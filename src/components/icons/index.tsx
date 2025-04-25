@@ -1,67 +1,48 @@
-export const SearchIcon = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 16 16"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M14 14L11.1 11.1"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
+import { Icon as IconifyIcon } from '@iconify/react';
+import { cn } from '@/utils/cn';
 
-export const PlusIcon = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 16 16"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M8 3.33334V12.6667"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M3.33334 8H12.6667"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
+export interface IconProps {
+  /** The icon name from Iconify (e.g., 'mdi:home') */
+  icon: string;
+  /** Custom CSS classes */
+  className?: string;
+  /** Size of the icon in pixels */
+  size?: number | string;
+  /** Color of the icon */
+  color?: string;
+  /** Rotation in degrees */
+  rotate?: number;
+  /** Flip the icon horizontally or vertically */
+  flip?: 'horizontal' | 'vertical' | 'both';
+  /** Whether the icon should spin */
+  spin?: boolean;
+}
 
-export const ArrowRightIcon = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 16 16"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M5.33334 3.33334L10.6667 8L5.33334 12.6667"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+export const Icon = ({
+  icon,
+  className,
+  size,
+  color,
+  rotate,
+  flip,
+  spin,
+  ...props
+}: IconProps) => {
+  return (
+    <IconifyIcon
+      icon={icon}
+      className={cn(
+        spin && 'animate-spin',
+        className
+      )}
+      style={{
+        color,
+        transform: `rotate(${rotate || 0}deg)`,
+      }}
+      height={size}
+      width={size}
+      flip={flip}
+      {...props}
     />
-  </svg>
-);
+  );
+}; 

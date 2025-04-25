@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from ".";
-import { SearchIcon, PlusIcon, ArrowRightIcon } from "../../icons";
+import { Icon } from "../../Icons";
 
 const meta: Meta<typeof Button> = {
   title: "Atoms/Button",
@@ -149,29 +149,29 @@ export const RoundedVariants: Story = {
 export const WithStartIcon: Story = {
   args: {
     children: "Search",
-    leftIcon: <SearchIcon />,
+    leftIcon: <Icon icon="mdi:search" />,
   },
 };
 
 export const WithEndIcon: Story = {
   args: {
     children: "Next",
-    rightIcon: <ArrowRightIcon />,
+    rightIcon: <Icon icon="mdi:arrow-right" />,
   },
 };
 
 export const WithBothIcons: Story = {
   args: {
     children: "Add Item",
-    leftIcon: <PlusIcon />,
-    rightIcon: <ArrowRightIcon />,
+    leftIcon: <Icon icon="mdi:plus" />,
+    rightIcon: <Icon icon="mdi:arrow-right" />,
   },
 };
 
 export const IconOnly: Story = {
   args: {
     "aria-label": "Search",
-    children: <SearchIcon />,
+    children: <Icon icon="mdi:search" />,
     rounded: "full",
   },
 };
@@ -179,7 +179,7 @@ export const IconOnly: Story = {
 export const IconOnlySmall: Story = {
   args: {
     "aria-label": "Add",
-    children: <PlusIcon />,
+    children: <Icon icon="mdi:plus" />,
     size: "sm",
     rounded: "full",
   },
@@ -188,7 +188,7 @@ export const IconOnlySmall: Story = {
 export const IconOnlyLarge: Story = {
   args: {
     "aria-label": "Next",
-    children: <ArrowRightIcon />,
+    children: <Icon icon="mdi:arrow-right" />,
     size: "lg",
     rounded: "full",
   },
@@ -207,13 +207,13 @@ export const SemanticVariants: Story = {
 export const SemanticWithIcons: Story = {
   render: () => (
     <div className="flex gap-2">
-      <Button variant="success" leftIcon={<PlusIcon />}>
+      <Button variant="success" leftIcon={<Icon icon="mdi:plus" />}>
         Add Success
       </Button>
-      <Button variant="warning" leftIcon={<SearchIcon />}>
+      <Button variant="warning" leftIcon={<Icon icon="mdi:search" />}>
         Search Warning
       </Button>
-      <Button variant="danger" leftIcon={<ArrowRightIcon />}>
+      <Button variant="danger" leftIcon={<Icon icon="mdi:arrow-right" />}>
         Delete Danger
       </Button>
     </div>

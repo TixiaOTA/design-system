@@ -16,8 +16,8 @@ export const WidgetCard: React.FC<WidgetCardProps> = ({
   className = ''
 }) => {
   return (
-    <Card className={`bg-white grid grid-cols-2 justify-between p-4 shadow-sm hover:bg-primary-50 ${className}`}>
-      <div className="space-y-1 pr-8">
+    <Card className={`bg-white grid grid-cols-4 justify-between p-4 shadow-sm hover:bg-primary-50 ${className}`}>
+      <div className="space-y-1 pr-8 col-span-3">
         <Text variant="label">{label}</Text>
         <Text variant="value">{value}</Text>
       </div>
