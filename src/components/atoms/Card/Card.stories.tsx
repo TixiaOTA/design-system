@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Card } from './Card';
+import { Text } from '../Text/Text';
 
-const meta: Meta<typeof Card> = {
-  title: 'Design System/Atoms/Card',
+const meta = {
+  title: 'Atoms/Card',
   component: Card,
   parameters: {
     layout: 'centered',
@@ -26,18 +27,22 @@ const meta: Meta<typeof Card> = {
       options: ['none', 'sm', 'md', 'lg', 'xl', 'full'],
     },
   },
-};
+} satisfies Meta<typeof Card>;
 
 export default meta;
-type Story = StoryObj<typeof Card>;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    children: 'Card',
-    variant: 'default',
-    padding: 'md',
-    shadow: 'sm',
-    rounded: 'md',
+    children: (
+      <div className="space-y-4">
+        <Text variant="heading3">Card Title</Text>
+        <Text variant="body1">
+          This is a card with some content. It can contain any type of content including text, images, or other components.
+        </Text>
+      </div>
+    ),
+    className: 'p-6 max-w-md',
   },
 };
 

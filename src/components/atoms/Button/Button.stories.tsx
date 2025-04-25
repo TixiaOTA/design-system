@@ -3,7 +3,7 @@ import { Button } from ".";
 import { SearchIcon, PlusIcon, ArrowRightIcon } from "../../icons";
 
 const meta: Meta<typeof Button> = {
-  title: "Design System/Atoms/Button",
+  title: "Atoms/Button",
   component: Button,
   tags: ["autodocs"],
   argTypes: {

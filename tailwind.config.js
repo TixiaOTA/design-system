@@ -2,22 +2,21 @@
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
-    "./stories/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {
       colors: {
         primary: {
-          50: "#E6F7FA",
-          100: "#B3E6F0",
-          200: "#80D5E6",
-          300: "#4DC4DC",
-          400: "#1AB3D2",
-          500: "#007C99", // Base color
-          600: "#006B80",
-          700: "#005A66",
-          800: "#00494D",
-          900: "#003833",
+          50: '#E6F7FA',  // Lightest tint
+          100: '#B3E6F0',
+          200: '#80D5E6',
+          300: '#4DC4DC',
+          400: '#1AB3D2',
+          500: '#007C99', // Base color
+          600: '#006B80',
+          700: '#005A66',
+          800: '#00494D',
+          900: '#003833',  // Darkest shade
         },
         secondary: {
           50: "#F5F8FF",
@@ -25,7 +24,7 @@ module.exports = {
           200: "#CCDAFF",
           300: "#99B5FF",
           400: "#668FFF",
-          500: "#3366FF", // Base color
+          500: "#3366FF",
           600: "#0040FF",
           700: "#002DB3",
           800: "#001A66",
@@ -81,6 +80,9 @@ module.exports = {
           800: "#212529",
           900: "#121416",
         },
+      },
+      fontFamily: {
+        sans: ['Poppins', 'system-ui', 'sans-serif'],
       },
     },
   },
