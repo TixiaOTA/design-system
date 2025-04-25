@@ -1,0 +1,75 @@
+import React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/utils/cn';
+
+const buttonVariants = cva(
+  'inline-flex items-center justify-center gap-2 font-medium transition-all duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed',
+  {
+    variants: {
+      variant: {
+        primary: 'bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 shadow-sm hover:shadow-md active:shadow-none',
+        secondary: 'bg-secondary-500 text-white hover:bg-secondary-600 active:bg-secondary-700 shadow-sm hover:shadow-md active:shadow-none',
+        success: 'bg-success-500 text-white hover:bg-success-600 active:bg-success-700 shadow-sm hover:shadow-md active:shadow-none',
+        warning: 'bg-warning-500 text-white hover:bg-warning-600 active:bg-warning-700 shadow-sm hover:shadow-md active:shadow-none',
+        danger: 'bg-danger-500 text-white hover:bg-danger-600 active:bg-danger-700 shadow-sm hover:shadow-md active:shadow-none',
+        outline: 'border border-neutral-300 text-primary-500 hover:bg-primary-50 active:bg-primary-100 hover:border-primary-500',
+        ghost: 'text-primary-500 hover:bg-primary-50 active:bg-primary-100',
+        link: 'text-primary-500 hover:underline p-0',
+      },
+      size: {
+        xs: 'text-xs px-2 py-1',
+        sm: 'text-sm px-3 py-1.5',
+        md: 'text-base px-4 py-2',
+        lg: 'text-lg px-5 py-2.5',
+      },
+      rounded: {
+        none: 'rounded-none',
+        sm: 'rounded-sm',
+        md: 'rounded-md',
+        lg: 'rounded-lg',
+        full: 'rounded-full',
+      },
+      fullWidth: {
+        true: 'w-full',
+      },
+    },
+    defaultVariants: {
+      variant: 'primary',
+      size: 'md',
+      rounded: 'md',
+      fullWidth: false,
+    },
+  }
+);
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  isLoading?: boolean;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+}
+
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, rounded, fullWidth, isLoading, leftIcon, rightIcon, children, ...props }, ref) => {
+    return (
+      <button
+        className={cn(buttonVariants({ variant, size, rounded, fullWidth, className }))}
+        ref={ref}
+        disabled={props.disabled || isLoading}
+        {...props}
+      >
+        {isLoading && (
+          <span className="animate-spin inline-block w-4 h-4 border-2 border-current border-r-transparent rounded-full" />
+        )}
+        {!isLoading && leftIcon}
+        {children}
+        {!isLoading && rightIcon}
+      </button>
+    );
+  }
+);
+
+Button.displayName = 'Button';
+
+export { buttonVariants };
