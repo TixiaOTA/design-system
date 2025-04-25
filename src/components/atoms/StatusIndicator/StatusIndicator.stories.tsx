@@ -80,6 +80,10 @@ export const WithoutLabel: Story = {
 };
 
 export const AllStates: Story = {
+  args: {
+    status: 'active',
+    withLabel: true,
+  },
   render: () => (
     <div className="flex flex-col gap-4">
       <StatusIndicator status="active" withLabel />
