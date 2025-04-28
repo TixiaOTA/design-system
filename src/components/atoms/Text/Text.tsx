@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '@/utils/cn';
 
 type TextVariant = 
   | 'display1' 
@@ -58,7 +59,7 @@ export const Text: React.FC<TextProps> = ({
   };
 
   return (
-    <Component className={`${baseStyles} ${variantStyles[variant]} ${className}`}>
+    <Component className={cn(baseStyles, variantStyles[variant], className)}>
       {children}
     </Component>
   );

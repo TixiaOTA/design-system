@@ -1,6 +1,7 @@
 import React from 'react';
-import { Text } from '../../atoms/Text/Text';
+import { Text } from '@/components/atoms/Text/Text';
 import { Card } from '@/components/atoms/Card';
+import { cn } from '@/utils/cn';
 
 interface WidgetCardProps {
   label: string;
@@ -16,7 +17,7 @@ export const WidgetCard: React.FC<WidgetCardProps> = ({
   className = ''
 }) => {
   return (
-    <Card className={`bg-white grid grid-cols-4 justify-between p-4 shadow-sm hover:bg-primary-50 ${className}`}>
+    <Card className={cn('bg-white grid grid-cols-4 justify-between p-4 shadow-sm hover:bg-primary-50', className)}>
       <div className="space-y-1 pr-8 col-span-3">
         <Text variant="label">{label}</Text>
         <Text variant="value">{value}</Text>
