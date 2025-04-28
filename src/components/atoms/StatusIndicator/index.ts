@@ -1,2 +1,2 @@
-export { default as StatusIndicator } from './StatusIndicator';
-export type { StatusIndicatorProps, StatusType } from './StatusIndicator'; 
+export type { StatusIndicatorProps, StatusIndicatorStatus } from './StatusIndicator';
+export { StatusIndicator } from './StatusIndicator'; 

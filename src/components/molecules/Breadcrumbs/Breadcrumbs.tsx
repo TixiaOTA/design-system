@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/components/atoms/Icons/Icons';
@@ -22,6 +22,9 @@ const breadcrumbsVariants = cva('flex items-center text-sm', {
   },
 });
 
+export type BreadcrumbsVariant = 'default' | 'light' | 'dark';
+export type BreadcrumbsSize = 'sm' | 'md' | 'lg';
+
 export interface BreadcrumbItem {
   /** Label to display */
   label: string;
@@ -29,10 +32,11 @@ export interface BreadcrumbItem {
   href?: string;
   /** Icon to display before the label */
   icon?: string;
+  onClick?: () => void;
 }
 
 export interface BreadcrumbsProps
-  extends React.HTMLAttributes<HTMLElement>,
+  extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof breadcrumbsVariants> {
   /** Array of breadcrumb items */
   items: BreadcrumbItem[];
@@ -41,15 +45,16 @@ export interface BreadcrumbsProps
   /** Whether the last item should be active */
   activeLastItem?: boolean;
   /** Size of the breadcrumbs */
-  size?: 'sm' | 'md' | 'lg';
+  size?: BreadcrumbsSize;
+  variant?: BreadcrumbsVariant;
 }
 
-export const Breadcrumbs = React.forwardRef<HTMLElement, BreadcrumbsProps>(
+const Breadcrumbs = forwardRef<HTMLDivElement, BreadcrumbsProps>(
   (
     {
       className,
-      variant,
-      size,
+      variant = 'default',
+      size = 'md',
       items,
       separator = <Icon icon="mdi:slash-forward" className="h-4 w-4 flex-shrink-0" />,
       activeLastItem = true,
@@ -128,4 +133,6 @@ export const Breadcrumbs = React.forwardRef<HTMLElement, BreadcrumbsProps>(
   }
 );
 
-Breadcrumbs.displayName = 'Breadcrumbs'; 
+Breadcrumbs.displayName = 'Breadcrumbs';
+
+export { Breadcrumbs }; 

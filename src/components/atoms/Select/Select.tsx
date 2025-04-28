@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/utils/cn';
 import { Icon } from '@/components/atoms/Icons/Icons';
@@ -25,6 +25,9 @@ const selectVariants = cva(
   }
 );
 
+export type SelectVariant = 'default' | 'error' | 'success';
+export type SelectSize = 'sm' | 'md' | 'lg';
+
 export interface SelectOption {
   label: string;
   value: string;
@@ -39,26 +42,28 @@ export interface SelectProps
   /** Label for the select */
   label?: string;
   /** Error message to display */
-  error?: string;
+  error?: boolean;
   /** Helper text to display below select */
   helperText?: string;
   /** Whether the select is required */
   required?: boolean;
   /** Placeholder text */
   placeholder?: string;
+  variant?: SelectVariant;
+  size?: SelectSize;
 }
 
-export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
+const Select = forwardRef<HTMLSelectElement, SelectProps>(
   (
     {
       className,
-      variant,
-      size,
+      variant = 'default',
+      size = 'md',
       options,
       label,
-      error,
+      error = false,
       helperText,
-      required,
+      required = false,
       placeholder,
       ...props
     },
@@ -123,4 +128,6 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
   }
 );
 
-Select.displayName = 'Select'; 
+Select.displayName = 'Select';
+
+export { Select }; 

@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { cn } from '@/utils/cn';
 import { Icon } from '@iconify/react';
 
+export type StarRatingSize = 'sm' | 'md' | 'lg';
+export type StarRatingColor = 'primary' | 'warning' | 'default';
+
 export interface StarRatingProps {
   rating: number;
   maxRating?: number;
-  size?: 'sm' | 'md' | 'lg';
-  color?: 'primary' | 'warning' | 'default';
+  size?: StarRatingSize;
+  color?: StarRatingColor;
   readOnly?: boolean;
   onRatingChange?: (rating: number) => void;
   className?: string;
@@ -28,7 +31,7 @@ export const StarRating: React.FC<StarRatingProps> = ({
   rating,
   maxRating = 5,
   size = 'md',
-  color = 'warning',
+  color = 'primary',
   readOnly = false,
   onRatingChange,
   className

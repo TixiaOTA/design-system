@@ -1,5 +1,5 @@
-import React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import React, { forwardRef } from 'react';
+import { cva } from 'class-variance-authority';
 import { cn } from '@/utils/cn';
 
 const buttonVariants = cva(
@@ -36,25 +36,42 @@ const buttonVariants = cva(
     defaultVariants: {
       variant: 'primary',
       size: 'md',
-      rounded: 'md',
+      rounded: 'none',
       fullWidth: false,
     },
   }
 );
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
+export type ButtonSize = 'sm' | 'md' | 'lg';
+export type ButtonRounded = 'none' | 'sm' | 'md' | 'lg' | 'full';
+
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  rounded?: ButtonRounded;
+  fullWidth?: boolean;
   isLoading?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
 }
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, rounded, fullWidth, isLoading, leftIcon, rightIcon, children, ...props }, ref) => {
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ 
+    className, 
+    variant = 'primary', 
+    size = 'md', 
+    rounded = 'none', 
+    fullWidth = false, 
+    isLoading = false, 
+    leftIcon, 
+    rightIcon, 
+    children, 
+    ...props 
+  }, ref) => {
     return (
       <button
-        className={cn(buttonVariants({ variant, size, rounded, fullWidth }), className)}
+        className={cn(buttonVariants({ variant, size, rounded, fullWidth, className }))}
         ref={ref}
         disabled={props.disabled || isLoading}
         {...props}
@@ -71,5 +88,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 
 Button.displayName = 'Button';
+
+export { Button };
 
 export { buttonVariants };

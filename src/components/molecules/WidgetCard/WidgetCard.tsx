@@ -1,30 +1,39 @@
 import React from 'react';
-import { Text } from '@/components/atoms/Text/Text';
-import { Card } from '@/components/atoms/Card';
 import { cn } from '@/utils/cn';
+import { Icon } from '@iconify/react';
+import type { IconifyIcon } from '@iconify/react';
 
-interface WidgetCardProps {
+export interface WidgetCardProps {
   label: string;
   value: string | number;
-  icon: React.ReactNode;
+  icon?: string | IconifyIcon;
   className?: string;
 }
 
-export const WidgetCard: React.FC<WidgetCardProps> = ({
+const WidgetCard: React.FC<WidgetCardProps> = ({
   label,
   value,
   icon,
-  className = ''
+  className
 }) => {
   return (
-    <Card className={cn('bg-white grid grid-cols-4 justify-between p-4 shadow-sm hover:bg-primary-50', className)}>
-      <div className="space-y-1 pr-8 col-span-3">
-        <Text variant="label">{label}</Text>
-        <Text variant="value">{value}</Text>
+    <div
+      className={cn(
+        'flex items-center gap-4 rounded-lg bg-white p-4 shadow-sm',
+        className
+      )}
+    >
+      {icon && (
+        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary-50">
+          <Icon icon={icon} className="h-6 w-6 text-primary-600" />
+        </div>
+      )}
+      <div>
+        <p className="text-sm font-medium text-gray-500">{label}</p>
+        <p className="mt-1 text-2xl font-semibold text-gray-900">{value}</p>
       </div>
-      <div className="text-cyan-400 self-center justify-self-end">
-        {icon}
-      </div>
-    </Card>
+    </div>
   );
-}; 
+};
+
+export { WidgetCard }; 

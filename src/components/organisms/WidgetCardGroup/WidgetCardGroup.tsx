@@ -1,32 +1,24 @@
 import React from 'react';
-import { WidgetCard } from '../../molecules/WidgetCard/WidgetCard';
+import { WidgetCard } from '@/components/molecules/WidgetCard/WidgetCard';
+import type { WidgetCardProps } from '@/components/molecules/WidgetCard/WidgetCard';
+import { cn } from '@/utils/cn';
 
-interface WidgetData {
-  id: string | number;
-  label: string;
-  value: string | number;
-  icon: React.ReactNode;
-}
-
-interface WidgetCardGroupProps {
-  widgets: WidgetData[];
+export interface WidgetCardGroupProps {
+  widgets: WidgetCardProps[];
   className?: string;
 }
 
-export const WidgetCardGroup: React.FC<WidgetCardGroupProps> = ({
+const WidgetCardGroup: React.FC<WidgetCardGroupProps> = ({
   widgets,
-  className = ''
+  className
 }) => {
   return (
-    <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ${className}`}>
-      {widgets.map((widget) => (
-        <WidgetCard
-          key={widget.id}
-          label={widget.label}
-          value={widget.value}
-          icon={widget.icon}
-        />
+    <div className={cn('grid gap-4 sm:grid-cols-2 lg:grid-cols-4', className)}>
+      {widgets.map((widget, index) => (
+        <WidgetCard key={index} {...widget} />
       ))}
     </div>
   );
-}; 
+};
+
+export { WidgetCardGroup }; 

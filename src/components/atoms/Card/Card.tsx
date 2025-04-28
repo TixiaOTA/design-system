@@ -1,5 +1,5 @@
-import React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import React, { forwardRef } from 'react';
+import { cva } from 'class-variance-authority';
 import { cn } from '@/utils/cn';
 
 const cardVariants = cva(
@@ -43,18 +43,32 @@ const cardVariants = cva(
   }
 );
 
-export interface CardProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof cardVariants> {
+export type CardVariant = 'default' | 'elevated' | 'outline' | 'ghost';
+export type CardPadding = 'none' | 'sm' | 'md' | 'lg';
+export type CardShadow = 'none' | 'sm' | 'md' | 'lg';
+export type CardRounded = 'none' | 'sm' | 'md' | 'lg' | 'full';
+
+export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: CardVariant;
+  padding?: CardPadding;
+  shadow?: CardShadow;
+  rounded?: CardRounded;
   asChild?: boolean;
 }
 
-const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, variant, padding, shadow, rounded, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? React.Fragment : 'div';
+const Card = forwardRef<HTMLDivElement, CardProps>(
+  ({ 
+    className, 
+    variant = 'default', 
+    padding = 'md', 
+    shadow = 'none', 
+    rounded = 'none', 
+    asChild = false, 
+    ...props 
+  }, ref) => {
     return (
-      <Comp
-        className={cn(cardVariants({ variant, padding, shadow, rounded }), className)}
+      <div
+        className={cn(cardVariants({ variant, padding, shadow, rounded, className }))}
         ref={ref}
         {...props}
       />

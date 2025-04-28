@@ -14,13 +14,13 @@
       "require": "./dist/tixia-design-system.umd.js"
     }
   },
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -p tsconfig.build.json && vite build",
-    "storybook": "storybook dev",
-    "build-storybook": "storybook build",
-    "preview": "vite preview"
-  },
+"scripts": {
+  "dev": "vite",
+  "build": "tsc -p tsconfig.build.json && vite build && cp src/index.d.ts dist/",
+  "storybook": "storybook dev",
+  "build-storybook": "storybook build",
+  "preview": "vite preview"
+},
   "dependencies": {
     "@heroui/react": "^2.7.6",
     "@iconify/react": "^4.1.1",

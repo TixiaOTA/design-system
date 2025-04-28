@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
-import type { ApexOptions, ApexAxisChartSeries, ApexNonAxisChartSeries } from 'apexcharts';
-import { cn } from '@/utils/cn';
+import { ApexOptions } from 'apexcharts';
 
 export type ChartType =
   | 'line'
@@ -84,7 +83,7 @@ export const Chart: React.FC<ChartProps> = ({
   };
 
   return (
-    <div className={cn('w-full', className)}>
+    <div className={className}>
       <ReactApexChart
         type={type}
         series={series}

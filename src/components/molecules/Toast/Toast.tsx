@@ -1,124 +1,112 @@
-import React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import React, { forwardRef } from 'react';
 import { cn } from '@/utils/cn';
-import { Icon } from '@/components/atoms/Icons/Icons';
+import { Icon } from '@iconify/react';
+import type { IconifyIcon } from '@iconify/react';
 
-const toastVariants = cva(
-  'pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-md border p-4 pr-8 shadow-lg transition-all',
-  {
-    variants: {
-      variant: {
-        default: 'bg-white border-neutral-200 text-neutral-900',
-        success: 'bg-success-50 border-success-200 text-success-700',
-        error: 'bg-danger-50 border-danger-200 text-danger-700',
-        warning: 'bg-warning-50 border-warning-200 text-warning-700',
-        info: 'bg-info-50 border-info-200 text-info-700',
-      },
-    },
-    defaultVariants: {
-      variant: 'default',
-    },
-  }
-);
+export type ToastVariant = 'default' | 'success' | 'error' | 'warning' | 'info';
 
-const defaultIconMap = {
-  default: 'mdi:bell',
-  success: 'mdi:check-circle',
-  error: 'mdi:alert-circle',
-  warning: 'mdi:alert',
-  info: 'mdi:information',
-};
-
-export interface ToastProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof toastVariants> {
-  /** Title of the toast */
+export interface ToastProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: ToastVariant;
   title?: string;
-  /** Description or message of the toast */
   description?: string;
-  /** Whether to show the close button */
-  showClose?: boolean;
-  /** Callback when close button is clicked */
   onClose?: () => void;
-  /** Duration in milliseconds before auto-closing (0 to disable) */
-  duration?: number;
-  /** Custom icon to display */
-  icon?: string;
-  /** Whether to show the icon */
+  icon?: string | IconifyIcon;
   showIcon?: boolean;
 }
 
-export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
-  (
-    {
-      className,
-      variant = 'default',
-      title,
-      description,
-      showClose = true,
-      onClose,
-      duration = 5000,
-      icon,
-      showIcon = true,
-      ...props
-    },
-    ref
-  ) => {
-    React.useEffect(() => {
-      if (duration && onClose) {
-        const timer = setTimeout(onClose, duration);
-        return () => clearTimeout(timer);
-      }
-    }, [duration, onClose]);
+const Toast = forwardRef<HTMLDivElement, ToastProps>(
+  ({ 
+    className, 
+    variant = 'default', 
+    title, 
+    description, 
+    onClose, 
+    icon, 
+    showIcon = true, 
+    ...props 
+  }, ref) => {
+    const defaultIconMap: Record<ToastVariant, string> = {
+      default: 'mdi:information',
+      success: 'mdi:check-circle',
+      error: 'mdi:alert-circle',
+      warning: 'mdi:alert',
+      info: 'mdi:information'
+    };
 
-    const iconToShow = icon || (showIcon ? defaultIconMap[variant || 'default'] : undefined);
+    const iconToShow = icon || (showIcon ? defaultIconMap[variant] : undefined);
 
     return (
       <div
         ref={ref}
-        className={cn(toastVariants({ variant }), className)}
+        className={cn(
+          'flex items-start gap-3 rounded-lg p-4 shadow-lg',
+          {
+            'bg-white': variant === 'default',
+            'bg-success-50': variant === 'success',
+            'bg-error-50': variant === 'error',
+            'bg-warning-50': variant === 'warning',
+            'bg-info-50': variant === 'info'
+          },
+          className
+        )}
         {...props}
       >
-        <div className="flex items-start gap-3">
-          {iconToShow && (
-            <Icon
-              icon={iconToShow}
-              className={cn(
-                'h-5 w-5 shrink-0',
-                variant === 'default' && 'text-neutral-700',
-                variant === 'success' && 'text-success-700',
-                variant === 'error' && 'text-danger-700',
-                variant === 'warning' && 'text-warning-700',
-                variant === 'info' && 'text-info-700'
-              )}
-            />
+        {iconToShow && (
+          <Icon
+            icon={iconToShow}
+            className={cn('h-5 w-5 flex-shrink-0', {
+              'text-gray-500': variant === 'default',
+              'text-success-500': variant === 'success',
+              'text-error-500': variant === 'error',
+              'text-warning-500': variant === 'warning',
+              'text-info-500': variant === 'info'
+            })}
+          />
+        )}
+        <div className="flex-1">
+          {title && (
+            <h3
+              className={cn('text-sm font-medium', {
+                'text-gray-900': variant === 'default',
+                'text-success-900': variant === 'success',
+                'text-error-900': variant === 'error',
+                'text-warning-900': variant === 'warning',
+                'text-info-900': variant === 'info'
+              })}
+            >
+              {title}
+            </h3>
           )}
-          <div className="grid gap-1">
-            {title && (
-              <div className="text-sm font-semibold">
-                {title}
-              </div>
-            )}
-            {description && (
-              <div className="text-sm opacity-90">
-                {description}
-              </div>
-            )}
-          </div>
+          {description && (
+            <p
+              className={cn('mt-1 text-sm', {
+                'text-gray-500': variant === 'default',
+                'text-success-700': variant === 'success',
+                'text-error-700': variant === 'error',
+                'text-warning-700': variant === 'warning',
+                'text-info-700': variant === 'info'
+              })}
+            >
+              {description}
+            </p>
+          )}
         </div>
-        {showClose && (
+        {onClose && (
           <button
+            type="button"
             onClick={onClose}
             className={cn(
-              'absolute right-2 top-2 rounded-md p-1 transition-opacity hover:opacity-70 focus:outline-none focus:ring-2',
-              variant === 'default' && 'text-neutral-700/50 hover:text-neutral-700',
-              variant === 'success' && 'text-success-700/50 hover:text-success-700',
-              variant === 'error' && 'text-danger-700/50 hover:text-danger-700',
-              variant === 'warning' && 'text-warning-700/50 hover:text-warning-700',
-              variant === 'info' && 'text-info-700/50 hover:text-info-700'
+              'ml-4 flex-shrink-0 rounded-md p-1 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2',
+              {
+                'text-gray-400 hover:text-gray-500': variant === 'default',
+                'text-success-400 hover:text-success-500': variant === 'success',
+                'text-error-400 hover:text-error-500': variant === 'error',
+                'text-warning-400 hover:text-warning-500': variant === 'warning',
+                'text-info-400 hover:text-info-500': variant === 'info'
+              }
             )}
           >
-            <Icon icon="mdi:close" className="h-4 w-4" />
+            <Icon icon="mdi:close" className="h-5 w-5" />
           </button>
         )}
       </div>
@@ -126,4 +114,6 @@ export const Toast = React.forwardRef<HTMLDivElement, ToastProps>(
   }
 );
 
-Toast.displayName = 'Toast'; 
+Toast.displayName = 'Toast';
+
+export { Toast }; 

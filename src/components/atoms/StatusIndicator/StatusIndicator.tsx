@@ -1,11 +1,12 @@
 import React from 'react';
 import { cn } from '@/utils/cn';
 
-export type StatusType = 'active' | 'inactive' | 'pending' | 'warning' | 'error';
+export type StatusIndicatorStatus = 'active' | 'inactive' | 'pending' | 'warning' | 'error';
+export type StatusIndicatorSize = 'sm' | 'md' | 'lg';
 
 export interface StatusIndicatorProps {
-  status: StatusType;
-  size?: 'sm' | 'md' | 'lg';
+  status: StatusIndicatorStatus;
+  size?: StatusIndicatorSize;
   withLabel?: boolean;
   className?: string;
 }

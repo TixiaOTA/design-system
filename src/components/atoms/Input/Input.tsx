@@ -1,5 +1,5 @@
-import React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import React, { forwardRef } from 'react';
+import { cva } from 'class-variance-authority';
 import { cn } from '@/utils/cn';
 
 const inputVariants = cva(
@@ -24,42 +24,33 @@ const inputVariants = cva(
   }
 );
 
-export interface InputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>,
-    VariantProps<typeof inputVariants> {
-  /** Left icon component */
+export type InputVariant = 'default' | 'error' | 'success';
+export type InputSize = 'sm' | 'md' | 'lg';
+
+export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
+  variant?: InputVariant;
+  size?: InputSize;
   leftIcon?: React.ReactNode;
-  /** Right icon component */
   rightIcon?: React.ReactNode;
-  /** Error message to display */
-  error?: string;
-  /** Helper text to display below input */
+  error?: boolean;
   helperText?: string;
-  /** Label for the input */
   label?: string;
-  /** Whether the input is required */
   required?: boolean;
-  /** Size of the input */
-  size?: 'sm' | 'md' | 'lg';
 }
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  (
-    {
-      className,
-      variant,
-      size,
-      type = 'text',
-      leftIcon,
-      rightIcon,
-      error,
-      helperText,
-      label,
-      required,
-      ...props
-    },
-    ref
-  ) => {
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ 
+    className, 
+    variant = 'default', 
+    size = 'md', 
+    leftIcon, 
+    rightIcon, 
+    error = false, 
+    helperText, 
+    label, 
+    required = false, 
+    ...props 
+  }, ref) => {
     const id = React.useId();
 
     return (
@@ -81,7 +72,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           )}
           <input
             id={id}
-            type={type}
+            type="text"
             ref={ref}
             className={cn(
               inputVariants({ variant: error ? 'error' : variant, inputSize: size }),
@@ -113,4 +104,6 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   }
 );
 
-Input.displayName = 'Input'; 
+Input.displayName = 'Input';
+
+export { Input }; 
