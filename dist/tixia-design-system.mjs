@@ -1,0 +1,16461 @@
+import Ee, { useState as ho } from "react";
+function uo(n) {
+  return n && n.__esModule && Object.prototype.hasOwnProperty.call(n, "default") ? n.default : n;
+}
+function go(n) {
+  if (n.__esModule) return n;
+  var e = n.default;
+  if (typeof e == "function") {
+    var t = function i() {
+      return this instanceof i ? Reflect.construct(e, arguments, this.constructor) : e.apply(this, arguments);
+    };
+    t.prototype = e.prototype;
+  } else t = {};
+  return Object.defineProperty(t, "__esModule", { value: !0 }), Object.keys(n).forEach(function(i) {
+    var a = Object.getOwnPropertyDescriptor(n, i);
+    Object.defineProperty(t, i, a.get ? a : {
+      enumerable: !0,
+      get: function() {
+        return n[i];
+      }
+    });
+  }), t;
+}
+var ga = { exports: {} }, Dt = {};
+/**
+ * @license React
+ * react-jsx-runtime.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+var Ss;
+function fo() {
+  if (Ss) return Dt;
+  Ss = 1;
+  var n = Ee, e = Symbol.for("react.element"), t = Symbol.for("react.fragment"), i = Object.prototype.hasOwnProperty, a = n.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner, s = { key: !0, ref: !0, __self: !0, __source: !0 };
+  function r(o, l, c) {
+    var h, d = {}, u = null, g = null;
+    c !== void 0 && (u = "" + c), l.key !== void 0 && (u = "" + l.key), l.ref !== void 0 && (g = l.ref);
+    for (h in l) i.call(l, h) && !s.hasOwnProperty(h) && (d[h] = l[h]);
+    if (o && o.defaultProps) for (h in l = o.defaultProps, l) d[h] === void 0 && (d[h] = l[h]);
+    return { $$typeof: e, type: o, key: u, ref: g, props: d, _owner: a.current };
+  }
+  return Dt.Fragment = t, Dt.jsx = r, Dt.jsxs = r, Dt;
+}
+var Nt = {};
+/**
+ * @license React
+ * react-jsx-runtime.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+var Ms;
+function po() {
+  return Ms || (Ms = 1, process.env.NODE_ENV !== "production" && function() {
+    var n = Ee, e = Symbol.for("react.element"), t = Symbol.for("react.portal"), i = Symbol.for("react.fragment"), a = Symbol.for("react.strict_mode"), s = Symbol.for("react.profiler"), r = Symbol.for("react.provider"), o = Symbol.for("react.context"), l = Symbol.for("react.forward_ref"), c = Symbol.for("react.suspense"), h = Symbol.for("react.suspense_list"), d = Symbol.for("react.memo"), u = Symbol.for("react.lazy"), g = Symbol.for("react.offscreen"), p = Symbol.iterator, f = "@@iterator";
+    function x(M) {
+      if (M === null || typeof M != "object")
+        return null;
+      var H = p && M[p] || M[f];
+      return typeof H == "function" ? H : null;
+    }
+    var b = n.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+    function m(M) {
+      {
+        for (var H = arguments.length, K = new Array(H > 1 ? H - 1 : 0), ne = 1; ne < H; ne++)
+          K[ne - 1] = arguments[ne];
+        w("error", M, K);
+      }
+    }
+    function w(M, H, K) {
+      {
+        var ne = b.ReactDebugCurrentFrame, xe = ne.getStackAddendum();
+        xe !== "" && (H += "%s", K = K.concat([xe]));
+        var Ce = K.map(function(de) {
+          return String(de);
+        });
+        Ce.unshift("Warning: " + H), Function.prototype.apply.call(console[M], console, Ce);
+      }
+    }
+    var y = !1, v = !1, k = !1, A = !1, C = !1, S;
+    S = Symbol.for("react.module.reference");
+    function L(M) {
+      return !!(typeof M == "string" || typeof M == "function" || M === i || M === s || C || M === a || M === c || M === h || A || M === g || y || v || k || typeof M == "object" && M !== null && (M.$$typeof === u || M.$$typeof === d || M.$$typeof === r || M.$$typeof === o || M.$$typeof === l || // This needs to include all possible module reference object
+      // types supported by any Flight configuration anywhere since
+      // we don't know which Flight build this will end up being used
+      // with.
+      M.$$typeof === S || M.getModuleId !== void 0));
+    }
+    function P(M, H, K) {
+      var ne = M.displayName;
+      if (ne)
+        return ne;
+      var xe = H.displayName || H.name || "";
+      return xe !== "" ? K + "(" + xe + ")" : K;
+    }
+    function I(M) {
+      return M.displayName || "Context";
+    }
+    function E(M) {
+      if (M == null)
+        return null;
+      if (typeof M.tag == "number" && m("Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."), typeof M == "function")
+        return M.displayName || M.name || null;
+      if (typeof M == "string")
+        return M;
+      switch (M) {
+        case i:
+          return "Fragment";
+        case t:
+          return "Portal";
+        case s:
+          return "Profiler";
+        case a:
+          return "StrictMode";
+        case c:
+          return "Suspense";
+        case h:
+          return "SuspenseList";
+      }
+      if (typeof M == "object")
+        switch (M.$$typeof) {
+          case o:
+            var H = M;
+            return I(H) + ".Consumer";
+          case r:
+            var K = M;
+            return I(K._context) + ".Provider";
+          case l:
+            return P(M, M.render, "ForwardRef");
+          case d:
+            var ne = M.displayName || null;
+            return ne !== null ? ne : E(M.type) || "Memo";
+          case u: {
+            var xe = M, Ce = xe._payload, de = xe._init;
+            try {
+              return E(de(Ce));
+            } catch {
+              return null;
+            }
+          }
+        }
+      return null;
+    }
+    var O = Object.assign, _ = 0, Y, X, D, B, R, z, Z;
+    function Q() {
+    }
+    Q.__reactDisabledLog = !0;
+    function W() {
+      {
+        if (_ === 0) {
+          Y = console.log, X = console.info, D = console.warn, B = console.error, R = console.group, z = console.groupCollapsed, Z = console.groupEnd;
+          var M = {
+            configurable: !0,
+            enumerable: !0,
+            value: Q,
+            writable: !0
+          };
+          Object.defineProperties(console, {
+            info: M,
+            log: M,
+            warn: M,
+            error: M,
+            group: M,
+            groupCollapsed: M,
+            groupEnd: M
+          });
+        }
+        _++;
+      }
+    }
+    function se() {
+      {
+        if (_--, _ === 0) {
+          var M = {
+            configurable: !0,
+            enumerable: !0,
+            writable: !0
+          };
+          Object.defineProperties(console, {
+            log: O({}, M, {
+              value: Y
+            }),
+            info: O({}, M, {
+              value: X
+            }),
+            warn: O({}, M, {
+              value: D
+            }),
+            error: O({}, M, {
+              value: B
+            }),
+            group: O({}, M, {
+              value: R
+            }),
+            groupCollapsed: O({}, M, {
+              value: z
+            }),
+            groupEnd: O({}, M, {
+              value: Z
+            })
+          });
+        }
+        _ < 0 && m("disabledDepth fell below zero. This is a bug in React. Please file an issue.");
+      }
+    }
+    var G = b.ReactCurrentDispatcher, V;
+    function J(M, H, K) {
+      {
+        if (V === void 0)
+          try {
+            throw Error();
+          } catch (xe) {
+            var ne = xe.stack.trim().match(/\n( *(at )?)/);
+            V = ne && ne[1] || "";
+          }
+        return `
+` + V + M;
+      }
+    }
+    var ae = !1, te;
+    {
+      var fe = typeof WeakMap == "function" ? WeakMap : Map;
+      te = new fe();
+    }
+    function U(M, H) {
+      if (!M || ae)
+        return "";
+      {
+        var K = te.get(M);
+        if (K !== void 0)
+          return K;
+      }
+      var ne;
+      ae = !0;
+      var xe = Error.prepareStackTrace;
+      Error.prepareStackTrace = void 0;
+      var Ce;
+      Ce = G.current, G.current = null, W();
+      try {
+        if (H) {
+          var de = function() {
+            throw Error();
+          };
+          if (Object.defineProperty(de.prototype, "props", {
+            set: function() {
+              throw Error();
+            }
+          }), typeof Reflect == "object" && Reflect.construct) {
+            try {
+              Reflect.construct(de, []);
+            } catch (Ne) {
+              ne = Ne;
+            }
+            Reflect.construct(M, [], de);
+          } else {
+            try {
+              de.call();
+            } catch (Ne) {
+              ne = Ne;
+            }
+            M.call(de.prototype);
+          }
+        } else {
+          try {
+            throw Error();
+          } catch (Ne) {
+            ne = Ne;
+          }
+          M();
+        }
+      } catch (Ne) {
+        if (Ne && ne && typeof Ne.stack == "string") {
+          for (var he = Ne.stack.split(`
+`), Xe = ne.stack.split(`
+`), Te = he.length - 1, Ie = Xe.length - 1; Te >= 1 && Ie >= 0 && he[Te] !== Xe[Ie]; )
+            Ie--;
+          for (; Te >= 1 && Ie >= 0; Te--, Ie--)
+            if (he[Te] !== Xe[Ie]) {
+              if (Te !== 1 || Ie !== 1)
+                do
+                  if (Te--, Ie--, Ie < 0 || he[Te] !== Xe[Ie]) {
+                    var Ge = `
+` + he[Te].replace(" at new ", " at ");
+                    return M.displayName && Ge.includes("<anonymous>") && (Ge = Ge.replace("<anonymous>", M.displayName)), typeof M == "function" && te.set(M, Ge), Ge;
+                  }
+                while (Te >= 1 && Ie >= 0);
+              break;
+            }
+        }
+      } finally {
+        ae = !1, G.current = Ce, se(), Error.prepareStackTrace = xe;
+      }
+      var At = M ? M.displayName || M.name : "", ht = At ? J(At) : "";
+      return typeof M == "function" && te.set(M, ht), ht;
+    }
+    function we(M, H, K) {
+      return U(M, !1);
+    }
+    function Fe(M) {
+      var H = M.prototype;
+      return !!(H && H.isReactComponent);
+    }
+    function Qe(M, H, K) {
+      if (M == null)
+        return "";
+      if (typeof M == "function")
+        return U(M, Fe(M));
+      if (typeof M == "string")
+        return J(M);
+      switch (M) {
+        case c:
+          return J("Suspense");
+        case h:
+          return J("SuspenseList");
+      }
+      if (typeof M == "object")
+        switch (M.$$typeof) {
+          case l:
+            return we(M.render);
+          case d:
+            return Qe(M.type, H, K);
+          case u: {
+            var ne = M, xe = ne._payload, Ce = ne._init;
+            try {
+              return Qe(Ce(xe), H, K);
+            } catch {
+            }
+          }
+        }
+      return "";
+    }
+    var Ht = Object.prototype.hasOwnProperty, ds = {}, us = b.ReactDebugCurrentFrame;
+    function ui(M) {
+      if (M) {
+        var H = M._owner, K = Qe(M.type, M._source, H ? H.type : null);
+        us.setExtraStackFrame(K);
+      } else
+        us.setExtraStackFrame(null);
+    }
+    function Wn(M, H, K, ne, xe) {
+      {
+        var Ce = Function.call.bind(Ht);
+        for (var de in M)
+          if (Ce(M, de)) {
+            var he = void 0;
+            try {
+              if (typeof M[de] != "function") {
+                var Xe = Error((ne || "React class") + ": " + K + " type `" + de + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof M[de] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
+                throw Xe.name = "Invariant Violation", Xe;
+              }
+              he = M[de](H, de, ne, K, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
+            } catch (Te) {
+              he = Te;
+            }
+            he && !(he instanceof Error) && (ui(xe), m("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", ne || "React class", K, de, typeof he), ui(null)), he instanceof Error && !(he.message in ds) && (ds[he.message] = !0, ui(xe), m("Failed %s type: %s", K, he.message), ui(null));
+          }
+      }
+    }
+    var Bn = Array.isArray;
+    function _i(M) {
+      return Bn(M);
+    }
+    function jn(M) {
+      {
+        var H = typeof Symbol == "function" && Symbol.toStringTag, K = H && M[Symbol.toStringTag] || M.constructor.name || "Object";
+        return K;
+      }
+    }
+    function Gn(M) {
+      try {
+        return gs(M), !1;
+      } catch {
+        return !0;
+      }
+    }
+    function gs(M) {
+      return "" + M;
+    }
+    function fs(M) {
+      if (Gn(M))
+        return m("The provided key is an unsupported type %s. This value must be coerced to a string before before using it here.", jn(M)), gs(M);
+    }
+    var ps = b.ReactCurrentOwner, Vn = {
+      key: !0,
+      ref: !0,
+      __self: !0,
+      __source: !0
+    }, xs, bs;
+    function Un(M) {
+      if (Ht.call(M, "ref")) {
+        var H = Object.getOwnPropertyDescriptor(M, "ref").get;
+        if (H && H.isReactWarning)
+          return !1;
+      }
+      return M.ref !== void 0;
+    }
+    function qn(M) {
+      if (Ht.call(M, "key")) {
+        var H = Object.getOwnPropertyDescriptor(M, "key").get;
+        if (H && H.isReactWarning)
+          return !1;
+      }
+      return M.key !== void 0;
+    }
+    function $n(M, H) {
+      typeof M.ref == "string" && ps.current;
+    }
+    function Zn(M, H) {
+      {
+        var K = function() {
+          xs || (xs = !0, m("%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", H));
+        };
+        K.isReactWarning = !0, Object.defineProperty(M, "key", {
+          get: K,
+          configurable: !0
+        });
+      }
+    }
+    function Jn(M, H) {
+      {
+        var K = function() {
+          bs || (bs = !0, m("%s: `ref` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", H));
+        };
+        K.isReactWarning = !0, Object.defineProperty(M, "ref", {
+          get: K,
+          configurable: !0
+        });
+      }
+    }
+    var Kn = function(M, H, K, ne, xe, Ce, de) {
+      var he = {
+        // This tag allows us to uniquely identify this as a React Element
+        $$typeof: e,
+        // Built-in properties that belong on the element
+        type: M,
+        key: H,
+        ref: K,
+        props: de,
+        // Record the component responsible for creating this element.
+        _owner: Ce
+      };
+      return he._store = {}, Object.defineProperty(he._store, "validated", {
+        configurable: !1,
+        enumerable: !1,
+        writable: !0,
+        value: !1
+      }), Object.defineProperty(he, "_self", {
+        configurable: !1,
+        enumerable: !1,
+        writable: !1,
+        value: ne
+      }), Object.defineProperty(he, "_source", {
+        configurable: !1,
+        enumerable: !1,
+        writable: !1,
+        value: xe
+      }), Object.freeze && (Object.freeze(he.props), Object.freeze(he)), he;
+    };
+    function Qn(M, H, K, ne, xe) {
+      {
+        var Ce, de = {}, he = null, Xe = null;
+        K !== void 0 && (fs(K), he = "" + K), qn(H) && (fs(H.key), he = "" + H.key), Un(H) && (Xe = H.ref, $n(H, xe));
+        for (Ce in H)
+          Ht.call(H, Ce) && !Vn.hasOwnProperty(Ce) && (de[Ce] = H[Ce]);
+        if (M && M.defaultProps) {
+          var Te = M.defaultProps;
+          for (Ce in Te)
+            de[Ce] === void 0 && (de[Ce] = Te[Ce]);
+        }
+        if (he || Xe) {
+          var Ie = typeof M == "function" ? M.displayName || M.name || "Unknown" : M;
+          he && Zn(de, Ie), Xe && Jn(de, Ie);
+        }
+        return Kn(M, he, Xe, xe, ne, ps.current, de);
+      }
+    }
+    var Yi = b.ReactCurrentOwner, ms = b.ReactDebugCurrentFrame;
+    function kt(M) {
+      if (M) {
+        var H = M._owner, K = Qe(M.type, M._source, H ? H.type : null);
+        ms.setExtraStackFrame(K);
+      } else
+        ms.setExtraStackFrame(null);
+    }
+    var Fi;
+    Fi = !1;
+    function Xi(M) {
+      return typeof M == "object" && M !== null && M.$$typeof === e;
+    }
+    function vs() {
+      {
+        if (Yi.current) {
+          var M = E(Yi.current.type);
+          if (M)
+            return `
+
+Check the render method of \`` + M + "`.";
+        }
+        return "";
+      }
+    }
+    function eo(M) {
+      return "";
+    }
+    var ys = {};
+    function to(M) {
+      {
+        var H = vs();
+        if (!H) {
+          var K = typeof M == "string" ? M : M.displayName || M.name;
+          K && (H = `
+
+Check the top-level render call using <` + K + ">.");
+        }
+        return H;
+      }
+    }
+    function ws(M, H) {
+      {
+        if (!M._store || M._store.validated || M.key != null)
+          return;
+        M._store.validated = !0;
+        var K = to(H);
+        if (ys[K])
+          return;
+        ys[K] = !0;
+        var ne = "";
+        M && M._owner && M._owner !== Yi.current && (ne = " It was passed a child from " + E(M._owner.type) + "."), kt(M), m('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', K, ne), kt(null);
+      }
+    }
+    function ks(M, H) {
+      {
+        if (typeof M != "object")
+          return;
+        if (_i(M))
+          for (var K = 0; K < M.length; K++) {
+            var ne = M[K];
+            Xi(ne) && ws(ne, H);
+          }
+        else if (Xi(M))
+          M._store && (M._store.validated = !0);
+        else if (M) {
+          var xe = x(M);
+          if (typeof xe == "function" && xe !== M.entries)
+            for (var Ce = xe.call(M), de; !(de = Ce.next()).done; )
+              Xi(de.value) && ws(de.value, H);
+        }
+      }
+    }
+    function io(M) {
+      {
+        var H = M.type;
+        if (H == null || typeof H == "string")
+          return;
+        var K;
+        if (typeof H == "function")
+          K = H.propTypes;
+        else if (typeof H == "object" && (H.$$typeof === l || // Note: Memo only checks outer props here.
+        // Inner props are checked in the reconciler.
+        H.$$typeof === d))
+          K = H.propTypes;
+        else
+          return;
+        if (K) {
+          var ne = E(H);
+          Wn(K, M.props, "prop", ne, M);
+        } else if (H.PropTypes !== void 0 && !Fi) {
+          Fi = !0;
+          var xe = E(H);
+          m("Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?", xe || "Unknown");
+        }
+        typeof H.getDefaultProps == "function" && !H.getDefaultProps.isReactClassApproved && m("getDefaultProps is only used on classic React.createClass definitions. Use a static property named `defaultProps` instead.");
+      }
+    }
+    function ao(M) {
+      {
+        for (var H = Object.keys(M.props), K = 0; K < H.length; K++) {
+          var ne = H[K];
+          if (ne !== "children" && ne !== "key") {
+            kt(M), m("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", ne), kt(null);
+            break;
+          }
+        }
+        M.ref !== null && (kt(M), m("Invalid attribute `ref` supplied to `React.Fragment`."), kt(null));
+      }
+    }
+    var As = {};
+    function Cs(M, H, K, ne, xe, Ce) {
+      {
+        var de = L(M);
+        if (!de) {
+          var he = "";
+          (M === void 0 || typeof M == "object" && M !== null && Object.keys(M).length === 0) && (he += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.");
+          var Xe = eo();
+          Xe ? he += Xe : he += vs();
+          var Te;
+          M === null ? Te = "null" : _i(M) ? Te = "array" : M !== void 0 && M.$$typeof === e ? (Te = "<" + (E(M.type) || "Unknown") + " />", he = " Did you accidentally export a JSX literal instead of a component?") : Te = typeof M, m("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", Te, he);
+        }
+        var Ie = Qn(M, H, K, xe, Ce);
+        if (Ie == null)
+          return Ie;
+        if (de) {
+          var Ge = H.children;
+          if (Ge !== void 0)
+            if (ne)
+              if (_i(Ge)) {
+                for (var At = 0; At < Ge.length; At++)
+                  ks(Ge[At], M);
+                Object.freeze && Object.freeze(Ge);
+              } else
+                m("React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead.");
+            else
+              ks(Ge, M);
+        }
+        if (Ht.call(H, "key")) {
+          var ht = E(M), Ne = Object.keys(H).filter(function(co) {
+            return co !== "key";
+          }), Hi = Ne.length > 0 ? "{key: someKey, " + Ne.join(": ..., ") + ": ...}" : "{key: someKey}";
+          if (!As[ht + Hi]) {
+            var lo = Ne.length > 0 ? "{" + Ne.join(": ..., ") + ": ...}" : "{}";
+            m(`A props object containing a "key" prop is being spread into JSX:
+  let props = %s;
+  <%s {...props} />
+React keys must be passed directly to JSX without using spread:
+  let props = %s;
+  <%s key={someKey} {...props} />`, Hi, ht, lo, ht), As[ht + Hi] = !0;
+          }
+        }
+        return M === i ? ao(Ie) : io(Ie), Ie;
+      }
+    }
+    function so(M, H, K) {
+      return Cs(M, H, K, !0);
+    }
+    function ro(M, H, K) {
+      return Cs(M, H, K, !1);
+    }
+    var no = ro, oo = so;
+    Nt.Fragment = i, Nt.jsx = no, Nt.jsxs = oo;
+  }()), Nt;
+}
+process.env.NODE_ENV === "production" ? ga.exports = fo() : ga.exports = po();
+var ee = ga.exports;
+function kr(n) {
+  var e, t, i = "";
+  if (typeof n == "string" || typeof n == "number") i += n;
+  else if (typeof n == "object") if (Array.isArray(n)) {
+    var a = n.length;
+    for (e = 0; e < a; e++) n[e] && (t = kr(n[e])) && (i && (i += " "), i += t);
+  } else for (t in n) n[t] && (i && (i += " "), i += t);
+  return i;
+}
+function Ar() {
+  for (var n, e, t = 0, i = "", a = arguments.length; t < a; t++) (n = arguments[t]) && (e = kr(n)) && (i && (i += " "), i += e);
+  return i;
+}
+const Ls = (n) => typeof n == "boolean" ? `${n}` : n === 0 ? "0" : n, Ps = Ar, Rt = (n, e) => (t) => {
+  var i;
+  if ((e == null ? void 0 : e.variants) == null) return Ps(n, t == null ? void 0 : t.class, t == null ? void 0 : t.className);
+  const { variants: a, defaultVariants: s } = e, r = Object.keys(a).map((c) => {
+    const h = t == null ? void 0 : t[c], d = s == null ? void 0 : s[c];
+    if (h === null) return null;
+    const u = Ls(h) || Ls(d);
+    return a[c][u];
+  }), o = t && Object.entries(t).reduce((c, h) => {
+    let [d, u] = h;
+    return u === void 0 || (c[d] = u), c;
+  }, {}), l = e == null || (i = e.compoundVariants) === null || i === void 0 ? void 0 : i.reduce((c, h) => {
+    let { class: d, className: u, ...g } = h;
+    return Object.entries(g).every((p) => {
+      let [f, x] = p;
+      return Array.isArray(x) ? x.includes({
+        ...s,
+        ...o
+      }[f]) : {
+        ...s,
+        ...o
+      }[f] === x;
+    }) ? [
+      ...c,
+      d,
+      u
+    ] : c;
+  }, []);
+  return Ps(n, r, l, t == null ? void 0 : t.class, t == null ? void 0 : t.className);
+}, Wa = "-", xo = (n) => {
+  const e = mo(n), {
+    conflictingClassGroups: t,
+    conflictingClassGroupModifiers: i
+  } = n;
+  return {
+    getClassGroupId: (r) => {
+      const o = r.split(Wa);
+      return o[0] === "" && o.length !== 1 && o.shift(), Cr(o, e) || bo(r);
+    },
+    getConflictingClassGroupIds: (r, o) => {
+      const l = t[r] || [];
+      return o && i[r] ? [...l, ...i[r]] : l;
+    }
+  };
+}, Cr = (n, e) => {
+  var r;
+  if (n.length === 0)
+    return e.classGroupId;
+  const t = n[0], i = e.nextPart.get(t), a = i ? Cr(n.slice(1), i) : void 0;
+  if (a)
+    return a;
+  if (e.validators.length === 0)
+    return;
+  const s = n.join(Wa);
+  return (r = e.validators.find(({
+    validator: o
+  }) => o(s))) == null ? void 0 : r.classGroupId;
+}, Ts = /^\[(.+)\]$/, bo = (n) => {
+  if (Ts.test(n)) {
+    const e = Ts.exec(n)[1], t = e == null ? void 0 : e.substring(0, e.indexOf(":"));
+    if (t)
+      return "arbitrary.." + t;
+  }
+}, mo = (n) => {
+  const {
+    theme: e,
+    prefix: t
+  } = n, i = {
+    nextPart: /* @__PURE__ */ new Map(),
+    validators: []
+  };
+  return yo(Object.entries(n.classGroups), t).forEach(([s, r]) => {
+    fa(r, i, s, e);
+  }), i;
+}, fa = (n, e, t, i) => {
+  n.forEach((a) => {
+    if (typeof a == "string") {
+      const s = a === "" ? e : Is(e, a);
+      s.classGroupId = t;
+      return;
+    }
+    if (typeof a == "function") {
+      if (vo(a)) {
+        fa(a(i), e, t, i);
+        return;
+      }
+      e.validators.push({
+        validator: a,
+        classGroupId: t
+      });
+      return;
+    }
+    Object.entries(a).forEach(([s, r]) => {
+      fa(r, Is(e, s), t, i);
+    });
+  });
+}, Is = (n, e) => {
+  let t = n;
+  return e.split(Wa).forEach((i) => {
+    t.nextPart.has(i) || t.nextPart.set(i, {
+      nextPart: /* @__PURE__ */ new Map(),
+      validators: []
+    }), t = t.nextPart.get(i);
+  }), t;
+}, vo = (n) => n.isThemeGetter, yo = (n, e) => e ? n.map(([t, i]) => {
+  const a = i.map((s) => typeof s == "string" ? e + s : typeof s == "object" ? Object.fromEntries(Object.entries(s).map(([r, o]) => [e + r, o])) : s);
+  return [t, a];
+}) : n, wo = (n) => {
+  if (n < 1)
+    return {
+      get: () => {
+      },
+      set: () => {
+      }
+    };
+  let e = 0, t = /* @__PURE__ */ new Map(), i = /* @__PURE__ */ new Map();
+  const a = (s, r) => {
+    t.set(s, r), e++, e > n && (e = 0, i = t, t = /* @__PURE__ */ new Map());
+  };
+  return {
+    get(s) {
+      let r = t.get(s);
+      if (r !== void 0)
+        return r;
+      if ((r = i.get(s)) !== void 0)
+        return a(s, r), r;
+    },
+    set(s, r) {
+      t.has(s) ? t.set(s, r) : a(s, r);
+    }
+  };
+}, Sr = "!", ko = (n) => {
+  const {
+    separator: e,
+    experimentalParseClassName: t
+  } = n, i = e.length === 1, a = e[0], s = e.length, r = (o) => {
+    const l = [];
+    let c = 0, h = 0, d;
+    for (let x = 0; x < o.length; x++) {
+      let b = o[x];
+      if (c === 0) {
+        if (b === a && (i || o.slice(x, x + s) === e)) {
+          l.push(o.slice(h, x)), h = x + s;
+          continue;
+        }
+        if (b === "/") {
+          d = x;
+          continue;
+        }
+      }
+      b === "[" ? c++ : b === "]" && c--;
+    }
+    const u = l.length === 0 ? o : o.substring(h), g = u.startsWith(Sr), p = g ? u.substring(1) : u, f = d && d > h ? d - h : void 0;
+    return {
+      modifiers: l,
+      hasImportantModifier: g,
+      baseClassName: p,
+      maybePostfixModifierPosition: f
+    };
+  };
+  return t ? (o) => t({
+    className: o,
+    parseClassName: r
+  }) : r;
+}, Ao = (n) => {
+  if (n.length <= 1)
+    return n;
+  const e = [];
+  let t = [];
+  return n.forEach((i) => {
+    i[0] === "[" ? (e.push(...t.sort(), i), t = []) : t.push(i);
+  }), e.push(...t.sort()), e;
+}, Co = (n) => ({
+  cache: wo(n.cacheSize),
+  parseClassName: ko(n),
+  ...xo(n)
+}), So = /\s+/, Mo = (n, e) => {
+  const {
+    parseClassName: t,
+    getClassGroupId: i,
+    getConflictingClassGroupIds: a
+  } = e, s = [], r = n.trim().split(So);
+  let o = "";
+  for (let l = r.length - 1; l >= 0; l -= 1) {
+    const c = r[l], {
+      modifiers: h,
+      hasImportantModifier: d,
+      baseClassName: u,
+      maybePostfixModifierPosition: g
+    } = t(c);
+    let p = !!g, f = i(p ? u.substring(0, g) : u);
+    if (!f) {
+      if (!p) {
+        o = c + (o.length > 0 ? " " + o : o);
+        continue;
+      }
+      if (f = i(u), !f) {
+        o = c + (o.length > 0 ? " " + o : o);
+        continue;
+      }
+      p = !1;
+    }
+    const x = Ao(h).join(":"), b = d ? x + Sr : x, m = b + f;
+    if (s.includes(m))
+      continue;
+    s.push(m);
+    const w = a(f, p);
+    for (let y = 0; y < w.length; ++y) {
+      const v = w[y];
+      s.push(b + v);
+    }
+    o = c + (o.length > 0 ? " " + o : o);
+  }
+  return o;
+};
+function Lo() {
+  let n = 0, e, t, i = "";
+  for (; n < arguments.length; )
+    (e = arguments[n++]) && (t = Mr(e)) && (i && (i += " "), i += t);
+  return i;
+}
+const Mr = (n) => {
+  if (typeof n == "string")
+    return n;
+  let e, t = "";
+  for (let i = 0; i < n.length; i++)
+    n[i] && (e = Mr(n[i])) && (t && (t += " "), t += e);
+  return t;
+};
+function Po(n, ...e) {
+  let t, i, a, s = r;
+  function r(l) {
+    const c = e.reduce((h, d) => d(h), n());
+    return t = Co(c), i = t.cache.get, a = t.cache.set, s = o, o(l);
+  }
+  function o(l) {
+    const c = i(l);
+    if (c)
+      return c;
+    const h = Mo(l, t);
+    return a(l, h), h;
+  }
+  return function() {
+    return s(Lo.apply(null, arguments));
+  };
+}
+const Me = (n) => {
+  const e = (t) => t[n] || [];
+  return e.isThemeGetter = !0, e;
+}, Lr = /^\[(?:([a-z-]+):)?(.+)\]$/i, To = /^\d+\/\d+$/, Io = /* @__PURE__ */ new Set(["px", "full", "screen"]), Eo = /^(\d+(\.\d+)?)?(xs|sm|md|lg|xl)$/, Ro = /\d+(%|px|r?em|[sdl]?v([hwib]|min|max)|pt|pc|in|cm|mm|cap|ch|ex|r?lh|cq(w|h|i|b|min|max))|\b(calc|min|max|clamp)\(.+\)|^0$/, Oo = /^(rgba?|hsla?|hwb|(ok)?(lab|lch))\(.+\)$/, zo = /^(inset_)?-?((\d+)?\.?(\d+)[a-z]+|0)_-?((\d+)?\.?(\d+)[a-z]+|0)/, _o = /^(url|image|image-set|cross-fade|element|(repeating-)?(linear|radial|conic)-gradient)\(.+\)$/, et = (n) => Lt(n) || Io.has(n) || To.test(n), at = (n) => Ot(n, "length", Bo), Lt = (n) => !!n && !Number.isNaN(Number(n)), Di = (n) => Ot(n, "number", Lt), Wt = (n) => !!n && Number.isInteger(Number(n)), Yo = (n) => n.endsWith("%") && Lt(n.slice(0, -1)), le = (n) => Lr.test(n), st = (n) => Eo.test(n), Fo = /* @__PURE__ */ new Set(["length", "size", "percentage"]), Xo = (n) => Ot(n, Fo, Pr), Ho = (n) => Ot(n, "position", Pr), Do = /* @__PURE__ */ new Set(["image", "url"]), No = (n) => Ot(n, Do, Go), Wo = (n) => Ot(n, "", jo), Bt = () => !0, Ot = (n, e, t) => {
+  const i = Lr.exec(n);
+  return i ? i[1] ? typeof e == "string" ? i[1] === e : e.has(i[1]) : t(i[2]) : !1;
+}, Bo = (n) => (
+  // `colorFunctionRegex` check is necessary because color functions can have percentages in them which which would be incorrectly classified as lengths.
+  // For example, `hsl(0 0% 0%)` would be classified as a length without this check.
+  // I could also use lookbehind assertion in `lengthUnitRegex` but that isn't supported widely enough.
+  Ro.test(n) && !Oo.test(n)
+), Pr = () => !1, jo = (n) => zo.test(n), Go = (n) => _o.test(n), Vo = () => {
+  const n = Me("colors"), e = Me("spacing"), t = Me("blur"), i = Me("brightness"), a = Me("borderColor"), s = Me("borderRadius"), r = Me("borderSpacing"), o = Me("borderWidth"), l = Me("contrast"), c = Me("grayscale"), h = Me("hueRotate"), d = Me("invert"), u = Me("gap"), g = Me("gradientColorStops"), p = Me("gradientColorStopPositions"), f = Me("inset"), x = Me("margin"), b = Me("opacity"), m = Me("padding"), w = Me("saturate"), y = Me("scale"), v = Me("sepia"), k = Me("skew"), A = Me("space"), C = Me("translate"), S = () => ["auto", "contain", "none"], L = () => ["auto", "hidden", "clip", "visible", "scroll"], P = () => ["auto", le, e], I = () => [le, e], E = () => ["", et, at], O = () => ["auto", Lt, le], _ = () => ["bottom", "center", "left", "left-bottom", "left-top", "right", "right-bottom", "right-top", "top"], Y = () => ["solid", "dashed", "dotted", "double", "none"], X = () => ["normal", "multiply", "screen", "overlay", "darken", "lighten", "color-dodge", "color-burn", "hard-light", "soft-light", "difference", "exclusion", "hue", "saturation", "color", "luminosity"], D = () => ["start", "end", "center", "between", "around", "evenly", "stretch"], B = () => ["", "0", le], R = () => ["auto", "avoid", "all", "avoid-page", "page", "left", "right", "column"], z = () => [Lt, le];
+  return {
+    cacheSize: 500,
+    separator: ":",
+    theme: {
+      colors: [Bt],
+      spacing: [et, at],
+      blur: ["none", "", st, le],
+      brightness: z(),
+      borderColor: [n],
+      borderRadius: ["none", "", "full", st, le],
+      borderSpacing: I(),
+      borderWidth: E(),
+      contrast: z(),
+      grayscale: B(),
+      hueRotate: z(),
+      invert: B(),
+      gap: I(),
+      gradientColorStops: [n],
+      gradientColorStopPositions: [Yo, at],
+      inset: P(),
+      margin: P(),
+      opacity: z(),
+      padding: I(),
+      saturate: z(),
+      scale: z(),
+      sepia: B(),
+      skew: z(),
+      space: I(),
+      translate: I()
+    },
+    classGroups: {
+      // Layout
+      /**
+       * Aspect Ratio
+       * @see https://tailwindcss.com/docs/aspect-ratio
+       */
+      aspect: [{
+        aspect: ["auto", "square", "video", le]
+      }],
+      /**
+       * Container
+       * @see https://tailwindcss.com/docs/container
+       */
+      container: ["container"],
+      /**
+       * Columns
+       * @see https://tailwindcss.com/docs/columns
+       */
+      columns: [{
+        columns: [st]
+      }],
+      /**
+       * Break After
+       * @see https://tailwindcss.com/docs/break-after
+       */
+      "break-after": [{
+        "break-after": R()
+      }],
+      /**
+       * Break Before
+       * @see https://tailwindcss.com/docs/break-before
+       */
+      "break-before": [{
+        "break-before": R()
+      }],
+      /**
+       * Break Inside
+       * @see https://tailwindcss.com/docs/break-inside
+       */
+      "break-inside": [{
+        "break-inside": ["auto", "avoid", "avoid-page", "avoid-column"]
+      }],
+      /**
+       * Box Decoration Break
+       * @see https://tailwindcss.com/docs/box-decoration-break
+       */
+      "box-decoration": [{
+        "box-decoration": ["slice", "clone"]
+      }],
+      /**
+       * Box Sizing
+       * @see https://tailwindcss.com/docs/box-sizing
+       */
+      box: [{
+        box: ["border", "content"]
+      }],
+      /**
+       * Display
+       * @see https://tailwindcss.com/docs/display
+       */
+      display: ["block", "inline-block", "inline", "flex", "inline-flex", "table", "inline-table", "table-caption", "table-cell", "table-column", "table-column-group", "table-footer-group", "table-header-group", "table-row-group", "table-row", "flow-root", "grid", "inline-grid", "contents", "list-item", "hidden"],
+      /**
+       * Floats
+       * @see https://tailwindcss.com/docs/float
+       */
+      float: [{
+        float: ["right", "left", "none", "start", "end"]
+      }],
+      /**
+       * Clear
+       * @see https://tailwindcss.com/docs/clear
+       */
+      clear: [{
+        clear: ["left", "right", "both", "none", "start", "end"]
+      }],
+      /**
+       * Isolation
+       * @see https://tailwindcss.com/docs/isolation
+       */
+      isolation: ["isolate", "isolation-auto"],
+      /**
+       * Object Fit
+       * @see https://tailwindcss.com/docs/object-fit
+       */
+      "object-fit": [{
+        object: ["contain", "cover", "fill", "none", "scale-down"]
+      }],
+      /**
+       * Object Position
+       * @see https://tailwindcss.com/docs/object-position
+       */
+      "object-position": [{
+        object: [..._(), le]
+      }],
+      /**
+       * Overflow
+       * @see https://tailwindcss.com/docs/overflow
+       */
+      overflow: [{
+        overflow: L()
+      }],
+      /**
+       * Overflow X
+       * @see https://tailwindcss.com/docs/overflow
+       */
+      "overflow-x": [{
+        "overflow-x": L()
+      }],
+      /**
+       * Overflow Y
+       * @see https://tailwindcss.com/docs/overflow
+       */
+      "overflow-y": [{
+        "overflow-y": L()
+      }],
+      /**
+       * Overscroll Behavior
+       * @see https://tailwindcss.com/docs/overscroll-behavior
+       */
+      overscroll: [{
+        overscroll: S()
+      }],
+      /**
+       * Overscroll Behavior X
+       * @see https://tailwindcss.com/docs/overscroll-behavior
+       */
+      "overscroll-x": [{
+        "overscroll-x": S()
+      }],
+      /**
+       * Overscroll Behavior Y
+       * @see https://tailwindcss.com/docs/overscroll-behavior
+       */
+      "overscroll-y": [{
+        "overscroll-y": S()
+      }],
+      /**
+       * Position
+       * @see https://tailwindcss.com/docs/position
+       */
+      position: ["static", "fixed", "absolute", "relative", "sticky"],
+      /**
+       * Top / Right / Bottom / Left
+       * @see https://tailwindcss.com/docs/top-right-bottom-left
+       */
+      inset: [{
+        inset: [f]
+      }],
+      /**
+       * Right / Left
+       * @see https://tailwindcss.com/docs/top-right-bottom-left
+       */
+      "inset-x": [{
+        "inset-x": [f]
+      }],
+      /**
+       * Top / Bottom
+       * @see https://tailwindcss.com/docs/top-right-bottom-left
+       */
+      "inset-y": [{
+        "inset-y": [f]
+      }],
+      /**
+       * Start
+       * @see https://tailwindcss.com/docs/top-right-bottom-left
+       */
+      start: [{
+        start: [f]
+      }],
+      /**
+       * End
+       * @see https://tailwindcss.com/docs/top-right-bottom-left
+       */
+      end: [{
+        end: [f]
+      }],
+      /**
+       * Top
+       * @see https://tailwindcss.com/docs/top-right-bottom-left
+       */
+      top: [{
+        top: [f]
+      }],
+      /**
+       * Right
+       * @see https://tailwindcss.com/docs/top-right-bottom-left
+       */
+      right: [{
+        right: [f]
+      }],
+      /**
+       * Bottom
+       * @see https://tailwindcss.com/docs/top-right-bottom-left
+       */
+      bottom: [{
+        bottom: [f]
+      }],
+      /**
+       * Left
+       * @see https://tailwindcss.com/docs/top-right-bottom-left
+       */
+      left: [{
+        left: [f]
+      }],
+      /**
+       * Visibility
+       * @see https://tailwindcss.com/docs/visibility
+       */
+      visibility: ["visible", "invisible", "collapse"],
+      /**
+       * Z-Index
+       * @see https://tailwindcss.com/docs/z-index
+       */
+      z: [{
+        z: ["auto", Wt, le]
+      }],
+      // Flexbox and Grid
+      /**
+       * Flex Basis
+       * @see https://tailwindcss.com/docs/flex-basis
+       */
+      basis: [{
+        basis: P()
+      }],
+      /**
+       * Flex Direction
+       * @see https://tailwindcss.com/docs/flex-direction
+       */
+      "flex-direction": [{
+        flex: ["row", "row-reverse", "col", "col-reverse"]
+      }],
+      /**
+       * Flex Wrap
+       * @see https://tailwindcss.com/docs/flex-wrap
+       */
+      "flex-wrap": [{
+        flex: ["wrap", "wrap-reverse", "nowrap"]
+      }],
+      /**
+       * Flex
+       * @see https://tailwindcss.com/docs/flex
+       */
+      flex: [{
+        flex: ["1", "auto", "initial", "none", le]
+      }],
+      /**
+       * Flex Grow
+       * @see https://tailwindcss.com/docs/flex-grow
+       */
+      grow: [{
+        grow: B()
+      }],
+      /**
+       * Flex Shrink
+       * @see https://tailwindcss.com/docs/flex-shrink
+       */
+      shrink: [{
+        shrink: B()
+      }],
+      /**
+       * Order
+       * @see https://tailwindcss.com/docs/order
+       */
+      order: [{
+        order: ["first", "last", "none", Wt, le]
+      }],
+      /**
+       * Grid Template Columns
+       * @see https://tailwindcss.com/docs/grid-template-columns
+       */
+      "grid-cols": [{
+        "grid-cols": [Bt]
+      }],
+      /**
+       * Grid Column Start / End
+       * @see https://tailwindcss.com/docs/grid-column
+       */
+      "col-start-end": [{
+        col: ["auto", {
+          span: ["full", Wt, le]
+        }, le]
+      }],
+      /**
+       * Grid Column Start
+       * @see https://tailwindcss.com/docs/grid-column
+       */
+      "col-start": [{
+        "col-start": O()
+      }],
+      /**
+       * Grid Column End
+       * @see https://tailwindcss.com/docs/grid-column
+       */
+      "col-end": [{
+        "col-end": O()
+      }],
+      /**
+       * Grid Template Rows
+       * @see https://tailwindcss.com/docs/grid-template-rows
+       */
+      "grid-rows": [{
+        "grid-rows": [Bt]
+      }],
+      /**
+       * Grid Row Start / End
+       * @see https://tailwindcss.com/docs/grid-row
+       */
+      "row-start-end": [{
+        row: ["auto", {
+          span: [Wt, le]
+        }, le]
+      }],
+      /**
+       * Grid Row Start
+       * @see https://tailwindcss.com/docs/grid-row
+       */
+      "row-start": [{
+        "row-start": O()
+      }],
+      /**
+       * Grid Row End
+       * @see https://tailwindcss.com/docs/grid-row
+       */
+      "row-end": [{
+        "row-end": O()
+      }],
+      /**
+       * Grid Auto Flow
+       * @see https://tailwindcss.com/docs/grid-auto-flow
+       */
+      "grid-flow": [{
+        "grid-flow": ["row", "col", "dense", "row-dense", "col-dense"]
+      }],
+      /**
+       * Grid Auto Columns
+       * @see https://tailwindcss.com/docs/grid-auto-columns
+       */
+      "auto-cols": [{
+        "auto-cols": ["auto", "min", "max", "fr", le]
+      }],
+      /**
+       * Grid Auto Rows
+       * @see https://tailwindcss.com/docs/grid-auto-rows
+       */
+      "auto-rows": [{
+        "auto-rows": ["auto", "min", "max", "fr", le]
+      }],
+      /**
+       * Gap
+       * @see https://tailwindcss.com/docs/gap
+       */
+      gap: [{
+        gap: [u]
+      }],
+      /**
+       * Gap X
+       * @see https://tailwindcss.com/docs/gap
+       */
+      "gap-x": [{
+        "gap-x": [u]
+      }],
+      /**
+       * Gap Y
+       * @see https://tailwindcss.com/docs/gap
+       */
+      "gap-y": [{
+        "gap-y": [u]
+      }],
+      /**
+       * Justify Content
+       * @see https://tailwindcss.com/docs/justify-content
+       */
+      "justify-content": [{
+        justify: ["normal", ...D()]
+      }],
+      /**
+       * Justify Items
+       * @see https://tailwindcss.com/docs/justify-items
+       */
+      "justify-items": [{
+        "justify-items": ["start", "end", "center", "stretch"]
+      }],
+      /**
+       * Justify Self
+       * @see https://tailwindcss.com/docs/justify-self
+       */
+      "justify-self": [{
+        "justify-self": ["auto", "start", "end", "center", "stretch"]
+      }],
+      /**
+       * Align Content
+       * @see https://tailwindcss.com/docs/align-content
+       */
+      "align-content": [{
+        content: ["normal", ...D(), "baseline"]
+      }],
+      /**
+       * Align Items
+       * @see https://tailwindcss.com/docs/align-items
+       */
+      "align-items": [{
+        items: ["start", "end", "center", "baseline", "stretch"]
+      }],
+      /**
+       * Align Self
+       * @see https://tailwindcss.com/docs/align-self
+       */
+      "align-self": [{
+        self: ["auto", "start", "end", "center", "stretch", "baseline"]
+      }],
+      /**
+       * Place Content
+       * @see https://tailwindcss.com/docs/place-content
+       */
+      "place-content": [{
+        "place-content": [...D(), "baseline"]
+      }],
+      /**
+       * Place Items
+       * @see https://tailwindcss.com/docs/place-items
+       */
+      "place-items": [{
+        "place-items": ["start", "end", "center", "baseline", "stretch"]
+      }],
+      /**
+       * Place Self
+       * @see https://tailwindcss.com/docs/place-self
+       */
+      "place-self": [{
+        "place-self": ["auto", "start", "end", "center", "stretch"]
+      }],
+      // Spacing
+      /**
+       * Padding
+       * @see https://tailwindcss.com/docs/padding
+       */
+      p: [{
+        p: [m]
+      }],
+      /**
+       * Padding X
+       * @see https://tailwindcss.com/docs/padding
+       */
+      px: [{
+        px: [m]
+      }],
+      /**
+       * Padding Y
+       * @see https://tailwindcss.com/docs/padding
+       */
+      py: [{
+        py: [m]
+      }],
+      /**
+       * Padding Start
+       * @see https://tailwindcss.com/docs/padding
+       */
+      ps: [{
+        ps: [m]
+      }],
+      /**
+       * Padding End
+       * @see https://tailwindcss.com/docs/padding
+       */
+      pe: [{
+        pe: [m]
+      }],
+      /**
+       * Padding Top
+       * @see https://tailwindcss.com/docs/padding
+       */
+      pt: [{
+        pt: [m]
+      }],
+      /**
+       * Padding Right
+       * @see https://tailwindcss.com/docs/padding
+       */
+      pr: [{
+        pr: [m]
+      }],
+      /**
+       * Padding Bottom
+       * @see https://tailwindcss.com/docs/padding
+       */
+      pb: [{
+        pb: [m]
+      }],
+      /**
+       * Padding Left
+       * @see https://tailwindcss.com/docs/padding
+       */
+      pl: [{
+        pl: [m]
+      }],
+      /**
+       * Margin
+       * @see https://tailwindcss.com/docs/margin
+       */
+      m: [{
+        m: [x]
+      }],
+      /**
+       * Margin X
+       * @see https://tailwindcss.com/docs/margin
+       */
+      mx: [{
+        mx: [x]
+      }],
+      /**
+       * Margin Y
+       * @see https://tailwindcss.com/docs/margin
+       */
+      my: [{
+        my: [x]
+      }],
+      /**
+       * Margin Start
+       * @see https://tailwindcss.com/docs/margin
+       */
+      ms: [{
+        ms: [x]
+      }],
+      /**
+       * Margin End
+       * @see https://tailwindcss.com/docs/margin
+       */
+      me: [{
+        me: [x]
+      }],
+      /**
+       * Margin Top
+       * @see https://tailwindcss.com/docs/margin
+       */
+      mt: [{
+        mt: [x]
+      }],
+      /**
+       * Margin Right
+       * @see https://tailwindcss.com/docs/margin
+       */
+      mr: [{
+        mr: [x]
+      }],
+      /**
+       * Margin Bottom
+       * @see https://tailwindcss.com/docs/margin
+       */
+      mb: [{
+        mb: [x]
+      }],
+      /**
+       * Margin Left
+       * @see https://tailwindcss.com/docs/margin
+       */
+      ml: [{
+        ml: [x]
+      }],
+      /**
+       * Space Between X
+       * @see https://tailwindcss.com/docs/space
+       */
+      "space-x": [{
+        "space-x": [A]
+      }],
+      /**
+       * Space Between X Reverse
+       * @see https://tailwindcss.com/docs/space
+       */
+      "space-x-reverse": ["space-x-reverse"],
+      /**
+       * Space Between Y
+       * @see https://tailwindcss.com/docs/space
+       */
+      "space-y": [{
+        "space-y": [A]
+      }],
+      /**
+       * Space Between Y Reverse
+       * @see https://tailwindcss.com/docs/space
+       */
+      "space-y-reverse": ["space-y-reverse"],
+      // Sizing
+      /**
+       * Width
+       * @see https://tailwindcss.com/docs/width
+       */
+      w: [{
+        w: ["auto", "min", "max", "fit", "svw", "lvw", "dvw", le, e]
+      }],
+      /**
+       * Min-Width
+       * @see https://tailwindcss.com/docs/min-width
+       */
+      "min-w": [{
+        "min-w": [le, e, "min", "max", "fit"]
+      }],
+      /**
+       * Max-Width
+       * @see https://tailwindcss.com/docs/max-width
+       */
+      "max-w": [{
+        "max-w": [le, e, "none", "full", "min", "max", "fit", "prose", {
+          screen: [st]
+        }, st]
+      }],
+      /**
+       * Height
+       * @see https://tailwindcss.com/docs/height
+       */
+      h: [{
+        h: [le, e, "auto", "min", "max", "fit", "svh", "lvh", "dvh"]
+      }],
+      /**
+       * Min-Height
+       * @see https://tailwindcss.com/docs/min-height
+       */
+      "min-h": [{
+        "min-h": [le, e, "min", "max", "fit", "svh", "lvh", "dvh"]
+      }],
+      /**
+       * Max-Height
+       * @see https://tailwindcss.com/docs/max-height
+       */
+      "max-h": [{
+        "max-h": [le, e, "min", "max", "fit", "svh", "lvh", "dvh"]
+      }],
+      /**
+       * Size
+       * @see https://tailwindcss.com/docs/size
+       */
+      size: [{
+        size: [le, e, "auto", "min", "max", "fit"]
+      }],
+      // Typography
+      /**
+       * Font Size
+       * @see https://tailwindcss.com/docs/font-size
+       */
+      "font-size": [{
+        text: ["base", st, at]
+      }],
+      /**
+       * Font Smoothing
+       * @see https://tailwindcss.com/docs/font-smoothing
+       */
+      "font-smoothing": ["antialiased", "subpixel-antialiased"],
+      /**
+       * Font Style
+       * @see https://tailwindcss.com/docs/font-style
+       */
+      "font-style": ["italic", "not-italic"],
+      /**
+       * Font Weight
+       * @see https://tailwindcss.com/docs/font-weight
+       */
+      "font-weight": [{
+        font: ["thin", "extralight", "light", "normal", "medium", "semibold", "bold", "extrabold", "black", Di]
+      }],
+      /**
+       * Font Family
+       * @see https://tailwindcss.com/docs/font-family
+       */
+      "font-family": [{
+        font: [Bt]
+      }],
+      /**
+       * Font Variant Numeric
+       * @see https://tailwindcss.com/docs/font-variant-numeric
+       */
+      "fvn-normal": ["normal-nums"],
+      /**
+       * Font Variant Numeric
+       * @see https://tailwindcss.com/docs/font-variant-numeric
+       */
+      "fvn-ordinal": ["ordinal"],
+      /**
+       * Font Variant Numeric
+       * @see https://tailwindcss.com/docs/font-variant-numeric
+       */
+      "fvn-slashed-zero": ["slashed-zero"],
+      /**
+       * Font Variant Numeric
+       * @see https://tailwindcss.com/docs/font-variant-numeric
+       */
+      "fvn-figure": ["lining-nums", "oldstyle-nums"],
+      /**
+       * Font Variant Numeric
+       * @see https://tailwindcss.com/docs/font-variant-numeric
+       */
+      "fvn-spacing": ["proportional-nums", "tabular-nums"],
+      /**
+       * Font Variant Numeric
+       * @see https://tailwindcss.com/docs/font-variant-numeric
+       */
+      "fvn-fraction": ["diagonal-fractions", "stacked-fractions"],
+      /**
+       * Letter Spacing
+       * @see https://tailwindcss.com/docs/letter-spacing
+       */
+      tracking: [{
+        tracking: ["tighter", "tight", "normal", "wide", "wider", "widest", le]
+      }],
+      /**
+       * Line Clamp
+       * @see https://tailwindcss.com/docs/line-clamp
+       */
+      "line-clamp": [{
+        "line-clamp": ["none", Lt, Di]
+      }],
+      /**
+       * Line Height
+       * @see https://tailwindcss.com/docs/line-height
+       */
+      leading: [{
+        leading: ["none", "tight", "snug", "normal", "relaxed", "loose", et, le]
+      }],
+      /**
+       * List Style Image
+       * @see https://tailwindcss.com/docs/list-style-image
+       */
+      "list-image": [{
+        "list-image": ["none", le]
+      }],
+      /**
+       * List Style Type
+       * @see https://tailwindcss.com/docs/list-style-type
+       */
+      "list-style-type": [{
+        list: ["none", "disc", "decimal", le]
+      }],
+      /**
+       * List Style Position
+       * @see https://tailwindcss.com/docs/list-style-position
+       */
+      "list-style-position": [{
+        list: ["inside", "outside"]
+      }],
+      /**
+       * Placeholder Color
+       * @deprecated since Tailwind CSS v3.0.0
+       * @see https://tailwindcss.com/docs/placeholder-color
+       */
+      "placeholder-color": [{
+        placeholder: [n]
+      }],
+      /**
+       * Placeholder Opacity
+       * @see https://tailwindcss.com/docs/placeholder-opacity
+       */
+      "placeholder-opacity": [{
+        "placeholder-opacity": [b]
+      }],
+      /**
+       * Text Alignment
+       * @see https://tailwindcss.com/docs/text-align
+       */
+      "text-alignment": [{
+        text: ["left", "center", "right", "justify", "start", "end"]
+      }],
+      /**
+       * Text Color
+       * @see https://tailwindcss.com/docs/text-color
+       */
+      "text-color": [{
+        text: [n]
+      }],
+      /**
+       * Text Opacity
+       * @see https://tailwindcss.com/docs/text-opacity
+       */
+      "text-opacity": [{
+        "text-opacity": [b]
+      }],
+      /**
+       * Text Decoration
+       * @see https://tailwindcss.com/docs/text-decoration
+       */
+      "text-decoration": ["underline", "overline", "line-through", "no-underline"],
+      /**
+       * Text Decoration Style
+       * @see https://tailwindcss.com/docs/text-decoration-style
+       */
+      "text-decoration-style": [{
+        decoration: [...Y(), "wavy"]
+      }],
+      /**
+       * Text Decoration Thickness
+       * @see https://tailwindcss.com/docs/text-decoration-thickness
+       */
+      "text-decoration-thickness": [{
+        decoration: ["auto", "from-font", et, at]
+      }],
+      /**
+       * Text Underline Offset
+       * @see https://tailwindcss.com/docs/text-underline-offset
+       */
+      "underline-offset": [{
+        "underline-offset": ["auto", et, le]
+      }],
+      /**
+       * Text Decoration Color
+       * @see https://tailwindcss.com/docs/text-decoration-color
+       */
+      "text-decoration-color": [{
+        decoration: [n]
+      }],
+      /**
+       * Text Transform
+       * @see https://tailwindcss.com/docs/text-transform
+       */
+      "text-transform": ["uppercase", "lowercase", "capitalize", "normal-case"],
+      /**
+       * Text Overflow
+       * @see https://tailwindcss.com/docs/text-overflow
+       */
+      "text-overflow": ["truncate", "text-ellipsis", "text-clip"],
+      /**
+       * Text Wrap
+       * @see https://tailwindcss.com/docs/text-wrap
+       */
+      "text-wrap": [{
+        text: ["wrap", "nowrap", "balance", "pretty"]
+      }],
+      /**
+       * Text Indent
+       * @see https://tailwindcss.com/docs/text-indent
+       */
+      indent: [{
+        indent: I()
+      }],
+      /**
+       * Vertical Alignment
+       * @see https://tailwindcss.com/docs/vertical-align
+       */
+      "vertical-align": [{
+        align: ["baseline", "top", "middle", "bottom", "text-top", "text-bottom", "sub", "super", le]
+      }],
+      /**
+       * Whitespace
+       * @see https://tailwindcss.com/docs/whitespace
+       */
+      whitespace: [{
+        whitespace: ["normal", "nowrap", "pre", "pre-line", "pre-wrap", "break-spaces"]
+      }],
+      /**
+       * Word Break
+       * @see https://tailwindcss.com/docs/word-break
+       */
+      break: [{
+        break: ["normal", "words", "all", "keep"]
+      }],
+      /**
+       * Hyphens
+       * @see https://tailwindcss.com/docs/hyphens
+       */
+      hyphens: [{
+        hyphens: ["none", "manual", "auto"]
+      }],
+      /**
+       * Content
+       * @see https://tailwindcss.com/docs/content
+       */
+      content: [{
+        content: ["none", le]
+      }],
+      // Backgrounds
+      /**
+       * Background Attachment
+       * @see https://tailwindcss.com/docs/background-attachment
+       */
+      "bg-attachment": [{
+        bg: ["fixed", "local", "scroll"]
+      }],
+      /**
+       * Background Clip
+       * @see https://tailwindcss.com/docs/background-clip
+       */
+      "bg-clip": [{
+        "bg-clip": ["border", "padding", "content", "text"]
+      }],
+      /**
+       * Background Opacity
+       * @deprecated since Tailwind CSS v3.0.0
+       * @see https://tailwindcss.com/docs/background-opacity
+       */
+      "bg-opacity": [{
+        "bg-opacity": [b]
+      }],
+      /**
+       * Background Origin
+       * @see https://tailwindcss.com/docs/background-origin
+       */
+      "bg-origin": [{
+        "bg-origin": ["border", "padding", "content"]
+      }],
+      /**
+       * Background Position
+       * @see https://tailwindcss.com/docs/background-position
+       */
+      "bg-position": [{
+        bg: [..._(), Ho]
+      }],
+      /**
+       * Background Repeat
+       * @see https://tailwindcss.com/docs/background-repeat
+       */
+      "bg-repeat": [{
+        bg: ["no-repeat", {
+          repeat: ["", "x", "y", "round", "space"]
+        }]
+      }],
+      /**
+       * Background Size
+       * @see https://tailwindcss.com/docs/background-size
+       */
+      "bg-size": [{
+        bg: ["auto", "cover", "contain", Xo]
+      }],
+      /**
+       * Background Image
+       * @see https://tailwindcss.com/docs/background-image
+       */
+      "bg-image": [{
+        bg: ["none", {
+          "gradient-to": ["t", "tr", "r", "br", "b", "bl", "l", "tl"]
+        }, No]
+      }],
+      /**
+       * Background Color
+       * @see https://tailwindcss.com/docs/background-color
+       */
+      "bg-color": [{
+        bg: [n]
+      }],
+      /**
+       * Gradient Color Stops From Position
+       * @see https://tailwindcss.com/docs/gradient-color-stops
+       */
+      "gradient-from-pos": [{
+        from: [p]
+      }],
+      /**
+       * Gradient Color Stops Via Position
+       * @see https://tailwindcss.com/docs/gradient-color-stops
+       */
+      "gradient-via-pos": [{
+        via: [p]
+      }],
+      /**
+       * Gradient Color Stops To Position
+       * @see https://tailwindcss.com/docs/gradient-color-stops
+       */
+      "gradient-to-pos": [{
+        to: [p]
+      }],
+      /**
+       * Gradient Color Stops From
+       * @see https://tailwindcss.com/docs/gradient-color-stops
+       */
+      "gradient-from": [{
+        from: [g]
+      }],
+      /**
+       * Gradient Color Stops Via
+       * @see https://tailwindcss.com/docs/gradient-color-stops
+       */
+      "gradient-via": [{
+        via: [g]
+      }],
+      /**
+       * Gradient Color Stops To
+       * @see https://tailwindcss.com/docs/gradient-color-stops
+       */
+      "gradient-to": [{
+        to: [g]
+      }],
+      // Borders
+      /**
+       * Border Radius
+       * @see https://tailwindcss.com/docs/border-radius
+       */
+      rounded: [{
+        rounded: [s]
+      }],
+      /**
+       * Border Radius Start
+       * @see https://tailwindcss.com/docs/border-radius
+       */
+      "rounded-s": [{
+        "rounded-s": [s]
+      }],
+      /**
+       * Border Radius End
+       * @see https://tailwindcss.com/docs/border-radius
+       */
+      "rounded-e": [{
+        "rounded-e": [s]
+      }],
+      /**
+       * Border Radius Top
+       * @see https://tailwindcss.com/docs/border-radius
+       */
+      "rounded-t": [{
+        "rounded-t": [s]
+      }],
+      /**
+       * Border Radius Right
+       * @see https://tailwindcss.com/docs/border-radius
+       */
+      "rounded-r": [{
+        "rounded-r": [s]
+      }],
+      /**
+       * Border Radius Bottom
+       * @see https://tailwindcss.com/docs/border-radius
+       */
+      "rounded-b": [{
+        "rounded-b": [s]
+      }],
+      /**
+       * Border Radius Left
+       * @see https://tailwindcss.com/docs/border-radius
+       */
+      "rounded-l": [{
+        "rounded-l": [s]
+      }],
+      /**
+       * Border Radius Start Start
+       * @see https://tailwindcss.com/docs/border-radius
+       */
+      "rounded-ss": [{
+        "rounded-ss": [s]
+      }],
+      /**
+       * Border Radius Start End
+       * @see https://tailwindcss.com/docs/border-radius
+       */
+      "rounded-se": [{
+        "rounded-se": [s]
+      }],
+      /**
+       * Border Radius End End
+       * @see https://tailwindcss.com/docs/border-radius
+       */
+      "rounded-ee": [{
+        "rounded-ee": [s]
+      }],
+      /**
+       * Border Radius End Start
+       * @see https://tailwindcss.com/docs/border-radius
+       */
+      "rounded-es": [{
+        "rounded-es": [s]
+      }],
+      /**
+       * Border Radius Top Left
+       * @see https://tailwindcss.com/docs/border-radius
+       */
+      "rounded-tl": [{
+        "rounded-tl": [s]
+      }],
+      /**
+       * Border Radius Top Right
+       * @see https://tailwindcss.com/docs/border-radius
+       */
+      "rounded-tr": [{
+        "rounded-tr": [s]
+      }],
+      /**
+       * Border Radius Bottom Right
+       * @see https://tailwindcss.com/docs/border-radius
+       */
+      "rounded-br": [{
+        "rounded-br": [s]
+      }],
+      /**
+       * Border Radius Bottom Left
+       * @see https://tailwindcss.com/docs/border-radius
+       */
+      "rounded-bl": [{
+        "rounded-bl": [s]
+      }],
+      /**
+       * Border Width
+       * @see https://tailwindcss.com/docs/border-width
+       */
+      "border-w": [{
+        border: [o]
+      }],
+      /**
+       * Border Width X
+       * @see https://tailwindcss.com/docs/border-width
+       */
+      "border-w-x": [{
+        "border-x": [o]
+      }],
+      /**
+       * Border Width Y
+       * @see https://tailwindcss.com/docs/border-width
+       */
+      "border-w-y": [{
+        "border-y": [o]
+      }],
+      /**
+       * Border Width Start
+       * @see https://tailwindcss.com/docs/border-width
+       */
+      "border-w-s": [{
+        "border-s": [o]
+      }],
+      /**
+       * Border Width End
+       * @see https://tailwindcss.com/docs/border-width
+       */
+      "border-w-e": [{
+        "border-e": [o]
+      }],
+      /**
+       * Border Width Top
+       * @see https://tailwindcss.com/docs/border-width
+       */
+      "border-w-t": [{
+        "border-t": [o]
+      }],
+      /**
+       * Border Width Right
+       * @see https://tailwindcss.com/docs/border-width
+       */
+      "border-w-r": [{
+        "border-r": [o]
+      }],
+      /**
+       * Border Width Bottom
+       * @see https://tailwindcss.com/docs/border-width
+       */
+      "border-w-b": [{
+        "border-b": [o]
+      }],
+      /**
+       * Border Width Left
+       * @see https://tailwindcss.com/docs/border-width
+       */
+      "border-w-l": [{
+        "border-l": [o]
+      }],
+      /**
+       * Border Opacity
+       * @see https://tailwindcss.com/docs/border-opacity
+       */
+      "border-opacity": [{
+        "border-opacity": [b]
+      }],
+      /**
+       * Border Style
+       * @see https://tailwindcss.com/docs/border-style
+       */
+      "border-style": [{
+        border: [...Y(), "hidden"]
+      }],
+      /**
+       * Divide Width X
+       * @see https://tailwindcss.com/docs/divide-width
+       */
+      "divide-x": [{
+        "divide-x": [o]
+      }],
+      /**
+       * Divide Width X Reverse
+       * @see https://tailwindcss.com/docs/divide-width
+       */
+      "divide-x-reverse": ["divide-x-reverse"],
+      /**
+       * Divide Width Y
+       * @see https://tailwindcss.com/docs/divide-width
+       */
+      "divide-y": [{
+        "divide-y": [o]
+      }],
+      /**
+       * Divide Width Y Reverse
+       * @see https://tailwindcss.com/docs/divide-width
+       */
+      "divide-y-reverse": ["divide-y-reverse"],
+      /**
+       * Divide Opacity
+       * @see https://tailwindcss.com/docs/divide-opacity
+       */
+      "divide-opacity": [{
+        "divide-opacity": [b]
+      }],
+      /**
+       * Divide Style
+       * @see https://tailwindcss.com/docs/divide-style
+       */
+      "divide-style": [{
+        divide: Y()
+      }],
+      /**
+       * Border Color
+       * @see https://tailwindcss.com/docs/border-color
+       */
+      "border-color": [{
+        border: [a]
+      }],
+      /**
+       * Border Color X
+       * @see https://tailwindcss.com/docs/border-color
+       */
+      "border-color-x": [{
+        "border-x": [a]
+      }],
+      /**
+       * Border Color Y
+       * @see https://tailwindcss.com/docs/border-color
+       */
+      "border-color-y": [{
+        "border-y": [a]
+      }],
+      /**
+       * Border Color S
+       * @see https://tailwindcss.com/docs/border-color
+       */
+      "border-color-s": [{
+        "border-s": [a]
+      }],
+      /**
+       * Border Color E
+       * @see https://tailwindcss.com/docs/border-color
+       */
+      "border-color-e": [{
+        "border-e": [a]
+      }],
+      /**
+       * Border Color Top
+       * @see https://tailwindcss.com/docs/border-color
+       */
+      "border-color-t": [{
+        "border-t": [a]
+      }],
+      /**
+       * Border Color Right
+       * @see https://tailwindcss.com/docs/border-color
+       */
+      "border-color-r": [{
+        "border-r": [a]
+      }],
+      /**
+       * Border Color Bottom
+       * @see https://tailwindcss.com/docs/border-color
+       */
+      "border-color-b": [{
+        "border-b": [a]
+      }],
+      /**
+       * Border Color Left
+       * @see https://tailwindcss.com/docs/border-color
+       */
+      "border-color-l": [{
+        "border-l": [a]
+      }],
+      /**
+       * Divide Color
+       * @see https://tailwindcss.com/docs/divide-color
+       */
+      "divide-color": [{
+        divide: [a]
+      }],
+      /**
+       * Outline Style
+       * @see https://tailwindcss.com/docs/outline-style
+       */
+      "outline-style": [{
+        outline: ["", ...Y()]
+      }],
+      /**
+       * Outline Offset
+       * @see https://tailwindcss.com/docs/outline-offset
+       */
+      "outline-offset": [{
+        "outline-offset": [et, le]
+      }],
+      /**
+       * Outline Width
+       * @see https://tailwindcss.com/docs/outline-width
+       */
+      "outline-w": [{
+        outline: [et, at]
+      }],
+      /**
+       * Outline Color
+       * @see https://tailwindcss.com/docs/outline-color
+       */
+      "outline-color": [{
+        outline: [n]
+      }],
+      /**
+       * Ring Width
+       * @see https://tailwindcss.com/docs/ring-width
+       */
+      "ring-w": [{
+        ring: E()
+      }],
+      /**
+       * Ring Width Inset
+       * @see https://tailwindcss.com/docs/ring-width
+       */
+      "ring-w-inset": ["ring-inset"],
+      /**
+       * Ring Color
+       * @see https://tailwindcss.com/docs/ring-color
+       */
+      "ring-color": [{
+        ring: [n]
+      }],
+      /**
+       * Ring Opacity
+       * @see https://tailwindcss.com/docs/ring-opacity
+       */
+      "ring-opacity": [{
+        "ring-opacity": [b]
+      }],
+      /**
+       * Ring Offset Width
+       * @see https://tailwindcss.com/docs/ring-offset-width
+       */
+      "ring-offset-w": [{
+        "ring-offset": [et, at]
+      }],
+      /**
+       * Ring Offset Color
+       * @see https://tailwindcss.com/docs/ring-offset-color
+       */
+      "ring-offset-color": [{
+        "ring-offset": [n]
+      }],
+      // Effects
+      /**
+       * Box Shadow
+       * @see https://tailwindcss.com/docs/box-shadow
+       */
+      shadow: [{
+        shadow: ["", "inner", "none", st, Wo]
+      }],
+      /**
+       * Box Shadow Color
+       * @see https://tailwindcss.com/docs/box-shadow-color
+       */
+      "shadow-color": [{
+        shadow: [Bt]
+      }],
+      /**
+       * Opacity
+       * @see https://tailwindcss.com/docs/opacity
+       */
+      opacity: [{
+        opacity: [b]
+      }],
+      /**
+       * Mix Blend Mode
+       * @see https://tailwindcss.com/docs/mix-blend-mode
+       */
+      "mix-blend": [{
+        "mix-blend": [...X(), "plus-lighter", "plus-darker"]
+      }],
+      /**
+       * Background Blend Mode
+       * @see https://tailwindcss.com/docs/background-blend-mode
+       */
+      "bg-blend": [{
+        "bg-blend": X()
+      }],
+      // Filters
+      /**
+       * Filter
+       * @deprecated since Tailwind CSS v3.0.0
+       * @see https://tailwindcss.com/docs/filter
+       */
+      filter: [{
+        filter: ["", "none"]
+      }],
+      /**
+       * Blur
+       * @see https://tailwindcss.com/docs/blur
+       */
+      blur: [{
+        blur: [t]
+      }],
+      /**
+       * Brightness
+       * @see https://tailwindcss.com/docs/brightness
+       */
+      brightness: [{
+        brightness: [i]
+      }],
+      /**
+       * Contrast
+       * @see https://tailwindcss.com/docs/contrast
+       */
+      contrast: [{
+        contrast: [l]
+      }],
+      /**
+       * Drop Shadow
+       * @see https://tailwindcss.com/docs/drop-shadow
+       */
+      "drop-shadow": [{
+        "drop-shadow": ["", "none", st, le]
+      }],
+      /**
+       * Grayscale
+       * @see https://tailwindcss.com/docs/grayscale
+       */
+      grayscale: [{
+        grayscale: [c]
+      }],
+      /**
+       * Hue Rotate
+       * @see https://tailwindcss.com/docs/hue-rotate
+       */
+      "hue-rotate": [{
+        "hue-rotate": [h]
+      }],
+      /**
+       * Invert
+       * @see https://tailwindcss.com/docs/invert
+       */
+      invert: [{
+        invert: [d]
+      }],
+      /**
+       * Saturate
+       * @see https://tailwindcss.com/docs/saturate
+       */
+      saturate: [{
+        saturate: [w]
+      }],
+      /**
+       * Sepia
+       * @see https://tailwindcss.com/docs/sepia
+       */
+      sepia: [{
+        sepia: [v]
+      }],
+      /**
+       * Backdrop Filter
+       * @deprecated since Tailwind CSS v3.0.0
+       * @see https://tailwindcss.com/docs/backdrop-filter
+       */
+      "backdrop-filter": [{
+        "backdrop-filter": ["", "none"]
+      }],
+      /**
+       * Backdrop Blur
+       * @see https://tailwindcss.com/docs/backdrop-blur
+       */
+      "backdrop-blur": [{
+        "backdrop-blur": [t]
+      }],
+      /**
+       * Backdrop Brightness
+       * @see https://tailwindcss.com/docs/backdrop-brightness
+       */
+      "backdrop-brightness": [{
+        "backdrop-brightness": [i]
+      }],
+      /**
+       * Backdrop Contrast
+       * @see https://tailwindcss.com/docs/backdrop-contrast
+       */
+      "backdrop-contrast": [{
+        "backdrop-contrast": [l]
+      }],
+      /**
+       * Backdrop Grayscale
+       * @see https://tailwindcss.com/docs/backdrop-grayscale
+       */
+      "backdrop-grayscale": [{
+        "backdrop-grayscale": [c]
+      }],
+      /**
+       * Backdrop Hue Rotate
+       * @see https://tailwindcss.com/docs/backdrop-hue-rotate
+       */
+      "backdrop-hue-rotate": [{
+        "backdrop-hue-rotate": [h]
+      }],
+      /**
+       * Backdrop Invert
+       * @see https://tailwindcss.com/docs/backdrop-invert
+       */
+      "backdrop-invert": [{
+        "backdrop-invert": [d]
+      }],
+      /**
+       * Backdrop Opacity
+       * @see https://tailwindcss.com/docs/backdrop-opacity
+       */
+      "backdrop-opacity": [{
+        "backdrop-opacity": [b]
+      }],
+      /**
+       * Backdrop Saturate
+       * @see https://tailwindcss.com/docs/backdrop-saturate
+       */
+      "backdrop-saturate": [{
+        "backdrop-saturate": [w]
+      }],
+      /**
+       * Backdrop Sepia
+       * @see https://tailwindcss.com/docs/backdrop-sepia
+       */
+      "backdrop-sepia": [{
+        "backdrop-sepia": [v]
+      }],
+      // Tables
+      /**
+       * Border Collapse
+       * @see https://tailwindcss.com/docs/border-collapse
+       */
+      "border-collapse": [{
+        border: ["collapse", "separate"]
+      }],
+      /**
+       * Border Spacing
+       * @see https://tailwindcss.com/docs/border-spacing
+       */
+      "border-spacing": [{
+        "border-spacing": [r]
+      }],
+      /**
+       * Border Spacing X
+       * @see https://tailwindcss.com/docs/border-spacing
+       */
+      "border-spacing-x": [{
+        "border-spacing-x": [r]
+      }],
+      /**
+       * Border Spacing Y
+       * @see https://tailwindcss.com/docs/border-spacing
+       */
+      "border-spacing-y": [{
+        "border-spacing-y": [r]
+      }],
+      /**
+       * Table Layout
+       * @see https://tailwindcss.com/docs/table-layout
+       */
+      "table-layout": [{
+        table: ["auto", "fixed"]
+      }],
+      /**
+       * Caption Side
+       * @see https://tailwindcss.com/docs/caption-side
+       */
+      caption: [{
+        caption: ["top", "bottom"]
+      }],
+      // Transitions and Animation
+      /**
+       * Tranisition Property
+       * @see https://tailwindcss.com/docs/transition-property
+       */
+      transition: [{
+        transition: ["none", "all", "", "colors", "opacity", "shadow", "transform", le]
+      }],
+      /**
+       * Transition Duration
+       * @see https://tailwindcss.com/docs/transition-duration
+       */
+      duration: [{
+        duration: z()
+      }],
+      /**
+       * Transition Timing Function
+       * @see https://tailwindcss.com/docs/transition-timing-function
+       */
+      ease: [{
+        ease: ["linear", "in", "out", "in-out", le]
+      }],
+      /**
+       * Transition Delay
+       * @see https://tailwindcss.com/docs/transition-delay
+       */
+      delay: [{
+        delay: z()
+      }],
+      /**
+       * Animation
+       * @see https://tailwindcss.com/docs/animation
+       */
+      animate: [{
+        animate: ["none", "spin", "ping", "pulse", "bounce", le]
+      }],
+      // Transforms
+      /**
+       * Transform
+       * @see https://tailwindcss.com/docs/transform
+       */
+      transform: [{
+        transform: ["", "gpu", "none"]
+      }],
+      /**
+       * Scale
+       * @see https://tailwindcss.com/docs/scale
+       */
+      scale: [{
+        scale: [y]
+      }],
+      /**
+       * Scale X
+       * @see https://tailwindcss.com/docs/scale
+       */
+      "scale-x": [{
+        "scale-x": [y]
+      }],
+      /**
+       * Scale Y
+       * @see https://tailwindcss.com/docs/scale
+       */
+      "scale-y": [{
+        "scale-y": [y]
+      }],
+      /**
+       * Rotate
+       * @see https://tailwindcss.com/docs/rotate
+       */
+      rotate: [{
+        rotate: [Wt, le]
+      }],
+      /**
+       * Translate X
+       * @see https://tailwindcss.com/docs/translate
+       */
+      "translate-x": [{
+        "translate-x": [C]
+      }],
+      /**
+       * Translate Y
+       * @see https://tailwindcss.com/docs/translate
+       */
+      "translate-y": [{
+        "translate-y": [C]
+      }],
+      /**
+       * Skew X
+       * @see https://tailwindcss.com/docs/skew
+       */
+      "skew-x": [{
+        "skew-x": [k]
+      }],
+      /**
+       * Skew Y
+       * @see https://tailwindcss.com/docs/skew
+       */
+      "skew-y": [{
+        "skew-y": [k]
+      }],
+      /**
+       * Transform Origin
+       * @see https://tailwindcss.com/docs/transform-origin
+       */
+      "transform-origin": [{
+        origin: ["center", "top", "top-right", "right", "bottom-right", "bottom", "bottom-left", "left", "top-left", le]
+      }],
+      // Interactivity
+      /**
+       * Accent Color
+       * @see https://tailwindcss.com/docs/accent-color
+       */
+      accent: [{
+        accent: ["auto", n]
+      }],
+      /**
+       * Appearance
+       * @see https://tailwindcss.com/docs/appearance
+       */
+      appearance: [{
+        appearance: ["none", "auto"]
+      }],
+      /**
+       * Cursor
+       * @see https://tailwindcss.com/docs/cursor
+       */
+      cursor: [{
+        cursor: ["auto", "default", "pointer", "wait", "text", "move", "help", "not-allowed", "none", "context-menu", "progress", "cell", "crosshair", "vertical-text", "alias", "copy", "no-drop", "grab", "grabbing", "all-scroll", "col-resize", "row-resize", "n-resize", "e-resize", "s-resize", "w-resize", "ne-resize", "nw-resize", "se-resize", "sw-resize", "ew-resize", "ns-resize", "nesw-resize", "nwse-resize", "zoom-in", "zoom-out", le]
+      }],
+      /**
+       * Caret Color
+       * @see https://tailwindcss.com/docs/just-in-time-mode#caret-color-utilities
+       */
+      "caret-color": [{
+        caret: [n]
+      }],
+      /**
+       * Pointer Events
+       * @see https://tailwindcss.com/docs/pointer-events
+       */
+      "pointer-events": [{
+        "pointer-events": ["none", "auto"]
+      }],
+      /**
+       * Resize
+       * @see https://tailwindcss.com/docs/resize
+       */
+      resize: [{
+        resize: ["none", "y", "x", ""]
+      }],
+      /**
+       * Scroll Behavior
+       * @see https://tailwindcss.com/docs/scroll-behavior
+       */
+      "scroll-behavior": [{
+        scroll: ["auto", "smooth"]
+      }],
+      /**
+       * Scroll Margin
+       * @see https://tailwindcss.com/docs/scroll-margin
+       */
+      "scroll-m": [{
+        "scroll-m": I()
+      }],
+      /**
+       * Scroll Margin X
+       * @see https://tailwindcss.com/docs/scroll-margin
+       */
+      "scroll-mx": [{
+        "scroll-mx": I()
+      }],
+      /**
+       * Scroll Margin Y
+       * @see https://tailwindcss.com/docs/scroll-margin
+       */
+      "scroll-my": [{
+        "scroll-my": I()
+      }],
+      /**
+       * Scroll Margin Start
+       * @see https://tailwindcss.com/docs/scroll-margin
+       */
+      "scroll-ms": [{
+        "scroll-ms": I()
+      }],
+      /**
+       * Scroll Margin End
+       * @see https://tailwindcss.com/docs/scroll-margin
+       */
+      "scroll-me": [{
+        "scroll-me": I()
+      }],
+      /**
+       * Scroll Margin Top
+       * @see https://tailwindcss.com/docs/scroll-margin
+       */
+      "scroll-mt": [{
+        "scroll-mt": I()
+      }],
+      /**
+       * Scroll Margin Right
+       * @see https://tailwindcss.com/docs/scroll-margin
+       */
+      "scroll-mr": [{
+        "scroll-mr": I()
+      }],
+      /**
+       * Scroll Margin Bottom
+       * @see https://tailwindcss.com/docs/scroll-margin
+       */
+      "scroll-mb": [{
+        "scroll-mb": I()
+      }],
+      /**
+       * Scroll Margin Left
+       * @see https://tailwindcss.com/docs/scroll-margin
+       */
+      "scroll-ml": [{
+        "scroll-ml": I()
+      }],
+      /**
+       * Scroll Padding
+       * @see https://tailwindcss.com/docs/scroll-padding
+       */
+      "scroll-p": [{
+        "scroll-p": I()
+      }],
+      /**
+       * Scroll Padding X
+       * @see https://tailwindcss.com/docs/scroll-padding
+       */
+      "scroll-px": [{
+        "scroll-px": I()
+      }],
+      /**
+       * Scroll Padding Y
+       * @see https://tailwindcss.com/docs/scroll-padding
+       */
+      "scroll-py": [{
+        "scroll-py": I()
+      }],
+      /**
+       * Scroll Padding Start
+       * @see https://tailwindcss.com/docs/scroll-padding
+       */
+      "scroll-ps": [{
+        "scroll-ps": I()
+      }],
+      /**
+       * Scroll Padding End
+       * @see https://tailwindcss.com/docs/scroll-padding
+       */
+      "scroll-pe": [{
+        "scroll-pe": I()
+      }],
+      /**
+       * Scroll Padding Top
+       * @see https://tailwindcss.com/docs/scroll-padding
+       */
+      "scroll-pt": [{
+        "scroll-pt": I()
+      }],
+      /**
+       * Scroll Padding Right
+       * @see https://tailwindcss.com/docs/scroll-padding
+       */
+      "scroll-pr": [{
+        "scroll-pr": I()
+      }],
+      /**
+       * Scroll Padding Bottom
+       * @see https://tailwindcss.com/docs/scroll-padding
+       */
+      "scroll-pb": [{
+        "scroll-pb": I()
+      }],
+      /**
+       * Scroll Padding Left
+       * @see https://tailwindcss.com/docs/scroll-padding
+       */
+      "scroll-pl": [{
+        "scroll-pl": I()
+      }],
+      /**
+       * Scroll Snap Align
+       * @see https://tailwindcss.com/docs/scroll-snap-align
+       */
+      "snap-align": [{
+        snap: ["start", "end", "center", "align-none"]
+      }],
+      /**
+       * Scroll Snap Stop
+       * @see https://tailwindcss.com/docs/scroll-snap-stop
+       */
+      "snap-stop": [{
+        snap: ["normal", "always"]
+      }],
+      /**
+       * Scroll Snap Type
+       * @see https://tailwindcss.com/docs/scroll-snap-type
+       */
+      "snap-type": [{
+        snap: ["none", "x", "y", "both"]
+      }],
+      /**
+       * Scroll Snap Type Strictness
+       * @see https://tailwindcss.com/docs/scroll-snap-type
+       */
+      "snap-strictness": [{
+        snap: ["mandatory", "proximity"]
+      }],
+      /**
+       * Touch Action
+       * @see https://tailwindcss.com/docs/touch-action
+       */
+      touch: [{
+        touch: ["auto", "none", "manipulation"]
+      }],
+      /**
+       * Touch Action X
+       * @see https://tailwindcss.com/docs/touch-action
+       */
+      "touch-x": [{
+        "touch-pan": ["x", "left", "right"]
+      }],
+      /**
+       * Touch Action Y
+       * @see https://tailwindcss.com/docs/touch-action
+       */
+      "touch-y": [{
+        "touch-pan": ["y", "up", "down"]
+      }],
+      /**
+       * Touch Action Pinch Zoom
+       * @see https://tailwindcss.com/docs/touch-action
+       */
+      "touch-pz": ["touch-pinch-zoom"],
+      /**
+       * User Select
+       * @see https://tailwindcss.com/docs/user-select
+       */
+      select: [{
+        select: ["none", "text", "all", "auto"]
+      }],
+      /**
+       * Will Change
+       * @see https://tailwindcss.com/docs/will-change
+       */
+      "will-change": [{
+        "will-change": ["auto", "scroll", "contents", "transform", le]
+      }],
+      // SVG
+      /**
+       * Fill
+       * @see https://tailwindcss.com/docs/fill
+       */
+      fill: [{
+        fill: [n, "none"]
+      }],
+      /**
+       * Stroke Width
+       * @see https://tailwindcss.com/docs/stroke-width
+       */
+      "stroke-w": [{
+        stroke: [et, at, Di]
+      }],
+      /**
+       * Stroke
+       * @see https://tailwindcss.com/docs/stroke
+       */
+      stroke: [{
+        stroke: [n, "none"]
+      }],
+      // Accessibility
+      /**
+       * Screen Readers
+       * @see https://tailwindcss.com/docs/screen-readers
+       */
+      sr: ["sr-only", "not-sr-only"],
+      /**
+       * Forced Color Adjust
+       * @see https://tailwindcss.com/docs/forced-color-adjust
+       */
+      "forced-color-adjust": [{
+        "forced-color-adjust": ["auto", "none"]
+      }]
+    },
+    conflictingClassGroups: {
+      overflow: ["overflow-x", "overflow-y"],
+      overscroll: ["overscroll-x", "overscroll-y"],
+      inset: ["inset-x", "inset-y", "start", "end", "top", "right", "bottom", "left"],
+      "inset-x": ["right", "left"],
+      "inset-y": ["top", "bottom"],
+      flex: ["basis", "grow", "shrink"],
+      gap: ["gap-x", "gap-y"],
+      p: ["px", "py", "ps", "pe", "pt", "pr", "pb", "pl"],
+      px: ["pr", "pl"],
+      py: ["pt", "pb"],
+      m: ["mx", "my", "ms", "me", "mt", "mr", "mb", "ml"],
+      mx: ["mr", "ml"],
+      my: ["mt", "mb"],
+      size: ["w", "h"],
+      "font-size": ["leading"],
+      "fvn-normal": ["fvn-ordinal", "fvn-slashed-zero", "fvn-figure", "fvn-spacing", "fvn-fraction"],
+      "fvn-ordinal": ["fvn-normal"],
+      "fvn-slashed-zero": ["fvn-normal"],
+      "fvn-figure": ["fvn-normal"],
+      "fvn-spacing": ["fvn-normal"],
+      "fvn-fraction": ["fvn-normal"],
+      "line-clamp": ["display", "overflow"],
+      rounded: ["rounded-s", "rounded-e", "rounded-t", "rounded-r", "rounded-b", "rounded-l", "rounded-ss", "rounded-se", "rounded-ee", "rounded-es", "rounded-tl", "rounded-tr", "rounded-br", "rounded-bl"],
+      "rounded-s": ["rounded-ss", "rounded-es"],
+      "rounded-e": ["rounded-se", "rounded-ee"],
+      "rounded-t": ["rounded-tl", "rounded-tr"],
+      "rounded-r": ["rounded-tr", "rounded-br"],
+      "rounded-b": ["rounded-br", "rounded-bl"],
+      "rounded-l": ["rounded-tl", "rounded-bl"],
+      "border-spacing": ["border-spacing-x", "border-spacing-y"],
+      "border-w": ["border-w-s", "border-w-e", "border-w-t", "border-w-r", "border-w-b", "border-w-l"],
+      "border-w-x": ["border-w-r", "border-w-l"],
+      "border-w-y": ["border-w-t", "border-w-b"],
+      "border-color": ["border-color-s", "border-color-e", "border-color-t", "border-color-r", "border-color-b", "border-color-l"],
+      "border-color-x": ["border-color-r", "border-color-l"],
+      "border-color-y": ["border-color-t", "border-color-b"],
+      "scroll-m": ["scroll-mx", "scroll-my", "scroll-ms", "scroll-me", "scroll-mt", "scroll-mr", "scroll-mb", "scroll-ml"],
+      "scroll-mx": ["scroll-mr", "scroll-ml"],
+      "scroll-my": ["scroll-mt", "scroll-mb"],
+      "scroll-p": ["scroll-px", "scroll-py", "scroll-ps", "scroll-pe", "scroll-pt", "scroll-pr", "scroll-pb", "scroll-pl"],
+      "scroll-px": ["scroll-pr", "scroll-pl"],
+      "scroll-py": ["scroll-pt", "scroll-pb"],
+      touch: ["touch-x", "touch-y", "touch-pz"],
+      "touch-x": ["touch"],
+      "touch-y": ["touch"],
+      "touch-pz": ["touch"]
+    },
+    conflictingClassGroupModifiers: {
+      "font-size": ["leading"]
+    }
+  };
+}, Uo = /* @__PURE__ */ Po(Vo);
+function Re(...n) {
+  return Uo(Ar(n));
+}
+const qo = Rt(
+  "inline-flex items-center justify-center gap-2 font-medium transition-all duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed",
+  {
+    variants: {
+      variant: {
+        primary: "bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 shadow-sm hover:shadow-md active:shadow-none",
+        secondary: "bg-secondary-500 text-white hover:bg-secondary-600 active:bg-secondary-700 shadow-sm hover:shadow-md active:shadow-none",
+        success: "bg-success-500 text-white hover:bg-success-600 active:bg-success-700 shadow-sm hover:shadow-md active:shadow-none",
+        warning: "bg-warning-500 text-white hover:bg-warning-600 active:bg-warning-700 shadow-sm hover:shadow-md active:shadow-none",
+        danger: "bg-danger-500 text-white hover:bg-danger-600 active:bg-danger-700 shadow-sm hover:shadow-md active:shadow-none",
+        outline: "border border-neutral-300 text-primary-500 hover:bg-primary-50 active:bg-primary-100 hover:border-primary-500",
+        ghost: "text-primary-500 hover:bg-primary-50 active:bg-primary-100",
+        link: "text-primary-500 hover:underline p-0"
+      },
+      size: {
+        xs: "text-xs px-2 py-1",
+        sm: "text-sm px-3 py-1.5",
+        md: "text-base px-4 py-2",
+        lg: "text-lg px-5 py-2.5"
+      },
+      rounded: {
+        none: "rounded-none",
+        sm: "rounded-sm",
+        md: "rounded-md",
+        lg: "rounded-lg",
+        full: "rounded-full"
+      },
+      fullWidth: {
+        true: "w-full"
+      }
+    },
+    defaultVariants: {
+      variant: "primary",
+      size: "md",
+      rounded: "md",
+      fullWidth: !1
+    }
+  }
+), $o = Ee.forwardRef(
+  ({ className: n, variant: e, size: t, rounded: i, fullWidth: a, isLoading: s, leftIcon: r, rightIcon: o, children: l, ...c }, h) => /* @__PURE__ */ ee.jsxs(
+    "button",
+    {
+      className: Re(qo({ variant: e, size: t, rounded: i, fullWidth: a, className: n })),
+      ref: h,
+      disabled: c.disabled || s,
+      ...c,
+      children: [
+        s && /* @__PURE__ */ ee.jsx("span", { className: "animate-spin inline-block w-4 h-4 border-2 border-current border-r-transparent rounded-full" }),
+        !s && r,
+        l,
+        !s && o
+      ]
+    }
+  )
+);
+$o.displayName = "Button";
+const Ut = /^[a-z0-9]+(-[a-z0-9]+)*$/, Ei = (n, e, t, i = "") => {
+  const a = n.split(":");
+  if (n.slice(0, 1) === "@") {
+    if (a.length < 2 || a.length > 3)
+      return null;
+    i = a.shift().slice(1);
+  }
+  if (a.length > 3 || !a.length)
+    return null;
+  if (a.length > 1) {
+    const o = a.pop(), l = a.pop(), c = {
+      // Allow provider without '@': "provider:prefix:name"
+      provider: a.length > 0 ? a[0] : i,
+      prefix: l,
+      name: o
+    };
+    return e && !bi(c) ? null : c;
+  }
+  const s = a[0], r = s.split("-");
+  if (r.length > 1) {
+    const o = {
+      provider: i,
+      prefix: r.shift(),
+      name: r.join("-")
+    };
+    return e && !bi(o) ? null : o;
+  }
+  if (t && i === "") {
+    const o = {
+      provider: i,
+      prefix: "",
+      name: s
+    };
+    return e && !bi(o, t) ? null : o;
+  }
+  return null;
+}, bi = (n, e) => n ? !!((n.provider === "" || n.provider.match(Ut)) && (e && n.prefix === "" || n.prefix.match(Ut)) && n.name.match(Ut)) : !1, Tr = Object.freeze(
+  {
+    left: 0,
+    top: 0,
+    width: 16,
+    height: 16
+  }
+), Ci = Object.freeze({
+  rotate: 0,
+  vFlip: !1,
+  hFlip: !1
+}), Ba = Object.freeze({
+  ...Tr,
+  ...Ci
+}), pa = Object.freeze({
+  ...Ba,
+  body: "",
+  hidden: !1
+});
+function Zo(n, e) {
+  const t = {};
+  !n.hFlip != !e.hFlip && (t.hFlip = !0), !n.vFlip != !e.vFlip && (t.vFlip = !0);
+  const i = ((n.rotate || 0) + (e.rotate || 0)) % 4;
+  return i && (t.rotate = i), t;
+}
+function Es(n, e) {
+  const t = Zo(n, e);
+  for (const i in pa)
+    i in Ci ? i in n && !(i in t) && (t[i] = Ci[i]) : i in e ? t[i] = e[i] : i in n && (t[i] = n[i]);
+  return t;
+}
+function Jo(n, e) {
+  const t = n.icons, i = n.aliases || /* @__PURE__ */ Object.create(null), a = /* @__PURE__ */ Object.create(null);
+  function s(r) {
+    if (t[r])
+      return a[r] = [];
+    if (!(r in a)) {
+      a[r] = null;
+      const o = i[r] && i[r].parent, l = o && s(o);
+      l && (a[r] = [o].concat(l));
+    }
+    return a[r];
+  }
+  return Object.keys(t).concat(Object.keys(i)).forEach(s), a;
+}
+function Ko(n, e, t) {
+  const i = n.icons, a = n.aliases || /* @__PURE__ */ Object.create(null);
+  let s = {};
+  function r(o) {
+    s = Es(
+      i[o] || a[o],
+      s
+    );
+  }
+  return r(e), t.forEach(r), Es(n, s);
+}
+function Ir(n, e) {
+  const t = [];
+  if (typeof n != "object" || typeof n.icons != "object")
+    return t;
+  n.not_found instanceof Array && n.not_found.forEach((a) => {
+    e(a, null), t.push(a);
+  });
+  const i = Jo(n);
+  for (const a in i) {
+    const s = i[a];
+    s && (e(a, Ko(n, a, s)), t.push(a));
+  }
+  return t;
+}
+const Qo = {
+  provider: "",
+  aliases: {},
+  not_found: {},
+  ...Tr
+};
+function Ni(n, e) {
+  for (const t in e)
+    if (t in n && typeof n[t] != typeof e[t])
+      return !1;
+  return !0;
+}
+function Er(n) {
+  if (typeof n != "object" || n === null)
+    return null;
+  const e = n;
+  if (typeof e.prefix != "string" || !n.icons || typeof n.icons != "object" || !Ni(n, Qo))
+    return null;
+  const t = e.icons;
+  for (const a in t) {
+    const s = t[a];
+    if (!a.match(Ut) || typeof s.body != "string" || !Ni(
+      s,
+      pa
+    ))
+      return null;
+  }
+  const i = e.aliases || /* @__PURE__ */ Object.create(null);
+  for (const a in i) {
+    const s = i[a], r = s.parent;
+    if (!a.match(Ut) || typeof r != "string" || !t[r] && !i[r] || !Ni(
+      s,
+      pa
+    ))
+      return null;
+  }
+  return e;
+}
+const Rs = /* @__PURE__ */ Object.create(null);
+function el(n, e) {
+  return {
+    provider: n,
+    prefix: e,
+    icons: /* @__PURE__ */ Object.create(null),
+    missing: /* @__PURE__ */ new Set()
+  };
+}
+function mt(n, e) {
+  const t = Rs[n] || (Rs[n] = /* @__PURE__ */ Object.create(null));
+  return t[e] || (t[e] = el(n, e));
+}
+function ja(n, e) {
+  return Er(e) ? Ir(e, (t, i) => {
+    i ? n.icons[t] = i : n.missing.add(t);
+  }) : [];
+}
+function tl(n, e, t) {
+  try {
+    if (typeof t.body == "string")
+      return n.icons[e] = { ...t }, !0;
+  } catch {
+  }
+  return !1;
+}
+let Jt = !1;
+function Rr(n) {
+  return typeof n == "boolean" && (Jt = n), Jt;
+}
+function il(n) {
+  const e = typeof n == "string" ? Ei(n, !0, Jt) : n;
+  if (e) {
+    const t = mt(e.provider, e.prefix), i = e.name;
+    return t.icons[i] || (t.missing.has(i) ? null : void 0);
+  }
+}
+function al(n, e) {
+  const t = Ei(n, !0, Jt);
+  if (!t)
+    return !1;
+  const i = mt(t.provider, t.prefix);
+  return tl(i, t.name, e);
+}
+function sl(n, e) {
+  if (typeof n != "object")
+    return !1;
+  if (typeof e != "string" && (e = n.provider || ""), Jt && !e && !n.prefix) {
+    let a = !1;
+    return Er(n) && (n.prefix = "", Ir(n, (s, r) => {
+      r && al(s, r) && (a = !0);
+    })), a;
+  }
+  const t = n.prefix;
+  if (!bi({
+    provider: e,
+    prefix: t,
+    name: "a"
+  }))
+    return !1;
+  const i = mt(e, t);
+  return !!ja(i, n);
+}
+const Or = Object.freeze({
+  width: null,
+  height: null
+}), zr = Object.freeze({
+  // Dimensions
+  ...Or,
+  // Transformations
+  ...Ci
+}), rl = /(-?[0-9.]*[0-9]+[0-9.]*)/g, nl = /^-?[0-9.]*[0-9]+[0-9.]*$/g;
+function Os(n, e, t) {
+  if (e === 1)
+    return n;
+  if (t = t || 100, typeof n == "number")
+    return Math.ceil(n * e * t) / t;
+  if (typeof n != "string")
+    return n;
+  const i = n.split(rl);
+  if (i === null || !i.length)
+    return n;
+  const a = [];
+  let s = i.shift(), r = nl.test(s);
+  for (; ; ) {
+    if (r) {
+      const o = parseFloat(s);
+      isNaN(o) ? a.push(s) : a.push(Math.ceil(o * e * t) / t);
+    } else
+      a.push(s);
+    if (s = i.shift(), s === void 0)
+      return a.join("");
+    r = !r;
+  }
+}
+const ol = (n) => n === "unset" || n === "undefined" || n === "none";
+function ll(n, e) {
+  const t = {
+    ...Ba,
+    ...n
+  }, i = {
+    ...zr,
+    ...e
+  }, a = {
+    left: t.left,
+    top: t.top,
+    width: t.width,
+    height: t.height
+  };
+  let s = t.body;
+  [t, i].forEach((p) => {
+    const f = [], x = p.hFlip, b = p.vFlip;
+    let m = p.rotate;
+    x ? b ? m += 2 : (f.push(
+      "translate(" + (a.width + a.left).toString() + " " + (0 - a.top).toString() + ")"
+    ), f.push("scale(-1 1)"), a.top = a.left = 0) : b && (f.push(
+      "translate(" + (0 - a.left).toString() + " " + (a.height + a.top).toString() + ")"
+    ), f.push("scale(1 -1)"), a.top = a.left = 0);
+    let w;
+    switch (m < 0 && (m -= Math.floor(m / 4) * 4), m = m % 4, m) {
+      case 1:
+        w = a.height / 2 + a.top, f.unshift(
+          "rotate(90 " + w.toString() + " " + w.toString() + ")"
+        );
+        break;
+      case 2:
+        f.unshift(
+          "rotate(180 " + (a.width / 2 + a.left).toString() + " " + (a.height / 2 + a.top).toString() + ")"
+        );
+        break;
+      case 3:
+        w = a.width / 2 + a.left, f.unshift(
+          "rotate(-90 " + w.toString() + " " + w.toString() + ")"
+        );
+        break;
+    }
+    m % 2 === 1 && (a.left !== a.top && (w = a.left, a.left = a.top, a.top = w), a.width !== a.height && (w = a.width, a.width = a.height, a.height = w)), f.length && (s = '<g transform="' + f.join(" ") + '">' + s + "</g>");
+  });
+  const r = i.width, o = i.height, l = a.width, c = a.height;
+  let h, d;
+  r === null ? (d = o === null ? "1em" : o === "auto" ? c : o, h = Os(d, l / c)) : (h = r === "auto" ? l : r, d = o === null ? Os(h, c / l) : o === "auto" ? c : o);
+  const u = {}, g = (p, f) => {
+    ol(f) || (u[p] = f.toString());
+  };
+  return g("width", h), g("height", d), u.viewBox = a.left.toString() + " " + a.top.toString() + " " + l.toString() + " " + c.toString(), {
+    attributes: u,
+    body: s
+  };
+}
+const cl = /\sid="(\S+)"/g, hl = "IconifyId" + Date.now().toString(16) + (Math.random() * 16777216 | 0).toString(16);
+let dl = 0;
+function ul(n, e = hl) {
+  const t = [];
+  let i;
+  for (; i = cl.exec(n); )
+    t.push(i[1]);
+  if (!t.length)
+    return n;
+  const a = "suffix" + (Math.random() * 16777216 | Date.now()).toString(16);
+  return t.forEach((s) => {
+    const r = typeof e == "function" ? e(s) : e + (dl++).toString(), o = s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    n = n.replace(
+      // Allowed characters before id: [#;"]
+      // Allowed characters after id: [)"], .[a-z]
+      new RegExp('([#;"])(' + o + ')([")]|\\.[a-z])', "g"),
+      "$1" + r + a + "$3"
+    );
+  }), n = n.replace(new RegExp(a, "g"), ""), n;
+}
+const xa = /* @__PURE__ */ Object.create(null);
+function gl(n, e) {
+  xa[n] = e;
+}
+function ba(n) {
+  return xa[n] || xa[""];
+}
+function Ga(n) {
+  let e;
+  if (typeof n.resources == "string")
+    e = [n.resources];
+  else if (e = n.resources, !(e instanceof Array) || !e.length)
+    return null;
+  return {
+    // API hosts
+    resources: e,
+    // Root path
+    path: n.path || "/",
+    // URL length limit
+    maxURL: n.maxURL || 500,
+    // Timeout before next host is used.
+    rotate: n.rotate || 750,
+    // Timeout before failing query.
+    timeout: n.timeout || 5e3,
+    // Randomise default API end point.
+    random: n.random === !0,
+    // Start index
+    index: n.index || 0,
+    // Receive data after time out (used if time out kicks in first, then API module sends data anyway).
+    dataAfterTimeout: n.dataAfterTimeout !== !1
+  };
+}
+const Va = /* @__PURE__ */ Object.create(null), jt = [
+  "https://api.simplesvg.com",
+  "https://api.unisvg.com"
+], mi = [];
+for (; jt.length > 0; )
+  jt.length === 1 || Math.random() > 0.5 ? mi.push(jt.shift()) : mi.push(jt.pop());
+Va[""] = Ga({
+  resources: ["https://api.iconify.design"].concat(mi)
+});
+function fl(n, e) {
+  const t = Ga(e);
+  return t === null ? !1 : (Va[n] = t, !0);
+}
+function Ua(n) {
+  return Va[n];
+}
+const pl = () => {
+  let n;
+  try {
+    if (n = fetch, typeof n == "function")
+      return n;
+  } catch {
+  }
+};
+let zs = pl();
+function xl(n, e) {
+  const t = Ua(n);
+  if (!t)
+    return 0;
+  let i;
+  if (!t.maxURL)
+    i = 0;
+  else {
+    let a = 0;
+    t.resources.forEach((r) => {
+      a = Math.max(a, r.length);
+    });
+    const s = e + ".json?icons=";
+    i = t.maxURL - a - t.path.length - s.length;
+  }
+  return i;
+}
+function bl(n) {
+  return n === 404;
+}
+const ml = (n, e, t) => {
+  const i = [], a = xl(n, e), s = "icons";
+  let r = {
+    type: s,
+    provider: n,
+    prefix: e,
+    icons: []
+  }, o = 0;
+  return t.forEach((l, c) => {
+    o += l.length + 1, o >= a && c > 0 && (i.push(r), r = {
+      type: s,
+      provider: n,
+      prefix: e,
+      icons: []
+    }, o = l.length), r.icons.push(l);
+  }), i.push(r), i;
+};
+function vl(n) {
+  if (typeof n == "string") {
+    const e = Ua(n);
+    if (e)
+      return e.path;
+  }
+  return "/";
+}
+const yl = (n, e, t) => {
+  if (!zs) {
+    t("abort", 424);
+    return;
+  }
+  let i = vl(e.provider);
+  switch (e.type) {
+    case "icons": {
+      const s = e.prefix, o = e.icons.join(","), l = new URLSearchParams({
+        icons: o
+      });
+      i += s + ".json?" + l.toString();
+      break;
+    }
+    case "custom": {
+      const s = e.uri;
+      i += s.slice(0, 1) === "/" ? s.slice(1) : s;
+      break;
+    }
+    default:
+      t("abort", 400);
+      return;
+  }
+  let a = 503;
+  zs(n + i).then((s) => {
+    const r = s.status;
+    if (r !== 200) {
+      setTimeout(() => {
+        t(bl(r) ? "abort" : "next", r);
+      });
+      return;
+    }
+    return a = 501, s.json();
+  }).then((s) => {
+    if (typeof s != "object" || s === null) {
+      setTimeout(() => {
+        s === 404 ? t("abort", s) : t("next", a);
+      });
+      return;
+    }
+    setTimeout(() => {
+      t("success", s);
+    });
+  }).catch(() => {
+    t("next", a);
+  });
+}, wl = {
+  prepare: ml,
+  send: yl
+};
+function kl(n) {
+  const e = {
+    loaded: [],
+    missing: [],
+    pending: []
+  }, t = /* @__PURE__ */ Object.create(null);
+  n.sort((a, s) => a.provider !== s.provider ? a.provider.localeCompare(s.provider) : a.prefix !== s.prefix ? a.prefix.localeCompare(s.prefix) : a.name.localeCompare(s.name));
+  let i = {
+    provider: "",
+    prefix: "",
+    name: ""
+  };
+  return n.forEach((a) => {
+    if (i.name === a.name && i.prefix === a.prefix && i.provider === a.provider)
+      return;
+    i = a;
+    const s = a.provider, r = a.prefix, o = a.name, l = t[s] || (t[s] = /* @__PURE__ */ Object.create(null)), c = l[r] || (l[r] = mt(s, r));
+    let h;
+    o in c.icons ? h = e.loaded : r === "" || c.missing.has(o) ? h = e.missing : h = e.pending;
+    const d = {
+      provider: s,
+      prefix: r,
+      name: o
+    };
+    h.push(d);
+  }), e;
+}
+function _r(n, e) {
+  n.forEach((t) => {
+    const i = t.loaderCallbacks;
+    i && (t.loaderCallbacks = i.filter((a) => a.id !== e));
+  });
+}
+function Al(n) {
+  n.pendingCallbacksFlag || (n.pendingCallbacksFlag = !0, setTimeout(() => {
+    n.pendingCallbacksFlag = !1;
+    const e = n.loaderCallbacks ? n.loaderCallbacks.slice(0) : [];
+    if (!e.length)
+      return;
+    let t = !1;
+    const i = n.provider, a = n.prefix;
+    e.forEach((s) => {
+      const r = s.icons, o = r.pending.length;
+      r.pending = r.pending.filter((l) => {
+        if (l.prefix !== a)
+          return !0;
+        const c = l.name;
+        if (n.icons[c])
+          r.loaded.push({
+            provider: i,
+            prefix: a,
+            name: c
+          });
+        else if (n.missing.has(c))
+          r.missing.push({
+            provider: i,
+            prefix: a,
+            name: c
+          });
+        else
+          return t = !0, !0;
+        return !1;
+      }), r.pending.length !== o && (t || _r([n], s.id), s.callback(
+        r.loaded.slice(0),
+        r.missing.slice(0),
+        r.pending.slice(0),
+        s.abort
+      ));
+    });
+  }));
+}
+let Cl = 0;
+function Sl(n, e, t) {
+  const i = Cl++, a = _r.bind(null, t, i);
+  if (!e.pending.length)
+    return a;
+  const s = {
+    id: i,
+    icons: e,
+    callback: n,
+    abort: a
+  };
+  return t.forEach((r) => {
+    (r.loaderCallbacks || (r.loaderCallbacks = [])).push(s);
+  }), a;
+}
+function Ml(n, e = !0, t = !1) {
+  const i = [];
+  return n.forEach((a) => {
+    const s = typeof a == "string" ? Ei(a, e, t) : a;
+    s && i.push(s);
+  }), i;
+}
+var Ll = {
+  resources: [],
+  index: 0,
+  timeout: 2e3,
+  rotate: 750,
+  random: !1,
+  dataAfterTimeout: !1
+};
+function Pl(n, e, t, i) {
+  const a = n.resources.length, s = n.random ? Math.floor(Math.random() * a) : n.index;
+  let r;
+  if (n.random) {
+    let k = n.resources.slice(0);
+    for (r = []; k.length > 1; ) {
+      const A = Math.floor(Math.random() * k.length);
+      r.push(k[A]), k = k.slice(0, A).concat(k.slice(A + 1));
+    }
+    r = r.concat(k);
+  } else
+    r = n.resources.slice(s).concat(n.resources.slice(0, s));
+  const o = Date.now();
+  let l = "pending", c = 0, h, d = null, u = [], g = [];
+  typeof i == "function" && g.push(i);
+  function p() {
+    d && (clearTimeout(d), d = null);
+  }
+  function f() {
+    l === "pending" && (l = "aborted"), p(), u.forEach((k) => {
+      k.status === "pending" && (k.status = "aborted");
+    }), u = [];
+  }
+  function x(k, A) {
+    A && (g = []), typeof k == "function" && g.push(k);
+  }
+  function b() {
+    return {
+      startTime: o,
+      payload: e,
+      status: l,
+      queriesSent: c,
+      queriesPending: u.length,
+      subscribe: x,
+      abort: f
+    };
+  }
+  function m() {
+    l = "failed", g.forEach((k) => {
+      k(void 0, h);
+    });
+  }
+  function w() {
+    u.forEach((k) => {
+      k.status === "pending" && (k.status = "aborted");
+    }), u = [];
+  }
+  function y(k, A, C) {
+    const S = A !== "success";
+    switch (u = u.filter((L) => L !== k), l) {
+      case "pending":
+        break;
+      case "failed":
+        if (S || !n.dataAfterTimeout)
+          return;
+        break;
+      default:
+        return;
+    }
+    if (A === "abort") {
+      h = C, m();
+      return;
+    }
+    if (S) {
+      h = C, u.length || (r.length ? v() : m());
+      return;
+    }
+    if (p(), w(), !n.random) {
+      const L = n.resources.indexOf(k.resource);
+      L !== -1 && L !== n.index && (n.index = L);
+    }
+    l = "completed", g.forEach((L) => {
+      L(C);
+    });
+  }
+  function v() {
+    if (l !== "pending")
+      return;
+    p();
+    const k = r.shift();
+    if (k === void 0) {
+      if (u.length) {
+        d = setTimeout(() => {
+          p(), l === "pending" && (w(), m());
+        }, n.timeout);
+        return;
+      }
+      m();
+      return;
+    }
+    const A = {
+      status: "pending",
+      resource: k,
+      callback: (C, S) => {
+        y(A, C, S);
+      }
+    };
+    u.push(A), c++, d = setTimeout(v, n.rotate), t(k, e, A.callback);
+  }
+  return setTimeout(v), b;
+}
+function Yr(n) {
+  const e = {
+    ...Ll,
+    ...n
+  };
+  let t = [];
+  function i() {
+    t = t.filter((o) => o().status === "pending");
+  }
+  function a(o, l, c) {
+    const h = Pl(
+      e,
+      o,
+      l,
+      (d, u) => {
+        i(), c && c(d, u);
+      }
+    );
+    return t.push(h), h;
+  }
+  function s(o) {
+    return t.find((l) => o(l)) || null;
+  }
+  return {
+    query: a,
+    find: s,
+    setIndex: (o) => {
+      e.index = o;
+    },
+    getIndex: () => e.index,
+    cleanup: i
+  };
+}
+function _s() {
+}
+const Wi = /* @__PURE__ */ Object.create(null);
+function Tl(n) {
+  if (!Wi[n]) {
+    const e = Ua(n);
+    if (!e)
+      return;
+    const t = Yr(e), i = {
+      config: e,
+      redundancy: t
+    };
+    Wi[n] = i;
+  }
+  return Wi[n];
+}
+function Il(n, e, t) {
+  let i, a;
+  if (typeof n == "string") {
+    const s = ba(n);
+    if (!s)
+      return t(void 0, 424), _s;
+    a = s.send;
+    const r = Tl(n);
+    r && (i = r.redundancy);
+  } else {
+    const s = Ga(n);
+    if (s) {
+      i = Yr(s);
+      const r = n.resources ? n.resources[0] : "", o = ba(r);
+      o && (a = o.send);
+    }
+  }
+  return !i || !a ? (t(void 0, 424), _s) : i.query(e, a, t)().abort;
+}
+const Ys = "iconify2", Kt = "iconify", Fr = Kt + "-count", Fs = Kt + "-version", Xr = 36e5, El = 168;
+function ma(n, e) {
+  try {
+    return n.getItem(e);
+  } catch {
+  }
+}
+function qa(n, e, t) {
+  try {
+    return n.setItem(e, t), !0;
+  } catch {
+  }
+}
+function Xs(n, e) {
+  try {
+    n.removeItem(e);
+  } catch {
+  }
+}
+function va(n, e) {
+  return qa(n, Fr, e.toString());
+}
+function ya(n) {
+  return parseInt(ma(n, Fr)) || 0;
+}
+const Ri = {
+  local: !0,
+  session: !0
+}, Hr = {
+  local: /* @__PURE__ */ new Set(),
+  session: /* @__PURE__ */ new Set()
+};
+let $a = !1;
+function Rl(n) {
+  $a = n;
+}
+let gi = typeof window > "u" ? {} : window;
+function Dr(n) {
+  const e = n + "Storage";
+  try {
+    if (gi && gi[e] && typeof gi[e].length == "number")
+      return gi[e];
+  } catch {
+  }
+  Ri[n] = !1;
+}
+function Nr(n, e) {
+  const t = Dr(n);
+  if (!t)
+    return;
+  const i = ma(t, Fs);
+  if (i !== Ys) {
+    if (i) {
+      const o = ya(t);
+      for (let l = 0; l < o; l++)
+        Xs(t, Kt + l.toString());
+    }
+    qa(t, Fs, Ys), va(t, 0);
+    return;
+  }
+  const a = Math.floor(Date.now() / Xr) - El, s = (o) => {
+    const l = Kt + o.toString(), c = ma(t, l);
+    if (typeof c == "string") {
+      try {
+        const h = JSON.parse(c);
+        if (typeof h == "object" && typeof h.cached == "number" && h.cached > a && typeof h.provider == "string" && typeof h.data == "object" && typeof h.data.prefix == "string" && // Valid item: run callback
+        e(h, o))
+          return !0;
+      } catch {
+      }
+      Xs(t, l);
+    }
+  };
+  let r = ya(t);
+  for (let o = r - 1; o >= 0; o--)
+    s(o) || (o === r - 1 ? (r--, va(t, r)) : Hr[n].add(o));
+}
+function Wr() {
+  if (!$a) {
+    Rl(!0);
+    for (const n in Ri)
+      Nr(n, (e) => {
+        const t = e.data, i = e.provider, a = t.prefix, s = mt(
+          i,
+          a
+        );
+        if (!ja(s, t).length)
+          return !1;
+        const r = t.lastModified || -1;
+        return s.lastModifiedCached = s.lastModifiedCached ? Math.min(s.lastModifiedCached, r) : r, !0;
+      });
+  }
+}
+function Ol(n, e) {
+  const t = n.lastModifiedCached;
+  if (
+    // Matches or newer
+    t && t >= e
+  )
+    return t === e;
+  if (n.lastModifiedCached = e, t)
+    for (const i in Ri)
+      Nr(i, (a) => {
+        const s = a.data;
+        return a.provider !== n.provider || s.prefix !== n.prefix || s.lastModified === e;
+      });
+  return !0;
+}
+function zl(n, e) {
+  $a || Wr();
+  function t(i) {
+    let a;
+    if (!Ri[i] || !(a = Dr(i)))
+      return;
+    const s = Hr[i];
+    let r;
+    if (s.size)
+      s.delete(r = Array.from(s).shift());
+    else if (r = ya(a), !va(a, r + 1))
+      return;
+    const o = {
+      cached: Math.floor(Date.now() / Xr),
+      provider: n.provider,
+      data: e
+    };
+    return qa(
+      a,
+      Kt + r.toString(),
+      JSON.stringify(o)
+    );
+  }
+  e.lastModified && !Ol(n, e.lastModified) || Object.keys(e.icons).length && (e.not_found && (e = Object.assign({}, e), delete e.not_found), t("local") || t("session"));
+}
+function Hs() {
+}
+function _l(n) {
+  n.iconsLoaderFlag || (n.iconsLoaderFlag = !0, setTimeout(() => {
+    n.iconsLoaderFlag = !1, Al(n);
+  }));
+}
+function Yl(n, e) {
+  n.iconsToLoad ? n.iconsToLoad = n.iconsToLoad.concat(e).sort() : n.iconsToLoad = e, n.iconsQueueFlag || (n.iconsQueueFlag = !0, setTimeout(() => {
+    n.iconsQueueFlag = !1;
+    const { provider: t, prefix: i } = n, a = n.iconsToLoad;
+    delete n.iconsToLoad;
+    let s;
+    if (!a || !(s = ba(t)))
+      return;
+    s.prepare(t, i, a).forEach((o) => {
+      Il(t, o, (l) => {
+        if (typeof l != "object")
+          o.icons.forEach((c) => {
+            n.missing.add(c);
+          });
+        else
+          try {
+            const c = ja(
+              n,
+              l
+            );
+            if (!c.length)
+              return;
+            const h = n.pendingIcons;
+            h && c.forEach((d) => {
+              h.delete(d);
+            }), zl(n, l);
+          } catch (c) {
+            console.error(c);
+          }
+        _l(n);
+      });
+    });
+  }));
+}
+const Fl = (n, e) => {
+  const t = Ml(n, !0, Rr()), i = kl(t);
+  if (!i.pending.length) {
+    let l = !0;
+    return e && setTimeout(() => {
+      l && e(
+        i.loaded,
+        i.missing,
+        i.pending,
+        Hs
+      );
+    }), () => {
+      l = !1;
+    };
+  }
+  const a = /* @__PURE__ */ Object.create(null), s = [];
+  let r, o;
+  return i.pending.forEach((l) => {
+    const { provider: c, prefix: h } = l;
+    if (h === o && c === r)
+      return;
+    r = c, o = h, s.push(mt(c, h));
+    const d = a[c] || (a[c] = /* @__PURE__ */ Object.create(null));
+    d[h] || (d[h] = []);
+  }), i.pending.forEach((l) => {
+    const { provider: c, prefix: h, name: d } = l, u = mt(c, h), g = u.pendingIcons || (u.pendingIcons = /* @__PURE__ */ new Set());
+    g.has(d) || (g.add(d), a[c][h].push(d));
+  }), s.forEach((l) => {
+    const { provider: c, prefix: h } = l;
+    a[c][h].length && Yl(l, a[c][h]);
+  }), e ? Sl(e, i, s) : Hs;
+};
+function Xl(n, e) {
+  const t = {
+    ...n
+  };
+  for (const i in e) {
+    const a = e[i], s = typeof a;
+    i in Or ? (a === null || a && (s === "string" || s === "number")) && (t[i] = a) : s === typeof t[i] && (t[i] = i === "rotate" ? a % 4 : a);
+  }
+  return t;
+}
+const Hl = /[\s,]+/;
+function Dl(n, e) {
+  e.split(Hl).forEach((t) => {
+    switch (t.trim()) {
+      case "horizontal":
+        n.hFlip = !0;
+        break;
+      case "vertical":
+        n.vFlip = !0;
+        break;
+    }
+  });
+}
+function Nl(n, e = 0) {
+  const t = n.replace(/^-?[0-9.]*/, "");
+  function i(a) {
+    for (; a < 0; )
+      a += 4;
+    return a % 4;
+  }
+  if (t === "") {
+    const a = parseInt(n);
+    return isNaN(a) ? 0 : i(a);
+  } else if (t !== n) {
+    let a = 0;
+    switch (t) {
+      case "%":
+        a = 25;
+        break;
+      case "deg":
+        a = 90;
+    }
+    if (a) {
+      let s = parseFloat(n.slice(0, n.length - t.length));
+      return isNaN(s) ? 0 : (s = s / a, s % 1 === 0 ? i(s) : 0);
+    }
+  }
+  return e;
+}
+function Wl(n, e) {
+  let t = n.indexOf("xlink:") === -1 ? "" : ' xmlns:xlink="http://www.w3.org/1999/xlink"';
+  for (const i in e)
+    t += " " + i + '="' + e[i] + '"';
+  return '<svg xmlns="http://www.w3.org/2000/svg"' + t + ">" + n + "</svg>";
+}
+function Bl(n) {
+  return n.replace(/"/g, "'").replace(/%/g, "%25").replace(/#/g, "%23").replace(/</g, "%3C").replace(/>/g, "%3E").replace(/\s+/g, " ");
+}
+function jl(n) {
+  return "data:image/svg+xml," + Bl(n);
+}
+function Gl(n) {
+  return 'url("' + jl(n) + '")';
+}
+let qt;
+function Vl() {
+  try {
+    qt = window.trustedTypes.createPolicy("iconify", {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      createHTML: (n) => n
+    });
+  } catch {
+    qt = null;
+  }
+}
+function Ul(n) {
+  return qt === void 0 && Vl(), qt ? qt.createHTML(n) : n;
+}
+const Br = {
+  ...zr,
+  inline: !1
+}, ql = {
+  xmlns: "http://www.w3.org/2000/svg",
+  xmlnsXlink: "http://www.w3.org/1999/xlink",
+  "aria-hidden": !0,
+  role: "img"
+}, $l = {
+  display: "inline-block"
+}, wa = {
+  backgroundColor: "currentColor"
+}, jr = {
+  backgroundColor: "transparent"
+}, Ds = {
+  Image: "var(--svg)",
+  Repeat: "no-repeat",
+  Size: "100% 100%"
+}, Ns = {
+  WebkitMask: wa,
+  mask: wa,
+  background: jr
+};
+for (const n in Ns) {
+  const e = Ns[n];
+  for (const t in Ds)
+    e[n + t] = Ds[t];
+}
+const Zl = {
+  ...Br,
+  inline: !0
+};
+function Ws(n) {
+  return n + (n.match(/^[-0-9.]+$/) ? "px" : "");
+}
+const Jl = (n, e, t, i) => {
+  const a = t ? Zl : Br, s = Xl(a, e), r = e.mode || "svg", o = {}, l = e.style || {}, c = {
+    ...r === "svg" ? ql : {},
+    ref: i
+  };
+  for (let b in e) {
+    const m = e[b];
+    if (m !== void 0)
+      switch (b) {
+        case "icon":
+        case "style":
+        case "children":
+        case "onLoad":
+        case "mode":
+        case "_ref":
+        case "_inline":
+          break;
+        case "inline":
+        case "hFlip":
+        case "vFlip":
+          s[b] = m === !0 || m === "true" || m === 1;
+          break;
+        case "flip":
+          typeof m == "string" && Dl(s, m);
+          break;
+        case "color":
+          o.color = m;
+          break;
+        case "rotate":
+          typeof m == "string" ? s[b] = Nl(m) : typeof m == "number" && (s[b] = m);
+          break;
+        case "ariaHidden":
+        case "aria-hidden":
+          m !== !0 && m !== "true" && delete c["aria-hidden"];
+          break;
+        default:
+          a[b] === void 0 && (c[b] = m);
+      }
+  }
+  const h = ll(n, s), d = h.attributes;
+  if (s.inline && (o.verticalAlign = "-0.125em"), r === "svg") {
+    c.style = {
+      ...o,
+      ...l
+    }, Object.assign(c, d);
+    let b = 0, m = e.id;
+    return typeof m == "string" && (m = m.replace(/-/g, "_")), c.dangerouslySetInnerHTML = {
+      __html: Ul(ul(h.body, m ? () => m + "ID" + b++ : "iconifyReact"))
+    }, Ee.createElement("svg", c);
+  }
+  const { body: u, width: g, height: p } = n, f = r === "mask" || (r === "bg" ? !1 : u.indexOf("currentColor") !== -1), x = Wl(u, {
+    ...d,
+    width: g + "",
+    height: p + ""
+  });
+  return c.style = {
+    ...o,
+    "--svg": Gl(x),
+    width: Ws(d.width),
+    height: Ws(d.height),
+    ...$l,
+    ...f ? wa : jr,
+    ...l
+  }, Ee.createElement("span", c);
+};
+Rr(!0);
+gl("", wl);
+if (typeof document < "u" && typeof window < "u") {
+  Wr();
+  const n = window;
+  if (n.IconifyPreload !== void 0) {
+    const e = n.IconifyPreload, t = "Invalid IconifyPreload syntax.";
+    typeof e == "object" && e !== null && (e instanceof Array ? e : [e]).forEach((i) => {
+      try {
+        // Check if item is an object and not null/array
+        (typeof i != "object" || i === null || i instanceof Array || // Check for 'icons' and 'prefix'
+        typeof i.icons != "object" || typeof i.prefix != "string" || // Add icon set
+        !sl(i)) && console.error(t);
+      } catch {
+        console.error(t);
+      }
+    });
+  }
+  if (n.IconifyProviders !== void 0) {
+    const e = n.IconifyProviders;
+    if (typeof e == "object" && e !== null)
+      for (let t in e) {
+        const i = "IconifyProviders[" + t + "] is invalid.";
+        try {
+          const a = e[t];
+          if (typeof a != "object" || !a || a.resources === void 0)
+            continue;
+          fl(t, a) || console.error(i);
+        } catch {
+          console.error(i);
+        }
+      }
+  }
+}
+class Gr extends Ee.Component {
+  constructor(e) {
+    super(e), this.state = {
+      // Render placeholder before component is mounted
+      icon: null
+    };
+  }
+  /**
+   * Abort loading icon
+   */
+  _abortLoading() {
+    this._loading && (this._loading.abort(), this._loading = null);
+  }
+  /**
+   * Update state
+   */
+  _setData(e) {
+    this.state.icon !== e && this.setState({
+      icon: e
+    });
+  }
+  /**
+   * Check if icon should be loaded
+   */
+  _checkIcon(e) {
+    const t = this.state, i = this.props.icon;
+    if (typeof i == "object" && i !== null && typeof i.body == "string") {
+      this._icon = "", this._abortLoading(), (e || t.icon === null) && this._setData({
+        data: i
+      });
+      return;
+    }
+    let a;
+    if (typeof i != "string" || (a = Ei(i, !1, !0)) === null) {
+      this._abortLoading(), this._setData(null);
+      return;
+    }
+    const s = il(a);
+    if (!s) {
+      (!this._loading || this._loading.name !== i) && (this._abortLoading(), this._icon = "", this._setData(null), s !== null && (this._loading = {
+        name: i,
+        abort: Fl([a], this._checkIcon.bind(this, !1))
+      }));
+      return;
+    }
+    if (this._icon !== i || t.icon === null) {
+      this._abortLoading(), this._icon = i;
+      const r = ["iconify"];
+      a.prefix !== "" && r.push("iconify--" + a.prefix), a.provider !== "" && r.push("iconify--" + a.provider), this._setData({
+        data: s,
+        classes: r
+      }), this.props.onLoad && this.props.onLoad(i);
+    }
+  }
+  /**
+   * Component mounted
+   */
+  componentDidMount() {
+    this._checkIcon(!1);
+  }
+  /**
+   * Component updated
+   */
+  componentDidUpdate(e) {
+    e.icon !== this.props.icon && this._checkIcon(!0);
+  }
+  /**
+   * Abort loading
+   */
+  componentWillUnmount() {
+    this._abortLoading();
+  }
+  /**
+   * Render
+   */
+  render() {
+    const e = this.props, t = this.state.icon;
+    if (t === null)
+      return e.children ? e.children : Ee.createElement("span", {});
+    let i = e;
+    return t.classes && (i = {
+      ...e,
+      className: (typeof e.className == "string" ? e.className + " " : "") + t.classes.join(" ")
+    }), Jl({
+      ...Ba,
+      ...t.data
+    }, i, e._inline, e._ref);
+  }
+}
+const Si = Ee.forwardRef(function(e, t) {
+  const i = {
+    ...e,
+    _ref: t,
+    _inline: !1
+  };
+  return Ee.createElement(Gr, i);
+});
+Ee.forwardRef(function(e, t) {
+  const i = {
+    ...e,
+    _ref: t,
+    _inline: !0
+  };
+  return Ee.createElement(Gr, i);
+});
+const Qt = ({
+  icon: n,
+  className: e,
+  size: t,
+  color: i,
+  rotate: a,
+  flip: s,
+  spin: r,
+  ...o
+}) => /* @__PURE__ */ ee.jsx(
+  Si,
+  {
+    icon: n,
+    className: Re(
+      r && "animate-spin",
+      e
+    ),
+    style: {
+      color: i,
+      transform: `rotate(${a || 0}deg)`
+    },
+    height: t,
+    width: t,
+    flip: s,
+    ...o
+  }
+), Kl = Rt(
+  "w-full rounded-md border bg-white px-3 py-2 text-sm ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+  {
+    variants: {
+      variant: {
+        default: "border-neutral-200 hover:border-neutral-300",
+        error: "border-danger-500 hover:border-danger-600 focus-visible:ring-danger-500",
+        success: "border-success-500 hover:border-success-600 focus-visible:ring-success-500"
+      },
+      size: {
+        sm: "px-2 py-1 text-sm",
+        md: "px-3 py-2 text-base",
+        lg: "px-4 py-3 text-lg"
+      }
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "md"
+    }
+  }
+), Ql = Ee.forwardRef(
+  ({
+    className: n,
+    variant: e,
+    size: t,
+    options: i,
+    label: a,
+    error: s,
+    helperText: r,
+    required: o,
+    placeholder: l,
+    ...c
+  }, h) => {
+    const d = Ee.useId();
+    return /* @__PURE__ */ ee.jsxs("div", { className: "w-full", children: [
+      a && /* @__PURE__ */ ee.jsxs(
+        "label",
+        {
+          htmlFor: d,
+          className: "mb-1.5 block text-sm font-medium text-neutral-900",
+          children: [
+            a,
+            o && /* @__PURE__ */ ee.jsx("span", { className: "text-danger-500", children: "*" })
+          ]
+        }
+      ),
+      /* @__PURE__ */ ee.jsxs("div", { className: "relative", children: [
+        /* @__PURE__ */ ee.jsxs(
+          "select",
+          {
+            id: d,
+            ref: h,
+            className: Re(
+              Kl({ variant: s ? "error" : e, size: t }),
+              "appearance-none pr-10",
+              n
+            ),
+            "aria-describedby": s ? `${d}-error` : r ? `${d}-helper` : void 0,
+            ...c,
+            children: [
+              l && /* @__PURE__ */ ee.jsx("option", { value: "", disabled: !0, children: l }),
+              i.map((u) => /* @__PURE__ */ ee.jsx(
+                "option",
+                {
+                  value: u.value,
+                  disabled: u.disabled,
+                  children: u.label
+                },
+                u.value
+              ))
+            ]
+          }
+        ),
+        /* @__PURE__ */ ee.jsx("div", { className: "pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500", children: /* @__PURE__ */ ee.jsx(Qt, { icon: "mdi:chevron-down" }) })
+      ] }),
+      s && /* @__PURE__ */ ee.jsx("p", { className: "mt-1 text-sm text-danger-500", id: `${d}-error`, children: s }),
+      !s && r && /* @__PURE__ */ ee.jsx("p", { className: "mt-1 text-sm text-neutral-500", id: `${d}-helper`, children: r })
+    ] });
+  }
+);
+Ql.displayName = "Select";
+const ec = Rt(
+  "w-full rounded-md border bg-white px-3 py-2 text-sm ring-offset-white transition-colors placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+  {
+    variants: {
+      variant: {
+        default: "border-neutral-200 hover:border-neutral-300",
+        error: "border-danger-500 hover:border-danger-600 focus-visible:ring-danger-500",
+        success: "border-success-500 hover:border-success-600 focus-visible:ring-success-500"
+      },
+      inputSize: {
+        sm: "px-2 py-1 text-sm",
+        md: "px-3 py-2 text-base",
+        lg: "px-4 py-3 text-lg"
+      }
+    },
+    defaultVariants: {
+      variant: "default",
+      inputSize: "md"
+    }
+  }
+), tc = Ee.forwardRef(
+  ({
+    className: n,
+    variant: e,
+    size: t,
+    type: i = "text",
+    leftIcon: a,
+    rightIcon: s,
+    error: r,
+    helperText: o,
+    label: l,
+    required: c,
+    ...h
+  }, d) => {
+    const u = Ee.useId();
+    return /* @__PURE__ */ ee.jsxs("div", { className: "w-full", children: [
+      l && /* @__PURE__ */ ee.jsxs(
+        "label",
+        {
+          htmlFor: u,
+          className: "mb-1.5 block text-sm font-medium text-neutral-900",
+          children: [
+            l,
+            c && /* @__PURE__ */ ee.jsx("span", { className: "text-danger-500", children: "*" })
+          ]
+        }
+      ),
+      /* @__PURE__ */ ee.jsxs("div", { className: "relative", children: [
+        a && /* @__PURE__ */ ee.jsx("div", { className: "absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500", children: a }),
+        /* @__PURE__ */ ee.jsx(
+          "input",
+          {
+            id: u,
+            type: i,
+            ref: d,
+            className: Re(
+              ec({ variant: r ? "error" : e, inputSize: t }),
+              a && "pl-10",
+              s && "pr-10",
+              n
+            ),
+            "aria-describedby": r ? `${u}-error` : o ? `${u}-helper` : void 0,
+            ...h
+          }
+        ),
+        s && /* @__PURE__ */ ee.jsx("div", { className: "absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500", children: s })
+      ] }),
+      r && /* @__PURE__ */ ee.jsx("p", { className: "mt-1 text-sm text-danger-500", id: `${u}-error`, children: r }),
+      !r && o && /* @__PURE__ */ ee.jsx("p", { className: "mt-1 text-sm text-neutral-500", id: `${u}-helper`, children: o })
+    ] });
+  }
+);
+tc.displayName = "Input";
+const ic = {
+  active: {
+    bgColor: "bg-success-500",
+    label: "Active"
+  },
+  inactive: {
+    bgColor: "bg-default-400",
+    label: "Inactive"
+  },
+  pending: {
+    bgColor: "bg-warning-500",
+    label: "Pending"
+  },
+  warning: {
+    bgColor: "bg-warning-500",
+    label: "Warning"
+  },
+  error: {
+    bgColor: "bg-danger-500",
+    label: "Error"
+  }
+}, ac = {
+  sm: "w-2 h-2",
+  md: "w-3 h-3",
+  lg: "w-4 h-4"
+}, jh = ({
+  status: n,
+  size: e = "md",
+  withLabel: t = !1,
+  className: i
+}) => {
+  const { bgColor: a, label: s } = ic[n], r = ac[e];
+  return /* @__PURE__ */ ee.jsxs("div", { className: Re("flex items-center gap-2", i), children: [
+    /* @__PURE__ */ ee.jsx("div", { className: Re("rounded-full animate-pulse", a, r) }),
+    t && /* @__PURE__ */ ee.jsx("span", { className: "text-sm", children: s })
+  ] });
+}, Bs = ({
+  variant: n,
+  children: e,
+  className: t = "",
+  as: i = "div"
+}) => {
+  const a = "font-sans antialiased", s = {
+    // Large displays
+    display1: "text-6xl font-bold tracking-tight text-gray-900 leading-tight",
+    display2: "text-5xl font-bold tracking-tight text-gray-900 leading-tight",
+    // Headings
+    heading1: "text-4xl font-semibold text-gray-900 leading-tight",
+    heading2: "text-3xl font-semibold text-gray-900 leading-tight",
+    heading3: "text-2xl font-medium text-gray-900 leading-snug",
+    heading4: "text-xl font-medium text-gray-900 leading-snug",
+    // Subtitles
+    subtitle1: "text-lg font-medium text-gray-900 leading-relaxed",
+    subtitle2: "text-base font-medium text-gray-700 leading-relaxed",
+    // Body text
+    body1: "text-base font-normal text-gray-700 leading-relaxed",
+    body2: "text-sm font-normal text-gray-600 leading-relaxed",
+    // Utility text
+    caption: "text-xs font-medium text-gray-500 leading-normal",
+    // Original variants (maintained for backward compatibility)
+    label: "text-sm font-medium text-gray-600 leading-normal",
+    value: "text-xl font-semibold text-gray-900 leading-normal"
+  };
+  return /* @__PURE__ */ ee.jsx(i, { className: `${a} ${s[n]} ${t}`, children: e });
+}, sc = Rt(
+  "border bg-card text-card-foreground",
+  {
+    variants: {
+      variant: {
+        default: "border-border shadow-sm",
+        elevated: "border-border shadow-lg",
+        outline: "border-border bg-transparent",
+        ghost: "border-transparent bg-transparent"
+      },
+      padding: {
+        none: "p-0",
+        sm: "p-4",
+        md: "p-6",
+        lg: "p-8"
+      },
+      shadow: {
+        none: "",
+        sm: "shadow-sm",
+        md: "shadow-md",
+        lg: "shadow-lg",
+        xl: "shadow-xl"
+      },
+      rounded: {
+        none: "rounded-none",
+        sm: "rounded-sm",
+        md: "rounded-md",
+        lg: "rounded-lg",
+        xl: "rounded-xl",
+        full: "rounded-full"
+      }
+    },
+    defaultVariants: {
+      variant: "default",
+      padding: "md",
+      shadow: "sm",
+      rounded: "md"
+    }
+  }
+), Vr = Ee.forwardRef(
+  ({ className: n, variant: e, padding: t, shadow: i, rounded: a, asChild: s = !1, ...r }, o) => /* @__PURE__ */ ee.jsx(
+    "div",
+    {
+      className: Re(sc({ variant: e, padding: t, shadow: i, rounded: a, className: n })),
+      ref: o,
+      ...r
+    }
+  )
+);
+Vr.displayName = "Card";
+var Ur = {};
+/*!
+ * ApexCharts v4.7.0
+ * (c) 2018-2025 ApexCharts
+ * Released under the MIT License.
+ */
+function ka(n, e) {
+  (e == null || e > n.length) && (e = n.length);
+  for (var t = 0, i = Array(e); t < e; t++) i[t] = n[t];
+  return i;
+}
+function qr(n) {
+  if (n === void 0) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  return n;
+}
+function q(n, e) {
+  if (!(n instanceof e)) throw new TypeError("Cannot call a class as a function");
+}
+function js(n, e) {
+  for (var t = 0; t < e.length; t++) {
+    var i = e[t];
+    i.enumerable = i.enumerable || !1, i.configurable = !0, "value" in i && (i.writable = !0), Object.defineProperty(n, Jr(i.key), i);
+  }
+}
+function $(n, e, t) {
+  return e && js(n.prototype, e), t && js(n, t), Object.defineProperty(n, "prototype", { writable: !1 }), n;
+}
+function Vt(n, e) {
+  var t = typeof Symbol < "u" && n[Symbol.iterator] || n["@@iterator"];
+  if (!t) {
+    if (Array.isArray(n) || (t = Za(n)) || e) {
+      t && (n = t);
+      var i = 0, a = function() {
+      };
+      return { s: a, n: function() {
+        return i >= n.length ? { done: !0 } : { done: !1, value: n[i++] };
+      }, e: function(l) {
+        throw l;
+      }, f: a };
+    }
+    throw new TypeError(`Invalid attempt to iterate non-iterable instance.
+In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
+  }
+  var s, r = !0, o = !1;
+  return { s: function() {
+    t = t.call(n);
+  }, n: function() {
+    var l = t.next();
+    return r = l.done, l;
+  }, e: function(l) {
+    o = !0, s = l;
+  }, f: function() {
+    try {
+      r || t.return == null || t.return();
+    } finally {
+      if (o) throw s;
+    }
+  } };
+}
+function ni(n) {
+  var e = $r();
+  return function() {
+    var t, i = Li(n);
+    if (e) {
+      var a = Li(this).constructor;
+      t = Reflect.construct(i, arguments, a);
+    } else t = i.apply(this, arguments);
+    return function(s, r) {
+      if (r && (typeof r == "object" || typeof r == "function")) return r;
+      if (r !== void 0) throw new TypeError("Derived constructors may only return object or undefined");
+      return qr(s);
+    }(this, t);
+  };
+}
+function Mi(n, e, t) {
+  return (e = Jr(e)) in n ? Object.defineProperty(n, e, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : n[e] = t, n;
+}
+function Li(n) {
+  return Li = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function(e) {
+    return e.__proto__ || Object.getPrototypeOf(e);
+  }, Li(n);
+}
+function oi(n, e) {
+  if (typeof e != "function" && e !== null) throw new TypeError("Super expression must either be null or a function");
+  n.prototype = Object.create(e && e.prototype, { constructor: { value: n, writable: !0, configurable: !0 } }), Object.defineProperty(n, "prototype", { writable: !1 }), e && Aa(n, e);
+}
+function $r() {
+  try {
+    var n = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
+    }));
+  } catch {
+  }
+  return ($r = function() {
+    return !!n;
+  })();
+}
+function Gs(n, e) {
+  var t = Object.keys(n);
+  if (Object.getOwnPropertySymbols) {
+    var i = Object.getOwnPropertySymbols(n);
+    e && (i = i.filter(function(a) {
+      return Object.getOwnPropertyDescriptor(n, a).enumerable;
+    })), t.push.apply(t, i);
+  }
+  return t;
+}
+function N(n) {
+  for (var e = 1; e < arguments.length; e++) {
+    var t = arguments[e] != null ? arguments[e] : {};
+    e % 2 ? Gs(Object(t), !0).forEach(function(i) {
+      Mi(n, i, t[i]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(n, Object.getOwnPropertyDescriptors(t)) : Gs(Object(t)).forEach(function(i) {
+      Object.defineProperty(n, i, Object.getOwnPropertyDescriptor(t, i));
+    });
+  }
+  return n;
+}
+function Aa(n, e) {
+  return Aa = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function(t, i) {
+    return t.__proto__ = i, t;
+  }, Aa(n, e);
+}
+function Zr(n, e) {
+  return function(t) {
+    if (Array.isArray(t)) return t;
+  }(n) || function(t, i) {
+    var a = t == null ? null : typeof Symbol < "u" && t[Symbol.iterator] || t["@@iterator"];
+    if (a != null) {
+      var s, r, o, l, c = [], h = !0, d = !1;
+      try {
+        if (o = (a = a.call(t)).next, i === 0) {
+          if (Object(a) !== a) return;
+          h = !1;
+        } else for (; !(h = (s = o.call(a)).done) && (c.push(s.value), c.length !== i); h = !0) ;
+      } catch (u) {
+        d = !0, r = u;
+      } finally {
+        try {
+          if (!h && a.return != null && (l = a.return(), Object(l) !== l)) return;
+        } finally {
+          if (d) throw r;
+        }
+      }
+      return c;
+    }
+  }(n, e) || Za(n, e) || function() {
+    throw new TypeError(`Invalid attempt to destructure non-iterable instance.
+In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
+  }();
+}
+function Oe(n) {
+  return function(e) {
+    if (Array.isArray(e)) return ka(e);
+  }(n) || function(e) {
+    if (typeof Symbol < "u" && e[Symbol.iterator] != null || e["@@iterator"] != null) return Array.from(e);
+  }(n) || Za(n) || function() {
+    throw new TypeError(`Invalid attempt to spread non-iterable instance.
+In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
+  }();
+}
+function Jr(n) {
+  var e = function(t, i) {
+    if (typeof t != "object" || !t) return t;
+    var a = t[Symbol.toPrimitive];
+    if (a !== void 0) {
+      var s = a.call(t, i);
+      if (typeof s != "object") return s;
+      throw new TypeError("@@toPrimitive must return a primitive value.");
+    }
+    return (i === "string" ? String : Number)(t);
+  }(n, "string");
+  return typeof e == "symbol" ? e : e + "";
+}
+function Tt(n) {
+  return Tt = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(e) {
+    return typeof e;
+  } : function(e) {
+    return e && typeof Symbol == "function" && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : typeof e;
+  }, Tt(n);
+}
+function Za(n, e) {
+  if (n) {
+    if (typeof n == "string") return ka(n, e);
+    var t = {}.toString.call(n).slice(8, -1);
+    return t === "Object" && n.constructor && (t = n.constructor.name), t === "Map" || t === "Set" ? Array.from(n) : t === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? ka(n, e) : void 0;
+  }
+}
+var T = function() {
+  function n() {
+    q(this, n);
+  }
+  return $(n, [{ key: "shadeRGBColor", value: function(e, t) {
+    var i = t.split(","), a = e < 0 ? 0 : 255, s = e < 0 ? -1 * e : e, r = parseInt(i[0].slice(4), 10), o = parseInt(i[1], 10), l = parseInt(i[2], 10);
+    return "rgb(" + (Math.round((a - r) * s) + r) + "," + (Math.round((a - o) * s) + o) + "," + (Math.round((a - l) * s) + l) + ")";
+  } }, { key: "shadeHexColor", value: function(e, t) {
+    var i = parseInt(t.slice(1), 16), a = e < 0 ? 0 : 255, s = e < 0 ? -1 * e : e, r = i >> 16, o = i >> 8 & 255, l = 255 & i;
+    return "#" + (16777216 + 65536 * (Math.round((a - r) * s) + r) + 256 * (Math.round((a - o) * s) + o) + (Math.round((a - l) * s) + l)).toString(16).slice(1);
+  } }, { key: "shadeColor", value: function(e, t) {
+    return n.isColorHex(t) ? this.shadeHexColor(e, t) : this.shadeRGBColor(e, t);
+  } }], [{ key: "bind", value: function(e, t) {
+    return function() {
+      return e.apply(t, arguments);
+    };
+  } }, { key: "isObject", value: function(e) {
+    return e && Tt(e) === "object" && !Array.isArray(e) && e != null;
+  } }, { key: "is", value: function(e, t) {
+    return Object.prototype.toString.call(t) === "[object " + e + "]";
+  } }, { key: "isSafari", value: function() {
+    return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  } }, { key: "listToArray", value: function(e) {
+    var t, i = [];
+    for (t = 0; t < e.length; t++) i[t] = e[t];
+    return i;
+  } }, { key: "extend", value: function(e, t) {
+    var i = this;
+    typeof Object.assign != "function" && (Object.assign = function(s) {
+      if (s == null) throw new TypeError("Cannot convert undefined or null to object");
+      for (var r = Object(s), o = 1; o < arguments.length; o++) {
+        var l = arguments[o];
+        if (l != null) for (var c in l) l.hasOwnProperty(c) && (r[c] = l[c]);
+      }
+      return r;
+    });
+    var a = Object.assign({}, e);
+    return this.isObject(e) && this.isObject(t) && Object.keys(t).forEach(function(s) {
+      i.isObject(t[s]) && s in e ? a[s] = i.extend(e[s], t[s]) : Object.assign(a, Mi({}, s, t[s]));
+    }), a;
+  } }, { key: "extendArray", value: function(e, t) {
+    var i = [];
+    return e.map(function(a) {
+      i.push(n.extend(t, a));
+    }), e = i;
+  } }, { key: "monthMod", value: function(e) {
+    return e % 12;
+  } }, { key: "clone", value: function(e) {
+    var t, i = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : /* @__PURE__ */ new WeakMap();
+    if (e === null || Tt(e) !== "object") return e;
+    if (i.has(e)) return i.get(e);
+    if (Array.isArray(e)) {
+      t = [], i.set(e, t);
+      for (var a = 0; a < e.length; a++) t[a] = this.clone(e[a], i);
+    } else if (e instanceof Date) t = new Date(e.getTime());
+    else for (var s in t = {}, i.set(e, t), e) e.hasOwnProperty(s) && (t[s] = this.clone(e[s], i));
+    return t;
+  } }, { key: "log10", value: function(e) {
+    return Math.log(e) / Math.LN10;
+  } }, { key: "roundToBase10", value: function(e) {
+    return Math.pow(10, Math.floor(Math.log10(e)));
+  } }, { key: "roundToBase", value: function(e, t) {
+    return Math.pow(t, Math.floor(Math.log(e) / Math.log(t)));
+  } }, { key: "parseNumber", value: function(e) {
+    return e === null ? e : parseFloat(e);
+  } }, { key: "stripNumber", value: function(e) {
+    var t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 2;
+    return Number.isInteger(e) ? e : parseFloat(e.toPrecision(t));
+  } }, { key: "randomId", value: function() {
+    return (Math.random() + 1).toString(36).substring(4);
+  } }, { key: "noExponents", value: function(e) {
+    return e.toString().includes("e") ? Math.round(e) : e;
+  } }, { key: "elementExists", value: function(e) {
+    return !(!e || !e.isConnected);
+  } }, { key: "getDimensions", value: function(e) {
+    var t = getComputedStyle(e, null), i = e.clientHeight, a = e.clientWidth;
+    return i -= parseFloat(t.paddingTop) + parseFloat(t.paddingBottom), [a -= parseFloat(t.paddingLeft) + parseFloat(t.paddingRight), i];
+  } }, { key: "getBoundingClientRect", value: function(e) {
+    var t = e.getBoundingClientRect();
+    return { top: t.top, right: t.right, bottom: t.bottom, left: t.left, width: e.clientWidth, height: e.clientHeight, x: t.left, y: t.top };
+  } }, { key: "getLargestStringFromArr", value: function(e) {
+    return e.reduce(function(t, i) {
+      return Array.isArray(i) && (i = i.reduce(function(a, s) {
+        return a.length > s.length ? a : s;
+      })), t.length > i.length ? t : i;
+    }, 0);
+  } }, { key: "hexToRgba", value: function() {
+    var e = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : "#999999", t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 0.6;
+    e.substring(0, 1) !== "#" && (e = "#999999");
+    var i = e.replace("#", "");
+    i = i.match(new RegExp("(.{" + i.length / 3 + "})", "g"));
+    for (var a = 0; a < i.length; a++) i[a] = parseInt(i[a].length === 1 ? i[a] + i[a] : i[a], 16);
+    return t !== void 0 && i.push(t), "rgba(" + i.join(",") + ")";
+  } }, { key: "getOpacityFromRGBA", value: function(e) {
+    return parseFloat(e.replace(/^.*,(.+)\)/, "$1"));
+  } }, { key: "rgb2hex", value: function(e) {
+    return (e = e.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i)) && e.length === 4 ? "#" + ("0" + parseInt(e[1], 10).toString(16)).slice(-2) + ("0" + parseInt(e[2], 10).toString(16)).slice(-2) + ("0" + parseInt(e[3], 10).toString(16)).slice(-2) : "";
+  } }, { key: "isColorHex", value: function(e) {
+    return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)|(^#[0-9A-F]{8}$)/i.test(e);
+  } }, { key: "getPolygonPos", value: function(e, t) {
+    for (var i = [], a = 2 * Math.PI / t, s = 0; s < t; s++) {
+      var r = {};
+      r.x = e * Math.sin(s * a), r.y = -e * Math.cos(s * a), i.push(r);
+    }
+    return i;
+  } }, { key: "polarToCartesian", value: function(e, t, i, a) {
+    var s = (a - 90) * Math.PI / 180;
+    return { x: e + i * Math.cos(s), y: t + i * Math.sin(s) };
+  } }, { key: "escapeString", value: function(e) {
+    var t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "x", i = e.toString().slice();
+    return i = i.replace(/[` ~!@#$%^&*()|+\=?;:'",.<>{}[\]\\/]/gi, t);
+  } }, { key: "negToZero", value: function(e) {
+    return e < 0 ? 0 : e;
+  } }, { key: "moveIndexInArray", value: function(e, t, i) {
+    if (i >= e.length) for (var a = i - e.length + 1; a--; ) e.push(void 0);
+    return e.splice(i, 0, e.splice(t, 1)[0]), e;
+  } }, { key: "extractNumber", value: function(e) {
+    return parseFloat(e.replace(/[^\d.]*/g, ""));
+  } }, { key: "findAncestor", value: function(e, t) {
+    for (; (e = e.parentElement) && !e.classList.contains(t); ) ;
+    return e;
+  } }, { key: "setELstyles", value: function(e, t) {
+    for (var i in t) t.hasOwnProperty(i) && (e.style.key = t[i]);
+  } }, { key: "preciseAddition", value: function(e, t) {
+    var i = (String(e).split(".")[1] || "").length, a = (String(t).split(".")[1] || "").length, s = Math.pow(10, Math.max(i, a));
+    return (Math.round(e * s) + Math.round(t * s)) / s;
+  } }, { key: "isNumber", value: function(e) {
+    return !isNaN(e) && parseFloat(Number(e)) === e && !isNaN(parseInt(e, 10));
+  } }, { key: "isFloat", value: function(e) {
+    return Number(e) === e && e % 1 != 0;
+  } }, { key: "isMsEdge", value: function() {
+    var e = window.navigator.userAgent, t = e.indexOf("Edge/");
+    return t > 0 && parseInt(e.substring(t + 5, e.indexOf(".", t)), 10);
+  } }, { key: "getGCD", value: function(e, t) {
+    var i = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : 7, a = Math.pow(10, i - Math.floor(Math.log10(Math.max(e, t))));
+    for (e = Math.round(Math.abs(e) * a), t = Math.round(Math.abs(t) * a); t; ) {
+      var s = t;
+      t = e % t, e = s;
+    }
+    return e / a;
+  } }, { key: "getPrimeFactors", value: function(e) {
+    for (var t = [], i = 2; e >= 2; ) e % i == 0 ? (t.push(i), e /= i) : i++;
+    return t;
+  } }, { key: "mod", value: function(e, t) {
+    var i = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : 7, a = Math.pow(10, i - Math.floor(Math.log10(Math.max(e, t))));
+    return (e = Math.round(Math.abs(e) * a)) % (t = Math.round(Math.abs(t) * a)) / a;
+  } }]), n;
+}(), zt = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w;
+  }
+  return $(n, [{ key: "animateLine", value: function(e, t, i, a) {
+    e.attr(t).animate(a).attr(i);
+  } }, { key: "animateMarker", value: function(e, t, i, a) {
+    e.attr({ opacity: 0 }).animate(t).attr({ opacity: 1 }).after(function() {
+      a();
+    });
+  } }, { key: "animateRect", value: function(e, t, i, a, s) {
+    e.attr(t).animate(a).attr(i).after(function() {
+      return s();
+    });
+  } }, { key: "animatePathsGradually", value: function(e) {
+    var t = e.el, i = e.realIndex, a = e.j, s = e.fill, r = e.pathFrom, o = e.pathTo, l = e.speed, c = e.delay, h = this.w, d = 0;
+    h.config.chart.animations.animateGradually.enabled && (d = h.config.chart.animations.animateGradually.delay), h.config.chart.animations.dynamicAnimation.enabled && h.globals.dataChanged && h.config.chart.type !== "bar" && (d = 0), this.morphSVG(t, i, a, h.config.chart.type !== "line" || h.globals.comboCharts ? s : "stroke", r, o, l, c * d);
+  } }, { key: "showDelayedElements", value: function() {
+    this.w.globals.delayedElements.forEach(function(e) {
+      var t = e.el;
+      t.classList.remove("apexcharts-element-hidden"), t.classList.add("apexcharts-hidden-element-shown");
+    });
+  } }, { key: "animationCompleted", value: function(e) {
+    var t = this.w;
+    t.globals.animationEnded || (t.globals.animationEnded = !0, this.showDelayedElements(), typeof t.config.chart.events.animationEnd == "function" && t.config.chart.events.animationEnd(this.ctx, { el: e, w: t }));
+  } }, { key: "morphSVG", value: function(e, t, i, a, s, r, o, l) {
+    var c = this, h = this.w;
+    s || (s = e.attr("pathFrom")), r || (r = e.attr("pathTo"));
+    var d = function(u) {
+      return h.config.chart.type === "radar" && (o = 1), "M 0 ".concat(h.globals.gridHeight);
+    };
+    (!s || s.indexOf("undefined") > -1 || s.indexOf("NaN") > -1) && (s = d()), (!r.trim() || r.indexOf("undefined") > -1 || r.indexOf("NaN") > -1) && (r = d()), h.globals.shouldAnimate || (o = 1), e.plot(s).animate(1, l).plot(s).animate(o, l).plot(r).after(function() {
+      T.isNumber(i) ? i === h.globals.series[h.globals.maxValsInArrayIndex].length - 2 && h.globals.shouldAnimate && c.animationCompleted(e) : a !== "none" && h.globals.shouldAnimate && (!h.globals.comboCharts && t === h.globals.series.length - 1 || h.globals.comboCharts) && c.animationCompleted(e), c.showDelayedElements();
+    });
+  } }]), n;
+}();
+const Ca = {}, Kr = [];
+function ce(n, e) {
+  if (Array.isArray(n)) for (const t of n) ce(t, e);
+  else if (typeof n != "object") Qr(Object.getOwnPropertyNames(e)), Ca[n] = Object.assign(Ca[n] || {}, e);
+  else for (const t in n) ce(t, n[t]);
+}
+function We(n) {
+  return Ca[n] || {};
+}
+function Qr(n) {
+  Kr.push(...n);
+}
+function Ja(n, e) {
+  let t;
+  const i = n.length, a = [];
+  for (t = 0; t < i; t++) a.push(e(n[t]));
+  return a;
+}
+function Bi(n) {
+  return n % 360 * Math.PI / 180;
+}
+function _t(n) {
+  return n.charAt(0).toUpperCase() + n.slice(1);
+}
+function Yt(n, e, t, i) {
+  return e != null && t != null || (i = i || n.bbox(), e == null ? e = i.width / i.height * t : t == null && (t = i.height / i.width * e)), { width: e, height: t };
+}
+function Sa(n, e) {
+  const t = n.origin;
+  let i = n.ox != null ? n.ox : n.originX != null ? n.originX : "center", a = n.oy != null ? n.oy : n.originY != null ? n.originY : "center";
+  t != null && ([i, a] = Array.isArray(t) ? t : typeof t == "object" ? [t.x, t.y] : [t, t]);
+  const s = typeof i == "string", r = typeof a == "string";
+  if (s || r) {
+    const { height: o, width: l, x: c, y: h } = e.bbox();
+    s && (i = i.includes("left") ? c : i.includes("right") ? c + l : c + l / 2), r && (a = a.includes("top") ? h : a.includes("bottom") ? h + o : h + o / 2);
+  }
+  return [i, a];
+}
+const rc = /* @__PURE__ */ new Set(["desc", "metadata", "title"]), Ma = (n) => rc.has(n.nodeName), en = (n, e, t = {}) => {
+  const i = { ...e };
+  for (const a in i) i[a].valueOf() === t[a] && delete i[a];
+  Object.keys(i).length ? n.node.setAttribute("data-svgjs", JSON.stringify(i)) : (n.node.removeAttribute("data-svgjs"), n.node.removeAttribute("svgjs:data"));
+}, Ka = "http://www.w3.org/2000/svg", ji = "http://www.w3.org/2000/xmlns/", Ft = "http://www.w3.org/1999/xlink", ue = { window: typeof window > "u" ? null : window, document: typeof document > "u" ? null : document };
+function li() {
+  return ue.window;
+}
+let Qa = class {
+};
+const bt = {}, es = "___SYMBOL___ROOT___";
+function ei(n, e = Ka) {
+  return ue.document.createElementNS(e, n);
+}
+function He(n, e = !1) {
+  if (n instanceof Qa) return n;
+  if (typeof n == "object") return Gi(n);
+  if (n == null) return new bt[es]();
+  if (typeof n == "string" && n.charAt(0) !== "<") return Gi(ue.document.querySelector(n));
+  const t = e ? ue.document.createElement("div") : ei("svg");
+  return t.innerHTML = n, n = Gi(t.firstChild), t.removeChild(t.firstChild), n;
+}
+function Ae(n, e) {
+  return e && (e instanceof ue.window.Node || e.ownerDocument && e instanceof e.ownerDocument.defaultView.Node) ? e : ei(n);
+}
+function Ue(n) {
+  if (!n) return null;
+  if (n.instance instanceof Qa) return n.instance;
+  if (n.nodeName === "#document-fragment") return new bt.Fragment(n);
+  let e = _t(n.nodeName || "Dom");
+  return e === "LinearGradient" || e === "RadialGradient" ? e = "Gradient" : bt[e] || (e = "Dom"), new bt[e](n);
+}
+let Gi = Ue;
+function ge(n, e = n.name, t = !1) {
+  return bt[e] = n, t && (bt[es] = n), Qr(Object.getOwnPropertyNames(n.prototype)), n;
+}
+let nc = 1e3;
+function tn(n) {
+  return "Svgjs" + _t(n) + nc++;
+}
+function an(n) {
+  for (let e = n.children.length - 1; e >= 0; e--) an(n.children[e]);
+  return n.id && (n.id = tn(n.nodeName)), n;
+}
+function re(n, e) {
+  let t, i;
+  for (i = (n = Array.isArray(n) ? n : [n]).length - 1; i >= 0; i--) for (t in e) n[i].prototype[t] = e[t];
+}
+function ke(n) {
+  return function(...e) {
+    const t = e[e.length - 1];
+    return !t || t.constructor !== Object || t instanceof Array ? n.apply(this, e) : n.apply(this, e.slice(0, -1)).attr(t);
+  };
+}
+ce("Dom", { siblings: function() {
+  return this.parent().children();
+}, position: function() {
+  return this.parent().index(this);
+}, next: function() {
+  return this.siblings()[this.position() + 1];
+}, prev: function() {
+  return this.siblings()[this.position() - 1];
+}, forward: function() {
+  const n = this.position();
+  return this.parent().add(this.remove(), n + 1), this;
+}, backward: function() {
+  const n = this.position();
+  return this.parent().add(this.remove(), n ? n - 1 : 0), this;
+}, front: function() {
+  return this.parent().add(this.remove()), this;
+}, back: function() {
+  return this.parent().add(this.remove(), 0), this;
+}, before: function(n) {
+  (n = He(n)).remove();
+  const e = this.position();
+  return this.parent().add(n, e), this;
+}, after: function(n) {
+  (n = He(n)).remove();
+  const e = this.position();
+  return this.parent().add(n, e + 1), this;
+}, insertBefore: function(n) {
+  return (n = He(n)).before(this), this;
+}, insertAfter: function(n) {
+  return (n = He(n)).after(this), this;
+} });
+const sn = /^([+-]?(\d+(\.\d*)?|\.\d+)(e[+-]?\d+)?)([a-z%]*)$/i, oc = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i, lc = /rgb\((\d+),(\d+),(\d+)\)/, cc = /(#[a-z_][a-z0-9\-_]*)/i, hc = /\)\s*,?\s*/, dc = /\s/g, Vs = /^#[a-f0-9]{3}$|^#[a-f0-9]{6}$/i, Us = /^rgb\(/, qs = /^(\s+)?$/, $s = /^[+-]?(\d+(\.\d*)?|\.\d+)(e[+-]?\d+)?$/i, uc = /\.(jpg|jpeg|png|gif|svg)(\?[^=]+.*)?/i, it = /[\s,]+/, ts = /[MLHVCSQTAZ]/i;
+function gc(n) {
+  const e = Math.round(n), t = Math.max(0, Math.min(255, e)).toString(16);
+  return t.length === 1 ? "0" + t : t;
+}
+function Ct(n, e) {
+  for (let t = e.length; t--; ) if (n[e[t]] == null) return !1;
+  return !0;
+}
+function Vi(n, e, t) {
+  return t < 0 && (t += 1), t > 1 && (t -= 1), t < 1 / 6 ? n + 6 * (e - n) * t : t < 0.5 ? e : t < 2 / 3 ? n + (e - n) * (2 / 3 - t) * 6 : n;
+}
+ce("Dom", { classes: function() {
+  const n = this.attr("class");
+  return n == null ? [] : n.trim().split(it);
+}, hasClass: function(n) {
+  return this.classes().indexOf(n) !== -1;
+}, addClass: function(n) {
+  if (!this.hasClass(n)) {
+    const e = this.classes();
+    e.push(n), this.attr("class", e.join(" "));
+  }
+  return this;
+}, removeClass: function(n) {
+  return this.hasClass(n) && this.attr("class", this.classes().filter(function(e) {
+    return e !== n;
+  }).join(" ")), this;
+}, toggleClass: function(n) {
+  return this.hasClass(n) ? this.removeClass(n) : this.addClass(n);
+} }), ce("Dom", { css: function(n, e) {
+  const t = {};
+  if (arguments.length === 0) return this.node.style.cssText.split(/\s*;\s*/).filter(function(i) {
+    return !!i.length;
+  }).forEach(function(i) {
+    const a = i.split(/\s*:\s*/);
+    t[a[0]] = a[1];
+  }), t;
+  if (arguments.length < 2) {
+    if (Array.isArray(n)) {
+      for (const i of n) {
+        const a = i;
+        t[i] = this.node.style.getPropertyValue(a);
+      }
+      return t;
+    }
+    if (typeof n == "string") return this.node.style.getPropertyValue(n);
+    if (typeof n == "object") for (const i in n) this.node.style.setProperty(i, n[i] == null || qs.test(n[i]) ? "" : n[i]);
+  }
+  return arguments.length === 2 && this.node.style.setProperty(n, e == null || qs.test(e) ? "" : e), this;
+}, show: function() {
+  return this.css("display", "");
+}, hide: function() {
+  return this.css("display", "none");
+}, visible: function() {
+  return this.css("display") !== "none";
+} }), ce("Dom", { data: function(n, e, t) {
+  if (n == null) return this.data(Ja(function(i, a) {
+    let s;
+    const r = i.length, o = [];
+    for (s = 0; s < r; s++) a(i[s]) && o.push(i[s]);
+    return o;
+  }(this.node.attributes, (i) => i.nodeName.indexOf("data-") === 0), (i) => i.nodeName.slice(5)));
+  if (n instanceof Array) {
+    const i = {};
+    for (const a of n) i[a] = this.data(a);
+    return i;
+  }
+  if (typeof n == "object") for (e in n) this.data(e, n[e]);
+  else if (arguments.length < 2) try {
+    return JSON.parse(this.attr("data-" + n));
+  } catch {
+    return this.attr("data-" + n);
+  }
+  else this.attr("data-" + n, e === null ? null : t === !0 || typeof e == "string" || typeof e == "number" ? e : JSON.stringify(e));
+  return this;
+} }), ce("Dom", { remember: function(n, e) {
+  if (typeof arguments[0] == "object") for (const t in n) this.remember(t, n[t]);
+  else {
+    if (arguments.length === 1) return this.memory()[n];
+    this.memory()[n] = e;
+  }
+  return this;
+}, forget: function() {
+  if (arguments.length === 0) this._memory = {};
+  else for (let n = arguments.length - 1; n >= 0; n--) delete this.memory()[arguments[n]];
+  return this;
+}, memory: function() {
+  return this._memory = this._memory || {};
+} });
+class ye {
+  constructor(...e) {
+    this.init(...e);
+  }
+  static isColor(e) {
+    return e && (e instanceof ye || this.isRgb(e) || this.test(e));
+  }
+  static isRgb(e) {
+    return e && typeof e.r == "number" && typeof e.g == "number" && typeof e.b == "number";
+  }
+  static random(e = "vibrant", t) {
+    const { random: i, round: a, sin: s, PI: r } = Math;
+    if (e === "vibrant") {
+      const o = 24 * i() + 57, l = 38 * i() + 45, c = 360 * i();
+      return new ye(o, l, c, "lch");
+    }
+    if (e === "sine") {
+      const o = a(80 * s(2 * r * (t = t ?? i()) / 0.5 + 0.01) + 150), l = a(50 * s(2 * r * t / 0.5 + 4.6) + 200), c = a(100 * s(2 * r * t / 0.5 + 2.3) + 150);
+      return new ye(o, l, c);
+    }
+    if (e === "pastel") {
+      const o = 8 * i() + 86, l = 17 * i() + 9, c = 360 * i();
+      return new ye(o, l, c, "lch");
+    }
+    if (e === "dark") {
+      const o = 10 + 10 * i(), l = 50 * i() + 86, c = 360 * i();
+      return new ye(o, l, c, "lch");
+    }
+    if (e === "rgb") {
+      const o = 255 * i(), l = 255 * i(), c = 255 * i();
+      return new ye(o, l, c);
+    }
+    if (e === "lab") {
+      const o = 100 * i(), l = 256 * i() - 128, c = 256 * i() - 128;
+      return new ye(o, l, c, "lab");
+    }
+    if (e === "grey") {
+      const o = 255 * i();
+      return new ye(o, o, o);
+    }
+    throw new Error("Unsupported random color mode");
+  }
+  static test(e) {
+    return typeof e == "string" && (Vs.test(e) || Us.test(e));
+  }
+  cmyk() {
+    const { _a: e, _b: t, _c: i } = this.rgb(), [a, s, r] = [e, t, i].map((l) => l / 255), o = Math.min(1 - a, 1 - s, 1 - r);
+    return o === 1 ? new ye(0, 0, 0, 1, "cmyk") : new ye((1 - a - o) / (1 - o), (1 - s - o) / (1 - o), (1 - r - o) / (1 - o), o, "cmyk");
+  }
+  hsl() {
+    const { _a: e, _b: t, _c: i } = this.rgb(), [a, s, r] = [e, t, i].map((u) => u / 255), o = Math.max(a, s, r), l = Math.min(a, s, r), c = (o + l) / 2, h = o === l, d = o - l;
+    return new ye(360 * (h ? 0 : o === a ? ((s - r) / d + (s < r ? 6 : 0)) / 6 : o === s ? ((r - a) / d + 2) / 6 : o === r ? ((a - s) / d + 4) / 6 : 0), 100 * (h ? 0 : c > 0.5 ? d / (2 - o - l) : d / (o + l)), 100 * c, "hsl");
+  }
+  init(e = 0, t = 0, i = 0, a = 0, s = "rgb") {
+    if (e = e || 0, this.space) for (const d in this.space) delete this[this.space[d]];
+    if (typeof e == "number") s = typeof a == "string" ? a : s, a = typeof a == "string" ? 0 : a, Object.assign(this, { _a: e, _b: t, _c: i, _d: a, space: s });
+    else if (e instanceof Array) this.space = t || (typeof e[3] == "string" ? e[3] : e[4]) || "rgb", Object.assign(this, { _a: e[0], _b: e[1], _c: e[2], _d: e[3] || 0 });
+    else if (e instanceof Object) {
+      const d = function(u, g) {
+        const p = Ct(u, "rgb") ? { _a: u.r, _b: u.g, _c: u.b, _d: 0, space: "rgb" } : Ct(u, "xyz") ? { _a: u.x, _b: u.y, _c: u.z, _d: 0, space: "xyz" } : Ct(u, "hsl") ? { _a: u.h, _b: u.s, _c: u.l, _d: 0, space: "hsl" } : Ct(u, "lab") ? { _a: u.l, _b: u.a, _c: u.b, _d: 0, space: "lab" } : Ct(u, "lch") ? { _a: u.l, _b: u.c, _c: u.h, _d: 0, space: "lch" } : Ct(u, "cmyk") ? { _a: u.c, _b: u.m, _c: u.y, _d: u.k, space: "cmyk" } : { _a: 0, _b: 0, _c: 0, space: "rgb" };
+        return p.space = g || p.space, p;
+      }(e, t);
+      Object.assign(this, d);
+    } else if (typeof e == "string") if (Us.test(e)) {
+      const d = e.replace(dc, ""), [u, g, p] = lc.exec(d).slice(1, 4).map((f) => parseInt(f));
+      Object.assign(this, { _a: u, _b: g, _c: p, _d: 0, space: "rgb" });
+    } else {
+      if (!Vs.test(e)) throw Error("Unsupported string format, can't construct Color");
+      {
+        const d = (f) => parseInt(f, 16), [, u, g, p] = oc.exec(function(f) {
+          return f.length === 4 ? ["#", f.substring(1, 2), f.substring(1, 2), f.substring(2, 3), f.substring(2, 3), f.substring(3, 4), f.substring(3, 4)].join("") : f;
+        }(e)).map(d);
+        Object.assign(this, { _a: u, _b: g, _c: p, _d: 0, space: "rgb" });
+      }
+    }
+    const { _a: r, _b: o, _c: l, _d: c } = this, h = this.space === "rgb" ? { r, g: o, b: l } : this.space === "xyz" ? { x: r, y: o, z: l } : this.space === "hsl" ? { h: r, s: o, l } : this.space === "lab" ? { l: r, a: o, b: l } : this.space === "lch" ? { l: r, c: o, h: l } : this.space === "cmyk" ? { c: r, m: o, y: l, k: c } : {};
+    Object.assign(this, h);
+  }
+  lab() {
+    const { x: e, y: t, z: i } = this.xyz();
+    return new ye(116 * t - 16, 500 * (e - t), 200 * (t - i), "lab");
+  }
+  lch() {
+    const { l: e, a: t, b: i } = this.lab(), a = Math.sqrt(t ** 2 + i ** 2);
+    let s = 180 * Math.atan2(i, t) / Math.PI;
+    return s < 0 && (s *= -1, s = 360 - s), new ye(e, a, s, "lch");
+  }
+  rgb() {
+    if (this.space === "rgb") return this;
+    if ((e = this.space) === "lab" || e === "xyz" || e === "lch") {
+      let { x: t, y: i, z: a } = this;
+      if (this.space === "lab" || this.space === "lch") {
+        let { l: g, a: p, b: f } = this;
+        if (this.space === "lch") {
+          const { c: k, h: A } = this, C = Math.PI / 180;
+          p = k * Math.cos(C * A), f = k * Math.sin(C * A);
+        }
+        const x = (g + 16) / 116, b = p / 500 + x, m = x - f / 200, w = 16 / 116, y = 8856e-6, v = 7.787;
+        t = 0.95047 * (b ** 3 > y ? b ** 3 : (b - w) / v), i = 1 * (x ** 3 > y ? x ** 3 : (x - w) / v), a = 1.08883 * (m ** 3 > y ? m ** 3 : (m - w) / v);
+      }
+      const s = 3.2406 * t + -1.5372 * i + -0.4986 * a, r = -0.9689 * t + 1.8758 * i + 0.0415 * a, o = 0.0557 * t + -0.204 * i + 1.057 * a, l = Math.pow, c = 31308e-7, h = s > c ? 1.055 * l(s, 1 / 2.4) - 0.055 : 12.92 * s, d = r > c ? 1.055 * l(r, 1 / 2.4) - 0.055 : 12.92 * r, u = o > c ? 1.055 * l(o, 1 / 2.4) - 0.055 : 12.92 * o;
+      return new ye(255 * h, 255 * d, 255 * u);
+    }
+    if (this.space === "hsl") {
+      let { h: t, s: i, l: a } = this;
+      if (t /= 360, i /= 100, a /= 100, i === 0)
+        return a *= 255, new ye(a, a, a);
+      const s = a < 0.5 ? a * (1 + i) : a + i - a * i, r = 2 * a - s, o = 255 * Vi(r, s, t + 1 / 3), l = 255 * Vi(r, s, t), c = 255 * Vi(r, s, t - 1 / 3);
+      return new ye(o, l, c);
+    }
+    if (this.space === "cmyk") {
+      const { c: t, m: i, y: a, k: s } = this, r = 255 * (1 - Math.min(1, t * (1 - s) + s)), o = 255 * (1 - Math.min(1, i * (1 - s) + s)), l = 255 * (1 - Math.min(1, a * (1 - s) + s));
+      return new ye(r, o, l);
+    }
+    return this;
+    var e;
+  }
+  toArray() {
+    const { _a: e, _b: t, _c: i, _d: a, space: s } = this;
+    return [e, t, i, a, s];
+  }
+  toHex() {
+    const [e, t, i] = this._clamped().map(gc);
+    return `#${e}${t}${i}`;
+  }
+  toRgb() {
+    const [e, t, i] = this._clamped();
+    return `rgb(${e},${t},${i})`;
+  }
+  toString() {
+    return this.toHex();
+  }
+  xyz() {
+    const { _a: e, _b: t, _c: i } = this.rgb(), [a, s, r] = [e, t, i].map((x) => x / 255), o = a > 0.04045 ? Math.pow((a + 0.055) / 1.055, 2.4) : a / 12.92, l = s > 0.04045 ? Math.pow((s + 0.055) / 1.055, 2.4) : s / 12.92, c = r > 0.04045 ? Math.pow((r + 0.055) / 1.055, 2.4) : r / 12.92, h = (0.4124 * o + 0.3576 * l + 0.1805 * c) / 0.95047, d = (0.2126 * o + 0.7152 * l + 0.0722 * c) / 1, u = (0.0193 * o + 0.1192 * l + 0.9505 * c) / 1.08883, g = h > 8856e-6 ? Math.pow(h, 1 / 3) : 7.787 * h + 16 / 116, p = d > 8856e-6 ? Math.pow(d, 1 / 3) : 7.787 * d + 16 / 116, f = u > 8856e-6 ? Math.pow(u, 1 / 3) : 7.787 * u + 16 / 116;
+    return new ye(g, p, f, "xyz");
+  }
+  _clamped() {
+    const { _a: e, _b: t, _c: i } = this.rgb(), { max: a, min: s, round: r } = Math;
+    return [e, t, i].map((o) => a(0, s(r(o), 255)));
+  }
+}
+class pe {
+  constructor(...e) {
+    this.init(...e);
+  }
+  clone() {
+    return new pe(this);
+  }
+  init(e, t) {
+    const s = Array.isArray(e) ? { x: e[0], y: e[1] } : typeof e == "object" ? { x: e.x, y: e.y } : { x: e, y: t };
+    return this.x = s.x == null ? 0 : s.x, this.y = s.y == null ? 0 : s.y, this;
+  }
+  toArray() {
+    return [this.x, this.y];
+  }
+  transform(e) {
+    return this.clone().transformO(e);
+  }
+  transformO(e) {
+    ie.isMatrixLike(e) || (e = new ie(e));
+    const { x: t, y: i } = this;
+    return this.x = e.a * t + e.c * i + e.e, this.y = e.b * t + e.d * i + e.f, this;
+  }
+}
+function St(n, e, t) {
+  return Math.abs(e - n) < 1e-6;
+}
+class ie {
+  constructor(...e) {
+    this.init(...e);
+  }
+  static formatTransforms(e) {
+    const t = e.flip === "both" || e.flip === !0, i = e.flip && (t || e.flip === "x") ? -1 : 1, a = e.flip && (t || e.flip === "y") ? -1 : 1, s = e.skew && e.skew.length ? e.skew[0] : isFinite(e.skew) ? e.skew : isFinite(e.skewX) ? e.skewX : 0, r = e.skew && e.skew.length ? e.skew[1] : isFinite(e.skew) ? e.skew : isFinite(e.skewY) ? e.skewY : 0, o = e.scale && e.scale.length ? e.scale[0] * i : isFinite(e.scale) ? e.scale * i : isFinite(e.scaleX) ? e.scaleX * i : i, l = e.scale && e.scale.length ? e.scale[1] * a : isFinite(e.scale) ? e.scale * a : isFinite(e.scaleY) ? e.scaleY * a : a, c = e.shear || 0, h = e.rotate || e.theta || 0, d = new pe(e.origin || e.around || e.ox || e.originX, e.oy || e.originY), u = d.x, g = d.y, p = new pe(e.position || e.px || e.positionX || NaN, e.py || e.positionY || NaN), f = p.x, x = p.y, b = new pe(e.translate || e.tx || e.translateX, e.ty || e.translateY), m = b.x, w = b.y, y = new pe(e.relative || e.rx || e.relativeX, e.ry || e.relativeY);
+    return { scaleX: o, scaleY: l, skewX: s, skewY: r, shear: c, theta: h, rx: y.x, ry: y.y, tx: m, ty: w, ox: u, oy: g, px: f, py: x };
+  }
+  static fromArray(e) {
+    return { a: e[0], b: e[1], c: e[2], d: e[3], e: e[4], f: e[5] };
+  }
+  static isMatrixLike(e) {
+    return e.a != null || e.b != null || e.c != null || e.d != null || e.e != null || e.f != null;
+  }
+  static matrixMultiply(e, t, i) {
+    const a = e.a * t.a + e.c * t.b, s = e.b * t.a + e.d * t.b, r = e.a * t.c + e.c * t.d, o = e.b * t.c + e.d * t.d, l = e.e + e.a * t.e + e.c * t.f, c = e.f + e.b * t.e + e.d * t.f;
+    return i.a = a, i.b = s, i.c = r, i.d = o, i.e = l, i.f = c, i;
+  }
+  around(e, t, i) {
+    return this.clone().aroundO(e, t, i);
+  }
+  aroundO(e, t, i) {
+    const a = e || 0, s = t || 0;
+    return this.translateO(-a, -s).lmultiplyO(i).translateO(a, s);
+  }
+  clone() {
+    return new ie(this);
+  }
+  decompose(e = 0, t = 0) {
+    const i = this.a, a = this.b, s = this.c, r = this.d, o = this.e, l = this.f, c = i * r - a * s, h = c > 0 ? 1 : -1, d = h * Math.sqrt(i * i + a * a), u = Math.atan2(h * a, h * i), g = 180 / Math.PI * u, p = Math.cos(u), f = Math.sin(u), x = (i * s + a * r) / c, b = s * d / (x * i - a) || r * d / (x * a + i);
+    return { scaleX: d, scaleY: b, shear: x, rotate: g, translateX: o - e + e * p * d + t * (x * p * d - f * b), translateY: l - t + e * f * d + t * (x * f * d + p * b), originX: e, originY: t, a: this.a, b: this.b, c: this.c, d: this.d, e: this.e, f: this.f };
+  }
+  equals(e) {
+    if (e === this) return !0;
+    const t = new ie(e);
+    return St(this.a, t.a) && St(this.b, t.b) && St(this.c, t.c) && St(this.d, t.d) && St(this.e, t.e) && St(this.f, t.f);
+  }
+  flip(e, t) {
+    return this.clone().flipO(e, t);
+  }
+  flipO(e, t) {
+    return e === "x" ? this.scaleO(-1, 1, t, 0) : e === "y" ? this.scaleO(1, -1, 0, t) : this.scaleO(-1, -1, e, t || e);
+  }
+  init(e) {
+    const t = ie.fromArray([1, 0, 0, 1, 0, 0]);
+    return e = e instanceof Ye ? e.matrixify() : typeof e == "string" ? ie.fromArray(e.split(it).map(parseFloat)) : Array.isArray(e) ? ie.fromArray(e) : typeof e == "object" && ie.isMatrixLike(e) ? e : typeof e == "object" ? new ie().transform(e) : arguments.length === 6 ? ie.fromArray([].slice.call(arguments)) : t, this.a = e.a != null ? e.a : t.a, this.b = e.b != null ? e.b : t.b, this.c = e.c != null ? e.c : t.c, this.d = e.d != null ? e.d : t.d, this.e = e.e != null ? e.e : t.e, this.f = e.f != null ? e.f : t.f, this;
+  }
+  inverse() {
+    return this.clone().inverseO();
+  }
+  inverseO() {
+    const e = this.a, t = this.b, i = this.c, a = this.d, s = this.e, r = this.f, o = e * a - t * i;
+    if (!o) throw new Error("Cannot invert " + this);
+    const l = a / o, c = -t / o, h = -i / o, d = e / o, u = -(l * s + h * r), g = -(c * s + d * r);
+    return this.a = l, this.b = c, this.c = h, this.d = d, this.e = u, this.f = g, this;
+  }
+  lmultiply(e) {
+    return this.clone().lmultiplyO(e);
+  }
+  lmultiplyO(e) {
+    const t = e instanceof ie ? e : new ie(e);
+    return ie.matrixMultiply(t, this, this);
+  }
+  multiply(e) {
+    return this.clone().multiplyO(e);
+  }
+  multiplyO(e) {
+    const t = e instanceof ie ? e : new ie(e);
+    return ie.matrixMultiply(this, t, this);
+  }
+  rotate(e, t, i) {
+    return this.clone().rotateO(e, t, i);
+  }
+  rotateO(e, t = 0, i = 0) {
+    e = Bi(e);
+    const a = Math.cos(e), s = Math.sin(e), { a: r, b: o, c: l, d: c, e: h, f: d } = this;
+    return this.a = r * a - o * s, this.b = o * a + r * s, this.c = l * a - c * s, this.d = c * a + l * s, this.e = h * a - d * s + i * s - t * a + t, this.f = d * a + h * s - t * s - i * a + i, this;
+  }
+  scale() {
+    return this.clone().scaleO(...arguments);
+  }
+  scaleO(e, t = e, i = 0, a = 0) {
+    arguments.length === 3 && (a = i, i = t, t = e);
+    const { a: s, b: r, c: o, d: l, e: c, f: h } = this;
+    return this.a = s * e, this.b = r * t, this.c = o * e, this.d = l * t, this.e = c * e - i * e + i, this.f = h * t - a * t + a, this;
+  }
+  shear(e, t, i) {
+    return this.clone().shearO(e, t, i);
+  }
+  shearO(e, t = 0, i = 0) {
+    const { a, b: s, c: r, d: o, e: l, f: c } = this;
+    return this.a = a + s * e, this.c = r + o * e, this.e = l + c * e - i * e, this;
+  }
+  skew() {
+    return this.clone().skewO(...arguments);
+  }
+  skewO(e, t = e, i = 0, a = 0) {
+    arguments.length === 3 && (a = i, i = t, t = e), e = Bi(e), t = Bi(t);
+    const s = Math.tan(e), r = Math.tan(t), { a: o, b: l, c, d: h, e: d, f: u } = this;
+    return this.a = o + l * s, this.b = l + o * r, this.c = c + h * s, this.d = h + c * r, this.e = d + u * s - a * s, this.f = u + d * r - i * r, this;
+  }
+  skewX(e, t, i) {
+    return this.skew(e, 0, t, i);
+  }
+  skewY(e, t, i) {
+    return this.skew(0, e, t, i);
+  }
+  toArray() {
+    return [this.a, this.b, this.c, this.d, this.e, this.f];
+  }
+  toString() {
+    return "matrix(" + this.a + "," + this.b + "," + this.c + "," + this.d + "," + this.e + "," + this.f + ")";
+  }
+  transform(e) {
+    if (ie.isMatrixLike(e))
+      return new ie(e).multiplyO(this);
+    const t = ie.formatTransforms(e), { x: i, y: a } = new pe(t.ox, t.oy).transform(this), s = new ie().translateO(t.rx, t.ry).lmultiplyO(this).translateO(-i, -a).scaleO(t.scaleX, t.scaleY).skewO(t.skewX, t.skewY).shearO(t.shear).rotateO(t.theta).translateO(i, a);
+    if (isFinite(t.px) || isFinite(t.py)) {
+      const r = new pe(i, a).transform(s), o = isFinite(t.px) ? t.px - r.x : 0, l = isFinite(t.py) ? t.py - r.y : 0;
+      s.translateO(o, l);
+    }
+    return s.translateO(t.tx, t.ty), s;
+  }
+  translate(e, t) {
+    return this.clone().translateO(e, t);
+  }
+  translateO(e, t) {
+    return this.e += e || 0, this.f += t || 0, this;
+  }
+  valueOf() {
+    return { a: this.a, b: this.b, c: this.c, d: this.d, e: this.e, f: this.f };
+  }
+}
+function rt() {
+  if (!rt.nodes) {
+    const n = He().size(2, 0);
+    n.node.style.cssText = ["opacity: 0", "position: absolute", "left: -100%", "top: -100%", "overflow: hidden"].join(";"), n.attr("focusable", "false"), n.attr("aria-hidden", "true");
+    const e = n.path().node;
+    rt.nodes = { svg: n, path: e };
+  }
+  if (!rt.nodes.svg.node.parentNode) {
+    const n = ue.document.body || ue.document.documentElement;
+    rt.nodes.svg.addTo(n);
+  }
+  return rt.nodes;
+}
+function rn(n) {
+  return !(n.width || n.height || n.x || n.y);
+}
+ge(ie, "Matrix");
+class Le {
+  constructor(...e) {
+    this.init(...e);
+  }
+  addOffset() {
+    return this.x += ue.window.pageXOffset, this.y += ue.window.pageYOffset, new Le(this);
+  }
+  init(e) {
+    return e = typeof e == "string" ? e.split(it).map(parseFloat) : Array.isArray(e) ? e : typeof e == "object" ? [e.left != null ? e.left : e.x, e.top != null ? e.top : e.y, e.width, e.height] : arguments.length === 4 ? [].slice.call(arguments) : [0, 0, 0, 0], this.x = e[0] || 0, this.y = e[1] || 0, this.width = this.w = e[2] || 0, this.height = this.h = e[3] || 0, this.x2 = this.x + this.w, this.y2 = this.y + this.h, this.cx = this.x + this.w / 2, this.cy = this.y + this.h / 2, this;
+  }
+  isNulled() {
+    return rn(this);
+  }
+  merge(e) {
+    const t = Math.min(this.x, e.x), i = Math.min(this.y, e.y), a = Math.max(this.x + this.width, e.x + e.width) - t, s = Math.max(this.y + this.height, e.y + e.height) - i;
+    return new Le(t, i, a, s);
+  }
+  toArray() {
+    return [this.x, this.y, this.width, this.height];
+  }
+  toString() {
+    return this.x + " " + this.y + " " + this.width + " " + this.height;
+  }
+  transform(e) {
+    e instanceof ie || (e = new ie(e));
+    let t = 1 / 0, i = -1 / 0, a = 1 / 0, s = -1 / 0;
+    return [new pe(this.x, this.y), new pe(this.x2, this.y), new pe(this.x, this.y2), new pe(this.x2, this.y2)].forEach(function(r) {
+      r = r.transform(e), t = Math.min(t, r.x), i = Math.max(i, r.x), a = Math.min(a, r.y), s = Math.max(s, r.y);
+    }), new Le(t, a, i - t, s - a);
+  }
+}
+function Zs(n, e, t) {
+  let i;
+  try {
+    if (i = e(n.node), rn(i) && (a = n.node) !== ue.document && !(ue.document.documentElement.contains || function(s) {
+      for (; s.parentNode; ) s = s.parentNode;
+      return s === ue.document;
+    }).call(ue.document.documentElement, a)) throw new Error("Element not in the dom");
+  } catch {
+    i = t(n);
+  }
+  var a;
+  return i;
+}
+ce({ viewbox: { viewbox(n, e, t, i) {
+  return n == null ? new Le(this.attr("viewBox")) : this.attr("viewBox", new Le(n, e, t, i));
+}, zoom(n, e) {
+  let { width: t, height: i } = this.attr(["width", "height"]);
+  if ((t || i) && typeof t != "string" && typeof i != "string" || (t = this.node.clientWidth, i = this.node.clientHeight), !t || !i) throw new Error("Impossible to get absolute width and height. Please provide an absolute width and height attribute on the zooming element");
+  const a = this.viewbox(), s = t / a.width, r = i / a.height, o = Math.min(s, r);
+  if (n == null) return o;
+  let l = o / n;
+  l === 1 / 0 && (l = Number.MAX_SAFE_INTEGER / 100), e = e || new pe(t / 2 / s + a.x, i / 2 / r + a.y);
+  const c = new Le(a).transform(new ie({ scale: l, origin: e }));
+  return this.viewbox(c);
+} } }), ge(Le, "Box");
+class vt extends Array {
+  constructor(e = [], ...t) {
+    if (super(e, ...t), typeof e == "number") return this;
+    this.length = 0, this.push(...e);
+  }
+}
+re([vt], { each(n, ...e) {
+  return typeof n == "function" ? this.map((t, i, a) => n.call(t, t, i, a)) : this.map((t) => t[n](...e));
+}, toArray() {
+  return Array.prototype.concat.apply([], this);
+} });
+const fc = ["toArray", "constructor", "each"];
+function wt(n, e) {
+  return new vt(Ja((e || ue.document).querySelectorAll(n), function(t) {
+    return Ue(t);
+  }));
+}
+vt.extend = function(n) {
+  n = n.reduce((e, t) => (fc.includes(t) || t[0] === "_" || (t in Array.prototype && (e["$" + t] = Array.prototype[t]), e[t] = function(...i) {
+    return this.each(t, ...i);
+  }), e), {}), re([vt], n);
+};
+let pc = 0;
+const nn = {};
+function on(n) {
+  let e = n.getEventHolder();
+  return e === ue.window && (e = nn), e.events || (e.events = {}), e.events;
+}
+function is(n) {
+  return n.getEventTarget();
+}
+function tt(n, e, t, i, a) {
+  const s = t.bind(i || n), r = He(n), o = on(r), l = is(r);
+  e = Array.isArray(e) ? e : e.split(it), t._svgjsListenerId || (t._svgjsListenerId = ++pc), e.forEach(function(c) {
+    const h = c.split(".")[0], d = c.split(".")[1] || "*";
+    o[h] = o[h] || {}, o[h][d] = o[h][d] || {}, o[h][d][t._svgjsListenerId] = s, l.addEventListener(h, s, a || !1);
+  });
+}
+function qe(n, e, t, i) {
+  const a = He(n), s = on(a), r = is(a);
+  (typeof t != "function" || (t = t._svgjsListenerId)) && (e = Array.isArray(e) ? e : (e || "").split(it)).forEach(function(o) {
+    const l = o && o.split(".")[0], c = o && o.split(".")[1];
+    let h, d;
+    if (t) s[l] && s[l][c || "*"] && (r.removeEventListener(l, s[l][c || "*"][t], i || !1), delete s[l][c || "*"][t]);
+    else if (l && c) {
+      if (s[l] && s[l][c]) {
+        for (d in s[l][c]) qe(r, [l, c].join("."), d);
+        delete s[l][c];
+      }
+    } else if (c) for (o in s) for (h in s[o]) c === h && qe(r, [o, c].join("."));
+    else if (l) {
+      if (s[l]) {
+        for (h in s[l]) qe(r, [l, h].join("."));
+        delete s[l];
+      }
+    } else {
+      for (o in s) qe(r, o);
+      (function(u) {
+        let g = u.getEventHolder();
+        g === ue.window && (g = nn), g.events && (g.events = {});
+      })(a);
+    }
+  });
+}
+class ci extends Qa {
+  addEventListener() {
+  }
+  dispatch(e, t, i) {
+    return function(a, s, r, o) {
+      const l = is(a);
+      return s instanceof ue.window.Event || (s = new ue.window.CustomEvent(s, { detail: r, cancelable: !0, ...o })), l.dispatchEvent(s), s;
+    }(this, e, t, i);
+  }
+  dispatchEvent(e) {
+    const t = this.getEventHolder().events;
+    if (!t) return !0;
+    const i = t[e.type];
+    for (const a in i) for (const s in i[a]) i[a][s](e);
+    return !e.defaultPrevented;
+  }
+  fire(e, t, i) {
+    return this.dispatch(e, t, i), this;
+  }
+  getEventHolder() {
+    return this;
+  }
+  getEventTarget() {
+    return this;
+  }
+  off(e, t, i) {
+    return qe(this, e, t, i), this;
+  }
+  on(e, t, i, a) {
+    return tt(this, e, t, i, a), this;
+  }
+  removeEventListener() {
+  }
+}
+function Js() {
+}
+ge(ci, "EventTarget");
+const Ui = 400, xc = ">", bc = 0, mc = { "fill-opacity": 1, "stroke-opacity": 1, "stroke-width": 0, "stroke-linejoin": "miter", "stroke-linecap": "butt", fill: "#000000", stroke: "#000000", opacity: 1, x: 0, y: 0, cx: 0, cy: 0, width: 0, height: 0, r: 0, rx: 0, ry: 0, offset: 0, "stop-opacity": 1, "stop-color": "#000000", "text-anchor": "start" };
+class yt extends Array {
+  constructor(...e) {
+    super(...e), this.init(...e);
+  }
+  clone() {
+    return new this.constructor(this);
+  }
+  init(e) {
+    return typeof e == "number" || (this.length = 0, this.push(...this.parse(e))), this;
+  }
+  parse(e = []) {
+    return e instanceof Array ? e : e.trim().split(it).map(parseFloat);
+  }
+  toArray() {
+    return Array.prototype.concat.apply([], this);
+  }
+  toSet() {
+    return new Set(this);
+  }
+  toString() {
+    return this.join(" ");
+  }
+  valueOf() {
+    const e = [];
+    return e.push(...this), e;
+  }
+}
+class oe {
+  constructor(...e) {
+    this.init(...e);
+  }
+  convert(e) {
+    return new oe(this.value, e);
+  }
+  divide(e) {
+    return e = new oe(e), new oe(this / e, this.unit || e.unit);
+  }
+  init(e, t) {
+    return t = Array.isArray(e) ? e[1] : t, e = Array.isArray(e) ? e[0] : e, this.value = 0, this.unit = t || "", typeof e == "number" ? this.value = isNaN(e) ? 0 : isFinite(e) ? e : e < 0 ? -34e37 : 34e37 : typeof e == "string" ? (t = e.match(sn)) && (this.value = parseFloat(t[1]), t[5] === "%" ? this.value /= 100 : t[5] === "s" && (this.value *= 1e3), this.unit = t[5]) : e instanceof oe && (this.value = e.valueOf(), this.unit = e.unit), this;
+  }
+  minus(e) {
+    return e = new oe(e), new oe(this - e, this.unit || e.unit);
+  }
+  plus(e) {
+    return e = new oe(e), new oe(this + e, this.unit || e.unit);
+  }
+  times(e) {
+    return e = new oe(e), new oe(this * e, this.unit || e.unit);
+  }
+  toArray() {
+    return [this.value, this.unit];
+  }
+  toJSON() {
+    return this.toString();
+  }
+  toString() {
+    return (this.unit === "%" ? ~~(1e8 * this.value) / 1e6 : this.unit === "s" ? this.value / 1e3 : this.value) + this.unit;
+  }
+  valueOf() {
+    return this.value;
+  }
+}
+const vc = /* @__PURE__ */ new Set(["fill", "stroke", "color", "bgcolor", "stop-color", "flood-color", "lighting-color"]), ln = [];
+class ot extends ci {
+  constructor(e, t) {
+    super(), this.node = e, this.type = e.nodeName, t && e !== t && this.attr(t);
+  }
+  add(e, t) {
+    return (e = He(e)).removeNamespace && this.node instanceof ue.window.SVGElement && e.removeNamespace(), t == null ? this.node.appendChild(e.node) : e.node !== this.node.childNodes[t] && this.node.insertBefore(e.node, this.node.childNodes[t]), this;
+  }
+  addTo(e, t) {
+    return He(e).put(this, t);
+  }
+  children() {
+    return new vt(Ja(this.node.children, function(e) {
+      return Ue(e);
+    }));
+  }
+  clear() {
+    for (; this.node.hasChildNodes(); ) this.node.removeChild(this.node.lastChild);
+    return this;
+  }
+  clone(e = !0, t = !0) {
+    this.writeDataToDom();
+    let i = this.node.cloneNode(e);
+    return t && (i = an(i)), new this.constructor(i);
+  }
+  each(e, t) {
+    const i = this.children();
+    let a, s;
+    for (a = 0, s = i.length; a < s; a++) e.apply(i[a], [a, i]), t && i[a].each(e, t);
+    return this;
+  }
+  element(e, t) {
+    return this.put(new ot(ei(e), t));
+  }
+  first() {
+    return Ue(this.node.firstChild);
+  }
+  get(e) {
+    return Ue(this.node.childNodes[e]);
+  }
+  getEventHolder() {
+    return this.node;
+  }
+  getEventTarget() {
+    return this.node;
+  }
+  has(e) {
+    return this.index(e) >= 0;
+  }
+  html(e, t) {
+    return this.xml(e, t, "http://www.w3.org/1999/xhtml");
+  }
+  id(e) {
+    return e !== void 0 || this.node.id || (this.node.id = tn(this.type)), this.attr("id", e);
+  }
+  index(e) {
+    return [].slice.call(this.node.childNodes).indexOf(e.node);
+  }
+  last() {
+    return Ue(this.node.lastChild);
+  }
+  matches(e) {
+    const t = this.node, i = t.matches || t.matchesSelector || t.msMatchesSelector || t.mozMatchesSelector || t.webkitMatchesSelector || t.oMatchesSelector || null;
+    return i && i.call(t, e);
+  }
+  parent(e) {
+    let t = this;
+    if (!t.node.parentNode) return null;
+    if (t = Ue(t.node.parentNode), !e) return t;
+    do
+      if (typeof e == "string" ? t.matches(e) : t instanceof e) return t;
+    while (t = Ue(t.node.parentNode));
+    return t;
+  }
+  put(e, t) {
+    return e = He(e), this.add(e, t), e;
+  }
+  putIn(e, t) {
+    return He(e).add(this, t);
+  }
+  remove() {
+    return this.parent() && this.parent().removeElement(this), this;
+  }
+  removeElement(e) {
+    return this.node.removeChild(e.node), this;
+  }
+  replace(e) {
+    return e = He(e), this.node.parentNode && this.node.parentNode.replaceChild(e.node, this.node), e;
+  }
+  round(e = 2, t = null) {
+    const i = 10 ** e, a = this.attr(t);
+    for (const s in a) typeof a[s] == "number" && (a[s] = Math.round(a[s] * i) / i);
+    return this.attr(a), this;
+  }
+  svg(e, t) {
+    return this.xml(e, t, Ka);
+  }
+  toString() {
+    return this.id();
+  }
+  words(e) {
+    return this.node.textContent = e, this;
+  }
+  wrap(e) {
+    const t = this.parent();
+    if (!t) return this.addTo(e);
+    const i = t.index(this);
+    return t.put(e, i).put(this);
+  }
+  writeDataToDom() {
+    return this.each(function() {
+      this.writeDataToDom();
+    }), this;
+  }
+  xml(e, t, i) {
+    if (typeof e == "boolean" && (i = t, t = e, e = null), e == null || typeof e == "function") {
+      t = t == null || t, this.writeDataToDom();
+      let o = this;
+      if (e != null) {
+        if (o = Ue(o.node.cloneNode(!0)), t) {
+          const l = e(o);
+          if (o = l || o, l === !1) return "";
+        }
+        o.each(function() {
+          const l = e(this), c = l || this;
+          l === !1 ? this.remove() : l && this !== c && this.replace(c);
+        }, !0);
+      }
+      return t ? o.node.outerHTML : o.node.innerHTML;
+    }
+    t = t != null && t;
+    const a = ei("wrapper", i), s = ue.document.createDocumentFragment();
+    a.innerHTML = e;
+    for (let o = a.children.length; o--; ) s.appendChild(a.firstElementChild);
+    const r = this.parent();
+    return t ? this.replace(s) && r : this.add(s);
+  }
+}
+re(ot, { attr: function(n, e, t) {
+  if (n == null) {
+    n = {}, e = this.node.attributes;
+    for (const i of e) n[i.nodeName] = $s.test(i.nodeValue) ? parseFloat(i.nodeValue) : i.nodeValue;
+    return n;
+  }
+  if (n instanceof Array) return n.reduce((i, a) => (i[a] = this.attr(a), i), {});
+  if (typeof n == "object" && n.constructor === Object) for (e in n) this.attr(e, n[e]);
+  else if (e === null) this.node.removeAttribute(n);
+  else {
+    if (e == null) return (e = this.node.getAttribute(n)) == null ? mc[n] : $s.test(e) ? parseFloat(e) : e;
+    typeof (e = ln.reduce((i, a) => a(n, i, this), e)) == "number" ? e = new oe(e) : vc.has(n) && ye.isColor(e) ? e = new ye(e) : e.constructor === Array && (e = new yt(e)), n === "leading" ? this.leading && this.leading(e) : typeof t == "string" ? this.node.setAttributeNS(t, n, e.toString()) : this.node.setAttribute(n, e.toString()), !this.rebuild || n !== "font-size" && n !== "x" || this.rebuild();
+  }
+  return this;
+}, find: function(n) {
+  return wt(n, this.node);
+}, findOne: function(n) {
+  return Ue(this.node.querySelector(n));
+} }), ge(ot, "Dom");
+let Ye = class extends ot {
+  constructor(n, e) {
+    super(n, e), this.dom = {}, this.node.instance = this, (n.hasAttribute("data-svgjs") || n.hasAttribute("svgjs:data")) && this.setData(JSON.parse(n.getAttribute("data-svgjs")) ?? JSON.parse(n.getAttribute("svgjs:data")) ?? {});
+  }
+  center(n, e) {
+    return this.cx(n).cy(e);
+  }
+  cx(n) {
+    return n == null ? this.x() + this.width() / 2 : this.x(n - this.width() / 2);
+  }
+  cy(n) {
+    return n == null ? this.y() + this.height() / 2 : this.y(n - this.height() / 2);
+  }
+  defs() {
+    const n = this.root();
+    return n && n.defs();
+  }
+  dmove(n, e) {
+    return this.dx(n).dy(e);
+  }
+  dx(n = 0) {
+    return this.x(new oe(n).plus(this.x()));
+  }
+  dy(n = 0) {
+    return this.y(new oe(n).plus(this.y()));
+  }
+  getEventHolder() {
+    return this;
+  }
+  height(n) {
+    return this.attr("height", n);
+  }
+  move(n, e) {
+    return this.x(n).y(e);
+  }
+  parents(n = this.root()) {
+    const e = typeof n == "string";
+    e || (n = He(n));
+    const t = new vt();
+    let i = this;
+    for (; (i = i.parent()) && i.node !== ue.document && i.nodeName !== "#document-fragment" && (t.push(i), e || i.node !== n.node) && (!e || !i.matches(n)); ) if (i.node === this.root().node) return null;
+    return t;
+  }
+  reference(n) {
+    if (!(n = this.attr(n))) return null;
+    const e = (n + "").match(cc);
+    return e ? He(e[1]) : null;
+  }
+  root() {
+    const n = this.parent(function(e) {
+      return bt[e];
+    }(es));
+    return n && n.root();
+  }
+  setData(n) {
+    return this.dom = n, this;
+  }
+  size(n, e) {
+    const t = Yt(this, n, e);
+    return this.width(new oe(t.width)).height(new oe(t.height));
+  }
+  width(n) {
+    return this.attr("width", n);
+  }
+  writeDataToDom() {
+    return en(this, this.dom), super.writeDataToDom();
+  }
+  x(n) {
+    return this.attr("x", n);
+  }
+  y(n) {
+    return this.attr("y", n);
+  }
+};
+re(Ye, { bbox: function() {
+  const n = Zs(this, (e) => e.getBBox(), (e) => {
+    try {
+      const t = e.clone().addTo(rt().svg).show(), i = t.node.getBBox();
+      return t.remove(), i;
+    } catch (t) {
+      throw new Error(`Getting bbox of element "${e.node.nodeName}" is not possible: ${t.toString()}`);
+    }
+  });
+  return new Le(n);
+}, rbox: function(n) {
+  const e = Zs(this, (i) => i.getBoundingClientRect(), (i) => {
+    throw new Error(`Getting rbox of element "${i.node.nodeName}" is not possible`);
+  }), t = new Le(e);
+  return n ? t.transform(n.screenCTM().inverseO()) : t.addOffset();
+}, inside: function(n, e) {
+  const t = this.bbox();
+  return n > t.x && e > t.y && n < t.x + t.width && e < t.y + t.height;
+}, point: function(n, e) {
+  return new pe(n, e).transformO(this.screenCTM().inverseO());
+}, ctm: function() {
+  return new ie(this.node.getCTM());
+}, screenCTM: function() {
+  try {
+    if (typeof this.isRoot == "function" && !this.isRoot()) {
+      const n = this.rect(1, 1), e = n.node.getScreenCTM();
+      return n.remove(), new ie(e);
+    }
+    return new ie(this.node.getScreenCTM());
+  } catch {
+    return console.warn(`Cannot get CTM from SVG node ${this.node.nodeName}. Is the element rendered?`), new ie();
+  }
+} }), ge(Ye, "Element");
+const Gt = { stroke: ["color", "width", "opacity", "linecap", "linejoin", "miterlimit", "dasharray", "dashoffset"], fill: ["color", "opacity", "rule"], prefix: function(n, e) {
+  return e === "color" ? n : n + "-" + e;
+} };
+["fill", "stroke"].forEach(function(n) {
+  const e = {};
+  let t;
+  e[n] = function(i) {
+    if (i === void 0) return this.attr(n);
+    if (typeof i == "string" || i instanceof ye || ye.isRgb(i) || i instanceof Ye) this.attr(n, i);
+    else for (t = Gt[n].length - 1; t >= 0; t--) i[Gt[n][t]] != null && this.attr(Gt.prefix(n, Gt[n][t]), i[Gt[n][t]]);
+    return this;
+  }, ce(["Element", "Runner"], e);
+}), ce(["Element", "Runner"], { matrix: function(n, e, t, i, a, s) {
+  return n == null ? new ie(this) : this.attr("transform", new ie(n, e, t, i, a, s));
+}, rotate: function(n, e, t) {
+  return this.transform({ rotate: n, ox: e, oy: t }, !0);
+}, skew: function(n, e, t, i) {
+  return arguments.length === 1 || arguments.length === 3 ? this.transform({ skew: n, ox: e, oy: t }, !0) : this.transform({ skew: [n, e], ox: t, oy: i }, !0);
+}, shear: function(n, e, t) {
+  return this.transform({ shear: n, ox: e, oy: t }, !0);
+}, scale: function(n, e, t, i) {
+  return arguments.length === 1 || arguments.length === 3 ? this.transform({ scale: n, ox: e, oy: t }, !0) : this.transform({ scale: [n, e], ox: t, oy: i }, !0);
+}, translate: function(n, e) {
+  return this.transform({ translate: [n, e] }, !0);
+}, relative: function(n, e) {
+  return this.transform({ relative: [n, e] }, !0);
+}, flip: function(n = "both", e = "center") {
+  return "xybothtrue".indexOf(n) === -1 && (e = n, n = "both"), this.transform({ flip: n, origin: e }, !0);
+}, opacity: function(n) {
+  return this.attr("opacity", n);
+} }), ce("radius", { radius: function(n, e = n) {
+  return (this._element || this).type === "radialGradient" ? this.attr("r", new oe(n)) : this.rx(n).ry(e);
+} }), ce("Path", { length: function() {
+  return this.node.getTotalLength();
+}, pointAt: function(n) {
+  return new pe(this.node.getPointAtLength(n));
+} }), ce(["Element", "Runner"], { font: function(n, e) {
+  if (typeof n == "object") {
+    for (e in n) this.font(e, n[e]);
+    return this;
+  }
+  return n === "leading" ? this.leading(e) : n === "anchor" ? this.attr("text-anchor", e) : n === "size" || n === "family" || n === "weight" || n === "stretch" || n === "variant" || n === "style" ? this.attr("font-" + n, e) : this.attr(n, e);
+} });
+ce("Element", ["click", "dblclick", "mousedown", "mouseup", "mouseover", "mouseout", "mousemove", "mouseenter", "mouseleave", "touchstart", "touchmove", "touchleave", "touchend", "touchcancel", "contextmenu", "wheel", "pointerdown", "pointermove", "pointerup", "pointerleave", "pointercancel"].reduce(function(n, e) {
+  return n[e] = function(t) {
+    return t === null ? this.off(e) : this.on(e, t), this;
+  }, n;
+}, {})), ce("Element", { untransform: function() {
+  return this.attr("transform", null);
+}, matrixify: function() {
+  return (this.attr("transform") || "").split(hc).slice(0, -1).map(function(e) {
+    const t = e.trim().split("(");
+    return [t[0], t[1].split(it).map(function(i) {
+      return parseFloat(i);
+    })];
+  }).reverse().reduce(function(e, t) {
+    return t[0] === "matrix" ? e.lmultiply(ie.fromArray(t[1])) : e[t[0]].apply(e, t[1]);
+  }, new ie());
+}, toParent: function(n, e) {
+  if (this === n) return this;
+  if (Ma(this.node)) return this.addTo(n, e);
+  const t = this.screenCTM(), i = n.screenCTM().inverse();
+  return this.addTo(n, e).untransform().transform(i.multiply(t)), this;
+}, toRoot: function(n) {
+  return this.toParent(this.root(), n);
+}, transform: function(n, e) {
+  if (n == null || typeof n == "string") {
+    const i = new ie(this).decompose();
+    return n == null ? i : i[n];
+  }
+  ie.isMatrixLike(n) || (n = { ...n, origin: Sa(n, this) });
+  const t = new ie(e === !0 ? this : e || !1).transform(n);
+  return this.attr("transform", t);
+} });
+class De extends Ye {
+  flatten() {
+    return this.each(function() {
+      if (this instanceof De) return this.flatten().ungroup();
+    }), this;
+  }
+  ungroup(e = this.parent(), t = e.index(this)) {
+    return t = t === -1 ? e.children().length : t, this.each(function(i, a) {
+      return a[a.length - i - 1].toParent(e, t);
+    }), this.remove();
+  }
+}
+ge(De, "Container");
+class Oi extends De {
+  constructor(e, t = e) {
+    super(Ae("defs", e), t);
+  }
+  flatten() {
+    return this;
+  }
+  ungroup() {
+    return this;
+  }
+}
+ge(Oi, "Defs");
+class je extends Ye {
+}
+function as(n) {
+  return this.attr("rx", n);
+}
+function ss(n) {
+  return this.attr("ry", n);
+}
+function cn(n) {
+  return n == null ? this.cx() - this.rx() : this.cx(n + this.rx());
+}
+function hn(n) {
+  return n == null ? this.cy() - this.ry() : this.cy(n + this.ry());
+}
+function dn(n) {
+  return this.attr("cx", n);
+}
+function un(n) {
+  return this.attr("cy", n);
+}
+function gn(n) {
+  return n == null ? 2 * this.rx() : this.rx(new oe(n).divide(2));
+}
+function fn(n) {
+  return n == null ? 2 * this.ry() : this.ry(new oe(n).divide(2));
+}
+ge(je, "Shape");
+var yc = Object.freeze({ __proto__: null, cx: dn, cy: un, height: fn, rx: as, ry: ss, width: gn, x: cn, y: hn });
+class vi extends je {
+  constructor(e, t = e) {
+    super(Ae("ellipse", e), t);
+  }
+  size(e, t) {
+    const i = Yt(this, e, t);
+    return this.rx(new oe(i.width).divide(2)).ry(new oe(i.height).divide(2));
+  }
+}
+re(vi, yc), ce("Container", { ellipse: ke(function(n = 0, e = n) {
+  return this.put(new vi()).size(n, e).move(0, 0);
+}) }), ge(vi, "Ellipse");
+class pn extends ot {
+  constructor(e = ue.document.createDocumentFragment()) {
+    super(e);
+  }
+  xml(e, t, i) {
+    if (typeof e == "boolean" && (i = t, t = e, e = null), e == null || typeof e == "function") {
+      const a = new ot(ei("wrapper", i));
+      return a.add(this.node.cloneNode(!0)), a.xml(!1, i);
+    }
+    return super.xml(e, !1, i);
+  }
+}
+function xn(n, e) {
+  return (this._element || this).type === "radialGradient" ? this.attr({ fx: new oe(n), fy: new oe(e) }) : this.attr({ x1: new oe(n), y1: new oe(e) });
+}
+function bn(n, e) {
+  return (this._element || this).type === "radialGradient" ? this.attr({ cx: new oe(n), cy: new oe(e) }) : this.attr({ x2: new oe(n), y2: new oe(e) });
+}
+ge(pn, "Fragment");
+var wc = Object.freeze({ __proto__: null, from: xn, to: bn });
+class $t extends De {
+  constructor(e, t) {
+    super(Ae(e + "Gradient", typeof e == "string" ? null : e), t);
+  }
+  attr(e, t, i) {
+    return e === "transform" && (e = "gradientTransform"), super.attr(e, t, i);
+  }
+  bbox() {
+    return new Le();
+  }
+  targets() {
+    return wt("svg [fill*=" + this.id() + "]");
+  }
+  toString() {
+    return this.url();
+  }
+  update(e) {
+    return this.clear(), typeof e == "function" && e.call(this, this), this;
+  }
+  url() {
+    return "url(#" + this.id() + ")";
+  }
+}
+re($t, wc), ce({ Container: { gradient(...n) {
+  return this.defs().gradient(...n);
+} }, Defs: { gradient: ke(function(n, e) {
+  return this.put(new $t(n)).update(e);
+}) } }), ge($t, "Gradient");
+class ti extends De {
+  constructor(e, t = e) {
+    super(Ae("pattern", e), t);
+  }
+  attr(e, t, i) {
+    return e === "transform" && (e = "patternTransform"), super.attr(e, t, i);
+  }
+  bbox() {
+    return new Le();
+  }
+  targets() {
+    return wt("svg [fill*=" + this.id() + "]");
+  }
+  toString() {
+    return this.url();
+  }
+  update(e) {
+    return this.clear(), typeof e == "function" && e.call(this, this), this;
+  }
+  url() {
+    return "url(#" + this.id() + ")";
+  }
+}
+ce({ Container: { pattern(...n) {
+  return this.defs().pattern(...n);
+} }, Defs: { pattern: ke(function(n, e, t) {
+  return this.put(new ti()).update(t).attr({ x: 0, y: 0, width: n, height: e, patternUnits: "userSpaceOnUse" });
+}) } }), ge(ti, "Pattern");
+let yi = class extends je {
+  constructor(n, e = n) {
+    super(Ae("image", n), e);
+  }
+  load(n, e) {
+    if (!n) return this;
+    const t = new ue.window.Image();
+    return tt(t, "load", function(i) {
+      const a = this.parent(ti);
+      this.width() === 0 && this.height() === 0 && this.size(t.width, t.height), a instanceof ti && a.width() === 0 && a.height() === 0 && a.size(this.width(), this.height()), typeof e == "function" && e.call(this, i);
+    }, this), tt(t, "load error", function() {
+      qe(t);
+    }), this.attr("href", t.src = n, Ft);
+  }
+};
+var Ks;
+Ks = function(n, e, t) {
+  return n !== "fill" && n !== "stroke" || uc.test(e) && (e = t.root().defs().image(e)), e instanceof yi && (e = t.root().defs().pattern(0, 0, (i) => {
+    i.add(e);
+  })), e;
+}, ln.push(Ks), ce({ Container: { image: ke(function(n, e) {
+  return this.put(new yi()).size(0, 0).load(n, e);
+}) } }), ge(yi, "Image");
+class lt extends yt {
+  bbox() {
+    let e = -1 / 0, t = -1 / 0, i = 1 / 0, a = 1 / 0;
+    return this.forEach(function(s) {
+      e = Math.max(s[0], e), t = Math.max(s[1], t), i = Math.min(s[0], i), a = Math.min(s[1], a);
+    }), new Le(i, a, e - i, t - a);
+  }
+  move(e, t) {
+    const i = this.bbox();
+    if (e -= i.x, t -= i.y, !isNaN(e) && !isNaN(t)) for (let a = this.length - 1; a >= 0; a--) this[a] = [this[a][0] + e, this[a][1] + t];
+    return this;
+  }
+  parse(e = [0, 0]) {
+    const t = [];
+    (e = e instanceof Array ? Array.prototype.concat.apply([], e) : e.trim().split(it).map(parseFloat)).length % 2 != 0 && e.pop();
+    for (let i = 0, a = e.length; i < a; i += 2) t.push([e[i], e[i + 1]]);
+    return t;
+  }
+  size(e, t) {
+    let i;
+    const a = this.bbox();
+    for (i = this.length - 1; i >= 0; i--) a.width && (this[i][0] = (this[i][0] - a.x) * e / a.width + a.x), a.height && (this[i][1] = (this[i][1] - a.y) * t / a.height + a.y);
+    return this;
+  }
+  toLine() {
+    return { x1: this[0][0], y1: this[0][1], x2: this[1][0], y2: this[1][1] };
+  }
+  toString() {
+    const e = [];
+    for (let t = 0, i = this.length; t < i; t++) e.push(this[t].join(","));
+    return e.join(" ");
+  }
+  transform(e) {
+    return this.clone().transformO(e);
+  }
+  transformO(e) {
+    ie.isMatrixLike(e) || (e = new ie(e));
+    for (let t = this.length; t--; ) {
+      const [i, a] = this[t];
+      this[t][0] = e.a * i + e.c * a + e.e, this[t][1] = e.b * i + e.d * a + e.f;
+    }
+    return this;
+  }
+}
+const kc = lt;
+var rs = Object.freeze({ __proto__: null, MorphArray: kc, height: function(n) {
+  const e = this.bbox();
+  return n == null ? e.height : this.size(e.width, n);
+}, width: function(n) {
+  const e = this.bbox();
+  return n == null ? e.width : this.size(n, e.height);
+}, x: function(n) {
+  return n == null ? this.bbox().x : this.move(n, this.bbox().y);
+}, y: function(n) {
+  return n == null ? this.bbox().y : this.move(this.bbox().x, n);
+} });
+let ft = class extends je {
+  constructor(n, e = n) {
+    super(Ae("line", n), e);
+  }
+  array() {
+    return new lt([[this.attr("x1"), this.attr("y1")], [this.attr("x2"), this.attr("y2")]]);
+  }
+  move(n, e) {
+    return this.attr(this.array().move(n, e).toLine());
+  }
+  plot(n, e, t, i) {
+    return n == null ? this.array() : (n = e !== void 0 ? { x1: n, y1: e, x2: t, y2: i } : new lt(n).toLine(), this.attr(n));
+  }
+  size(n, e) {
+    const t = Yt(this, n, e);
+    return this.attr(this.array().size(t.width, t.height).toLine());
+  }
+};
+re(ft, rs), ce({ Container: { line: ke(function(...n) {
+  return ft.prototype.plot.apply(this.put(new ft()), n[0] != null ? n : [0, 0, 0, 0]);
+}) } }), ge(ft, "Line");
+let wi = class extends De {
+  constructor(n, e = n) {
+    super(Ae("marker", n), e);
+  }
+  height(n) {
+    return this.attr("markerHeight", n);
+  }
+  orient(n) {
+    return this.attr("orient", n);
+  }
+  ref(n, e) {
+    return this.attr("refX", n).attr("refY", e);
+  }
+  toString() {
+    return "url(#" + this.id() + ")";
+  }
+  update(n) {
+    return this.clear(), typeof n == "function" && n.call(this, this), this;
+  }
+  width(n) {
+    return this.attr("markerWidth", n);
+  }
+};
+function Mt(n, e) {
+  return function(t) {
+    return t == null ? this[n] : (this[n] = t, e && e.call(this), this);
+  };
+}
+ce({ Container: { marker(...n) {
+  return this.defs().marker(...n);
+} }, Defs: { marker: ke(function(n, e, t) {
+  return this.put(new wi()).size(n, e).ref(n / 2, e / 2).viewbox(0, 0, n, e).attr("orient", "auto").update(t);
+}) }, marker: { marker(n, e, t, i) {
+  let a = ["marker"];
+  return n !== "all" && a.push(n), a = a.join("-"), n = arguments[1] instanceof wi ? arguments[1] : this.defs().marker(e, t, i), this.attr(a, n);
+} } }), ge(wi, "Marker");
+const Ac = { "-": function(n) {
+  return n;
+}, "<>": function(n) {
+  return -Math.cos(n * Math.PI) / 2 + 0.5;
+}, ">": function(n) {
+  return Math.sin(n * Math.PI / 2);
+}, "<": function(n) {
+  return 1 - Math.cos(n * Math.PI / 2);
+}, bezier: function(n, e, t, i) {
+  return function(a) {
+    return a < 0 ? n > 0 ? e / n * a : t > 0 ? i / t * a : 0 : a > 1 ? t < 1 ? (1 - i) / (1 - t) * a + (i - t) / (1 - t) : n < 1 ? (1 - e) / (1 - n) * a + (e - n) / (1 - n) : 1 : 3 * a * (1 - a) ** 2 * e + 3 * a ** 2 * (1 - a) * i + a ** 3;
+  };
+}, steps: function(n, e = "end") {
+  e = e.split("-").reverse()[0];
+  let t = n;
+  return e === "none" ? --t : e === "both" && ++t, (i, a = !1) => {
+    let s = Math.floor(i * n);
+    const r = i * s % 1 == 0;
+    return e !== "start" && e !== "both" || ++s, a && r && --s, i >= 0 && s < 0 && (s = 0), i <= 1 && s > t && (s = t), s / t;
+  };
+} };
+class ns {
+  done() {
+    return !1;
+  }
+}
+class La extends ns {
+  constructor(e = xc) {
+    super(), this.ease = Ac[e] || e;
+  }
+  step(e, t, i) {
+    return typeof e != "number" ? i < 1 ? e : t : e + (t - e) * this.ease(i);
+  }
+}
+class Pi extends ns {
+  constructor(e) {
+    super(), this.stepper = e;
+  }
+  done(e) {
+    return e.done;
+  }
+  step(e, t, i, a) {
+    return this.stepper(e, t, i, a);
+  }
+}
+function Qs() {
+  const n = (this._duration || 500) / 1e3, e = this._overshoot || 0, t = Math.PI, i = Math.log(e / 100 + 1e-10), a = -i / Math.sqrt(t * t + i * i), s = 3.9 / (a * n);
+  this.d = 2 * a * s, this.k = s * s;
+}
+re(class extends Pi {
+  constructor(n = 500, e = 0) {
+    super(), this.duration(n).overshoot(e);
+  }
+  step(n, e, t, i) {
+    if (typeof n == "string") return n;
+    if (i.done = t === 1 / 0, t === 1 / 0) return e;
+    if (t === 0) return n;
+    t > 100 && (t = 16), t /= 1e3;
+    const a = i.velocity || 0, s = -this.d * a - this.k * (n - e), r = n + a * t + s * t * t / 2;
+    return i.velocity = a + s * t, i.done = Math.abs(e - r) + Math.abs(a) < 2e-3, i.done ? e : r;
+  }
+}, { duration: Mt("_duration", Qs), overshoot: Mt("_overshoot", Qs) });
+re(class extends Pi {
+  constructor(n = 0.1, e = 0.01, t = 0, i = 1e3) {
+    super(), this.p(n).i(e).d(t).windup(i);
+  }
+  step(n, e, t, i) {
+    if (typeof n == "string") return n;
+    if (i.done = t === 1 / 0, t === 1 / 0) return e;
+    if (t === 0) return n;
+    const a = e - n;
+    let s = (i.integral || 0) + a * t;
+    const r = (a - (i.error || 0)) / t, o = this._windup;
+    return o !== !1 && (s = Math.max(-o, Math.min(s, o))), i.error = a, i.integral = s, i.done = Math.abs(a) < 1e-3, i.done ? e : n + (this.P * a + this.I * s + this.D * r);
+  }
+}, { windup: Mt("_windup"), p: Mt("P"), i: Mt("I"), d: Mt("D") });
+const Cc = { M: 2, L: 2, H: 1, V: 1, C: 6, S: 4, Q: 4, T: 2, A: 7, Z: 0 }, Pa = { M: function(n, e, t) {
+  return e.x = t.x = n[0], e.y = t.y = n[1], ["M", e.x, e.y];
+}, L: function(n, e) {
+  return e.x = n[0], e.y = n[1], ["L", n[0], n[1]];
+}, H: function(n, e) {
+  return e.x = n[0], ["H", n[0]];
+}, V: function(n, e) {
+  return e.y = n[0], ["V", n[0]];
+}, C: function(n, e) {
+  return e.x = n[4], e.y = n[5], ["C", n[0], n[1], n[2], n[3], n[4], n[5]];
+}, S: function(n, e) {
+  return e.x = n[2], e.y = n[3], ["S", n[0], n[1], n[2], n[3]];
+}, Q: function(n, e) {
+  return e.x = n[2], e.y = n[3], ["Q", n[0], n[1], n[2], n[3]];
+}, T: function(n, e) {
+  return e.x = n[0], e.y = n[1], ["T", n[0], n[1]];
+}, Z: function(n, e, t) {
+  return e.x = t.x, e.y = t.y, ["Z"];
+}, A: function(n, e) {
+  return e.x = n[5], e.y = n[6], ["A", n[0], n[1], n[2], n[3], n[4], n[5], n[6]];
+} }, qi = "mlhvqtcsaz".split("");
+for (let n = 0, e = qi.length; n < e; ++n) Pa[qi[n]] = /* @__PURE__ */ function(t) {
+  return function(i, a, s) {
+    if (t === "H") i[0] = i[0] + a.x;
+    else if (t === "V") i[0] = i[0] + a.y;
+    else if (t === "A") i[5] = i[5] + a.x, i[6] = i[6] + a.y;
+    else for (let r = 0, o = i.length; r < o; ++r) i[r] = i[r] + (r % 2 ? a.y : a.x);
+    return Pa[t](i, a, s);
+  };
+}(qi[n].toUpperCase());
+function Ta(n) {
+  return n.segment.length && n.segment.length - 1 === Cc[n.segment[0].toUpperCase()];
+}
+function Sc(n, e) {
+  n.inNumber && dt(n, !1);
+  const t = ts.test(e);
+  if (t) n.segment = [e];
+  else {
+    const i = n.lastCommand, a = i.toLowerCase(), s = i === a;
+    n.segment = [a === "m" ? s ? "l" : "L" : i];
+  }
+  return n.inSegment = !0, n.lastCommand = n.segment[0], t;
+}
+function dt(n, e) {
+  if (!n.inNumber) throw new Error("Parser Error");
+  n.number && n.segment.push(parseFloat(n.number)), n.inNumber = e, n.number = "", n.pointSeen = !1, n.hasExponent = !1, Ta(n) && Ia(n);
+}
+function Ia(n) {
+  n.inSegment = !1, n.absolute && (n.segment = function(e) {
+    const t = e.segment[0];
+    return Pa[t](e.segment.slice(1), e.p, e.p0);
+  }(n)), n.segments.push(n.segment);
+}
+function Mc(n) {
+  if (!n.segment.length) return !1;
+  const e = n.segment[0].toUpperCase() === "A", t = n.segment.length;
+  return e && (t === 4 || t === 5);
+}
+function Lc(n) {
+  return n.lastToken.toUpperCase() === "E";
+}
+const Pc = /* @__PURE__ */ new Set([" ", ",", "	", `
+`, "\r", "\f"]);
+class Ze extends yt {
+  bbox() {
+    return rt().path.setAttribute("d", this.toString()), new Le(rt.nodes.path.getBBox());
+  }
+  move(e, t) {
+    const i = this.bbox();
+    if (e -= i.x, t -= i.y, !isNaN(e) && !isNaN(t)) for (let a, s = this.length - 1; s >= 0; s--) a = this[s][0], a === "M" || a === "L" || a === "T" ? (this[s][1] += e, this[s][2] += t) : a === "H" ? this[s][1] += e : a === "V" ? this[s][1] += t : a === "C" || a === "S" || a === "Q" ? (this[s][1] += e, this[s][2] += t, this[s][3] += e, this[s][4] += t, a === "C" && (this[s][5] += e, this[s][6] += t)) : a === "A" && (this[s][6] += e, this[s][7] += t);
+    return this;
+  }
+  parse(e = "M0 0") {
+    return Array.isArray(e) && (e = Array.prototype.concat.apply([], e).toString()), function(t, i = !0) {
+      let a = 0, s = "";
+      const r = { segment: [], inNumber: !1, number: "", lastToken: "", inSegment: !1, segments: [], pointSeen: !1, hasExponent: !1, absolute: i, p0: new pe(), p: new pe() };
+      for (; r.lastToken = s, s = t.charAt(a++); ) if (r.inSegment || !Sc(r, s)) if (s !== ".") if (isNaN(parseInt(s))) if (Pc.has(s)) r.inNumber && dt(r, !1);
+      else if (s !== "-" && s !== "+") if (s.toUpperCase() !== "E") {
+        if (ts.test(s)) {
+          if (r.inNumber) dt(r, !1);
+          else {
+            if (!Ta(r)) throw new Error("parser Error");
+            Ia(r);
+          }
+          --a;
+        }
+      } else r.number += s, r.hasExponent = !0;
+      else {
+        if (r.inNumber && !Lc(r)) {
+          dt(r, !1), --a;
+          continue;
+        }
+        r.number += s, r.inNumber = !0;
+      }
+      else {
+        if (r.number === "0" || Mc(r)) {
+          r.inNumber = !0, r.number = s, dt(r, !0);
+          continue;
+        }
+        r.inNumber = !0, r.number += s;
+      }
+      else {
+        if (r.pointSeen || r.hasExponent) {
+          dt(r, !1), --a;
+          continue;
+        }
+        r.inNumber = !0, r.pointSeen = !0, r.number += s;
+      }
+      return r.inNumber && dt(r, !1), r.inSegment && Ta(r) && Ia(r), r.segments;
+    }(e);
+  }
+  size(e, t) {
+    const i = this.bbox();
+    let a, s;
+    for (i.width = i.width === 0 ? 1 : i.width, i.height = i.height === 0 ? 1 : i.height, a = this.length - 1; a >= 0; a--) s = this[a][0], s === "M" || s === "L" || s === "T" ? (this[a][1] = (this[a][1] - i.x) * e / i.width + i.x, this[a][2] = (this[a][2] - i.y) * t / i.height + i.y) : s === "H" ? this[a][1] = (this[a][1] - i.x) * e / i.width + i.x : s === "V" ? this[a][1] = (this[a][1] - i.y) * t / i.height + i.y : s === "C" || s === "S" || s === "Q" ? (this[a][1] = (this[a][1] - i.x) * e / i.width + i.x, this[a][2] = (this[a][2] - i.y) * t / i.height + i.y, this[a][3] = (this[a][3] - i.x) * e / i.width + i.x, this[a][4] = (this[a][4] - i.y) * t / i.height + i.y, s === "C" && (this[a][5] = (this[a][5] - i.x) * e / i.width + i.x, this[a][6] = (this[a][6] - i.y) * t / i.height + i.y)) : s === "A" && (this[a][1] = this[a][1] * e / i.width, this[a][2] = this[a][2] * t / i.height, this[a][6] = (this[a][6] - i.x) * e / i.width + i.x, this[a][7] = (this[a][7] - i.y) * t / i.height + i.y);
+    return this;
+  }
+  toString() {
+    return function(e) {
+      let t = "";
+      for (let i = 0, a = e.length; i < a; i++) t += e[i][0], e[i][1] != null && (t += e[i][1], e[i][2] != null && (t += " ", t += e[i][2], e[i][3] != null && (t += " ", t += e[i][3], t += " ", t += e[i][4], e[i][5] != null && (t += " ", t += e[i][5], t += " ", t += e[i][6], e[i][7] != null && (t += " ", t += e[i][7])))));
+      return t + " ";
+    }(this);
+  }
+}
+const mn = (n) => {
+  const e = typeof n;
+  return e === "number" ? oe : e === "string" ? ye.isColor(n) ? ye : it.test(n) ? ts.test(n) ? Ze : yt : sn.test(n) ? oe : Ea : Ra.indexOf(n.constructor) > -1 ? n.constructor : Array.isArray(n) ? yt : e === "object" ? ii : Ea;
+};
+class ut {
+  constructor(e) {
+    this._stepper = e || new La("-"), this._from = null, this._to = null, this._type = null, this._context = null, this._morphObj = null;
+  }
+  at(e) {
+    return this._morphObj.morph(this._from, this._to, e, this._stepper, this._context);
+  }
+  done() {
+    return this._context.map(this._stepper.done).reduce(function(e, t) {
+      return e && t;
+    }, !0);
+  }
+  from(e) {
+    return e == null ? this._from : (this._from = this._set(e), this);
+  }
+  stepper(e) {
+    return e == null ? this._stepper : (this._stepper = e, this);
+  }
+  to(e) {
+    return e == null ? this._to : (this._to = this._set(e), this);
+  }
+  type(e) {
+    return e == null ? this._type : (this._type = e, this);
+  }
+  _set(e) {
+    this._type || this.type(mn(e));
+    let t = new this._type(e);
+    return this._type === ye && (t = this._to ? t[this._to[4]]() : this._from ? t[this._from[4]]() : t), this._type === ii && (t = this._to ? t.align(this._to) : this._from ? t.align(this._from) : t), t = t.toConsumable(), this._morphObj = this._morphObj || new this._type(), this._context = this._context || Array.apply(null, Array(t.length)).map(Object).map(function(i) {
+      return i.done = !0, i;
+    }), t;
+  }
+}
+class Ea {
+  constructor(...e) {
+    this.init(...e);
+  }
+  init(e) {
+    return e = Array.isArray(e) ? e[0] : e, this.value = e, this;
+  }
+  toArray() {
+    return [this.value];
+  }
+  valueOf() {
+    return this.value;
+  }
+}
+class hi {
+  constructor(...e) {
+    this.init(...e);
+  }
+  init(e) {
+    return Array.isArray(e) && (e = { scaleX: e[0], scaleY: e[1], shear: e[2], rotate: e[3], translateX: e[4], translateY: e[5], originX: e[6], originY: e[7] }), Object.assign(this, hi.defaults, e), this;
+  }
+  toArray() {
+    const e = this;
+    return [e.scaleX, e.scaleY, e.shear, e.rotate, e.translateX, e.translateY, e.originX, e.originY];
+  }
+}
+hi.defaults = { scaleX: 1, scaleY: 1, shear: 0, rotate: 0, translateX: 0, translateY: 0, originX: 0, originY: 0 };
+const Tc = (n, e) => n[0] < e[0] ? -1 : n[0] > e[0] ? 1 : 0;
+class ii {
+  constructor(...e) {
+    this.init(...e);
+  }
+  align(e) {
+    const t = this.values;
+    for (let i = 0, a = t.length; i < a; ++i) {
+      if (t[i + 1] === e[i + 1]) {
+        if (t[i + 1] === ye && e[i + 7] !== t[i + 7]) {
+          const o = e[i + 7], l = new ye(this.values.splice(i + 3, 5))[o]().toArray();
+          this.values.splice(i + 3, 0, ...l);
+        }
+        i += t[i + 2] + 2;
+        continue;
+      }
+      if (!e[i + 1]) return this;
+      const s = new e[i + 1]().toArray(), r = t[i + 2] + 3;
+      t.splice(i, r, e[i], e[i + 1], e[i + 2], ...s), i += t[i + 2] + 2;
+    }
+    return this;
+  }
+  init(e) {
+    if (this.values = [], Array.isArray(e)) return void (this.values = e.slice());
+    e = e || {};
+    const t = [];
+    for (const i in e) {
+      const a = mn(e[i]), s = new a(e[i]).toArray();
+      t.push([i, a, s.length, ...s]);
+    }
+    return t.sort(Tc), this.values = t.reduce((i, a) => i.concat(a), []), this;
+  }
+  toArray() {
+    return this.values;
+  }
+  valueOf() {
+    const e = {}, t = this.values;
+    for (; t.length; ) {
+      const i = t.shift(), a = t.shift(), s = t.shift(), r = t.splice(0, s);
+      e[i] = new a(r);
+    }
+    return e;
+  }
+}
+const Ra = [Ea, hi, ii];
+class Pt extends je {
+  constructor(e, t = e) {
+    super(Ae("path", e), t);
+  }
+  array() {
+    return this._array || (this._array = new Ze(this.attr("d")));
+  }
+  clear() {
+    return delete this._array, this;
+  }
+  height(e) {
+    return e == null ? this.bbox().height : this.size(this.bbox().width, e);
+  }
+  move(e, t) {
+    return this.attr("d", this.array().move(e, t));
+  }
+  plot(e) {
+    return e == null ? this.array() : this.clear().attr("d", typeof e == "string" ? e : this._array = new Ze(e));
+  }
+  size(e, t) {
+    const i = Yt(this, e, t);
+    return this.attr("d", this.array().size(i.width, i.height));
+  }
+  width(e) {
+    return e == null ? this.bbox().width : this.size(e, this.bbox().height);
+  }
+  x(e) {
+    return e == null ? this.bbox().x : this.move(e, this.bbox().y);
+  }
+  y(e) {
+    return e == null ? this.bbox().y : this.move(this.bbox().x, e);
+  }
+}
+Pt.prototype.MorphArray = Ze, ce({ Container: { path: ke(function(n) {
+  return this.put(new Pt()).plot(n || new Ze());
+}) } }), ge(Pt, "Path");
+var vn = Object.freeze({ __proto__: null, array: function() {
+  return this._array || (this._array = new lt(this.attr("points")));
+}, clear: function() {
+  return delete this._array, this;
+}, move: function(n, e) {
+  return this.attr("points", this.array().move(n, e));
+}, plot: function(n) {
+  return n == null ? this.array() : this.clear().attr("points", typeof n == "string" ? n : this._array = new lt(n));
+}, size: function(n, e) {
+  const t = Yt(this, n, e);
+  return this.attr("points", this.array().size(t.width, t.height));
+} });
+class pt extends je {
+  constructor(e, t = e) {
+    super(Ae("polygon", e), t);
+  }
+}
+ce({ Container: { polygon: ke(function(n) {
+  return this.put(new pt()).plot(n || new lt());
+}) } }), re(pt, rs), re(pt, vn), ge(pt, "Polygon");
+class xt extends je {
+  constructor(e, t = e) {
+    super(Ae("polyline", e), t);
+  }
+}
+ce({ Container: { polyline: ke(function(n) {
+  return this.put(new xt()).plot(n || new lt());
+}) } }), re(xt, rs), re(xt, vn), ge(xt, "Polyline");
+class ki extends je {
+  constructor(e, t = e) {
+    super(Ae("rect", e), t);
+  }
+}
+re(ki, { rx: as, ry: ss }), ce({ Container: { rect: ke(function(n, e) {
+  return this.put(new ki()).size(n, e);
+}) } }), ge(ki, "Rect");
+class $i {
+  constructor() {
+    this._first = null, this._last = null;
+  }
+  first() {
+    return this._first && this._first.value;
+  }
+  last() {
+    return this._last && this._last.value;
+  }
+  push(e) {
+    const t = e.next !== void 0 ? e : { value: e, next: null, prev: null };
+    return this._last ? (t.prev = this._last, this._last.next = t, this._last = t) : (this._last = t, this._first = t), t;
+  }
+  remove(e) {
+    e.prev && (e.prev.next = e.next), e.next && (e.next.prev = e.prev), e === this._last && (this._last = e.prev), e === this._first && (this._first = e.next), e.prev = null, e.next = null;
+  }
+  shift() {
+    const e = this._first;
+    return e ? (this._first = e.next, this._first && (this._first.prev = null), this._last = this._first ? this._last : null, e.value) : null;
+  }
+}
+const ve = { nextDraw: null, frames: new $i(), timeouts: new $i(), immediates: new $i(), timer: () => ue.window.performance || ue.window.Date, transforms: [], frame(n) {
+  const e = ve.frames.push({ run: n });
+  return ve.nextDraw === null && (ve.nextDraw = ue.window.requestAnimationFrame(ve._draw)), e;
+}, timeout(n, e) {
+  e = e || 0;
+  const t = ve.timer().now() + e, i = ve.timeouts.push({ run: n, time: t });
+  return ve.nextDraw === null && (ve.nextDraw = ue.window.requestAnimationFrame(ve._draw)), i;
+}, immediate(n) {
+  const e = ve.immediates.push(n);
+  return ve.nextDraw === null && (ve.nextDraw = ue.window.requestAnimationFrame(ve._draw)), e;
+}, cancelFrame(n) {
+  n != null && ve.frames.remove(n);
+}, clearTimeout(n) {
+  n != null && ve.timeouts.remove(n);
+}, cancelImmediate(n) {
+  n != null && ve.immediates.remove(n);
+}, _draw(n) {
+  let e = null;
+  const t = ve.timeouts.last();
+  for (; (e = ve.timeouts.shift()) && (n >= e.time ? e.run() : ve.timeouts.push(e), e !== t); ) ;
+  let i = null;
+  const a = ve.frames.last();
+  for (; i !== a && (i = ve.frames.shift()); ) i.run(n);
+  let s = null;
+  for (; s = ve.immediates.shift(); ) s();
+  ve.nextDraw = ve.timeouts.first() || ve.frames.first() ? ue.window.requestAnimationFrame(ve._draw) : null;
+} }, Ic = function(n) {
+  const e = n.start, t = n.runner.duration();
+  return { start: e, duration: t, end: e + t, runner: n.runner };
+}, Ec = function() {
+  const n = ue.window;
+  return (n.performance || n.Date).now();
+};
+class yn extends ci {
+  constructor(e = Ec) {
+    super(), this._timeSource = e, this.terminate();
+  }
+  active() {
+    return !!this._nextFrame;
+  }
+  finish() {
+    return this.time(this.getEndTimeOfTimeline() + 1), this.pause();
+  }
+  getEndTime() {
+    const e = this.getLastRunnerInfo(), t = e ? e.runner.duration() : 0;
+    return (e ? e.start : this._time) + t;
+  }
+  getEndTimeOfTimeline() {
+    const e = this._runners.map((t) => t.start + t.runner.duration());
+    return Math.max(0, ...e);
+  }
+  getLastRunnerInfo() {
+    return this.getRunnerInfoById(this._lastRunnerId);
+  }
+  getRunnerInfoById(e) {
+    return this._runners[this._runnerIds.indexOf(e)] || null;
+  }
+  pause() {
+    return this._paused = !0, this._continue();
+  }
+  persist(e) {
+    return e == null ? this._persist : (this._persist = e, this);
+  }
+  play() {
+    return this._paused = !1, this.updateTime()._continue();
+  }
+  reverse(e) {
+    const t = this.speed();
+    if (e == null) return this.speed(-t);
+    const i = Math.abs(t);
+    return this.speed(e ? -i : i);
+  }
+  schedule(e, t, i) {
+    if (e == null) return this._runners.map(Ic);
+    let a = 0;
+    const s = this.getEndTime();
+    if (t = t || 0, i == null || i === "last" || i === "after") a = s;
+    else if (i === "absolute" || i === "start") a = t, t = 0;
+    else if (i === "now") a = this._time;
+    else if (i === "relative") {
+      const l = this.getRunnerInfoById(e.id);
+      l && (a = l.start + t, t = 0);
+    } else {
+      if (i !== "with-last") throw new Error('Invalid value for the "when" parameter');
+      {
+        const l = this.getLastRunnerInfo();
+        a = l ? l.start : this._time;
+      }
+    }
+    e.unschedule(), e.timeline(this);
+    const r = e.persist(), o = { persist: r === null ? this._persist : r, start: a + t, runner: e };
+    return this._lastRunnerId = e.id, this._runners.push(o), this._runners.sort((l, c) => l.start - c.start), this._runnerIds = this._runners.map((l) => l.runner.id), this.updateTime()._continue(), this;
+  }
+  seek(e) {
+    return this.time(this._time + e);
+  }
+  source(e) {
+    return e == null ? this._timeSource : (this._timeSource = e, this);
+  }
+  speed(e) {
+    return e == null ? this._speed : (this._speed = e, this);
+  }
+  stop() {
+    return this.time(0), this.pause();
+  }
+  time(e) {
+    return e == null ? this._time : (this._time = e, this._continue(!0));
+  }
+  unschedule(e) {
+    const t = this._runnerIds.indexOf(e.id);
+    return t < 0 || (this._runners.splice(t, 1), this._runnerIds.splice(t, 1), e.timeline(null)), this;
+  }
+  updateTime() {
+    return this.active() || (this._lastSourceTime = this._timeSource()), this;
+  }
+  _continue(e = !1) {
+    return ve.cancelFrame(this._nextFrame), this._nextFrame = null, e ? this._stepImmediate() : (this._paused || (this._nextFrame = ve.frame(this._step)), this);
+  }
+  _stepFn(e = !1) {
+    const t = this._timeSource();
+    let i = t - this._lastSourceTime;
+    e && (i = 0);
+    const a = this._speed * i + (this._time - this._lastStepTime);
+    this._lastSourceTime = t, e || (this._time += a, this._time = this._time < 0 ? 0 : this._time), this._lastStepTime = this._time, this.fire("time", this._time);
+    for (let r = this._runners.length; r--; ) {
+      const o = this._runners[r], l = o.runner;
+      this._time - o.start <= 0 && l.reset();
+    }
+    let s = !1;
+    for (let r = 0, o = this._runners.length; r < o; r++) {
+      const l = this._runners[r], c = l.runner;
+      let h = a;
+      const d = this._time - l.start;
+      if (d <= 0) {
+        s = !0;
+        continue;
+      }
+      d < h && (h = d), c.active() && (c.step(h).done ? l.persist !== !0 && c.duration() - c.time() + this._time + l.persist < this._time && (c.unschedule(), --r, --o) : s = !0);
+    }
+    return s && !(this._speed < 0 && this._time === 0) || this._runnerIds.length && this._speed < 0 && this._time > 0 ? this._continue() : (this.pause(), this.fire("finished")), this;
+  }
+  terminate() {
+    this._startTime = 0, this._speed = 1, this._persist = 0, this._nextFrame = null, this._paused = !0, this._runners = [], this._runnerIds = [], this._lastRunnerId = -1, this._time = 0, this._lastSourceTime = 0, this._lastStepTime = 0, this._step = this._stepFn.bind(this, !1), this._stepImmediate = this._stepFn.bind(this, !0);
+  }
+}
+ce({ Element: { timeline: function(n) {
+  return n == null ? (this._timeline = this._timeline || new yn(), this._timeline) : (this._timeline = n, this);
+} } });
+class Be extends ci {
+  constructor(e) {
+    super(), this.id = Be.id++, e = typeof (e = e ?? Ui) == "function" ? new Pi(e) : e, this._element = null, this._timeline = null, this.done = !1, this._queue = [], this._duration = typeof e == "number" && e, this._isDeclarative = e instanceof Pi, this._stepper = this._isDeclarative ? e : new La(), this._history = {}, this.enabled = !0, this._time = 0, this._lastTime = 0, this._reseted = !0, this.transforms = new ie(), this.transformId = 1, this._haveReversed = !1, this._reverse = !1, this._loopsDone = 0, this._swing = !1, this._wait = 0, this._times = 1, this._frameId = null, this._persist = !!this._isDeclarative || null;
+  }
+  static sanitise(e, t, i) {
+    let a = 1, s = !1, r = 0;
+    return t = t ?? bc, i = i || "last", typeof (e = e ?? Ui) != "object" || e instanceof ns || (t = e.delay ?? t, i = e.when ?? i, s = e.swing || s, a = e.times ?? a, r = e.wait ?? r, e = e.duration ?? Ui), { duration: e, delay: t, swing: s, times: a, wait: r, when: i };
+  }
+  active(e) {
+    return e == null ? this.enabled : (this.enabled = e, this);
+  }
+  addTransform(e) {
+    return this.transforms.lmultiplyO(e), this;
+  }
+  after(e) {
+    return this.on("finished", e);
+  }
+  animate(e, t, i) {
+    const a = Be.sanitise(e, t, i), s = new Be(a.duration);
+    return this._timeline && s.timeline(this._timeline), this._element && s.element(this._element), s.loop(a).schedule(a.delay, a.when);
+  }
+  clearTransform() {
+    return this.transforms = new ie(), this;
+  }
+  clearTransformsFromQueue() {
+    this.done && this._timeline && this._timeline._runnerIds.includes(this.id) || (this._queue = this._queue.filter((e) => !e.isTransform));
+  }
+  delay(e) {
+    return this.animate(0, e);
+  }
+  duration() {
+    return this._times * (this._wait + this._duration) - this._wait;
+  }
+  during(e) {
+    return this.queue(null, e);
+  }
+  ease(e) {
+    return this._stepper = new La(e), this;
+  }
+  element(e) {
+    return e == null ? this._element : (this._element = e, e._prepareRunner(), this);
+  }
+  finish() {
+    return this.step(1 / 0);
+  }
+  loop(e, t, i) {
+    return typeof e == "object" && (t = e.swing, i = e.wait, e = e.times), this._times = e || 1 / 0, this._swing = t || !1, this._wait = i || 0, this._times === !0 && (this._times = 1 / 0), this;
+  }
+  loops(e) {
+    const t = this._duration + this._wait;
+    if (e == null) {
+      const s = Math.floor(this._time / t), r = (this._time - s * t) / this._duration;
+      return Math.min(s + r, this._times);
+    }
+    const i = e % 1, a = t * Math.floor(e) + this._duration * i;
+    return this.time(a);
+  }
+  persist(e) {
+    return e == null ? this._persist : (this._persist = e, this);
+  }
+  position(e) {
+    const t = this._time, i = this._duration, a = this._wait, s = this._times, r = this._swing, o = this._reverse;
+    let l;
+    if (e == null) {
+      const d = function(g) {
+        const p = r * Math.floor(g % (2 * (a + i)) / (a + i)), f = p && !o || !p && o, x = Math.pow(-1, f) * (g % (a + i)) / i + f;
+        return Math.max(Math.min(x, 1), 0);
+      }, u = s * (a + i) - a;
+      return l = t <= 0 ? Math.round(d(1e-5)) : t < u ? d(t) : Math.round(d(u - 1e-5)), l;
+    }
+    const c = Math.floor(this.loops()), h = r && c % 2 == 0;
+    return l = c + (h && !o || o && h ? e : 1 - e), this.loops(l);
+  }
+  progress(e) {
+    return e == null ? Math.min(1, this._time / this.duration()) : this.time(e * this.duration());
+  }
+  queue(e, t, i, a) {
+    return this._queue.push({ initialiser: e || Js, runner: t || Js, retarget: i, isTransform: a, initialised: !1, finished: !1 }), this.timeline() && this.timeline()._continue(), this;
+  }
+  reset() {
+    return this._reseted || (this.time(0), this._reseted = !0), this;
+  }
+  reverse(e) {
+    return this._reverse = e ?? !this._reverse, this;
+  }
+  schedule(e, t, i) {
+    if (e instanceof yn || (i = t, t = e, e = this.timeline()), !e) throw Error("Runner cannot be scheduled without timeline");
+    return e.schedule(this, t, i), this;
+  }
+  step(e) {
+    if (!this.enabled) return this;
+    e = e ?? 16, this._time += e;
+    const t = this.position(), i = this._lastPosition !== t && this._time >= 0;
+    this._lastPosition = t;
+    const a = this.duration(), s = this._lastTime <= 0 && this._time > 0, r = this._lastTime < a && this._time >= a;
+    this._lastTime = this._time, s && this.fire("start", this);
+    const o = this._isDeclarative;
+    this.done = !o && !r && this._time >= a, this._reseted = !1;
+    let l = !1;
+    return (i || o) && (this._initialise(i), this.transforms = new ie(), l = this._run(o ? e : t), this.fire("step", this)), this.done = this.done || l && o, r && this.fire("finished", this), this;
+  }
+  time(e) {
+    if (e == null) return this._time;
+    const t = e - this._time;
+    return this.step(t), this;
+  }
+  timeline(e) {
+    return e === void 0 ? this._timeline : (this._timeline = e, this);
+  }
+  unschedule() {
+    const e = this.timeline();
+    return e && e.unschedule(this), this;
+  }
+  _initialise(e) {
+    if (e || this._isDeclarative) for (let t = 0, i = this._queue.length; t < i; ++t) {
+      const a = this._queue[t], s = this._isDeclarative || !a.initialised && e;
+      e = !a.finished, s && e && (a.initialiser.call(this), a.initialised = !0);
+    }
+  }
+  _rememberMorpher(e, t) {
+    if (this._history[e] = { morpher: t, caller: this._queue[this._queue.length - 1] }, this._isDeclarative) {
+      const i = this.timeline();
+      i && i.play();
+    }
+  }
+  _run(e) {
+    let t = !0;
+    for (let i = 0, a = this._queue.length; i < a; ++i) {
+      const s = this._queue[i], r = s.runner.call(this, e);
+      s.finished = s.finished || r === !0, t = t && s.finished;
+    }
+    return t;
+  }
+  _tryRetarget(e, t, i) {
+    if (this._history[e]) {
+      if (!this._history[e].caller.initialised) {
+        const s = this._queue.indexOf(this._history[e].caller);
+        return this._queue.splice(s, 1), !1;
+      }
+      this._history[e].caller.retarget ? this._history[e].caller.retarget.call(this, t, i) : this._history[e].morpher.to(t), this._history[e].caller.finished = !1;
+      const a = this.timeline();
+      return a && a.play(), !0;
+    }
+    return !1;
+  }
+}
+Be.id = 0;
+class Ti {
+  constructor(e = new ie(), t = -1, i = !0) {
+    this.transforms = e, this.id = t, this.done = i;
+  }
+  clearTransformsFromQueue() {
+  }
+}
+re([Be, Ti], { mergeWith(n) {
+  return new Ti(n.transforms.lmultiply(this.transforms), n.id);
+} });
+const wn = (n, e) => n.lmultiplyO(e), kn = (n) => n.transforms;
+function Rc() {
+  const n = this._transformationRunners.runners.map(kn).reduce(wn, new ie());
+  this.transform(n), this._transformationRunners.merge(), this._transformationRunners.length() === 1 && (this._frameId = null);
+}
+class Oc {
+  constructor() {
+    this.runners = [], this.ids = [];
+  }
+  add(e) {
+    if (this.runners.includes(e)) return;
+    const t = e.id + 1;
+    return this.runners.push(e), this.ids.push(t), this;
+  }
+  clearBefore(e) {
+    const t = this.ids.indexOf(e + 1) || 1;
+    return this.ids.splice(0, t, 0), this.runners.splice(0, t, new Ti()).forEach((i) => i.clearTransformsFromQueue()), this;
+  }
+  edit(e, t) {
+    const i = this.ids.indexOf(e + 1);
+    return this.ids.splice(i, 1, e + 1), this.runners.splice(i, 1, t), this;
+  }
+  getByID(e) {
+    return this.runners[this.ids.indexOf(e + 1)];
+  }
+  length() {
+    return this.ids.length;
+  }
+  merge() {
+    let e = null;
+    for (let t = 0; t < this.runners.length; ++t) {
+      const i = this.runners[t];
+      if (e && i.done && e.done && (!i._timeline || !i._timeline._runnerIds.includes(i.id)) && (!e._timeline || !e._timeline._runnerIds.includes(e.id))) {
+        this.remove(i.id);
+        const a = i.mergeWith(e);
+        this.edit(e.id, a), e = a, --t;
+      } else e = i;
+    }
+    return this;
+  }
+  remove(e) {
+    const t = this.ids.indexOf(e + 1);
+    return this.ids.splice(t, 1), this.runners.splice(t, 1), this;
+  }
+}
+ce({ Element: { animate(n, e, t) {
+  const i = Be.sanitise(n, e, t), a = this.timeline();
+  return new Be(i.duration).loop(i).element(this).timeline(a.play()).schedule(i.delay, i.when);
+}, delay(n, e) {
+  return this.animate(0, n, e);
+}, _clearTransformRunnersBefore(n) {
+  this._transformationRunners.clearBefore(n.id);
+}, _currentTransform(n) {
+  return this._transformationRunners.runners.filter((e) => e.id <= n.id).map(kn).reduce(wn, new ie());
+}, _addRunner(n) {
+  this._transformationRunners.add(n), ve.cancelImmediate(this._frameId), this._frameId = ve.immediate(Rc.bind(this));
+}, _prepareRunner() {
+  this._frameId == null && (this._transformationRunners = new Oc().add(new Ti(new ie(this))));
+} } });
+re(Be, { attr(n, e) {
+  return this.styleAttr("attr", n, e);
+}, css(n, e) {
+  return this.styleAttr("css", n, e);
+}, styleAttr(n, e, t) {
+  if (typeof e == "string") return this.styleAttr(n, { [e]: t });
+  let i = e;
+  if (this._tryRetarget(n, i)) return this;
+  let a = new ut(this._stepper).to(i), s = Object.keys(i);
+  return this.queue(function() {
+    a = a.from(this.element()[n](s));
+  }, function(r) {
+    return this.element()[n](a.at(r).valueOf()), a.done();
+  }, function(r) {
+    const o = Object.keys(r), l = (c = s, o.filter((d) => !c.includes(d)));
+    var c;
+    if (l.length) {
+      const d = this.element()[n](l), u = new ii(a.from()).valueOf();
+      Object.assign(u, d), a.from(u);
+    }
+    const h = new ii(a.to()).valueOf();
+    Object.assign(h, r), a.to(h), s = o, i = r;
+  }), this._rememberMorpher(n, a), this;
+}, zoom(n, e) {
+  if (this._tryRetarget("zoom", n, e)) return this;
+  let t = new ut(this._stepper).to(new oe(n));
+  return this.queue(function() {
+    t = t.from(this.element().zoom());
+  }, function(i) {
+    return this.element().zoom(t.at(i), e), t.done();
+  }, function(i, a) {
+    e = a, t.to(i);
+  }), this._rememberMorpher("zoom", t), this;
+}, transform(n, e, t) {
+  if (e = n.relative || e, this._isDeclarative && !e && this._tryRetarget("transform", n)) return this;
+  const i = ie.isMatrixLike(n);
+  t = n.affine != null ? n.affine : t ?? !i;
+  const a = new ut(this._stepper).type(t ? hi : ie);
+  let s, r, o, l, c;
+  return this.queue(function() {
+    r = r || this.element(), s = s || Sa(n, r), c = new ie(e ? void 0 : r), r._addRunner(this), e || r._clearTransformRunnersBefore(this);
+  }, function(h) {
+    e || this.clearTransform();
+    const { x: d, y: u } = new pe(s).transform(r._currentTransform(this));
+    let g = new ie({ ...n, origin: [d, u] }), p = this._isDeclarative && o ? o : c;
+    if (t) {
+      g = g.decompose(d, u), p = p.decompose(d, u);
+      const x = g.rotate, b = p.rotate, m = [x - 360, x, x + 360], w = m.map((k) => Math.abs(k - b)), y = Math.min(...w), v = w.indexOf(y);
+      g.rotate = m[v];
+    }
+    e && (i || (g.rotate = n.rotate || 0), this._isDeclarative && l && (p.rotate = l)), a.from(p), a.to(g);
+    const f = a.at(h);
+    return l = f.rotate, o = new ie(f), this.addTransform(o), r._addRunner(this), a.done();
+  }, function(h) {
+    (h.origin || "center").toString() !== (n.origin || "center").toString() && (s = Sa(h, r)), n = { ...h, origin: s };
+  }, !0), this._isDeclarative && this._rememberMorpher("transform", a), this;
+}, x(n) {
+  return this._queueNumber("x", n);
+}, y(n) {
+  return this._queueNumber("y", n);
+}, ax(n) {
+  return this._queueNumber("ax", n);
+}, ay(n) {
+  return this._queueNumber("ay", n);
+}, dx(n = 0) {
+  return this._queueNumberDelta("x", n);
+}, dy(n = 0) {
+  return this._queueNumberDelta("y", n);
+}, dmove(n, e) {
+  return this.dx(n).dy(e);
+}, _queueNumberDelta(n, e) {
+  if (e = new oe(e), this._tryRetarget(n, e)) return this;
+  const t = new ut(this._stepper).to(e);
+  let i = null;
+  return this.queue(function() {
+    i = this.element()[n](), t.from(i), t.to(i + e);
+  }, function(a) {
+    return this.element()[n](t.at(a)), t.done();
+  }, function(a) {
+    t.to(i + new oe(a));
+  }), this._rememberMorpher(n, t), this;
+}, _queueObject(n, e) {
+  if (this._tryRetarget(n, e)) return this;
+  const t = new ut(this._stepper).to(e);
+  return this.queue(function() {
+    t.from(this.element()[n]());
+  }, function(i) {
+    return this.element()[n](t.at(i)), t.done();
+  }), this._rememberMorpher(n, t), this;
+}, _queueNumber(n, e) {
+  return this._queueObject(n, new oe(e));
+}, cx(n) {
+  return this._queueNumber("cx", n);
+}, cy(n) {
+  return this._queueNumber("cy", n);
+}, move(n, e) {
+  return this.x(n).y(e);
+}, amove(n, e) {
+  return this.ax(n).ay(e);
+}, center(n, e) {
+  return this.cx(n).cy(e);
+}, size(n, e) {
+  let t;
+  return n && e || (t = this._element.bbox()), n || (n = t.width / t.height * e), e || (e = t.height / t.width * n), this.width(n).height(e);
+}, width(n) {
+  return this._queueNumber("width", n);
+}, height(n) {
+  return this._queueNumber("height", n);
+}, plot(n, e, t, i) {
+  if (arguments.length === 4) return this.plot([n, e, t, i]);
+  if (this._tryRetarget("plot", n)) return this;
+  const a = new ut(this._stepper).type(this._element.MorphArray).to(n);
+  return this.queue(function() {
+    a.from(this._element.array());
+  }, function(s) {
+    return this._element.plot(a.at(s)), a.done();
+  }), this._rememberMorpher("plot", a), this;
+}, leading(n) {
+  return this._queueNumber("leading", n);
+}, viewbox(n, e, t, i) {
+  return this._queueObject("viewbox", new Le(n, e, t, i));
+}, update(n) {
+  return typeof n != "object" ? this.update({ offset: arguments[0], color: arguments[1], opacity: arguments[2] }) : (n.opacity != null && this.attr("stop-opacity", n.opacity), n.color != null && this.attr("stop-color", n.color), n.offset != null && this.attr("offset", n.offset), this);
+} }), re(Be, { rx: as, ry: ss, from: xn, to: bn }), ge(Be, "Runner");
+class Oa extends De {
+  constructor(e, t = e) {
+    super(Ae("svg", e), t), this.namespace();
+  }
+  defs() {
+    return this.isRoot() ? Ue(this.node.querySelector("defs")) || this.put(new Oi()) : this.root().defs();
+  }
+  isRoot() {
+    return !this.node.parentNode || !(this.node.parentNode instanceof ue.window.SVGElement) && this.node.parentNode.nodeName !== "#document-fragment";
+  }
+  namespace() {
+    return this.isRoot() ? this.attr({ xmlns: Ka, version: "1.1" }).attr("xmlns:xlink", Ft, ji) : this.root().namespace();
+  }
+  removeNamespace() {
+    return this.attr({ xmlns: null, version: null }).attr("xmlns:xlink", null, ji).attr("xmlns:svgjs", null, ji);
+  }
+  root() {
+    return this.isRoot() ? this : super.root();
+  }
+}
+ce({ Container: { nested: ke(function() {
+  return this.put(new Oa());
+}) } }), ge(Oa, "Svg", !0);
+let za = class extends De {
+  constructor(n, e = n) {
+    super(Ae("symbol", n), e);
+  }
+};
+ce({ Container: { symbol: ke(function() {
+  return this.put(new za());
+}) } }), ge(za, "Symbol");
+var An = Object.freeze({ __proto__: null, amove: function(n, e) {
+  return this.ax(n).ay(e);
+}, ax: function(n) {
+  return this.attr("x", n);
+}, ay: function(n) {
+  return this.attr("y", n);
+}, build: function(n) {
+  return this._build = !!n, this;
+}, center: function(n, e, t = this.bbox()) {
+  return this.cx(n, t).cy(e, t);
+}, cx: function(n, e = this.bbox()) {
+  return n == null ? e.cx : this.attr("x", this.attr("x") + n - e.cx);
+}, cy: function(n, e = this.bbox()) {
+  return n == null ? e.cy : this.attr("y", this.attr("y") + n - e.cy);
+}, length: function() {
+  return this.node.getComputedTextLength();
+}, move: function(n, e, t = this.bbox()) {
+  return this.x(n, t).y(e, t);
+}, plain: function(n) {
+  return this._build === !1 && this.clear(), this.node.appendChild(ue.document.createTextNode(n)), this;
+}, x: function(n, e = this.bbox()) {
+  return n == null ? e.x : this.attr("x", this.attr("x") + n - e.x);
+}, y: function(n, e = this.bbox()) {
+  return n == null ? e.y : this.attr("y", this.attr("y") + n - e.y);
+} });
+class Je extends je {
+  constructor(e, t = e) {
+    super(Ae("text", e), t), this.dom.leading = this.dom.leading ?? new oe(1.3), this._rebuild = !0, this._build = !1;
+  }
+  leading(e) {
+    return e == null ? this.dom.leading : (this.dom.leading = new oe(e), this.rebuild());
+  }
+  rebuild(e) {
+    if (typeof e == "boolean" && (this._rebuild = e), this._rebuild) {
+      const t = this;
+      let i = 0;
+      const a = this.dom.leading;
+      this.each(function(s) {
+        if (Ma(this.node)) return;
+        const r = ue.window.getComputedStyle(this.node).getPropertyValue("font-size"), o = a * new oe(r);
+        this.dom.newLined && (this.attr("x", t.attr("x")), this.text() === `
+` ? i += o : (this.attr("dy", s ? o + i : 0), i = 0));
+      }), this.fire("rebuild");
+    }
+    return this;
+  }
+  setData(e) {
+    return this.dom = e, this.dom.leading = new oe(e.leading || 1.3), this;
+  }
+  writeDataToDom() {
+    return en(this, this.dom, { leading: 1.3 }), this;
+  }
+  text(e) {
+    if (e === void 0) {
+      const t = this.node.childNodes;
+      let i = 0;
+      e = "";
+      for (let a = 0, s = t.length; a < s; ++a) t[a].nodeName === "textPath" || Ma(t[a]) ? a === 0 && (i = a + 1) : (a !== i && t[a].nodeType !== 3 && Ue(t[a]).dom.newLined === !0 && (e += `
+`), e += t[a].textContent);
+      return e;
+    }
+    if (this.clear().build(!0), typeof e == "function") e.call(this, this);
+    else for (let t = 0, i = (e = (e + "").split(`
+`)).length; t < i; t++) this.newLine(e[t]);
+    return this.build(!1).rebuild();
+  }
+}
+re(Je, An), ce({ Container: { text: ke(function(n = "") {
+  return this.put(new Je()).text(n);
+}), plain: ke(function(n = "") {
+  return this.put(new Je()).plain(n);
+}) } }), ge(Je, "Text");
+class Ai extends je {
+  constructor(e, t = e) {
+    super(Ae("tspan", e), t), this._build = !1;
+  }
+  dx(e) {
+    return this.attr("dx", e);
+  }
+  dy(e) {
+    return this.attr("dy", e);
+  }
+  newLine() {
+    this.dom.newLined = !0;
+    const e = this.parent();
+    if (!(e instanceof Je)) return this;
+    const t = e.index(this), i = ue.window.getComputedStyle(this.node).getPropertyValue("font-size"), a = e.dom.leading * new oe(i);
+    return this.dy(t ? a : 0).attr("x", e.x());
+  }
+  text(e) {
+    return e == null ? this.node.textContent + (this.dom.newLined ? `
+` : "") : (typeof e == "function" ? (this.clear().build(!0), e.call(this, this), this.build(!1)) : this.plain(e), this);
+  }
+}
+re(Ai, An), ce({ Tspan: { tspan: ke(function(n = "") {
+  const e = new Ai();
+  return this._build || this.clear(), this.put(e).text(n);
+}) }, Text: { newLine: function(n = "") {
+  return this.tspan(n).newLine();
+} } }), ge(Ai, "Tspan");
+class Zi extends je {
+  constructor(e, t = e) {
+    super(Ae("circle", e), t);
+  }
+  radius(e) {
+    return this.attr("r", e);
+  }
+  rx(e) {
+    return this.attr("r", e);
+  }
+  ry(e) {
+    return this.rx(e);
+  }
+  size(e) {
+    return this.radius(new oe(e).divide(2));
+  }
+}
+re(Zi, { x: cn, y: hn, cx: dn, cy: un, width: gn, height: fn }), ce({ Container: { circle: ke(function(n = 0) {
+  return this.put(new Zi()).size(n).move(0, 0);
+}) } }), ge(Zi, "Circle");
+class Ji extends De {
+  constructor(e, t = e) {
+    super(Ae("clipPath", e), t);
+  }
+  remove() {
+    return this.targets().forEach(function(e) {
+      e.unclip();
+    }), super.remove();
+  }
+  targets() {
+    return wt("svg [clip-path*=" + this.id() + "]");
+  }
+}
+ce({ Container: { clip: ke(function() {
+  return this.defs().put(new Ji());
+}) }, Element: { clipper() {
+  return this.reference("clip-path");
+}, clipWith(n) {
+  const e = n instanceof Ji ? n : this.parent().clip().add(n);
+  return this.attr("clip-path", "url(#" + e.id() + ")");
+}, unclip() {
+  return this.attr("clip-path", null);
+} } }), ge(Ji, "ClipPath");
+class er extends Ye {
+  constructor(e, t = e) {
+    super(Ae("foreignObject", e), t);
+  }
+}
+ce({ Container: { foreignObject: ke(function(n, e) {
+  return this.put(new er()).size(n, e);
+}) } }), ge(er, "ForeignObject");
+var Cn = Object.freeze({ __proto__: null, dmove: function(n, e) {
+  return this.children().forEach((t) => {
+    let i;
+    try {
+      i = t.node instanceof li().SVGSVGElement ? new Le(t.attr(["x", "y", "width", "height"])) : t.bbox();
+    } catch {
+      return;
+    }
+    const a = new ie(t), s = a.translate(n, e).transform(a.inverse()), r = new pe(i.x, i.y).transform(s);
+    t.move(r.x, r.y);
+  }), this;
+}, dx: function(n) {
+  return this.dmove(n, 0);
+}, dy: function(n) {
+  return this.dmove(0, n);
+}, height: function(n, e = this.bbox()) {
+  return n == null ? e.height : this.size(e.width, n, e);
+}, move: function(n = 0, e = 0, t = this.bbox()) {
+  const i = n - t.x, a = e - t.y;
+  return this.dmove(i, a);
+}, size: function(n, e, t = this.bbox()) {
+  const i = Yt(this, n, e, t), a = i.width / t.width, s = i.height / t.height;
+  return this.children().forEach((r) => {
+    const o = new pe(t).transform(new ie(r).inverse());
+    r.scale(a, s, o.x, o.y);
+  }), this;
+}, width: function(n, e = this.bbox()) {
+  return n == null ? e.width : this.size(n, e.height, e);
+}, x: function(n, e = this.bbox()) {
+  return n == null ? e.x : this.move(n, e.y, e);
+}, y: function(n, e = this.bbox()) {
+  return n == null ? e.y : this.move(e.x, n, e);
+} });
+class nt extends De {
+  constructor(e, t = e) {
+    super(Ae("g", e), t);
+  }
+}
+re(nt, Cn), ce({ Container: { group: ke(function() {
+  return this.put(new nt());
+}) } }), ge(nt, "G");
+class fi extends De {
+  constructor(e, t = e) {
+    super(Ae("a", e), t);
+  }
+  target(e) {
+    return this.attr("target", e);
+  }
+  to(e) {
+    return this.attr("href", e, Ft);
+  }
+}
+re(fi, Cn), ce({ Container: { link: ke(function(n) {
+  return this.put(new fi()).to(n);
+}) }, Element: { unlink() {
+  const n = this.linker();
+  if (!n) return this;
+  const e = n.parent();
+  if (!e) return this.remove();
+  const t = e.index(n);
+  return e.add(this, t), n.remove(), this;
+}, linkTo(n) {
+  let e = this.linker();
+  return e || (e = new fi(), this.wrap(e)), typeof n == "function" ? n.call(e, e) : e.to(n), this;
+}, linker() {
+  const n = this.parent();
+  return n && n.node.nodeName.toLowerCase() === "a" ? n : null;
+} } }), ge(fi, "A");
+class Ki extends De {
+  constructor(e, t = e) {
+    super(Ae("mask", e), t);
+  }
+  remove() {
+    return this.targets().forEach(function(e) {
+      e.unmask();
+    }), super.remove();
+  }
+  targets() {
+    return wt("svg [mask*=" + this.id() + "]");
+  }
+}
+ce({ Container: { mask: ke(function() {
+  return this.defs().put(new Ki());
+}) }, Element: { masker() {
+  return this.reference("mask");
+}, maskWith(n) {
+  const e = n instanceof Ki ? n : this.parent().mask().add(n);
+  return this.attr("mask", "url(#" + e.id() + ")");
+}, unmask() {
+  return this.attr("mask", null);
+} } }), ge(Ki, "Mask");
+class tr extends Ye {
+  constructor(e, t = e) {
+    super(Ae("stop", e), t);
+  }
+  update(e) {
+    return (typeof e == "number" || e instanceof oe) && (e = { offset: arguments[0], color: arguments[1], opacity: arguments[2] }), e.opacity != null && this.attr("stop-opacity", e.opacity), e.color != null && this.attr("stop-color", e.color), e.offset != null && this.attr("offset", new oe(e.offset)), this;
+  }
+}
+ce({ Gradient: { stop: function(n, e, t) {
+  return this.put(new tr()).update(n, e, t);
+} } }), ge(tr, "Stop");
+class Qi extends Ye {
+  constructor(e, t = e) {
+    super(Ae("style", e), t);
+  }
+  addText(e = "") {
+    return this.node.textContent += e, this;
+  }
+  font(e, t, i = {}) {
+    return this.rule("@font-face", { fontFamily: e, src: t, ...i });
+  }
+  rule(e, t) {
+    return this.addText(function(i, a) {
+      if (!i) return "";
+      if (!a) return i;
+      let s = i + "{";
+      for (const r in a) s += r.replace(/([A-Z])/g, function(o, l) {
+        return "-" + l.toLowerCase();
+      }) + ":" + a[r] + ";";
+      return s += "}", s;
+    }(e, t));
+  }
+}
+ce("Dom", { style(n, e) {
+  return this.put(new Qi()).rule(n, e);
+}, fontface(n, e, t) {
+  return this.put(new Qi()).font(n, e, t);
+} }), ge(Qi, "Style");
+class ea extends Je {
+  constructor(e, t = e) {
+    super(Ae("textPath", e), t);
+  }
+  array() {
+    const e = this.track();
+    return e ? e.array() : null;
+  }
+  plot(e) {
+    const t = this.track();
+    let i = null;
+    return t && (i = t.plot(e)), e == null ? i : this;
+  }
+  track() {
+    return this.reference("href");
+  }
+}
+ce({ Container: { textPath: ke(function(n, e) {
+  return n instanceof Je || (n = this.text(n)), n.path(e);
+}) }, Text: { path: ke(function(n, e = !0) {
+  const t = new ea();
+  let i;
+  if (n instanceof Pt || (n = this.defs().path(n)), t.attr("href", "#" + n, Ft), e) for (; i = this.node.firstChild; ) t.node.appendChild(i);
+  return this.put(t);
+}), textPath() {
+  return this.findOne("textPath");
+} }, Path: { text: ke(function(n) {
+  return n instanceof Je || (n = new Je().addTo(this.parent()).text(n)), n.path(this);
+}), targets() {
+  return wt("svg textPath").filter((n) => (n.attr("href") || "").includes(this.id()));
+} } }), ea.prototype.MorphArray = Ze, ge(ea, "TextPath");
+class ir extends je {
+  constructor(e, t = e) {
+    super(Ae("use", e), t);
+  }
+  use(e, t) {
+    return this.attr("href", (t || "") + "#" + e, Ft);
+  }
+}
+ce({ Container: { use: ke(function(n, e) {
+  return this.put(new ir()).use(n, e);
+}) } }), ge(ir, "Use");
+const zc = He;
+re([Oa, za, yi, ti, wi], We("viewbox")), re([ft, xt, pt, Pt], We("marker")), re(Je, We("Text")), re(Pt, We("Path")), re(Oi, We("Defs")), re([Je, Ai], We("Tspan")), re([ki, vi, $t, Be], We("radius")), re(ci, We("EventTarget")), re(ot, We("Dom")), re(Ye, We("Element")), re(je, We("Shape")), re([De, pn], We("Container")), re($t, We("Gradient")), re(Be, We("Runner")), vt.extend([...new Set(Kr)]), function(n = []) {
+  Ra.push(...[].concat(n));
+}([oe, ye, Le, ie, yt, lt, Ze, pe]), re(Ra, { to(n) {
+  return new ut().type(this.constructor).from(this.toArray()).to(n);
+}, fromArray(n) {
+  return this.init(n), this;
+}, toConsumable() {
+  return this.toArray();
+}, morph(n, e, t, i, a) {
+  return this.fromArray(n.map(function(s, r) {
+    return i.step(s, e[r], t, a[r], a);
+  }));
+} });
+class Se extends Ye {
+  constructor(e) {
+    super(Ae("filter", e), e), this.$source = "SourceGraphic", this.$sourceAlpha = "SourceAlpha", this.$background = "BackgroundImage", this.$backgroundAlpha = "BackgroundAlpha", this.$fill = "FillPaint", this.$stroke = "StrokePaint", this.$autoSetIn = !0;
+  }
+  put(e, t) {
+    return !(e = super.put(e, t)).attr("in") && this.$autoSetIn && e.attr("in", this.$source), e.attr("result") || e.attr("result", e.id()), e;
+  }
+  remove() {
+    return this.targets().each("unfilter"), super.remove();
+  }
+  targets() {
+    return wt('svg [filter*="' + this.id() + '"]');
+  }
+  toString() {
+    return "url(#" + this.id() + ")";
+  }
+}
+class os extends Ye {
+  constructor(e, t) {
+    super(e, t), this.result(this.id());
+  }
+  in(e) {
+    if (e == null) {
+      const t = this.attr("in");
+      return this.parent() && this.parent().find(`[result="${t}"]`)[0] || t;
+    }
+    return this.attr("in", e);
+  }
+  result(e) {
+    return this.attr("result", e);
+  }
+  toString() {
+    return this.result();
+  }
+}
+const Ve = (n) => function(...e) {
+  for (let t = n.length; t--; ) e[t] != null && this.attr(n[t], e[t]);
+}, _c = { blend: Ve(["in", "in2", "mode"]), colorMatrix: Ve(["type", "values"]), composite: Ve(["in", "in2", "operator"]), convolveMatrix: function(n) {
+  n = new yt(n).toString(), this.attr({ order: Math.sqrt(n.split(" ").length), kernelMatrix: n });
+}, diffuseLighting: Ve(["surfaceScale", "lightingColor", "diffuseConstant", "kernelUnitLength"]), displacementMap: Ve(["in", "in2", "scale", "xChannelSelector", "yChannelSelector"]), dropShadow: Ve(["in", "dx", "dy", "stdDeviation"]), flood: Ve(["flood-color", "flood-opacity"]), gaussianBlur: function(n = 0, e = n) {
+  this.attr("stdDeviation", n + " " + e);
+}, image: function(n) {
+  this.attr("href", n, Ft);
+}, morphology: Ve(["operator", "radius"]), offset: Ve(["dx", "dy"]), specularLighting: Ve(["surfaceScale", "lightingColor", "diffuseConstant", "specularExponent", "kernelUnitLength"]), tile: Ve([]), turbulence: Ve(["baseFrequency", "numOctaves", "seed", "stitchTiles", "type"]) };
+["blend", "colorMatrix", "componentTransfer", "composite", "convolveMatrix", "diffuseLighting", "displacementMap", "dropShadow", "flood", "gaussianBlur", "image", "merge", "morphology", "offset", "specularLighting", "tile", "turbulence"].forEach((n) => {
+  const e = _t(n), t = _c[n];
+  Se[e + "Effect"] = class extends os {
+    constructor(i) {
+      super(Ae("fe" + e, i), i);
+    }
+    update(i) {
+      return t.apply(this, i), this;
+    }
+  }, Se.prototype[n] = ke(function(i, ...a) {
+    const s = new Se[e + "Effect"]();
+    return i == null ? this.put(s) : (typeof i == "function" ? i.call(s, s) : a.unshift(i), this.put(s).update(a));
+  });
+}), re(Se, { merge(n) {
+  const e = this.put(new Se.MergeEffect());
+  return typeof n == "function" ? (n.call(e, e), e) : ((n instanceof Array ? n : [...arguments]).forEach((t) => {
+    t instanceof Se.MergeNode ? e.put(t) : e.mergeNode(t);
+  }), e);
+}, componentTransfer(n = {}) {
+  const e = this.put(new Se.ComponentTransferEffect());
+  if (typeof n == "function") return n.call(e, e), e;
+  n.r || n.g || n.b || n.a || (n = { r: n, g: n, b: n, a: n });
+  for (const t in n) e.add(new Se["Func" + t.toUpperCase()](n[t]));
+  return e;
+} });
+["distantLight", "pointLight", "spotLight", "mergeNode", "FuncR", "FuncG", "FuncB", "FuncA"].forEach((n) => {
+  const e = _t(n);
+  Se[e] = class extends os {
+    constructor(t) {
+      super(Ae("fe" + e, t), t);
+    }
+  };
+});
+["funcR", "funcG", "funcB", "funcA"].forEach(function(n) {
+  const e = Se[_t(n)], t = ke(function() {
+    return this.put(new e());
+  });
+  Se.ComponentTransferEffect.prototype[n] = t;
+});
+["distantLight", "pointLight", "spotLight"].forEach((n) => {
+  const e = Se[_t(n)], t = ke(function() {
+    return this.put(new e());
+  });
+  Se.DiffuseLightingEffect.prototype[n] = t, Se.SpecularLightingEffect.prototype[n] = t;
+}), re(Se.MergeEffect, { mergeNode(n) {
+  return this.put(new Se.MergeNode()).attr("in", n);
+} }), re(Oi, { filter: function(n) {
+  const e = this.put(new Se());
+  return typeof n == "function" && n.call(e, e), e;
+} }), re(De, { filter: function(n) {
+  return this.defs().filter(n);
+} }), re(Ye, { filterWith: function(n) {
+  const e = n instanceof Se ? n : this.defs().filter(n);
+  return this.attr("filter", e);
+}, unfilter: function(n) {
+  return this.attr("filter", null);
+}, filterer() {
+  return this.reference("filter");
+} });
+const Yc = { blend: function(n, e) {
+  return this.parent() && this.parent().blend(this, n, e);
+}, colorMatrix: function(n, e) {
+  return this.parent() && this.parent().colorMatrix(n, e).in(this);
+}, componentTransfer: function(n) {
+  return this.parent() && this.parent().componentTransfer(n).in(this);
+}, composite: function(n, e) {
+  return this.parent() && this.parent().composite(this, n, e);
+}, convolveMatrix: function(n) {
+  return this.parent() && this.parent().convolveMatrix(n).in(this);
+}, diffuseLighting: function(n, e, t, i) {
+  return this.parent() && this.parent().diffuseLighting(n, t, i).in(this);
+}, displacementMap: function(n, e, t, i) {
+  return this.parent() && this.parent().displacementMap(this, n, e, t, i);
+}, dropShadow: function(n, e, t) {
+  return this.parent() && this.parent().dropShadow(this, n, e, t).in(this);
+}, flood: function(n, e) {
+  return this.parent() && this.parent().flood(n, e);
+}, gaussianBlur: function(n, e) {
+  return this.parent() && this.parent().gaussianBlur(n, e).in(this);
+}, image: function(n) {
+  return this.parent() && this.parent().image(n);
+}, merge: function(n) {
+  return n = n instanceof Array ? n : [...n], this.parent() && this.parent().merge(this, ...n);
+}, morphology: function(n, e) {
+  return this.parent() && this.parent().morphology(n, e).in(this);
+}, offset: function(n, e) {
+  return this.parent() && this.parent().offset(n, e).in(this);
+}, specularLighting: function(n, e, t, i, a) {
+  return this.parent() && this.parent().specularLighting(n, t, i, a).in(this);
+}, tile: function() {
+  return this.parent() && this.parent().tile().in(this);
+}, turbulence: function(n, e, t, i, a) {
+  return this.parent() && this.parent().turbulence(n, e, t, i, a).in(this);
+} };
+re(os, Yc), re(Se.MergeEffect, { in: function(n) {
+  return n instanceof Se.MergeNode ? this.add(n, 0) : this.add(new Se.MergeNode().in(n), 0), this;
+} }), re([Se.CompositeEffect, Se.BlendEffect, Se.DisplacementMapEffect], { in2: function(n) {
+  if (n == null) {
+    const e = this.attr("in2");
+    return this.parent() && this.parent().find(`[result="${e}"]`)[0] || e;
+  }
+  return this.attr("in2", n);
+} }), Se.filter = { sepiatone: [0.343, 0.669, 0.119, 0, 0, 0.249, 0.626, 0.13, 0, 0, 0.172, 0.334, 0.111, 0, 0, 0, 0, 0, 1, 0] };
+var _e = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w;
+  }
+  return $(n, [{ key: "getDefaultFilter", value: function(e, t) {
+    var i = this.w;
+    e.unfilter(!0), new Se().size("120%", "180%", "-5%", "-40%"), i.config.chart.dropShadow.enabled && this.dropShadow(e, i.config.chart.dropShadow, t);
+  } }, { key: "applyFilter", value: function(e, t, i) {
+    var a, s = this, r = this.w;
+    if (e.unfilter(!0), i !== "none") {
+      var o, l, c = r.config.chart.dropShadow, h = i === "lighten" ? 2 : 0.3;
+      e.filterWith(function(d) {
+        d.colorMatrix({ type: "matrix", values: `
+          `.concat(h, ` 0 0 0 0
+          0 `).concat(h, ` 0 0 0
+          0 0 `).concat(h, ` 0 0
+          0 0 0 1 0
+        `), in: "SourceGraphic", result: "brightness" }), c.enabled && s.addShadow(d, t, c, "brightness");
+      }), !c.noUserSpaceOnUse && ((o = e.filterer()) === null || o === void 0 || (l = o.node) === null || l === void 0 || l.setAttribute("filterUnits", "userSpaceOnUse")), this._scaleFilterSize((a = e.filterer()) === null || a === void 0 ? void 0 : a.node);
+    } else this.getDefaultFilter(e, t);
+  } }, { key: "addShadow", value: function(e, t, i, a) {
+    var s, r = this.w, o = i.blur, l = i.top, c = i.left, h = i.color, d = i.opacity;
+    if (h = Array.isArray(h) ? h[t] : h, ((s = r.config.chart.dropShadow.enabledOnSeries) === null || s === void 0 ? void 0 : s.length) > 0 && r.config.chart.dropShadow.enabledOnSeries.indexOf(t) === -1) return e;
+    e.offset({ in: a, dx: c, dy: l, result: "offset" }), e.gaussianBlur({ in: "offset", stdDeviation: o, result: "blur" }), e.flood({ "flood-color": h, "flood-opacity": d, result: "flood" }), e.composite({ in: "flood", in2: "blur", operator: "in", result: "shadow" }), e.merge(["shadow", a]);
+  } }, { key: "dropShadow", value: function(e, t) {
+    var i, a, s, r, o, l = this, c = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : 0, h = this.w;
+    return e.unfilter(!0), T.isMsEdge() && h.config.chart.type === "radialBar" || ((i = h.config.chart.dropShadow.enabledOnSeries) === null || i === void 0 ? void 0 : i.length) > 0 && ((s = h.config.chart.dropShadow.enabledOnSeries) === null || s === void 0 ? void 0 : s.indexOf(c)) === -1 ? e : (e.filterWith(function(d) {
+      l.addShadow(d, c, t, "SourceGraphic");
+    }), t.noUserSpaceOnUse || (r = e.filterer()) === null || r === void 0 || (o = r.node) === null || o === void 0 || o.setAttribute("filterUnits", "userSpaceOnUse"), this._scaleFilterSize((a = e.filterer()) === null || a === void 0 ? void 0 : a.node), e);
+  } }, { key: "setSelectionFilter", value: function(e, t, i) {
+    var a = this.w;
+    if (a.globals.selectedDataPoints[t] !== void 0 && a.globals.selectedDataPoints[t].indexOf(i) > -1) {
+      e.node.setAttribute("selected", !0);
+      var s = a.config.states.active.filter;
+      s !== "none" && this.applyFilter(e, t, s.type);
+    }
+  } }, { key: "_scaleFilterSize", value: function(e) {
+    e && function(t) {
+      for (var i in t) t.hasOwnProperty(i) && e.setAttribute(i, t[i]);
+    }({ width: "200%", height: "200%", x: "-50%", y: "-50%" });
+  } }]), n;
+}(), F = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w;
+  }
+  return $(n, [{ key: "roundPathCorners", value: function(e, t) {
+    function i(C, S, L) {
+      var P = S.x - C.x, I = S.y - C.y, E = Math.sqrt(P * P + I * I);
+      return a(C, S, Math.min(1, L / E));
+    }
+    function a(C, S, L) {
+      return { x: C.x + (S.x - C.x) * L, y: C.y + (S.y - C.y) * L };
+    }
+    function s(C, S) {
+      C.length > 2 && (C[C.length - 2] = S.x, C[C.length - 1] = S.y);
+    }
+    function r(C) {
+      return { x: parseFloat(C[C.length - 2]), y: parseFloat(C[C.length - 1]) };
+    }
+    e.indexOf("NaN") > -1 && (e = "");
+    var o = e.split(/[,\s]/).reduce(function(C, S) {
+      var L = S.match(/^([a-zA-Z])(.+)/);
+      return L ? (C.push(L[1]), C.push(L[2])) : C.push(S), C;
+    }, []).reduce(function(C, S) {
+      return parseFloat(S) == S && C.length ? C[C.length - 1].push(S) : C.push([S]), C;
+    }, []), l = [];
+    if (o.length > 1) {
+      var c = r(o[0]), h = null;
+      o[o.length - 1][0] == "Z" && o[0].length > 2 && (h = ["L", c.x, c.y], o[o.length - 1] = h), l.push(o[0]);
+      for (var d = 1; d < o.length; d++) {
+        var u = l[l.length - 1], g = o[d], p = g == h ? o[1] : o[d + 1];
+        if (p && u && u.length > 2 && g[0] == "L" && p.length > 2 && p[0] == "L") {
+          var f, x, b = r(u), m = r(g), w = r(p);
+          f = i(m, b, t), x = i(m, w, t), s(g, f), g.origPoint = m, l.push(g);
+          var y = a(f, m, 0.5), v = a(m, x, 0.5), k = ["C", y.x, y.y, v.x, v.y, x.x, x.y];
+          k.origPoint = m, l.push(k);
+        } else l.push(g);
+      }
+      if (h) {
+        var A = r(l[l.length - 1]);
+        l.push(["Z"]), s(l[0], A);
+      }
+    } else l = o;
+    return l.reduce(function(C, S) {
+      return C + S.join(" ") + " ";
+    }, "");
+  } }, { key: "drawLine", value: function(e, t, i, a) {
+    var s = arguments.length > 4 && arguments[4] !== void 0 ? arguments[4] : "#a8a8a8", r = arguments.length > 5 && arguments[5] !== void 0 ? arguments[5] : 0, o = arguments.length > 6 && arguments[6] !== void 0 ? arguments[6] : null, l = arguments.length > 7 && arguments[7] !== void 0 ? arguments[7] : "butt";
+    return this.w.globals.dom.Paper.line().attr({ x1: e, y1: t, x2: i, y2: a, stroke: s, "stroke-dasharray": r, "stroke-width": o, "stroke-linecap": l });
+  } }, { key: "drawRect", value: function() {
+    var e = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : 0, t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 0, i = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : 0, a = arguments.length > 3 && arguments[3] !== void 0 ? arguments[3] : 0, s = arguments.length > 4 && arguments[4] !== void 0 ? arguments[4] : 0, r = arguments.length > 5 && arguments[5] !== void 0 ? arguments[5] : "#fefefe", o = arguments.length > 6 && arguments[6] !== void 0 ? arguments[6] : 1, l = arguments.length > 7 && arguments[7] !== void 0 ? arguments[7] : null, c = arguments.length > 8 && arguments[8] !== void 0 ? arguments[8] : null, h = arguments.length > 9 && arguments[9] !== void 0 ? arguments[9] : 0, d = this.w.globals.dom.Paper.rect();
+    return d.attr({ x: e, y: t, width: i > 0 ? i : 0, height: a > 0 ? a : 0, rx: s, ry: s, opacity: o, "stroke-width": l !== null ? l : 0, stroke: c !== null ? c : "none", "stroke-dasharray": h }), d.node.setAttribute("fill", r), d;
+  } }, { key: "drawPolygon", value: function(e) {
+    var t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "#e1e1e1", i = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : 1, a = arguments.length > 3 && arguments[3] !== void 0 ? arguments[3] : "none";
+    return this.w.globals.dom.Paper.polygon(e).attr({ fill: a, stroke: t, "stroke-width": i });
+  } }, { key: "drawCircle", value: function(e) {
+    var t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : null;
+    e < 0 && (e = 0);
+    var i = this.w.globals.dom.Paper.circle(2 * e);
+    return t !== null && i.attr(t), i;
+  } }, { key: "drawPath", value: function(e) {
+    var t = e.d, i = t === void 0 ? "" : t, a = e.stroke, s = a === void 0 ? "#a8a8a8" : a, r = e.strokeWidth, o = r === void 0 ? 1 : r, l = e.fill, c = e.fillOpacity, h = c === void 0 ? 1 : c, d = e.strokeOpacity, u = d === void 0 ? 1 : d, g = e.classes, p = e.strokeLinecap, f = p === void 0 ? null : p, x = e.strokeDashArray, b = x === void 0 ? 0 : x, m = this.w;
+    return f === null && (f = m.config.stroke.lineCap), (i.indexOf("undefined") > -1 || i.indexOf("NaN") > -1) && (i = "M 0 ".concat(m.globals.gridHeight)), m.globals.dom.Paper.path(i).attr({ fill: l, "fill-opacity": h, stroke: s, "stroke-opacity": u, "stroke-linecap": f, "stroke-width": o, "stroke-dasharray": b, class: g });
+  } }, { key: "group", value: function() {
+    var e = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : null, t = this.w.globals.dom.Paper.group();
+    return e !== null && t.attr(e), t;
+  } }, { key: "move", value: function(e, t) {
+    var i = ["M", e, t].join(" ");
+    return i;
+  } }, { key: "line", value: function(e, t) {
+    var i = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : null, a = null;
+    return i === null ? a = [" L", e, t].join(" ") : i === "H" ? a = [" H", e].join(" ") : i === "V" && (a = [" V", t].join(" ")), a;
+  } }, { key: "curve", value: function(e, t, i, a, s, r) {
+    var o = ["C", e, t, i, a, s, r].join(" ");
+    return o;
+  } }, { key: "quadraticCurve", value: function(e, t, i, a) {
+    return ["Q", e, t, i, a].join(" ");
+  } }, { key: "arc", value: function(e, t, i, a, s, r, o) {
+    var l = "A";
+    arguments.length > 7 && arguments[7] !== void 0 && arguments[7] && (l = "a");
+    var c = [l, e, t, i, a, s, r, o].join(" ");
+    return c;
+  } }, { key: "renderPaths", value: function(e) {
+    var t, i = e.j, a = e.realIndex, s = e.pathFrom, r = e.pathTo, o = e.stroke, l = e.strokeWidth, c = e.strokeLinecap, h = e.fill, d = e.animationDelay, u = e.initialSpeed, g = e.dataChangeSpeed, p = e.className, f = e.chartType, x = e.shouldClipToGrid, b = x === void 0 || x, m = e.bindEventsOnPaths, w = m === void 0 || m, y = e.drawShadow, v = y === void 0 || y, k = this.w, A = new _e(this.ctx), C = new zt(this.ctx), S = this.w.config.chart.animations.enabled, L = S && this.w.config.chart.animations.dynamicAnimation.enabled;
+    if (s && s.startsWith("M 0 0") && r) {
+      var P = r.match(/^M\s+[\d.-]+\s+[\d.-]+/);
+      P && (s = s.replace(/^M\s+0\s+0/, P[0]));
+    }
+    var I = !!(S && !k.globals.resized || L && k.globals.dataChanged && k.globals.shouldAnimate);
+    I ? t = s : (t = r, k.globals.animationEnded = !0);
+    var E = k.config.stroke.dashArray, O = 0;
+    O = Array.isArray(E) ? E[a] : k.config.stroke.dashArray;
+    var _ = this.drawPath({ d: t, stroke: o, strokeWidth: l, fill: h, fillOpacity: 1, classes: p, strokeLinecap: c, strokeDashArray: O });
+    _.attr("index", a), b && (f === "bar" && !k.globals.isHorizontal || k.globals.comboCharts ? _.attr({ "clip-path": "url(#gridRectBarMask".concat(k.globals.cuid, ")") }) : _.attr({ "clip-path": "url(#gridRectMask".concat(k.globals.cuid, ")") })), k.config.chart.dropShadow.enabled && v && A.dropShadow(_, k.config.chart.dropShadow, a), w && (_.node.addEventListener("mouseenter", this.pathMouseEnter.bind(this, _)), _.node.addEventListener("mouseleave", this.pathMouseLeave.bind(this, _)), _.node.addEventListener("mousedown", this.pathMouseDown.bind(this, _))), _.attr({ pathTo: r, pathFrom: s });
+    var Y = { el: _, j: i, realIndex: a, pathFrom: s, pathTo: r, fill: h, strokeWidth: l, delay: d };
+    return !S || k.globals.resized || k.globals.dataChanged ? !k.globals.resized && k.globals.dataChanged || C.showDelayedElements() : C.animatePathsGradually(N(N({}, Y), {}, { speed: u })), k.globals.dataChanged && L && I && C.animatePathsGradually(N(N({}, Y), {}, { speed: g })), _;
+  } }, { key: "drawPattern", value: function(e, t, i) {
+    var a = arguments.length > 3 && arguments[3] !== void 0 ? arguments[3] : "#a8a8a8", s = arguments.length > 4 && arguments[4] !== void 0 ? arguments[4] : 0;
+    return this.w.globals.dom.Paper.pattern(t, i, function(r) {
+      e === "horizontalLines" ? r.line(0, 0, i, 0).stroke({ color: a, width: s + 1 }) : e === "verticalLines" ? r.line(0, 0, 0, t).stroke({ color: a, width: s + 1 }) : e === "slantedLines" ? r.line(0, 0, t, i).stroke({ color: a, width: s }) : e === "squares" ? r.rect(t, i).fill("none").stroke({ color: a, width: s }) : e === "circles" && r.circle(t).fill("none").stroke({ color: a, width: s });
+    });
+  } }, { key: "drawGradient", value: function(e, t, i, a, s) {
+    var r, o = arguments.length > 5 && arguments[5] !== void 0 ? arguments[5] : null, l = arguments.length > 6 && arguments[6] !== void 0 ? arguments[6] : null, c = arguments.length > 7 && arguments[7] !== void 0 ? arguments[7] : [], h = arguments.length > 8 && arguments[8] !== void 0 ? arguments[8] : 0, d = this.w;
+    t.length < 9 && t.indexOf("#") === 0 && (t = T.hexToRgba(t, a)), i.length < 9 && i.indexOf("#") === 0 && (i = T.hexToRgba(i, s));
+    var u = 0, g = 1, p = 1, f = null;
+    l !== null && (u = l[0] !== void 0 ? l[0] / 100 : 0, g = l[1] !== void 0 ? l[1] / 100 : 1, p = l[2] !== void 0 ? l[2] / 100 : 1, f = l[3] !== void 0 ? l[3] / 100 : null);
+    var x = !(d.config.chart.type !== "donut" && d.config.chart.type !== "pie" && d.config.chart.type !== "polarArea" && d.config.chart.type !== "bubble");
+    if (r = c && c.length !== 0 ? d.globals.dom.Paper.gradient(x ? "radial" : "linear", function(w) {
+      (Array.isArray(c[h]) ? c[h] : c).forEach(function(y) {
+        w.stop(y.offset / 100, y.color, y.opacity);
+      });
+    }) : d.globals.dom.Paper.gradient(x ? "radial" : "linear", function(w) {
+      w.stop(u, t, a), w.stop(g, i, s), w.stop(p, i, s), f !== null && w.stop(f, t, a);
+    }), x) {
+      var b = d.globals.gridWidth / 2, m = d.globals.gridHeight / 2;
+      d.config.chart.type !== "bubble" ? r.attr({ gradientUnits: "userSpaceOnUse", cx: b, cy: m, r: o }) : r.attr({ cx: 0.5, cy: 0.5, r: 0.8, fx: 0.2, fy: 0.2 });
+    } else e === "vertical" ? r.from(0, 0).to(0, 1) : e === "diagonal" ? r.from(0, 0).to(1, 1) : e === "horizontal" ? r.from(0, 1).to(1, 1) : e === "diagonal2" && r.from(1, 0).to(0, 1);
+    return r;
+  } }, { key: "getTextBasedOnMaxWidth", value: function(e) {
+    var t = e.text, i = e.maxWidth, a = e.fontSize, s = e.fontFamily, r = this.getTextRects(t, a, s), o = r.width / t.length, l = Math.floor(i / o);
+    return i < r.width ? t.slice(0, l - 3) + "..." : t;
+  } }, { key: "drawText", value: function(e) {
+    var t = this, i = e.x, a = e.y, s = e.text, r = e.textAnchor, o = e.fontSize, l = e.fontFamily, c = e.fontWeight, h = e.foreColor, d = e.opacity, u = e.maxWidth, g = e.cssClass, p = g === void 0 ? "" : g, f = e.isPlainText, x = f === void 0 || f, b = e.dominantBaseline, m = b === void 0 ? "auto" : b, w = this.w;
+    s === void 0 && (s = "");
+    var y = s;
+    r || (r = "start"), h && h.length || (h = w.config.chart.foreColor), l = l || w.config.chart.fontFamily, c = c || "regular";
+    var v, k = { maxWidth: u, fontSize: o = o || "11px", fontFamily: l };
+    return Array.isArray(s) ? v = w.globals.dom.Paper.text(function(A) {
+      for (var C = 0; C < s.length; C++) y = s[C], u && (y = t.getTextBasedOnMaxWidth(N({ text: s[C] }, k))), C === 0 ? A.tspan(y) : A.tspan(y).newLine();
+    }) : (u && (y = this.getTextBasedOnMaxWidth(N({ text: s }, k))), v = x ? w.globals.dom.Paper.plain(s) : w.globals.dom.Paper.text(function(A) {
+      return A.tspan(y);
+    })), v.attr({ x: i, y: a, "text-anchor": r, "dominant-baseline": m, "font-size": o, "font-family": l, "font-weight": c, fill: h, class: "apexcharts-text " + p }), v.node.style.fontFamily = l, v.node.style.opacity = d, v;
+  } }, { key: "getMarkerPath", value: function(e, t, i, a) {
+    var s = "";
+    switch (i) {
+      case "cross":
+        s = "M ".concat(e - (a /= 1.4), " ").concat(t - a, " L ").concat(e + a, " ").concat(t + a, "  M ").concat(e - a, " ").concat(t + a, " L ").concat(e + a, " ").concat(t - a);
+        break;
+      case "plus":
+        s = "M ".concat(e - (a /= 1.12), " ").concat(t, " L ").concat(e + a, " ").concat(t, "  M ").concat(e, " ").concat(t - a, " L ").concat(e, " ").concat(t + a);
+        break;
+      case "star":
+      case "sparkle":
+        var r = 5;
+        a *= 1.15, i === "sparkle" && (a /= 1.1, r = 4);
+        for (var o = Math.PI / r, l = 0; l <= 2 * r; l++) {
+          var c = l * o, h = l % 2 == 0 ? a : a / 2;
+          s += (l === 0 ? "M" : "L") + (e + h * Math.sin(c)) + "," + (t - h * Math.cos(c));
+        }
+        s += "Z";
+        break;
+      case "triangle":
+        s = "M ".concat(e, " ").concat(t - a, ` 
+             L `).concat(e + a, " ").concat(t + a, ` 
+             L `).concat(e - a, " ").concat(t + a, ` 
+             Z`);
+        break;
+      case "square":
+      case "rect":
+        s = "M ".concat(e - (a /= 1.125), " ").concat(t - a, ` 
+           L `).concat(e + a, " ").concat(t - a, ` 
+           L `).concat(e + a, " ").concat(t + a, ` 
+           L `).concat(e - a, " ").concat(t + a, ` 
+           Z`);
+        break;
+      case "diamond":
+        a *= 1.05, s = "M ".concat(e, " ").concat(t - a, ` 
+             L `).concat(e + a, " ").concat(t, ` 
+             L `).concat(e, " ").concat(t + a, ` 
+             L `).concat(e - a, " ").concat(t, ` 
+            Z`);
+        break;
+      case "line":
+        s = "M ".concat(e - (a /= 1.1), " ").concat(t, ` 
+           L `).concat(e + a, " ").concat(t);
+        break;
+      default:
+        a *= 2, s = "M ".concat(e, ", ").concat(t, ` 
+           m -`).concat(a / 2, `, 0 
+           a `).concat(a / 2, ",").concat(a / 2, " 0 1,0 ").concat(a, `,0 
+           a `).concat(a / 2, ",").concat(a / 2, " 0 1,0 -").concat(a, ",0");
+    }
+    return s;
+  } }, { key: "drawMarkerShape", value: function(e, t, i, a, s) {
+    var r = this.drawPath({ d: this.getMarkerPath(e, t, i, a, s), stroke: s.pointStrokeColor, strokeDashArray: s.pointStrokeDashArray, strokeWidth: s.pointStrokeWidth, fill: s.pointFillColor, fillOpacity: s.pointFillOpacity, strokeOpacity: s.pointStrokeOpacity });
+    return r.attr({ cx: e, cy: t, shape: s.shape, class: s.class ? s.class : "" }), r;
+  } }, { key: "drawMarker", value: function(e, t, i) {
+    e = e || 0;
+    var a = i.pSize || 0;
+    return T.isNumber(t) || (a = 0, t = 0), this.drawMarkerShape(e, t, i == null ? void 0 : i.shape, a, N(N({}, i), i.shape === "line" || i.shape === "plus" || i.shape === "cross" ? { pointStrokeColor: i.pointFillColor, pointStrokeOpacity: i.pointFillOpacity } : {}));
+  } }, { key: "pathMouseEnter", value: function(e, t) {
+    var i = this.w, a = new _e(this.ctx), s = parseInt(e.node.getAttribute("index"), 10), r = parseInt(e.node.getAttribute("j"), 10);
+    if (typeof i.config.chart.events.dataPointMouseEnter == "function" && i.config.chart.events.dataPointMouseEnter(t, this.ctx, { seriesIndex: s, dataPointIndex: r, w: i }), this.ctx.events.fireEvent("dataPointMouseEnter", [t, this.ctx, { seriesIndex: s, dataPointIndex: r, w: i }]), (i.config.states.active.filter.type === "none" || e.node.getAttribute("selected") !== "true") && i.config.states.hover.filter.type !== "none" && !i.globals.isTouchDevice) {
+      var o = i.config.states.hover.filter;
+      a.applyFilter(e, s, o.type);
+    }
+  } }, { key: "pathMouseLeave", value: function(e, t) {
+    var i = this.w, a = new _e(this.ctx), s = parseInt(e.node.getAttribute("index"), 10), r = parseInt(e.node.getAttribute("j"), 10);
+    typeof i.config.chart.events.dataPointMouseLeave == "function" && i.config.chart.events.dataPointMouseLeave(t, this.ctx, { seriesIndex: s, dataPointIndex: r, w: i }), this.ctx.events.fireEvent("dataPointMouseLeave", [t, this.ctx, { seriesIndex: s, dataPointIndex: r, w: i }]), i.config.states.active.filter.type !== "none" && e.node.getAttribute("selected") === "true" || i.config.states.hover.filter.type !== "none" && a.getDefaultFilter(e, s);
+  } }, { key: "pathMouseDown", value: function(e, t) {
+    var i = this.w, a = new _e(this.ctx), s = parseInt(e.node.getAttribute("index"), 10), r = parseInt(e.node.getAttribute("j"), 10), o = "false";
+    if (e.node.getAttribute("selected") === "true") {
+      if (e.node.setAttribute("selected", "false"), i.globals.selectedDataPoints[s].indexOf(r) > -1) {
+        var l = i.globals.selectedDataPoints[s].indexOf(r);
+        i.globals.selectedDataPoints[s].splice(l, 1);
+      }
+    } else {
+      if (!i.config.states.active.allowMultipleDataPointsSelection && i.globals.selectedDataPoints.length > 0) {
+        i.globals.selectedDataPoints = [];
+        var c = i.globals.dom.Paper.find(".apexcharts-series path:not(.apexcharts-decoration-element)"), h = i.globals.dom.Paper.find(".apexcharts-series circle:not(.apexcharts-decoration-element), .apexcharts-series rect:not(.apexcharts-decoration-element)"), d = function(p) {
+          Array.prototype.forEach.call(p, function(f) {
+            f.node.setAttribute("selected", "false"), a.getDefaultFilter(f, s);
+          });
+        };
+        d(c), d(h);
+      }
+      e.node.setAttribute("selected", "true"), o = "true", i.globals.selectedDataPoints[s] === void 0 && (i.globals.selectedDataPoints[s] = []), i.globals.selectedDataPoints[s].push(r);
+    }
+    if (o === "true") {
+      var u = i.config.states.active.filter;
+      if (u !== "none") a.applyFilter(e, s, u.type);
+      else if (i.config.states.hover.filter !== "none" && !i.globals.isTouchDevice) {
+        var g = i.config.states.hover.filter;
+        a.applyFilter(e, s, g.type);
+      }
+    } else i.config.states.active.filter.type !== "none" && (i.config.states.hover.filter.type === "none" || i.globals.isTouchDevice ? a.getDefaultFilter(e, s) : (g = i.config.states.hover.filter, a.applyFilter(e, s, g.type)));
+    typeof i.config.chart.events.dataPointSelection == "function" && i.config.chart.events.dataPointSelection(t, this.ctx, { selectedDataPoints: i.globals.selectedDataPoints, seriesIndex: s, dataPointIndex: r, w: i }), t && this.ctx.events.fireEvent("dataPointSelection", [t, this.ctx, { selectedDataPoints: i.globals.selectedDataPoints, seriesIndex: s, dataPointIndex: r, w: i }]);
+  } }, { key: "rotateAroundCenter", value: function(e) {
+    var t = {};
+    return e && typeof e.getBBox == "function" && (t = e.getBBox()), { x: t.x + t.width / 2, y: t.y + t.height / 2 };
+  } }, { key: "getTextRects", value: function(e, t, i, a) {
+    var s = !(arguments.length > 4 && arguments[4] !== void 0) || arguments[4], r = this.w, o = this.drawText({ x: -200, y: -200, text: e, textAnchor: "start", fontSize: t, fontFamily: i, foreColor: "#fff", opacity: 0 });
+    a && o.attr("transform", a), r.globals.dom.Paper.add(o);
+    var l = o.bbox();
+    return s || (l = o.node.getBoundingClientRect()), o.remove(), { width: l.width, height: l.height };
+  } }, { key: "placeTextWithEllipsis", value: function(e, t, i) {
+    if (typeof e.getComputedTextLength == "function" && (e.textContent = t, t.length > 0 && e.getComputedTextLength() >= i / 1.1)) {
+      for (var a = t.length - 3; a > 0; a -= 3) if (e.getSubStringLength(0, a) <= i / 1.1) return void (e.textContent = t.substring(0, a) + "...");
+      e.textContent = ".";
+    }
+  } }], [{ key: "setAttrs", value: function(e, t) {
+    for (var i in t) t.hasOwnProperty(i) && e.setAttribute(i, t[i]);
+  } }]), n;
+}(), Pe = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w;
+  }
+  return $(n, [{ key: "getStackedSeriesTotals", value: function() {
+    var e = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : [], t = this.w, i = [];
+    if (t.globals.series.length === 0) return i;
+    for (var a = 0; a < t.globals.series[t.globals.maxValsInArrayIndex].length; a++) {
+      for (var s = 0, r = 0; r < t.globals.series.length; r++) t.globals.series[r][a] !== void 0 && e.indexOf(r) === -1 && (s += t.globals.series[r][a]);
+      i.push(s);
+    }
+    return i;
+  } }, { key: "getSeriesTotalByIndex", value: function() {
+    var e = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : null;
+    return e === null ? this.w.config.series.reduce(function(t, i) {
+      return t + i;
+    }, 0) : this.w.globals.series[e].reduce(function(t, i) {
+      return t + i;
+    }, 0);
+  } }, { key: "getStackedSeriesTotalsByGroups", value: function() {
+    var e = this, t = this.w, i = [];
+    return t.globals.seriesGroups.forEach(function(a) {
+      var s = [];
+      t.config.series.forEach(function(o, l) {
+        a.indexOf(t.globals.seriesNames[l]) > -1 && s.push(l);
+      });
+      var r = t.globals.series.map(function(o, l) {
+        return s.indexOf(l) === -1 ? l : -1;
+      }).filter(function(o) {
+        return o !== -1;
+      });
+      i.push(e.getStackedSeriesTotals(r));
+    }), i;
+  } }, { key: "setSeriesYAxisMappings", value: function() {
+    var e = this.w.globals, t = this.w.config, i = [], a = [], s = [], r = e.series.length > t.yaxis.length || t.yaxis.some(function(d) {
+      return Array.isArray(d.seriesName);
+    });
+    t.series.forEach(function(d, u) {
+      s.push(u), a.push(null);
+    }), t.yaxis.forEach(function(d, u) {
+      i[u] = [];
+    });
+    var o = [];
+    t.yaxis.forEach(function(d, u) {
+      var g = !1;
+      if (d.seriesName) {
+        var p = [];
+        Array.isArray(d.seriesName) ? p = d.seriesName : p.push(d.seriesName), p.forEach(function(f) {
+          t.series.forEach(function(x, b) {
+            if (x.name === f) {
+              var m = b;
+              u === b || r ? !r || s.indexOf(b) > -1 ? i[u].push([u, b]) : console.warn("Series '" + x.name + "' referenced more than once in what looks like the new style. That is, when using either seriesName: [], or when there are more series than yaxes.") : (i[b].push([b, u]), m = u), g = !0, (m = s.indexOf(m)) !== -1 && s.splice(m, 1);
+            }
+          });
+        });
+      }
+      g || o.push(u);
+    }), i = i.map(function(d, u) {
+      var g = [];
+      return d.forEach(function(p) {
+        a[p[1]] = p[0], g.push(p[1]);
+      }), g;
+    });
+    for (var l = t.yaxis.length - 1, c = 0; c < o.length && (l = o[c], i[l] = [], s); c++) {
+      var h = s[0];
+      s.shift(), i[l].push(h), a[h] = l;
+    }
+    s.forEach(function(d) {
+      i[l].push(d), a[d] = l;
+    }), e.seriesYAxisMap = i.map(function(d) {
+      return d;
+    }), e.seriesYAxisReverseMap = a.map(function(d) {
+      return d;
+    }), e.seriesYAxisMap.forEach(function(d, u) {
+      d.forEach(function(g) {
+        t.series[g] && t.series[g].group === void 0 && (t.series[g].group = "apexcharts-axis-".concat(u.toString()));
+      });
+    });
+  } }, { key: "isSeriesNull", value: function() {
+    var e = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : null;
+    return (e === null ? this.w.config.series.filter(function(t) {
+      return t !== null;
+    }) : this.w.config.series[e].data.filter(function(t) {
+      return t !== null;
+    })).length === 0;
+  } }, { key: "seriesHaveSameValues", value: function(e) {
+    return this.w.globals.series[e].every(function(t, i, a) {
+      return t === a[0];
+    });
+  } }, { key: "getCategoryLabels", value: function(e) {
+    var t = this.w, i = e.slice();
+    return t.config.xaxis.convertedCatToNumeric && (i = e.map(function(a, s) {
+      return t.config.xaxis.labels.formatter(a - t.globals.minX + 1);
+    })), i;
+  } }, { key: "getLargestSeries", value: function() {
+    var e = this.w;
+    e.globals.maxValsInArrayIndex = e.globals.series.map(function(t) {
+      return t.length;
+    }).indexOf(Math.max.apply(Math, e.globals.series.map(function(t) {
+      return t.length;
+    })));
+  } }, { key: "getLargestMarkerSize", value: function() {
+    var e = this.w, t = 0;
+    return e.globals.markers.size.forEach(function(i) {
+      t = Math.max(t, i);
+    }), e.config.markers.discrete && e.config.markers.discrete.length && e.config.markers.discrete.forEach(function(i) {
+      t = Math.max(t, i.size);
+    }), t > 0 && (e.config.markers.hover.size > 0 ? t = e.config.markers.hover.size : t += e.config.markers.hover.sizeOffset), e.globals.markers.largestSize = t, t;
+  } }, { key: "getSeriesTotals", value: function() {
+    var e = this.w;
+    e.globals.seriesTotals = e.globals.series.map(function(t, i) {
+      var a = 0;
+      if (Array.isArray(t)) for (var s = 0; s < t.length; s++) a += t[s];
+      else a += t;
+      return a;
+    });
+  } }, { key: "getSeriesTotalsXRange", value: function(e, t) {
+    var i = this.w;
+    return i.globals.series.map(function(a, s) {
+      for (var r = 0, o = 0; o < a.length; o++) i.globals.seriesX[s][o] > e && i.globals.seriesX[s][o] < t && (r += a[o]);
+      return r;
+    });
+  } }, { key: "getPercentSeries", value: function() {
+    var e = this.w;
+    e.globals.seriesPercent = e.globals.series.map(function(t, i) {
+      var a = [];
+      if (Array.isArray(t)) for (var s = 0; s < t.length; s++) {
+        var r = e.globals.stackedSeriesTotals[s], o = 0;
+        r && (o = 100 * t[s] / r), a.push(o);
+      }
+      else {
+        var l = 100 * t / e.globals.seriesTotals.reduce(function(c, h) {
+          return c + h;
+        }, 0);
+        a.push(l);
+      }
+      return a;
+    });
+  } }, { key: "getCalculatedRatios", value: function() {
+    var e, t, i, a = this, s = this.w, r = s.globals, o = [], l = 0, c = [], h = 0.1, d = 0;
+    if (r.yRange = [], r.isMultipleYAxis) for (var u = 0; u < r.minYArr.length; u++) r.yRange.push(Math.abs(r.minYArr[u] - r.maxYArr[u])), c.push(0);
+    else r.yRange.push(Math.abs(r.minY - r.maxY));
+    r.xRange = Math.abs(r.maxX - r.minX), r.zRange = Math.abs(r.maxZ - r.minZ);
+    for (var g = 0; g < r.yRange.length; g++) o.push(r.yRange[g] / r.gridHeight);
+    if (t = r.xRange / r.gridWidth, e = r.yRange / r.gridWidth, i = r.xRange / r.gridHeight, (l = r.zRange / r.gridHeight * 16) || (l = 1), r.minY !== Number.MIN_VALUE && Math.abs(r.minY) !== 0 && (r.hasNegs = !0), s.globals.seriesYAxisReverseMap.length > 0) {
+      var p = function(x, b) {
+        var m = s.config.yaxis[s.globals.seriesYAxisReverseMap[b]], w = x < 0 ? -1 : 1;
+        return x = Math.abs(x), m.logarithmic && (x = a.getBaseLog(m.logBase, x)), -w * x / o[b];
+      };
+      if (r.isMultipleYAxis) {
+        c = [];
+        for (var f = 0; f < o.length; f++) c.push(p(r.minYArr[f], f));
+      } else (c = []).push(p(r.minY, 0)), r.minY !== Number.MIN_VALUE && Math.abs(r.minY) !== 0 && (h = -r.minY / e, d = r.minX / t);
+    } else (c = []).push(0), h = 0, d = 0;
+    return { yRatio: o, invertedYRatio: e, zRatio: l, xRatio: t, invertedXRatio: i, baseLineInvertedY: h, baseLineY: c, baseLineX: d };
+  } }, { key: "getLogSeries", value: function(e) {
+    var t = this, i = this.w;
+    return i.globals.seriesLog = e.map(function(a, s) {
+      var r = i.globals.seriesYAxisReverseMap[s];
+      return i.config.yaxis[r] && i.config.yaxis[r].logarithmic ? a.map(function(o) {
+        return o === null ? null : t.getLogVal(i.config.yaxis[r].logBase, o, s);
+      }) : a;
+    }), i.globals.invalidLogScale ? e : i.globals.seriesLog;
+  } }, { key: "getLogValAtSeriesIndex", value: function(e, t) {
+    if (e === null) return null;
+    var i = this.w, a = i.globals.seriesYAxisReverseMap[t];
+    return i.config.yaxis[a] && i.config.yaxis[a].logarithmic ? this.getLogVal(i.config.yaxis[a].logBase, e, t) : e;
+  } }, { key: "getBaseLog", value: function(e, t) {
+    return Math.log(t) / Math.log(e);
+  } }, { key: "getLogVal", value: function(e, t, i) {
+    if (t <= 0) return 0;
+    var a = this.w, s = a.globals.minYArr[i] === 0 ? -1 : this.getBaseLog(e, a.globals.minYArr[i]), r = (a.globals.maxYArr[i] === 0 ? 0 : this.getBaseLog(e, a.globals.maxYArr[i])) - s;
+    return t < 1 ? t / r : (this.getBaseLog(e, t) - s) / r;
+  } }, { key: "getLogYRatios", value: function(e) {
+    var t = this, i = this.w, a = this.w.globals;
+    return a.yLogRatio = e.slice(), a.logYRange = a.yRange.map(function(s, r) {
+      var o = i.globals.seriesYAxisReverseMap[r];
+      if (i.config.yaxis[o] && t.w.config.yaxis[o].logarithmic) {
+        var l, c = -Number.MAX_VALUE, h = Number.MIN_VALUE;
+        return a.seriesLog.forEach(function(d, u) {
+          d.forEach(function(g) {
+            i.config.yaxis[u] && i.config.yaxis[u].logarithmic && (c = Math.max(g, c), h = Math.min(g, h));
+          });
+        }), l = Math.pow(a.yRange[r], Math.abs(h - c) / a.yRange[r]), a.yLogRatio[r] = l / a.gridHeight, l;
+      }
+    }), a.invalidLogScale ? e.slice() : a.yLogRatio;
+  } }, { key: "drawSeriesByGroup", value: function(e, t, i, a) {
+    var s = this.w, r = [];
+    return e.series.length > 0 && t.forEach(function(o) {
+      var l = [], c = [];
+      e.i.forEach(function(h, d) {
+        s.config.series[h].group === o && (l.push(e.series[d]), c.push(h));
+      }), l.length > 0 && r.push(a.draw(l, i, c));
+    }), r;
+  } }], [{ key: "checkComboSeries", value: function(e, t) {
+    var i = !1, a = 0, s = 0;
+    return t === void 0 && (t = "line"), e.length && e[0].type !== void 0 && e.forEach(function(r) {
+      r.type !== "bar" && r.type !== "column" && r.type !== "candlestick" && r.type !== "boxPlot" || a++, r.type !== void 0 && r.type !== t && s++;
+    }), s > 0 && (i = !0), { comboBarCount: a, comboCharts: i };
+  } }, { key: "extendArrayProps", value: function(e, t, i) {
+    var a, s, r, o, l, c;
+    return (a = t) !== null && a !== void 0 && a.yaxis && (t = e.extendYAxis(t, i)), (s = t) !== null && s !== void 0 && s.annotations && (t.annotations.yaxis && (t = e.extendYAxisAnnotations(t)), (r = t) !== null && r !== void 0 && (o = r.annotations) !== null && o !== void 0 && o.xaxis && (t = e.extendXAxisAnnotations(t)), (l = t) !== null && l !== void 0 && (c = l.annotations) !== null && c !== void 0 && c.points && (t = e.extendPointAnnotations(t))), t;
+  } }]), n;
+}(), zi = function() {
+  function n(e) {
+    q(this, n), this.w = e.w, this.annoCtx = e;
+  }
+  return $(n, [{ key: "setOrientations", value: function(e) {
+    var t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : null, i = this.w;
+    if (e.label.orientation === "vertical") {
+      var a = t !== null ? t : 0, s = i.globals.dom.baseEl.querySelector(".apexcharts-xaxis-annotations .apexcharts-xaxis-annotation-label[rel='".concat(a, "']"));
+      if (s !== null) {
+        var r = s.getBoundingClientRect();
+        s.setAttribute("x", parseFloat(s.getAttribute("x")) - r.height + 4);
+        var o = e.label.position === "top" ? r.width : -r.width;
+        s.setAttribute("y", parseFloat(s.getAttribute("y")) + o);
+        var l = this.annoCtx.graphics.rotateAroundCenter(s), c = l.x, h = l.y;
+        s.setAttribute("transform", "rotate(-90 ".concat(c, " ").concat(h, ")"));
+      }
+    }
+  } }, { key: "addBackgroundToAnno", value: function(e, t) {
+    var i = this.w;
+    if (!e || !t.label.text || !String(t.label.text).trim()) return null;
+    var a = i.globals.dom.baseEl.querySelector(".apexcharts-grid").getBoundingClientRect(), s = e.getBoundingClientRect(), r = t.label.style.padding, o = r.left, l = r.right, c = r.top, h = r.bottom;
+    if (t.label.orientation === "vertical") {
+      var d = [o, l, c, h];
+      c = d[0], h = d[1], o = d[2], l = d[3];
+    }
+    var u = s.left - a.left - o, g = s.top - a.top - c, p = this.annoCtx.graphics.drawRect(u - i.globals.barPadForNumericAxis, g, s.width + o + l, s.height + c + h, t.label.borderRadius, t.label.style.background, 1, t.label.borderWidth, t.label.borderColor, 0);
+    return t.id && p.node.classList.add(t.id), p;
+  } }, { key: "annotationsBackground", value: function() {
+    var e = this, t = this.w, i = function(a, s, r) {
+      var o = t.globals.dom.baseEl.querySelector(".apexcharts-".concat(r, "-annotations .apexcharts-").concat(r, "-annotation-label[rel='").concat(s, "']"));
+      if (o) {
+        var l = o.parentNode, c = e.addBackgroundToAnno(o, a);
+        c && (l.insertBefore(c.node, o), a.label.mouseEnter && c.node.addEventListener("mouseenter", a.label.mouseEnter.bind(e, a)), a.label.mouseLeave && c.node.addEventListener("mouseleave", a.label.mouseLeave.bind(e, a)), a.label.click && c.node.addEventListener("click", a.label.click.bind(e, a)));
+      }
+    };
+    t.config.annotations.xaxis.forEach(function(a, s) {
+      return i(a, s, "xaxis");
+    }), t.config.annotations.yaxis.forEach(function(a, s) {
+      return i(a, s, "yaxis");
+    }), t.config.annotations.points.forEach(function(a, s) {
+      return i(a, s, "point");
+    });
+  } }, { key: "getY1Y2", value: function(e, t) {
+    var i, a = this.w, s = e === "y1" ? t.y : t.y2, r = !1;
+    if (this.annoCtx.invertAxis) {
+      var o = a.config.xaxis.convertedCatToNumeric ? a.globals.categoryLabels : a.globals.labels, l = o.indexOf(s), c = a.globals.dom.baseEl.querySelector(".apexcharts-yaxis-texts-g text:nth-child(".concat(l + 1, ")"));
+      i = c ? parseFloat(c.getAttribute("y")) : (a.globals.gridHeight / o.length - 1) * (l + 1) - a.globals.barHeight, t.seriesIndex !== void 0 && a.globals.barHeight && (i -= a.globals.barHeight / 2 * (a.globals.series.length - 1) - a.globals.barHeight * t.seriesIndex);
+    } else {
+      var h, d = a.globals.seriesYAxisMap[t.yAxisIndex][0], u = a.config.yaxis[t.yAxisIndex].logarithmic ? new Pe(this.annoCtx.ctx).getLogVal(a.config.yaxis[t.yAxisIndex].logBase, s, d) / a.globals.yLogRatio[d] : (s - a.globals.minYArr[d]) / (a.globals.yRange[d] / a.globals.gridHeight);
+      i = a.globals.gridHeight - Math.min(Math.max(u, 0), a.globals.gridHeight), r = u > a.globals.gridHeight || u < 0, !t.marker || t.y !== void 0 && t.y !== null || (i = 0), (h = a.config.yaxis[t.yAxisIndex]) !== null && h !== void 0 && h.reversed && (i = u);
+    }
+    return typeof s == "string" && s.includes("px") && (i = parseFloat(s)), { yP: i, clipped: r };
+  } }, { key: "getX1X2", value: function(e, t) {
+    var i = this.w, a = e === "x1" ? t.x : t.x2, s = this.annoCtx.invertAxis ? i.globals.minY : i.globals.minX, r = this.annoCtx.invertAxis ? i.globals.maxY : i.globals.maxX, o = this.annoCtx.invertAxis ? i.globals.yRange[0] : i.globals.xRange, l = !1, c = this.annoCtx.inversedReversedAxis ? (r - a) / (o / i.globals.gridWidth) : (a - s) / (o / i.globals.gridWidth);
+    return i.config.xaxis.type !== "category" && !i.config.xaxis.convertedCatToNumeric || this.annoCtx.invertAxis || i.globals.dataFormatXNumeric || i.config.chart.sparkline.enabled || (c = this.getStringX(a)), typeof a == "string" && a.includes("px") && (c = parseFloat(a)), a == null && t.marker && (c = i.globals.gridWidth), t.seriesIndex !== void 0 && i.globals.barWidth && !this.annoCtx.invertAxis && (c -= i.globals.barWidth / 2 * (i.globals.series.length - 1) - i.globals.barWidth * t.seriesIndex), typeof c != "number" && (c = 0, l = !0), parseFloat(c.toFixed(10)) > parseFloat(i.globals.gridWidth.toFixed(10)) ? (c = i.globals.gridWidth, l = !0) : c < 0 && (c = 0, l = !0), { x: c, clipped: l };
+  } }, { key: "getStringX", value: function(e) {
+    var t = this.w, i = e;
+    t.config.xaxis.convertedCatToNumeric && t.globals.categoryLabels.length && (e = t.globals.categoryLabels.indexOf(e) + 1);
+    var a = t.globals.labels.map(function(r) {
+      return Array.isArray(r) ? r.join(" ") : r;
+    }).indexOf(e), s = t.globals.dom.baseEl.querySelector(".apexcharts-xaxis-texts-g text:nth-child(".concat(a + 1, ")"));
+    return s && (i = parseFloat(s.getAttribute("x"))), i;
+  } }]), n;
+}(), Fc = function() {
+  function n(e) {
+    q(this, n), this.w = e.w, this.annoCtx = e, this.invertAxis = this.annoCtx.invertAxis, this.helpers = new zi(this.annoCtx);
+  }
+  return $(n, [{ key: "addXaxisAnnotation", value: function(e, t, i) {
+    var a, s = this.w, r = this.helpers.getX1X2("x1", e), o = r.x, l = r.clipped, c = !0, h = e.label.text, d = e.strokeDashArray;
+    if (T.isNumber(o)) {
+      if (e.x2 === null || e.x2 === void 0) {
+        if (!l) {
+          var u = this.annoCtx.graphics.drawLine(o + e.offsetX, 0 + e.offsetY, o + e.offsetX, s.globals.gridHeight + e.offsetY, e.borderColor, d, e.borderWidth);
+          t.appendChild(u.node), e.id && u.node.classList.add(e.id);
+        }
+      } else {
+        var g = this.helpers.getX1X2("x2", e);
+        if (a = g.x, c = g.clipped, a < o) {
+          var p = o;
+          o = a, a = p;
+        }
+        var f = this.annoCtx.graphics.drawRect(o + e.offsetX, 0 + e.offsetY, a - o, s.globals.gridHeight + e.offsetY, 0, e.fillColor, e.opacity, 1, e.borderColor, d);
+        f.node.classList.add("apexcharts-annotation-rect"), f.attr("clip-path", "url(#gridRectMask".concat(s.globals.cuid, ")")), t.appendChild(f.node), e.id && f.node.classList.add(e.id);
+      }
+      if (!l || !c) {
+        var x = this.annoCtx.graphics.getTextRects(h, parseFloat(e.label.style.fontSize)), b = e.label.position === "top" ? 4 : e.label.position === "center" ? s.globals.gridHeight / 2 + (e.label.orientation === "vertical" ? x.width / 2 : 0) : s.globals.gridHeight, m = this.annoCtx.graphics.drawText({ x: o + e.label.offsetX, y: b + e.label.offsetY - (e.label.orientation === "vertical" ? e.label.position === "top" ? x.width / 2 - 12 : -x.width / 2 : 0), text: h, textAnchor: e.label.textAnchor, fontSize: e.label.style.fontSize, fontFamily: e.label.style.fontFamily, fontWeight: e.label.style.fontWeight, foreColor: e.label.style.color, cssClass: "apexcharts-xaxis-annotation-label ".concat(e.label.style.cssClass, " ").concat(e.id ? e.id : "") });
+        m.attr({ rel: i }), t.appendChild(m.node), this.annoCtx.helpers.setOrientations(e, i);
+      }
+    }
+  } }, { key: "drawXAxisAnnotations", value: function() {
+    var e = this, t = this.w, i = this.annoCtx.graphics.group({ class: "apexcharts-xaxis-annotations" });
+    return t.config.annotations.xaxis.map(function(a, s) {
+      e.addXaxisAnnotation(a, i.node, s);
+    }), i;
+  } }]), n;
+}(), ze = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w, this.months31 = [1, 3, 5, 7, 8, 10, 12], this.months30 = [2, 4, 6, 9, 11], this.daysCntOfYear = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+  }
+  return $(n, [{ key: "isValidDate", value: function(e) {
+    return typeof e != "number" && !isNaN(this.parseDate(e));
+  } }, { key: "getTimeStamp", value: function(e) {
+    return Date.parse(e) ? this.w.config.xaxis.labels.datetimeUTC ? new Date(new Date(e).toISOString().substr(0, 25)).getTime() : new Date(e).getTime() : e;
+  } }, { key: "getDate", value: function(e) {
+    return this.w.config.xaxis.labels.datetimeUTC ? new Date(new Date(e).toUTCString()) : new Date(e);
+  } }, { key: "parseDate", value: function(e) {
+    var t = Date.parse(e);
+    if (!isNaN(t)) return this.getTimeStamp(e);
+    var i = Date.parse(e.replace(/-/g, "/").replace(/[a-z]+/gi, " "));
+    return i = this.getTimeStamp(i);
+  } }, { key: "parseDateWithTimezone", value: function(e) {
+    return Date.parse(e.replace(/-/g, "/").replace(/[a-z]+/gi, " "));
+  } }, { key: "formatDate", value: function(e, t) {
+    var i = this.w.globals.locale, a = this.w.config.xaxis.labels.datetimeUTC, s = ["\0"].concat(Oe(i.months)), r = [""].concat(Oe(i.shortMonths)), o = [""].concat(Oe(i.days)), l = [""].concat(Oe(i.shortDays));
+    function c(C, S) {
+      var L = C + "";
+      for (S = S || 2; L.length < S; ) L = "0" + L;
+      return L;
+    }
+    var h = a ? e.getUTCFullYear() : e.getFullYear();
+    t = (t = (t = t.replace(/(^|[^\\])yyyy+/g, "$1" + h)).replace(/(^|[^\\])yy/g, "$1" + h.toString().substr(2, 2))).replace(/(^|[^\\])y/g, "$1" + h);
+    var d = (a ? e.getUTCMonth() : e.getMonth()) + 1;
+    t = (t = (t = (t = t.replace(/(^|[^\\])MMMM+/g, "$1" + s[0])).replace(/(^|[^\\])MMM/g, "$1" + r[0])).replace(/(^|[^\\])MM/g, "$1" + c(d))).replace(/(^|[^\\])M/g, "$1" + d);
+    var u = a ? e.getUTCDate() : e.getDate();
+    t = (t = (t = (t = t.replace(/(^|[^\\])dddd+/g, "$1" + o[0])).replace(/(^|[^\\])ddd/g, "$1" + l[0])).replace(/(^|[^\\])dd/g, "$1" + c(u))).replace(/(^|[^\\])d/g, "$1" + u);
+    var g = a ? e.getUTCHours() : e.getHours(), p = g > 12 ? g - 12 : g === 0 ? 12 : g;
+    t = (t = (t = (t = t.replace(/(^|[^\\])HH+/g, "$1" + c(g))).replace(/(^|[^\\])H/g, "$1" + g)).replace(/(^|[^\\])hh+/g, "$1" + c(p))).replace(/(^|[^\\])h/g, "$1" + p);
+    var f = a ? e.getUTCMinutes() : e.getMinutes();
+    t = (t = t.replace(/(^|[^\\])mm+/g, "$1" + c(f))).replace(/(^|[^\\])m/g, "$1" + f);
+    var x = a ? e.getUTCSeconds() : e.getSeconds();
+    t = (t = t.replace(/(^|[^\\])ss+/g, "$1" + c(x))).replace(/(^|[^\\])s/g, "$1" + x);
+    var b = a ? e.getUTCMilliseconds() : e.getMilliseconds();
+    t = t.replace(/(^|[^\\])fff+/g, "$1" + c(b, 3)), b = Math.round(b / 10), t = t.replace(/(^|[^\\])ff/g, "$1" + c(b)), b = Math.round(b / 10);
+    var m = g < 12 ? "AM" : "PM";
+    t = (t = (t = t.replace(/(^|[^\\])f/g, "$1" + b)).replace(/(^|[^\\])TT+/g, "$1" + m)).replace(/(^|[^\\])T/g, "$1" + m.charAt(0));
+    var w = m.toLowerCase();
+    t = (t = t.replace(/(^|[^\\])tt+/g, "$1" + w)).replace(/(^|[^\\])t/g, "$1" + w.charAt(0));
+    var y = -e.getTimezoneOffset(), v = a || !y ? "Z" : y > 0 ? "+" : "-";
+    if (!a) {
+      var k = (y = Math.abs(y)) % 60;
+      v += c(Math.floor(y / 60)) + ":" + c(k);
+    }
+    t = t.replace(/(^|[^\\])K/g, "$1" + v);
+    var A = (a ? e.getUTCDay() : e.getDay()) + 1;
+    return t = (t = (t = (t = (t = t.replace(new RegExp(o[0], "g"), o[A])).replace(new RegExp(l[0], "g"), l[A])).replace(new RegExp(s[0], "g"), s[d])).replace(new RegExp(r[0], "g"), r[d])).replace(/\\(.)/g, "$1");
+  } }, { key: "getTimeUnitsfromTimestamp", value: function(e, t, i) {
+    var a = this.w;
+    a.config.xaxis.min !== void 0 && (e = a.config.xaxis.min), a.config.xaxis.max !== void 0 && (t = a.config.xaxis.max);
+    var s = this.getDate(e), r = this.getDate(t), o = this.formatDate(s, "yyyy MM dd HH mm ss fff").split(" "), l = this.formatDate(r, "yyyy MM dd HH mm ss fff").split(" ");
+    return { minMillisecond: parseInt(o[6], 10), maxMillisecond: parseInt(l[6], 10), minSecond: parseInt(o[5], 10), maxSecond: parseInt(l[5], 10), minMinute: parseInt(o[4], 10), maxMinute: parseInt(l[4], 10), minHour: parseInt(o[3], 10), maxHour: parseInt(l[3], 10), minDate: parseInt(o[2], 10), maxDate: parseInt(l[2], 10), minMonth: parseInt(o[1], 10) - 1, maxMonth: parseInt(l[1], 10) - 1, minYear: parseInt(o[0], 10), maxYear: parseInt(l[0], 10) };
+  } }, { key: "isLeapYear", value: function(e) {
+    return e % 4 == 0 && e % 100 != 0 || e % 400 == 0;
+  } }, { key: "calculcateLastDaysOfMonth", value: function(e, t, i) {
+    return this.determineDaysOfMonths(e, t) - i;
+  } }, { key: "determineDaysOfYear", value: function(e) {
+    var t = 365;
+    return this.isLeapYear(e) && (t = 366), t;
+  } }, { key: "determineRemainingDaysOfYear", value: function(e, t, i) {
+    var a = this.daysCntOfYear[t] + i;
+    return t > 1 && this.isLeapYear() && a++, a;
+  } }, { key: "determineDaysOfMonths", value: function(e, t) {
+    var i = 30;
+    switch (e = T.monthMod(e), !0) {
+      case this.months30.indexOf(e) > -1:
+        e === 2 && (i = this.isLeapYear(t) ? 29 : 28);
+        break;
+      case this.months31.indexOf(e) > -1:
+      default:
+        i = 31;
+    }
+    return i;
+  } }]), n;
+}(), di = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w, this.tooltipKeyFormat = "dd MMM";
+  }
+  return $(n, [{ key: "xLabelFormat", value: function(e, t, i, a) {
+    var s = this.w;
+    if (s.config.xaxis.type === "datetime" && s.config.xaxis.labels.formatter === void 0 && s.config.tooltip.x.formatter === void 0) {
+      var r = new ze(this.ctx);
+      return r.formatDate(r.getDate(t), s.config.tooltip.x.format);
+    }
+    return e(t, i, a);
+  } }, { key: "defaultGeneralFormatter", value: function(e) {
+    return Array.isArray(e) ? e.map(function(t) {
+      return t;
+    }) : e;
+  } }, { key: "defaultYFormatter", value: function(e, t, i) {
+    var a = this.w;
+    if (T.isNumber(e)) if (a.globals.yValueDecimal !== 0) e = e.toFixed(t.decimalsInFloat !== void 0 ? t.decimalsInFloat : a.globals.yValueDecimal);
+    else {
+      var s = e.toFixed(0);
+      e = e == s ? s : e.toFixed(1);
+    }
+    return e;
+  } }, { key: "setLabelFormatters", value: function() {
+    var e = this, t = this.w;
+    return t.globals.xaxisTooltipFormatter = function(i) {
+      return e.defaultGeneralFormatter(i);
+    }, t.globals.ttKeyFormatter = function(i) {
+      return e.defaultGeneralFormatter(i);
+    }, t.globals.ttZFormatter = function(i) {
+      return i;
+    }, t.globals.legendFormatter = function(i) {
+      return e.defaultGeneralFormatter(i);
+    }, t.config.xaxis.labels.formatter !== void 0 ? t.globals.xLabelFormatter = t.config.xaxis.labels.formatter : t.globals.xLabelFormatter = function(i) {
+      if (T.isNumber(i)) {
+        if (!t.config.xaxis.convertedCatToNumeric && t.config.xaxis.type === "numeric") {
+          if (T.isNumber(t.config.xaxis.decimalsInFloat)) return i.toFixed(t.config.xaxis.decimalsInFloat);
+          var a = t.globals.maxX - t.globals.minX;
+          return a > 0 && a < 100 ? i.toFixed(1) : i.toFixed(0);
+        }
+        return t.globals.isBarHorizontal && t.globals.maxY - t.globals.minYArr < 4 ? i.toFixed(1) : i.toFixed(0);
+      }
+      return i;
+    }, typeof t.config.tooltip.x.formatter == "function" ? t.globals.ttKeyFormatter = t.config.tooltip.x.formatter : t.globals.ttKeyFormatter = t.globals.xLabelFormatter, typeof t.config.xaxis.tooltip.formatter == "function" && (t.globals.xaxisTooltipFormatter = t.config.xaxis.tooltip.formatter), (Array.isArray(t.config.tooltip.y) || t.config.tooltip.y.formatter !== void 0) && (t.globals.ttVal = t.config.tooltip.y), t.config.tooltip.z.formatter !== void 0 && (t.globals.ttZFormatter = t.config.tooltip.z.formatter), t.config.legend.formatter !== void 0 && (t.globals.legendFormatter = t.config.legend.formatter), t.config.yaxis.forEach(function(i, a) {
+      i.labels.formatter !== void 0 ? t.globals.yLabelFormatters[a] = i.labels.formatter : t.globals.yLabelFormatters[a] = function(s) {
+        return t.globals.xyCharts ? Array.isArray(s) ? s.map(function(r) {
+          return e.defaultYFormatter(r, i, a);
+        }) : e.defaultYFormatter(s, i, a) : s;
+      };
+    }), t.globals;
+  } }, { key: "heatmapLabelFormatters", value: function() {
+    var e = this.w;
+    if (e.config.chart.type === "heatmap") {
+      e.globals.yAxisScale[0].result = e.globals.seriesNames.slice();
+      var t = e.globals.seriesNames.reduce(function(i, a) {
+        return i.length > a.length ? i : a;
+      }, 0);
+      e.globals.yAxisScale[0].niceMax = t, e.globals.yAxisScale[0].niceMin = t;
+    }
+  } }]), n;
+}(), ct = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w;
+  }
+  return $(n, [{ key: "getLabel", value: function(e, t, i, a) {
+    var s = arguments.length > 4 && arguments[4] !== void 0 ? arguments[4] : [], r = arguments.length > 5 && arguments[5] !== void 0 ? arguments[5] : "12px", o = !(arguments.length > 6 && arguments[6] !== void 0) || arguments[6], l = this.w, c = e[a] === void 0 ? "" : e[a], h = c, d = l.globals.xLabelFormatter, u = l.config.xaxis.labels.formatter, g = !1, p = new di(this.ctx), f = c;
+    o && (h = p.xLabelFormat(d, c, f, { i: a, dateFormatter: new ze(this.ctx).formatDate, w: l }), u !== void 0 && (h = u(c, e[a], { i: a, dateFormatter: new ze(this.ctx).formatDate, w: l })));
+    var x, b;
+    t.length > 0 ? (x = t[a].unit, b = null, t.forEach(function(v) {
+      v.unit === "month" ? b = "year" : v.unit === "day" ? b = "month" : v.unit === "hour" ? b = "day" : v.unit === "minute" && (b = "hour");
+    }), g = b === x, i = t[a].position, h = t[a].value) : l.config.xaxis.type === "datetime" && u === void 0 && (h = ""), h === void 0 && (h = ""), h = Array.isArray(h) ? h : h.toString();
+    var m = new F(this.ctx), w = {};
+    w = l.globals.rotateXLabels && o ? m.getTextRects(h, parseInt(r, 10), null, "rotate(".concat(l.config.xaxis.labels.rotate, " 0 0)"), !1) : m.getTextRects(h, parseInt(r, 10));
+    var y = !l.config.xaxis.labels.showDuplicates && this.ctx.timeScale;
+    return !Array.isArray(h) && (String(h) === "NaN" || s.indexOf(h) >= 0 && y) && (h = ""), { x: i, text: h, textRect: w, isBold: g };
+  } }, { key: "checkLabelBasedOnTickamount", value: function(e, t, i) {
+    var a = this.w, s = a.config.xaxis.tickAmount;
+    return s === "dataPoints" && (s = Math.round(a.globals.gridWidth / 120)), s > i || e % Math.round(i / (s + 1)) == 0 || (t.text = ""), t;
+  } }, { key: "checkForOverflowingLabels", value: function(e, t, i, a, s) {
+    var r = this.w;
+    if (e === 0 && r.globals.skipFirstTimelinelabel && (t.text = ""), e === i - 1 && r.globals.skipLastTimelinelabel && (t.text = ""), r.config.xaxis.labels.hideOverlappingLabels && a.length > 0) {
+      var o = s[s.length - 1];
+      t.x < o.textRect.width / (r.globals.rotateXLabels ? Math.abs(r.config.xaxis.labels.rotate) / 12 : 1.01) + o.x && (t.text = "");
+    }
+    return t;
+  } }, { key: "checkForReversedLabels", value: function(e, t) {
+    var i = this.w;
+    return i.config.yaxis[e] && i.config.yaxis[e].reversed && t.reverse(), t;
+  } }, { key: "yAxisAllSeriesCollapsed", value: function(e) {
+    var t = this.w.globals;
+    return !t.seriesYAxisMap[e].some(function(i) {
+      return t.collapsedSeriesIndices.indexOf(i) === -1;
+    });
+  } }, { key: "translateYAxisIndex", value: function(e) {
+    var t = this.w, i = t.globals, a = t.config.yaxis;
+    return i.series.length > a.length || a.some(function(s) {
+      return Array.isArray(s.seriesName);
+    }) ? e : i.seriesYAxisReverseMap[e];
+  } }, { key: "isYAxisHidden", value: function(e) {
+    var t = this.w, i = t.config.yaxis[e];
+    if (!i.show || this.yAxisAllSeriesCollapsed(e)) return !0;
+    if (!i.showForNullSeries) {
+      var a = t.globals.seriesYAxisMap[e], s = new Pe(this.ctx);
+      return a.every(function(r) {
+        return s.isSeriesNull(r);
+      });
+    }
+    return !1;
+  } }, { key: "getYAxisForeColor", value: function(e, t) {
+    var i = this.w;
+    return Array.isArray(e) && i.globals.yAxisScale[t] && this.ctx.theme.pushExtraColors(e, i.globals.yAxisScale[t].result.length, !1), e;
+  } }, { key: "drawYAxisTicks", value: function(e, t, i, a, s, r, o) {
+    var l = this.w, c = new F(this.ctx), h = l.globals.translateY + l.config.yaxis[s].labels.offsetY;
+    if (l.globals.isBarHorizontal ? h = 0 : l.config.chart.type === "heatmap" && (h += r / 2), a.show && t > 0) {
+      l.config.yaxis[s].opposite === !0 && (e += a.width);
+      for (var d = t; d >= 0; d--) {
+        var u = c.drawLine(e + i.offsetX - a.width + a.offsetX, h + a.offsetY, e + i.offsetX + a.offsetX, h + a.offsetY, a.color);
+        o.add(u), h += r;
+      }
+    }
+  } }]), n;
+}(), Xc = function() {
+  function n(e) {
+    q(this, n), this.w = e.w, this.annoCtx = e, this.helpers = new zi(this.annoCtx), this.axesUtils = new ct(this.annoCtx);
+  }
+  return $(n, [{ key: "addYaxisAnnotation", value: function(e, t, i) {
+    var a, s = this.w, r = e.strokeDashArray, o = this.helpers.getY1Y2("y1", e), l = o.yP, c = o.clipped, h = !0, d = !1, u = e.label.text;
+    if (e.y2 === null || e.y2 === void 0) {
+      if (!c) {
+        d = !0;
+        var g = this.annoCtx.graphics.drawLine(0 + e.offsetX, l + e.offsetY, this._getYAxisAnnotationWidth(e), l + e.offsetY, e.borderColor, r, e.borderWidth);
+        t.appendChild(g.node), e.id && g.node.classList.add(e.id);
+      }
+    } else {
+      if (a = (o = this.helpers.getY1Y2("y2", e)).yP, h = o.clipped, a > l) {
+        var p = l;
+        l = a, a = p;
+      }
+      if (!c || !h) {
+        d = !0;
+        var f = this.annoCtx.graphics.drawRect(0 + e.offsetX, a + e.offsetY, this._getYAxisAnnotationWidth(e), l - a, 0, e.fillColor, e.opacity, 1, e.borderColor, r);
+        f.node.classList.add("apexcharts-annotation-rect"), f.attr("clip-path", "url(#gridRectMask".concat(s.globals.cuid, ")")), t.appendChild(f.node), e.id && f.node.classList.add(e.id);
+      }
+    }
+    if (d) {
+      var x = e.label.position === "right" ? s.globals.gridWidth : e.label.position === "center" ? s.globals.gridWidth / 2 : 0, b = this.annoCtx.graphics.drawText({ x: x + e.label.offsetX, y: (a ?? l) + e.label.offsetY - 3, text: u, textAnchor: e.label.textAnchor, fontSize: e.label.style.fontSize, fontFamily: e.label.style.fontFamily, fontWeight: e.label.style.fontWeight, foreColor: e.label.style.color, cssClass: "apexcharts-yaxis-annotation-label ".concat(e.label.style.cssClass, " ").concat(e.id ? e.id : "") });
+      b.attr({ rel: i }), t.appendChild(b.node);
+    }
+  } }, { key: "_getYAxisAnnotationWidth", value: function(e) {
+    var t = this.w;
+    return t.globals.gridWidth, (e.width.indexOf("%") > -1 ? t.globals.gridWidth * parseInt(e.width, 10) / 100 : parseInt(e.width, 10)) + e.offsetX;
+  } }, { key: "drawYAxisAnnotations", value: function() {
+    var e = this, t = this.w, i = this.annoCtx.graphics.group({ class: "apexcharts-yaxis-annotations" });
+    return t.config.annotations.yaxis.forEach(function(a, s) {
+      a.yAxisIndex = e.axesUtils.translateYAxisIndex(a.yAxisIndex), e.axesUtils.isYAxisHidden(a.yAxisIndex) && e.axesUtils.yAxisAllSeriesCollapsed(a.yAxisIndex) || e.addYaxisAnnotation(a, i.node, s);
+    }), i;
+  } }]), n;
+}(), Hc = function() {
+  function n(e) {
+    q(this, n), this.w = e.w, this.annoCtx = e, this.helpers = new zi(this.annoCtx);
+  }
+  return $(n, [{ key: "addPointAnnotation", value: function(e, t, i) {
+    if (!(this.w.globals.collapsedSeriesIndices.indexOf(e.seriesIndex) > -1)) {
+      var a = this.helpers.getX1X2("x1", e), s = a.x, r = a.clipped, o = (a = this.helpers.getY1Y2("y1", e)).yP, l = a.clipped;
+      if (T.isNumber(s) && !l && !r) {
+        var c = { pSize: e.marker.size, pointStrokeWidth: e.marker.strokeWidth, pointFillColor: e.marker.fillColor, pointStrokeColor: e.marker.strokeColor, shape: e.marker.shape, pRadius: e.marker.radius, class: "apexcharts-point-annotation-marker ".concat(e.marker.cssClass, " ").concat(e.id ? e.id : "") }, h = this.annoCtx.graphics.drawMarker(s + e.marker.offsetX, o + e.marker.offsetY, c);
+        t.appendChild(h.node);
+        var d = e.label.text ? e.label.text : "", u = this.annoCtx.graphics.drawText({ x: s + e.label.offsetX, y: o + e.label.offsetY - e.marker.size - parseFloat(e.label.style.fontSize) / 1.6, text: d, textAnchor: e.label.textAnchor, fontSize: e.label.style.fontSize, fontFamily: e.label.style.fontFamily, fontWeight: e.label.style.fontWeight, foreColor: e.label.style.color, cssClass: "apexcharts-point-annotation-label ".concat(e.label.style.cssClass, " ").concat(e.id ? e.id : "") });
+        if (u.attr({ rel: i }), t.appendChild(u.node), e.customSVG.SVG) {
+          var g = this.annoCtx.graphics.group({ class: "apexcharts-point-annotations-custom-svg " + e.customSVG.cssClass });
+          g.attr({ transform: "translate(".concat(s + e.customSVG.offsetX, ", ").concat(o + e.customSVG.offsetY, ")") }), g.node.innerHTML = e.customSVG.SVG, t.appendChild(g.node);
+        }
+        if (e.image.path) {
+          var p = e.image.width ? e.image.width : 20, f = e.image.height ? e.image.height : 20;
+          h = this.annoCtx.addImage({ x: s + e.image.offsetX - p / 2, y: o + e.image.offsetY - f / 2, width: p, height: f, path: e.image.path, appendTo: ".apexcharts-point-annotations" });
+        }
+        e.mouseEnter && h.node.addEventListener("mouseenter", e.mouseEnter.bind(this, e)), e.mouseLeave && h.node.addEventListener("mouseleave", e.mouseLeave.bind(this, e)), e.click && h.node.addEventListener("click", e.click.bind(this, e));
+      }
+    }
+  } }, { key: "drawPointAnnotations", value: function() {
+    var e = this, t = this.w, i = this.annoCtx.graphics.group({ class: "apexcharts-point-annotations" });
+    return t.config.annotations.points.map(function(a, s) {
+      e.addPointAnnotation(a, i.node, s);
+    }), i;
+  } }]), n;
+}(), Sn = { name: "en", options: { months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], shortMonths: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], shortDays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], toolbar: { exportToSVG: "Download SVG", exportToPNG: "Download PNG", exportToCSV: "Download CSV", menu: "Menu", selection: "Selection", selectionZoom: "Selection Zoom", zoomIn: "Zoom In", zoomOut: "Zoom Out", pan: "Panning", reset: "Reset Zoom" } } }, gt = function() {
+  function n() {
+    q(this, n), this.yAxis = { show: !0, showAlways: !1, showForNullSeries: !0, seriesName: void 0, opposite: !1, reversed: !1, logarithmic: !1, logBase: 10, tickAmount: void 0, stepSize: void 0, forceNiceScale: !1, max: void 0, min: void 0, floating: !1, decimalsInFloat: void 0, labels: { show: !0, showDuplicates: !1, minWidth: 0, maxWidth: 160, offsetX: 0, offsetY: 0, align: void 0, rotate: 0, padding: 20, style: { colors: [], fontSize: "11px", fontWeight: 400, fontFamily: void 0, cssClass: "" }, formatter: void 0 }, axisBorder: { show: !1, color: "#e0e0e0", width: 1, offsetX: 0, offsetY: 0 }, axisTicks: { show: !1, color: "#e0e0e0", width: 6, offsetX: 0, offsetY: 0 }, title: { text: void 0, rotate: -90, offsetY: 0, offsetX: 0, style: { color: void 0, fontSize: "11px", fontWeight: 900, fontFamily: void 0, cssClass: "" } }, tooltip: { enabled: !1, offsetX: 0 }, crosshairs: { show: !0, position: "front", stroke: { color: "#b6b6b6", width: 1, dashArray: 0 } } }, this.pointAnnotation = { id: void 0, x: 0, y: null, yAxisIndex: 0, seriesIndex: void 0, mouseEnter: void 0, mouseLeave: void 0, click: void 0, marker: { size: 4, fillColor: "#fff", strokeWidth: 2, strokeColor: "#333", shape: "circle", offsetX: 0, offsetY: 0, cssClass: "" }, label: { borderColor: "#c2c2c2", borderWidth: 1, borderRadius: 2, text: void 0, textAnchor: "middle", offsetX: 0, offsetY: 0, mouseEnter: void 0, mouseLeave: void 0, click: void 0, style: { background: "#fff", color: void 0, fontSize: "11px", fontFamily: void 0, fontWeight: 400, cssClass: "", padding: { left: 5, right: 5, top: 2, bottom: 2 } } }, customSVG: { SVG: void 0, cssClass: void 0, offsetX: 0, offsetY: 0 }, image: { path: void 0, width: 20, height: 20, offsetX: 0, offsetY: 0 } }, this.yAxisAnnotation = { id: void 0, y: 0, y2: null, strokeDashArray: 1, fillColor: "#c2c2c2", borderColor: "#c2c2c2", borderWidth: 1, opacity: 0.3, offsetX: 0, offsetY: 0, width: "100%", yAxisIndex: 0, label: { borderColor: "#c2c2c2", borderWidth: 1, borderRadius: 2, text: void 0, textAnchor: "end", position: "right", offsetX: 0, offsetY: -3, mouseEnter: void 0, mouseLeave: void 0, click: void 0, style: { background: "#fff", color: void 0, fontSize: "11px", fontFamily: void 0, fontWeight: 400, cssClass: "", padding: { left: 5, right: 5, top: 2, bottom: 2 } } } }, this.xAxisAnnotation = { id: void 0, x: 0, x2: null, strokeDashArray: 1, fillColor: "#c2c2c2", borderColor: "#c2c2c2", borderWidth: 1, opacity: 0.3, offsetX: 0, offsetY: 0, label: { borderColor: "#c2c2c2", borderWidth: 1, borderRadius: 2, text: void 0, textAnchor: "middle", orientation: "vertical", position: "top", offsetX: 0, offsetY: 0, mouseEnter: void 0, mouseLeave: void 0, click: void 0, style: { background: "#fff", color: void 0, fontSize: "11px", fontFamily: void 0, fontWeight: 400, cssClass: "", padding: { left: 5, right: 5, top: 2, bottom: 2 } } } }, this.text = { x: 0, y: 0, text: "", textAnchor: "start", foreColor: void 0, fontSize: "13px", fontFamily: void 0, fontWeight: 400, appendTo: ".apexcharts-annotations", backgroundColor: "transparent", borderColor: "#c2c2c2", borderRadius: 0, borderWidth: 0, paddingLeft: 4, paddingRight: 4, paddingTop: 2, paddingBottom: 2 };
+  }
+  return $(n, [{ key: "init", value: function() {
+    return { annotations: { yaxis: [this.yAxisAnnotation], xaxis: [this.xAxisAnnotation], points: [this.pointAnnotation], texts: [], images: [], shapes: [] }, chart: { animations: { enabled: !0, speed: 800, animateGradually: { delay: 150, enabled: !0 }, dynamicAnimation: { enabled: !0, speed: 350 } }, background: "", locales: [Sn], defaultLocale: "en", dropShadow: { enabled: !1, enabledOnSeries: void 0, top: 2, left: 2, blur: 4, color: "#000", opacity: 0.7 }, events: { animationEnd: void 0, beforeMount: void 0, mounted: void 0, updated: void 0, click: void 0, mouseMove: void 0, mouseLeave: void 0, xAxisLabelClick: void 0, legendClick: void 0, markerClick: void 0, selection: void 0, dataPointSelection: void 0, dataPointMouseEnter: void 0, dataPointMouseLeave: void 0, beforeZoom: void 0, beforeResetZoom: void 0, zoomed: void 0, scrolled: void 0, brushScrolled: void 0 }, foreColor: "#373d3f", fontFamily: "Helvetica, Arial, sans-serif", height: "auto", parentHeightOffset: 15, redrawOnParentResize: !0, redrawOnWindowResize: !0, id: void 0, group: void 0, nonce: void 0, offsetX: 0, offsetY: 0, selection: { enabled: !1, type: "x", fill: { color: "#24292e", opacity: 0.1 }, stroke: { width: 1, color: "#24292e", opacity: 0.4, dashArray: 3 }, xaxis: { min: void 0, max: void 0 }, yaxis: { min: void 0, max: void 0 } }, sparkline: { enabled: !1 }, brush: { enabled: !1, autoScaleYaxis: !0, target: void 0, targets: void 0 }, stacked: !1, stackOnlyBar: !0, stackType: "normal", toolbar: { show: !0, offsetX: 0, offsetY: 0, tools: { download: !0, selection: !0, zoom: !0, zoomin: !0, zoomout: !0, pan: !0, reset: !0, customIcons: [] }, export: { csv: { filename: void 0, columnDelimiter: ",", headerCategory: "category", headerValue: "value", categoryFormatter: void 0, valueFormatter: void 0 }, png: { filename: void 0 }, svg: { filename: void 0 }, scale: void 0, width: void 0 }, autoSelected: "zoom" }, type: "line", width: "100%", zoom: { enabled: !0, type: "x", autoScaleYaxis: !1, allowMouseWheelZoom: !0, zoomedArea: { fill: { color: "#90CAF9", opacity: 0.4 }, stroke: { color: "#0D47A1", opacity: 0.4, width: 1 } } } }, plotOptions: { line: { isSlopeChart: !1, colors: { threshold: 0, colorAboveThreshold: void 0, colorBelowThreshold: void 0 } }, area: { fillTo: "origin" }, bar: { horizontal: !1, columnWidth: "70%", barHeight: "70%", distributed: !1, borderRadius: 0, borderRadiusApplication: "around", borderRadiusWhenStacked: "last", rangeBarOverlap: !0, rangeBarGroupRows: !1, hideZeroBarsWhenGrouped: !1, isDumbbell: !1, dumbbellColors: void 0, isFunnel: !1, isFunnel3d: !0, colors: { ranges: [], backgroundBarColors: [], backgroundBarOpacity: 1, backgroundBarRadius: 0 }, dataLabels: { position: "top", maxItems: 100, hideOverflowingLabels: !0, orientation: "horizontal", total: { enabled: !1, formatter: void 0, offsetX: 0, offsetY: 0, style: { color: "#373d3f", fontSize: "12px", fontFamily: void 0, fontWeight: 600 } } } }, bubble: { zScaling: !0, minBubbleRadius: void 0, maxBubbleRadius: void 0 }, candlestick: { colors: { upward: "#00B746", downward: "#EF403C" }, wick: { useFillColor: !0 } }, boxPlot: { colors: { upper: "#00E396", lower: "#008FFB" } }, heatmap: { radius: 2, enableShades: !0, shadeIntensity: 0.5, reverseNegativeShade: !1, distributed: !1, useFillColorAsStroke: !1, colorScale: { inverse: !1, ranges: [], min: void 0, max: void 0 } }, treemap: { enableShades: !0, shadeIntensity: 0.5, distributed: !1, reverseNegativeShade: !1, useFillColorAsStroke: !1, borderRadius: 4, dataLabels: { format: "scale" }, colorScale: { inverse: !1, ranges: [], min: void 0, max: void 0 }, seriesTitle: { show: !0, offsetY: 1, offsetX: 1, borderColor: "#000", borderWidth: 1, borderRadius: 2, style: { background: "rgba(0, 0, 0, 0.6)", color: "#fff", fontSize: "12px", fontFamily: void 0, fontWeight: 400, cssClass: "", padding: { left: 6, right: 6, top: 2, bottom: 2 } } } }, radialBar: { inverseOrder: !1, startAngle: 0, endAngle: 360, offsetX: 0, offsetY: 0, hollow: { margin: 5, size: "50%", background: "transparent", image: void 0, imageWidth: 150, imageHeight: 150, imageOffsetX: 0, imageOffsetY: 0, imageClipped: !0, position: "front", dropShadow: { enabled: !1, top: 0, left: 0, blur: 3, color: "#000", opacity: 0.5 } }, track: { show: !0, startAngle: void 0, endAngle: void 0, background: "#f2f2f2", strokeWidth: "97%", opacity: 1, margin: 5, dropShadow: { enabled: !1, top: 0, left: 0, blur: 3, color: "#000", opacity: 0.5 } }, dataLabels: { show: !0, name: { show: !0, fontSize: "16px", fontFamily: void 0, fontWeight: 600, color: void 0, offsetY: 0, formatter: function(e) {
+      return e;
+    } }, value: { show: !0, fontSize: "14px", fontFamily: void 0, fontWeight: 400, color: void 0, offsetY: 16, formatter: function(e) {
+      return e + "%";
+    } }, total: { show: !1, label: "Total", fontSize: "16px", fontWeight: 600, fontFamily: void 0, color: void 0, formatter: function(e) {
+      return e.globals.seriesTotals.reduce(function(t, i) {
+        return t + i;
+      }, 0) / e.globals.series.length + "%";
+    } } }, barLabels: { enabled: !1, offsetX: 0, offsetY: 0, useSeriesColors: !0, fontFamily: void 0, fontWeight: 600, fontSize: "16px", formatter: function(e) {
+      return e;
+    }, onClick: void 0 } }, pie: { customScale: 1, offsetX: 0, offsetY: 0, startAngle: 0, endAngle: 360, expandOnClick: !0, dataLabels: { offset: 0, minAngleToShowLabel: 10 }, donut: { size: "65%", background: "transparent", labels: { show: !1, name: { show: !0, fontSize: "16px", fontFamily: void 0, fontWeight: 600, color: void 0, offsetY: -10, formatter: function(e) {
+      return e;
+    } }, value: { show: !0, fontSize: "20px", fontFamily: void 0, fontWeight: 400, color: void 0, offsetY: 10, formatter: function(e) {
+      return e;
+    } }, total: { show: !1, showAlways: !1, label: "Total", fontSize: "16px", fontWeight: 400, fontFamily: void 0, color: void 0, formatter: function(e) {
+      return e.globals.seriesTotals.reduce(function(t, i) {
+        return t + i;
+      }, 0);
+    } } } } }, polarArea: { rings: { strokeWidth: 1, strokeColor: "#e8e8e8" }, spokes: { strokeWidth: 1, connectorColors: "#e8e8e8" } }, radar: { size: void 0, offsetX: 0, offsetY: 0, polygons: { strokeWidth: 1, strokeColors: "#e8e8e8", connectorColors: "#e8e8e8", fill: { colors: void 0 } } } }, colors: void 0, dataLabels: { enabled: !0, enabledOnSeries: void 0, formatter: function(e) {
+      return e !== null ? e : "";
+    }, textAnchor: "middle", distributed: !1, offsetX: 0, offsetY: 0, style: { fontSize: "12px", fontFamily: void 0, fontWeight: 600, colors: void 0 }, background: { enabled: !0, foreColor: "#fff", backgroundColor: void 0, borderRadius: 2, padding: 4, opacity: 0.9, borderWidth: 1, borderColor: "#fff", dropShadow: { enabled: !1, top: 1, left: 1, blur: 1, color: "#000", opacity: 0.8 } }, dropShadow: { enabled: !1, top: 1, left: 1, blur: 1, color: "#000", opacity: 0.8 } }, fill: { type: "solid", colors: void 0, opacity: 0.85, gradient: { shade: "dark", type: "horizontal", shadeIntensity: 0.5, gradientToColors: void 0, inverseColors: !0, opacityFrom: 1, opacityTo: 1, stops: [0, 50, 100], colorStops: [] }, image: { src: [], width: void 0, height: void 0 }, pattern: { style: "squares", width: 6, height: 6, strokeWidth: 2 } }, forecastDataPoints: { count: 0, fillOpacity: 0.5, strokeWidth: void 0, dashArray: 4 }, grid: { show: !0, borderColor: "#e0e0e0", strokeDashArray: 0, position: "back", xaxis: { lines: { show: !1 } }, yaxis: { lines: { show: !0 } }, row: { colors: void 0, opacity: 0.5 }, column: { colors: void 0, opacity: 0.5 }, padding: { top: 0, right: 10, bottom: 0, left: 12 } }, labels: [], legend: { show: !0, showForSingleSeries: !1, showForNullSeries: !0, showForZeroSeries: !0, floating: !1, position: "bottom", horizontalAlign: "center", inverseOrder: !1, fontSize: "12px", fontFamily: void 0, fontWeight: 400, width: void 0, height: void 0, formatter: void 0, tooltipHoverFormatter: void 0, offsetX: -20, offsetY: 4, customLegendItems: [], clusterGroupedSeries: !0, clusterGroupedSeriesOrientation: "vertical", labels: { colors: void 0, useSeriesColors: !1 }, markers: { size: 7, fillColors: void 0, strokeWidth: 1, shape: void 0, offsetX: 0, offsetY: 0, customHTML: void 0, onClick: void 0 }, itemMargin: { horizontal: 5, vertical: 4 }, onItemClick: { toggleDataSeries: !0 }, onItemHover: { highlightDataSeries: !0 } }, markers: { discrete: [], size: 0, colors: void 0, strokeColors: "#fff", strokeWidth: 2, strokeOpacity: 0.9, strokeDashArray: 0, fillOpacity: 1, shape: "circle", offsetX: 0, offsetY: 0, showNullDataPoints: !0, onClick: void 0, onDblClick: void 0, hover: { size: void 0, sizeOffset: 3 } }, noData: { text: void 0, align: "center", verticalAlign: "middle", offsetX: 0, offsetY: 0, style: { color: void 0, fontSize: "14px", fontFamily: void 0 } }, responsive: [], series: void 0, states: { hover: { filter: { type: "lighten" } }, active: { allowMultipleDataPointsSelection: !1, filter: { type: "darken" } } }, title: { text: void 0, align: "left", margin: 5, offsetX: 0, offsetY: 0, floating: !1, style: { fontSize: "14px", fontWeight: 900, fontFamily: void 0, color: void 0 } }, subtitle: { text: void 0, align: "left", margin: 5, offsetX: 0, offsetY: 30, floating: !1, style: { fontSize: "12px", fontWeight: 400, fontFamily: void 0, color: void 0 } }, stroke: { show: !0, curve: "smooth", lineCap: "butt", width: 2, colors: void 0, dashArray: 0, fill: { type: "solid", colors: void 0, opacity: 0.85, gradient: { shade: "dark", type: "horizontal", shadeIntensity: 0.5, gradientToColors: void 0, inverseColors: !0, opacityFrom: 1, opacityTo: 1, stops: [0, 50, 100], colorStops: [] } } }, tooltip: { enabled: !0, enabledOnSeries: void 0, shared: !0, hideEmptySeries: !1, followCursor: !1, intersect: !1, inverseOrder: !1, custom: void 0, fillSeriesColor: !1, theme: "light", cssClass: "", style: { fontSize: "12px", fontFamily: void 0 }, onDatasetHover: { highlightDataSeries: !1 }, x: { show: !0, format: "dd MMM", formatter: void 0 }, y: { formatter: void 0, title: { formatter: function(e) {
+      return e ? e + ": " : "";
+    } } }, z: { formatter: void 0, title: "Size: " }, marker: { show: !0, fillColors: void 0 }, items: { display: "flex" }, fixed: { enabled: !1, position: "topRight", offsetX: 0, offsetY: 0 } }, xaxis: { type: "category", categories: [], convertedCatToNumeric: !1, offsetX: 0, offsetY: 0, overwriteCategories: void 0, labels: { show: !0, rotate: -45, rotateAlways: !1, hideOverlappingLabels: !0, trim: !1, minHeight: void 0, maxHeight: 120, showDuplicates: !0, style: { colors: [], fontSize: "12px", fontWeight: 400, fontFamily: void 0, cssClass: "" }, offsetX: 0, offsetY: 0, format: void 0, formatter: void 0, datetimeUTC: !0, datetimeFormatter: { year: "yyyy", month: "MMM 'yy", day: "dd MMM", hour: "HH:mm", minute: "HH:mm:ss", second: "HH:mm:ss" } }, group: { groups: [], style: { colors: [], fontSize: "12px", fontWeight: 400, fontFamily: void 0, cssClass: "" } }, axisBorder: { show: !0, color: "#e0e0e0", width: "100%", height: 1, offsetX: 0, offsetY: 0 }, axisTicks: { show: !0, color: "#e0e0e0", height: 6, offsetX: 0, offsetY: 0 }, stepSize: void 0, tickAmount: void 0, tickPlacement: "on", min: void 0, max: void 0, range: void 0, floating: !1, decimalsInFloat: void 0, position: "bottom", title: { text: void 0, offsetX: 0, offsetY: 0, style: { color: void 0, fontSize: "12px", fontWeight: 900, fontFamily: void 0, cssClass: "" } }, crosshairs: { show: !0, width: 1, position: "back", opacity: 0.9, stroke: { color: "#b6b6b6", width: 1, dashArray: 3 }, fill: { type: "solid", color: "#B1B9C4", gradient: { colorFrom: "#D8E3F0", colorTo: "#BED1E6", stops: [0, 100], opacityFrom: 0.4, opacityTo: 0.5 } }, dropShadow: { enabled: !1, left: 0, top: 0, blur: 1, opacity: 0.8 } }, tooltip: { enabled: !0, offsetY: 0, formatter: void 0, style: { fontSize: "12px", fontFamily: void 0 } } }, yaxis: this.yAxis, theme: { mode: "", palette: "palette1", monochrome: { enabled: !1, color: "#008FFB", shadeTo: "light", shadeIntensity: 0.65 } } };
+  } }]), n;
+}(), Dc = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w, this.graphics = new F(this.ctx), this.w.globals.isBarHorizontal && (this.invertAxis = !0), this.helpers = new zi(this), this.xAxisAnnotations = new Fc(this), this.yAxisAnnotations = new Xc(this), this.pointsAnnotations = new Hc(this), this.w.globals.isBarHorizontal && this.w.config.yaxis[0].reversed && (this.inversedReversedAxis = !0), this.xDivision = this.w.globals.gridWidth / this.w.globals.dataPoints;
+  }
+  return $(n, [{ key: "drawAxesAnnotations", value: function() {
+    var e = this.w;
+    if (e.globals.axisCharts && e.globals.dataPoints) {
+      for (var t = this.yAxisAnnotations.drawYAxisAnnotations(), i = this.xAxisAnnotations.drawXAxisAnnotations(), a = this.pointsAnnotations.drawPointAnnotations(), s = e.config.chart.animations.enabled, r = [t, i, a], o = [i.node, t.node, a.node], l = 0; l < 3; l++) e.globals.dom.elGraphical.add(r[l]), !s || e.globals.resized || e.globals.dataChanged || e.config.chart.type !== "scatter" && e.config.chart.type !== "bubble" && e.globals.dataPoints > 1 && o[l].classList.add("apexcharts-element-hidden"), e.globals.delayedElements.push({ el: o[l], index: 0 });
+      this.helpers.annotationsBackground();
+    }
+  } }, { key: "drawImageAnnos", value: function() {
+    var e = this;
+    this.w.config.annotations.images.map(function(t, i) {
+      e.addImage(t, i);
+    });
+  } }, { key: "drawTextAnnos", value: function() {
+    var e = this;
+    this.w.config.annotations.texts.map(function(t, i) {
+      e.addText(t, i);
+    });
+  } }, { key: "addXaxisAnnotation", value: function(e, t, i) {
+    this.xAxisAnnotations.addXaxisAnnotation(e, t, i);
+  } }, { key: "addYaxisAnnotation", value: function(e, t, i) {
+    this.yAxisAnnotations.addYaxisAnnotation(e, t, i);
+  } }, { key: "addPointAnnotation", value: function(e, t, i) {
+    this.pointsAnnotations.addPointAnnotation(e, t, i);
+  } }, { key: "addText", value: function(e, t) {
+    var i = e.x, a = e.y, s = e.text, r = e.textAnchor, o = e.foreColor, l = e.fontSize, c = e.fontFamily, h = e.fontWeight, d = e.cssClass, u = e.backgroundColor, g = e.borderWidth, p = e.strokeDashArray, f = e.borderRadius, x = e.borderColor, b = e.appendTo, m = b === void 0 ? ".apexcharts-svg" : b, w = e.paddingLeft, y = w === void 0 ? 4 : w, v = e.paddingRight, k = v === void 0 ? 4 : v, A = e.paddingBottom, C = A === void 0 ? 2 : A, S = e.paddingTop, L = S === void 0 ? 2 : S, P = this.w, I = this.graphics.drawText({ x: i, y: a, text: s, textAnchor: r || "start", fontSize: l || "12px", fontWeight: h || "regular", fontFamily: c || P.config.chart.fontFamily, foreColor: o || P.config.chart.foreColor, cssClass: d }), E = P.globals.dom.baseEl.querySelector(m);
+    E && E.appendChild(I.node);
+    var O = I.bbox();
+    if (s) {
+      var _ = this.graphics.drawRect(O.x - y, O.y - L, O.width + y + k, O.height + C + L, f, u || "transparent", 1, g, x, p);
+      E.insertBefore(_.node, I.node);
+    }
+  } }, { key: "addImage", value: function(e, t) {
+    var i = this.w, a = e.path, s = e.x, r = s === void 0 ? 0 : s, o = e.y, l = o === void 0 ? 0 : o, c = e.width, h = c === void 0 ? 20 : c, d = e.height, u = d === void 0 ? 20 : d, g = e.appendTo, p = g === void 0 ? ".apexcharts-svg" : g, f = i.globals.dom.Paper.image(a);
+    f.size(h, u).move(r, l);
+    var x = i.globals.dom.baseEl.querySelector(p);
+    return x && x.appendChild(f.node), f;
+  } }, { key: "addXaxisAnnotationExternal", value: function(e, t, i) {
+    return this.addAnnotationExternal({ params: e, pushToMemory: t, context: i, type: "xaxis", contextMethod: i.addXaxisAnnotation }), i;
+  } }, { key: "addYaxisAnnotationExternal", value: function(e, t, i) {
+    return this.addAnnotationExternal({ params: e, pushToMemory: t, context: i, type: "yaxis", contextMethod: i.addYaxisAnnotation }), i;
+  } }, { key: "addPointAnnotationExternal", value: function(e, t, i) {
+    return this.invertAxis === void 0 && (this.invertAxis = i.w.globals.isBarHorizontal), this.addAnnotationExternal({ params: e, pushToMemory: t, context: i, type: "point", contextMethod: i.addPointAnnotation }), i;
+  } }, { key: "addAnnotationExternal", value: function(e) {
+    var t = e.params, i = e.pushToMemory, a = e.context, s = e.type, r = e.contextMethod, o = a, l = o.w, c = l.globals.dom.baseEl.querySelector(".apexcharts-".concat(s, "-annotations")), h = c.childNodes.length + 1, d = new gt(), u = Object.assign({}, s === "xaxis" ? d.xAxisAnnotation : s === "yaxis" ? d.yAxisAnnotation : d.pointAnnotation), g = T.extend(u, t);
+    switch (s) {
+      case "xaxis":
+        this.addXaxisAnnotation(g, c, h);
+        break;
+      case "yaxis":
+        this.addYaxisAnnotation(g, c, h);
+        break;
+      case "point":
+        this.addPointAnnotation(g, c, h);
+    }
+    var p = l.globals.dom.baseEl.querySelector(".apexcharts-".concat(s, "-annotations .apexcharts-").concat(s, "-annotation-label[rel='").concat(h, "']")), f = this.helpers.addBackgroundToAnno(p, g);
+    return f && c.insertBefore(f.node, p), i && l.globals.memory.methodsToExec.push({ context: o, id: g.id ? g.id : T.randomId(), method: r, label: "addAnnotation", params: t }), a;
+  } }, { key: "clearAnnotations", value: function(e) {
+    for (var t = e.w, i = t.globals.dom.baseEl.querySelectorAll(".apexcharts-yaxis-annotations, .apexcharts-xaxis-annotations, .apexcharts-point-annotations"), a = t.globals.memory.methodsToExec.length - 1; a >= 0; a--) t.globals.memory.methodsToExec[a].label !== "addText" && t.globals.memory.methodsToExec[a].label !== "addAnnotation" || t.globals.memory.methodsToExec.splice(a, 1);
+    i = T.listToArray(i), Array.prototype.forEach.call(i, function(s) {
+      for (; s.firstChild; ) s.removeChild(s.firstChild);
+    });
+  } }, { key: "removeAnnotation", value: function(e, t) {
+    var i = e.w, a = i.globals.dom.baseEl.querySelectorAll(".".concat(t));
+    a && (i.globals.memory.methodsToExec.map(function(s, r) {
+      s.id === t && i.globals.memory.methodsToExec.splice(r, 1);
+    }), Object.keys(i.config.annotations).forEach(function(s) {
+      var r = i.config.annotations[s];
+      Array.isArray(r) && (i.config.annotations[s] = r.filter(function(o) {
+        return o.id !== t;
+      }));
+    }), Array.prototype.forEach.call(a, function(s) {
+      s.parentElement.removeChild(s);
+    }));
+  } }]), n;
+}(), ta = function(n) {
+  var e, t = n.isTimeline, i = n.ctx, a = n.seriesIndex, s = n.dataPointIndex, r = n.y1, o = n.y2, l = n.w, c = l.globals.seriesRangeStart[a][s], h = l.globals.seriesRangeEnd[a][s], d = l.globals.labels[s], u = l.config.series[a].name ? l.config.series[a].name : "", g = l.globals.ttKeyFormatter, p = l.config.tooltip.y.title.formatter, f = { w: l, seriesIndex: a, dataPointIndex: s, start: c, end: h };
+  typeof p == "function" && (u = p(u, f)), (e = l.config.series[a].data[s]) !== null && e !== void 0 && e.x && (d = l.config.series[a].data[s].x), t || l.config.xaxis.type === "datetime" && (d = new di(i).xLabelFormat(l.globals.ttKeyFormatter, d, d, { i: void 0, dateFormatter: new ze(i).formatDate, w: l })), typeof g == "function" && (d = g(d, f)), Number.isFinite(r) && Number.isFinite(o) && (c = r, h = o);
+  var x = "", b = "", m = l.globals.colors[a];
+  if (l.config.tooltip.x.formatter === void 0) if (l.config.xaxis.type === "datetime") {
+    var w = new ze(i);
+    x = w.formatDate(w.getDate(c), l.config.tooltip.x.format), b = w.formatDate(w.getDate(h), l.config.tooltip.x.format);
+  } else x = c, b = h;
+  else x = l.config.tooltip.x.formatter(c), b = l.config.tooltip.x.formatter(h);
+  return { start: c, end: h, startVal: x, endVal: b, ylabel: d, color: m, seriesName: u };
+}, ia = function(n) {
+  var e = n.color, t = n.seriesName, i = n.ylabel, a = n.start, s = n.end, r = n.seriesIndex, o = n.dataPointIndex, l = n.ctx.tooltip.tooltipLabels.getFormatters(r);
+  a = l.yLbFormatter(a), s = l.yLbFormatter(s);
+  var c = l.yLbFormatter(n.w.globals.series[r][o]), h = `<span class="value start-value">
+  `.concat(a, `
+  </span> <span class="separator">-</span> <span class="value end-value">
+  `).concat(s, `
+  </span>`);
+  return '<div class="apexcharts-tooltip-rangebar"><div> <span class="series-name" style="color: ' + e + '">' + (t || "") + '</span></div><div> <span class="category">' + i + ": </span> " + (n.w.globals.comboCharts ? n.w.config.series[r].type === "rangeArea" || n.w.config.series[r].type === "rangeBar" ? h : "<span>".concat(c, "</span>") : h) + " </div></div>";
+}, ai = function() {
+  function n(e) {
+    q(this, n), this.opts = e;
+  }
+  return $(n, [{ key: "hideYAxis", value: function() {
+    this.opts.yaxis[0].show = !1, this.opts.yaxis[0].title.text = "", this.opts.yaxis[0].axisBorder.show = !1, this.opts.yaxis[0].axisTicks.show = !1, this.opts.yaxis[0].floating = !0;
+  } }, { key: "line", value: function() {
+    return { dataLabels: { enabled: !1 }, stroke: { width: 5, curve: "straight" }, markers: { size: 0, hover: { sizeOffset: 6 } }, xaxis: { crosshairs: { width: 1 } } };
+  } }, { key: "sparkline", value: function(e) {
+    return this.hideYAxis(), T.extend(e, { grid: { show: !1, padding: { left: 0, right: 0, top: 0, bottom: 0 } }, legend: { show: !1 }, xaxis: { labels: { show: !1 }, tooltip: { enabled: !1 }, axisBorder: { show: !1 }, axisTicks: { show: !1 } }, chart: { toolbar: { show: !1 }, zoom: { enabled: !1 } }, dataLabels: { enabled: !1 } });
+  } }, { key: "slope", value: function() {
+    return this.hideYAxis(), { chart: { toolbar: { show: !1 }, zoom: { enabled: !1 } }, dataLabels: { enabled: !0, formatter: function(e, t) {
+      var i = t.w.config.series[t.seriesIndex].name;
+      return e !== null ? i + ": " + e : "";
+    }, background: { enabled: !1 }, offsetX: -5 }, grid: { xaxis: { lines: { show: !0 } }, yaxis: { lines: { show: !1 } } }, xaxis: { position: "top", labels: { style: { fontSize: 14, fontWeight: 900 } }, tooltip: { enabled: !1 }, crosshairs: { show: !1 } }, markers: { size: 8, hover: { sizeOffset: 1 } }, legend: { show: !1 }, tooltip: { shared: !1, intersect: !0, followCursor: !0 }, stroke: { width: 5, curve: "straight" } };
+  } }, { key: "bar", value: function() {
+    return { chart: { stacked: !1 }, plotOptions: { bar: { dataLabels: { position: "center" } } }, dataLabels: { style: { colors: ["#fff"] }, background: { enabled: !1 } }, stroke: { width: 0, lineCap: "square" }, fill: { opacity: 0.85 }, legend: { markers: { shape: "square" } }, tooltip: { shared: !1, intersect: !0 }, xaxis: { tooltip: { enabled: !1 }, tickPlacement: "between", crosshairs: { width: "barWidth", position: "back", fill: { type: "gradient" }, dropShadow: { enabled: !1 }, stroke: { width: 0 } } } };
+  } }, { key: "funnel", value: function() {
+    return this.hideYAxis(), N(N({}, this.bar()), {}, { chart: { animations: { speed: 800, animateGradually: { enabled: !1 } } }, plotOptions: { bar: { horizontal: !0, borderRadiusApplication: "around", borderRadius: 0, dataLabels: { position: "center" } } }, grid: { show: !1, padding: { left: 0, right: 0 } }, xaxis: { labels: { show: !1 }, tooltip: { enabled: !1 }, axisBorder: { show: !1 }, axisTicks: { show: !1 } } });
+  } }, { key: "candlestick", value: function() {
+    var e = this;
+    return { stroke: { width: 1 }, fill: { opacity: 1 }, dataLabels: { enabled: !1 }, tooltip: { shared: !0, custom: function(t) {
+      var i = t.seriesIndex, a = t.dataPointIndex, s = t.w;
+      return e._getBoxTooltip(s, i, a, ["Open", "High", "", "Low", "Close"], "candlestick");
+    } }, states: { active: { filter: { type: "none" } } }, xaxis: { crosshairs: { width: 1 } } };
+  } }, { key: "boxPlot", value: function() {
+    var e = this;
+    return { chart: { animations: { dynamicAnimation: { enabled: !1 } } }, stroke: { width: 1, colors: ["#24292e"] }, dataLabels: { enabled: !1 }, tooltip: { shared: !0, custom: function(t) {
+      var i = t.seriesIndex, a = t.dataPointIndex, s = t.w;
+      return e._getBoxTooltip(s, i, a, ["Minimum", "Q1", "Median", "Q3", "Maximum"], "boxPlot");
+    } }, markers: { size: 7, strokeWidth: 1, strokeColors: "#111" }, xaxis: { crosshairs: { width: 1 } } };
+  } }, { key: "rangeBar", value: function() {
+    return { chart: { animations: { animateGradually: !1 } }, stroke: { width: 0, lineCap: "square" }, plotOptions: { bar: { borderRadius: 0, dataLabels: { position: "center" } } }, dataLabels: { enabled: !1, formatter: function(e, t) {
+      t.ctx;
+      var i = t.seriesIndex, a = t.dataPointIndex, s = t.w, r = function() {
+        var o = s.globals.seriesRangeStart[i][a];
+        return s.globals.seriesRangeEnd[i][a] - o;
+      };
+      return s.globals.comboCharts ? s.config.series[i].type === "rangeBar" || s.config.series[i].type === "rangeArea" ? r() : e : r();
+    }, background: { enabled: !1 }, style: { colors: ["#fff"] } }, markers: { size: 10 }, tooltip: { shared: !1, followCursor: !0, custom: function(e) {
+      return e.w.config.plotOptions && e.w.config.plotOptions.bar && e.w.config.plotOptions.bar.horizontal ? function(t) {
+        var i = ta(N(N({}, t), {}, { isTimeline: !0 })), a = i.color, s = i.seriesName, r = i.ylabel, o = i.startVal, l = i.endVal;
+        return ia(N(N({}, t), {}, { color: a, seriesName: s, ylabel: r, start: o, end: l }));
+      }(e) : function(t) {
+        var i = ta(t), a = i.color, s = i.seriesName, r = i.ylabel, o = i.start, l = i.end;
+        return ia(N(N({}, t), {}, { color: a, seriesName: s, ylabel: r, start: o, end: l }));
+      }(e);
+    } }, xaxis: { tickPlacement: "between", tooltip: { enabled: !1 }, crosshairs: { stroke: { width: 0 } } } };
+  } }, { key: "dumbbell", value: function(e) {
+    var t, i;
+    return (t = e.plotOptions.bar) !== null && t !== void 0 && t.barHeight || (e.plotOptions.bar.barHeight = 2), (i = e.plotOptions.bar) !== null && i !== void 0 && i.columnWidth || (e.plotOptions.bar.columnWidth = 2), e;
+  } }, { key: "area", value: function() {
+    return { stroke: { width: 4, fill: { type: "solid", gradient: { inverseColors: !1, shade: "light", type: "vertical", opacityFrom: 0.65, opacityTo: 0.5, stops: [0, 100, 100] } } }, fill: { type: "gradient", gradient: { inverseColors: !1, shade: "light", type: "vertical", opacityFrom: 0.65, opacityTo: 0.5, stops: [0, 100, 100] } }, markers: { size: 0, hover: { sizeOffset: 6 } }, tooltip: { followCursor: !1 } };
+  } }, { key: "rangeArea", value: function() {
+    return { stroke: { curve: "straight", width: 0 }, fill: { type: "solid", opacity: 0.6 }, markers: { size: 0 }, states: { hover: { filter: { type: "none" } }, active: { filter: { type: "none" } } }, tooltip: { intersect: !1, shared: !0, followCursor: !0, custom: function(e) {
+      return function(t) {
+        var i = ta(t), a = i.color, s = i.seriesName, r = i.ylabel, o = i.start, l = i.end;
+        return ia(N(N({}, t), {}, { color: a, seriesName: s, ylabel: r, start: o, end: l }));
+      }(e);
+    } } };
+  } }, { key: "brush", value: function(e) {
+    return T.extend(e, { chart: { toolbar: { autoSelected: "selection", show: !1 }, zoom: { enabled: !1 } }, dataLabels: { enabled: !1 }, stroke: { width: 1 }, tooltip: { enabled: !1 }, xaxis: { tooltip: { enabled: !1 } } });
+  } }, { key: "stacked100", value: function(e) {
+    e.dataLabels = e.dataLabels || {}, e.dataLabels.formatter = e.dataLabels.formatter || void 0;
+    var t = e.dataLabels.formatter;
+    return e.yaxis.forEach(function(i, a) {
+      e.yaxis[a].min = 0, e.yaxis[a].max = 100;
+    }), e.chart.type === "bar" && (e.dataLabels.formatter = t || function(i) {
+      return typeof i == "number" && i ? i.toFixed(0) + "%" : i;
+    }), e;
+  } }, { key: "stackedBars", value: function() {
+    var e = this.bar();
+    return N(N({}, e), {}, { plotOptions: N(N({}, e.plotOptions), {}, { bar: N(N({}, e.plotOptions.bar), {}, { borderRadiusApplication: "end", borderRadiusWhenStacked: "last" }) }) });
+  } }, { key: "convertCatToNumeric", value: function(e) {
+    return e.xaxis.convertedCatToNumeric = !0, e;
+  } }, { key: "convertCatToNumericXaxis", value: function(e, t, i) {
+    e.xaxis.type = "numeric", e.xaxis.labels = e.xaxis.labels || {}, e.xaxis.labels.formatter = e.xaxis.labels.formatter || function(r) {
+      return T.isNumber(r) ? Math.floor(r) : r;
+    };
+    var a = e.xaxis.labels.formatter, s = e.xaxis.categories && e.xaxis.categories.length ? e.xaxis.categories : e.labels;
+    return i && i.length && (s = i.map(function(r) {
+      return Array.isArray(r) ? r : String(r);
+    })), s && s.length && (e.xaxis.labels.formatter = function(r) {
+      return T.isNumber(r) ? a(s[Math.floor(r) - 1]) : a(r);
+    }), e.xaxis.categories = [], e.labels = [], e.xaxis.tickAmount = e.xaxis.tickAmount || "dataPoints", e;
+  } }, { key: "bubble", value: function() {
+    return { dataLabels: { style: { colors: ["#fff"] } }, tooltip: { shared: !1, intersect: !0 }, xaxis: { crosshairs: { width: 0 } }, fill: { type: "solid", gradient: { shade: "light", inverse: !0, shadeIntensity: 0.55, opacityFrom: 0.4, opacityTo: 0.8 } } };
+  } }, { key: "scatter", value: function() {
+    return { dataLabels: { enabled: !1 }, tooltip: { shared: !1, intersect: !0 }, markers: { size: 6, strokeWidth: 1, hover: { sizeOffset: 2 } } };
+  } }, { key: "heatmap", value: function() {
+    return { chart: { stacked: !1 }, fill: { opacity: 1 }, dataLabels: { style: { colors: ["#fff"] } }, stroke: { colors: ["#fff"] }, tooltip: { followCursor: !0, marker: { show: !1 }, x: { show: !1 } }, legend: { position: "top", markers: { shape: "square" } }, grid: { padding: { right: 20 } } };
+  } }, { key: "treemap", value: function() {
+    return { chart: { zoom: { enabled: !1 } }, dataLabels: { style: { fontSize: 14, fontWeight: 600, colors: ["#fff"] } }, stroke: { show: !0, width: 2, colors: ["#fff"] }, legend: { show: !1 }, fill: { opacity: 1, gradient: { stops: [0, 100] } }, tooltip: { followCursor: !0, x: { show: !1 } }, grid: { padding: { left: 0, right: 0 } }, xaxis: { crosshairs: { show: !1 }, tooltip: { enabled: !1 } } };
+  } }, { key: "pie", value: function() {
+    return { chart: { toolbar: { show: !1 } }, plotOptions: { pie: { donut: { labels: { show: !1 } } } }, dataLabels: { formatter: function(e) {
+      return e.toFixed(1) + "%";
+    }, style: { colors: ["#fff"] }, background: { enabled: !1 }, dropShadow: { enabled: !0 } }, stroke: { colors: ["#fff"] }, fill: { opacity: 1, gradient: { shade: "light", stops: [0, 100] } }, tooltip: { theme: "dark", fillSeriesColor: !0 }, legend: { position: "right" }, grid: { padding: { left: 0, right: 0, top: 0, bottom: 0 } } };
+  } }, { key: "donut", value: function() {
+    return { chart: { toolbar: { show: !1 } }, dataLabels: { formatter: function(e) {
+      return e.toFixed(1) + "%";
+    }, style: { colors: ["#fff"] }, background: { enabled: !1 }, dropShadow: { enabled: !0 } }, stroke: { colors: ["#fff"] }, fill: { opacity: 1, gradient: { shade: "light", shadeIntensity: 0.35, stops: [80, 100], opacityFrom: 1, opacityTo: 1 } }, tooltip: { theme: "dark", fillSeriesColor: !0 }, legend: { position: "right" }, grid: { padding: { left: 0, right: 0, top: 0, bottom: 0 } } };
+  } }, { key: "polarArea", value: function() {
+    return { chart: { toolbar: { show: !1 } }, dataLabels: { formatter: function(e) {
+      return e.toFixed(1) + "%";
+    }, enabled: !1 }, stroke: { show: !0, width: 2 }, fill: { opacity: 0.7 }, tooltip: { theme: "dark", fillSeriesColor: !0 }, legend: { position: "right" }, grid: { padding: { left: 0, right: 0, top: 0, bottom: 0 } } };
+  } }, { key: "radar", value: function() {
+    return this.opts.yaxis[0].labels.offsetY = this.opts.yaxis[0].labels.offsetY ? this.opts.yaxis[0].labels.offsetY : 6, { dataLabels: { enabled: !1, style: { fontSize: "11px" } }, stroke: { width: 2 }, markers: { size: 5, strokeWidth: 1, strokeOpacity: 1 }, fill: { opacity: 0.2 }, tooltip: { shared: !1, intersect: !0, followCursor: !0 }, grid: { show: !1, padding: { left: 0, right: 0, top: 0, bottom: 0 } }, xaxis: { labels: { formatter: function(e) {
+      return e;
+    }, style: { colors: ["#a8a8a8"], fontSize: "11px" } }, tooltip: { enabled: !1 }, crosshairs: { show: !1 } } };
+  } }, { key: "radialBar", value: function() {
+    return { chart: { animations: { dynamicAnimation: { enabled: !0, speed: 800 } }, toolbar: { show: !1 } }, fill: { gradient: { shade: "dark", shadeIntensity: 0.4, inverseColors: !1, type: "diagonal2", opacityFrom: 1, opacityTo: 1, stops: [70, 98, 100] } }, legend: { show: !1, position: "right" }, tooltip: { enabled: !1, fillSeriesColor: !0 }, grid: { padding: { left: 0, right: 0, top: 0, bottom: 0 } } };
+  } }, { key: "_getBoxTooltip", value: function(e, t, i, a, s) {
+    var r = e.globals.seriesCandleO[t][i], o = e.globals.seriesCandleH[t][i], l = e.globals.seriesCandleM[t][i], c = e.globals.seriesCandleL[t][i], h = e.globals.seriesCandleC[t][i];
+    return e.config.series[t].type && e.config.series[t].type !== s ? `<div class="apexcharts-custom-tooltip">
+          `.concat(e.config.series[t].name ? e.config.series[t].name : "series-" + (t + 1), ": <strong>").concat(e.globals.series[t][i], `</strong>
+        </div>`) : '<div class="apexcharts-tooltip-box apexcharts-tooltip-'.concat(e.config.chart.type, '">') + "<div>".concat(a[0], ': <span class="value">') + r + "</span></div>" + "<div>".concat(a[1], ': <span class="value">') + o + "</span></div>" + (l ? "<div>".concat(a[2], ': <span class="value">') + l + "</span></div>" : "") + "<div>".concat(a[3], ': <span class="value">') + c + "</span></div>" + "<div>".concat(a[4], ': <span class="value">') + h + "</span></div></div>";
+  } }]), n;
+}(), si = function() {
+  function n(e) {
+    q(this, n), this.opts = e;
+  }
+  return $(n, [{ key: "init", value: function(e) {
+    var t = e.responsiveOverride, i = this.opts, a = new gt(), s = new ai(i);
+    this.chartType = i.chart.type, i = this.extendYAxis(i), i = this.extendAnnotations(i);
+    var r = a.init(), o = {};
+    if (i && Tt(i) === "object") {
+      var l, c, h, d, u, g, p, f, x, b, m = {};
+      m = ["line", "area", "bar", "candlestick", "boxPlot", "rangeBar", "rangeArea", "bubble", "scatter", "heatmap", "treemap", "pie", "polarArea", "donut", "radar", "radialBar"].indexOf(i.chart.type) !== -1 ? s[i.chart.type]() : s.line(), (l = i.plotOptions) !== null && l !== void 0 && (c = l.bar) !== null && c !== void 0 && c.isFunnel && (m = s.funnel()), i.chart.stacked && i.chart.type === "bar" && (m = s.stackedBars()), (h = i.chart.brush) !== null && h !== void 0 && h.enabled && (m = s.brush(m)), (d = i.plotOptions) !== null && d !== void 0 && (u = d.line) !== null && u !== void 0 && u.isSlopeChart && (m = s.slope()), i.chart.stacked && i.chart.stackType === "100%" && (i = s.stacked100(i)), (g = i.plotOptions) !== null && g !== void 0 && (p = g.bar) !== null && p !== void 0 && p.isDumbbell && (i = s.dumbbell(i)), this.checkForDarkTheme(window.Apex), this.checkForDarkTheme(i), i.xaxis = i.xaxis || window.Apex.xaxis || {}, t || (i.xaxis.convertedCatToNumeric = !1), ((f = (i = this.checkForCatToNumericXAxis(this.chartType, m, i)).chart.sparkline) !== null && f !== void 0 && f.enabled || (x = window.Apex.chart) !== null && x !== void 0 && (b = x.sparkline) !== null && b !== void 0 && b.enabled) && (m = s.sparkline(m)), o = T.extend(r, m);
+    }
+    var w = T.extend(o, window.Apex);
+    return r = T.extend(w, i), r = this.handleUserInputErrors(r);
+  } }, { key: "checkForCatToNumericXAxis", value: function(e, t, i) {
+    var a, s, r = new ai(i), o = (e === "bar" || e === "boxPlot") && ((a = i.plotOptions) === null || a === void 0 || (s = a.bar) === null || s === void 0 ? void 0 : s.horizontal), l = e === "pie" || e === "polarArea" || e === "donut" || e === "radar" || e === "radialBar" || e === "heatmap", c = i.xaxis.type !== "datetime" && i.xaxis.type !== "numeric", h = i.xaxis.tickPlacement ? i.xaxis.tickPlacement : t.xaxis && t.xaxis.tickPlacement;
+    return o || l || !c || h === "between" || (i = r.convertCatToNumeric(i)), i;
+  } }, { key: "extendYAxis", value: function(e, t) {
+    var i = new gt();
+    (e.yaxis === void 0 || !e.yaxis || Array.isArray(e.yaxis) && e.yaxis.length === 0) && (e.yaxis = {}), e.yaxis.constructor !== Array && window.Apex.yaxis && window.Apex.yaxis.constructor !== Array && (e.yaxis = T.extend(e.yaxis, window.Apex.yaxis)), e.yaxis.constructor !== Array ? e.yaxis = [T.extend(i.yAxis, e.yaxis)] : e.yaxis = T.extendArray(e.yaxis, i.yAxis);
+    var a = !1;
+    e.yaxis.forEach(function(r) {
+      r.logarithmic && (a = !0);
+    });
+    var s = e.series;
+    return t && !s && (s = t.config.series), a && s.length !== e.yaxis.length && s.length && (e.yaxis = s.map(function(r, o) {
+      if (r.name || (s[o].name = "series-".concat(o + 1)), e.yaxis[o]) return e.yaxis[o].seriesName = s[o].name, e.yaxis[o];
+      var l = T.extend(i.yAxis, e.yaxis[0]);
+      return l.show = !1, l;
+    })), a && s.length > 1 && s.length !== e.yaxis.length && console.warn("A multi-series logarithmic chart should have equal number of series and y-axes"), e;
+  } }, { key: "extendAnnotations", value: function(e) {
+    return e.annotations === void 0 && (e.annotations = {}, e.annotations.yaxis = [], e.annotations.xaxis = [], e.annotations.points = []), e = this.extendYAxisAnnotations(e), e = this.extendXAxisAnnotations(e), e = this.extendPointAnnotations(e);
+  } }, { key: "extendYAxisAnnotations", value: function(e) {
+    var t = new gt();
+    return e.annotations.yaxis = T.extendArray(e.annotations.yaxis !== void 0 ? e.annotations.yaxis : [], t.yAxisAnnotation), e;
+  } }, { key: "extendXAxisAnnotations", value: function(e) {
+    var t = new gt();
+    return e.annotations.xaxis = T.extendArray(e.annotations.xaxis !== void 0 ? e.annotations.xaxis : [], t.xAxisAnnotation), e;
+  } }, { key: "extendPointAnnotations", value: function(e) {
+    var t = new gt();
+    return e.annotations.points = T.extendArray(e.annotations.points !== void 0 ? e.annotations.points : [], t.pointAnnotation), e;
+  } }, { key: "checkForDarkTheme", value: function(e) {
+    e.theme && e.theme.mode === "dark" && (e.tooltip || (e.tooltip = {}), e.tooltip.theme !== "light" && (e.tooltip.theme = "dark"), e.chart.foreColor || (e.chart.foreColor = "#f6f7f8"), e.theme.palette || (e.theme.palette = "palette4"));
+  } }, { key: "handleUserInputErrors", value: function(e) {
+    var t = e;
+    if (t.tooltip.shared && t.tooltip.intersect) throw new Error("tooltip.shared cannot be enabled when tooltip.intersect is true. Turn off any other option by setting it to false.");
+    if (t.chart.type === "bar" && t.plotOptions.bar.horizontal) {
+      if (t.yaxis.length > 1) throw new Error("Multiple Y Axis for bars are not supported. Switch to column chart by setting plotOptions.bar.horizontal=false");
+      t.yaxis[0].reversed && (t.yaxis[0].opposite = !0), t.xaxis.tooltip.enabled = !1, t.yaxis[0].tooltip.enabled = !1, t.chart.zoom.enabled = !1;
+    }
+    return t.chart.type !== "bar" && t.chart.type !== "rangeBar" || t.tooltip.shared && t.xaxis.crosshairs.width === "barWidth" && t.series.length > 1 && (t.xaxis.crosshairs.width = "tickWidth"), t.chart.type !== "candlestick" && t.chart.type !== "boxPlot" || t.yaxis[0].reversed && (console.warn("Reversed y-axis in ".concat(t.chart.type, " chart is not supported.")), t.yaxis[0].reversed = !1), t;
+  } }]), n;
+}(), Mn = function() {
+  function n() {
+    q(this, n);
+  }
+  return $(n, [{ key: "initGlobalVars", value: function(e) {
+    e.series = [], e.seriesCandleO = [], e.seriesCandleH = [], e.seriesCandleM = [], e.seriesCandleL = [], e.seriesCandleC = [], e.seriesRangeStart = [], e.seriesRangeEnd = [], e.seriesRange = [], e.seriesPercent = [], e.seriesGoals = [], e.seriesX = [], e.seriesZ = [], e.seriesNames = [], e.seriesTotals = [], e.seriesLog = [], e.seriesColors = [], e.stackedSeriesTotals = [], e.seriesXvalues = [], e.seriesYvalues = [], e.labels = [], e.hasXaxisGroups = !1, e.groups = [], e.barGroups = [], e.lineGroups = [], e.areaGroups = [], e.hasSeriesGroups = !1, e.seriesGroups = [], e.categoryLabels = [], e.timescaleLabels = [], e.noLabelsProvided = !1, e.resizeTimer = null, e.selectionResizeTimer = null, e.lastWheelExecution = 0, e.delayedElements = [], e.pointsArray = [], e.dataLabelsRects = [], e.isXNumeric = !1, e.skipLastTimelinelabel = !1, e.skipFirstTimelinelabel = !1, e.isDataXYZ = !1, e.isMultiLineX = !1, e.isMultipleYAxis = !1, e.maxY = -Number.MAX_VALUE, e.minY = Number.MIN_VALUE, e.minYArr = [], e.maxYArr = [], e.maxX = -Number.MAX_VALUE, e.minX = Number.MAX_VALUE, e.initialMaxX = -Number.MAX_VALUE, e.initialMinX = Number.MAX_VALUE, e.maxDate = 0, e.minDate = Number.MAX_VALUE, e.minZ = Number.MAX_VALUE, e.maxZ = -Number.MAX_VALUE, e.minXDiff = Number.MAX_VALUE, e.yAxisScale = [], e.xAxisScale = null, e.xAxisTicksPositions = [], e.yLabelsCoords = [], e.yTitleCoords = [], e.barPadForNumericAxis = 0, e.padHorizontal = 0, e.xRange = 0, e.yRange = [], e.zRange = 0, e.dataPoints = 0, e.xTickAmount = 0, e.multiAxisTickAmount = 0;
+  } }, { key: "globalVars", value: function(e) {
+    return { chartID: null, cuid: null, events: { beforeMount: [], mounted: [], updated: [], clicked: [], selection: [], dataPointSelection: [], zoomed: [], scrolled: [] }, colors: [], clientX: null, clientY: null, fill: { colors: [] }, stroke: { colors: [] }, dataLabels: { style: { colors: [] } }, radarPolygons: { fill: { colors: [] } }, markers: { colors: [], size: e.markers.size, largestSize: 0 }, animationEnded: !1, isTouchDevice: "ontouchstart" in window || navigator.msMaxTouchPoints, isDirty: !1, isExecCalled: !1, initialConfig: null, initialSeries: [], lastXAxis: [], lastYAxis: [], columnSeries: null, labels: [], timescaleLabels: [], noLabelsProvided: !1, allSeriesCollapsed: !1, collapsedSeries: [], collapsedSeriesIndices: [], ancillaryCollapsedSeries: [], ancillaryCollapsedSeriesIndices: [], risingSeries: [], dataFormatXNumeric: !1, capturedSeriesIndex: -1, capturedDataPointIndex: -1, selectedDataPoints: [], invalidLogScale: !1, ignoreYAxisIndexes: [], maxValsInArrayIndex: 0, radialSize: 0, selection: void 0, zoomEnabled: e.chart.toolbar.autoSelected === "zoom" && e.chart.toolbar.tools.zoom && e.chart.zoom.enabled, panEnabled: e.chart.toolbar.autoSelected === "pan" && e.chart.toolbar.tools.pan, selectionEnabled: e.chart.toolbar.autoSelected === "selection" && e.chart.toolbar.tools.selection, yaxis: null, mousedown: !1, lastClientPosition: {}, visibleXRange: void 0, yValueDecimal: 0, total: 0, SVGNS: "http://www.w3.org/2000/svg", svgWidth: 0, svgHeight: 0, noData: !1, locale: {}, dom: {}, memory: { methodsToExec: [] }, shouldAnimate: !0, skipLastTimelinelabel: !1, skipFirstTimelinelabel: !1, delayedElements: [], axisCharts: !0, isDataXYZ: !1, isSlopeChart: e.plotOptions.line.isSlopeChart, resized: !1, resizeTimer: null, comboCharts: !1, dataChanged: !1, previousPaths: [], allSeriesHasEqualX: !0, pointsArray: [], dataLabelsRects: [], lastDrawnDataLabelsIndexes: [], hasNullValues: !1, zoomed: !1, gridWidth: 0, gridHeight: 0, rotateXLabels: !1, defaultLabels: !1, xLabelFormatter: void 0, yLabelFormatters: [], xaxisTooltipFormatter: void 0, ttKeyFormatter: void 0, ttVal: void 0, ttZFormatter: void 0, LINE_HEIGHT_RATIO: 1.618, xAxisLabelsHeight: 0, xAxisGroupLabelsHeight: 0, xAxisLabelsWidth: 0, yAxisLabelsWidth: 0, scaleX: 1, scaleY: 1, translateX: 0, translateY: 0, translateYAxisX: [], yAxisWidths: [], translateXAxisY: 0, translateXAxisX: 0, tooltip: null, niceScaleAllowedMagMsd: [[1, 1, 2, 5, 5, 5, 10, 10, 10, 10, 10], [1, 1, 2, 5, 5, 5, 10, 10, 10, 10, 10]], niceScaleDefaultTicks: [1, 2, 4, 4, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 12, 12, 12, 12, 12, 12, 12, 12, 12, 24], seriesYAxisMap: [], seriesYAxisReverseMap: [] };
+  } }, { key: "init", value: function(e) {
+    var t = this.globalVars(e);
+    return this.initGlobalVars(t), t.initialConfig = T.extend({}, e), t.initialSeries = T.clone(e.series), t.lastXAxis = T.clone(t.initialConfig.xaxis), t.lastYAxis = T.clone(t.initialConfig.yaxis), t;
+  } }]), n;
+}(), Nc = function() {
+  function n(e) {
+    q(this, n), this.opts = e;
+  }
+  return $(n, [{ key: "init", value: function() {
+    var e = new si(this.opts).init({ responsiveOverride: !1 });
+    return { config: e, globals: new Mn().init(e) };
+  } }]), n;
+}(), Ke = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w, this.opts = null, this.seriesIndex = 0, this.patternIDs = [];
+  }
+  return $(n, [{ key: "clippedImgArea", value: function(e) {
+    var t = this.w, i = t.config, a = parseInt(t.globals.gridWidth, 10), s = parseInt(t.globals.gridHeight, 10), r = a > s ? a : s, o = e.image, l = 0, c = 0;
+    e.width === void 0 && e.height === void 0 ? i.fill.image.width !== void 0 && i.fill.image.height !== void 0 ? (l = i.fill.image.width + 1, c = i.fill.image.height) : (l = r + 1, c = r) : (l = e.width, c = e.height);
+    var h = document.createElementNS(t.globals.SVGNS, "pattern");
+    F.setAttrs(h, { id: e.patternID, patternUnits: e.patternUnits ? e.patternUnits : "userSpaceOnUse", width: l + "px", height: c + "px" });
+    var d = document.createElementNS(t.globals.SVGNS, "image");
+    h.appendChild(d), d.setAttributeNS(window.SVG.xlink, "href", o), F.setAttrs(d, { x: 0, y: 0, preserveAspectRatio: "none", width: l + "px", height: c + "px" }), d.style.opacity = e.opacity, t.globals.dom.elDefs.node.appendChild(h);
+  } }, { key: "getSeriesIndex", value: function(e) {
+    var t = this.w, i = t.config.chart.type;
+    return (i === "bar" || i === "rangeBar") && t.config.plotOptions.bar.distributed || i === "heatmap" || i === "treemap" ? this.seriesIndex = e.seriesNumber : this.seriesIndex = e.seriesNumber % t.globals.series.length, this.seriesIndex;
+  } }, { key: "computeColorStops", value: function(e, t) {
+    var i, a = this.w, s = null, r = null, o = Vt(e);
+    try {
+      for (o.s(); !(i = o.n()).done; ) {
+        var l = i.value;
+        l >= t.threshold ? (s === null || l > s) && (s = l) : (r === null || l < r) && (r = l);
+      }
+    } catch (d) {
+      o.e(d);
+    } finally {
+      o.f();
+    }
+    s === null && (s = t.threshold), r === null && (r = t.threshold);
+    var c = s - t.threshold + (t.threshold - r);
+    c === 0 && (c = 1);
+    var h = 100 - (t.threshold - r) / c * 100;
+    return [{ offset: h = Math.max(0, Math.min(h, 100)), color: t.colorAboveThreshold, opacity: a.config.fill.opacity }, { offset: 0, color: t.colorBelowThreshold, opacity: a.config.fill.opacity }];
+  } }, { key: "fillPath", value: function(e) {
+    var t, i, a, s = this.w;
+    this.opts = e;
+    var r, o, l, c = this.w.config;
+    this.seriesIndex = this.getSeriesIndex(e);
+    var h = c.plotOptions.line.colors.colorAboveThreshold && c.plotOptions.line.colors.colorBelowThreshold, d = this.getFillColors()[this.seriesIndex];
+    s.globals.seriesColors[this.seriesIndex] !== void 0 && (d = s.globals.seriesColors[this.seriesIndex]), typeof d == "function" && (d = d({ seriesIndex: this.seriesIndex, dataPointIndex: e.dataPointIndex, value: e.value, w: s }));
+    var u, g, p, f = e.fillType ? e.fillType : this.getFillType(this.seriesIndex), x = Array.isArray(c.fill.opacity) ? c.fill.opacity[this.seriesIndex] : c.fill.opacity, b = f === "gradient" || h;
+    e.color && (d = e.color), (t = s.config.series[this.seriesIndex]) !== null && t !== void 0 && (i = t.data) !== null && i !== void 0 && (a = i[e.dataPointIndex]) !== null && a !== void 0 && a.fillColor && (d = (u = s.config.series[this.seriesIndex]) === null || u === void 0 || (g = u.data) === null || g === void 0 || (p = g[e.dataPointIndex]) === null || p === void 0 ? void 0 : p.fillColor), d || (d = "#fff", console.warn("undefined color - ApexCharts"));
+    var m = d;
+    if (d.indexOf("rgb") === -1 ? d.indexOf("#") === -1 ? m = d : d.length < 9 && (m = T.hexToRgba(d, x)) : d.indexOf("rgba") > -1 ? x = T.getOpacityFromRGBA(d) : m = T.hexToRgba(T.rgb2hex(d), x), e.opacity && (x = e.opacity), f === "pattern" && (o = this.handlePatternFill({ fillConfig: e.fillConfig, patternFill: o, fillColor: d, fillOpacity: x, defaultColor: m })), b) {
+      var w = Oe(c.fill.gradient.colorStops) || [], y = c.fill.gradient.type;
+      h && (w[this.seriesIndex] = this.computeColorStops(s.globals.series[this.seriesIndex], c.plotOptions.line.colors), y = "vertical"), l = this.handleGradientFill({ type: y, fillConfig: e.fillConfig, fillColor: d, fillOpacity: x, colorStops: w, i: this.seriesIndex });
+    }
+    if (f === "image") {
+      var v = c.fill.image.src, k = e.patternID ? e.patternID : "", A = "pattern".concat(s.globals.cuid).concat(e.seriesNumber + 1).concat(k);
+      this.patternIDs.indexOf(A) === -1 && (this.clippedImgArea({ opacity: x, image: Array.isArray(v) ? e.seriesNumber < v.length ? v[e.seriesNumber] : v[0] : v, width: e.width ? e.width : void 0, height: e.height ? e.height : void 0, patternUnits: e.patternUnits, patternID: A }), this.patternIDs.push(A)), r = "url(#".concat(A, ")");
+    } else r = b ? l : f === "pattern" ? o : m;
+    return e.solid && (r = m), r;
+  } }, { key: "getFillType", value: function(e) {
+    var t = this.w;
+    return Array.isArray(t.config.fill.type) ? t.config.fill.type[e] : t.config.fill.type;
+  } }, { key: "getFillColors", value: function() {
+    var e = this.w, t = e.config, i = this.opts, a = [];
+    return e.globals.comboCharts ? e.config.series[this.seriesIndex].type === "line" ? Array.isArray(e.globals.stroke.colors) ? a = e.globals.stroke.colors : a.push(e.globals.stroke.colors) : Array.isArray(e.globals.fill.colors) ? a = e.globals.fill.colors : a.push(e.globals.fill.colors) : t.chart.type === "line" ? Array.isArray(e.globals.stroke.colors) ? a = e.globals.stroke.colors : a.push(e.globals.stroke.colors) : Array.isArray(e.globals.fill.colors) ? a = e.globals.fill.colors : a.push(e.globals.fill.colors), i.fillColors !== void 0 && (a = [], Array.isArray(i.fillColors) ? a = i.fillColors.slice() : a.push(i.fillColors)), a;
+  } }, { key: "handlePatternFill", value: function(e) {
+    var t = e.fillConfig, i = e.patternFill, a = e.fillColor, s = e.fillOpacity, r = e.defaultColor, o = this.w.config.fill;
+    t && (o = t);
+    var l = this.opts, c = new F(this.ctx), h = Array.isArray(o.pattern.strokeWidth) ? o.pattern.strokeWidth[this.seriesIndex] : o.pattern.strokeWidth, d = a;
+    return Array.isArray(o.pattern.style) ? i = o.pattern.style[l.seriesNumber] !== void 0 ? c.drawPattern(o.pattern.style[l.seriesNumber], o.pattern.width, o.pattern.height, d, h, s) : r : i = c.drawPattern(o.pattern.style, o.pattern.width, o.pattern.height, d, h, s), i;
+  } }, { key: "handleGradientFill", value: function(e) {
+    var t = e.type, i = e.fillColor, a = e.fillOpacity, s = e.fillConfig, r = e.colorStops, o = e.i, l = this.w.config.fill;
+    s && (l = N(N({}, l), s));
+    var c = this.opts, h = new F(this.ctx), d = new T();
+    t = t || l.gradient.type;
+    var u, g = i, p = l.gradient.opacityFrom === void 0 ? a : Array.isArray(l.gradient.opacityFrom) ? l.gradient.opacityFrom[o] : l.gradient.opacityFrom;
+    g.indexOf("rgba") > -1 && (p = T.getOpacityFromRGBA(g));
+    var f = l.gradient.opacityTo === void 0 ? a : Array.isArray(l.gradient.opacityTo) ? l.gradient.opacityTo[o] : l.gradient.opacityTo;
+    if (l.gradient.gradientToColors === void 0 || l.gradient.gradientToColors.length === 0) u = l.gradient.shade === "dark" ? d.shadeColor(-1 * parseFloat(l.gradient.shadeIntensity), i.indexOf("rgb") > -1 ? T.rgb2hex(i) : i) : d.shadeColor(parseFloat(l.gradient.shadeIntensity), i.indexOf("rgb") > -1 ? T.rgb2hex(i) : i);
+    else if (l.gradient.gradientToColors[c.seriesNumber]) {
+      var x = l.gradient.gradientToColors[c.seriesNumber];
+      u = x, x.indexOf("rgba") > -1 && (f = T.getOpacityFromRGBA(x));
+    } else u = i;
+    if (l.gradient.gradientFrom && (g = l.gradient.gradientFrom), l.gradient.gradientTo && (u = l.gradient.gradientTo), l.gradient.inverseColors) {
+      var b = g;
+      g = u, u = b;
+    }
+    return g.indexOf("rgb") > -1 && (g = T.rgb2hex(g)), u.indexOf("rgb") > -1 && (u = T.rgb2hex(u)), h.drawGradient(t, g, u, p, f, c.size, l.gradient.stops, r, o);
+  } }]), n;
+}(), Xt = function() {
+  function n(e, t) {
+    q(this, n), this.ctx = e, this.w = e.w;
+  }
+  return $(n, [{ key: "setGlobalMarkerSize", value: function() {
+    var e = this.w;
+    if (e.globals.markers.size = Array.isArray(e.config.markers.size) ? e.config.markers.size : [e.config.markers.size], e.globals.markers.size.length > 0) {
+      if (e.globals.markers.size.length < e.globals.series.length + 1) for (var t = 0; t <= e.globals.series.length; t++) e.globals.markers.size[t] === void 0 && e.globals.markers.size.push(e.globals.markers.size[0]);
+    } else e.globals.markers.size = e.config.series.map(function(i) {
+      return e.config.markers.size;
+    });
+  } }, { key: "plotChartMarkers", value: function(e) {
+    var t = e.pointsPos, i = e.seriesIndex, a = e.j, s = e.pSize, r = e.alwaysDrawMarker, o = r !== void 0 && r, l = e.isVirtualPoint, c = l !== void 0 && l, h = this.w, d = i, u = t, g = null, p = new F(this.ctx), f = h.config.markers.discrete && h.config.markers.discrete.length;
+    if (Array.isArray(u.x)) for (var x = 0; x < u.x.length; x++) {
+      var b = void 0, m = a, w = !T.isNumber(u.y[x]);
+      h.globals.markers.largestSize === 0 && h.globals.hasNullValues && h.globals.series[d][a + 1] !== null && !c && (w = !0), a === 1 && x === 0 && (m = 0), a === 1 && x === 1 && (m = 1);
+      var y = "apexcharts-marker";
+      if (h.config.chart.type !== "line" && h.config.chart.type !== "area" || h.globals.comboCharts || h.config.tooltip.intersect || (y += " no-pointer-events"), (Array.isArray(h.config.markers.size) ? h.globals.markers.size[i] > 0 : h.config.markers.size > 0) || o || f) {
+        w || (y += " w".concat(T.randomId()));
+        var v = this.getMarkerConfig({ cssClass: y, seriesIndex: i, dataPointIndex: m });
+        h.config.series[d].data[m] && (h.config.series[d].data[m].fillColor && (v.pointFillColor = h.config.series[d].data[m].fillColor), h.config.series[d].data[m].strokeColor && (v.pointStrokeColor = h.config.series[d].data[m].strokeColor)), s !== void 0 && (v.pSize = s), (u.x[x] < -h.globals.markers.largestSize || u.x[x] > h.globals.gridWidth + h.globals.markers.largestSize || u.y[x] < -h.globals.markers.largestSize || u.y[x] > h.globals.gridHeight + h.globals.markers.largestSize) && (v.pSize = 0), !w && ((h.globals.markers.size[i] > 0 || o || f) && !g && (g = p.group({ class: o || f ? "" : "apexcharts-series-markers" })).attr("clip-path", "url(#gridRectMarkerMask".concat(h.globals.cuid, ")")), (b = p.drawMarker(u.x[x], u.y[x], v)).attr("rel", m), b.attr("j", m), b.attr("index", i), b.node.setAttribute("default-marker-size", v.pSize), new _e(this.ctx).setSelectionFilter(b, i, m), this.addEvents(b), g && g.add(b));
+      } else h.globals.pointsArray[i] === void 0 && (h.globals.pointsArray[i] = []), h.globals.pointsArray[i].push([u.x[x], u.y[x]]);
+    }
+    return g;
+  } }, { key: "getMarkerConfig", value: function(e) {
+    var t = e.cssClass, i = e.seriesIndex, a = e.dataPointIndex, s = a === void 0 ? null : a, r = e.radius, o = r === void 0 ? null : r, l = e.size, c = l === void 0 ? null : l, h = e.strokeWidth, d = h === void 0 ? null : h, u = this.w, g = this.getMarkerStyle(i), p = c === null ? u.globals.markers.size[i] : c, f = u.config.markers;
+    return s !== null && f.discrete.length && f.discrete.map(function(x) {
+      x.seriesIndex === i && x.dataPointIndex === s && (g.pointStrokeColor = x.strokeColor, g.pointFillColor = x.fillColor, p = x.size, g.pointShape = x.shape);
+    }), { pSize: o === null ? p : o, pRadius: o !== null ? o : f.radius, pointStrokeWidth: d !== null ? d : Array.isArray(f.strokeWidth) ? f.strokeWidth[i] : f.strokeWidth, pointStrokeColor: g.pointStrokeColor, pointFillColor: g.pointFillColor, shape: g.pointShape || (Array.isArray(f.shape) ? f.shape[i] : f.shape), class: t, pointStrokeOpacity: Array.isArray(f.strokeOpacity) ? f.strokeOpacity[i] : f.strokeOpacity, pointStrokeDashArray: Array.isArray(f.strokeDashArray) ? f.strokeDashArray[i] : f.strokeDashArray, pointFillOpacity: Array.isArray(f.fillOpacity) ? f.fillOpacity[i] : f.fillOpacity, seriesIndex: i };
+  } }, { key: "addEvents", value: function(e) {
+    var t = this.w, i = new F(this.ctx);
+    e.node.addEventListener("mouseenter", i.pathMouseEnter.bind(this.ctx, e)), e.node.addEventListener("mouseleave", i.pathMouseLeave.bind(this.ctx, e)), e.node.addEventListener("mousedown", i.pathMouseDown.bind(this.ctx, e)), e.node.addEventListener("click", t.config.markers.onClick), e.node.addEventListener("dblclick", t.config.markers.onDblClick), e.node.addEventListener("touchstart", i.pathMouseDown.bind(this.ctx, e), { passive: !0 });
+  } }, { key: "getMarkerStyle", value: function(e) {
+    var t = this.w, i = t.globals.markers.colors, a = t.config.markers.strokeColor || t.config.markers.strokeColors;
+    return { pointStrokeColor: Array.isArray(a) ? a[e] : a, pointFillColor: Array.isArray(i) ? i[e] : i };
+  } }]), n;
+}(), Ln = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w, this.initialAnim = this.w.config.chart.animations.enabled;
+  }
+  return $(n, [{ key: "draw", value: function(e, t, i) {
+    var a = this.w, s = new F(this.ctx), r = i.realIndex, o = i.pointsPos, l = i.zRatio, c = i.elParent, h = s.group({ class: "apexcharts-series-markers apexcharts-series-".concat(a.config.chart.type) });
+    if (h.attr("clip-path", "url(#gridRectMarkerMask".concat(a.globals.cuid, ")")), Array.isArray(o.x)) for (var d = 0; d < o.x.length; d++) {
+      var u = t + 1, g = !0;
+      t === 0 && d === 0 && (u = 0), t === 0 && d === 1 && (u = 1);
+      var p = a.globals.markers.size[r];
+      if (l !== 1 / 0) {
+        var f = a.config.plotOptions.bubble;
+        p = a.globals.seriesZ[r][u], f.zScaling && (p /= l), f.minBubbleRadius && p < f.minBubbleRadius && (p = f.minBubbleRadius), f.maxBubbleRadius && p > f.maxBubbleRadius && (p = f.maxBubbleRadius);
+      }
+      var x = o.x[d], b = o.y[d];
+      if (p = p || 0, b !== null && a.globals.series[r][u] !== void 0 || (g = !1), g) {
+        var m = this.drawPoint(x, b, p, r, u, t);
+        h.add(m);
+      }
+      c.add(h);
+    }
+  } }, { key: "drawPoint", value: function(e, t, i, a, s, r) {
+    var o = this.w, l = a, c = new zt(this.ctx), h = new _e(this.ctx), d = new Ke(this.ctx), u = new Xt(this.ctx), g = new F(this.ctx), p = u.getMarkerConfig({ cssClass: "apexcharts-marker", seriesIndex: l, dataPointIndex: s, radius: o.config.chart.type === "bubble" || o.globals.comboCharts && o.config.series[a] && o.config.series[a].type === "bubble" ? i : null }), f = d.fillPath({ seriesNumber: a, dataPointIndex: s, color: p.pointFillColor, patternUnits: "objectBoundingBox", value: o.globals.series[a][r] }), x = g.drawMarker(e, t, p);
+    if (o.config.series[l].data[s] && o.config.series[l].data[s].fillColor && (f = o.config.series[l].data[s].fillColor), x.attr({ fill: f }), o.config.chart.dropShadow.enabled) {
+      var b = o.config.chart.dropShadow;
+      h.dropShadow(x, b, a);
+    }
+    if (!this.initialAnim || o.globals.dataChanged || o.globals.resized) o.globals.animationEnded = !0;
+    else {
+      var m = o.config.chart.animations.speed;
+      c.animateMarker(x, m, o.globals.easing, function() {
+        window.setTimeout(function() {
+          c.animationCompleted(x);
+        }, 100);
+      });
+    }
+    return x.attr({ rel: s, j: s, index: a, "default-marker-size": p.pSize }), h.setSelectionFilter(x, a, s), u.addEvents(x), x.node.classList.add("apexcharts-marker"), x;
+  } }, { key: "centerTextInBubble", value: function(e) {
+    var t = this.w;
+    return { y: e += parseInt(t.config.dataLabels.style.fontSize, 10) / 4 };
+  } }]), n;
+}(), It = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w;
+  }
+  return $(n, [{ key: "dataLabelsCorrection", value: function(e, t, i, a, s, r, o) {
+    var l = this.w, c = !1, h = new F(this.ctx).getTextRects(i, o), d = h.width, u = h.height;
+    t < 0 && (t = 0), t > l.globals.gridHeight + u && (t = l.globals.gridHeight + u / 2), l.globals.dataLabelsRects[a] === void 0 && (l.globals.dataLabelsRects[a] = []), l.globals.dataLabelsRects[a].push({ x: e, y: t, width: d, height: u });
+    var g = l.globals.dataLabelsRects[a].length - 2, p = l.globals.lastDrawnDataLabelsIndexes[a] !== void 0 ? l.globals.lastDrawnDataLabelsIndexes[a][l.globals.lastDrawnDataLabelsIndexes[a].length - 1] : 0;
+    if (l.globals.dataLabelsRects[a][g] !== void 0) {
+      var f = l.globals.dataLabelsRects[a][p];
+      (e > f.x + f.width || t > f.y + f.height || t + u < f.y || e + d < f.x) && (c = !0);
+    }
+    return (s === 0 || r) && (c = !0), { x: e, y: t, textRects: h, drawnextLabel: c };
+  } }, { key: "drawDataLabel", value: function(e) {
+    var t = this, i = e.type, a = e.pos, s = e.i, r = e.j, o = e.isRangeStart, l = e.strokeWidth, c = l === void 0 ? 2 : l, h = this.w, d = new F(this.ctx), u = h.config.dataLabels, g = 0, p = 0, f = r, x = null;
+    if (h.globals.collapsedSeriesIndices.indexOf(s) !== -1 || !u.enabled || !Array.isArray(a.x)) return x;
+    x = d.group({ class: "apexcharts-data-labels" });
+    for (var b = 0; b < a.x.length; b++) if (g = a.x[b] + u.offsetX, p = a.y[b] + u.offsetY + c, !isNaN(g)) {
+      r === 1 && b === 0 && (f = 0), r === 1 && b === 1 && (f = 1);
+      var m = h.globals.series[s][f];
+      i === "rangeArea" && (m = o ? h.globals.seriesRangeStart[s][f] : h.globals.seriesRangeEnd[s][f]);
+      var w = "", y = function(k) {
+        return h.config.dataLabels.formatter(k, { ctx: t.ctx, seriesIndex: s, dataPointIndex: f, w: h });
+      };
+      h.config.chart.type === "bubble" ? (w = y(m = h.globals.seriesZ[s][f]), p = a.y[b], p = new Ln(this.ctx).centerTextInBubble(p, s, f).y) : m !== void 0 && (w = y(m));
+      var v = h.config.dataLabels.textAnchor;
+      h.globals.isSlopeChart && (v = f === 0 ? "end" : f === h.config.series[s].data.length - 1 ? "start" : "middle"), this.plotDataLabelsText({ x: g, y: p, text: w, i: s, j: f, parent: x, offsetCorrection: !0, dataLabelsConfig: h.config.dataLabels, textAnchor: v });
+    }
+    return x;
+  } }, { key: "plotDataLabelsText", value: function(e) {
+    var t = this.w, i = new F(this.ctx), a = e.x, s = e.y, r = e.i, o = e.j, l = e.text, c = e.textAnchor, h = e.fontSize, d = e.parent, u = e.dataLabelsConfig, g = e.color, p = e.alwaysDrawDataLabel, f = e.offsetCorrection, x = e.className, b = null;
+    if (Array.isArray(t.config.dataLabels.enabledOnSeries) && t.config.dataLabels.enabledOnSeries.indexOf(r) < 0) return b;
+    var m = { x: a, y: s, drawnextLabel: !0, textRects: null };
+    f && (m = this.dataLabelsCorrection(a, s, l, r, o, p, parseInt(u.style.fontSize, 10))), t.globals.zoomed || (a = m.x, s = m.y), m.textRects && (a < -20 - m.textRects.width || a > t.globals.gridWidth + m.textRects.width + 30) && (l = "");
+    var w = t.globals.dataLabels.style.colors[r];
+    ((t.config.chart.type === "bar" || t.config.chart.type === "rangeBar") && t.config.plotOptions.bar.distributed || t.config.dataLabels.distributed) && (w = t.globals.dataLabels.style.colors[o]), typeof w == "function" && (w = w({ series: t.globals.series, seriesIndex: r, dataPointIndex: o, w: t })), g && (w = g);
+    var y = u.offsetX, v = u.offsetY;
+    if (t.config.chart.type !== "bar" && t.config.chart.type !== "rangeBar" || (y = 0, v = 0), t.globals.isSlopeChart && (o !== 0 && (y = -2 * u.offsetX + 5), o !== 0 && o !== t.config.series[r].data.length - 1 && (y = 0)), m.drawnextLabel) {
+      if ((b = i.drawText({ width: 100, height: parseInt(u.style.fontSize, 10), x: a + y, y: s + v, foreColor: w, textAnchor: c || u.textAnchor, text: l, fontSize: h || u.style.fontSize, fontFamily: u.style.fontFamily, fontWeight: u.style.fontWeight || "normal" })).attr({ class: x || "apexcharts-datalabel", cx: a, cy: s }), u.dropShadow.enabled) {
+        var k = u.dropShadow;
+        new _e(this.ctx).dropShadow(b, k);
+      }
+      d.add(b), t.globals.lastDrawnDataLabelsIndexes[r] === void 0 && (t.globals.lastDrawnDataLabelsIndexes[r] = []), t.globals.lastDrawnDataLabelsIndexes[r].push(o);
+    }
+    return b;
+  } }, { key: "addBackgroundToDataLabel", value: function(e, t) {
+    var i = this.w, a = i.config.dataLabels.background, s = a.padding, r = a.padding / 2, o = t.width, l = t.height, c = new F(this.ctx).drawRect(t.x - s, t.y - r / 2, o + 2 * s, l + r, a.borderRadius, i.config.chart.background !== "transparent" && i.config.chart.background ? i.config.chart.background : "#fff", a.opacity, a.borderWidth, a.borderColor);
+    return a.dropShadow.enabled && new _e(this.ctx).dropShadow(c, a.dropShadow), c;
+  } }, { key: "dataLabelsBackground", value: function() {
+    var e = this.w;
+    if (e.config.chart.type !== "bubble") for (var t = e.globals.dom.baseEl.querySelectorAll(".apexcharts-datalabels text"), i = 0; i < t.length; i++) {
+      var a = t[i], s = a.getBBox(), r = null;
+      if (s.width && s.height && (r = this.addBackgroundToDataLabel(a, s)), r) {
+        a.parentNode.insertBefore(r.node, a);
+        var o = e.config.dataLabels.background.backgroundColor || a.getAttribute("fill");
+        e.config.chart.animations.enabled && !e.globals.resized && !e.globals.dataChanged ? r.animate().attr({ fill: o }) : r.attr({ fill: o }), a.setAttribute("fill", e.config.dataLabels.background.foreColor);
+      }
+    }
+  } }, { key: "bringForward", value: function() {
+    for (var e = this.w, t = e.globals.dom.baseEl.querySelectorAll(".apexcharts-datalabels"), i = e.globals.dom.baseEl.querySelector(".apexcharts-plot-series:last-child"), a = 0; a < t.length; a++) i && i.insertBefore(t[a], i.nextSibling);
+  } }]), n;
+}(), $e = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w, this.legendInactiveClass = "legend-mouseover-inactive";
+  }
+  return $(n, [{ key: "getAllSeriesEls", value: function() {
+    return this.w.globals.dom.baseEl.getElementsByClassName("apexcharts-series");
+  } }, { key: "getSeriesByName", value: function(e) {
+    return this.w.globals.dom.baseEl.querySelector(".apexcharts-inner .apexcharts-series[seriesName='".concat(T.escapeString(e), "']"));
+  } }, { key: "isSeriesHidden", value: function(e) {
+    var t = this.getSeriesByName(e), i = parseInt(t.getAttribute("data:realIndex"), 10);
+    return { isHidden: t.classList.contains("apexcharts-series-collapsed"), realIndex: i };
+  } }, { key: "addCollapsedClassToSeries", value: function(e, t) {
+    var i = this.w;
+    function a(s) {
+      for (var r = 0; r < s.length; r++) s[r].index === t && e.node.classList.add("apexcharts-series-collapsed");
+    }
+    a(i.globals.collapsedSeries), a(i.globals.ancillaryCollapsedSeries);
+  } }, { key: "toggleSeries", value: function(e) {
+    var t = this.isSeriesHidden(e);
+    return this.ctx.legend.legendHelpers.toggleDataSeries(t.realIndex, t.isHidden), t.isHidden;
+  } }, { key: "showSeries", value: function(e) {
+    var t = this.isSeriesHidden(e);
+    t.isHidden && this.ctx.legend.legendHelpers.toggleDataSeries(t.realIndex, !0);
+  } }, { key: "hideSeries", value: function(e) {
+    var t = this.isSeriesHidden(e);
+    t.isHidden || this.ctx.legend.legendHelpers.toggleDataSeries(t.realIndex, !1);
+  } }, { key: "resetSeries", value: function() {
+    var e = !(arguments.length > 0 && arguments[0] !== void 0) || arguments[0], t = !(arguments.length > 1 && arguments[1] !== void 0) || arguments[1], i = !(arguments.length > 2 && arguments[2] !== void 0) || arguments[2], a = this.w, s = T.clone(a.globals.initialSeries);
+    a.globals.previousPaths = [], i ? (a.globals.collapsedSeries = [], a.globals.ancillaryCollapsedSeries = [], a.globals.collapsedSeriesIndices = [], a.globals.ancillaryCollapsedSeriesIndices = []) : s = this.emptyCollapsedSeries(s), a.config.series = s, e && (t && (a.globals.zoomed = !1, this.ctx.updateHelpers.revertDefaultAxisMinMax()), this.ctx.updateHelpers._updateSeries(s, a.config.chart.animations.dynamicAnimation.enabled));
+  } }, { key: "emptyCollapsedSeries", value: function(e) {
+    for (var t = this.w, i = 0; i < e.length; i++) t.globals.collapsedSeriesIndices.indexOf(i) > -1 && (e[i].data = []);
+    return e;
+  } }, { key: "highlightSeries", value: function(e) {
+    var t = this.w, i = this.getSeriesByName(e), a = parseInt(i == null ? void 0 : i.getAttribute("data:realIndex"), 10), s = t.globals.dom.baseEl.querySelectorAll(".apexcharts-series, .apexcharts-datalabels, .apexcharts-yaxis"), r = null, o = null, l = null;
+    if (t.globals.axisCharts || t.config.chart.type === "radialBar") if (t.globals.axisCharts) {
+      r = t.globals.dom.baseEl.querySelector(".apexcharts-series[data\\:realIndex='".concat(a, "']")), o = t.globals.dom.baseEl.querySelector(".apexcharts-datalabels[data\\:realIndex='".concat(a, "']"));
+      var c = t.globals.seriesYAxisReverseMap[a];
+      l = t.globals.dom.baseEl.querySelector(".apexcharts-yaxis[rel='".concat(c, "']"));
+    } else r = t.globals.dom.baseEl.querySelector(".apexcharts-series[rel='".concat(a + 1, "']"));
+    else r = t.globals.dom.baseEl.querySelector(".apexcharts-series[rel='".concat(a + 1, "'] path"));
+    for (var h = 0; h < s.length; h++) s[h].classList.add(this.legendInactiveClass);
+    if (r) t.globals.axisCharts || r.parentNode.classList.remove(this.legendInactiveClass), r.classList.remove(this.legendInactiveClass), o !== null && o.classList.remove(this.legendInactiveClass), l !== null && l.classList.remove(this.legendInactiveClass);
+    else for (var d = 0; d < s.length; d++) s[d].classList.remove(this.legendInactiveClass);
+  } }, { key: "toggleSeriesOnHover", value: function(e, t) {
+    var i = this.w;
+    t || (t = e.target);
+    var a = i.globals.dom.baseEl.querySelectorAll(".apexcharts-series, .apexcharts-datalabels, .apexcharts-yaxis");
+    if (e.type === "mousemove") {
+      var s = parseInt(t.getAttribute("rel"), 10) - 1;
+      this.highlightSeries(i.globals.seriesNames[s]);
+    } else if (e.type === "mouseout") for (var r = 0; r < a.length; r++) a[r].classList.remove(this.legendInactiveClass);
+  } }, { key: "highlightRangeInSeries", value: function(e, t) {
+    var i = this, a = this.w, s = a.globals.dom.baseEl.getElementsByClassName("apexcharts-heatmap-rect"), r = function(c) {
+      for (var h = 0; h < s.length; h++) s[h].classList[c](i.legendInactiveClass);
+    };
+    if (e.type === "mousemove") {
+      var o = parseInt(t.getAttribute("rel"), 10) - 1;
+      r("add");
+      var l = a.config.plotOptions.heatmap.colorScale.ranges;
+      (function(c, h) {
+        for (var d = 0; d < s.length; d++) {
+          var u = Number(s[d].getAttribute("val"));
+          u >= c.from && (u < c.to || c.to === h && u === h) && s[d].classList.remove(i.legendInactiveClass);
+        }
+      })(l[o], l.reduce(function(c, h) {
+        return Math.max(c, h.to);
+      }, 0));
+    } else e.type === "mouseout" && r("remove");
+  } }, { key: "getActiveConfigSeriesIndex", value: function() {
+    var e = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : "asc", t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : [], i = this.w, a = 0;
+    if (i.config.series.length > 1) {
+      for (var s = i.config.series.map(function(o, l) {
+        return o.data && o.data.length > 0 && i.globals.collapsedSeriesIndices.indexOf(l) === -1 && (!i.globals.comboCharts || t.length === 0 || t.length && t.indexOf(i.config.series[l].type) > -1) ? l : -1;
+      }), r = e === "asc" ? 0 : s.length - 1; e === "asc" ? r < s.length : r >= 0; e === "asc" ? r++ : r--) if (s[r] !== -1) {
+        a = s[r];
+        break;
+      }
+    }
+    return a;
+  } }, { key: "getBarSeriesIndices", value: function() {
+    return this.w.globals.comboCharts ? this.w.config.series.map(function(e, t) {
+      return e.type === "bar" || e.type === "column" ? t : -1;
+    }).filter(function(e) {
+      return e !== -1;
+    }) : this.w.config.series.map(function(e, t) {
+      return t;
+    });
+  } }, { key: "getPreviousPaths", value: function() {
+    var e = this.w;
+    function t(r, o, l) {
+      for (var c = r[o].childNodes, h = { type: l, paths: [], realIndex: r[o].getAttribute("data:realIndex") }, d = 0; d < c.length; d++) if (c[d].hasAttribute("pathTo")) {
+        var u = c[d].getAttribute("pathTo");
+        h.paths.push({ d: u });
+      }
+      e.globals.previousPaths.push(h);
+    }
+    e.globals.previousPaths = [], ["line", "area", "bar", "rangebar", "rangeArea", "candlestick", "radar"].forEach(function(r) {
+      for (var o, l = (o = r, e.globals.dom.baseEl.querySelectorAll(".apexcharts-".concat(o, "-series .apexcharts-series"))), c = 0; c < l.length; c++) t(l, c, r);
+    });
+    var i = e.globals.dom.baseEl.querySelectorAll(".apexcharts-".concat(e.config.chart.type, " .apexcharts-series"));
+    if (i.length > 0) for (var a = function(r) {
+      for (var o = e.globals.dom.baseEl.querySelectorAll(".apexcharts-".concat(e.config.chart.type, " .apexcharts-series[data\\:realIndex='").concat(r, "'] rect")), l = [], c = function(d) {
+        var u = function(p) {
+          return o[d].getAttribute(p);
+        }, g = { x: parseFloat(u("x")), y: parseFloat(u("y")), width: parseFloat(u("width")), height: parseFloat(u("height")) };
+        l.push({ rect: g, color: o[d].getAttribute("color") });
+      }, h = 0; h < o.length; h++) c(h);
+      e.globals.previousPaths.push(l);
+    }, s = 0; s < i.length; s++) a(s);
+    e.globals.axisCharts || (e.globals.previousPaths = e.globals.series);
+  } }, { key: "clearPreviousPaths", value: function() {
+    var e = this.w;
+    e.globals.previousPaths = [], e.globals.allSeriesCollapsed = !1;
+  } }, { key: "handleNoData", value: function() {
+    var e = this.w, t = e.config.noData, i = new F(this.ctx), a = e.globals.svgWidth / 2, s = e.globals.svgHeight / 2, r = "middle";
+    if (e.globals.noData = !0, e.globals.animationEnded = !0, t.align === "left" ? (a = 10, r = "start") : t.align === "right" && (a = e.globals.svgWidth - 10, r = "end"), t.verticalAlign === "top" ? s = 50 : t.verticalAlign === "bottom" && (s = e.globals.svgHeight - 50), a += t.offsetX, s = s + parseInt(t.style.fontSize, 10) + 2 + t.offsetY, t.text !== void 0 && t.text !== "") {
+      var o = i.drawText({ x: a, y: s, text: t.text, textAnchor: r, fontSize: t.style.fontSize, fontFamily: t.style.fontFamily, foreColor: t.style.color, opacity: 1, class: "apexcharts-text-nodata" });
+      e.globals.dom.Paper.add(o);
+    }
+  } }, { key: "setNullSeriesToZeroValues", value: function(e) {
+    for (var t = this.w, i = 0; i < e.length; i++) if (e[i].length === 0) for (var a = 0; a < e[t.globals.maxValsInArrayIndex].length; a++) e[i].push(0);
+    return e;
+  } }, { key: "hasAllSeriesEqualX", value: function() {
+    for (var e = !0, t = this.w, i = this.filteredSeriesX(), a = 0; a < i.length - 1; a++) if (i[a][0] !== i[a + 1][0]) {
+      e = !1;
+      break;
+    }
+    return t.globals.allSeriesHasEqualX = e, e;
+  } }, { key: "filteredSeriesX", value: function() {
+    var e = this.w.globals.seriesX.map(function(t) {
+      return t.length > 0 ? t : [];
+    });
+    return e;
+  } }]), n;
+}(), ls = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w, this.twoDSeries = [], this.threeDSeries = [], this.twoDSeriesX = [], this.seriesGoals = [], this.coreUtils = new Pe(this.ctx);
+  }
+  return $(n, [{ key: "isMultiFormat", value: function() {
+    return this.isFormatXY() || this.isFormat2DArray();
+  } }, { key: "isFormatXY", value: function() {
+    var e = this.w.config.series.slice(), t = new $e(this.ctx);
+    if (this.activeSeriesIndex = t.getActiveConfigSeriesIndex(), e[this.activeSeriesIndex].data !== void 0 && e[this.activeSeriesIndex].data.length > 0 && e[this.activeSeriesIndex].data[0] !== null && e[this.activeSeriesIndex].data[0].x !== void 0 && e[this.activeSeriesIndex].data[0] !== null) return !0;
+  } }, { key: "isFormat2DArray", value: function() {
+    var e = this.w.config.series.slice(), t = new $e(this.ctx);
+    if (this.activeSeriesIndex = t.getActiveConfigSeriesIndex(), e[this.activeSeriesIndex].data !== void 0 && e[this.activeSeriesIndex].data.length > 0 && e[this.activeSeriesIndex].data[0] !== void 0 && e[this.activeSeriesIndex].data[0] !== null && e[this.activeSeriesIndex].data[0].constructor === Array) return !0;
+  } }, { key: "handleFormat2DArray", value: function(e, t) {
+    for (var i = this.w.config, a = this.w.globals, s = i.chart.type === "boxPlot" || i.series[t].type === "boxPlot", r = 0; r < e[t].data.length; r++) if (e[t].data[r][1] !== void 0 && (Array.isArray(e[t].data[r][1]) && e[t].data[r][1].length === 4 && !s ? this.twoDSeries.push(T.parseNumber(e[t].data[r][1][3])) : e[t].data[r].length >= 5 ? this.twoDSeries.push(T.parseNumber(e[t].data[r][4])) : this.twoDSeries.push(T.parseNumber(e[t].data[r][1])), a.dataFormatXNumeric = !0), i.xaxis.type === "datetime") {
+      var o = new Date(e[t].data[r][0]);
+      o = new Date(o).getTime(), this.twoDSeriesX.push(o);
+    } else this.twoDSeriesX.push(e[t].data[r][0]);
+    for (var l = 0; l < e[t].data.length; l++) e[t].data[l][2] !== void 0 && (this.threeDSeries.push(e[t].data[l][2]), a.isDataXYZ = !0);
+  } }, { key: "handleFormatXY", value: function(e, t) {
+    var i = this.w.config, a = this.w.globals, s = new ze(this.ctx), r = t;
+    a.collapsedSeriesIndices.indexOf(t) > -1 && (r = this.activeSeriesIndex);
+    for (var o = 0; o < e[t].data.length; o++) e[t].data[o].y !== void 0 && (Array.isArray(e[t].data[o].y) ? this.twoDSeries.push(T.parseNumber(e[t].data[o].y[e[t].data[o].y.length - 1])) : this.twoDSeries.push(T.parseNumber(e[t].data[o].y))), e[t].data[o].goals !== void 0 && Array.isArray(e[t].data[o].goals) ? (this.seriesGoals[t] === void 0 && (this.seriesGoals[t] = []), this.seriesGoals[t].push(e[t].data[o].goals)) : (this.seriesGoals[t] === void 0 && (this.seriesGoals[t] = []), this.seriesGoals[t].push(null));
+    for (var l = 0; l < e[r].data.length; l++) {
+      var c = typeof e[r].data[l].x == "string", h = Array.isArray(e[r].data[l].x), d = !h && !!s.isValidDate(e[r].data[l].x);
+      if (c || d) if (c || i.xaxis.convertedCatToNumeric) {
+        var u = a.isBarHorizontal && a.isRangeData;
+        i.xaxis.type !== "datetime" || u ? (this.fallbackToCategory = !0, this.twoDSeriesX.push(e[r].data[l].x), isNaN(e[r].data[l].x) || this.w.config.xaxis.type === "category" || typeof e[r].data[l].x == "string" || (a.isXNumeric = !0)) : this.twoDSeriesX.push(s.parseDate(e[r].data[l].x));
+      } else i.xaxis.type === "datetime" ? this.twoDSeriesX.push(s.parseDate(e[r].data[l].x.toString())) : (a.dataFormatXNumeric = !0, a.isXNumeric = !0, this.twoDSeriesX.push(parseFloat(e[r].data[l].x)));
+      else h ? (this.fallbackToCategory = !0, this.twoDSeriesX.push(e[r].data[l].x)) : (a.isXNumeric = !0, a.dataFormatXNumeric = !0, this.twoDSeriesX.push(e[r].data[l].x));
+    }
+    if (e[t].data[0] && e[t].data[0].z !== void 0) {
+      for (var g = 0; g < e[t].data.length; g++) this.threeDSeries.push(e[t].data[g].z);
+      a.isDataXYZ = !0;
+    }
+  } }, { key: "handleRangeData", value: function(e, t) {
+    var i = this.w.globals, a = {};
+    return this.isFormat2DArray() ? a = this.handleRangeDataFormat("array", e, t) : this.isFormatXY() && (a = this.handleRangeDataFormat("xy", e, t)), i.seriesRangeStart[t] = a.start === void 0 ? [] : a.start, i.seriesRangeEnd[t] = a.end === void 0 ? [] : a.end, i.seriesRange[t] = a.rangeUniques, i.seriesRange.forEach(function(s, r) {
+      s && s.forEach(function(o, l) {
+        o.y.forEach(function(c, h) {
+          for (var d = 0; d < o.y.length; d++) if (h !== d) {
+            var u = c.y1, g = c.y2, p = o.y[d].y1;
+            u <= o.y[d].y2 && p <= g && (o.overlaps.indexOf(c.rangeName) < 0 && o.overlaps.push(c.rangeName), o.overlaps.indexOf(o.y[d].rangeName) < 0 && o.overlaps.push(o.y[d].rangeName));
+          }
+        });
+      });
+    }), a;
+  } }, { key: "handleCandleStickBoxData", value: function(e, t) {
+    var i = this.w.globals, a = {};
+    return this.isFormat2DArray() ? a = this.handleCandleStickBoxDataFormat("array", e, t) : this.isFormatXY() && (a = this.handleCandleStickBoxDataFormat("xy", e, t)), i.seriesCandleO[t] = a.o, i.seriesCandleH[t] = a.h, i.seriesCandleM[t] = a.m, i.seriesCandleL[t] = a.l, i.seriesCandleC[t] = a.c, a;
+  } }, { key: "handleRangeDataFormat", value: function(e, t, i) {
+    var a = [], s = [], r = t[i].data.filter(function(h, d, u) {
+      return d === u.findIndex(function(g) {
+        return g.x === h.x;
+      });
+    }).map(function(h, d) {
+      return { x: h.x, overlaps: [], y: [] };
+    });
+    if (e === "array") for (var o = 0; o < t[i].data.length; o++) Array.isArray(t[i].data[o]) ? (a.push(t[i].data[o][1][0]), s.push(t[i].data[o][1][1])) : (a.push(t[i].data[o]), s.push(t[i].data[o]));
+    else if (e === "xy") for (var l = function(h) {
+      var d = Array.isArray(t[i].data[h].y), u = T.randomId(), g = t[i].data[h].x, p = { y1: d ? t[i].data[h].y[0] : t[i].data[h].y, y2: d ? t[i].data[h].y[1] : t[i].data[h].y, rangeName: u };
+      t[i].data[h].rangeName = u;
+      var f = r.findIndex(function(x) {
+        return x.x === g;
+      });
+      r[f].y.push(p), a.push(p.y1), s.push(p.y2);
+    }, c = 0; c < t[i].data.length; c++) l(c);
+    return { start: a, end: s, rangeUniques: r };
+  } }, { key: "handleCandleStickBoxDataFormat", value: function(e, t, i) {
+    var a = this.w, s = a.config.chart.type === "boxPlot" || a.config.series[i].type === "boxPlot", r = [], o = [], l = [], c = [], h = [];
+    if (e === "array") if (s && t[i].data[0].length === 6 || !s && t[i].data[0].length === 5) for (var d = 0; d < t[i].data.length; d++) r.push(t[i].data[d][1]), o.push(t[i].data[d][2]), s ? (l.push(t[i].data[d][3]), c.push(t[i].data[d][4]), h.push(t[i].data[d][5])) : (c.push(t[i].data[d][3]), h.push(t[i].data[d][4]));
+    else for (var u = 0; u < t[i].data.length; u++) Array.isArray(t[i].data[u][1]) && (r.push(t[i].data[u][1][0]), o.push(t[i].data[u][1][1]), s ? (l.push(t[i].data[u][1][2]), c.push(t[i].data[u][1][3]), h.push(t[i].data[u][1][4])) : (c.push(t[i].data[u][1][2]), h.push(t[i].data[u][1][3])));
+    else if (e === "xy") for (var g = 0; g < t[i].data.length; g++) Array.isArray(t[i].data[g].y) && (r.push(t[i].data[g].y[0]), o.push(t[i].data[g].y[1]), s ? (l.push(t[i].data[g].y[2]), c.push(t[i].data[g].y[3]), h.push(t[i].data[g].y[4])) : (c.push(t[i].data[g].y[2]), h.push(t[i].data[g].y[3])));
+    return { o: r, h: o, m: l, l: c, c: h };
+  } }, { key: "parseDataAxisCharts", value: function(e) {
+    var t = this, i = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : this.ctx, a = this.w.config, s = this.w.globals, r = new ze(i), o = a.labels.length > 0 ? a.labels.slice() : a.xaxis.categories.slice();
+    s.isRangeBar = a.chart.type === "rangeBar" && s.isBarHorizontal, s.hasXaxisGroups = a.xaxis.type === "category" && a.xaxis.group.groups.length > 0, s.hasXaxisGroups && (s.groups = a.xaxis.group.groups), e.forEach(function(g, p) {
+      g.name !== void 0 ? s.seriesNames.push(g.name) : s.seriesNames.push("series-" + parseInt(p + 1, 10));
+    }), this.coreUtils.setSeriesYAxisMappings();
+    var l = [], c = Oe(new Set(a.series.map(function(g) {
+      return g.group;
+    })));
+    a.series.forEach(function(g, p) {
+      var f = c.indexOf(g.group);
+      l[f] || (l[f] = []), l[f].push(s.seriesNames[p]);
+    }), s.seriesGroups = l;
+    for (var h = function() {
+      for (var g = 0; g < o.length; g++) if (typeof o[g] == "string") {
+        if (!r.isValidDate(o[g])) throw new Error("You have provided invalid Date format. Please provide a valid JavaScript Date");
+        t.twoDSeriesX.push(r.parseDate(o[g]));
+      } else t.twoDSeriesX.push(o[g]);
+    }, d = 0; d < e.length; d++) {
+      if (this.twoDSeries = [], this.twoDSeriesX = [], this.threeDSeries = [], e[d].data === void 0) return void console.error("It is a possibility that you may have not included 'data' property in series.");
+      if (a.chart.type !== "rangeBar" && a.chart.type !== "rangeArea" && e[d].type !== "rangeBar" && e[d].type !== "rangeArea" || (s.isRangeData = !0, this.handleRangeData(e, d)), this.isMultiFormat()) this.isFormat2DArray() ? this.handleFormat2DArray(e, d) : this.isFormatXY() && this.handleFormatXY(e, d), a.chart.type !== "candlestick" && e[d].type !== "candlestick" && a.chart.type !== "boxPlot" && e[d].type !== "boxPlot" || this.handleCandleStickBoxData(e, d), s.series.push(this.twoDSeries), s.labels.push(this.twoDSeriesX), s.seriesX.push(this.twoDSeriesX), s.seriesGoals = this.seriesGoals, d !== this.activeSeriesIndex || this.fallbackToCategory || (s.isXNumeric = !0);
+      else {
+        a.xaxis.type === "datetime" ? (s.isXNumeric = !0, h(), s.seriesX.push(this.twoDSeriesX)) : a.xaxis.type === "numeric" && (s.isXNumeric = !0, o.length > 0 && (this.twoDSeriesX = o, s.seriesX.push(this.twoDSeriesX))), s.labels.push(this.twoDSeriesX);
+        var u = e[d].data.map(function(g) {
+          return T.parseNumber(g);
+        });
+        s.series.push(u);
+      }
+      s.seriesZ.push(this.threeDSeries), e[d].color !== void 0 ? s.seriesColors.push(e[d].color) : s.seriesColors.push(void 0);
+    }
+    return this.w;
+  } }, { key: "parseDataNonAxisCharts", value: function(e) {
+    var t = this.w.globals, i = this.w.config;
+    t.series = e.slice(), t.seriesNames = i.labels.slice();
+    for (var a = 0; a < t.series.length; a++) t.seriesNames[a] === void 0 && t.seriesNames.push("series-" + (a + 1));
+    return this.w;
+  } }, { key: "handleExternalLabelsData", value: function(e) {
+    var t = this.w.config, i = this.w.globals;
+    t.xaxis.categories.length > 0 ? i.labels = t.xaxis.categories : t.labels.length > 0 ? i.labels = t.labels.slice() : this.fallbackToCategory ? (i.labels = i.labels[0], i.seriesRange.length && (i.seriesRange.map(function(a) {
+      a.forEach(function(s) {
+        i.labels.indexOf(s.x) < 0 && s.x && i.labels.push(s.x);
+      });
+    }), i.labels = Array.from(new Set(i.labels.map(JSON.stringify)), JSON.parse)), t.xaxis.convertedCatToNumeric && (new ai(t).convertCatToNumericXaxis(t, this.ctx, i.seriesX[0]), this._generateExternalLabels(e))) : this._generateExternalLabels(e);
+  } }, { key: "_generateExternalLabels", value: function(e) {
+    var t = this.w.globals, i = this.w.config, a = [];
+    if (t.axisCharts) {
+      if (t.series.length > 0) if (this.isFormatXY()) for (var s = i.series.map(function(d, u) {
+        return d.data.filter(function(g, p, f) {
+          return f.findIndex(function(x) {
+            return x.x === g.x;
+          }) === p;
+        });
+      }), r = s.reduce(function(d, u, g, p) {
+        return p[d].length > u.length ? d : g;
+      }, 0), o = 0; o < s[r].length; o++) a.push(o + 1);
+      else for (var l = 0; l < t.series[t.maxValsInArrayIndex].length; l++) a.push(l + 1);
+      t.seriesX = [];
+      for (var c = 0; c < e.length; c++) t.seriesX.push(a);
+      this.w.globals.isBarHorizontal || (t.isXNumeric = !0);
+    }
+    if (a.length === 0) {
+      a = t.axisCharts ? [] : t.series.map(function(d, u) {
+        return u + 1;
+      });
+      for (var h = 0; h < e.length; h++) t.seriesX.push(a);
+    }
+    t.labels = a, i.xaxis.convertedCatToNumeric && (t.categoryLabels = a.map(function(d) {
+      return i.xaxis.labels.formatter(d);
+    })), t.noLabelsProvided = !0;
+  } }, { key: "parseData", value: function(e) {
+    var t = this.w, i = t.config, a = t.globals;
+    if (this.excludeCollapsedSeriesInYAxis(), this.fallbackToCategory = !1, this.ctx.core.resetGlobals(), this.ctx.core.isMultipleY(), a.axisCharts ? (this.parseDataAxisCharts(e), this.coreUtils.getLargestSeries()) : this.parseDataNonAxisCharts(e), i.chart.stacked) {
+      var s = new $e(this.ctx);
+      a.series = s.setNullSeriesToZeroValues(a.series);
+    }
+    this.coreUtils.getSeriesTotals(), a.axisCharts && (a.stackedSeriesTotals = this.coreUtils.getStackedSeriesTotals(), a.stackedSeriesTotalsByGroups = this.coreUtils.getStackedSeriesTotalsByGroups()), this.coreUtils.getPercentSeries(), a.dataFormatXNumeric || a.isXNumeric && (i.xaxis.type !== "numeric" || i.labels.length !== 0 || i.xaxis.categories.length !== 0) || this.handleExternalLabelsData(e);
+    for (var r = this.coreUtils.getCategoryLabels(a.labels), o = 0; o < r.length; o++) if (Array.isArray(r[o])) {
+      a.isMultiLineX = !0;
+      break;
+    }
+  } }, { key: "excludeCollapsedSeriesInYAxis", value: function() {
+    var e = this.w, t = [];
+    e.globals.seriesYAxisMap.forEach(function(i, a) {
+      var s = 0;
+      i.forEach(function(r) {
+        e.globals.collapsedSeriesIndices.indexOf(r) !== -1 && s++;
+      }), s > 0 && s == i.length && t.push(a);
+    }), e.globals.ignoreYAxisIndexes = t.map(function(i) {
+      return i;
+    });
+  } }]), n;
+}(), Zt = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w;
+  }
+  return $(n, [{ key: "svgStringToNode", value: function(e) {
+    return new DOMParser().parseFromString(e, "image/svg+xml").documentElement;
+  } }, { key: "scaleSvgNode", value: function(e, t) {
+    var i = parseFloat(e.getAttributeNS(null, "width")), a = parseFloat(e.getAttributeNS(null, "height"));
+    e.setAttributeNS(null, "width", i * t), e.setAttributeNS(null, "height", a * t), e.setAttributeNS(null, "viewBox", "0 0 " + i + " " + a);
+  } }, { key: "getSvgString", value: function(e) {
+    var t = this;
+    return new Promise(function(i) {
+      var a = t.w, s = e || a.config.chart.toolbar.export.scale || a.config.chart.toolbar.export.width / a.globals.svgWidth;
+      s || (s = 1);
+      var r = a.globals.svgWidth * s, o = a.globals.svgHeight * s, l = a.globals.dom.elWrap.cloneNode(!0);
+      l.style.width = r + "px", l.style.height = o + "px";
+      var c = new XMLSerializer().serializeToString(l), h = `
+        <svg xmlns="http://www.w3.org/2000/svg"
+          version="1.1"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          class="apexcharts-svg"
+          xmlns:data="ApexChartsNS"
+          transform="translate(0, 0)"
+          width="`.concat(a.globals.svgWidth, 'px" height="').concat(a.globals.svgHeight, `px">
+          <foreignObject width="100%" height="100%">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="width:`).concat(r, "px; height:").concat(o, `px;">
+            <style type="text/css">
+              .apexcharts-tooltip, .apexcharts-toolbar, .apexcharts-xaxistooltip, .apexcharts-yaxistooltip, .apexcharts-xcrosshairs, .apexcharts-ycrosshairs, .apexcharts-zoom-rect, .apexcharts-selection-rect {
+                display: none;
+              }
+            </style>
+              `).concat(c, `
+            </div>
+          </foreignObject>
+        </svg>
+      `), d = t.svgStringToNode(h);
+      s !== 1 && t.scaleSvgNode(d, s), t.convertImagesToBase64(d).then(function() {
+        h = new XMLSerializer().serializeToString(d), i(h.replace(/&nbsp;/g, "&#160;"));
+      });
+    });
+  } }, { key: "convertImagesToBase64", value: function(e) {
+    var t = this, i = e.getElementsByTagName("image"), a = Array.from(i).map(function(s) {
+      var r = s.getAttributeNS("http://www.w3.org/1999/xlink", "href");
+      return r && !r.startsWith("data:") ? t.getBase64FromUrl(r).then(function(o) {
+        s.setAttributeNS("http://www.w3.org/1999/xlink", "href", o);
+      }).catch(function(o) {
+        console.error("Error converting image to base64:", o);
+      }) : Promise.resolve();
+    });
+    return Promise.all(a);
+  } }, { key: "getBase64FromUrl", value: function(e) {
+    return new Promise(function(t, i) {
+      var a = new Image();
+      a.crossOrigin = "Anonymous", a.onload = function() {
+        var s = document.createElement("canvas");
+        s.width = a.width, s.height = a.height, s.getContext("2d").drawImage(a, 0, 0), t(s.toDataURL());
+      }, a.onerror = i, a.src = e;
+    });
+  } }, { key: "svgUrl", value: function() {
+    var e = this;
+    return new Promise(function(t) {
+      e.getSvgString().then(function(i) {
+        var a = new Blob([i], { type: "image/svg+xml;charset=utf-8" });
+        t(URL.createObjectURL(a));
+      });
+    });
+  } }, { key: "dataURI", value: function(e) {
+    var t = this;
+    return new Promise(function(i) {
+      var a = t.w, s = e ? e.scale || e.width / a.globals.svgWidth : 1, r = document.createElement("canvas");
+      r.width = a.globals.svgWidth * s, r.height = parseInt(a.globals.dom.elWrap.style.height, 10) * s;
+      var o = a.config.chart.background !== "transparent" && a.config.chart.background ? a.config.chart.background : "#fff", l = r.getContext("2d");
+      l.fillStyle = o, l.fillRect(0, 0, r.width * s, r.height * s), t.getSvgString(s).then(function(c) {
+        var h = "data:image/svg+xml," + encodeURIComponent(c), d = new Image();
+        d.crossOrigin = "anonymous", d.onload = function() {
+          if (l.drawImage(d, 0, 0), r.msToBlob) {
+            var u = r.msToBlob();
+            i({ blob: u });
+          } else {
+            var g = r.toDataURL("image/png");
+            i({ imgURI: g });
+          }
+        }, d.src = h;
+      });
+    });
+  } }, { key: "exportToSVG", value: function() {
+    var e = this;
+    this.svgUrl().then(function(t) {
+      e.triggerDownload(t, e.w.config.chart.toolbar.export.svg.filename, ".svg");
+    });
+  } }, { key: "exportToPng", value: function() {
+    var e = this, t = this.w.config.chart.toolbar.export.scale, i = this.w.config.chart.toolbar.export.width, a = t ? { scale: t } : i ? { width: i } : void 0;
+    this.dataURI(a).then(function(s) {
+      var r = s.imgURI, o = s.blob;
+      o ? navigator.msSaveOrOpenBlob(o, e.w.globals.chartID + ".png") : e.triggerDownload(r, e.w.config.chart.toolbar.export.png.filename, ".png");
+    });
+  } }, { key: "exportToCSV", value: function(e) {
+    var t = this, i = e.series, a = e.fileName, s = e.columnDelimiter, r = s === void 0 ? "," : s, o = e.lineDelimiter, l = o === void 0 ? `
+` : o, c = this.w;
+    i || (i = c.config.series);
+    var h = [], d = [], u = "", g = c.globals.series.map(function(v, k) {
+      return c.globals.collapsedSeriesIndices.indexOf(k) === -1 ? v : [];
+    }), p = function(v) {
+      return typeof c.config.chart.toolbar.export.csv.categoryFormatter == "function" ? c.config.chart.toolbar.export.csv.categoryFormatter(v) : c.config.xaxis.type === "datetime" && String(v).length >= 10 ? new Date(v).toDateString() : T.isNumber(v) ? v : v.split(r).join("");
+    }, f = function(v) {
+      return typeof c.config.chart.toolbar.export.csv.valueFormatter == "function" ? c.config.chart.toolbar.export.csv.valueFormatter(v) : v;
+    }, x = Math.max.apply(Math, Oe(i.map(function(v) {
+      return v.data ? v.data.length : 0;
+    }))), b = new ls(this.ctx), m = new ct(this.ctx), w = function(v) {
+      var k = "";
+      if (c.globals.axisCharts) {
+        if (c.config.xaxis.type === "category" || c.config.xaxis.convertedCatToNumeric) if (c.globals.isBarHorizontal) {
+          var A = c.globals.yLabelFormatters[0], C = new $e(t.ctx).getActiveConfigSeriesIndex();
+          k = A(c.globals.labels[v], { seriesIndex: C, dataPointIndex: v, w: c });
+        } else k = m.getLabel(c.globals.labels, c.globals.timescaleLabels, 0, v).text;
+        c.config.xaxis.type === "datetime" && (c.config.xaxis.categories.length ? k = c.config.xaxis.categories[v] : c.config.labels.length && (k = c.config.labels[v]));
+      } else k = c.config.labels[v];
+      return k === null ? "nullvalue" : (Array.isArray(k) && (k = k.join(" ")), T.isNumber(k) ? k : k.split(r).join(""));
+    }, y = function(v, k) {
+      if (h.length && k === 0 && d.push(h.join(r)), v.data) {
+        v.data = v.data.length && v.data || Oe(Array(x)).map(function() {
+          return "";
+        });
+        for (var A = 0; A < v.data.length; A++) {
+          h = [];
+          var C = w(A);
+          if (C !== "nullvalue") {
+            if (C || (b.isFormatXY() ? C = i[k].data[A].x : b.isFormat2DArray() && (C = i[k].data[A] ? i[k].data[A][0] : "")), k === 0) {
+              h.push(p(C));
+              for (var S = 0; S < c.globals.series.length; S++) {
+                var L, P = b.isFormatXY() ? (L = i[S].data[A]) === null || L === void 0 ? void 0 : L.y : g[S][A];
+                h.push(f(P));
+              }
+            }
+            (c.config.chart.type === "candlestick" || v.type && v.type === "candlestick") && (h.pop(), h.push(c.globals.seriesCandleO[k][A]), h.push(c.globals.seriesCandleH[k][A]), h.push(c.globals.seriesCandleL[k][A]), h.push(c.globals.seriesCandleC[k][A])), (c.config.chart.type === "boxPlot" || v.type && v.type === "boxPlot") && (h.pop(), h.push(c.globals.seriesCandleO[k][A]), h.push(c.globals.seriesCandleH[k][A]), h.push(c.globals.seriesCandleM[k][A]), h.push(c.globals.seriesCandleL[k][A]), h.push(c.globals.seriesCandleC[k][A])), c.config.chart.type === "rangeBar" && (h.pop(), h.push(c.globals.seriesRangeStart[k][A]), h.push(c.globals.seriesRangeEnd[k][A])), h.length && d.push(h.join(r));
+          }
+        }
+      }
+    };
+    h.push(c.config.chart.toolbar.export.csv.headerCategory), c.config.chart.type === "boxPlot" ? (h.push("minimum"), h.push("q1"), h.push("median"), h.push("q3"), h.push("maximum")) : c.config.chart.type === "candlestick" ? (h.push("open"), h.push("high"), h.push("low"), h.push("close")) : c.config.chart.type === "rangeBar" ? (h.push("minimum"), h.push("maximum")) : i.map(function(v, k) {
+      var A = (v.name ? v.name : "series-".concat(k)) + "";
+      c.globals.axisCharts && h.push(A.split(r).join("") ? A.split(r).join("") : "series-".concat(k));
+    }), c.globals.axisCharts || (h.push(c.config.chart.toolbar.export.csv.headerValue), d.push(h.join(r))), c.globals.allSeriesHasEqualX || !c.globals.axisCharts || c.config.xaxis.categories.length || c.config.labels.length ? i.map(function(v, k) {
+      c.globals.axisCharts ? y(v, k) : ((h = []).push(p(c.globals.labels[k])), h.push(f(g[k])), d.push(h.join(r)));
+    }) : function() {
+      var v = /* @__PURE__ */ new Set(), k = {};
+      i.forEach(function(A, C) {
+        A == null || A.data.forEach(function(S) {
+          var L, P;
+          if (b.isFormatXY()) L = S.x, P = S.y;
+          else {
+            if (!b.isFormat2DArray()) return;
+            L = S[0], P = S[1];
+          }
+          k[L] || (k[L] = Array(i.length).fill("")), k[L][C] = f(P), v.add(L);
+        });
+      }), h.length && d.push(h.join(r)), Array.from(v).sort().forEach(function(A) {
+        d.push([p(A), k[A].join(r)]);
+      });
+    }(), u += d.join(l), this.triggerDownload("data:text/csv; charset=utf-8," + encodeURIComponent("\uFEFF" + u), a || c.config.chart.toolbar.export.csv.filename, ".csv");
+  } }, { key: "triggerDownload", value: function(e, t, i) {
+    var a = document.createElement("a");
+    a.href = e, a.download = (t || this.w.globals.chartID) + i, document.body.appendChild(a), a.click(), document.body.removeChild(a);
+  } }]), n;
+}(), ri = function() {
+  function n(e, t) {
+    q(this, n), this.ctx = e, this.elgrid = t, this.w = e.w;
+    var i = this.w;
+    this.axesUtils = new ct(e), this.xaxisLabels = i.globals.labels.slice(), i.globals.timescaleLabels.length > 0 && !i.globals.isBarHorizontal && (this.xaxisLabels = i.globals.timescaleLabels.slice()), i.config.xaxis.overwriteCategories && (this.xaxisLabels = i.config.xaxis.overwriteCategories), this.drawnLabels = [], this.drawnLabelsRects = [], i.config.xaxis.position === "top" ? this.offY = 0 : this.offY = i.globals.gridHeight, this.offY = this.offY + i.config.xaxis.axisBorder.offsetY, this.isCategoryBarHorizontal = i.config.chart.type === "bar" && i.config.plotOptions.bar.horizontal, this.xaxisFontSize = i.config.xaxis.labels.style.fontSize, this.xaxisFontFamily = i.config.xaxis.labels.style.fontFamily, this.xaxisForeColors = i.config.xaxis.labels.style.colors, this.xaxisBorderWidth = i.config.xaxis.axisBorder.width, this.isCategoryBarHorizontal && (this.xaxisBorderWidth = i.config.yaxis[0].axisBorder.width.toString()), this.xaxisBorderWidth.indexOf("%") > -1 ? this.xaxisBorderWidth = i.globals.gridWidth * parseInt(this.xaxisBorderWidth, 10) / 100 : this.xaxisBorderWidth = parseInt(this.xaxisBorderWidth, 10), this.xaxisBorderHeight = i.config.xaxis.axisBorder.height, this.yaxis = i.config.yaxis[0];
+  }
+  return $(n, [{ key: "drawXaxis", value: function() {
+    var e = this.w, t = new F(this.ctx), i = t.group({ class: "apexcharts-xaxis", transform: "translate(".concat(e.config.xaxis.offsetX, ", ").concat(e.config.xaxis.offsetY, ")") }), a = t.group({ class: "apexcharts-xaxis-texts-g", transform: "translate(".concat(e.globals.translateXAxisX, ", ").concat(e.globals.translateXAxisY, ")") });
+    i.add(a);
+    for (var s = [], r = 0; r < this.xaxisLabels.length; r++) s.push(this.xaxisLabels[r]);
+    if (this.drawXAxisLabelAndGroup(!0, t, a, s, e.globals.isXNumeric, function(p, f) {
+      return f;
+    }), e.globals.hasXaxisGroups) {
+      var o = e.globals.groups;
+      s = [];
+      for (var l = 0; l < o.length; l++) s.push(o[l].title);
+      var c = {};
+      e.config.xaxis.group.style && (c.xaxisFontSize = e.config.xaxis.group.style.fontSize, c.xaxisFontFamily = e.config.xaxis.group.style.fontFamily, c.xaxisForeColors = e.config.xaxis.group.style.colors, c.fontWeight = e.config.xaxis.group.style.fontWeight, c.cssClass = e.config.xaxis.group.style.cssClass), this.drawXAxisLabelAndGroup(!1, t, a, s, !1, function(p, f) {
+        return o[p].cols * f;
+      }, c);
+    }
+    if (e.config.xaxis.title.text !== void 0) {
+      var h = t.group({ class: "apexcharts-xaxis-title" }), d = t.drawText({ x: e.globals.gridWidth / 2 + e.config.xaxis.title.offsetX, y: this.offY + parseFloat(this.xaxisFontSize) + (e.config.xaxis.position === "bottom" ? e.globals.xAxisLabelsHeight : -e.globals.xAxisLabelsHeight - 10) + e.config.xaxis.title.offsetY, text: e.config.xaxis.title.text, textAnchor: "middle", fontSize: e.config.xaxis.title.style.fontSize, fontFamily: e.config.xaxis.title.style.fontFamily, fontWeight: e.config.xaxis.title.style.fontWeight, foreColor: e.config.xaxis.title.style.color, cssClass: "apexcharts-xaxis-title-text " + e.config.xaxis.title.style.cssClass });
+      h.add(d), i.add(h);
+    }
+    if (e.config.xaxis.axisBorder.show) {
+      var u = e.globals.barPadForNumericAxis, g = t.drawLine(e.globals.padHorizontal + e.config.xaxis.axisBorder.offsetX - u, this.offY, this.xaxisBorderWidth + u, this.offY, e.config.xaxis.axisBorder.color, 0, this.xaxisBorderHeight);
+      this.elgrid && this.elgrid.elGridBorders && e.config.grid.show ? this.elgrid.elGridBorders.add(g) : i.add(g);
+    }
+    return i;
+  } }, { key: "drawXAxisLabelAndGroup", value: function(e, t, i, a, s, r) {
+    var o, l = this, c = arguments.length > 6 && arguments[6] !== void 0 ? arguments[6] : {}, h = [], d = [], u = this.w, g = c.xaxisFontSize || this.xaxisFontSize, p = c.xaxisFontFamily || this.xaxisFontFamily, f = c.xaxisForeColors || this.xaxisForeColors, x = c.fontWeight || u.config.xaxis.labels.style.fontWeight, b = c.cssClass || u.config.xaxis.labels.style.cssClass, m = u.globals.padHorizontal, w = a.length, y = u.config.xaxis.type === "category" ? u.globals.dataPoints : w;
+    if (y === 0 && w > y && (y = w), s) {
+      var v = Math.max(Number(u.config.xaxis.tickAmount) || 1, y > 1 ? y - 1 : y);
+      o = u.globals.gridWidth / Math.min(v, w - 1), m = m + r(0, o) / 2 + u.config.xaxis.labels.offsetX;
+    } else o = u.globals.gridWidth / y, m = m + r(0, o) + u.config.xaxis.labels.offsetX;
+    for (var k = function(C) {
+      var S = m - r(C, o) / 2 + u.config.xaxis.labels.offsetX;
+      C === 0 && w === 1 && o / 2 === m && y === 1 && (S = u.globals.gridWidth / 2);
+      var L = l.axesUtils.getLabel(a, u.globals.timescaleLabels, S, C, h, g, e), P = 28;
+      if (u.globals.rotateXLabels && e && (P = 22), u.config.xaxis.title.text && u.config.xaxis.position === "top" && (P += parseFloat(u.config.xaxis.title.style.fontSize) + 2), e || (P = P + parseFloat(g) + (u.globals.xAxisLabelsHeight - u.globals.xAxisGroupLabelsHeight) + (u.globals.rotateXLabels ? 10 : 0)), L = u.config.xaxis.tickAmount !== void 0 && u.config.xaxis.tickAmount !== "dataPoints" && u.config.xaxis.type !== "datetime" ? l.axesUtils.checkLabelBasedOnTickamount(C, L, w) : l.axesUtils.checkForOverflowingLabels(C, L, w, h, d), u.config.xaxis.labels.show) {
+        var I = t.drawText({ x: L.x, y: l.offY + u.config.xaxis.labels.offsetY + P - (u.config.xaxis.position === "top" ? u.globals.xAxisHeight + u.config.xaxis.axisTicks.height - 2 : 0), text: L.text, textAnchor: "middle", fontWeight: L.isBold ? 600 : x, fontSize: g, fontFamily: p, foreColor: Array.isArray(f) ? e && u.config.xaxis.convertedCatToNumeric ? f[u.globals.minX + C - 1] : f[C] : f, isPlainText: !1, cssClass: (e ? "apexcharts-xaxis-label " : "apexcharts-xaxis-group-label ") + b });
+        if (i.add(I), I.on("click", function(O) {
+          if (typeof u.config.chart.events.xAxisLabelClick == "function") {
+            var _ = Object.assign({}, u, { labelIndex: C });
+            u.config.chart.events.xAxisLabelClick(O, l.ctx, _);
+          }
+        }), e) {
+          var E = document.createElementNS(u.globals.SVGNS, "title");
+          E.textContent = Array.isArray(L.text) ? L.text.join(" ") : L.text, I.node.appendChild(E), L.text !== "" && (h.push(L.text), d.push(L));
+        }
+      }
+      C < w - 1 && (m += r(C + 1, o));
+    }, A = 0; A <= w - 1; A++) k(A);
+  } }, { key: "drawXaxisInversed", value: function(e) {
+    var t, i, a = this, s = this.w, r = new F(this.ctx), o = s.config.yaxis[0].opposite ? s.globals.translateYAxisX[e] : 0, l = r.group({ class: "apexcharts-yaxis apexcharts-xaxis-inversed", rel: e }), c = r.group({ class: "apexcharts-yaxis-texts-g apexcharts-xaxis-inversed-texts-g", transform: "translate(" + o + ", 0)" });
+    l.add(c);
+    var h = [];
+    if (s.config.yaxis[e].show) for (var d = 0; d < this.xaxisLabels.length; d++) h.push(this.xaxisLabels[d]);
+    t = s.globals.gridHeight / h.length, i = -t / 2.2;
+    var u = s.globals.yLabelFormatters[0], g = s.config.yaxis[0].labels;
+    if (g.show) for (var p = function(v) {
+      var k = h[v] === void 0 ? "" : h[v];
+      k = u(k, { seriesIndex: e, dataPointIndex: v, w: s });
+      var A = a.axesUtils.getYAxisForeColor(g.style.colors, e), C = 0;
+      Array.isArray(k) && (C = k.length / 2 * parseInt(g.style.fontSize, 10));
+      var S = g.offsetX - 15, L = "end";
+      a.yaxis.opposite && (L = "start"), s.config.yaxis[0].labels.align === "left" ? (S = g.offsetX, L = "start") : s.config.yaxis[0].labels.align === "center" ? (S = g.offsetX, L = "middle") : s.config.yaxis[0].labels.align === "right" && (L = "end");
+      var P = r.drawText({ x: S, y: i + t + g.offsetY - C, text: k, textAnchor: L, foreColor: Array.isArray(A) ? A[v] : A, fontSize: g.style.fontSize, fontFamily: g.style.fontFamily, fontWeight: g.style.fontWeight, isPlainText: !1, cssClass: "apexcharts-yaxis-label " + g.style.cssClass, maxWidth: g.maxWidth });
+      c.add(P), P.on("click", function(O) {
+        if (typeof s.config.chart.events.xAxisLabelClick == "function") {
+          var _ = Object.assign({}, s, { labelIndex: v });
+          s.config.chart.events.xAxisLabelClick(O, a.ctx, _);
+        }
+      });
+      var I = document.createElementNS(s.globals.SVGNS, "title");
+      if (I.textContent = Array.isArray(k) ? k.join(" ") : k, P.node.appendChild(I), s.config.yaxis[e].labels.rotate !== 0) {
+        var E = r.rotateAroundCenter(P.node);
+        P.node.setAttribute("transform", "rotate(".concat(s.config.yaxis[e].labels.rotate, " 0 ").concat(E.y, ")"));
+      }
+      i += t;
+    }, f = 0; f <= h.length - 1; f++) p(f);
+    if (s.config.yaxis[0].title.text !== void 0) {
+      var x = r.group({ class: "apexcharts-yaxis-title apexcharts-xaxis-title-inversed", transform: "translate(" + o + ", 0)" }), b = r.drawText({ x: s.config.yaxis[0].title.offsetX, y: s.globals.gridHeight / 2 + s.config.yaxis[0].title.offsetY, text: s.config.yaxis[0].title.text, textAnchor: "middle", foreColor: s.config.yaxis[0].title.style.color, fontSize: s.config.yaxis[0].title.style.fontSize, fontWeight: s.config.yaxis[0].title.style.fontWeight, fontFamily: s.config.yaxis[0].title.style.fontFamily, cssClass: "apexcharts-yaxis-title-text " + s.config.yaxis[0].title.style.cssClass });
+      x.add(b), l.add(x);
+    }
+    var m = 0;
+    this.isCategoryBarHorizontal && s.config.yaxis[0].opposite && (m = s.globals.gridWidth);
+    var w = s.config.xaxis.axisBorder;
+    if (w.show) {
+      var y = r.drawLine(s.globals.padHorizontal + w.offsetX + m, 1 + w.offsetY, s.globals.padHorizontal + w.offsetX + m, s.globals.gridHeight + w.offsetY, w.color, 0);
+      this.elgrid && this.elgrid.elGridBorders && s.config.grid.show ? this.elgrid.elGridBorders.add(y) : l.add(y);
+    }
+    return s.config.yaxis[0].axisTicks.show && this.axesUtils.drawYAxisTicks(m, h.length, s.config.yaxis[0].axisBorder, s.config.yaxis[0].axisTicks, 0, t, l), l;
+  } }, { key: "drawXaxisTicks", value: function(e, t, i) {
+    var a = this.w, s = e;
+    if (!(e < 0 || e - 2 > a.globals.gridWidth)) {
+      var r = this.offY + a.config.xaxis.axisTicks.offsetY;
+      if (t = t + r + a.config.xaxis.axisTicks.height, a.config.xaxis.position === "top" && (t = r - a.config.xaxis.axisTicks.height), a.config.xaxis.axisTicks.show) {
+        var o = new F(this.ctx).drawLine(e + a.config.xaxis.axisTicks.offsetX, r + a.config.xaxis.offsetY, s + a.config.xaxis.axisTicks.offsetX, t + a.config.xaxis.offsetY, a.config.xaxis.axisTicks.color);
+        i.add(o), o.node.classList.add("apexcharts-xaxis-tick");
+      }
+    }
+  } }, { key: "getXAxisTicksPositions", value: function() {
+    var e = this.w, t = [], i = this.xaxisLabels.length, a = e.globals.padHorizontal;
+    if (e.globals.timescaleLabels.length > 0) for (var s = 0; s < i; s++) a = this.xaxisLabels[s].position, t.push(a);
+    else for (var r = i, o = 0; o < r; o++) {
+      var l = r;
+      e.globals.isXNumeric && e.config.chart.type !== "bar" && (l -= 1), a += e.globals.gridWidth / l, t.push(a);
+    }
+    return t;
+  } }, { key: "xAxisLabelCorrections", value: function() {
+    var e = this.w, t = new F(this.ctx), i = e.globals.dom.baseEl.querySelector(".apexcharts-xaxis-texts-g"), a = e.globals.dom.baseEl.querySelectorAll(".apexcharts-xaxis-texts-g text:not(.apexcharts-xaxis-group-label)"), s = e.globals.dom.baseEl.querySelectorAll(".apexcharts-yaxis-inversed text"), r = e.globals.dom.baseEl.querySelectorAll(".apexcharts-xaxis-inversed-texts-g text tspan");
+    if (e.globals.rotateXLabels || e.config.xaxis.labels.rotateAlways) for (var o = 0; o < a.length; o++) {
+      var l = t.rotateAroundCenter(a[o]);
+      l.y = l.y - 1, l.x = l.x + 1, a[o].setAttribute("transform", "rotate(".concat(e.config.xaxis.labels.rotate, " ").concat(l.x, " ").concat(l.y, ")")), a[o].setAttribute("text-anchor", "end"), i.setAttribute("transform", "translate(0, ".concat(-10, ")"));
+      var c = a[o].childNodes;
+      e.config.xaxis.labels.trim && Array.prototype.forEach.call(c, function(g) {
+        t.placeTextWithEllipsis(g, g.textContent, e.globals.xAxisLabelsHeight - (e.config.legend.position === "bottom" ? 20 : 10));
+      });
+    }
+    else (function() {
+      for (var g = e.globals.gridWidth / (e.globals.labels.length + 1), p = 0; p < a.length; p++) {
+        var f = a[p].childNodes;
+        e.config.xaxis.labels.trim && e.config.xaxis.type !== "datetime" && Array.prototype.forEach.call(f, function(x) {
+          t.placeTextWithEllipsis(x, x.textContent, g);
+        });
+      }
+    })();
+    if (s.length > 0) {
+      var h = s[s.length - 1].getBBox(), d = s[0].getBBox();
+      h.x < -20 && s[s.length - 1].parentNode.removeChild(s[s.length - 1]), d.x + d.width > e.globals.gridWidth && !e.globals.isBarHorizontal && s[0].parentNode.removeChild(s[0]);
+      for (var u = 0; u < r.length; u++) t.placeTextWithEllipsis(r[u], r[u].textContent, e.config.yaxis[0].labels.maxWidth - (e.config.yaxis[0].title.text ? 2 * parseFloat(e.config.yaxis[0].title.style.fontSize) : 0) - 15);
+    }
+  } }]), n;
+}(), Pn = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w;
+    var t = this.w;
+    this.xaxisLabels = t.globals.labels.slice(), this.axesUtils = new ct(e), this.isRangeBar = t.globals.seriesRange.length && t.globals.isBarHorizontal, t.globals.timescaleLabels.length > 0 && (this.xaxisLabels = t.globals.timescaleLabels.slice());
+  }
+  return $(n, [{ key: "drawGridArea", value: function() {
+    var e = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : null, t = this.w, i = new F(this.ctx);
+    e || (e = i.group({ class: "apexcharts-grid" }));
+    var a = i.drawLine(t.globals.padHorizontal, 1, t.globals.padHorizontal, t.globals.gridHeight, "transparent"), s = i.drawLine(t.globals.padHorizontal, t.globals.gridHeight, t.globals.gridWidth, t.globals.gridHeight, "transparent");
+    return e.add(s), e.add(a), e;
+  } }, { key: "drawGrid", value: function() {
+    if (this.w.globals.axisCharts) {
+      var e = this.renderGrid();
+      return this.drawGridArea(e.el), e;
+    }
+    return null;
+  } }, { key: "createGridMask", value: function() {
+    var e = this.w, t = e.globals, i = new F(this.ctx), a = Array.isArray(e.config.stroke.width) ? Math.max.apply(Math, Oe(e.config.stroke.width)) : e.config.stroke.width, s = function(h) {
+      var d = document.createElementNS(t.SVGNS, "clipPath");
+      return d.setAttribute("id", h), d;
+    };
+    t.dom.elGridRectMask = s("gridRectMask".concat(t.cuid)), t.dom.elGridRectBarMask = s("gridRectBarMask".concat(t.cuid)), t.dom.elGridRectMarkerMask = s("gridRectMarkerMask".concat(t.cuid)), t.dom.elForecastMask = s("forecastMask".concat(t.cuid)), t.dom.elNonForecastMask = s("nonForecastMask".concat(t.cuid));
+    var r = 0, o = 0;
+    (["bar", "rangeBar", "candlestick", "boxPlot"].includes(e.config.chart.type) || e.globals.comboBarCount > 0) && e.globals.isXNumeric && !e.globals.isBarHorizontal && (r = Math.max(e.config.grid.padding.left, t.barPadForNumericAxis), o = Math.max(e.config.grid.padding.right, t.barPadForNumericAxis)), t.dom.elGridRect = i.drawRect(-a / 2 - 2, -a / 2 - 2, t.gridWidth + a + 4, t.gridHeight + a + 4, 0, "#fff"), t.dom.elGridRectBar = i.drawRect(-a / 2 - r - 2, -a / 2 - 2, t.gridWidth + a + o + r + 4, t.gridHeight + a + 4, 0, "#fff");
+    var l = e.globals.markers.largestSize;
+    t.dom.elGridRectMarker = i.drawRect(-l, -l, t.gridWidth + 2 * l, t.gridHeight + 2 * l, 0, "#fff"), t.dom.elGridRectMask.appendChild(t.dom.elGridRect.node), t.dom.elGridRectBarMask.appendChild(t.dom.elGridRectBar.node), t.dom.elGridRectMarkerMask.appendChild(t.dom.elGridRectMarker.node);
+    var c = t.dom.baseEl.querySelector("defs");
+    c.appendChild(t.dom.elGridRectMask), c.appendChild(t.dom.elGridRectBarMask), c.appendChild(t.dom.elGridRectMarkerMask), c.appendChild(t.dom.elForecastMask), c.appendChild(t.dom.elNonForecastMask);
+  } }, { key: "_drawGridLines", value: function(e) {
+    var t = e.i, i = e.x1, a = e.y1, s = e.x2, r = e.y2, o = e.xCount, l = e.parent, c = this.w;
+    if (!(t === 0 && c.globals.skipFirstTimelinelabel || t === o - 1 && c.globals.skipLastTimelinelabel && !c.config.xaxis.labels.formatter || c.config.chart.type === "radar")) {
+      c.config.grid.xaxis.lines.show && this._drawGridLine({ i: t, x1: i, y1: a, x2: s, y2: r, xCount: o, parent: l });
+      var h = 0;
+      if (c.globals.hasXaxisGroups && c.config.xaxis.tickPlacement === "between") {
+        var d = c.globals.groups;
+        if (d) {
+          for (var u = 0, g = 0; u < t && g < d.length; g++) u += d[g].cols;
+          u === t && (h = 0.6 * c.globals.xAxisLabelsHeight);
+        }
+      }
+      new ri(this.ctx).drawXaxisTicks(i, h, c.globals.dom.elGraphical);
+    }
+  } }, { key: "_drawGridLine", value: function(e) {
+    var t = e.i, i = e.x1, a = e.y1, s = e.x2, r = e.y2, o = e.xCount, l = e.parent, c = this.w, h = l.node.classList.contains("apexcharts-gridlines-horizontal"), d = c.globals.barPadForNumericAxis, u = a === 0 && r === 0 || i === 0 && s === 0 || a === c.globals.gridHeight && r === c.globals.gridHeight || c.globals.isBarHorizontal && (t === 0 || t === o - 1), g = new F(this).drawLine(i - (h ? d : 0), a, s + (h ? d : 0), r, c.config.grid.borderColor, c.config.grid.strokeDashArray);
+    g.node.classList.add("apexcharts-gridline"), u && c.config.grid.show ? this.elGridBorders.add(g) : l.add(g);
+  } }, { key: "_drawGridBandRect", value: function(e) {
+    var t = e.c, i = e.x1, a = e.y1, s = e.x2, r = e.y2, o = e.type, l = this.w, c = new F(this.ctx), h = l.globals.barPadForNumericAxis, d = l.config.grid[o].colors[t], u = c.drawRect(i - (o === "row" ? h : 0), a, s + (o === "row" ? 2 * h : 0), r, 0, d, l.config.grid[o].opacity);
+    this.elg.add(u), u.attr("clip-path", "url(#gridRectMask".concat(l.globals.cuid, ")")), u.node.classList.add("apexcharts-grid-".concat(o));
+  } }, { key: "_drawXYLines", value: function(e) {
+    var t = this, i = e.xCount, a = e.tickAmount, s = this.w;
+    if (s.config.grid.xaxis.lines.show || s.config.xaxis.axisTicks.show) {
+      var r, o = s.globals.padHorizontal, l = s.globals.gridHeight;
+      s.globals.timescaleLabels.length ? function(p) {
+        for (var f = p.xC, x = p.x1, b = p.y1, m = p.x2, w = p.y2, y = 0; y < f; y++) x = t.xaxisLabels[y].position, m = t.xaxisLabels[y].position, t._drawGridLines({ i: y, x1: x, y1: b, x2: m, y2: w, xCount: i, parent: t.elgridLinesV });
+      }({ xC: i, x1: o, y1: 0, x2: r, y2: l }) : (s.globals.isXNumeric && (i = s.globals.xAxisScale.result.length), function(p) {
+        for (var f = p.xC, x = p.x1, b = p.y1, m = p.x2, w = p.y2, y = 0; y < f + (s.globals.isXNumeric ? 0 : 1); y++) y === 0 && f === 1 && s.globals.dataPoints === 1 && (m = x = s.globals.gridWidth / 2), t._drawGridLines({ i: y, x1: x, y1: b, x2: m, y2: w, xCount: i, parent: t.elgridLinesV }), m = x += s.globals.gridWidth / (s.globals.isXNumeric ? f - 1 : f);
+      }({ xC: i, x1: o, y1: 0, x2: r, y2: l }));
+    }
+    if (s.config.grid.yaxis.lines.show) {
+      var c = 0, h = 0, d = s.globals.gridWidth, u = a + 1;
+      this.isRangeBar && (u = s.globals.labels.length);
+      for (var g = 0; g < u + (this.isRangeBar ? 1 : 0); g++) this._drawGridLine({ i: g, xCount: u + (this.isRangeBar ? 1 : 0), x1: 0, y1: c, x2: d, y2: h, parent: this.elgridLinesH }), h = c += s.globals.gridHeight / (this.isRangeBar ? u : a);
+    }
+  } }, { key: "_drawInvertedXYLines", value: function(e) {
+    var t = e.xCount, i = this.w;
+    if (i.config.grid.xaxis.lines.show || i.config.xaxis.axisTicks.show) for (var a, s = i.globals.padHorizontal, r = i.globals.gridHeight, o = 0; o < t + 1; o++)
+      i.config.grid.xaxis.lines.show && this._drawGridLine({ i: o, xCount: t + 1, x1: s, y1: 0, x2: a, y2: r, parent: this.elgridLinesV }), new ri(this.ctx).drawXaxisTicks(s, 0, i.globals.dom.elGraphical), a = s += i.globals.gridWidth / t;
+    if (i.config.grid.yaxis.lines.show) for (var l = 0, c = 0, h = i.globals.gridWidth, d = 0; d < i.globals.dataPoints + 1; d++) this._drawGridLine({ i: d, xCount: i.globals.dataPoints + 1, x1: 0, y1: l, x2: h, y2: c, parent: this.elgridLinesH }), c = l += i.globals.gridHeight / i.globals.dataPoints;
+  } }, { key: "renderGrid", value: function() {
+    var e = this.w, t = e.globals, i = new F(this.ctx);
+    this.elg = i.group({ class: "apexcharts-grid" }), this.elgridLinesH = i.group({ class: "apexcharts-gridlines-horizontal" }), this.elgridLinesV = i.group({ class: "apexcharts-gridlines-vertical" }), this.elGridBorders = i.group({ class: "apexcharts-grid-borders" }), this.elg.add(this.elgridLinesH), this.elg.add(this.elgridLinesV), e.config.grid.show || (this.elgridLinesV.hide(), this.elgridLinesH.hide(), this.elGridBorders.hide());
+    for (var a = 0; a < t.seriesYAxisMap.length && t.ignoreYAxisIndexes.includes(a); ) a++;
+    a === t.seriesYAxisMap.length && (a = 0);
+    var s, r = t.yAxisScale[a].result.length - 1;
+    if (!t.isBarHorizontal || this.isRangeBar) {
+      var o, l, c;
+      s = this.xaxisLabels.length, this.isRangeBar && (r = t.labels.length, e.config.xaxis.tickAmount && e.config.xaxis.labels.formatter && (s = e.config.xaxis.tickAmount), ((o = t.yAxisScale) === null || o === void 0 || (l = o[a]) === null || l === void 0 || (c = l.result) === null || c === void 0 ? void 0 : c.length) > 0 && e.config.xaxis.type !== "datetime" && (s = t.yAxisScale[a].result.length - 1)), this._drawXYLines({ xCount: s, tickAmount: r });
+    } else s = r, r = t.xTickAmount, this._drawInvertedXYLines({ xCount: s, tickAmount: r });
+    return this.drawGridBands(s, r), { el: this.elg, elGridBorders: this.elGridBorders, xAxisTickWidth: t.gridWidth / s };
+  } }, { key: "drawGridBands", value: function(e, t) {
+    var i, a, s = this, r = this.w;
+    if (((i = r.config.grid.row.colors) === null || i === void 0 ? void 0 : i.length) > 0 && function(p, f, x, b, m, w) {
+      for (var y = 0, v = 0; y < f; y++, v++) v >= r.config.grid[p].colors.length && (v = 0), s._drawGridBandRect({ c: v, x1: x, y1: b, x2: m, y2: w, type: p }), b += r.globals.gridHeight / t;
+    }("row", t, 0, 0, r.globals.gridWidth, r.globals.gridHeight / t), ((a = r.config.grid.column.colors) === null || a === void 0 ? void 0 : a.length) > 0) {
+      var o = r.globals.isBarHorizontal || r.config.xaxis.tickPlacement !== "on" || r.config.xaxis.type !== "category" && !r.config.xaxis.convertedCatToNumeric ? e : e - 1;
+      r.globals.isXNumeric && (o = r.globals.xAxisScale.result.length - 1);
+      for (var l = r.globals.padHorizontal, c = r.globals.padHorizontal + r.globals.gridWidth / o, h = r.globals.gridHeight, d = 0, u = 0; d < e; d++, u++) {
+        var g;
+        u >= r.config.grid.column.colors.length && (u = 0), r.config.xaxis.type === "datetime" && (l = this.xaxisLabels[d].position, c = (((g = this.xaxisLabels[d + 1]) === null || g === void 0 ? void 0 : g.position) || r.globals.gridWidth) - this.xaxisLabels[d].position), this._drawGridBandRect({ c: u, x1: l, y1: 0, x2: c, y2: h, type: "column" }), l += r.globals.gridWidth / o;
+      }
+    }
+  } }]), n;
+}(), Tn = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w, this.coreUtils = new Pe(this.ctx);
+  }
+  return $(n, [{ key: "niceScale", value: function(e, t) {
+    var i, a, s, r, o = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : 0, l = 1e-11, c = this.w, h = c.globals;
+    h.isBarHorizontal ? (i = c.config.xaxis, a = Math.max((h.svgWidth - 100) / 25, 2)) : (i = c.config.yaxis[o], a = Math.max((h.svgHeight - 100) / 15, 2)), T.isNumber(a) || (a = 10), s = i.min !== void 0 && i.min !== null, r = i.max !== void 0 && i.min !== null;
+    var d = i.stepSize !== void 0 && i.stepSize !== null, u = i.tickAmount !== void 0 && i.tickAmount !== null, g = u ? i.tickAmount : h.niceScaleDefaultTicks[Math.min(Math.round(a / 2), h.niceScaleDefaultTicks.length - 1)];
+    if (h.isMultipleYAxis && !u && h.multiAxisTickAmount > 0 && (g = h.multiAxisTickAmount, u = !0), g = g === "dataPoints" ? h.dataPoints - 1 : Math.abs(Math.round(g)), (e === Number.MIN_VALUE && t === 0 || !T.isNumber(e) && !T.isNumber(t) || e === Number.MIN_VALUE && t === -Number.MAX_VALUE) && (e = T.isNumber(i.min) ? i.min : 0, t = T.isNumber(i.max) ? i.max : e + g, h.allSeriesCollapsed = !1), e > t) {
+      console.warn("axis.min cannot be greater than axis.max: swapping min and max");
+      var p = t;
+      t = e, e = p;
+    } else e === t && (e = e === 0 ? 0 : e - 1, t = t === 0 ? 2 : t + 1);
+    var f = [];
+    g < 1 && (g = 1);
+    var x = g, b = Math.abs(t - e);
+    !s && e > 0 && e / b < 0.15 && (e = 0, s = !0), !r && t < 0 && -t / b < 0.15 && (t = 0, r = !0);
+    var m = (b = Math.abs(t - e)) / x, w = m, y = Math.floor(Math.log10(w)), v = Math.pow(10, y), k = Math.ceil(w / v);
+    if (m = w = (k = h.niceScaleAllowedMagMsd[h.yValueDecimal === 0 ? 0 : 1][k]) * v, h.isBarHorizontal && i.stepSize && i.type !== "datetime" ? (m = i.stepSize, d = !0) : d && (m = i.stepSize), d && i.forceNiceScale) {
+      var A = Math.floor(Math.log10(m));
+      m *= Math.pow(10, y - A);
+    }
+    if (s && r) {
+      var C = b / x;
+      if (u) if (d) if (T.mod(b, m) != 0) {
+        var S = T.getGCD(m, C);
+        m = C / S < 10 ? S : C;
+      } else T.mod(m, C) == 0 ? m = C : (C = m, u = !1);
+      else m = C;
+      else if (d) T.mod(b, m) == 0 ? C = m : m = C;
+      else if (T.mod(b, m) == 0) C = m;
+      else {
+        C = b / (x = Math.ceil(b / m));
+        var L = T.getGCD(b, m);
+        b / L < a && (C = L), m = C;
+      }
+      x = Math.round(b / m);
+    } else {
+      if (s || r) {
+        if (r) if (u) e = t - m * x;
+        else {
+          var P = e;
+          e = m * Math.floor(e / m), Math.abs(t - e) / T.getGCD(b, m) > a && (e = t - m * g, e += m * Math.floor((P - e) / m));
+        }
+        else if (s) if (u) t = e + m * x;
+        else {
+          var I = t;
+          t = m * Math.ceil(t / m), Math.abs(t - e) / T.getGCD(b, m) > a && (t = e + m * g, t += m * Math.ceil((I - t) / m));
+        }
+      } else if (h.isMultipleYAxis && u) {
+        var E = m * Math.floor(e / m), O = E + m * x;
+        O < t && (m *= 2), O = t, t = (e = E) + m * x, b = Math.abs(t - e), e > 0 && e < Math.abs(O - t) && (e = 0, t = m * x), t < 0 && -t < Math.abs(E - e) && (t = 0, e = -m * x);
+      } else e = m * Math.floor(e / m), t = m * Math.ceil(t / m);
+      b = Math.abs(t - e), m = T.getGCD(b, m), x = Math.round(b / m);
+    }
+    if (u || s || r || (x = Math.ceil((b - l) / (m + l))) > 16 && T.getPrimeFactors(x).length < 2 && x++, !u && i.forceNiceScale && h.yValueDecimal === 0 && x > b && (x = b, m = Math.round(b / x)), x > a && (!u && !d || i.forceNiceScale)) {
+      var _ = T.getPrimeFactors(x), Y = _.length - 1, X = x;
+      e: for (var D = 0; D < Y; D++) for (var B = 0; B <= Y - D; B++) {
+        for (var R = Math.min(B + D, Y), z = X, Z = 1, Q = B; Q <= R; Q++) Z *= _[Q];
+        if ((z /= Z) < a) {
+          X = z;
+          break e;
+        }
+      }
+      m = X === x ? b : b / X, x = Math.round(b / m);
+    }
+    h.isMultipleYAxis && h.multiAxisTickAmount == 0 && h.ignoreYAxisIndexes.indexOf(o) < 0 && (h.multiAxisTickAmount = x);
+    var W = e - m, se = m * l;
+    do
+      W += m, f.push(T.stripNumber(W, 7));
+    while (t - W > se);
+    return { result: f, niceMin: f[0], niceMax: f[f.length - 1] };
+  } }, { key: "linearScale", value: function(e, t) {
+    var i = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : 10, a = arguments.length > 3 && arguments[3] !== void 0 ? arguments[3] : 0, s = arguments.length > 4 && arguments[4] !== void 0 ? arguments[4] : void 0, r = Math.abs(t - e), o = [];
+    if (e === t) return { result: o = [e], niceMin: o[0], niceMax: o[o.length - 1] };
+    (i = this._adjustTicksForSmallRange(i, a, r)) === "dataPoints" && (i = this.w.globals.dataPoints - 1), s || (s = r / i), s = Math.round(100 * (s + Number.EPSILON)) / 100, i === Number.MAX_VALUE && (i = 5, s = 1);
+    for (var l = e; i >= 0; ) o.push(l), l = T.preciseAddition(l, s), i -= 1;
+    return { result: o, niceMin: o[0], niceMax: o[o.length - 1] };
+  } }, { key: "logarithmicScaleNice", value: function(e, t, i) {
+    t <= 0 && (t = Math.max(e, i)), e <= 0 && (e = Math.min(t, i));
+    for (var a = [], s = Math.ceil(Math.log(t) / Math.log(i) + 1), r = Math.floor(Math.log(e) / Math.log(i)); r < s; r++) a.push(Math.pow(i, r));
+    return { result: a, niceMin: a[0], niceMax: a[a.length - 1] };
+  } }, { key: "logarithmicScale", value: function(e, t, i) {
+    t <= 0 && (t = Math.max(e, i)), e <= 0 && (e = Math.min(t, i));
+    for (var a = [], s = Math.log(t) / Math.log(i), r = Math.log(e) / Math.log(i), o = s - r, l = Math.round(o), c = o / l, h = 0, d = r; h < l; h++, d += c) a.push(Math.pow(i, d));
+    return a.push(Math.pow(i, s)), { result: a, niceMin: e, niceMax: t };
+  } }, { key: "_adjustTicksForSmallRange", value: function(e, t, i) {
+    var a = e;
+    if (t !== void 0 && this.w.config.yaxis[t].labels.formatter && this.w.config.yaxis[t].tickAmount === void 0) {
+      var s = Number(this.w.config.yaxis[t].labels.formatter(1));
+      T.isNumber(s) && this.w.globals.yValueDecimal === 0 && (a = Math.ceil(i));
+    }
+    return a < e ? a : e;
+  } }, { key: "setYScaleForIndex", value: function(e, t, i) {
+    var a = this.w.globals, s = this.w.config, r = a.isBarHorizontal ? s.xaxis : s.yaxis[e];
+    a.yAxisScale[e] === void 0 && (a.yAxisScale[e] = []);
+    var o = Math.abs(i - t);
+    r.logarithmic && o <= 5 && (a.invalidLogScale = !0), r.logarithmic && o > 5 ? (a.allSeriesCollapsed = !1, a.yAxisScale[e] = r.forceNiceScale ? this.logarithmicScaleNice(t, i, r.logBase) : this.logarithmicScale(t, i, r.logBase)) : i !== -Number.MAX_VALUE && T.isNumber(i) && t !== Number.MAX_VALUE && T.isNumber(t) ? (a.allSeriesCollapsed = !1, a.yAxisScale[e] = this.niceScale(t, i, e)) : a.yAxisScale[e] = this.niceScale(Number.MIN_VALUE, 0, e);
+  } }, { key: "setXScale", value: function(e, t) {
+    var i = this.w, a = i.globals;
+    if (t !== -Number.MAX_VALUE && T.isNumber(t)) {
+      var s = a.xTickAmount;
+      a.xAxisScale = this.linearScale(e, t, s, 0, i.config.xaxis.stepSize);
+    } else a.xAxisScale = this.linearScale(0, 10, 10);
+    return a.xAxisScale;
+  } }, { key: "scaleMultipleYAxes", value: function() {
+    var e = this, t = this.w.config, i = this.w.globals;
+    this.coreUtils.setSeriesYAxisMappings();
+    var a = i.seriesYAxisMap, s = i.minYArr, r = i.maxYArr;
+    i.allSeriesCollapsed = !0, i.barGroups = [], a.forEach(function(o, l) {
+      var c = [];
+      o.forEach(function(h) {
+        var d, u = (d = t.series[h]) === null || d === void 0 ? void 0 : d.group;
+        c.indexOf(u) < 0 && c.push(u);
+      }), o.length > 0 ? function() {
+        var h, d, u = Number.MAX_VALUE, g = -Number.MAX_VALUE, p = u, f = g;
+        if (t.chart.stacked) (function() {
+          var m = new Array(i.dataPoints).fill(0), w = [], y = [], v = [];
+          c.forEach(function() {
+            w.push(m.map(function() {
+              return Number.MIN_VALUE;
+            })), y.push(m.map(function() {
+              return Number.MIN_VALUE;
+            })), v.push(m.map(function() {
+              return Number.MIN_VALUE;
+            }));
+          });
+          for (var k = function(C) {
+            !h && t.series[o[C]].type && (h = t.series[o[C]].type);
+            var S = o[C];
+            d = t.series[S].group ? t.series[S].group : "axis-".concat(l), !(i.collapsedSeriesIndices.indexOf(S) < 0 && i.ancillaryCollapsedSeriesIndices.indexOf(S) < 0) || (i.allSeriesCollapsed = !1, c.forEach(function(L, P) {
+              if (t.series[S].group === L) for (var I = 0; I < i.series[S].length; I++) {
+                var E = i.series[S][I];
+                E >= 0 ? y[P][I] += E : v[P][I] += E, w[P][I] += E, p = Math.min(p, E), f = Math.max(f, E);
+              }
+            })), h !== "bar" && h !== "column" || i.barGroups.push(d);
+          }, A = 0; A < o.length; A++) k(A);
+          h || (h = t.chart.type), h === "bar" || h === "column" ? c.forEach(function(C, S) {
+            u = Math.min(u, Math.min.apply(null, v[S])), g = Math.max(g, Math.max.apply(null, y[S]));
+          }) : (c.forEach(function(C, S) {
+            p = Math.min(p, Math.min.apply(null, w[S])), f = Math.max(f, Math.max.apply(null, w[S]));
+          }), u = p, g = f), u === Number.MIN_VALUE && g === Number.MIN_VALUE && (g = -Number.MAX_VALUE);
+        })();
+        else for (var x = 0; x < o.length; x++) {
+          var b = o[x];
+          u = Math.min(u, s[b]), g = Math.max(g, r[b]), !(i.collapsedSeriesIndices.indexOf(b) < 0 && i.ancillaryCollapsedSeriesIndices.indexOf(b) < 0) || (i.allSeriesCollapsed = !1);
+        }
+        t.yaxis[l].min !== void 0 && (u = typeof t.yaxis[l].min == "function" ? t.yaxis[l].min(u) : t.yaxis[l].min), t.yaxis[l].max !== void 0 && (g = typeof t.yaxis[l].max == "function" ? t.yaxis[l].max(g) : t.yaxis[l].max), i.barGroups = i.barGroups.filter(function(m, w, y) {
+          return y.indexOf(m) === w;
+        }), e.setYScaleForIndex(l, u, g), o.forEach(function(m) {
+          s[m] = i.yAxisScale[l].niceMin, r[m] = i.yAxisScale[l].niceMax;
+        });
+      }() : e.setYScaleForIndex(l, 0, -Number.MAX_VALUE);
+    });
+  } }]), n;
+}(), _a = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w, this.scales = new Tn(e);
+  }
+  return $(n, [{ key: "init", value: function() {
+    this.setYRange(), this.setXRange(), this.setZRange();
+  } }, { key: "getMinYMaxY", value: function(e) {
+    var t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : Number.MAX_VALUE, i = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : -Number.MAX_VALUE, a = arguments.length > 3 && arguments[3] !== void 0 ? arguments[3] : null, s = this.w.config, r = this.w.globals, o = -Number.MAX_VALUE, l = Number.MIN_VALUE;
+    a === null && (a = e + 1);
+    var c = r.series, h = c, d = c;
+    s.chart.type === "candlestick" ? (h = r.seriesCandleL, d = r.seriesCandleH) : s.chart.type === "boxPlot" ? (h = r.seriesCandleO, d = r.seriesCandleC) : r.isRangeData && (h = r.seriesRangeStart, d = r.seriesRangeEnd);
+    var u = !1;
+    if (r.seriesX.length >= a) {
+      var g, p = (g = r.brushSource) === null || g === void 0 ? void 0 : g.w.config.chart.brush;
+      (s.chart.zoom.enabled && s.chart.zoom.autoScaleYaxis || p != null && p.enabled && p != null && p.autoScaleYaxis) && (u = !0);
+    }
+    for (var f = e; f < a; f++) {
+      r.dataPoints = Math.max(r.dataPoints, c[f].length);
+      var x = s.series[f].type;
+      r.categoryLabels.length && (r.dataPoints = r.categoryLabels.filter(function(S) {
+        return S !== void 0;
+      }).length), r.labels.length && s.xaxis.type !== "datetime" && r.series.reduce(function(S, L) {
+        return S + L.length;
+      }, 0) !== 0 && (r.dataPoints = Math.max(r.dataPoints, r.labels.length));
+      var b = 0, m = c[f].length - 1;
+      if (u) {
+        if (s.xaxis.min) for (; b < m && r.seriesX[f][b] < s.xaxis.min; b++) ;
+        if (s.xaxis.max) for (; m > b && r.seriesX[f][m] > s.xaxis.max; m--) ;
+      }
+      for (var w = b; w <= m && w < r.series[f].length; w++) {
+        var y = c[f][w];
+        if (y !== null && T.isNumber(y)) {
+          var v, k, A, C;
+          switch (((v = d[f]) === null || v === void 0 ? void 0 : v[w]) !== void 0 && (o = Math.max(o, d[f][w]), t = Math.min(t, d[f][w])), ((k = h[f]) === null || k === void 0 ? void 0 : k[w]) !== void 0 && (t = Math.min(t, h[f][w]), i = Math.max(i, h[f][w])), x) {
+            case "candlestick":
+              r.seriesCandleC[f][w] !== void 0 && (o = Math.max(o, r.seriesCandleH[f][w]), t = Math.min(t, r.seriesCandleL[f][w]));
+              break;
+            case "boxPlot":
+              r.seriesCandleC[f][w] !== void 0 && (o = Math.max(o, r.seriesCandleC[f][w]), t = Math.min(t, r.seriesCandleO[f][w]));
+          }
+          x && x !== "candlestick" && x !== "boxPlot" && x !== "rangeArea" && x !== "rangeBar" && (o = Math.max(o, r.series[f][w]), t = Math.min(t, r.series[f][w])), r.seriesGoals[f] && r.seriesGoals[f][w] && Array.isArray(r.seriesGoals[f][w]) && r.seriesGoals[f][w].forEach(function(S) {
+            o = Math.max(o, S.value), t = Math.min(t, S.value);
+          }), i = o, y = T.noExponents(y), T.isFloat(y) && (r.yValueDecimal = Math.max(r.yValueDecimal, y.toString().split(".")[1].length)), l > ((A = h[f]) === null || A === void 0 ? void 0 : A[w]) && ((C = h[f]) === null || C === void 0 ? void 0 : C[w]) < 0 && (l = h[f][w]);
+        } else r.hasNullValues = !0;
+      }
+      x !== "bar" && x !== "column" || (l < 0 && o < 0 && (o = 0, i = Math.max(i, 0)), l === Number.MIN_VALUE && (l = 0, t = Math.min(t, 0)));
+    }
+    return s.chart.type === "rangeBar" && r.seriesRangeStart.length && r.isBarHorizontal && (l = t), s.chart.type === "bar" && (l < 0 && o < 0 && (o = 0), l === Number.MIN_VALUE && (l = 0)), { minY: l, maxY: o, lowestY: t, highestY: i };
+  } }, { key: "setYRange", value: function() {
+    var e = this.w.globals, t = this.w.config;
+    e.maxY = -Number.MAX_VALUE, e.minY = Number.MIN_VALUE;
+    var i, a = Number.MAX_VALUE;
+    if (e.isMultipleYAxis) {
+      a = Number.MAX_VALUE;
+      for (var s = 0; s < e.series.length; s++) i = this.getMinYMaxY(s), e.minYArr[s] = i.lowestY, e.maxYArr[s] = i.highestY, a = Math.min(a, i.lowestY);
+    }
+    return i = this.getMinYMaxY(0, a, null, e.series.length), t.chart.type === "bar" ? (e.minY = i.minY, e.maxY = i.maxY) : (e.minY = i.lowestY, e.maxY = i.highestY), a = i.lowestY, t.chart.stacked && this._setStackedMinMax(), t.chart.type === "line" || t.chart.type === "area" || t.chart.type === "scatter" || t.chart.type === "candlestick" || t.chart.type === "boxPlot" || t.chart.type === "rangeBar" && !e.isBarHorizontal ? e.minY === Number.MIN_VALUE && a !== -Number.MAX_VALUE && a !== e.maxY && (e.minY = a) : e.minY = e.minY !== Number.MIN_VALUE ? Math.min(i.minY, e.minY) : i.minY, t.yaxis.forEach(function(r, o) {
+      r.max !== void 0 && (typeof r.max == "number" ? e.maxYArr[o] = r.max : typeof r.max == "function" && (e.maxYArr[o] = r.max(e.isMultipleYAxis ? e.maxYArr[o] : e.maxY)), e.maxY = e.maxYArr[o]), r.min !== void 0 && (typeof r.min == "number" ? e.minYArr[o] = r.min : typeof r.min == "function" && (e.minYArr[o] = r.min(e.isMultipleYAxis ? e.minYArr[o] === Number.MIN_VALUE ? 0 : e.minYArr[o] : e.minY)), e.minY = e.minYArr[o]);
+    }), e.isBarHorizontal && ["min", "max"].forEach(function(r) {
+      t.xaxis[r] !== void 0 && typeof t.xaxis[r] == "number" && (r === "min" ? e.minY = t.xaxis[r] : e.maxY = t.xaxis[r]);
+    }), e.isMultipleYAxis ? (this.scales.scaleMultipleYAxes(), e.minY = a) : (this.scales.setYScaleForIndex(0, e.minY, e.maxY), e.minY = e.yAxisScale[0].niceMin, e.maxY = e.yAxisScale[0].niceMax, e.minYArr[0] = e.minY, e.maxYArr[0] = e.maxY), e.barGroups = [], e.lineGroups = [], e.areaGroups = [], t.series.forEach(function(r) {
+      switch (r.type || t.chart.type) {
+        case "bar":
+        case "column":
+          e.barGroups.push(r.group);
+          break;
+        case "line":
+          e.lineGroups.push(r.group);
+          break;
+        case "area":
+          e.areaGroups.push(r.group);
+      }
+    }), e.barGroups = e.barGroups.filter(function(r, o, l) {
+      return l.indexOf(r) === o;
+    }), e.lineGroups = e.lineGroups.filter(function(r, o, l) {
+      return l.indexOf(r) === o;
+    }), e.areaGroups = e.areaGroups.filter(function(r, o, l) {
+      return l.indexOf(r) === o;
+    }), { minY: e.minY, maxY: e.maxY, minYArr: e.minYArr, maxYArr: e.maxYArr, yAxisScale: e.yAxisScale };
+  } }, { key: "setXRange", value: function() {
+    var e = this.w.globals, t = this.w.config, i = t.xaxis.type === "numeric" || t.xaxis.type === "datetime" || t.xaxis.type === "category" && !e.noLabelsProvided || e.noLabelsProvided || e.isXNumeric;
+    if (e.isXNumeric && function() {
+      for (var l = 0; l < e.series.length; l++) if (e.labels[l]) for (var c = 0; c < e.labels[l].length; c++) e.labels[l][c] !== null && T.isNumber(e.labels[l][c]) && (e.maxX = Math.max(e.maxX, e.labels[l][c]), e.initialMaxX = Math.max(e.maxX, e.labels[l][c]), e.minX = Math.min(e.minX, e.labels[l][c]), e.initialMinX = Math.min(e.minX, e.labels[l][c]));
+    }(), e.noLabelsProvided && t.xaxis.categories.length === 0 && (e.maxX = e.labels[e.labels.length - 1], e.initialMaxX = e.labels[e.labels.length - 1], e.minX = 1, e.initialMinX = 1), e.isXNumeric || e.noLabelsProvided || e.dataFormatXNumeric) {
+      var a = 10;
+      if (t.xaxis.tickAmount === void 0) a = Math.round(e.svgWidth / 150), t.xaxis.type === "numeric" && e.dataPoints < 30 && (a = e.dataPoints - 1), a > e.dataPoints && e.dataPoints !== 0 && (a = e.dataPoints - 1);
+      else if (t.xaxis.tickAmount === "dataPoints") {
+        if (e.series.length > 1 && (a = e.series[e.maxValsInArrayIndex].length - 1), e.isXNumeric) {
+          var s = Math.round(e.maxX - e.minX);
+          s < 30 && (a = s - 1);
+        }
+      } else a = t.xaxis.tickAmount;
+      if (e.xTickAmount = a, t.xaxis.max !== void 0 && typeof t.xaxis.max == "number" && (e.maxX = t.xaxis.max), t.xaxis.min !== void 0 && typeof t.xaxis.min == "number" && (e.minX = t.xaxis.min), t.xaxis.range !== void 0 && (e.minX = e.maxX - t.xaxis.range), e.minX !== Number.MAX_VALUE && e.maxX !== -Number.MAX_VALUE) if (t.xaxis.convertedCatToNumeric && !e.dataFormatXNumeric) {
+        for (var r = [], o = e.minX - 1; o < e.maxX; o++) r.push(o + 1);
+        e.xAxisScale = { result: r, niceMin: r[0], niceMax: r[r.length - 1] };
+      } else e.xAxisScale = this.scales.setXScale(e.minX, e.maxX);
+      else e.xAxisScale = this.scales.linearScale(0, a, a, 0, t.xaxis.stepSize), e.noLabelsProvided && e.labels.length > 0 && (e.xAxisScale = this.scales.linearScale(1, e.labels.length, a - 1, 0, t.xaxis.stepSize), e.seriesX = e.labels.slice());
+      i && (e.labels = e.xAxisScale.result.slice());
+    }
+    return e.isBarHorizontal && e.labels.length && (e.xTickAmount = e.labels.length), this._handleSingleDataPoint(), this._getMinXDiff(), { minX: e.minX, maxX: e.maxX };
+  } }, { key: "setZRange", value: function() {
+    var e = this.w.globals;
+    if (e.isDataXYZ) {
+      for (var t = 0; t < e.series.length; t++) if (e.seriesZ[t] !== void 0) for (var i = 0; i < e.seriesZ[t].length; i++) e.seriesZ[t][i] !== null && T.isNumber(e.seriesZ[t][i]) && (e.maxZ = Math.max(e.maxZ, e.seriesZ[t][i]), e.minZ = Math.min(e.minZ, e.seriesZ[t][i]));
+    }
+  } }, { key: "_handleSingleDataPoint", value: function() {
+    var e = this.w.globals, t = this.w.config;
+    if (e.minX === e.maxX) {
+      var i = new ze(this.ctx);
+      if (t.xaxis.type === "datetime") {
+        var a = i.getDate(e.minX);
+        t.xaxis.labels.datetimeUTC ? a.setUTCDate(a.getUTCDate() - 2) : a.setDate(a.getDate() - 2), e.minX = new Date(a).getTime();
+        var s = i.getDate(e.maxX);
+        t.xaxis.labels.datetimeUTC ? s.setUTCDate(s.getUTCDate() + 2) : s.setDate(s.getDate() + 2), e.maxX = new Date(s).getTime();
+      } else (t.xaxis.type === "numeric" || t.xaxis.type === "category" && !e.noLabelsProvided) && (e.minX = e.minX - 2, e.initialMinX = e.minX, e.maxX = e.maxX + 2, e.initialMaxX = e.maxX);
+    }
+  } }, { key: "_getMinXDiff", value: function() {
+    var e = this.w.globals;
+    e.isXNumeric && e.seriesX.forEach(function(t, i) {
+      if (t.length) {
+        t.length === 1 && t.push(e.seriesX[e.maxValsInArrayIndex][e.seriesX[e.maxValsInArrayIndex].length - 1]);
+        var a = t.slice();
+        a.sort(function(s, r) {
+          return s - r;
+        }), a.forEach(function(s, r) {
+          if (r > 0) {
+            var o = s - a[r - 1];
+            o > 0 && (e.minXDiff = Math.min(o, e.minXDiff));
+          }
+        }), e.dataPoints !== 1 && e.minXDiff !== Number.MAX_VALUE || (e.minXDiff = 0.5);
+      }
+    });
+  } }, { key: "_setStackedMinMax", value: function() {
+    var e = this, t = this.w.globals;
+    if (t.series.length) {
+      var i = t.seriesGroups;
+      i.length || (i = [this.w.globals.seriesNames.map(function(r) {
+        return r;
+      })]);
+      var a = {}, s = {};
+      i.forEach(function(r) {
+        a[r] = [], s[r] = [], e.w.config.series.map(function(o, l) {
+          return r.indexOf(t.seriesNames[l]) > -1 ? l : null;
+        }).filter(function(o) {
+          return o !== null;
+        }).forEach(function(o) {
+          for (var l = 0; l < t.series[t.maxValsInArrayIndex].length; l++) {
+            var c, h, d, u;
+            a[r][l] === void 0 && (a[r][l] = 0, s[r][l] = 0), (e.w.config.chart.stacked && !t.comboCharts || e.w.config.chart.stacked && t.comboCharts && (!e.w.config.chart.stackOnlyBar || ((c = e.w.config.series) === null || c === void 0 || (h = c[o]) === null || h === void 0 ? void 0 : h.type) === "bar" || ((d = e.w.config.series) === null || d === void 0 || (u = d[o]) === null || u === void 0 ? void 0 : u.type) === "column")) && t.series[o][l] !== null && T.isNumber(t.series[o][l]) && (t.series[o][l] > 0 ? a[r][l] += parseFloat(t.series[o][l]) + 1e-4 : s[r][l] += parseFloat(t.series[o][l]));
+          }
+        });
+      }), Object.entries(a).forEach(function(r) {
+        var o = Zr(r, 1)[0];
+        a[o].forEach(function(l, c) {
+          t.maxY = Math.max(t.maxY, a[o][c]), t.minY = Math.min(t.minY, s[o][c]);
+        });
+      });
+    }
+  } }]), n;
+}(), cs = function() {
+  function n(e, t) {
+    q(this, n), this.ctx = e, this.elgrid = t, this.w = e.w;
+    var i = this.w;
+    this.xaxisFontSize = i.config.xaxis.labels.style.fontSize, this.axisFontFamily = i.config.xaxis.labels.style.fontFamily, this.xaxisForeColors = i.config.xaxis.labels.style.colors, this.isCategoryBarHorizontal = i.config.chart.type === "bar" && i.config.plotOptions.bar.horizontal, this.xAxisoffX = i.config.xaxis.position === "bottom" ? i.globals.gridHeight : 0, this.drawnLabels = [], this.axesUtils = new ct(e);
+  }
+  return $(n, [{ key: "drawYaxis", value: function(e) {
+    var t = this.w, i = new F(this.ctx), a = t.config.yaxis[e].labels.style, s = a.fontSize, r = a.fontFamily, o = a.fontWeight, l = i.group({ class: "apexcharts-yaxis", rel: e, transform: "translate(".concat(t.globals.translateYAxisX[e], ", 0)") });
+    if (this.axesUtils.isYAxisHidden(e)) return l;
+    var c = i.group({ class: "apexcharts-yaxis-texts-g" });
+    l.add(c);
+    var h = t.globals.yAxisScale[e].result.length - 1, d = t.globals.gridHeight / h, u = t.globals.yLabelFormatters[e], g = this.axesUtils.checkForReversedLabels(e, t.globals.yAxisScale[e].result.slice());
+    if (t.config.yaxis[e].labels.show) {
+      var p = t.globals.translateY + t.config.yaxis[e].labels.offsetY;
+      t.globals.isBarHorizontal ? p = 0 : t.config.chart.type === "heatmap" && (p -= d / 2), p += parseInt(s, 10) / 3;
+      for (var f = h; f >= 0; f--) {
+        var x = u(g[f], f, t), b = t.config.yaxis[e].labels.padding;
+        t.config.yaxis[e].opposite && t.config.yaxis.length !== 0 && (b *= -1);
+        var m = this.getTextAnchor(t.config.yaxis[e].labels.align, t.config.yaxis[e].opposite), w = this.axesUtils.getYAxisForeColor(a.colors, e), y = Array.isArray(w) ? w[f] : w, v = T.listToArray(t.globals.dom.baseEl.querySelectorAll(".apexcharts-yaxis[rel='".concat(e, "'] .apexcharts-yaxis-label tspan"))).map(function(A) {
+          return A.textContent;
+        }), k = i.drawText({ x: b, y: p, text: v.includes(x) && !t.config.yaxis[e].labels.showDuplicates ? "" : x, textAnchor: m, fontSize: s, fontFamily: r, fontWeight: o, maxWidth: t.config.yaxis[e].labels.maxWidth, foreColor: y, isPlainText: !1, cssClass: "apexcharts-yaxis-label ".concat(a.cssClass) });
+        c.add(k), this.addTooltip(k, x), t.config.yaxis[e].labels.rotate !== 0 && this.rotateLabel(i, k, firstLabel, t.config.yaxis[e].labels.rotate), p += d;
+      }
+    }
+    return this.addYAxisTitle(i, l, e), this.addAxisBorder(i, l, e, h, d), l;
+  } }, { key: "getTextAnchor", value: function(e, t) {
+    return e === "left" ? "start" : e === "center" ? "middle" : e === "right" ? "end" : t ? "start" : "end";
+  } }, { key: "addTooltip", value: function(e, t) {
+    var i = document.createElementNS(this.w.globals.SVGNS, "title");
+    i.textContent = Array.isArray(t) ? t.join(" ") : t, e.node.appendChild(i);
+  } }, { key: "rotateLabel", value: function(e, t, i, a) {
+    var s = e.rotateAroundCenter(i.node), r = e.rotateAroundCenter(t.node);
+    t.node.setAttribute("transform", "rotate(".concat(a, " ").concat(s.x, " ").concat(r.y, ")"));
+  } }, { key: "addYAxisTitle", value: function(e, t, i) {
+    var a = this.w;
+    if (a.config.yaxis[i].title.text !== void 0) {
+      var s = e.group({ class: "apexcharts-yaxis-title" }), r = a.config.yaxis[i].opposite ? a.globals.translateYAxisX[i] : 0, o = e.drawText({ x: r, y: a.globals.gridHeight / 2 + a.globals.translateY + a.config.yaxis[i].title.offsetY, text: a.config.yaxis[i].title.text, textAnchor: "end", foreColor: a.config.yaxis[i].title.style.color, fontSize: a.config.yaxis[i].title.style.fontSize, fontWeight: a.config.yaxis[i].title.style.fontWeight, fontFamily: a.config.yaxis[i].title.style.fontFamily, cssClass: "apexcharts-yaxis-title-text ".concat(a.config.yaxis[i].title.style.cssClass) });
+      s.add(o), t.add(s);
+    }
+  } }, { key: "addAxisBorder", value: function(e, t, i, a, s) {
+    var r = this.w, o = r.config.yaxis[i].axisBorder, l = 31 + o.offsetX;
+    if (r.config.yaxis[i].opposite && (l = -31 - o.offsetX), o.show) {
+      var c = e.drawLine(l, r.globals.translateY + o.offsetY - 2, l, r.globals.gridHeight + r.globals.translateY + o.offsetY + 2, o.color, 0, o.width);
+      t.add(c);
+    }
+    r.config.yaxis[i].axisTicks.show && this.axesUtils.drawYAxisTicks(l, a, o, r.config.yaxis[i].axisTicks, i, s, t);
+  } }, { key: "drawYaxisInversed", value: function(e) {
+    var t = this.w, i = new F(this.ctx), a = i.group({ class: "apexcharts-xaxis apexcharts-yaxis-inversed" }), s = i.group({ class: "apexcharts-xaxis-texts-g", transform: "translate(".concat(t.globals.translateXAxisX, ", ").concat(t.globals.translateXAxisY, ")") });
+    a.add(s);
+    var r = t.globals.yAxisScale[e].result.length - 1, o = t.globals.gridWidth / r + 0.1, l = o + t.config.xaxis.labels.offsetX, c = t.globals.xLabelFormatter, h = this.axesUtils.checkForReversedLabels(e, t.globals.yAxisScale[e].result.slice()), d = t.globals.timescaleLabels;
+    if (d.length > 0 && (this.xaxisLabels = d.slice(), r = (h = d.slice()).length), t.config.xaxis.labels.show) for (var u = d.length ? 0 : r; d.length ? u < d.length : u >= 0; d.length ? u++ : u--) {
+      var g = c(h[u], u, t), p = t.globals.gridWidth + t.globals.padHorizontal - (l - o + t.config.xaxis.labels.offsetX);
+      if (d.length) {
+        var f = this.axesUtils.getLabel(h, d, p, u, this.drawnLabels, this.xaxisFontSize);
+        p = f.x, g = f.text, this.drawnLabels.push(f.text), u === 0 && t.globals.skipFirstTimelinelabel && (g = ""), u === h.length - 1 && t.globals.skipLastTimelinelabel && (g = "");
+      }
+      var x = i.drawText({ x: p, y: this.xAxisoffX + t.config.xaxis.labels.offsetY + 30 - (t.config.xaxis.position === "top" ? t.globals.xAxisHeight + t.config.xaxis.axisTicks.height - 2 : 0), text: g, textAnchor: "middle", foreColor: Array.isArray(this.xaxisForeColors) ? this.xaxisForeColors[e] : this.xaxisForeColors, fontSize: this.xaxisFontSize, fontFamily: this.xaxisFontFamily, fontWeight: t.config.xaxis.labels.style.fontWeight, isPlainText: !1, cssClass: "apexcharts-xaxis-label ".concat(t.config.xaxis.labels.style.cssClass) });
+      s.add(x), x.tspan(g), this.addTooltip(x, g), l += o;
+    }
+    return this.inversedYAxisTitleText(a), this.inversedYAxisBorder(a), a;
+  } }, { key: "inversedYAxisBorder", value: function(e) {
+    var t = this.w, i = new F(this.ctx), a = t.config.xaxis.axisBorder;
+    if (a.show) {
+      var s = 0;
+      t.config.chart.type === "bar" && t.globals.isXNumeric && (s -= 15);
+      var r = i.drawLine(t.globals.padHorizontal + s + a.offsetX, this.xAxisoffX, t.globals.gridWidth, this.xAxisoffX, a.color, 0, a.height);
+      this.elgrid && this.elgrid.elGridBorders && t.config.grid.show ? this.elgrid.elGridBorders.add(r) : e.add(r);
+    }
+  } }, { key: "inversedYAxisTitleText", value: function(e) {
+    var t = this.w, i = new F(this.ctx);
+    if (t.config.xaxis.title.text !== void 0) {
+      var a = i.group({ class: "apexcharts-xaxis-title apexcharts-yaxis-title-inversed" }), s = i.drawText({ x: t.globals.gridWidth / 2 + t.config.xaxis.title.offsetX, y: this.xAxisoffX + parseFloat(this.xaxisFontSize) + parseFloat(t.config.xaxis.title.style.fontSize) + t.config.xaxis.title.offsetY + 20, text: t.config.xaxis.title.text, textAnchor: "middle", fontSize: t.config.xaxis.title.style.fontSize, fontFamily: t.config.xaxis.title.style.fontFamily, fontWeight: t.config.xaxis.title.style.fontWeight, foreColor: t.config.xaxis.title.style.color, cssClass: "apexcharts-xaxis-title-text ".concat(t.config.xaxis.title.style.cssClass) });
+      a.add(s), e.add(a);
+    }
+  } }, { key: "yAxisTitleRotate", value: function(e, t) {
+    var i = this.w, a = new F(this.ctx), s = i.globals.dom.baseEl.querySelector(".apexcharts-yaxis[rel='".concat(e, "'] .apexcharts-yaxis-texts-g")), r = s ? s.getBoundingClientRect() : { width: 0, height: 0 }, o = i.globals.dom.baseEl.querySelector(".apexcharts-yaxis[rel='".concat(e, "'] .apexcharts-yaxis-title text")), l = o ? o.getBoundingClientRect() : { width: 0, height: 0 };
+    if (o) {
+      var c = this.xPaddingForYAxisTitle(e, r, l, t);
+      o.setAttribute("x", c.xPos - (t ? 10 : 0));
+      var h = a.rotateAroundCenter(o);
+      o.setAttribute("transform", "rotate(".concat(t ? -1 * i.config.yaxis[e].title.rotate : i.config.yaxis[e].title.rotate, " ").concat(h.x, " ").concat(h.y, ")"));
+    }
+  } }, { key: "xPaddingForYAxisTitle", value: function(e, t, i, a) {
+    var s = this.w, r = 0, o = 10;
+    return s.config.yaxis[e].title.text === void 0 || e < 0 ? { xPos: r, padd: 0 } : (a ? r = t.width + s.config.yaxis[e].title.offsetX + i.width / 2 + o / 2 : (r = -1 * t.width + s.config.yaxis[e].title.offsetX + o / 2 + i.width / 2, s.globals.isBarHorizontal && (o = 25, r = -1 * t.width - s.config.yaxis[e].title.offsetX - o)), { xPos: r, padd: o });
+  } }, { key: "setYAxisXPosition", value: function(e, t) {
+    var i = this.w, a = 0, s = 0, r = 18, o = 1;
+    i.config.yaxis.length > 1 && (this.multipleYs = !0), i.config.yaxis.forEach(function(l, c) {
+      var h = i.globals.ignoreYAxisIndexes.includes(c) || !l.show || l.floating || e[c].width === 0, d = e[c].width + t[c].width;
+      l.opposite ? i.globals.isBarHorizontal ? (s = i.globals.gridWidth + i.globals.translateX - 1, i.globals.translateYAxisX[c] = s - l.labels.offsetX) : (s = i.globals.gridWidth + i.globals.translateX + o, h || (o += d + 20), i.globals.translateYAxisX[c] = s - l.labels.offsetX + 20) : (a = i.globals.translateX - r, h || (r += d + 20), i.globals.translateYAxisX[c] = a + l.labels.offsetX);
+    });
+  } }, { key: "setYAxisTextAlignments", value: function() {
+    var e = this.w;
+    T.listToArray(e.globals.dom.baseEl.getElementsByClassName("apexcharts-yaxis")).forEach(function(t, i) {
+      var a = e.config.yaxis[i];
+      if (a && !a.floating && a.labels.align !== void 0) {
+        var s = e.globals.dom.baseEl.querySelector(".apexcharts-yaxis[rel='".concat(i, "'] .apexcharts-yaxis-texts-g")), r = T.listToArray(e.globals.dom.baseEl.querySelectorAll(".apexcharts-yaxis[rel='".concat(i, "'] .apexcharts-yaxis-label"))), o = s.getBoundingClientRect();
+        r.forEach(function(l) {
+          l.setAttribute("text-anchor", a.labels.align);
+        }), a.labels.align !== "left" || a.opposite ? a.labels.align === "center" ? s.setAttribute("transform", "translate(".concat(o.width / 2 * (a.opposite ? 1 : -1), ", 0)")) : a.labels.align === "right" && a.opposite && s.setAttribute("transform", "translate(".concat(o.width, ", 0)")) : s.setAttribute("transform", "translate(-".concat(o.width, ", 0)"));
+      }
+    });
+  } }]), n;
+}(), Wc = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w, this.documentEvent = T.bind(this.documentEvent, this);
+  }
+  return $(n, [{ key: "addEventListener", value: function(e, t) {
+    var i = this.w;
+    i.globals.events.hasOwnProperty(e) ? i.globals.events[e].push(t) : i.globals.events[e] = [t];
+  } }, { key: "removeEventListener", value: function(e, t) {
+    var i = this.w;
+    if (i.globals.events.hasOwnProperty(e)) {
+      var a = i.globals.events[e].indexOf(t);
+      a !== -1 && i.globals.events[e].splice(a, 1);
+    }
+  } }, { key: "fireEvent", value: function(e, t) {
+    var i = this.w;
+    if (i.globals.events.hasOwnProperty(e)) {
+      t && t.length || (t = []);
+      for (var a = i.globals.events[e], s = a.length, r = 0; r < s; r++) a[r].apply(null, t);
+    }
+  } }, { key: "setupEventHandlers", value: function() {
+    var e = this, t = this.w, i = this.ctx, a = t.globals.dom.baseEl.querySelector(t.globals.chartClass);
+    this.ctx.eventList.forEach(function(s) {
+      a.addEventListener(s, function(r) {
+        var o = r.target.getAttribute("i") === null && t.globals.capturedSeriesIndex !== -1 ? t.globals.capturedSeriesIndex : r.target.getAttribute("i"), l = r.target.getAttribute("j") === null && t.globals.capturedDataPointIndex !== -1 ? t.globals.capturedDataPointIndex : r.target.getAttribute("j"), c = Object.assign({}, t, { seriesIndex: t.globals.axisCharts ? o : 0, dataPointIndex: l });
+        r.type === "mousemove" || r.type === "touchmove" ? typeof t.config.chart.events.mouseMove == "function" && t.config.chart.events.mouseMove(r, i, c) : r.type === "mouseleave" || r.type === "touchleave" ? typeof t.config.chart.events.mouseLeave == "function" && t.config.chart.events.mouseLeave(r, i, c) : (r.type === "mouseup" && r.which === 1 || r.type === "touchend") && (typeof t.config.chart.events.click == "function" && t.config.chart.events.click(r, i, c), i.ctx.events.fireEvent("click", [r, i, c]));
+      }, { capture: !1, passive: !0 });
+    }), this.ctx.eventList.forEach(function(s) {
+      t.globals.dom.baseEl.addEventListener(s, e.documentEvent, { passive: !0 });
+    }), this.ctx.core.setupBrushHandler();
+  } }, { key: "documentEvent", value: function(e) {
+    var t = this.w, i = e.target.className;
+    if (e.type === "click") {
+      var a = t.globals.dom.baseEl.querySelector(".apexcharts-menu");
+      a && a.classList.contains("apexcharts-menu-open") && i !== "apexcharts-menu-icon" && a.classList.remove("apexcharts-menu-open");
+    }
+    t.globals.clientX = e.type === "touchmove" ? e.touches[0].clientX : e.clientX, t.globals.clientY = e.type === "touchmove" ? e.touches[0].clientY : e.clientY;
+  } }]), n;
+}(), Bc = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w;
+  }
+  return $(n, [{ key: "setCurrentLocaleValues", value: function(e) {
+    var t = this.w.config.chart.locales;
+    window.Apex.chart && window.Apex.chart.locales && window.Apex.chart.locales.length > 0 && (t = this.w.config.chart.locales.concat(window.Apex.chart.locales));
+    var i = t.filter(function(s) {
+      return s.name === e;
+    })[0];
+    if (!i) throw new Error("Wrong locale name provided. Please make sure you set the correct locale name in options");
+    var a = T.extend(Sn, i);
+    this.w.globals.locale = a.options;
+  } }]), n;
+}(), jc = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w;
+  }
+  return $(n, [{ key: "drawAxis", value: function(e, t) {
+    var i, a, s = this, r = this.w.globals, o = this.w.config, l = new ri(this.ctx, t), c = new cs(this.ctx, t);
+    r.axisCharts && e !== "radar" && (r.isBarHorizontal ? (a = c.drawYaxisInversed(0), i = l.drawXaxisInversed(0), r.dom.elGraphical.add(i), r.dom.elGraphical.add(a)) : (i = l.drawXaxis(), r.dom.elGraphical.add(i), o.yaxis.map(function(h, d) {
+      if (r.ignoreYAxisIndexes.indexOf(d) === -1 && (a = c.drawYaxis(d), r.dom.Paper.add(a), s.w.config.grid.position === "back")) {
+        var u = r.dom.Paper.children()[1];
+        u.remove(), r.dom.Paper.add(u);
+      }
+    })));
+  } }]), n;
+}(), Ya = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w;
+  }
+  return $(n, [{ key: "drawXCrosshairs", value: function() {
+    var e = this.w, t = new F(this.ctx), i = new _e(this.ctx), a = e.config.xaxis.crosshairs.fill.gradient, s = e.config.xaxis.crosshairs.dropShadow, r = e.config.xaxis.crosshairs.fill.type, o = a.colorFrom, l = a.colorTo, c = a.opacityFrom, h = a.opacityTo, d = a.stops, u = s.enabled, g = s.left, p = s.top, f = s.blur, x = s.color, b = s.opacity, m = e.config.xaxis.crosshairs.fill.color;
+    if (e.config.xaxis.crosshairs.show) {
+      r === "gradient" && (m = t.drawGradient("vertical", o, l, c, h, null, d, null));
+      var w = t.drawRect();
+      e.config.xaxis.crosshairs.width === 1 && (w = t.drawLine());
+      var y = e.globals.gridHeight;
+      (!T.isNumber(y) || y < 0) && (y = 0);
+      var v = e.config.xaxis.crosshairs.width;
+      (!T.isNumber(v) || v < 0) && (v = 0), w.attr({ class: "apexcharts-xcrosshairs", x: 0, y: 0, y2: y, width: v, height: y, fill: m, filter: "none", "fill-opacity": e.config.xaxis.crosshairs.opacity, stroke: e.config.xaxis.crosshairs.stroke.color, "stroke-width": e.config.xaxis.crosshairs.stroke.width, "stroke-dasharray": e.config.xaxis.crosshairs.stroke.dashArray }), u && (w = i.dropShadow(w, { left: g, top: p, blur: f, color: x, opacity: b })), e.globals.dom.elGraphical.add(w);
+    }
+  } }, { key: "drawYCrosshairs", value: function() {
+    var e = this.w, t = new F(this.ctx), i = e.config.yaxis[0].crosshairs, a = e.globals.barPadForNumericAxis;
+    if (e.config.yaxis[0].crosshairs.show) {
+      var s = t.drawLine(-a, 0, e.globals.gridWidth + a, 0, i.stroke.color, i.stroke.dashArray, i.stroke.width);
+      s.attr({ class: "apexcharts-ycrosshairs" }), e.globals.dom.elGraphical.add(s);
+    }
+    var r = t.drawLine(-a, 0, e.globals.gridWidth + a, 0, i.stroke.color, 0, 0);
+    r.attr({ class: "apexcharts-ycrosshairs-hidden" }), e.globals.dom.elGraphical.add(r);
+  } }]), n;
+}(), Gc = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w;
+  }
+  return $(n, [{ key: "checkResponsiveConfig", value: function(e) {
+    var t = this, i = this.w, a = i.config;
+    if (a.responsive.length !== 0) {
+      var s = a.responsive.slice();
+      s.sort(function(c, h) {
+        return c.breakpoint > h.breakpoint ? 1 : h.breakpoint > c.breakpoint ? -1 : 0;
+      }).reverse();
+      var r = new si({}), o = function() {
+        var c = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {}, h = s[0].breakpoint, d = window.innerWidth > 0 ? window.innerWidth : screen.width;
+        if (d > h) {
+          var u = T.clone(i.globals.initialConfig);
+          u.series = T.clone(i.config.series);
+          var g = Pe.extendArrayProps(r, u, i);
+          c = T.extend(g, c), c = T.extend(i.config, c), t.overrideResponsiveOptions(c);
+        } else for (var p = 0; p < s.length; p++) d < s[p].breakpoint && (c = Pe.extendArrayProps(r, s[p].options, i), c = T.extend(i.config, c), t.overrideResponsiveOptions(c));
+      };
+      if (e) {
+        var l = Pe.extendArrayProps(r, e, i);
+        l = T.extend(i.config, l), o(l = T.extend(l, e));
+      } else o({});
+    }
+  } }, { key: "overrideResponsiveOptions", value: function(e) {
+    var t = new si(e).init({ responsiveOverride: !0 });
+    this.w.config = t;
+  } }]), n;
+}(), Vc = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w, this.colors = [], this.isColorFn = !1, this.isHeatmapDistributed = this.checkHeatmapDistributed(), this.isBarDistributed = this.checkBarDistributed();
+  }
+  return $(n, [{ key: "checkHeatmapDistributed", value: function() {
+    var e = this.w.config, t = e.chart, i = e.plotOptions;
+    return t.type === "treemap" && i.treemap && i.treemap.distributed || t.type === "heatmap" && i.heatmap && i.heatmap.distributed;
+  } }, { key: "checkBarDistributed", value: function() {
+    var e = this.w.config, t = e.chart, i = e.plotOptions;
+    return i.bar && i.bar.distributed && (t.type === "bar" || t.type === "rangeBar");
+  } }, { key: "init", value: function() {
+    this.setDefaultColors();
+  } }, { key: "setDefaultColors", value: function() {
+    var e = this.w, t = new T();
+    e.globals.dom.elWrap.classList.add("apexcharts-theme-".concat(e.config.theme.mode || "light"));
+    var i = Oe(e.config.colors || e.config.fill.colors || []);
+    e.globals.colors = this.getColors(i), this.applySeriesColors(e.globals.seriesColors, e.globals.colors), e.config.theme.monochrome.enabled && (e.globals.colors = this.getMonochromeColors(e.config.theme.monochrome, e.globals.series, t));
+    var a = e.globals.colors.slice();
+    this.pushExtraColors(e.globals.colors), this.applyColorTypes(["fill", "stroke"], a), this.applyDataLabelsColors(a), this.applyRadarPolygonsColors(), this.applyMarkersColors(a);
+  } }, { key: "getColors", value: function(e) {
+    var t = this, i = this.w;
+    return e && e.length !== 0 ? Array.isArray(e) && e.length > 0 && typeof e[0] == "function" ? (this.isColorFn = !0, i.config.series.map(function(a, s) {
+      var r = e[s] || e[0];
+      return typeof r == "function" ? r({ value: i.globals.axisCharts ? i.globals.series[s][0] || 0 : i.globals.series[s], seriesIndex: s, dataPointIndex: s, w: t.w }) : r;
+    })) : e : this.predefined();
+  } }, { key: "applySeriesColors", value: function(e, t) {
+    e.forEach(function(i, a) {
+      i && (t[a] = i);
+    });
+  } }, { key: "getMonochromeColors", value: function(e, t, i) {
+    var a = e.color, s = e.shadeIntensity, r = e.shadeTo, o = this.isBarDistributed || this.isHeatmapDistributed ? t[0].length * t.length : t.length, l = 1 / (o / s), c = 0;
+    return Array.from({ length: o }, function() {
+      var h = r === "dark" ? i.shadeColor(-1 * c, a) : i.shadeColor(c, a);
+      return c += l, h;
+    });
+  } }, { key: "applyColorTypes", value: function(e, t) {
+    var i = this, a = this.w;
+    e.forEach(function(s) {
+      a.globals[s].colors = a.config[s].colors === void 0 ? i.isColorFn ? a.config.colors : t : a.config[s].colors.slice(), i.pushExtraColors(a.globals[s].colors);
+    });
+  } }, { key: "applyDataLabelsColors", value: function(e) {
+    var t = this.w;
+    t.globals.dataLabels.style.colors = t.config.dataLabels.style.colors === void 0 ? e : t.config.dataLabels.style.colors.slice(), this.pushExtraColors(t.globals.dataLabels.style.colors, 50);
+  } }, { key: "applyRadarPolygonsColors", value: function() {
+    var e = this.w;
+    e.globals.radarPolygons.fill.colors = e.config.plotOptions.radar.polygons.fill.colors === void 0 ? [e.config.theme.mode === "dark" ? "#343A3F" : "none"] : e.config.plotOptions.radar.polygons.fill.colors.slice(), this.pushExtraColors(e.globals.radarPolygons.fill.colors, 20);
+  } }, { key: "applyMarkersColors", value: function(e) {
+    var t = this.w;
+    t.globals.markers.colors = t.config.markers.colors === void 0 ? e : t.config.markers.colors.slice(), this.pushExtraColors(t.globals.markers.colors);
+  } }, { key: "pushExtraColors", value: function(e, t) {
+    var i = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : null, a = this.w, s = t || a.globals.series.length;
+    if (i === null && (i = this.isBarDistributed || this.isHeatmapDistributed || a.config.chart.type === "heatmap" && a.config.plotOptions.heatmap && a.config.plotOptions.heatmap.colorScale.inverse), i && a.globals.series.length && (s = a.globals.series[a.globals.maxValsInArrayIndex].length * a.globals.series.length), e.length < s) for (var r = s - e.length, o = 0; o < r; o++) e.push(e[o]);
+  } }, { key: "updateThemeOptions", value: function(e) {
+    e.chart = e.chart || {}, e.tooltip = e.tooltip || {};
+    var t = e.theme.mode, i = t === "dark" ? "palette4" : t === "light" ? "palette1" : e.theme.palette || "palette1", a = t === "dark" ? "#f6f7f8" : t === "light" ? "#373d3f" : e.chart.foreColor || "#373d3f";
+    return e.tooltip.theme = t || "light", e.chart.foreColor = a, e.theme.palette = i, e;
+  } }, { key: "predefined", value: function() {
+    var e = { palette1: ["#008FFB", "#00E396", "#FEB019", "#FF4560", "#775DD0"], palette2: ["#3f51b5", "#03a9f4", "#4caf50", "#f9ce1d", "#FF9800"], palette3: ["#33b2df", "#546E7A", "#d4526e", "#13d8aa", "#A5978B"], palette4: ["#4ecdc4", "#c7f464", "#81D4FA", "#fd6a6a", "#546E7A"], palette5: ["#2b908f", "#f9a3a4", "#90ee7e", "#fa4443", "#69d2e7"], palette6: ["#449DD1", "#F86624", "#EA3546", "#662E9B", "#C5D86D"], palette7: ["#D7263D", "#1B998B", "#2E294E", "#F46036", "#E2C044"], palette8: ["#662E9B", "#F86624", "#F9C80E", "#EA3546", "#43BCCD"], palette9: ["#5C4742", "#A5978B", "#8D5B4C", "#5A2A27", "#C4BBAF"], palette10: ["#A300D6", "#7D02EB", "#5653FE", "#2983FF", "#00B1F2"], default: ["#008FFB", "#00E396", "#FEB019", "#FF4560", "#775DD0"] };
+    return e[this.w.config.theme.palette] || e.default;
+  } }]), n;
+}(), Uc = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w;
+  }
+  return $(n, [{ key: "draw", value: function() {
+    this.drawTitleSubtitle("title"), this.drawTitleSubtitle("subtitle");
+  } }, { key: "drawTitleSubtitle", value: function(e) {
+    var t = this.w, i = e === "title" ? t.config.title : t.config.subtitle, a = t.globals.svgWidth / 2, s = i.offsetY, r = "middle";
+    if (i.align === "left" ? (a = 10, r = "start") : i.align === "right" && (a = t.globals.svgWidth - 10, r = "end"), a += i.offsetX, s = s + parseInt(i.style.fontSize, 10) + i.margin / 2, i.text !== void 0) {
+      var o = new F(this.ctx).drawText({ x: a, y: s, text: i.text, textAnchor: r, fontSize: i.style.fontSize, fontFamily: i.style.fontFamily, fontWeight: i.style.fontWeight, foreColor: i.style.color, opacity: 1 });
+      o.node.setAttribute("class", "apexcharts-".concat(e, "-text")), t.globals.dom.Paper.add(o);
+    }
+  } }]), n;
+}(), qc = function() {
+  function n(e) {
+    q(this, n), this.w = e.w, this.dCtx = e;
+  }
+  return $(n, [{ key: "getTitleSubtitleCoords", value: function(e) {
+    var t = this.w, i = 0, a = 0, s = e === "title" ? t.config.title.floating : t.config.subtitle.floating, r = t.globals.dom.baseEl.querySelector(".apexcharts-".concat(e, "-text"));
+    if (r !== null && !s) {
+      var o = r.getBoundingClientRect();
+      i = o.width, a = t.globals.axisCharts ? o.height + 5 : o.height;
+    }
+    return { width: i, height: a };
+  } }, { key: "getLegendsRect", value: function() {
+    var e = this.w, t = e.globals.dom.elLegendWrap;
+    e.config.legend.height || e.config.legend.position !== "top" && e.config.legend.position !== "bottom" || (t.style.maxHeight = e.globals.svgHeight / 2 + "px");
+    var i = Object.assign({}, T.getBoundingClientRect(t));
+    return t !== null && !e.config.legend.floating && e.config.legend.show ? this.dCtx.lgRect = { x: i.x, y: i.y, height: i.height, width: i.height === 0 ? 0 : i.width } : this.dCtx.lgRect = { x: 0, y: 0, height: 0, width: 0 }, e.config.legend.position !== "left" && e.config.legend.position !== "right" || 1.5 * this.dCtx.lgRect.width > e.globals.svgWidth && (this.dCtx.lgRect.width = e.globals.svgWidth / 1.5), this.dCtx.lgRect;
+  } }, { key: "getDatalabelsRect", value: function() {
+    var e = this, t = this.w, i = [];
+    t.config.series.forEach(function(l, c) {
+      l.data.forEach(function(h, d) {
+        var u;
+        u = t.globals.series[c][d], a = t.config.dataLabels.formatter(u, { ctx: e.dCtx.ctx, seriesIndex: c, dataPointIndex: d, w: t }), i.push(a);
+      });
+    });
+    var a = T.getLargestStringFromArr(i), s = new F(this.dCtx.ctx), r = t.config.dataLabels.style, o = s.getTextRects(a, parseInt(r.fontSize), r.fontFamily);
+    return { width: 1.05 * o.width, height: o.height };
+  } }, { key: "getLargestStringFromMultiArr", value: function(e, t) {
+    var i = e;
+    if (this.w.globals.isMultiLineX) {
+      var a = t.map(function(r, o) {
+        return Array.isArray(r) ? r.length : 1;
+      }), s = Math.max.apply(Math, Oe(a));
+      i = t[a.indexOf(s)];
+    }
+    return i;
+  } }]), n;
+}(), $c = function() {
+  function n(e) {
+    q(this, n), this.w = e.w, this.dCtx = e;
+  }
+  return $(n, [{ key: "getxAxisLabelsCoords", value: function() {
+    var e, t = this.w, i = t.globals.labels.slice();
+    if (t.config.xaxis.convertedCatToNumeric && i.length === 0 && (i = t.globals.categoryLabels), t.globals.timescaleLabels.length > 0) {
+      var a = this.getxAxisTimeScaleLabelsCoords();
+      e = { width: a.width, height: a.height }, t.globals.rotateXLabels = !1;
+    } else {
+      this.dCtx.lgWidthForSideLegends = t.config.legend.position !== "left" && t.config.legend.position !== "right" || t.config.legend.floating ? 0 : this.dCtx.lgRect.width;
+      var s = t.globals.xLabelFormatter, r = T.getLargestStringFromArr(i), o = this.dCtx.dimHelpers.getLargestStringFromMultiArr(r, i);
+      t.globals.isBarHorizontal && (o = r = t.globals.yAxisScale[0].result.reduce(function(p, f) {
+        return p.length > f.length ? p : f;
+      }, 0));
+      var l = new di(this.dCtx.ctx), c = r;
+      r = l.xLabelFormat(s, r, c, { i: void 0, dateFormatter: new ze(this.dCtx.ctx).formatDate, w: t }), o = l.xLabelFormat(s, o, c, { i: void 0, dateFormatter: new ze(this.dCtx.ctx).formatDate, w: t }), (t.config.xaxis.convertedCatToNumeric && r === void 0 || String(r).trim() === "") && (o = r = "1");
+      var h = new F(this.dCtx.ctx), d = h.getTextRects(r, t.config.xaxis.labels.style.fontSize), u = d;
+      if (r !== o && (u = h.getTextRects(o, t.config.xaxis.labels.style.fontSize)), (e = { width: d.width >= u.width ? d.width : u.width, height: d.height >= u.height ? d.height : u.height }).width * i.length > t.globals.svgWidth - this.dCtx.lgWidthForSideLegends - this.dCtx.yAxisWidth - this.dCtx.gridPad.left - this.dCtx.gridPad.right && t.config.xaxis.labels.rotate !== 0 || t.config.xaxis.labels.rotateAlways) {
+        if (!t.globals.isBarHorizontal) {
+          t.globals.rotateXLabels = !0;
+          var g = function(p) {
+            return h.getTextRects(p, t.config.xaxis.labels.style.fontSize, t.config.xaxis.labels.style.fontFamily, "rotate(".concat(t.config.xaxis.labels.rotate, " 0 0)"), !1);
+          };
+          d = g(r), r !== o && (u = g(o)), e.height = (d.height > u.height ? d.height : u.height) / 1.5, e.width = d.width > u.width ? d.width : u.width;
+        }
+      } else t.globals.rotateXLabels = !1;
+    }
+    return t.config.xaxis.labels.show || (e = { width: 0, height: 0 }), { width: e.width, height: e.height };
+  } }, { key: "getxAxisGroupLabelsCoords", value: function() {
+    var e, t = this.w;
+    if (!t.globals.hasXaxisGroups) return { width: 0, height: 0 };
+    var i, a = ((e = t.config.xaxis.group.style) === null || e === void 0 ? void 0 : e.fontSize) || t.config.xaxis.labels.style.fontSize, s = t.globals.groups.map(function(d) {
+      return d.title;
+    }), r = T.getLargestStringFromArr(s), o = this.dCtx.dimHelpers.getLargestStringFromMultiArr(r, s), l = new F(this.dCtx.ctx), c = l.getTextRects(r, a), h = c;
+    return r !== o && (h = l.getTextRects(o, a)), i = { width: c.width >= h.width ? c.width : h.width, height: c.height >= h.height ? c.height : h.height }, t.config.xaxis.labels.show || (i = { width: 0, height: 0 }), { width: i.width, height: i.height };
+  } }, { key: "getxAxisTitleCoords", value: function() {
+    var e = this.w, t = 0, i = 0;
+    if (e.config.xaxis.title.text !== void 0) {
+      var a = new F(this.dCtx.ctx).getTextRects(e.config.xaxis.title.text, e.config.xaxis.title.style.fontSize);
+      t = a.width, i = a.height;
+    }
+    return { width: t, height: i };
+  } }, { key: "getxAxisTimeScaleLabelsCoords", value: function() {
+    var e, t = this.w;
+    this.dCtx.timescaleLabels = t.globals.timescaleLabels.slice();
+    var i = this.dCtx.timescaleLabels.map(function(s) {
+      return s.value;
+    }), a = i.reduce(function(s, r) {
+      return s === void 0 ? (console.error("You have possibly supplied invalid Date format. Please supply a valid JavaScript Date"), 0) : s.length > r.length ? s : r;
+    }, 0);
+    return 1.05 * (e = new F(this.dCtx.ctx).getTextRects(a, t.config.xaxis.labels.style.fontSize)).width * i.length > t.globals.gridWidth && t.config.xaxis.labels.rotate !== 0 && (t.globals.overlappingXLabels = !0), e;
+  } }, { key: "additionalPaddingXLabels", value: function(e) {
+    var t = this, i = this.w, a = i.globals, s = i.config, r = s.xaxis.type, o = e.width;
+    a.skipLastTimelinelabel = !1, a.skipFirstTimelinelabel = !1;
+    var l = i.config.yaxis[0].opposite && i.globals.isBarHorizontal, c = function(h, d) {
+      s.yaxis.length > 1 && function(u) {
+        return a.collapsedSeriesIndices.indexOf(u) !== -1;
+      }(d) || function(u) {
+        if (t.dCtx.timescaleLabels && t.dCtx.timescaleLabels.length) {
+          var g = t.dCtx.timescaleLabels[0], p = t.dCtx.timescaleLabels[t.dCtx.timescaleLabels.length - 1].position + o / 1.75 - t.dCtx.yAxisWidthRight, f = g.position - o / 1.75 + t.dCtx.yAxisWidthLeft, x = i.config.legend.position === "right" && t.dCtx.lgRect.width > 0 ? t.dCtx.lgRect.width : 0;
+          p > a.svgWidth - a.translateX - x && (a.skipLastTimelinelabel = !0), f < -(u.show && !u.floating || s.chart.type !== "bar" && s.chart.type !== "candlestick" && s.chart.type !== "rangeBar" && s.chart.type !== "boxPlot" ? 10 : o / 1.75) && (a.skipFirstTimelinelabel = !0);
+        } else r === "datetime" ? t.dCtx.gridPad.right < o && !a.rotateXLabels && (a.skipLastTimelinelabel = !0) : r !== "datetime" && t.dCtx.gridPad.right < o / 2 - t.dCtx.yAxisWidthRight && !a.rotateXLabels && !i.config.xaxis.labels.trim && (t.dCtx.xPadRight = o / 2 + 1);
+      }(h);
+    };
+    s.yaxis.forEach(function(h, d) {
+      l ? (t.dCtx.gridPad.left < o && (t.dCtx.xPadLeft = o / 2 + 1), t.dCtx.xPadRight = o / 2 + 1) : c(h, d);
+    });
+  } }]), n;
+}(), Zc = function() {
+  function n(e) {
+    q(this, n), this.w = e.w, this.dCtx = e;
+  }
+  return $(n, [{ key: "getyAxisLabelsCoords", value: function() {
+    var e = this, t = this.w, i = [], a = 10, s = new ct(this.dCtx.ctx);
+    return t.config.yaxis.map(function(r, o) {
+      var l = { seriesIndex: o, dataPointIndex: -1, w: t }, c = t.globals.yAxisScale[o], h = 0;
+      if (!s.isYAxisHidden(o) && r.labels.show && r.labels.minWidth !== void 0 && (h = r.labels.minWidth), !s.isYAxisHidden(o) && r.labels.show && c.result.length) {
+        var d = t.globals.yLabelFormatters[o], u = c.niceMin === Number.MIN_VALUE ? 0 : c.niceMin, g = c.result.reduce(function(y, v) {
+          var k, A;
+          return ((k = String(d(y, l))) === null || k === void 0 ? void 0 : k.length) > ((A = String(d(v, l))) === null || A === void 0 ? void 0 : A.length) ? y : v;
+        }, u), p = g = d(g, l);
+        if (g !== void 0 && g.length !== 0 || (g = c.niceMax), t.globals.isBarHorizontal) {
+          a = 0;
+          var f = t.globals.labels.slice();
+          g = T.getLargestStringFromArr(f), g = d(g, { seriesIndex: o, dataPointIndex: -1, w: t }), p = e.dCtx.dimHelpers.getLargestStringFromMultiArr(g, f);
+        }
+        var x = new F(e.dCtx.ctx), b = "rotate(".concat(r.labels.rotate, " 0 0)"), m = x.getTextRects(g, r.labels.style.fontSize, r.labels.style.fontFamily, b, !1), w = m;
+        g !== p && (w = x.getTextRects(p, r.labels.style.fontSize, r.labels.style.fontFamily, b, !1)), i.push({ width: (h > w.width || h > m.width ? h : w.width > m.width ? w.width : m.width) + a, height: w.height > m.height ? w.height : m.height });
+      } else i.push({ width: 0, height: 0 });
+    }), i;
+  } }, { key: "getyAxisTitleCoords", value: function() {
+    var e = this, t = this.w, i = [];
+    return t.config.yaxis.map(function(a, s) {
+      if (a.show && a.title.text !== void 0) {
+        var r = new F(e.dCtx.ctx), o = "rotate(".concat(a.title.rotate, " 0 0)"), l = r.getTextRects(a.title.text, a.title.style.fontSize, a.title.style.fontFamily, o, !1);
+        i.push({ width: l.width, height: l.height });
+      } else i.push({ width: 0, height: 0 });
+    }), i;
+  } }, { key: "getTotalYAxisWidth", value: function() {
+    var e = this.w, t = 0, i = 0, a = 0, s = e.globals.yAxisScale.length > 1 ? 10 : 0, r = new ct(this.dCtx.ctx), o = function(l, c) {
+      var h = e.config.yaxis[c].floating, d = 0;
+      l.width > 0 && !h ? (d = l.width + s, function(u) {
+        return e.globals.ignoreYAxisIndexes.indexOf(u) > -1;
+      }(c) && (d = d - l.width - s)) : d = h || r.isYAxisHidden(c) ? 0 : 5, e.config.yaxis[c].opposite ? a += d : i += d, t += d;
+    };
+    return e.globals.yLabelsCoords.map(function(l, c) {
+      o(l, c);
+    }), e.globals.yTitleCoords.map(function(l, c) {
+      o(l, c);
+    }), e.globals.isBarHorizontal && !e.config.yaxis[0].floating && (t = e.globals.yLabelsCoords[0].width + e.globals.yTitleCoords[0].width + 15), this.dCtx.yAxisWidthLeft = i, this.dCtx.yAxisWidthRight = a, t;
+  } }]), n;
+}(), Jc = function() {
+  function n(e) {
+    q(this, n), this.w = e.w, this.dCtx = e;
+  }
+  return $(n, [{ key: "gridPadForColumnsInNumericAxis", value: function(e) {
+    var t = this.w, i = t.config, a = t.globals;
+    if (a.noData || a.collapsedSeries.length + a.ancillaryCollapsedSeries.length === i.series.length) return 0;
+    var s = function(g) {
+      return ["bar", "rangeBar", "candlestick", "boxPlot"].includes(g);
+    }, r = i.chart.type, o = 0, l = s(r) ? i.series.length : 1;
+    a.comboBarCount > 0 && (l = a.comboBarCount), a.collapsedSeries.forEach(function(g) {
+      s(g.type) && (l -= 1);
+    }), i.chart.stacked && (l = 1);
+    var c = s(r) || a.comboBarCount > 0, h = Math.abs(a.initialMaxX - a.initialMinX);
+    if (c && a.isXNumeric && !a.isBarHorizontal && l > 0 && h !== 0) {
+      h <= 3 && (h = a.dataPoints);
+      var d = h / e, u = a.minXDiff && a.minXDiff / d > 0 ? a.minXDiff / d : 0;
+      u > e / 2 && (u /= 2), (o = u * parseInt(i.plotOptions.bar.columnWidth, 10) / 100) < 1 && (o = 1), a.barPadForNumericAxis = o;
+    }
+    return o;
+  } }, { key: "gridPadFortitleSubtitle", value: function() {
+    var e = this, t = this.w, i = t.globals, a = this.dCtx.isSparkline || !i.axisCharts ? 0 : 10;
+    ["title", "subtitle"].forEach(function(o) {
+      t.config[o].text !== void 0 ? a += t.config[o].margin : a += e.dCtx.isSparkline || !i.axisCharts ? 0 : 5;
+    }), !t.config.legend.show || t.config.legend.position !== "bottom" || t.config.legend.floating || i.axisCharts || (a += 10);
+    var s = this.dCtx.dimHelpers.getTitleSubtitleCoords("title"), r = this.dCtx.dimHelpers.getTitleSubtitleCoords("subtitle");
+    i.gridHeight -= s.height + r.height + a, i.translateY += s.height + r.height + a;
+  } }, { key: "setGridXPosForDualYAxis", value: function(e, t) {
+    var i = this.w, a = new ct(this.dCtx.ctx);
+    i.config.yaxis.forEach(function(s, r) {
+      i.globals.ignoreYAxisIndexes.indexOf(r) !== -1 || s.floating || a.isYAxisHidden(r) || (s.opposite && (i.globals.translateX -= t[r].width + e[r].width + parseInt(s.labels.style.fontSize, 10) / 1.2 + 12), i.globals.translateX < 2 && (i.globals.translateX = 2));
+    });
+  } }]), n;
+}(), Ii = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w, this.lgRect = {}, this.yAxisWidth = 0, this.yAxisWidthLeft = 0, this.yAxisWidthRight = 0, this.xAxisHeight = 0, this.isSparkline = this.w.config.chart.sparkline.enabled, this.dimHelpers = new qc(this), this.dimYAxis = new Zc(this), this.dimXAxis = new $c(this), this.dimGrid = new Jc(this), this.lgWidthForSideLegends = 0, this.gridPad = this.w.config.grid.padding, this.xPadRight = 0, this.xPadLeft = 0;
+  }
+  return $(n, [{ key: "plotCoords", value: function() {
+    var e = this, t = this.w, i = t.globals;
+    this.lgRect = this.dimHelpers.getLegendsRect(), this.datalabelsCoords = { width: 0, height: 0 };
+    var a = Array.isArray(t.config.stroke.width) ? Math.max.apply(Math, Oe(t.config.stroke.width)) : t.config.stroke.width;
+    this.isSparkline && ((t.config.markers.discrete.length > 0 || t.config.markers.size > 0) && Object.entries(this.gridPad).forEach(function(r) {
+      var o = Zr(r, 2), l = o[0], c = o[1];
+      e.gridPad[l] = Math.max(c, e.w.globals.markers.largestSize / 1.5);
+    }), this.gridPad.top = Math.max(a / 2, this.gridPad.top), this.gridPad.bottom = Math.max(a / 2, this.gridPad.bottom)), i.axisCharts ? this.setDimensionsForAxisCharts() : this.setDimensionsForNonAxisCharts(), this.dimGrid.gridPadFortitleSubtitle(), i.gridHeight = i.gridHeight - this.gridPad.top - this.gridPad.bottom, i.gridWidth = i.gridWidth - this.gridPad.left - this.gridPad.right - this.xPadRight - this.xPadLeft;
+    var s = this.dimGrid.gridPadForColumnsInNumericAxis(i.gridWidth);
+    i.gridWidth = i.gridWidth - 2 * s, i.translateX = i.translateX + this.gridPad.left + this.xPadLeft + (s > 0 ? s : 0), i.translateY = i.translateY + this.gridPad.top;
+  } }, { key: "setDimensionsForAxisCharts", value: function() {
+    var e = this, t = this.w, i = t.globals, a = this.dimYAxis.getyAxisLabelsCoords(), s = this.dimYAxis.getyAxisTitleCoords();
+    i.isSlopeChart && (this.datalabelsCoords = this.dimHelpers.getDatalabelsRect()), t.globals.yLabelsCoords = [], t.globals.yTitleCoords = [], t.config.yaxis.map(function(g, p) {
+      t.globals.yLabelsCoords.push({ width: a[p].width, index: p }), t.globals.yTitleCoords.push({ width: s[p].width, index: p });
+    }), this.yAxisWidth = this.dimYAxis.getTotalYAxisWidth();
+    var r = this.dimXAxis.getxAxisLabelsCoords(), o = this.dimXAxis.getxAxisGroupLabelsCoords(), l = this.dimXAxis.getxAxisTitleCoords();
+    this.conditionalChecksForAxisCoords(r, l, o), i.translateXAxisY = t.globals.rotateXLabels ? this.xAxisHeight / 8 : -4, i.translateXAxisX = t.globals.rotateXLabels && t.globals.isXNumeric && t.config.xaxis.labels.rotate <= -45 ? -this.xAxisWidth / 4 : 0, t.globals.isBarHorizontal && (i.rotateXLabels = !1, i.translateXAxisY = parseInt(t.config.xaxis.labels.style.fontSize, 10) / 1.5 * -1), i.translateXAxisY = i.translateXAxisY + t.config.xaxis.labels.offsetY, i.translateXAxisX = i.translateXAxisX + t.config.xaxis.labels.offsetX;
+    var c = this.yAxisWidth, h = this.xAxisHeight;
+    i.xAxisLabelsHeight = this.xAxisHeight - l.height, i.xAxisGroupLabelsHeight = i.xAxisLabelsHeight - r.height, i.xAxisLabelsWidth = this.xAxisWidth, i.xAxisHeight = this.xAxisHeight;
+    var d = 10;
+    (t.config.chart.type === "radar" || this.isSparkline) && (c = 0, h = 0), this.isSparkline && (this.lgRect = { height: 0, width: 0 }), (this.isSparkline || t.config.chart.type === "treemap") && (c = 0, h = 0, d = 0), this.isSparkline || t.config.chart.type === "treemap" || this.dimXAxis.additionalPaddingXLabels(r);
+    var u = function() {
+      i.translateX = c + e.datalabelsCoords.width, i.gridHeight = i.svgHeight - e.lgRect.height - h - (e.isSparkline || t.config.chart.type === "treemap" ? 0 : t.globals.rotateXLabels ? 10 : 15), i.gridWidth = i.svgWidth - c - 2 * e.datalabelsCoords.width;
+    };
+    switch (t.config.xaxis.position === "top" && (d = i.xAxisHeight - t.config.xaxis.axisTicks.height - 5), t.config.legend.position) {
+      case "bottom":
+        i.translateY = d, u();
+        break;
+      case "top":
+        i.translateY = this.lgRect.height + d, u();
+        break;
+      case "left":
+        i.translateY = d, i.translateX = this.lgRect.width + c + this.datalabelsCoords.width, i.gridHeight = i.svgHeight - h - 12, i.gridWidth = i.svgWidth - this.lgRect.width - c - 2 * this.datalabelsCoords.width;
+        break;
+      case "right":
+        i.translateY = d, i.translateX = c + this.datalabelsCoords.width, i.gridHeight = i.svgHeight - h - 12, i.gridWidth = i.svgWidth - this.lgRect.width - c - 2 * this.datalabelsCoords.width - 5;
+        break;
+      default:
+        throw new Error("Legend position not supported");
+    }
+    this.dimGrid.setGridXPosForDualYAxis(s, a), new cs(this.ctx).setYAxisXPosition(a, s);
+  } }, { key: "setDimensionsForNonAxisCharts", value: function() {
+    var e = this.w, t = e.globals, i = e.config, a = 0;
+    e.config.legend.show && !e.config.legend.floating && (a = 20);
+    var s = i.chart.type === "pie" || i.chart.type === "polarArea" || i.chart.type === "donut" ? "pie" : "radialBar", r = i.plotOptions[s].offsetY, o = i.plotOptions[s].offsetX;
+    if (!i.legend.show || i.legend.floating) {
+      t.gridHeight = t.svgHeight;
+      var l = t.dom.elWrap.getBoundingClientRect().width;
+      return t.gridWidth = Math.min(l, t.gridHeight), t.translateY = r, void (t.translateX = o + (t.svgWidth - t.gridWidth) / 2);
+    }
+    switch (i.legend.position) {
+      case "bottom":
+        t.gridHeight = t.svgHeight - this.lgRect.height, t.gridWidth = t.svgWidth, t.translateY = r - 10, t.translateX = o + (t.svgWidth - t.gridWidth) / 2;
+        break;
+      case "top":
+        t.gridHeight = t.svgHeight - this.lgRect.height, t.gridWidth = t.svgWidth, t.translateY = this.lgRect.height + r + 10, t.translateX = o + (t.svgWidth - t.gridWidth) / 2;
+        break;
+      case "left":
+        t.gridWidth = t.svgWidth - this.lgRect.width - a, t.gridHeight = i.chart.height !== "auto" ? t.svgHeight : t.gridWidth, t.translateY = r, t.translateX = o + this.lgRect.width + a;
+        break;
+      case "right":
+        t.gridWidth = t.svgWidth - this.lgRect.width - a - 5, t.gridHeight = i.chart.height !== "auto" ? t.svgHeight : t.gridWidth, t.translateY = r, t.translateX = o + 10;
+        break;
+      default:
+        throw new Error("Legend position not supported");
+    }
+  } }, { key: "conditionalChecksForAxisCoords", value: function(e, t, i) {
+    var a = this.w, s = a.globals.hasXaxisGroups ? 2 : 1, r = i.height + e.height + t.height, o = a.globals.isMultiLineX ? 1.2 : a.globals.LINE_HEIGHT_RATIO, l = a.globals.rotateXLabels ? 22 : 10, c = a.globals.rotateXLabels && a.config.legend.position === "bottom" ? 10 : 0;
+    this.xAxisHeight = r * o + s * l + c, this.xAxisWidth = e.width, this.xAxisHeight - t.height > a.config.xaxis.labels.maxHeight && (this.xAxisHeight = a.config.xaxis.labels.maxHeight), a.config.xaxis.labels.minHeight && this.xAxisHeight < a.config.xaxis.labels.minHeight && (this.xAxisHeight = a.config.xaxis.labels.minHeight), a.config.xaxis.floating && (this.xAxisHeight = 0);
+    var h = 0, d = 0;
+    a.config.yaxis.forEach(function(u) {
+      h += u.labels.minWidth, d += u.labels.maxWidth;
+    }), this.yAxisWidth < h && (this.yAxisWidth = h), this.yAxisWidth > d && (this.yAxisWidth = d);
+  } }]), n;
+}(), Kc = function() {
+  function n(e) {
+    q(this, n), this.w = e.w, this.lgCtx = e;
+  }
+  return $(n, [{ key: "getLegendStyles", value: function() {
+    var e, t, i, a = document.createElement("style");
+    a.setAttribute("type", "text/css");
+    var s = ((e = this.lgCtx.ctx) === null || e === void 0 || (t = e.opts) === null || t === void 0 || (i = t.chart) === null || i === void 0 ? void 0 : i.nonce) || this.w.config.chart.nonce;
+    s && a.setAttribute("nonce", s);
+    var r = document.createTextNode(`
+      .apexcharts-flip-y {
+        transform: scaleY(-1) translateY(-100%);
+        transform-origin: top;
+        transform-box: fill-box;
+      }
+      .apexcharts-flip-x {
+        transform: scaleX(-1);
+        transform-origin: center;
+        transform-box: fill-box;
+      }
+      .apexcharts-legend {
+        display: flex;
+        overflow: auto;
+        padding: 0 10px;
+      }
+      .apexcharts-legend.apexcharts-legend-group-horizontal {
+        flex-direction: column;
+      }
+      .apexcharts-legend-group {
+        display: flex;
+      }
+      .apexcharts-legend-group-vertical {
+        flex-direction: column-reverse;
+      }
+      .apexcharts-legend.apx-legend-position-bottom, .apexcharts-legend.apx-legend-position-top {
+        flex-wrap: wrap
+      }
+      .apexcharts-legend.apx-legend-position-right, .apexcharts-legend.apx-legend-position-left {
+        flex-direction: column;
+        bottom: 0;
+      }
+      .apexcharts-legend.apx-legend-position-bottom.apexcharts-align-left, .apexcharts-legend.apx-legend-position-top.apexcharts-align-left, .apexcharts-legend.apx-legend-position-right, .apexcharts-legend.apx-legend-position-left {
+        justify-content: flex-start;
+        align-items: flex-start;
+      }
+      .apexcharts-legend.apx-legend-position-bottom.apexcharts-align-center, .apexcharts-legend.apx-legend-position-top.apexcharts-align-center {
+        justify-content: center;
+        align-items: center;
+      }
+      .apexcharts-legend.apx-legend-position-bottom.apexcharts-align-right, .apexcharts-legend.apx-legend-position-top.apexcharts-align-right {
+        justify-content: flex-end;
+        align-items: flex-end;
+      }
+      .apexcharts-legend-series {
+        cursor: pointer;
+        line-height: normal;
+        display: flex;
+        align-items: center;
+      }
+      .apexcharts-legend-text {
+        position: relative;
+        font-size: 14px;
+      }
+      .apexcharts-legend-text *, .apexcharts-legend-marker * {
+        pointer-events: none;
+      }
+      .apexcharts-legend-marker {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        margin-right: 1px;
+      }
+
+      .apexcharts-legend-series.apexcharts-no-click {
+        cursor: auto;
+      }
+      .apexcharts-legend .apexcharts-hidden-zero-series, .apexcharts-legend .apexcharts-hidden-null-series {
+        display: none !important;
+      }
+      .apexcharts-inactive-legend {
+        opacity: 0.45;
+      }
+
+    `);
+    return a.appendChild(r), a;
+  } }, { key: "getLegendDimensions", value: function() {
+    var e = this.w.globals.dom.baseEl.querySelector(".apexcharts-legend").getBoundingClientRect(), t = e.width;
+    return { clwh: e.height, clww: t };
+  } }, { key: "appendToForeignObject", value: function() {
+    this.w.globals.dom.elLegendForeign.appendChild(this.getLegendStyles());
+  } }, { key: "toggleDataSeries", value: function(e, t) {
+    var i = this, a = this.w;
+    if (a.globals.axisCharts || a.config.chart.type === "radialBar") {
+      a.globals.resized = !0;
+      var s = null, r = null;
+      a.globals.risingSeries = [], a.globals.axisCharts ? (s = a.globals.dom.baseEl.querySelector(".apexcharts-series[data\\:realIndex='".concat(e, "']")), r = parseInt(s.getAttribute("data:realIndex"), 10)) : (s = a.globals.dom.baseEl.querySelector(".apexcharts-series[rel='".concat(e + 1, "']")), r = parseInt(s.getAttribute("rel"), 10) - 1), t ? [{ cs: a.globals.collapsedSeries, csi: a.globals.collapsedSeriesIndices }, { cs: a.globals.ancillaryCollapsedSeries, csi: a.globals.ancillaryCollapsedSeriesIndices }].forEach(function(h) {
+        i.riseCollapsedSeries(h.cs, h.csi, r);
+      }) : this.hideSeries({ seriesEl: s, realIndex: r });
+    } else {
+      var o = a.globals.dom.Paper.findOne(" .apexcharts-series[rel='".concat(e + 1, "'] path")), l = a.config.chart.type;
+      if (l === "pie" || l === "polarArea" || l === "donut") {
+        var c = a.config.plotOptions.pie.donut.labels;
+        new F(this.lgCtx.ctx).pathMouseDown(o, null), this.lgCtx.ctx.pie.printDataLabelsInner(o.node, c);
+      }
+      o.fire("click");
+    }
+  } }, { key: "getSeriesAfterCollapsing", value: function(e) {
+    var t = e.realIndex, i = this.w, a = i.globals, s = T.clone(i.config.series);
+    if (a.axisCharts) {
+      var r = i.config.yaxis[a.seriesYAxisReverseMap[t]], o = { index: t, data: s[t].data.slice(), type: s[t].type || i.config.chart.type };
+      if (r && r.show && r.showAlways) a.ancillaryCollapsedSeriesIndices.indexOf(t) < 0 && (a.ancillaryCollapsedSeries.push(o), a.ancillaryCollapsedSeriesIndices.push(t));
+      else if (a.collapsedSeriesIndices.indexOf(t) < 0) {
+        a.collapsedSeries.push(o), a.collapsedSeriesIndices.push(t);
+        var l = a.risingSeries.indexOf(t);
+        a.risingSeries.splice(l, 1);
+      }
+    } else a.collapsedSeries.push({ index: t, data: s[t] }), a.collapsedSeriesIndices.push(t);
+    return a.allSeriesCollapsed = a.collapsedSeries.length + a.ancillaryCollapsedSeries.length === i.config.series.length, this._getSeriesBasedOnCollapsedState(s);
+  } }, { key: "hideSeries", value: function(e) {
+    for (var t = e.seriesEl, i = e.realIndex, a = this.w, s = this.getSeriesAfterCollapsing({ realIndex: i }), r = t.childNodes, o = 0; o < r.length; o++) r[o].classList.contains("apexcharts-series-markers-wrap") && (r[o].classList.contains("apexcharts-hide") ? r[o].classList.remove("apexcharts-hide") : r[o].classList.add("apexcharts-hide"));
+    this.lgCtx.ctx.updateHelpers._updateSeries(s, a.config.chart.animations.dynamicAnimation.enabled);
+  } }, { key: "riseCollapsedSeries", value: function(e, t, i) {
+    var a = this.w, s = T.clone(a.config.series);
+    if (e.length > 0) {
+      for (var r = 0; r < e.length; r++) e[r].index === i && (a.globals.axisCharts ? s[i].data = e[r].data.slice() : s[i] = e[r].data, typeof s[i] != "number" && (s[i].hidden = !1), e.splice(r, 1), t.splice(r, 1), a.globals.risingSeries.push(i));
+      s = this._getSeriesBasedOnCollapsedState(s), this.lgCtx.ctx.updateHelpers._updateSeries(s, a.config.chart.animations.dynamicAnimation.enabled);
+    }
+  } }, { key: "_getSeriesBasedOnCollapsedState", value: function(e) {
+    var t = this.w, i = 0;
+    return t.globals.axisCharts ? e.forEach(function(a, s) {
+      t.globals.collapsedSeriesIndices.indexOf(s) < 0 && t.globals.ancillaryCollapsedSeriesIndices.indexOf(s) < 0 || (e[s].data = [], i++);
+    }) : e.forEach(function(a, s) {
+      !t.globals.collapsedSeriesIndices.indexOf(s) < 0 && (e[s] = 0, i++);
+    }), t.globals.allSeriesCollapsed = i === e.length, e;
+  } }]), n;
+}(), In = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w, this.onLegendClick = this.onLegendClick.bind(this), this.onLegendHovered = this.onLegendHovered.bind(this), this.isBarsDistributed = this.w.config.chart.type === "bar" && this.w.config.plotOptions.bar.distributed && this.w.config.series.length === 1, this.legendHelpers = new Kc(this);
+  }
+  return $(n, [{ key: "init", value: function() {
+    var e = this.w, t = e.globals, i = e.config, a = i.legend.showForSingleSeries && t.series.length === 1 || this.isBarsDistributed || t.series.length > 1;
+    if (this.legendHelpers.appendToForeignObject(), (a || !t.axisCharts) && i.legend.show) {
+      for (; t.dom.elLegendWrap.firstChild; ) t.dom.elLegendWrap.removeChild(t.dom.elLegendWrap.firstChild);
+      this.drawLegends(), i.legend.position === "bottom" || i.legend.position === "top" ? this.legendAlignHorizontal() : i.legend.position !== "right" && i.legend.position !== "left" || this.legendAlignVertical();
+    }
+  } }, { key: "createLegendMarker", value: function(e) {
+    var t = e.i, i = e.fillcolor, a = this.w, s = document.createElement("span");
+    s.classList.add("apexcharts-legend-marker");
+    var r = a.config.legend.markers.shape || a.config.markers.shape, o = r;
+    Array.isArray(r) && (o = r[t]);
+    var l = Array.isArray(a.config.legend.markers.size) ? parseFloat(a.config.legend.markers.size[t]) : parseFloat(a.config.legend.markers.size), c = Array.isArray(a.config.legend.markers.offsetX) ? parseFloat(a.config.legend.markers.offsetX[t]) : parseFloat(a.config.legend.markers.offsetX), h = Array.isArray(a.config.legend.markers.offsetY) ? parseFloat(a.config.legend.markers.offsetY[t]) : parseFloat(a.config.legend.markers.offsetY), d = Array.isArray(a.config.legend.markers.strokeWidth) ? parseFloat(a.config.legend.markers.strokeWidth[t]) : parseFloat(a.config.legend.markers.strokeWidth), u = s.style;
+    if (u.height = 2 * (l + d) + "px", u.width = 2 * (l + d) + "px", u.left = c + "px", u.top = h + "px", a.config.legend.markers.customHTML) u.background = "transparent", u.color = i[t], Array.isArray(a.config.legend.markers.customHTML) ? a.config.legend.markers.customHTML[t] && (s.innerHTML = a.config.legend.markers.customHTML[t]()) : s.innerHTML = a.config.legend.markers.customHTML();
+    else {
+      var g = new Xt(this.ctx).getMarkerConfig({ cssClass: "apexcharts-legend-marker apexcharts-marker apexcharts-marker-".concat(o), seriesIndex: t, strokeWidth: d, size: l }), p = window.SVG().addTo(s).size("100%", "100%"), f = new F(this.ctx).drawMarker(0, 0, N(N({}, g), {}, { pointFillColor: Array.isArray(i) ? i[t] : g.pointFillColor, shape: o }));
+      a.globals.dom.Paper.find(".apexcharts-legend-marker.apexcharts-marker").forEach(function(x) {
+        x.node.classList.contains("apexcharts-marker-triangle") ? x.node.style.transform = "translate(50%, 45%)" : x.node.style.transform = "translate(50%, 50%)";
+      }), p.add(f);
+    }
+    return s;
+  } }, { key: "drawLegends", value: function() {
+    var e = this, t = this, i = this.w, a = i.config.legend.fontFamily, s = i.globals.seriesNames, r = i.config.legend.markers.fillColors ? i.config.legend.markers.fillColors.slice() : i.globals.colors.slice();
+    if (i.config.chart.type === "heatmap") {
+      var o = i.config.plotOptions.heatmap.colorScale.ranges;
+      s = o.map(function(g) {
+        return g.name ? g.name : g.from + " - " + g.to;
+      }), r = o.map(function(g) {
+        return g.color;
+      });
+    } else this.isBarsDistributed && (s = i.globals.labels.slice());
+    i.config.legend.customLegendItems.length && (s = i.config.legend.customLegendItems);
+    var l = i.globals.legendFormatter, c = i.config.legend.inverseOrder, h = [];
+    i.globals.seriesGroups.length > 1 && i.config.legend.clusterGroupedSeries && i.globals.seriesGroups.forEach(function(g, p) {
+      h[p] = document.createElement("div"), h[p].classList.add("apexcharts-legend-group", "apexcharts-legend-group-".concat(p)), i.config.legend.clusterGroupedSeriesOrientation === "horizontal" ? i.globals.dom.elLegendWrap.classList.add("apexcharts-legend-group-horizontal") : h[p].classList.add("apexcharts-legend-group-vertical");
+    });
+    for (var d = function(g) {
+      var p, f = l(s[g], { seriesIndex: g, w: i }), x = !1, b = !1;
+      if (i.globals.collapsedSeries.length > 0) for (var m = 0; m < i.globals.collapsedSeries.length; m++) i.globals.collapsedSeries[m].index === g && (x = !0);
+      if (i.globals.ancillaryCollapsedSeriesIndices.length > 0) for (var w = 0; w < i.globals.ancillaryCollapsedSeriesIndices.length; w++) i.globals.ancillaryCollapsedSeriesIndices[w] === g && (b = !0);
+      var y = e.createLegendMarker({ i: g, fillcolor: r });
+      F.setAttrs(y, { rel: g + 1, "data:collapsed": x || b }), (x || b) && y.classList.add("apexcharts-inactive-legend");
+      var v = document.createElement("div"), k = document.createElement("span");
+      k.classList.add("apexcharts-legend-text"), k.innerHTML = Array.isArray(f) ? f.join(" ") : f;
+      var A = i.config.legend.labels.useSeriesColors ? i.globals.colors[g] : Array.isArray(i.config.legend.labels.colors) ? (p = i.config.legend.labels.colors) === null || p === void 0 ? void 0 : p[g] : i.config.legend.labels.colors;
+      A || (A = i.config.chart.foreColor), k.style.color = A, k.style.fontSize = parseFloat(i.config.legend.fontSize) + "px", k.style.fontWeight = i.config.legend.fontWeight, k.style.fontFamily = a || i.config.chart.fontFamily, F.setAttrs(k, { rel: g + 1, i: g, "data:default-text": encodeURIComponent(f), "data:collapsed": x || b }), v.appendChild(y), v.appendChild(k);
+      var C = new Pe(e.ctx);
+      i.config.legend.showForZeroSeries || C.getSeriesTotalByIndex(g) === 0 && C.seriesHaveSameValues(g) && !C.isSeriesNull(g) && i.globals.collapsedSeriesIndices.indexOf(g) === -1 && i.globals.ancillaryCollapsedSeriesIndices.indexOf(g) === -1 && v.classList.add("apexcharts-hidden-zero-series"), i.config.legend.showForNullSeries || C.isSeriesNull(g) && i.globals.collapsedSeriesIndices.indexOf(g) === -1 && i.globals.ancillaryCollapsedSeriesIndices.indexOf(g) === -1 && v.classList.add("apexcharts-hidden-null-series"), h.length ? i.globals.seriesGroups.forEach(function(S, L) {
+        var P;
+        S.includes((P = i.config.series[g]) === null || P === void 0 ? void 0 : P.name) && (i.globals.dom.elLegendWrap.appendChild(h[L]), h[L].appendChild(v));
+      }) : i.globals.dom.elLegendWrap.appendChild(v), i.globals.dom.elLegendWrap.classList.add("apexcharts-align-".concat(i.config.legend.horizontalAlign)), i.globals.dom.elLegendWrap.classList.add("apx-legend-position-" + i.config.legend.position), v.classList.add("apexcharts-legend-series"), v.style.margin = "".concat(i.config.legend.itemMargin.vertical, "px ").concat(i.config.legend.itemMargin.horizontal, "px"), i.globals.dom.elLegendWrap.style.width = i.config.legend.width ? i.config.legend.width + "px" : "", i.globals.dom.elLegendWrap.style.height = i.config.legend.height ? i.config.legend.height + "px" : "", F.setAttrs(v, { rel: g + 1, seriesName: T.escapeString(s[g]), "data:collapsed": x || b }), (x || b) && v.classList.add("apexcharts-inactive-legend"), i.config.legend.onItemClick.toggleDataSeries || v.classList.add("apexcharts-no-click");
+    }, u = c ? s.length - 1 : 0; c ? u >= 0 : u <= s.length - 1; c ? u-- : u++) d(u);
+    i.globals.dom.elWrap.addEventListener("click", t.onLegendClick, !0), i.config.legend.onItemHover.highlightDataSeries && i.config.legend.customLegendItems.length === 0 && (i.globals.dom.elWrap.addEventListener("mousemove", t.onLegendHovered, !0), i.globals.dom.elWrap.addEventListener("mouseout", t.onLegendHovered, !0));
+  } }, { key: "setLegendWrapXY", value: function(e, t) {
+    var i = this.w, a = i.globals.dom.elLegendWrap, s = a.clientHeight, r = 0, o = 0;
+    if (i.config.legend.position === "bottom") o = i.globals.svgHeight - Math.min(s, i.globals.svgHeight / 2) - 5;
+    else if (i.config.legend.position === "top") {
+      var l = new Ii(this.ctx), c = l.dimHelpers.getTitleSubtitleCoords("title").height, h = l.dimHelpers.getTitleSubtitleCoords("subtitle").height;
+      o = (c > 0 ? c - 10 : 0) + (h > 0 ? h - 10 : 0);
+    }
+    a.style.position = "absolute", r = r + e + i.config.legend.offsetX, o = o + t + i.config.legend.offsetY, a.style.left = r + "px", a.style.top = o + "px", i.config.legend.position === "right" && (a.style.left = "auto", a.style.right = 25 + i.config.legend.offsetX + "px"), ["width", "height"].forEach(function(d) {
+      a.style[d] && (a.style[d] = parseInt(i.config.legend[d], 10) + "px");
+    });
+  } }, { key: "legendAlignHorizontal", value: function() {
+    var e = this.w;
+    e.globals.dom.elLegendWrap.style.right = 0;
+    var t = new Ii(this.ctx), i = t.dimHelpers.getTitleSubtitleCoords("title"), a = t.dimHelpers.getTitleSubtitleCoords("subtitle"), s = 0;
+    e.config.legend.position === "top" && (s = i.height + a.height + e.config.title.margin + e.config.subtitle.margin - 10), this.setLegendWrapXY(20, s);
+  } }, { key: "legendAlignVertical", value: function() {
+    var e = this.w, t = this.legendHelpers.getLegendDimensions(), i = 0;
+    e.config.legend.position === "left" && (i = 20), e.config.legend.position === "right" && (i = e.globals.svgWidth - t.clww - 10), this.setLegendWrapXY(i, 20);
+  } }, { key: "onLegendHovered", value: function(e) {
+    var t = this.w, i = e.target.classList.contains("apexcharts-legend-series") || e.target.classList.contains("apexcharts-legend-text") || e.target.classList.contains("apexcharts-legend-marker");
+    if (t.config.chart.type === "heatmap" || this.isBarsDistributed) {
+      if (i) {
+        var a = parseInt(e.target.getAttribute("rel"), 10) - 1;
+        this.ctx.events.fireEvent("legendHover", [this.ctx, a, this.w]), new $e(this.ctx).highlightRangeInSeries(e, e.target);
+      }
+    } else !e.target.classList.contains("apexcharts-inactive-legend") && i && new $e(this.ctx).toggleSeriesOnHover(e, e.target);
+  } }, { key: "onLegendClick", value: function(e) {
+    var t = this.w;
+    if (!t.config.legend.customLegendItems.length && (e.target.classList.contains("apexcharts-legend-series") || e.target.classList.contains("apexcharts-legend-text") || e.target.classList.contains("apexcharts-legend-marker"))) {
+      var i = parseInt(e.target.getAttribute("rel"), 10) - 1, a = e.target.getAttribute("data:collapsed") === "true", s = this.w.config.chart.events.legendClick;
+      typeof s == "function" && s(this.ctx, i, this.w), this.ctx.events.fireEvent("legendClick", [this.ctx, i, this.w]);
+      var r = this.w.config.legend.markers.onClick;
+      typeof r == "function" && e.target.classList.contains("apexcharts-legend-marker") && (r(this.ctx, i, this.w), this.ctx.events.fireEvent("legendMarkerClick", [this.ctx, i, this.w])), t.config.chart.type !== "treemap" && t.config.chart.type !== "heatmap" && !this.isBarsDistributed && t.config.legend.onItemClick.toggleDataSeries && this.legendHelpers.toggleDataSeries(i, a);
+    }
+  } }]), n;
+}(), En = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w;
+    var t = this.w;
+    this.ev = this.w.config.chart.events, this.selectedClass = "apexcharts-selected", this.localeValues = this.w.globals.locale.toolbar, this.minX = t.globals.minX, this.maxX = t.globals.maxX;
+  }
+  return $(n, [{ key: "createToolbar", value: function() {
+    var e = this, t = this.w, i = function() {
+      return document.createElement("div");
+    }, a = i();
+    if (a.setAttribute("class", "apexcharts-toolbar"), a.style.top = t.config.chart.toolbar.offsetY + "px", a.style.right = 3 - t.config.chart.toolbar.offsetX + "px", t.globals.dom.elWrap.appendChild(a), this.elZoom = i(), this.elZoomIn = i(), this.elZoomOut = i(), this.elPan = i(), this.elSelection = i(), this.elZoomReset = i(), this.elMenuIcon = i(), this.elMenu = i(), this.elCustomIcons = [], this.t = t.config.chart.toolbar.tools, Array.isArray(this.t.customIcons)) for (var s = 0; s < this.t.customIcons.length; s++) this.elCustomIcons.push(i());
+    var r = [], o = function(d, u, g) {
+      var p = d.toLowerCase();
+      e.t[p] && t.config.chart.zoom.enabled && r.push({ el: u, icon: typeof e.t[p] == "string" ? e.t[p] : g, title: e.localeValues[d], class: "apexcharts-".concat(p, "-icon") });
+    };
+    o("zoomIn", this.elZoomIn, `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <path d="M0 0h24v24H0z" fill="none"/>
+    <path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+</svg>
+`), o("zoomOut", this.elZoomOut, `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <path d="M0 0h24v24H0z" fill="none"/>
+    <path d="M7 11v2h10v-2H7zm5-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+</svg>
+`);
+    var l = function(d) {
+      e.t[d] && t.config.chart[d].enabled && r.push({ el: d === "zoom" ? e.elZoom : e.elSelection, icon: typeof e.t[d] == "string" ? e.t[d] : d === "zoom" ? `<svg xmlns="http://www.w3.org/2000/svg" fill="#000000" height="24" viewBox="0 0 24 24" width="24">
+    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+    <path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/>
+</svg>` : `<svg fill="#6E8192" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0h24v24H0z" fill="none"/>
+    <path d="M3 5h2V3c-1.1 0-2 .9-2 2zm0 8h2v-2H3v2zm4 8h2v-2H7v2zM3 9h2V7H3v2zm10-6h-2v2h2V3zm6 0v2h2c0-1.1-.9-2-2-2zM5 21v-2H3c0 1.1.9 2 2 2zm-2-4h2v-2H3v2zM9 3H7v2h2V3zm2 18h2v-2h-2v2zm8-8h2v-2h-2v2zm0 8c1.1 0 2-.9 2-2h-2v2zm0-12h2V7h-2v2zm0 8h2v-2h-2v2zm-4 4h2v-2h-2v2zm0-16h2V3h-2v2z"/>
+</svg>`, title: e.localeValues[d === "zoom" ? "selectionZoom" : "selection"], class: t.globals.isTouchDevice ? "apexcharts-element-hidden" : "apexcharts-".concat(d, "-icon") });
+    };
+    l("zoom"), l("selection"), this.t.pan && t.config.chart.zoom.enabled && r.push({ el: this.elPan, icon: typeof this.t.pan == "string" ? this.t.pan : `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" height="24" viewBox="0 0 24 24" width="24">
+    <defs>
+        <path d="M0 0h24v24H0z" id="a"/>
+    </defs>
+    <clipPath id="b">
+        <use overflow="visible" xlink:href="#a"/>
+    </clipPath>
+    <path clip-path="url(#b)" d="M23 5.5V20c0 2.2-1.8 4-4 4h-7.3c-1.08 0-2.1-.43-2.85-1.19L1 14.83s1.26-1.23 1.3-1.25c.22-.19.49-.29.79-.29.22 0 .42.06.6.16.04.01 4.31 2.46 4.31 2.46V4c0-.83.67-1.5 1.5-1.5S11 3.17 11 4v7h1V1.5c0-.83.67-1.5 1.5-1.5S15 .67 15 1.5V11h1V2.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5V11h1V5.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5z"/>
+</svg>`, title: this.localeValues.pan, class: t.globals.isTouchDevice ? "apexcharts-element-hidden" : "apexcharts-pan-icon" }), o("reset", this.elZoomReset, `<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+    <path d="M0 0h24v24H0z" fill="none"/>
+</svg>`), this.t.download && r.push({ el: this.elMenuIcon, icon: typeof this.t.download == "string" ? this.t.download : '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>', title: this.localeValues.menu, class: "apexcharts-menu-icon" });
+    for (var c = 0; c < this.elCustomIcons.length; c++) r.push({ el: this.elCustomIcons[c], icon: this.t.customIcons[c].icon, title: this.t.customIcons[c].title, index: this.t.customIcons[c].index, class: "apexcharts-toolbar-custom-icon " + this.t.customIcons[c].class });
+    r.forEach(function(d, u) {
+      d.index && T.moveIndexInArray(r, u, d.index);
+    });
+    for (var h = 0; h < r.length; h++) F.setAttrs(r[h].el, { class: r[h].class, title: r[h].title }), r[h].el.innerHTML = r[h].icon, a.appendChild(r[h].el);
+    this._createHamburgerMenu(a), t.globals.zoomEnabled ? this.elZoom.classList.add(this.selectedClass) : t.globals.panEnabled ? this.elPan.classList.add(this.selectedClass) : t.globals.selectionEnabled && this.elSelection.classList.add(this.selectedClass), this.addToolbarEventListeners();
+  } }, { key: "_createHamburgerMenu", value: function(e) {
+    this.elMenuItems = [], e.appendChild(this.elMenu), F.setAttrs(this.elMenu, { class: "apexcharts-menu" });
+    for (var t = [{ name: "exportSVG", title: this.localeValues.exportToSVG }, { name: "exportPNG", title: this.localeValues.exportToPNG }, { name: "exportCSV", title: this.localeValues.exportToCSV }], i = 0; i < t.length; i++) this.elMenuItems.push(document.createElement("div")), this.elMenuItems[i].innerHTML = t[i].title, F.setAttrs(this.elMenuItems[i], { class: "apexcharts-menu-item ".concat(t[i].name), title: t[i].title }), this.elMenu.appendChild(this.elMenuItems[i]);
+  } }, { key: "addToolbarEventListeners", value: function() {
+    var e = this;
+    this.elZoomReset.addEventListener("click", this.handleZoomReset.bind(this)), this.elSelection.addEventListener("click", this.toggleZoomSelection.bind(this, "selection")), this.elZoom.addEventListener("click", this.toggleZoomSelection.bind(this, "zoom")), this.elZoomIn.addEventListener("click", this.handleZoomIn.bind(this)), this.elZoomOut.addEventListener("click", this.handleZoomOut.bind(this)), this.elPan.addEventListener("click", this.togglePanning.bind(this)), this.elMenuIcon.addEventListener("click", this.toggleMenu.bind(this)), this.elMenuItems.forEach(function(i) {
+      i.classList.contains("exportSVG") ? i.addEventListener("click", e.handleDownload.bind(e, "svg")) : i.classList.contains("exportPNG") ? i.addEventListener("click", e.handleDownload.bind(e, "png")) : i.classList.contains("exportCSV") && i.addEventListener("click", e.handleDownload.bind(e, "csv"));
+    });
+    for (var t = 0; t < this.t.customIcons.length; t++) this.elCustomIcons[t].addEventListener("click", this.t.customIcons[t].click.bind(this, this.ctx, this.ctx.w));
+  } }, { key: "toggleZoomSelection", value: function(e) {
+    this.ctx.getSyncedCharts().forEach(function(t) {
+      t.ctx.toolbar.toggleOtherControls();
+      var i = e === "selection" ? t.ctx.toolbar.elSelection : t.ctx.toolbar.elZoom, a = e === "selection" ? "selectionEnabled" : "zoomEnabled";
+      t.w.globals[a] = !t.w.globals[a], i.classList.contains(t.ctx.toolbar.selectedClass) ? i.classList.remove(t.ctx.toolbar.selectedClass) : i.classList.add(t.ctx.toolbar.selectedClass);
+    });
+  } }, { key: "getToolbarIconsReference", value: function() {
+    var e = this.w;
+    this.elZoom || (this.elZoom = e.globals.dom.baseEl.querySelector(".apexcharts-zoom-icon")), this.elPan || (this.elPan = e.globals.dom.baseEl.querySelector(".apexcharts-pan-icon")), this.elSelection || (this.elSelection = e.globals.dom.baseEl.querySelector(".apexcharts-selection-icon"));
+  } }, { key: "enableZoomPanFromToolbar", value: function(e) {
+    this.toggleOtherControls(), e === "pan" ? this.w.globals.panEnabled = !0 : this.w.globals.zoomEnabled = !0;
+    var t = e === "pan" ? this.elPan : this.elZoom, i = e === "pan" ? this.elZoom : this.elPan;
+    t && t.classList.add(this.selectedClass), i && i.classList.remove(this.selectedClass);
+  } }, { key: "togglePanning", value: function() {
+    this.ctx.getSyncedCharts().forEach(function(e) {
+      e.ctx.toolbar.toggleOtherControls(), e.w.globals.panEnabled = !e.w.globals.panEnabled, e.ctx.toolbar.elPan.classList.contains(e.ctx.toolbar.selectedClass) ? e.ctx.toolbar.elPan.classList.remove(e.ctx.toolbar.selectedClass) : e.ctx.toolbar.elPan.classList.add(e.ctx.toolbar.selectedClass);
+    });
+  } }, { key: "toggleOtherControls", value: function() {
+    var e = this, t = this.w;
+    t.globals.panEnabled = !1, t.globals.zoomEnabled = !1, t.globals.selectionEnabled = !1, this.getToolbarIconsReference(), [this.elPan, this.elSelection, this.elZoom].forEach(function(i) {
+      i && i.classList.remove(e.selectedClass);
+    });
+  } }, { key: "handleZoomIn", value: function() {
+    var e = this.w;
+    e.globals.isRangeBar && (this.minX = e.globals.minY, this.maxX = e.globals.maxY);
+    var t = (this.minX + this.maxX) / 2, i = (this.minX + t) / 2, a = (this.maxX + t) / 2, s = this._getNewMinXMaxX(i, a);
+    e.globals.disableZoomIn || this.zoomUpdateOptions(s.minX, s.maxX);
+  } }, { key: "handleZoomOut", value: function() {
+    var e = this.w;
+    if (e.globals.isRangeBar && (this.minX = e.globals.minY, this.maxX = e.globals.maxY), !(e.config.xaxis.type === "datetime" && new Date(this.minX).getUTCFullYear() < 1e3)) {
+      var t = (this.minX + this.maxX) / 2, i = this.minX - (t - this.minX), a = this.maxX - (t - this.maxX), s = this._getNewMinXMaxX(i, a);
+      e.globals.disableZoomOut || this.zoomUpdateOptions(s.minX, s.maxX);
+    }
+  } }, { key: "_getNewMinXMaxX", value: function(e, t) {
+    var i = this.w.config.xaxis.convertedCatToNumeric;
+    return { minX: i ? Math.floor(e) : e, maxX: i ? Math.floor(t) : t };
+  } }, { key: "zoomUpdateOptions", value: function(e, t) {
+    var i = this.w;
+    if (e !== void 0 || t !== void 0) {
+      if (!(i.config.xaxis.convertedCatToNumeric && (e < 1 && (e = 1, t = i.globals.dataPoints), t - e < 2))) {
+        var a = { min: e, max: t }, s = this.getBeforeZoomRange(a);
+        s && (a = s.xaxis);
+        var r = { xaxis: a }, o = T.clone(i.globals.initialConfig.yaxis);
+        i.config.chart.group || (r.yaxis = o), this.w.globals.zoomed = !0, this.ctx.updateHelpers._updateOptions(r, !1, this.w.config.chart.animations.dynamicAnimation.enabled), this.zoomCallback(a, o);
+      }
+    } else this.handleZoomReset();
+  } }, { key: "zoomCallback", value: function(e, t) {
+    typeof this.ev.zoomed == "function" && (this.ev.zoomed(this.ctx, { xaxis: e, yaxis: t }), this.ctx.events.fireEvent("zoomed", { xaxis: e, yaxis: t }));
+  } }, { key: "getBeforeZoomRange", value: function(e, t) {
+    var i = null;
+    return typeof this.ev.beforeZoom == "function" && (i = this.ev.beforeZoom(this, { xaxis: e, yaxis: t })), i;
+  } }, { key: "toggleMenu", value: function() {
+    var e = this;
+    window.setTimeout(function() {
+      e.elMenu.classList.contains("apexcharts-menu-open") ? e.elMenu.classList.remove("apexcharts-menu-open") : e.elMenu.classList.add("apexcharts-menu-open");
+    }, 0);
+  } }, { key: "handleDownload", value: function(e) {
+    var t = this.w, i = new Zt(this.ctx);
+    switch (e) {
+      case "svg":
+        i.exportToSVG(this.ctx);
+        break;
+      case "png":
+        i.exportToPng(this.ctx);
+        break;
+      case "csv":
+        i.exportToCSV({ series: t.config.series, columnDelimiter: t.config.chart.toolbar.export.csv.columnDelimiter });
+    }
+  } }, { key: "handleZoomReset", value: function(e) {
+    this.ctx.getSyncedCharts().forEach(function(t) {
+      var i = t.w;
+      if (i.globals.lastXAxis.min = i.globals.initialConfig.xaxis.min, i.globals.lastXAxis.max = i.globals.initialConfig.xaxis.max, t.updateHelpers.revertDefaultAxisMinMax(), typeof i.config.chart.events.beforeResetZoom == "function") {
+        var a = i.config.chart.events.beforeResetZoom(t, i);
+        a && t.updateHelpers.revertDefaultAxisMinMax(a);
+      }
+      typeof i.config.chart.events.zoomed == "function" && t.ctx.toolbar.zoomCallback({ min: i.config.xaxis.min, max: i.config.xaxis.max }), i.globals.zoomed = !1;
+      var s = t.ctx.series.emptyCollapsedSeries(T.clone(i.globals.initialSeries));
+      t.updateHelpers._updateSeries(s, i.config.chart.animations.dynamicAnimation.enabled);
+    });
+  } }, { key: "destroy", value: function() {
+    this.elZoom = null, this.elZoomIn = null, this.elZoomOut = null, this.elPan = null, this.elSelection = null, this.elZoomReset = null, this.elMenuIcon = null;
+  } }]), n;
+}(), Qc = function(n) {
+  oi(t, En);
+  var e = ni(t);
+  function t(i) {
+    var a;
+    return q(this, t), (a = e.call(this, i)).ctx = i, a.w = i.w, a.dragged = !1, a.graphics = new F(a.ctx), a.eventList = ["mousedown", "mouseleave", "mousemove", "touchstart", "touchmove", "mouseup", "touchend", "wheel"], a.clientX = 0, a.clientY = 0, a.startX = 0, a.endX = 0, a.dragX = 0, a.startY = 0, a.endY = 0, a.dragY = 0, a.moveDirection = "none", a.debounceTimer = null, a.debounceDelay = 100, a.wheelDelay = 400, a;
+  }
+  return $(t, [{ key: "init", value: function(i) {
+    var a = this, s = i.xyRatios, r = this.w, o = this;
+    this.xyRatios = s, this.zoomRect = this.graphics.drawRect(0, 0, 0, 0), this.selectionRect = this.graphics.drawRect(0, 0, 0, 0), this.gridRect = r.globals.dom.baseEl.querySelector(".apexcharts-grid"), this.constraints = new Le(0, 0, r.globals.gridWidth, r.globals.gridHeight), this.zoomRect.node.classList.add("apexcharts-zoom-rect"), this.selectionRect.node.classList.add("apexcharts-selection-rect"), r.globals.dom.Paper.add(this.zoomRect), r.globals.dom.Paper.add(this.selectionRect), r.config.chart.selection.type === "x" ? this.slDraggableRect = this.selectionRect.draggable({ minX: 0, minY: 0, maxX: r.globals.gridWidth, maxY: r.globals.gridHeight }).on("dragmove.namespace", this.selectionDragging.bind(this, "dragging")) : r.config.chart.selection.type === "y" ? this.slDraggableRect = this.selectionRect.draggable({ minX: 0, maxX: r.globals.gridWidth }).on("dragmove.namespace", this.selectionDragging.bind(this, "dragging")) : this.slDraggableRect = this.selectionRect.draggable().on("dragmove.namespace", this.selectionDragging.bind(this, "dragging")), this.preselectedSelection(), this.hoverArea = r.globals.dom.baseEl.querySelector("".concat(r.globals.chartClass, " .apexcharts-svg")), this.hoverArea.classList.add("apexcharts-zoomable"), this.eventList.forEach(function(l) {
+      a.hoverArea.addEventListener(l, o.svgMouseEvents.bind(o, s), { capture: !1, passive: !0 });
+    }), r.config.chart.zoom.enabled && r.config.chart.zoom.allowMouseWheelZoom && this.hoverArea.addEventListener("wheel", o.mouseWheelEvent.bind(o), { capture: !1, passive: !1 });
+  } }, { key: "destroy", value: function() {
+    this.slDraggableRect && (this.slDraggableRect.draggable(!1), this.slDraggableRect.off(), this.selectionRect.off()), this.selectionRect = null, this.zoomRect = null, this.gridRect = null;
+  } }, { key: "svgMouseEvents", value: function(i, a) {
+    var s = this.w, r = this.ctx.toolbar, o = s.globals.zoomEnabled ? s.config.chart.zoom.type : s.config.chart.selection.type, l = s.config.chart.toolbar.autoSelected;
+    if (a.shiftKey ? (this.shiftWasPressed = !0, r.enableZoomPanFromToolbar(l === "pan" ? "zoom" : "pan")) : this.shiftWasPressed && (r.enableZoomPanFromToolbar(l), this.shiftWasPressed = !1), a.target) {
+      var c, h = a.target.classList;
+      if (a.target.parentNode && a.target.parentNode !== null && (c = a.target.parentNode.classList), !(h.contains("apexcharts-legend-marker") || h.contains("apexcharts-legend-text") || c && c.contains("apexcharts-toolbar"))) {
+        if (this.clientX = a.type === "touchmove" || a.type === "touchstart" ? a.touches[0].clientX : a.type === "touchend" ? a.changedTouches[0].clientX : a.clientX, this.clientY = a.type === "touchmove" || a.type === "touchstart" ? a.touches[0].clientY : a.type === "touchend" ? a.changedTouches[0].clientY : a.clientY, a.type === "mousedown" && a.which === 1 || a.type === "touchstart") {
+          var d = this.gridRect.getBoundingClientRect();
+          this.startX = this.clientX - d.left - s.globals.barPadForNumericAxis, this.startY = this.clientY - d.top, this.dragged = !1, this.w.globals.mousedown = !0;
+        }
+        (a.type === "mousemove" && a.which === 1 || a.type === "touchmove") && (this.dragged = !0, s.globals.panEnabled ? (s.globals.selection = null, this.w.globals.mousedown && this.panDragging({ context: this, zoomtype: o, xyRatios: i })) : (this.w.globals.mousedown && s.globals.zoomEnabled || this.w.globals.mousedown && s.globals.selectionEnabled) && (this.selection = this.selectionDrawing({ context: this, zoomtype: o }))), a.type !== "mouseup" && a.type !== "touchend" && a.type !== "mouseleave" || this.handleMouseUp({ zoomtype: o }), this.makeSelectionRectDraggable();
+      }
+    }
+  } }, { key: "handleMouseUp", value: function(i) {
+    var a, s = i.zoomtype, r = i.isResized, o = this.w, l = (a = this.gridRect) === null || a === void 0 ? void 0 : a.getBoundingClientRect();
+    l && (this.w.globals.mousedown || r) && (this.endX = this.clientX - l.left - o.globals.barPadForNumericAxis, this.endY = this.clientY - l.top, this.dragX = Math.abs(this.endX - this.startX), this.dragY = Math.abs(this.endY - this.startY), (o.globals.zoomEnabled || o.globals.selectionEnabled) && this.selectionDrawn({ context: this, zoomtype: s })), o.globals.zoomEnabled && this.hideSelectionRect(this.selectionRect), this.dragged = !1, this.w.globals.mousedown = !1;
+  } }, { key: "mouseWheelEvent", value: function(i) {
+    var a = this, s = this.w;
+    i.preventDefault();
+    var r = Date.now();
+    r - s.globals.lastWheelExecution > this.wheelDelay && (this.executeMouseWheelZoom(i), s.globals.lastWheelExecution = r), this.debounceTimer && clearTimeout(this.debounceTimer), this.debounceTimer = setTimeout(function() {
+      r - s.globals.lastWheelExecution > a.wheelDelay && (a.executeMouseWheelZoom(i), s.globals.lastWheelExecution = r);
+    }, this.debounceDelay);
+  } }, { key: "executeMouseWheelZoom", value: function(i) {
+    var a, s = this.w;
+    this.minX = s.globals.isRangeBar ? s.globals.minY : s.globals.minX, this.maxX = s.globals.isRangeBar ? s.globals.maxY : s.globals.maxX;
+    var r = (a = this.gridRect) === null || a === void 0 ? void 0 : a.getBoundingClientRect();
+    if (r) {
+      var o, l, c, h = (i.clientX - r.left) / r.width, d = this.minX, u = this.maxX, g = u - d;
+      if (i.deltaY < 0) {
+        var p = d + h * g;
+        l = p - (o = 0.5 * g) / 2, c = p + o / 2;
+      } else l = d - (o = 1.5 * g) / 2, c = u + o / 2;
+      if (!s.globals.isRangeBar) {
+        l = Math.max(l, s.globals.initialMinX), c = Math.min(c, s.globals.initialMaxX);
+        var f = 0.01 * (s.globals.initialMaxX - s.globals.initialMinX);
+        if (c - l < f) {
+          var x = (l + c) / 2;
+          l = x - f / 2, c = x + f / 2;
+        }
+      }
+      var b = this._getNewMinXMaxX(l, c);
+      isNaN(b.minX) || isNaN(b.maxX) || this.zoomUpdateOptions(b.minX, b.maxX);
+    }
+  } }, { key: "makeSelectionRectDraggable", value: function() {
+    var i = this, a = this.w;
+    if (this.selectionRect) {
+      var s = this.selectionRect.node.getBoundingClientRect();
+      s.width > 0 && s.height > 0 && (this.selectionRect.select(!1).resize(!1), this.selectionRect.select({ createRot: function() {
+      }, updateRot: function() {
+      }, createHandle: function(r, o, l, c, h) {
+        return h === "l" || h === "r" ? r.circle(8).css({ "stroke-width": 1, stroke: "#333", fill: "#fff" }) : r.circle(0);
+      }, updateHandle: function(r, o) {
+        return r.center(o[0], o[1]);
+      } }).resize().on("resize", function() {
+        var r = a.globals.zoomEnabled ? a.config.chart.zoom.type : a.config.chart.selection.type;
+        i.handleMouseUp({ zoomtype: r, isResized: !0 });
+      }));
+    }
+  } }, { key: "preselectedSelection", value: function() {
+    var i = this.w, a = this.xyRatios;
+    if (!i.globals.zoomEnabled) {
+      if (i.globals.selection !== void 0 && i.globals.selection !== null) this.drawSelectionRect(N(N({}, i.globals.selection), {}, { translateX: i.globals.translateX, translateY: i.globals.translateY }));
+      else if (i.config.chart.selection.xaxis.min !== void 0 && i.config.chart.selection.xaxis.max !== void 0) {
+        var s = (i.config.chart.selection.xaxis.min - i.globals.minX) / a.xRatio, r = i.globals.gridWidth - (i.globals.maxX - i.config.chart.selection.xaxis.max) / a.xRatio - s;
+        i.globals.isRangeBar && (s = (i.config.chart.selection.xaxis.min - i.globals.yAxisScale[0].niceMin) / a.invertedYRatio, r = (i.config.chart.selection.xaxis.max - i.config.chart.selection.xaxis.min) / a.invertedYRatio);
+        var o = { x: s, y: 0, width: r, height: i.globals.gridHeight, translateX: i.globals.translateX, translateY: i.globals.translateY, selectionEnabled: !0 };
+        this.drawSelectionRect(o), this.makeSelectionRectDraggable(), typeof i.config.chart.events.selection == "function" && i.config.chart.events.selection(this.ctx, { xaxis: { min: i.config.chart.selection.xaxis.min, max: i.config.chart.selection.xaxis.max }, yaxis: {} });
+      }
+    }
+  } }, { key: "drawSelectionRect", value: function(i) {
+    var a = i.x, s = i.y, r = i.width, o = i.height, l = i.translateX, c = l === void 0 ? 0 : l, h = i.translateY, d = h === void 0 ? 0 : h, u = this.w, g = this.zoomRect, p = this.selectionRect;
+    if (this.dragged || u.globals.selection !== null) {
+      var f = { transform: "translate(" + c + ", " + d + ")" };
+      u.globals.zoomEnabled && this.dragged && (r < 0 && (r = 1), g.attr({ x: a, y: s, width: r, height: o, fill: u.config.chart.zoom.zoomedArea.fill.color, "fill-opacity": u.config.chart.zoom.zoomedArea.fill.opacity, stroke: u.config.chart.zoom.zoomedArea.stroke.color, "stroke-width": u.config.chart.zoom.zoomedArea.stroke.width, "stroke-opacity": u.config.chart.zoom.zoomedArea.stroke.opacity }), F.setAttrs(g.node, f)), u.globals.selectionEnabled && (p.attr({ x: a, y: s, width: r > 0 ? r : 0, height: o > 0 ? o : 0, fill: u.config.chart.selection.fill.color, "fill-opacity": u.config.chart.selection.fill.opacity, stroke: u.config.chart.selection.stroke.color, "stroke-width": u.config.chart.selection.stroke.width, "stroke-dasharray": u.config.chart.selection.stroke.dashArray, "stroke-opacity": u.config.chart.selection.stroke.opacity }), F.setAttrs(p.node, f));
+    }
+  } }, { key: "hideSelectionRect", value: function(i) {
+    i && i.attr({ x: 0, y: 0, width: 0, height: 0 });
+  } }, { key: "selectionDrawing", value: function(i) {
+    var a = i.context, s = i.zoomtype, r = this.w, o = a, l = this.gridRect.getBoundingClientRect(), c = o.startX - 1, h = o.startY, d = !1, u = !1, g = o.clientX - l.left - r.globals.barPadForNumericAxis, p = o.clientY - l.top, f = g - c, x = p - h, b = { translateX: r.globals.translateX, translateY: r.globals.translateY };
+    return Math.abs(f + c) > r.globals.gridWidth ? f = r.globals.gridWidth - c : g < 0 && (f = c), c > g && (d = !0, f = Math.abs(f)), h > p && (u = !0, x = Math.abs(x)), b = N(N({}, b = s === "x" ? { x: d ? c - f : c, y: 0, width: f, height: r.globals.gridHeight } : s === "y" ? { x: 0, y: u ? h - x : h, width: r.globals.gridWidth, height: x } : { x: d ? c - f : c, y: u ? h - x : h, width: f, height: x }), {}, { translateX: r.globals.translateX, translateY: r.globals.translateY }), o.drawSelectionRect(b), o.selectionDragging("resizing"), b;
+  } }, { key: "selectionDragging", value: function(i, a) {
+    var s = this, r = this.w;
+    if (a) {
+      a.preventDefault();
+      var o = a.detail, l = o.handler, c = o.box, h = c.x, d = c.y;
+      h < this.constraints.x && (h = this.constraints.x), d < this.constraints.y && (d = this.constraints.y), c.x2 > this.constraints.x2 && (h = this.constraints.x2 - c.w), c.y2 > this.constraints.y2 && (d = this.constraints.y2 - c.h), l.move(h, d);
+      var u = this.xyRatios, g = this.selectionRect, p = 0;
+      i === "resizing" && (p = 30);
+      var f = function(b) {
+        return parseFloat(g.node.getAttribute(b));
+      }, x = { x: f("x"), y: f("y"), width: f("width"), height: f("height") };
+      r.globals.selection = x, typeof r.config.chart.events.selection == "function" && r.globals.selectionEnabled && (clearTimeout(this.w.globals.selectionResizeTimer), this.w.globals.selectionResizeTimer = window.setTimeout(function() {
+        var b, m, w, y, v = s.gridRect.getBoundingClientRect(), k = g.node.getBoundingClientRect();
+        r.globals.isRangeBar ? (b = r.globals.yAxisScale[0].niceMin + (k.left - v.left) * u.invertedYRatio, m = r.globals.yAxisScale[0].niceMin + (k.right - v.left) * u.invertedYRatio, w = 0, y = 1) : (b = r.globals.xAxisScale.niceMin + (k.left - v.left) * u.xRatio, m = r.globals.xAxisScale.niceMin + (k.right - v.left) * u.xRatio, w = r.globals.yAxisScale[0].niceMin + (v.bottom - k.bottom) * u.yRatio[0], y = r.globals.yAxisScale[0].niceMax - (k.top - v.top) * u.yRatio[0]);
+        var A = { xaxis: { min: b, max: m }, yaxis: { min: w, max: y } };
+        r.config.chart.events.selection(s.ctx, A), r.config.chart.brush.enabled && r.config.chart.events.brushScrolled !== void 0 && r.config.chart.events.brushScrolled(s.ctx, A);
+      }, p));
+    }
+  } }, { key: "selectionDrawn", value: function(i) {
+    var a, s, r = i.context, o = i.zoomtype, l = this.w, c = r, h = this.xyRatios, d = this.ctx.toolbar, u = l.globals.zoomEnabled ? c.zoomRect.node.getBoundingClientRect() : c.selectionRect.node.getBoundingClientRect(), g = c.gridRect.getBoundingClientRect(), p = u.left - g.left - l.globals.barPadForNumericAxis, f = u.right - g.left - l.globals.barPadForNumericAxis, x = u.top - g.top, b = u.bottom - g.top;
+    l.globals.isRangeBar ? (a = l.globals.yAxisScale[0].niceMin + p * h.invertedYRatio, s = l.globals.yAxisScale[0].niceMin + f * h.invertedYRatio) : (a = l.globals.xAxisScale.niceMin + p * h.xRatio, s = l.globals.xAxisScale.niceMin + f * h.xRatio);
+    var m = [], w = [];
+    if (l.config.yaxis.forEach(function(L, P) {
+      var I = l.globals.seriesYAxisMap[P][0], E = l.globals.yAxisScale[P].niceMax - h.yRatio[I] * x, O = l.globals.yAxisScale[P].niceMax - h.yRatio[I] * b;
+      m.push(E), w.push(O);
+    }), c.dragged && (c.dragX > 10 || c.dragY > 10) && a !== s) {
+      if (l.globals.zoomEnabled) {
+        var y = T.clone(l.globals.initialConfig.yaxis), v = T.clone(l.globals.initialConfig.xaxis);
+        if (l.globals.zoomed = !0, l.config.xaxis.convertedCatToNumeric && (a = Math.floor(a), s = Math.floor(s), a < 1 && (a = 1, s = l.globals.dataPoints), s - a < 2 && (s = a + 1)), o !== "xy" && o !== "x" || (v = { min: a, max: s }), o !== "xy" && o !== "y" || y.forEach(function(L, P) {
+          y[P].min = w[P], y[P].max = m[P];
+        }), d) {
+          var k = d.getBeforeZoomRange(v, y);
+          k && (v = k.xaxis ? k.xaxis : v, y = k.yaxis ? k.yaxis : y);
+        }
+        var A = { xaxis: v };
+        l.config.chart.group || (A.yaxis = y), c.ctx.updateHelpers._updateOptions(A, !1, c.w.config.chart.animations.dynamicAnimation.enabled), typeof l.config.chart.events.zoomed == "function" && d.zoomCallback(v, y);
+      } else if (l.globals.selectionEnabled) {
+        var C, S = null;
+        C = { min: a, max: s }, o !== "xy" && o !== "y" || (S = T.clone(l.config.yaxis)).forEach(function(L, P) {
+          S[P].min = w[P], S[P].max = m[P];
+        }), l.globals.selection = c.selection, typeof l.config.chart.events.selection == "function" && l.config.chart.events.selection(c.ctx, { xaxis: C, yaxis: S });
+      }
+    }
+  } }, { key: "panDragging", value: function(i) {
+    var a = i.context, s = this.w, r = a;
+    if (s.globals.lastClientPosition.x !== void 0) {
+      var o = s.globals.lastClientPosition.x - r.clientX, l = s.globals.lastClientPosition.y - r.clientY;
+      Math.abs(o) > Math.abs(l) && o > 0 ? this.moveDirection = "left" : Math.abs(o) > Math.abs(l) && o < 0 ? this.moveDirection = "right" : Math.abs(l) > Math.abs(o) && l > 0 ? this.moveDirection = "up" : Math.abs(l) > Math.abs(o) && l < 0 && (this.moveDirection = "down");
+    }
+    s.globals.lastClientPosition = { x: r.clientX, y: r.clientY };
+    var c = s.globals.isRangeBar ? s.globals.minY : s.globals.minX, h = s.globals.isRangeBar ? s.globals.maxY : s.globals.maxX;
+    r.panScrolled(c, h);
+  } }, { key: "panScrolled", value: function(i, a) {
+    var s = this.w, r = this.xyRatios, o = T.clone(s.globals.initialConfig.yaxis), l = r.xRatio, c = s.globals.minX, h = s.globals.maxX;
+    s.globals.isRangeBar && (l = r.invertedYRatio, c = s.globals.minY, h = s.globals.maxY), this.moveDirection === "left" ? (i = c + s.globals.gridWidth / 15 * l, a = h + s.globals.gridWidth / 15 * l) : this.moveDirection === "right" && (i = c - s.globals.gridWidth / 15 * l, a = h - s.globals.gridWidth / 15 * l), s.globals.isRangeBar || (i < s.globals.initialMinX || a > s.globals.initialMaxX) && (i = c, a = h);
+    var d = { xaxis: { min: i, max: a } };
+    s.config.chart.group || (d.yaxis = o), this.updateScrolledChart(d, i, a);
+  } }, { key: "updateScrolledChart", value: function(i, a, s) {
+    var r = this.w;
+    if (this.ctx.updateHelpers._updateOptions(i, !1, !1), typeof r.config.chart.events.scrolled == "function") {
+      var o = { xaxis: { min: a, max: s } };
+      r.config.chart.events.scrolled(this.ctx, o), this.ctx.events.fireEvent("scrolled", o);
+    }
+  } }]), t;
+}(), Rn = function() {
+  function n(e) {
+    q(this, n), this.w = e.w, this.ttCtx = e, this.ctx = e.ctx;
+  }
+  return $(n, [{ key: "getNearestValues", value: function(e) {
+    var t = e.hoverArea, i = e.elGrid, a = e.clientX, s = e.clientY, r = this.w, o = i.getBoundingClientRect(), l = o.width, c = o.height, h = l / (r.globals.dataPoints - 1), d = c / r.globals.dataPoints, u = this.hasBars();
+    !r.globals.comboCharts && !u || r.config.xaxis.convertedCatToNumeric || (h = l / r.globals.dataPoints);
+    var g = a - o.left - r.globals.barPadForNumericAxis, p = s - o.top;
+    g < 0 || p < 0 || g > l || p > c ? (t.classList.remove("hovering-zoom"), t.classList.remove("hovering-pan")) : r.globals.zoomEnabled ? (t.classList.remove("hovering-pan"), t.classList.add("hovering-zoom")) : r.globals.panEnabled && (t.classList.remove("hovering-zoom"), t.classList.add("hovering-pan"));
+    var f = Math.round(g / h), x = Math.floor(p / d);
+    u && !r.config.xaxis.convertedCatToNumeric && (f = Math.ceil(g / h), f -= 1);
+    var b = null, m = null, w = r.globals.seriesXvalues.map(function(C) {
+      return C.filter(function(S) {
+        return T.isNumber(S);
+      });
+    }), y = r.globals.seriesYvalues.map(function(C) {
+      return C.filter(function(S) {
+        return T.isNumber(S);
+      });
+    });
+    if (r.globals.isXNumeric) {
+      var v = this.ttCtx.getElGrid().getBoundingClientRect(), k = g * (v.width / l), A = p * (v.height / c);
+      b = (m = this.closestInMultiArray(k, A, w, y)).index, f = m.j, b !== null && r.globals.hasNullValues && (w = r.globals.seriesXvalues[b], f = (m = this.closestInArray(k, w)).j);
+    }
+    return r.globals.capturedSeriesIndex = b === null ? -1 : b, (!f || f < 1) && (f = 0), r.globals.isBarHorizontal ? r.globals.capturedDataPointIndex = x : r.globals.capturedDataPointIndex = f, { capturedSeries: b, j: r.globals.isBarHorizontal ? x : f, hoverX: g, hoverY: p };
+  } }, { key: "getFirstActiveXArray", value: function(e) {
+    for (var t = this.w, i = 0, a = e.map(function(r, o) {
+      return r.length > 0 ? o : -1;
+    }), s = 0; s < a.length; s++) if (a[s] !== -1 && t.globals.collapsedSeriesIndices.indexOf(s) === -1 && t.globals.ancillaryCollapsedSeriesIndices.indexOf(s) === -1) {
+      i = a[s];
+      break;
+    }
+    return i;
+  } }, { key: "closestInMultiArray", value: function(e, t, i, a) {
+    for (var s, r = this.w, o = 1 / 0, l = null, c = null, h = 0; h < i.length; h++) if (s = h, r.globals.collapsedSeriesIndices.indexOf(s) === -1 && r.globals.ancillaryCollapsedSeriesIndices.indexOf(s) === -1) for (var d = i[h], u = a[h], g = Math.min(d.length, u.length), p = 0; p < g; p++) {
+      var f = e - d[p], x = Math.sqrt(f * f);
+      if (!r.globals.allSeriesHasEqualX) {
+        var b = t - u[p];
+        x = Math.sqrt(f * f + b * b);
+      }
+      x < o && (o = x, l = h, c = p);
+    }
+    return { index: l, j: c };
+  } }, { key: "closestInArray", value: function(e, t) {
+    for (var i = t[0], a = null, s = Math.abs(e - i), r = 0; r < t.length; r++) {
+      var o = Math.abs(e - t[r]);
+      o < s && (s = o, a = r);
+    }
+    return { j: a };
+  } }, { key: "isXoverlap", value: function(e) {
+    var t = [], i = this.w.globals.seriesX.filter(function(s) {
+      return s[0] !== void 0;
+    });
+    if (i.length > 0) for (var a = 0; a < i.length - 1; a++) i[a][e] !== void 0 && i[a + 1][e] !== void 0 && i[a][e] !== i[a + 1][e] && t.push("unEqual");
+    return t.length === 0;
+  } }, { key: "isInitialSeriesSameLen", value: function() {
+    for (var e = !0, t = this.w.globals.initialSeries, i = 0; i < t.length - 1; i++) if (t[i].data.length !== t[i + 1].data.length) {
+      e = !1;
+      break;
+    }
+    return e;
+  } }, { key: "getBarsHeight", value: function(e) {
+    return Oe(e).reduce(function(t, i) {
+      return t + i.getBBox().height;
+    }, 0);
+  } }, { key: "getElMarkers", value: function(e) {
+    return typeof e == "number" ? this.w.globals.dom.baseEl.querySelectorAll(".apexcharts-series[data\\:realIndex='".concat(e, "'] .apexcharts-series-markers-wrap > *")) : this.w.globals.dom.baseEl.querySelectorAll(".apexcharts-series-markers-wrap > *");
+  } }, { key: "getAllMarkers", value: function() {
+    var e = this, t = arguments.length > 0 && arguments[0] !== void 0 && arguments[0], i = this.w.globals.dom.baseEl.querySelectorAll(".apexcharts-series-markers-wrap");
+    i = Oe(i), t && (i = i.filter(function(s) {
+      var r = Number(s.getAttribute("data:realIndex"));
+      return e.w.globals.collapsedSeriesIndices.indexOf(r) === -1;
+    })), i.sort(function(s, r) {
+      var o = Number(s.getAttribute("data:realIndex")), l = Number(r.getAttribute("data:realIndex"));
+      return l < o ? 1 : l > o ? -1 : 0;
+    });
+    var a = [];
+    return i.forEach(function(s) {
+      a.push(s.querySelector(".apexcharts-marker"));
+    }), a;
+  } }, { key: "hasMarkers", value: function(e) {
+    return this.getElMarkers(e).length > 0;
+  } }, { key: "getPathFromPoint", value: function(e, t) {
+    var i = Number(e.getAttribute("cx")), a = Number(e.getAttribute("cy")), s = e.getAttribute("shape");
+    return new F(this.ctx).getMarkerPath(i, a, s, t);
+  } }, { key: "getElBars", value: function() {
+    return this.w.globals.dom.baseEl.querySelectorAll(".apexcharts-bar-series,  .apexcharts-candlestick-series, .apexcharts-boxPlot-series, .apexcharts-rangebar-series");
+  } }, { key: "hasBars", value: function() {
+    return this.getElBars().length > 0;
+  } }, { key: "getHoverMarkerSize", value: function(e) {
+    var t = this.w, i = t.config.markers.hover.size;
+    return i === void 0 && (i = t.globals.markers.size[e] + t.config.markers.hover.sizeOffset), i;
+  } }, { key: "toggleAllTooltipSeriesGroups", value: function(e) {
+    var t = this.w, i = this.ttCtx;
+    i.allTooltipSeriesGroups.length === 0 && (i.allTooltipSeriesGroups = t.globals.dom.baseEl.querySelectorAll(".apexcharts-tooltip-series-group"));
+    for (var a = i.allTooltipSeriesGroups, s = 0; s < a.length; s++) e === "enable" ? (a[s].classList.add("apexcharts-active"), a[s].style.display = t.config.tooltip.items.display) : (a[s].classList.remove("apexcharts-active"), a[s].style.display = "none");
+  } }]), n;
+}(), eh = function() {
+  function n(e) {
+    q(this, n), this.w = e.w, this.ctx = e.ctx, this.ttCtx = e, this.tooltipUtil = new Rn(e);
+  }
+  return $(n, [{ key: "drawSeriesTexts", value: function(e) {
+    var t = e.shared, i = t === void 0 || t, a = e.ttItems, s = e.i, r = s === void 0 ? 0 : s, o = e.j, l = o === void 0 ? null : o, c = e.y1, h = e.y2, d = e.e, u = this.w;
+    u.config.tooltip.custom !== void 0 ? this.handleCustomTooltip({ i: r, j: l, y1: c, y2: h, w: u }) : this.toggleActiveInactiveSeries(i, r);
+    var g = this.getValuesToPrint({ i: r, j: l });
+    this.printLabels({ i: r, j: l, values: g, ttItems: a, shared: i, e: d });
+    var p = this.ttCtx.getElTooltip();
+    this.ttCtx.tooltipRect.ttWidth = p.getBoundingClientRect().width, this.ttCtx.tooltipRect.ttHeight = p.getBoundingClientRect().height;
+  } }, { key: "printLabels", value: function(e) {
+    var t, i = this, a = e.i, s = e.j, r = e.values, o = e.ttItems, l = e.shared, c = e.e, h = this.w, d = [], u = function(v) {
+      return h.globals.seriesGoals[v] && h.globals.seriesGoals[v][s] && Array.isArray(h.globals.seriesGoals[v][s]);
+    }, g = r.xVal, p = r.zVal, f = r.xAxisTTVal, x = "", b = h.globals.colors[a];
+    s !== null && h.config.plotOptions.bar.distributed && (b = h.globals.colors[s]);
+    for (var m = function(v, k) {
+      var A = i.getFormatters(a);
+      x = i.getSeriesName({ fn: A.yLbTitleFormatter, index: a, seriesIndex: a, j: s }), h.config.chart.type === "treemap" && (x = A.yLbTitleFormatter(String(h.config.series[a].data[s].x), { series: h.globals.series, seriesIndex: a, dataPointIndex: s, w: h }));
+      var C = h.config.tooltip.inverseOrder ? k : v;
+      if (h.globals.axisCharts) {
+        var S = function(I) {
+          var E, O, _, Y;
+          return h.globals.isRangeData ? A.yLbFormatter((E = h.globals.seriesRangeStart) === null || E === void 0 || (O = E[I]) === null || O === void 0 ? void 0 : O[s], { series: h.globals.seriesRangeStart, seriesIndex: I, dataPointIndex: s, w: h }) + " - " + A.yLbFormatter((_ = h.globals.seriesRangeEnd) === null || _ === void 0 || (Y = _[I]) === null || Y === void 0 ? void 0 : Y[s], { series: h.globals.seriesRangeEnd, seriesIndex: I, dataPointIndex: s, w: h }) : A.yLbFormatter(h.globals.series[I][s], { series: h.globals.series, seriesIndex: I, dataPointIndex: s, w: h });
+        };
+        if (l) A = i.getFormatters(C), x = i.getSeriesName({ fn: A.yLbTitleFormatter, index: C, seriesIndex: a, j: s }), b = h.globals.colors[C], t = S(C), u(C) && (d = h.globals.seriesGoals[C][s].map(function(I) {
+          return { attrs: I, val: A.yLbFormatter(I.value, { seriesIndex: C, dataPointIndex: s, w: h }) };
+        }));
+        else {
+          var L, P = c == null || (L = c.target) === null || L === void 0 ? void 0 : L.getAttribute("fill");
+          P && (P.indexOf("url") !== -1 ? P.indexOf("Pattern") !== -1 && (b = h.globals.dom.baseEl.querySelector(P.substr(4).slice(0, -1)).childNodes[0].getAttribute("stroke")) : b = P), t = S(a), u(a) && Array.isArray(h.globals.seriesGoals[a][s]) && (d = h.globals.seriesGoals[a][s].map(function(I) {
+            return { attrs: I, val: A.yLbFormatter(I.value, { seriesIndex: a, dataPointIndex: s, w: h }) };
+          }));
+        }
+      }
+      s === null && (t = A.yLbFormatter(h.globals.series[a], N(N({}, h), {}, { seriesIndex: a, dataPointIndex: a }))), i.DOMHandling({ i: a, t: C, j: s, ttItems: o, values: { val: t, goalVals: d, xVal: g, xAxisTTVal: f, zVal: p }, seriesName: x, shared: l, pColor: b });
+    }, w = 0, y = h.globals.series.length - 1; w < h.globals.series.length; w++, y--) m(w, y);
+  } }, { key: "getFormatters", value: function(e) {
+    var t, i = this.w, a = i.globals.yLabelFormatters[e];
+    return i.globals.ttVal !== void 0 ? Array.isArray(i.globals.ttVal) ? (a = i.globals.ttVal[e] && i.globals.ttVal[e].formatter, t = i.globals.ttVal[e] && i.globals.ttVal[e].title && i.globals.ttVal[e].title.formatter) : (a = i.globals.ttVal.formatter, typeof i.globals.ttVal.title.formatter == "function" && (t = i.globals.ttVal.title.formatter)) : t = i.config.tooltip.y.title.formatter, typeof a != "function" && (a = i.globals.yLabelFormatters[0] ? i.globals.yLabelFormatters[0] : function(s) {
+      return s;
+    }), typeof t != "function" && (t = function(s) {
+      return s ? s + ": " : "";
+    }), { yLbFormatter: a, yLbTitleFormatter: t };
+  } }, { key: "getSeriesName", value: function(e) {
+    var t = e.fn, i = e.index, a = e.seriesIndex, s = e.j, r = this.w;
+    return t(String(r.globals.seriesNames[i]), { series: r.globals.series, seriesIndex: a, dataPointIndex: s, w: r });
+  } }, { key: "DOMHandling", value: function(e) {
+    e.i;
+    var t = e.t, i = e.j, a = e.ttItems, s = e.values, r = e.seriesName, o = e.shared, l = e.pColor, c = this.w, h = this.ttCtx, d = s.val, u = s.goalVals, g = s.xVal, p = s.xAxisTTVal, f = s.zVal, x = null;
+    x = a[t].children, c.config.tooltip.fillSeriesColor && (a[t].style.backgroundColor = l, x[0].style.display = "none"), h.showTooltipTitle && (h.tooltipTitle === null && (h.tooltipTitle = c.globals.dom.baseEl.querySelector(".apexcharts-tooltip-title")), h.tooltipTitle.innerHTML = g), h.isXAxisTooltipEnabled && (h.xaxisTooltipText.innerHTML = p !== "" ? p : g);
+    var b = a[t].querySelector(".apexcharts-tooltip-text-y-label");
+    b && (b.innerHTML = r || "");
+    var m = a[t].querySelector(".apexcharts-tooltip-text-y-value");
+    m && (m.innerHTML = d !== void 0 ? d : ""), x[0] && x[0].classList.contains("apexcharts-tooltip-marker") && (c.config.tooltip.marker.fillColors && Array.isArray(c.config.tooltip.marker.fillColors) && (l = c.config.tooltip.marker.fillColors[t]), c.config.tooltip.fillSeriesColor ? x[0].style.backgroundColor = l : x[0].style.color = l), c.config.tooltip.marker.show || (x[0].style.display = "none");
+    var w = a[t].querySelector(".apexcharts-tooltip-text-goals-label"), y = a[t].querySelector(".apexcharts-tooltip-text-goals-value");
+    if (u.length && c.globals.seriesGoals[t]) {
+      var v = function() {
+        var C = "<div>", S = "<div>";
+        u.forEach(function(L, P) {
+          C += ' <div style="display: flex"><span class="apexcharts-tooltip-marker" style="background-color: '.concat(L.attrs.strokeColor, '; height: 3px; border-radius: 0; top: 5px;"></span> ').concat(L.attrs.name, "</div>"), S += "<div>".concat(L.val, "</div>");
+        }), w.innerHTML = C + "</div>", y.innerHTML = S + "</div>";
+      };
+      o ? c.globals.seriesGoals[t][i] && Array.isArray(c.globals.seriesGoals[t][i]) ? v() : (w.innerHTML = "", y.innerHTML = "") : v();
+    } else w.innerHTML = "", y.innerHTML = "";
+    if (f !== null && (a[t].querySelector(".apexcharts-tooltip-text-z-label").innerHTML = c.config.tooltip.z.title, a[t].querySelector(".apexcharts-tooltip-text-z-value").innerHTML = f !== void 0 ? f : ""), o && x[0]) {
+      if (c.config.tooltip.hideEmptySeries) {
+        var k = a[t].querySelector(".apexcharts-tooltip-marker"), A = a[t].querySelector(".apexcharts-tooltip-text");
+        parseFloat(d) == 0 ? (k.style.display = "none", A.style.display = "none") : (k.style.display = "block", A.style.display = "block");
+      }
+      d == null || c.globals.ancillaryCollapsedSeriesIndices.indexOf(t) > -1 || c.globals.collapsedSeriesIndices.indexOf(t) > -1 || Array.isArray(h.tConfig.enabledOnSeries) && h.tConfig.enabledOnSeries.indexOf(t) === -1 ? x[0].parentNode.style.display = "none" : x[0].parentNode.style.display = c.config.tooltip.items.display;
+    } else Array.isArray(h.tConfig.enabledOnSeries) && h.tConfig.enabledOnSeries.indexOf(t) === -1 && (x[0].parentNode.style.display = "none");
+  } }, { key: "toggleActiveInactiveSeries", value: function(e, t) {
+    var i = this.w;
+    if (e) this.tooltipUtil.toggleAllTooltipSeriesGroups("enable");
+    else {
+      this.tooltipUtil.toggleAllTooltipSeriesGroups("disable");
+      var a = i.globals.dom.baseEl.querySelector(".apexcharts-tooltip-series-group-".concat(t));
+      a && (a.classList.add("apexcharts-active"), a.style.display = i.config.tooltip.items.display);
+    }
+  } }, { key: "getValuesToPrint", value: function(e) {
+    var t = e.i, i = e.j, a = this.w, s = this.ctx.series.filteredSeriesX(), r = "", o = "", l = null, c = null, h = { series: a.globals.series, seriesIndex: t, dataPointIndex: i, w: a }, d = a.globals.ttZFormatter;
+    i === null ? c = a.globals.series[t] : a.globals.isXNumeric && a.config.chart.type !== "treemap" ? (r = s[t][i], s[t].length === 0 && (r = s[this.tooltipUtil.getFirstActiveXArray(s)][i])) : r = new ls(this.ctx).isFormatXY() ? a.config.series[t].data[i] !== void 0 ? a.config.series[t].data[i].x : "" : a.globals.labels[i] !== void 0 ? a.globals.labels[i] : "";
+    var u = r;
+    return a.globals.isXNumeric && a.config.xaxis.type === "datetime" ? r = new di(this.ctx).xLabelFormat(a.globals.ttKeyFormatter, u, u, { i: void 0, dateFormatter: new ze(this.ctx).formatDate, w: this.w }) : r = a.globals.isBarHorizontal ? a.globals.yLabelFormatters[0](u, h) : a.globals.xLabelFormatter(u, h), a.config.tooltip.x.formatter !== void 0 && (r = a.globals.ttKeyFormatter(u, h)), a.globals.seriesZ.length > 0 && a.globals.seriesZ[t].length > 0 && (l = d(a.globals.seriesZ[t][i], a)), o = typeof a.config.xaxis.tooltip.formatter == "function" ? a.globals.xaxisTooltipFormatter(u, h) : r, { val: Array.isArray(c) ? c.join(" ") : c, xVal: Array.isArray(r) ? r.join(" ") : r, xAxisTTVal: Array.isArray(o) ? o.join(" ") : o, zVal: l };
+  } }, { key: "handleCustomTooltip", value: function(e) {
+    var t = e.i, i = e.j, a = e.y1, s = e.y2, r = e.w, o = this.ttCtx.getElTooltip(), l = r.config.tooltip.custom;
+    Array.isArray(l) && l[t] && (l = l[t]);
+    var c = l({ ctx: this.ctx, series: r.globals.series, seriesIndex: t, dataPointIndex: i, y1: a, y2: s, w: r });
+    typeof c == "string" || typeof c == "number" ? o.innerHTML = c : (c instanceof Element || typeof c.nodeName == "string") && (o.innerHTML = "", o.appendChild(c.cloneNode(!0)));
+  } }]), n;
+}(), On = function() {
+  function n(e) {
+    q(this, n), this.ttCtx = e, this.ctx = e.ctx, this.w = e.w;
+  }
+  return $(n, [{ key: "moveXCrosshairs", value: function(e) {
+    var t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : null, i = this.ttCtx, a = this.w, s = i.getElXCrosshairs(), r = e - i.xcrosshairsWidth / 2, o = a.globals.labels.slice().length;
+    if (t !== null && (r = a.globals.gridWidth / o * t), s === null || a.globals.isBarHorizontal || (s.setAttribute("x", r), s.setAttribute("x1", r), s.setAttribute("x2", r), s.setAttribute("y2", a.globals.gridHeight), s.classList.add("apexcharts-active")), r < 0 && (r = 0), r > a.globals.gridWidth && (r = a.globals.gridWidth), i.isXAxisTooltipEnabled) {
+      var l = r;
+      a.config.xaxis.crosshairs.width !== "tickWidth" && a.config.xaxis.crosshairs.width !== "barWidth" || (l = r + i.xcrosshairsWidth / 2), this.moveXAxisTooltip(l);
+    }
+  } }, { key: "moveYCrosshairs", value: function(e) {
+    var t = this.ttCtx;
+    t.ycrosshairs !== null && F.setAttrs(t.ycrosshairs, { y1: e, y2: e }), t.ycrosshairsHidden !== null && F.setAttrs(t.ycrosshairsHidden, { y1: e, y2: e });
+  } }, { key: "moveXAxisTooltip", value: function(e) {
+    var t = this.w, i = this.ttCtx;
+    if (i.xaxisTooltip !== null && i.xcrosshairsWidth !== 0) {
+      i.xaxisTooltip.classList.add("apexcharts-active");
+      var a = i.xaxisOffY + t.config.xaxis.tooltip.offsetY + t.globals.translateY + 1 + t.config.xaxis.offsetY;
+      if (e -= i.xaxisTooltip.getBoundingClientRect().width / 2, !isNaN(e)) {
+        e += t.globals.translateX;
+        var s;
+        s = new F(this.ctx).getTextRects(i.xaxisTooltipText.innerHTML), i.xaxisTooltipText.style.minWidth = s.width + "px", i.xaxisTooltip.style.left = e + "px", i.xaxisTooltip.style.top = a + "px";
+      }
+    }
+  } }, { key: "moveYAxisTooltip", value: function(e) {
+    var t = this.w, i = this.ttCtx;
+    i.yaxisTTEls === null && (i.yaxisTTEls = t.globals.dom.baseEl.querySelectorAll(".apexcharts-yaxistooltip"));
+    var a = parseInt(i.ycrosshairsHidden.getAttribute("y1"), 10), s = t.globals.translateY + a, r = i.yaxisTTEls[e].getBoundingClientRect(), o = r.height, l = t.globals.translateYAxisX[e] - 2;
+    t.config.yaxis[e].opposite && (l -= r.width), s -= o / 2, t.globals.ignoreYAxisIndexes.indexOf(e) === -1 && s > 0 && s < t.globals.gridHeight ? (i.yaxisTTEls[e].classList.add("apexcharts-active"), i.yaxisTTEls[e].style.top = s + "px", i.yaxisTTEls[e].style.left = l + t.config.yaxis[e].tooltip.offsetX + "px") : i.yaxisTTEls[e].classList.remove("apexcharts-active");
+  } }, { key: "moveTooltip", value: function(e, t) {
+    var i = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : null, a = this.w, s = this.ttCtx, r = s.getElTooltip(), o = s.tooltipRect, l = i !== null ? parseFloat(i) : 1, c = parseFloat(e) + l + 5, h = parseFloat(t) + l / 2;
+    if (c > a.globals.gridWidth / 2 && (c = c - o.ttWidth - l - 10), c > a.globals.gridWidth - o.ttWidth - 10 && (c = a.globals.gridWidth - o.ttWidth), c < -20 && (c = -20), a.config.tooltip.followCursor) {
+      var d = s.getElGrid().getBoundingClientRect();
+      (c = s.e.clientX - d.left) > a.globals.gridWidth / 2 && (c -= s.tooltipRect.ttWidth), (h = s.e.clientY + a.globals.translateY - d.top) > a.globals.gridHeight / 2 && (h -= s.tooltipRect.ttHeight);
+    } else a.globals.isBarHorizontal || o.ttHeight / 2 + h > a.globals.gridHeight && (h = a.globals.gridHeight - o.ttHeight + a.globals.translateY);
+    isNaN(c) || (c += a.globals.translateX, r.style.left = c + "px", r.style.top = h + "px");
+  } }, { key: "moveMarkers", value: function(e, t) {
+    var i = this.w, a = this.ttCtx;
+    if (i.globals.markers.size[e] > 0) for (var s = i.globals.dom.baseEl.querySelectorAll(" .apexcharts-series[data\\:realIndex='".concat(e, "'] .apexcharts-marker")), r = 0; r < s.length; r++) parseInt(s[r].getAttribute("rel"), 10) === t && (a.marker.resetPointsSize(), a.marker.enlargeCurrentPoint(t, s[r]));
+    else a.marker.resetPointsSize(), this.moveDynamicPointOnHover(t, e);
+  } }, { key: "moveDynamicPointOnHover", value: function(e, t) {
+    var i, a, s, r, o = this.w, l = this.ttCtx, c = new F(this.ctx), h = o.globals.pointsArray, d = l.tooltipUtil.getHoverMarkerSize(t), u = o.config.series[t].type;
+    if (!u || u !== "column" && u !== "candlestick" && u !== "boxPlot") {
+      s = (i = h[t][e]) === null || i === void 0 ? void 0 : i[0], r = ((a = h[t][e]) === null || a === void 0 ? void 0 : a[1]) || 0;
+      var g = o.globals.dom.baseEl.querySelector(".apexcharts-series[data\\:realIndex='".concat(t, "'] .apexcharts-series-markers path"));
+      if (g && r < o.globals.gridHeight && r > 0) {
+        var p = g.getAttribute("shape"), f = c.getMarkerPath(s, r, p, 1.5 * d);
+        g.setAttribute("d", f);
+      }
+      this.moveXCrosshairs(s), l.fixedTooltip || this.moveTooltip(s, r, d);
+    }
+  } }, { key: "moveDynamicPointsOnHover", value: function(e) {
+    var t, i = this.ttCtx, a = i.w, s = 0, r = 0, o = a.globals.pointsArray, l = new $e(this.ctx), c = new F(this.ctx);
+    t = l.getActiveConfigSeriesIndex("asc", ["line", "area", "scatter", "bubble"]);
+    var h = i.tooltipUtil.getHoverMarkerSize(t);
+    if (o[t] && (s = o[t][e][0], r = o[t][e][1]), !isNaN(s)) {
+      var d = i.tooltipUtil.getAllMarkers();
+      if (d.length) for (var u = 0; u < a.globals.series.length; u++) {
+        var g = o[u];
+        if (a.globals.comboCharts && g === void 0 && d.splice(u, 0, null), g && g.length) {
+          var p = o[u][e][1], f = void 0;
+          d[u].setAttribute("cx", s);
+          var x = d[u].getAttribute("shape");
+          if (a.config.chart.type === "rangeArea" && !a.globals.comboCharts) {
+            var b = e + a.globals.series[u].length;
+            f = o[u][b][1], p -= Math.abs(p - f) / 2;
+          }
+          if (p !== null && !isNaN(p) && p < a.globals.gridHeight + h && p + h > 0) {
+            var m = c.getMarkerPath(s, p, x, h);
+            d[u].setAttribute("d", m);
+          } else d[u].setAttribute("d", "");
+        }
+      }
+      this.moveXCrosshairs(s), i.fixedTooltip || this.moveTooltip(s, r || a.globals.gridHeight, h);
+    }
+  } }, { key: "moveStickyTooltipOverBars", value: function(e, t) {
+    var i = this.w, a = this.ttCtx, s = i.globals.columnSeries ? i.globals.columnSeries.length : i.globals.series.length;
+    i.config.chart.stacked && (s = i.globals.barGroups.length);
+    var r = s >= 2 && s % 2 == 0 ? Math.floor(s / 2) : Math.floor(s / 2) + 1;
+    i.globals.isBarHorizontal && (r = new $e(this.ctx).getActiveConfigSeriesIndex("desc") + 1);
+    var o = i.globals.dom.baseEl.querySelector(".apexcharts-bar-series .apexcharts-series[rel='".concat(r, "'] path[j='").concat(e, "'], .apexcharts-candlestick-series .apexcharts-series[rel='").concat(r, "'] path[j='").concat(e, "'], .apexcharts-boxPlot-series .apexcharts-series[rel='").concat(r, "'] path[j='").concat(e, "'], .apexcharts-rangebar-series .apexcharts-series[rel='").concat(r, "'] path[j='").concat(e, "']"));
+    o || typeof t != "number" || (o = i.globals.dom.baseEl.querySelector(".apexcharts-bar-series .apexcharts-series[data\\:realIndex='".concat(t, "'] path[j='").concat(e, `'],
+        .apexcharts-candlestick-series .apexcharts-series[data\\:realIndex='`).concat(t, "'] path[j='").concat(e, `'],
+        .apexcharts-boxPlot-series .apexcharts-series[data\\:realIndex='`).concat(t, "'] path[j='").concat(e, `'],
+        .apexcharts-rangebar-series .apexcharts-series[data\\:realIndex='`).concat(t, "'] path[j='").concat(e, "']")));
+    var l = o ? parseFloat(o.getAttribute("cx")) : 0, c = o ? parseFloat(o.getAttribute("cy")) : 0, h = o ? parseFloat(o.getAttribute("barWidth")) : 0, d = a.getElGrid().getBoundingClientRect(), u = o && (o.classList.contains("apexcharts-candlestick-area") || o.classList.contains("apexcharts-boxPlot-area"));
+    i.globals.isXNumeric ? (o && !u && (l -= s % 2 != 0 ? h / 2 : 0), o && u && (l -= h / 2)) : i.globals.isBarHorizontal || (l = a.xAxisTicksPositions[e - 1] + a.dataPointsDividedWidth / 2, isNaN(l) && (l = a.xAxisTicksPositions[e] - a.dataPointsDividedWidth / 2)), i.globals.isBarHorizontal ? c -= a.tooltipRect.ttHeight : i.config.tooltip.followCursor ? c = a.e.clientY - d.top - a.tooltipRect.ttHeight / 2 : c + a.tooltipRect.ttHeight + 15 > i.globals.gridHeight && (c = i.globals.gridHeight), i.globals.isBarHorizontal || this.moveXCrosshairs(l), a.fixedTooltip || this.moveTooltip(l, c || i.globals.gridHeight);
+  } }]), n;
+}(), th = function() {
+  function n(e) {
+    q(this, n), this.w = e.w, this.ttCtx = e, this.ctx = e.ctx, this.tooltipPosition = new On(e);
+  }
+  return $(n, [{ key: "drawDynamicPoints", value: function() {
+    var e = this.w, t = new F(this.ctx), i = new Xt(this.ctx), a = e.globals.dom.baseEl.querySelectorAll(".apexcharts-series");
+    a = Oe(a), e.config.chart.stacked && a.sort(function(d, u) {
+      return parseFloat(d.getAttribute("data:realIndex")) - parseFloat(u.getAttribute("data:realIndex"));
+    });
+    for (var s = 0; s < a.length; s++) {
+      var r = a[s].querySelector(".apexcharts-series-markers-wrap");
+      if (r !== null) {
+        var o = void 0, l = "apexcharts-marker w".concat((Math.random() + 1).toString(36).substring(4));
+        e.config.chart.type !== "line" && e.config.chart.type !== "area" || e.globals.comboCharts || e.config.tooltip.intersect || (l += " no-pointer-events");
+        var c = i.getMarkerConfig({ cssClass: l, seriesIndex: Number(r.getAttribute("data:realIndex")) });
+        (o = t.drawMarker(0, 0, c)).node.setAttribute("default-marker-size", 0);
+        var h = document.createElementNS(e.globals.SVGNS, "g");
+        h.classList.add("apexcharts-series-markers"), h.appendChild(o.node), r.appendChild(h);
+      }
+    }
+  } }, { key: "enlargeCurrentPoint", value: function(e, t) {
+    var i = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : null, a = arguments.length > 3 && arguments[3] !== void 0 ? arguments[3] : null, s = this.w;
+    s.config.chart.type !== "bubble" && this.newPointSize(e, t);
+    var r = t.getAttribute("cx"), o = t.getAttribute("cy");
+    if (i !== null && a !== null && (r = i, o = a), this.tooltipPosition.moveXCrosshairs(r), !this.fixedTooltip) {
+      if (s.config.chart.type === "radar") {
+        var l = this.ttCtx.getElGrid().getBoundingClientRect();
+        r = this.ttCtx.e.clientX - l.left;
+      }
+      this.tooltipPosition.moveTooltip(r, o, s.config.markers.hover.size);
+    }
+  } }, { key: "enlargePoints", value: function(e) {
+    for (var t = this.w, i = this, a = this.ttCtx, s = e, r = t.globals.dom.baseEl.querySelectorAll(".apexcharts-series:not(.apexcharts-series-collapsed) .apexcharts-marker"), o = t.config.markers.hover.size, l = 0; l < r.length; l++) {
+      var c = r[l].getAttribute("rel"), h = r[l].getAttribute("index");
+      if (o === void 0 && (o = t.globals.markers.size[h] + t.config.markers.hover.sizeOffset), s === parseInt(c, 10)) {
+        i.newPointSize(s, r[l]);
+        var d = r[l].getAttribute("cx"), u = r[l].getAttribute("cy");
+        i.tooltipPosition.moveXCrosshairs(d), a.fixedTooltip || i.tooltipPosition.moveTooltip(d, u, o);
+      } else i.oldPointSize(r[l]);
+    }
+  } }, { key: "newPointSize", value: function(e, t) {
+    var i = this.w, a = i.config.markers.hover.size, s = e === 0 ? t.parentNode.firstChild : t.parentNode.lastChild;
+    if (s.getAttribute("default-marker-size") !== "0") {
+      var r = parseInt(s.getAttribute("index"), 10);
+      a === void 0 && (a = i.globals.markers.size[r] + i.config.markers.hover.sizeOffset), a < 0 && (a = 0);
+      var o = this.ttCtx.tooltipUtil.getPathFromPoint(t, a);
+      t.setAttribute("d", o);
+    }
+  } }, { key: "oldPointSize", value: function(e) {
+    var t = parseFloat(e.getAttribute("default-marker-size")), i = this.ttCtx.tooltipUtil.getPathFromPoint(e, t);
+    e.setAttribute("d", i);
+  } }, { key: "resetPointsSize", value: function() {
+    for (var e = this.w.globals.dom.baseEl.querySelectorAll(".apexcharts-series:not(.apexcharts-series-collapsed) .apexcharts-marker"), t = 0; t < e.length; t++) {
+      var i = parseFloat(e[t].getAttribute("default-marker-size"));
+      if (T.isNumber(i) && i > 0) {
+        var a = this.ttCtx.tooltipUtil.getPathFromPoint(e[t], i);
+        e[t].setAttribute("d", a);
+      } else e[t].setAttribute("d", "M0,0");
+    }
+  } }]), n;
+}(), ih = function() {
+  function n(e) {
+    q(this, n), this.w = e.w;
+    var t = this.w;
+    this.ttCtx = e, this.isVerticalGroupedRangeBar = !t.globals.isBarHorizontal && t.config.chart.type === "rangeBar" && t.config.plotOptions.bar.rangeBarGroupRows;
+  }
+  return $(n, [{ key: "getAttr", value: function(e, t) {
+    return parseFloat(e.target.getAttribute(t));
+  } }, { key: "handleHeatTreeTooltip", value: function(e) {
+    var t = e.e, i = e.opt, a = e.x, s = e.y, r = e.type, o = this.ttCtx, l = this.w;
+    if (t.target.classList.contains("apexcharts-".concat(r, "-rect"))) {
+      var c = this.getAttr(t, "i"), h = this.getAttr(t, "j"), d = this.getAttr(t, "cx"), u = this.getAttr(t, "cy"), g = this.getAttr(t, "width"), p = this.getAttr(t, "height");
+      if (o.tooltipLabels.drawSeriesTexts({ ttItems: i.ttItems, i: c, j: h, shared: !1, e: t }), l.globals.capturedSeriesIndex = c, l.globals.capturedDataPointIndex = h, a = d + o.tooltipRect.ttWidth / 2 + g, s = u + o.tooltipRect.ttHeight / 2 - p / 2, o.tooltipPosition.moveXCrosshairs(d + g / 2), a > l.globals.gridWidth / 2 && (a = d - o.tooltipRect.ttWidth / 2 + g), o.w.config.tooltip.followCursor) {
+        var f = l.globals.dom.elWrap.getBoundingClientRect();
+        a = l.globals.clientX - f.left - (a > l.globals.gridWidth / 2 ? o.tooltipRect.ttWidth : 0), s = l.globals.clientY - f.top - (s > l.globals.gridHeight / 2 ? o.tooltipRect.ttHeight : 0);
+      }
+    }
+    return { x: a, y: s };
+  } }, { key: "handleMarkerTooltip", value: function(e) {
+    var t, i, a = e.e, s = e.opt, r = e.x, o = e.y, l = this.w, c = this.ttCtx;
+    if (a.target.classList.contains("apexcharts-marker")) {
+      var h = parseInt(s.paths.getAttribute("cx"), 10), d = parseInt(s.paths.getAttribute("cy"), 10), u = parseFloat(s.paths.getAttribute("val"));
+      if (i = parseInt(s.paths.getAttribute("rel"), 10), t = parseInt(s.paths.parentNode.parentNode.parentNode.getAttribute("rel"), 10) - 1, c.intersect) {
+        var g = T.findAncestor(s.paths, "apexcharts-series");
+        g && (t = parseInt(g.getAttribute("data:realIndex"), 10));
+      }
+      if (c.tooltipLabels.drawSeriesTexts({ ttItems: s.ttItems, i: t, j: i, shared: !c.showOnIntersect && l.config.tooltip.shared, e: a }), a.type === "mouseup" && c.markerClick(a, t, i), l.globals.capturedSeriesIndex = t, l.globals.capturedDataPointIndex = i, r = h, o = d + l.globals.translateY - 1.4 * c.tooltipRect.ttHeight, c.w.config.tooltip.followCursor) {
+        var p = c.getElGrid().getBoundingClientRect();
+        o = c.e.clientY + l.globals.translateY - p.top;
+      }
+      u < 0 && (o = d), c.marker.enlargeCurrentPoint(i, s.paths, r, o);
+    }
+    return { x: r, y: o };
+  } }, { key: "handleBarTooltip", value: function(e) {
+    var t, i, a = e.e, s = e.opt, r = this.w, o = this.ttCtx, l = o.getElTooltip(), c = 0, h = 0, d = 0, u = this.getBarTooltipXY({ e: a, opt: s });
+    if (u.j !== null || u.barHeight !== 0 || u.barWidth !== 0) {
+      t = u.i;
+      var g = u.j;
+      if (r.globals.capturedSeriesIndex = t, r.globals.capturedDataPointIndex = g, r.globals.isBarHorizontal && o.tooltipUtil.hasBars() || !r.config.tooltip.shared ? (h = u.x, d = u.y, i = Array.isArray(r.config.stroke.width) ? r.config.stroke.width[t] : r.config.stroke.width, c = h) : r.globals.comboCharts || r.config.tooltip.shared || (c /= 2), isNaN(d) && (d = r.globals.svgHeight - o.tooltipRect.ttHeight), parseInt(s.paths.parentNode.getAttribute("data:realIndex"), 10), h + o.tooltipRect.ttWidth > r.globals.gridWidth ? h -= o.tooltipRect.ttWidth : h < 0 && (h = 0), o.w.config.tooltip.followCursor) {
+        var p = o.getElGrid().getBoundingClientRect();
+        d = o.e.clientY - p.top;
+      }
+      o.tooltip === null && (o.tooltip = r.globals.dom.baseEl.querySelector(".apexcharts-tooltip")), r.config.tooltip.shared || (r.globals.comboBarCount > 0 ? o.tooltipPosition.moveXCrosshairs(c + i / 2) : o.tooltipPosition.moveXCrosshairs(c)), !o.fixedTooltip && (!r.config.tooltip.shared || r.globals.isBarHorizontal && o.tooltipUtil.hasBars()) && (d = d + r.globals.translateY - o.tooltipRect.ttHeight / 2, l.style.left = h + r.globals.translateX + "px", l.style.top = d + "px");
+    }
+  } }, { key: "getBarTooltipXY", value: function(e) {
+    var t = this, i = e.e, a = e.opt, s = this.w, r = null, o = this.ttCtx, l = 0, c = 0, h = 0, d = 0, u = 0, g = i.target.classList;
+    if (g.contains("apexcharts-bar-area") || g.contains("apexcharts-candlestick-area") || g.contains("apexcharts-boxPlot-area") || g.contains("apexcharts-rangebar-area")) {
+      var p = i.target, f = p.getBoundingClientRect(), x = a.elGrid.getBoundingClientRect(), b = f.height;
+      u = f.height;
+      var m = f.width, w = parseInt(p.getAttribute("cx"), 10), y = parseInt(p.getAttribute("cy"), 10);
+      d = parseFloat(p.getAttribute("barWidth"));
+      var v = i.type === "touchmove" ? i.touches[0].clientX : i.clientX;
+      r = parseInt(p.getAttribute("j"), 10), l = parseInt(p.parentNode.getAttribute("rel"), 10) - 1;
+      var k = p.getAttribute("data-range-y1"), A = p.getAttribute("data-range-y2");
+      s.globals.comboCharts && (l = parseInt(p.parentNode.getAttribute("data:realIndex"), 10));
+      var C = function(L) {
+        return s.globals.isXNumeric ? w - m / 2 : t.isVerticalGroupedRangeBar ? w + m / 2 : w - o.dataPointsDividedWidth + m / 2;
+      }, S = function() {
+        return y - o.dataPointsDividedHeight + b / 2 - o.tooltipRect.ttHeight / 2;
+      };
+      o.tooltipLabels.drawSeriesTexts({ ttItems: a.ttItems, i: l, j: r, y1: k ? parseInt(k, 10) : null, y2: A ? parseInt(A, 10) : null, shared: !o.showOnIntersect && s.config.tooltip.shared, e: i }), s.config.tooltip.followCursor ? s.globals.isBarHorizontal ? (c = v - x.left + 15, h = S()) : (c = C(), h = i.clientY - x.top - o.tooltipRect.ttHeight / 2 - 15) : s.globals.isBarHorizontal ? ((c = w) < o.xyRatios.baseLineInvertedY && (c = w - o.tooltipRect.ttWidth), h = S()) : (c = C(), h = y);
+    }
+    return { x: c, y: h, barHeight: u, barWidth: d, i: l, j: r };
+  } }]), n;
+}(), ah = function() {
+  function n(e) {
+    q(this, n), this.w = e.w, this.ttCtx = e;
+  }
+  return $(n, [{ key: "drawXaxisTooltip", value: function() {
+    var e = this.w, t = this.ttCtx, i = e.config.xaxis.position === "bottom";
+    t.xaxisOffY = i ? e.globals.gridHeight + 1 : -e.globals.xAxisHeight - e.config.xaxis.axisTicks.height + 3;
+    var a = i ? "apexcharts-xaxistooltip apexcharts-xaxistooltip-bottom" : "apexcharts-xaxistooltip apexcharts-xaxistooltip-top", s = e.globals.dom.elWrap;
+    t.isXAxisTooltipEnabled && e.globals.dom.baseEl.querySelector(".apexcharts-xaxistooltip") === null && (t.xaxisTooltip = document.createElement("div"), t.xaxisTooltip.setAttribute("class", a + " apexcharts-theme-" + e.config.tooltip.theme), s.appendChild(t.xaxisTooltip), t.xaxisTooltipText = document.createElement("div"), t.xaxisTooltipText.classList.add("apexcharts-xaxistooltip-text"), t.xaxisTooltipText.style.fontFamily = e.config.xaxis.tooltip.style.fontFamily || e.config.chart.fontFamily, t.xaxisTooltipText.style.fontSize = e.config.xaxis.tooltip.style.fontSize, t.xaxisTooltip.appendChild(t.xaxisTooltipText));
+  } }, { key: "drawYaxisTooltip", value: function() {
+    for (var e = this.w, t = this.ttCtx, i = 0; i < e.config.yaxis.length; i++) {
+      var a = e.config.yaxis[i].opposite || e.config.yaxis[i].crosshairs.opposite;
+      t.yaxisOffX = a ? e.globals.gridWidth + 1 : 1;
+      var s = "apexcharts-yaxistooltip apexcharts-yaxistooltip-".concat(i, a ? " apexcharts-yaxistooltip-right" : " apexcharts-yaxistooltip-left"), r = e.globals.dom.elWrap;
+      e.globals.dom.baseEl.querySelector(".apexcharts-yaxistooltip apexcharts-yaxistooltip-".concat(i)) === null && (t.yaxisTooltip = document.createElement("div"), t.yaxisTooltip.setAttribute("class", s + " apexcharts-theme-" + e.config.tooltip.theme), r.appendChild(t.yaxisTooltip), i === 0 && (t.yaxisTooltipText = []), t.yaxisTooltipText[i] = document.createElement("div"), t.yaxisTooltipText[i].classList.add("apexcharts-yaxistooltip-text"), t.yaxisTooltip.appendChild(t.yaxisTooltipText[i]));
+    }
+  } }, { key: "setXCrosshairWidth", value: function() {
+    var e = this.w, t = this.ttCtx, i = t.getElXCrosshairs();
+    if (t.xcrosshairsWidth = parseInt(e.config.xaxis.crosshairs.width, 10), e.globals.comboCharts) {
+      var a = e.globals.dom.baseEl.querySelector(".apexcharts-bar-area");
+      if (a !== null && e.config.xaxis.crosshairs.width === "barWidth") {
+        var s = parseFloat(a.getAttribute("barWidth"));
+        t.xcrosshairsWidth = s;
+      } else if (e.config.xaxis.crosshairs.width === "tickWidth") {
+        var r = e.globals.labels.length;
+        t.xcrosshairsWidth = e.globals.gridWidth / r;
+      }
+    } else if (e.config.xaxis.crosshairs.width === "tickWidth") {
+      var o = e.globals.labels.length;
+      t.xcrosshairsWidth = e.globals.gridWidth / o;
+    } else if (e.config.xaxis.crosshairs.width === "barWidth") {
+      var l = e.globals.dom.baseEl.querySelector(".apexcharts-bar-area");
+      if (l !== null) {
+        var c = parseFloat(l.getAttribute("barWidth"));
+        t.xcrosshairsWidth = c;
+      } else t.xcrosshairsWidth = 1;
+    }
+    e.globals.isBarHorizontal && (t.xcrosshairsWidth = 0), i !== null && t.xcrosshairsWidth > 0 && i.setAttribute("width", t.xcrosshairsWidth);
+  } }, { key: "handleYCrosshair", value: function() {
+    var e = this.w, t = this.ttCtx;
+    t.ycrosshairs = e.globals.dom.baseEl.querySelector(".apexcharts-ycrosshairs"), t.ycrosshairsHidden = e.globals.dom.baseEl.querySelector(".apexcharts-ycrosshairs-hidden");
+  } }, { key: "drawYaxisTooltipText", value: function(e, t, i) {
+    var a = this.ttCtx, s = this.w, r = s.globals, o = r.seriesYAxisMap[e];
+    if (a.yaxisTooltips[e] && o.length > 0) {
+      var l = r.yLabelFormatters[e], c = a.getElGrid().getBoundingClientRect(), h = o[0], d = 0;
+      i.yRatio.length > 1 && (d = h);
+      var u = (t - c.top) * i.yRatio[d], g = r.maxYArr[h] - r.minYArr[h], p = r.minYArr[h] + (g - u);
+      s.config.yaxis[e].reversed && (p = r.maxYArr[h] - (g - u)), a.tooltipPosition.moveYCrosshairs(t - c.top), a.yaxisTooltipText[e].innerHTML = l(p), a.tooltipPosition.moveYAxisTooltip(e);
+    }
+  } }]), n;
+}(), ar = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w;
+    var t = this.w;
+    this.tConfig = t.config.tooltip, this.tooltipUtil = new Rn(this), this.tooltipLabels = new eh(this), this.tooltipPosition = new On(this), this.marker = new th(this), this.intersect = new ih(this), this.axesTooltip = new ah(this), this.showOnIntersect = this.tConfig.intersect, this.showTooltipTitle = this.tConfig.x.show, this.fixedTooltip = this.tConfig.fixed.enabled, this.xaxisTooltip = null, this.yaxisTTEls = null, this.isBarShared = !t.globals.isBarHorizontal && this.tConfig.shared, this.lastHoverTime = Date.now();
+  }
+  return $(n, [{ key: "getElTooltip", value: function(e) {
+    return e || (e = this), e.w.globals.dom.baseEl ? e.w.globals.dom.baseEl.querySelector(".apexcharts-tooltip") : null;
+  } }, { key: "getElXCrosshairs", value: function() {
+    return this.w.globals.dom.baseEl.querySelector(".apexcharts-xcrosshairs");
+  } }, { key: "getElGrid", value: function() {
+    return this.w.globals.dom.baseEl.querySelector(".apexcharts-grid");
+  } }, { key: "drawTooltip", value: function(e) {
+    var t = this.w;
+    this.xyRatios = e, this.isXAxisTooltipEnabled = t.config.xaxis.tooltip.enabled && t.globals.axisCharts, this.yaxisTooltips = t.config.yaxis.map(function(r, o) {
+      return !!(r.show && r.tooltip.enabled && t.globals.axisCharts);
+    }), this.allTooltipSeriesGroups = [], t.globals.axisCharts || (this.showTooltipTitle = !1);
+    var i = document.createElement("div");
+    if (i.classList.add("apexcharts-tooltip"), t.config.tooltip.cssClass && i.classList.add(t.config.tooltip.cssClass), i.classList.add("apexcharts-theme-".concat(this.tConfig.theme || "light")), t.globals.dom.elWrap.appendChild(i), t.globals.axisCharts) {
+      this.axesTooltip.drawXaxisTooltip(), this.axesTooltip.drawYaxisTooltip(), this.axesTooltip.setXCrosshairWidth(), this.axesTooltip.handleYCrosshair();
+      var a = new ri(this.ctx);
+      this.xAxisTicksPositions = a.getXAxisTicksPositions();
+    }
+    if (!t.globals.comboCharts && !this.tConfig.intersect && t.config.chart.type !== "rangeBar" || this.tConfig.shared || (this.showOnIntersect = !0), t.config.markers.size !== 0 && t.globals.markers.largestSize !== 0 || this.marker.drawDynamicPoints(this), t.globals.collapsedSeries.length !== t.globals.series.length) {
+      this.dataPointsDividedHeight = t.globals.gridHeight / t.globals.dataPoints, this.dataPointsDividedWidth = t.globals.gridWidth / t.globals.dataPoints, this.showTooltipTitle && (this.tooltipTitle = document.createElement("div"), this.tooltipTitle.classList.add("apexcharts-tooltip-title"), this.tooltipTitle.style.fontFamily = this.tConfig.style.fontFamily || t.config.chart.fontFamily, this.tooltipTitle.style.fontSize = this.tConfig.style.fontSize, i.appendChild(this.tooltipTitle));
+      var s = t.globals.series.length;
+      (t.globals.xyCharts || t.globals.comboCharts) && this.tConfig.shared && (s = this.showOnIntersect ? 1 : t.globals.series.length), this.legendLabels = t.globals.dom.baseEl.querySelectorAll(".apexcharts-legend-text"), this.ttItems = this.createTTElements(s), this.addSVGEvents();
+    }
+  } }, { key: "createTTElements", value: function(e) {
+    for (var t = this, i = this.w, a = [], s = this.getElTooltip(), r = function(l) {
+      var c = document.createElement("div");
+      c.classList.add("apexcharts-tooltip-series-group", "apexcharts-tooltip-series-group-".concat(l)), c.style.order = i.config.tooltip.inverseOrder ? e - l : l + 1;
+      var h = document.createElement("span");
+      h.classList.add("apexcharts-tooltip-marker"), i.config.tooltip.fillSeriesColor ? h.style.backgroundColor = i.globals.colors[l] : h.style.color = i.globals.colors[l];
+      var d = i.config.markers.shape, u = d;
+      Array.isArray(d) && (u = d[l]), h.setAttribute("shape", u), c.appendChild(h);
+      var g = document.createElement("div");
+      g.classList.add("apexcharts-tooltip-text"), g.style.fontFamily = t.tConfig.style.fontFamily || i.config.chart.fontFamily, g.style.fontSize = t.tConfig.style.fontSize, ["y", "goals", "z"].forEach(function(p) {
+        var f = document.createElement("div");
+        f.classList.add("apexcharts-tooltip-".concat(p, "-group"));
+        var x = document.createElement("span");
+        x.classList.add("apexcharts-tooltip-text-".concat(p, "-label")), f.appendChild(x);
+        var b = document.createElement("span");
+        b.classList.add("apexcharts-tooltip-text-".concat(p, "-value")), f.appendChild(b), g.appendChild(f);
+      }), c.appendChild(g), s.appendChild(c), a.push(c);
+    }, o = 0; o < e; o++) r(o);
+    return a;
+  } }, { key: "addSVGEvents", value: function() {
+    var e = this.w, t = e.config.chart.type, i = this.getElTooltip(), a = !(t !== "bar" && t !== "candlestick" && t !== "boxPlot" && t !== "rangeBar"), s = t === "area" || t === "line" || t === "scatter" || t === "bubble" || t === "radar", r = e.globals.dom.Paper.node, o = this.getElGrid();
+    o && (this.seriesBound = o.getBoundingClientRect());
+    var l, c = [], h = [], d = { hoverArea: r, elGrid: o, tooltipEl: i, tooltipY: c, tooltipX: h, ttItems: this.ttItems };
+    if (e.globals.axisCharts && (s ? l = e.globals.dom.baseEl.querySelectorAll(".apexcharts-series[data\\:longestSeries='true'] .apexcharts-marker") : a ? l = e.globals.dom.baseEl.querySelectorAll(".apexcharts-series .apexcharts-bar-area, .apexcharts-series .apexcharts-candlestick-area, .apexcharts-series .apexcharts-boxPlot-area, .apexcharts-series .apexcharts-rangebar-area") : t !== "heatmap" && t !== "treemap" || (l = e.globals.dom.baseEl.querySelectorAll(".apexcharts-series .apexcharts-heatmap, .apexcharts-series .apexcharts-treemap")), l && l.length)) for (var u = 0; u < l.length; u++) c.push(l[u].getAttribute("cy")), h.push(l[u].getAttribute("cx"));
+    if (e.globals.xyCharts && !this.showOnIntersect || e.globals.comboCharts && !this.showOnIntersect || a && this.tooltipUtil.hasBars() && this.tConfig.shared) this.addPathsEventListeners([r], d);
+    else if (a && !e.globals.comboCharts || s && this.showOnIntersect) this.addDatapointEventsListeners(d);
+    else if (!e.globals.axisCharts || t === "heatmap" || t === "treemap") {
+      var g = e.globals.dom.baseEl.querySelectorAll(".apexcharts-series");
+      this.addPathsEventListeners(g, d);
+    }
+    if (this.showOnIntersect) {
+      var p = e.globals.dom.baseEl.querySelectorAll(".apexcharts-line-series .apexcharts-marker, .apexcharts-area-series .apexcharts-marker");
+      p.length > 0 && this.addPathsEventListeners(p, d), this.tooltipUtil.hasBars() && !this.tConfig.shared && this.addDatapointEventsListeners(d);
+    }
+  } }, { key: "drawFixedTooltipRect", value: function() {
+    var e = this.w, t = this.getElTooltip(), i = t.getBoundingClientRect(), a = i.width + 10, s = i.height + 10, r = this.tConfig.fixed.offsetX, o = this.tConfig.fixed.offsetY, l = this.tConfig.fixed.position.toLowerCase();
+    return l.indexOf("right") > -1 && (r = r + e.globals.svgWidth - a + 10), l.indexOf("bottom") > -1 && (o = o + e.globals.svgHeight - s - 10), t.style.left = r + "px", t.style.top = o + "px", { x: r, y: o, ttWidth: a, ttHeight: s };
+  } }, { key: "addDatapointEventsListeners", value: function(e) {
+    var t = this.w.globals.dom.baseEl.querySelectorAll(".apexcharts-series-markers .apexcharts-marker, .apexcharts-bar-area, .apexcharts-candlestick-area, .apexcharts-boxPlot-area, .apexcharts-rangebar-area");
+    this.addPathsEventListeners(t, e);
+  } }, { key: "addPathsEventListeners", value: function(e, t) {
+    for (var i = this, a = function(r) {
+      var o = { paths: e[r], tooltipEl: t.tooltipEl, tooltipY: t.tooltipY, tooltipX: t.tooltipX, elGrid: t.elGrid, hoverArea: t.hoverArea, ttItems: t.ttItems };
+      ["mousemove", "mouseup", "touchmove", "mouseout", "touchend"].map(function(l) {
+        return e[r].addEventListener(l, i.onSeriesHover.bind(i, o), { capture: !1, passive: !0 });
+      });
+    }, s = 0; s < e.length; s++) a(s);
+  } }, { key: "onSeriesHover", value: function(e, t) {
+    var i = this, a = Date.now() - this.lastHoverTime;
+    a >= 20 ? this.seriesHover(e, t) : (clearTimeout(this.seriesHoverTimeout), this.seriesHoverTimeout = setTimeout(function() {
+      i.seriesHover(e, t);
+    }, 20 - a));
+  } }, { key: "seriesHover", value: function(e, t) {
+    var i = this;
+    this.lastHoverTime = Date.now();
+    var a = [], s = this.w;
+    s.config.chart.group && (a = this.ctx.getGroupedCharts()), s.globals.axisCharts && (s.globals.minX === -1 / 0 && s.globals.maxX === 1 / 0 || s.globals.dataPoints === 0) || (a.length ? a.forEach(function(r) {
+      var o = i.getElTooltip(r), l = { paths: e.paths, tooltipEl: o, tooltipY: e.tooltipY, tooltipX: e.tooltipX, elGrid: e.elGrid, hoverArea: e.hoverArea, ttItems: r.w.globals.tooltip.ttItems };
+      r.w.globals.minX === i.w.globals.minX && r.w.globals.maxX === i.w.globals.maxX && r.w.globals.tooltip.seriesHoverByContext({ chartCtx: r, ttCtx: r.w.globals.tooltip, opt: l, e: t });
+    }) : this.seriesHoverByContext({ chartCtx: this.ctx, ttCtx: this.w.globals.tooltip, opt: e, e: t }));
+  } }, { key: "seriesHoverByContext", value: function(e) {
+    var t = e.chartCtx, i = e.ttCtx, a = e.opt, s = e.e, r = t.w, o = this.getElTooltip(t);
+    o && (i.tooltipRect = { x: 0, y: 0, ttWidth: o.getBoundingClientRect().width, ttHeight: o.getBoundingClientRect().height }, i.e = s, i.tooltipUtil.hasBars() && !r.globals.comboCharts && !i.isBarShared && this.tConfig.onDatasetHover.highlightDataSeries && new $e(t).toggleSeriesOnHover(s, s.target.parentNode), r.globals.axisCharts ? i.axisChartsTooltips({ e: s, opt: a, tooltipRect: i.tooltipRect }) : i.nonAxisChartsTooltips({ e: s, opt: a, tooltipRect: i.tooltipRect }), i.fixedTooltip && i.drawFixedTooltipRect());
+  } }, { key: "axisChartsTooltips", value: function(e) {
+    var t, i, a = e.e, s = e.opt, r = this.w, o = s.elGrid.getBoundingClientRect(), l = a.type === "touchmove" ? a.touches[0].clientX : a.clientX, c = a.type === "touchmove" ? a.touches[0].clientY : a.clientY;
+    if (this.clientY = c, this.clientX = l, r.globals.capturedSeriesIndex = -1, r.globals.capturedDataPointIndex = -1, c < o.top || c > o.top + o.height) this.handleMouseOut(s);
+    else {
+      if (Array.isArray(this.tConfig.enabledOnSeries) && !r.config.tooltip.shared) {
+        var h = parseInt(s.paths.getAttribute("index"), 10);
+        if (this.tConfig.enabledOnSeries.indexOf(h) < 0) return void this.handleMouseOut(s);
+      }
+      var d = this.getElTooltip(), u = this.getElXCrosshairs(), g = [];
+      r.config.chart.group && (g = this.ctx.getSyncedCharts());
+      var p = r.globals.xyCharts || r.config.chart.type === "bar" && !r.globals.isBarHorizontal && this.tooltipUtil.hasBars() && this.tConfig.shared || r.globals.comboCharts && this.tooltipUtil.hasBars();
+      if (a.type === "mousemove" || a.type === "touchmove" || a.type === "mouseup") {
+        if (r.globals.collapsedSeries.length + r.globals.ancillaryCollapsedSeries.length === r.globals.series.length) return;
+        u !== null && u.classList.add("apexcharts-active");
+        var f = this.yaxisTooltips.filter(function(m) {
+          return m === !0;
+        });
+        if (this.ycrosshairs !== null && f.length && this.ycrosshairs.classList.add("apexcharts-active"), p && !this.showOnIntersect || g.length > 1) this.handleStickyTooltip(a, l, c, s);
+        else if (r.config.chart.type === "heatmap" || r.config.chart.type === "treemap") {
+          var x = this.intersect.handleHeatTreeTooltip({ e: a, opt: s, x: t, y: i, type: r.config.chart.type });
+          t = x.x, i = x.y, d.style.left = t + "px", d.style.top = i + "px";
+        } else this.tooltipUtil.hasBars() && this.intersect.handleBarTooltip({ e: a, opt: s }), this.tooltipUtil.hasMarkers() && this.intersect.handleMarkerTooltip({ e: a, opt: s, x: t, y: i });
+        if (this.yaxisTooltips.length) for (var b = 0; b < r.config.yaxis.length; b++) this.axesTooltip.drawYaxisTooltipText(b, c, this.xyRatios);
+        r.globals.dom.baseEl.classList.add("apexcharts-tooltip-active"), s.tooltipEl.classList.add("apexcharts-active");
+      } else a.type !== "mouseout" && a.type !== "touchend" || this.handleMouseOut(s);
+    }
+  } }, { key: "nonAxisChartsTooltips", value: function(e) {
+    var t = e.e, i = e.opt, a = e.tooltipRect, s = this.w, r = i.paths.getAttribute("rel"), o = this.getElTooltip(), l = s.globals.dom.elWrap.getBoundingClientRect();
+    if (t.type === "mousemove" || t.type === "touchmove") {
+      s.globals.dom.baseEl.classList.add("apexcharts-tooltip-active"), o.classList.add("apexcharts-active"), this.tooltipLabels.drawSeriesTexts({ ttItems: i.ttItems, i: parseInt(r, 10) - 1, shared: !1 });
+      var c = s.globals.clientX - l.left - a.ttWidth / 2, h = s.globals.clientY - l.top - a.ttHeight - 10;
+      if (o.style.left = c + "px", o.style.top = h + "px", s.config.legend.tooltipHoverFormatter) {
+        var d = r - 1, u = (0, s.config.legend.tooltipHoverFormatter)(this.legendLabels[d].getAttribute("data:default-text"), { seriesIndex: d, dataPointIndex: d, w: s });
+        this.legendLabels[d].innerHTML = u;
+      }
+    } else t.type !== "mouseout" && t.type !== "touchend" || (o.classList.remove("apexcharts-active"), s.globals.dom.baseEl.classList.remove("apexcharts-tooltip-active"), s.config.legend.tooltipHoverFormatter && this.legendLabels.forEach(function(g) {
+      var p = g.getAttribute("data:default-text");
+      g.innerHTML = decodeURIComponent(p);
+    }));
+  } }, { key: "handleStickyTooltip", value: function(e, t, i, a) {
+    var s = this.w, r = this.tooltipUtil.getNearestValues({ context: this, hoverArea: a.hoverArea, elGrid: a.elGrid, clientX: t, clientY: i }), o = r.j, l = r.capturedSeries;
+    s.globals.collapsedSeriesIndices.includes(l) && (l = null);
+    var c = a.elGrid.getBoundingClientRect();
+    if (r.hoverX < 0 || r.hoverX > c.width) this.handleMouseOut(a);
+    else if (l !== null) this.handleStickyCapturedSeries(e, l, a, o);
+    else if (this.tooltipUtil.isXoverlap(o) || s.globals.isBarHorizontal) {
+      var h = s.globals.series.findIndex(function(d, u) {
+        return !s.globals.collapsedSeriesIndices.includes(u);
+      });
+      this.create(e, this, h, o, a.ttItems);
+    }
+  } }, { key: "handleStickyCapturedSeries", value: function(e, t, i, a) {
+    var s = this.w;
+    if (!this.tConfig.shared && s.globals.series[t][a] === null) return void this.handleMouseOut(i);
+    if (s.globals.series[t][a] !== void 0) this.tConfig.shared && this.tooltipUtil.isXoverlap(a) && this.tooltipUtil.isInitialSeriesSameLen() ? this.create(e, this, t, a, i.ttItems) : this.create(e, this, t, a, i.ttItems, !1);
+    else if (this.tooltipUtil.isXoverlap(a)) {
+      var r = s.globals.series.findIndex(function(o, l) {
+        return !s.globals.collapsedSeriesIndices.includes(l);
+      });
+      this.create(e, this, r, a, i.ttItems);
+    }
+  } }, { key: "deactivateHoverFilter", value: function() {
+    for (var e = this.w, t = new F(this.ctx), i = e.globals.dom.Paper.find(".apexcharts-bar-area"), a = 0; a < i.length; a++) t.pathMouseLeave(i[a]);
+  } }, { key: "handleMouseOut", value: function(e) {
+    var t = this.w, i = this.getElXCrosshairs();
+    if (t.globals.dom.baseEl.classList.remove("apexcharts-tooltip-active"), e.tooltipEl.classList.remove("apexcharts-active"), this.deactivateHoverFilter(), t.config.chart.type !== "bubble" && this.marker.resetPointsSize(), i !== null && i.classList.remove("apexcharts-active"), this.ycrosshairs !== null && this.ycrosshairs.classList.remove("apexcharts-active"), this.isXAxisTooltipEnabled && this.xaxisTooltip.classList.remove("apexcharts-active"), this.yaxisTooltips.length) {
+      this.yaxisTTEls === null && (this.yaxisTTEls = t.globals.dom.baseEl.querySelectorAll(".apexcharts-yaxistooltip"));
+      for (var a = 0; a < this.yaxisTTEls.length; a++) this.yaxisTTEls[a].classList.remove("apexcharts-active");
+    }
+    t.config.legend.tooltipHoverFormatter && this.legendLabels.forEach(function(s) {
+      var r = s.getAttribute("data:default-text");
+      s.innerHTML = decodeURIComponent(r);
+    });
+  } }, { key: "markerClick", value: function(e, t, i) {
+    var a = this.w;
+    typeof a.config.chart.events.markerClick == "function" && a.config.chart.events.markerClick(e, this.ctx, { seriesIndex: t, dataPointIndex: i, w: a }), this.ctx.events.fireEvent("markerClick", [e, this.ctx, { seriesIndex: t, dataPointIndex: i, w: a }]);
+  } }, { key: "create", value: function(e, t, i, a, s) {
+    var r, o, l, c, h, d, u, g, p, f, x, b, m, w, y, v, k = arguments.length > 5 && arguments[5] !== void 0 ? arguments[5] : null, A = this.w, C = t;
+    e.type === "mouseup" && this.markerClick(e, i, a), k === null && (k = this.tConfig.shared);
+    var S = this.tooltipUtil.hasMarkers(i), L = this.tooltipUtil.getElBars(), P = function() {
+      A.globals.markers.largestSize > 0 ? C.marker.enlargePoints(a) : C.tooltipPosition.moveDynamicPointsOnHover(a);
+    };
+    if (A.config.legend.tooltipHoverFormatter) {
+      var I = A.config.legend.tooltipHoverFormatter, E = Array.from(this.legendLabels);
+      E.forEach(function(Q) {
+        var W = Q.getAttribute("data:default-text");
+        Q.innerHTML = decodeURIComponent(W);
+      });
+      for (var O = 0; O < E.length; O++) {
+        var _ = E[O], Y = parseInt(_.getAttribute("i"), 10), X = decodeURIComponent(_.getAttribute("data:default-text")), D = I(X, { seriesIndex: k ? Y : i, dataPointIndex: a, w: A });
+        if (k) _.innerHTML = A.globals.collapsedSeriesIndices.indexOf(Y) < 0 ? D : X;
+        else if (_.innerHTML = Y === i ? D : X, i === Y) break;
+      }
+    }
+    var B = N(N({ ttItems: s, i, j: a }, ((r = A.globals.seriesRange) === null || r === void 0 || (o = r[i]) === null || o === void 0 || (l = o[a]) === null || l === void 0 || (c = l.y[0]) === null || c === void 0 ? void 0 : c.y1) !== void 0 && { y1: (h = A.globals.seriesRange) === null || h === void 0 || (d = h[i]) === null || d === void 0 || (u = d[a]) === null || u === void 0 || (g = u.y[0]) === null || g === void 0 ? void 0 : g.y1 }), ((p = A.globals.seriesRange) === null || p === void 0 || (f = p[i]) === null || f === void 0 || (x = f[a]) === null || x === void 0 || (b = x.y[0]) === null || b === void 0 ? void 0 : b.y2) !== void 0 && { y2: (m = A.globals.seriesRange) === null || m === void 0 || (w = m[i]) === null || w === void 0 || (y = w[a]) === null || y === void 0 || (v = y.y[0]) === null || v === void 0 ? void 0 : v.y2 });
+    if (k) {
+      if (C.tooltipLabels.drawSeriesTexts(N(N({}, B), {}, { shared: !this.showOnIntersect && this.tConfig.shared })), S) P();
+      else if (this.tooltipUtil.hasBars() && (this.barSeriesHeight = this.tooltipUtil.getBarsHeight(L), this.barSeriesHeight > 0)) {
+        var R = new F(this.ctx), z = A.globals.dom.Paper.find(".apexcharts-bar-area[j='".concat(a, "']"));
+        this.deactivateHoverFilter(), C.tooltipUtil.getAllMarkers(!0).length && !this.barSeriesHeight && P(), C.tooltipPosition.moveStickyTooltipOverBars(a, i);
+        for (var Z = 0; Z < z.length; Z++) R.pathMouseEnter(z[Z]);
+      }
+    } else C.tooltipLabels.drawSeriesTexts(N({ shared: !1 }, B)), this.tooltipUtil.hasBars() && C.tooltipPosition.moveStickyTooltipOverBars(a, i), S && C.tooltipPosition.moveMarkers(i, a);
+  } }]), n;
+}(), sh = function() {
+  function n(e) {
+    q(this, n), this.w = e.w, this.barCtx = e, this.totalFormatter = this.w.config.plotOptions.bar.dataLabels.total.formatter, this.totalFormatter || (this.totalFormatter = this.w.config.dataLabels.formatter);
+  }
+  return $(n, [{ key: "handleBarDataLabels", value: function(e) {
+    var t, i, a = e.x, s = e.y, r = e.y1, o = e.y2, l = e.i, c = e.j, h = e.realIndex, d = e.columnGroupIndex, u = e.series, g = e.barHeight, p = e.barWidth, f = e.barXPosition, x = e.barYPosition, b = e.visibleSeries, m = this.w, w = new F(this.barCtx.ctx), y = Array.isArray(this.barCtx.strokeWidth) ? this.barCtx.strokeWidth[h] : this.barCtx.strokeWidth;
+    m.globals.isXNumeric && !m.globals.isBarHorizontal ? (t = a + parseFloat(p * (b + 1)), i = s + parseFloat(g * (b + 1)) - y) : (t = a + parseFloat(p * b), i = s + parseFloat(g * b));
+    var v, k = null, A = a, C = s, S = {}, L = m.config.dataLabels, P = this.barCtx.barOptions.dataLabels, I = this.barCtx.barOptions.dataLabels.total;
+    x !== void 0 && this.barCtx.isRangeBar && (i = x, C = x), f !== void 0 && this.barCtx.isVerticalGroupedRangeBar && (t = f, A = f);
+    var E = L.offsetX, O = L.offsetY, _ = { width: 0, height: 0 };
+    if (m.config.dataLabels.enabled) {
+      var Y = m.globals.series[l][c];
+      _ = w.getTextRects(m.config.dataLabels.formatter ? m.config.dataLabels.formatter(Y, N(N({}, m), {}, { seriesIndex: l, dataPointIndex: c, w: m })) : m.globals.yLabelFormatters[0](Y), parseFloat(L.style.fontSize));
+    }
+    var X = { x: a, y: s, i: l, j: c, realIndex: h, columnGroupIndex: d, bcx: t, bcy: i, barHeight: g, barWidth: p, textRects: _, strokeWidth: y, dataLabelsX: A, dataLabelsY: C, dataLabelsConfig: L, barDataLabelsConfig: P, barTotalDataLabelsConfig: I, offX: E, offY: O };
+    return S = this.barCtx.isHorizontal ? this.calculateBarsDataLabelsPosition(X) : this.calculateColumnsDataLabelsPosition(X), v = this.drawCalculatedDataLabels({ x: S.dataLabelsX, y: S.dataLabelsY, val: this.barCtx.isRangeBar ? [r, o] : m.config.chart.stackType === "100%" ? u[h][c] : m.globals.series[h][c], i: h, j: c, barWidth: p, barHeight: g, textRects: _, dataLabelsConfig: L }), m.config.chart.stacked && I.enabled && (k = this.drawTotalDataLabels({ x: S.totalDataLabelsX, y: S.totalDataLabelsY, barWidth: p, barHeight: g, realIndex: h, textAnchor: S.totalDataLabelsAnchor, val: this.getStackedTotalDataLabel({ realIndex: h, j: c }), dataLabelsConfig: L, barTotalDataLabelsConfig: I })), { dataLabelsPos: S, dataLabels: v, totalDataLabels: k };
+  } }, { key: "getStackedTotalDataLabel", value: function(e) {
+    var t = e.realIndex, i = e.j, a = this.w, s = this.barCtx.stackedSeriesTotals[i];
+    return this.totalFormatter && (s = this.totalFormatter(s, N(N({}, a), {}, { seriesIndex: t, dataPointIndex: i, w: a }))), s;
+  } }, { key: "calculateColumnsDataLabelsPosition", value: function(e) {
+    var t = this, i = this.w, a = e.i, s = e.j, r = e.realIndex;
+    e.columnGroupIndex;
+    var o, l, c = e.y, h = e.bcx, d = e.barWidth, u = e.barHeight, g = e.textRects, p = e.dataLabelsX, f = e.dataLabelsY, x = e.dataLabelsConfig, b = e.barDataLabelsConfig, m = e.barTotalDataLabelsConfig, w = e.strokeWidth, y = e.offX, v = e.offY, k = h;
+    u = Math.abs(u);
+    var A = i.config.plotOptions.bar.dataLabels.orientation === "vertical", C = this.barCtx.barHelpers.getZeroValueEncounters({ i: a, j: s }).zeroEncounters;
+    h -= w / 2;
+    var S = i.globals.gridWidth / i.globals.dataPoints;
+    this.barCtx.isVerticalGroupedRangeBar ? p += d / 2 : (p = i.globals.isXNumeric ? h - d / 2 + y : h - S + d / 2 + y, !i.config.chart.stacked && C > 0 && i.config.plotOptions.bar.hideZeroBarsWhenGrouped && (p -= d * C)), A && (p = p + g.height / 2 - w / 2 - 2);
+    var L = i.globals.series[a][s] < 0, P = c;
+    switch (this.barCtx.isReversed && (P = c + (L ? u : -u)), b.position) {
+      case "center":
+        f = A ? L ? P - u / 2 + v : P + u / 2 - v : L ? P - u / 2 + g.height / 2 + v : P + u / 2 + g.height / 2 - v;
+        break;
+      case "bottom":
+        f = A ? L ? P - u + v : P + u - v : L ? P - u + g.height + w + v : P + u - g.height / 2 + w - v;
+        break;
+      case "top":
+        f = A ? L ? P + v : P - v : L ? P - g.height / 2 - v : P + g.height + v;
+    }
+    var I = P;
+    if (i.globals.seriesGroups.forEach(function(_) {
+      var Y;
+      (Y = t.barCtx[_.join(",")]) === null || Y === void 0 || Y.prevY.forEach(function(X) {
+        I = L ? Math.max(X[s], I) : Math.min(X[s], I);
+      });
+    }), this.barCtx.lastActiveBarSerieIndex === r && m.enabled) {
+      var E = new F(this.barCtx.ctx).getTextRects(this.getStackedTotalDataLabel({ realIndex: r, j: s }), x.fontSize);
+      o = L ? I - E.height / 2 - v - m.offsetY + 18 : I + E.height + v + m.offsetY - 18;
+      var O = S;
+      l = k + (i.globals.isXNumeric ? -d * i.globals.barGroups.length / 2 : i.globals.barGroups.length * d / 2 - (i.globals.barGroups.length - 1) * d - O) + m.offsetX;
+    }
+    return i.config.chart.stacked || (f < 0 ? f = 0 + w : f + g.height / 3 > i.globals.gridHeight && (f = i.globals.gridHeight - w)), { bcx: h, bcy: c, dataLabelsX: p, dataLabelsY: f, totalDataLabelsX: l, totalDataLabelsY: o, totalDataLabelsAnchor: "middle" };
+  } }, { key: "calculateBarsDataLabelsPosition", value: function(e) {
+    var t = this, i = this.w, a = e.x, s = e.i, r = e.j, o = e.realIndex, l = e.bcy, c = e.barHeight, h = e.barWidth, d = e.textRects, u = e.dataLabelsX, g = e.strokeWidth, p = e.dataLabelsConfig, f = e.barDataLabelsConfig, x = e.barTotalDataLabelsConfig, b = e.offX, m = e.offY, w = i.globals.gridHeight / i.globals.dataPoints, y = this.barCtx.barHelpers.getZeroValueEncounters({ i: s, j: r }).zeroEncounters;
+    h = Math.abs(h);
+    var v, k, A = l - (this.barCtx.isRangeBar ? 0 : w) + c / 2 + d.height / 2 + m - 3;
+    !i.config.chart.stacked && y > 0 && i.config.plotOptions.bar.hideZeroBarsWhenGrouped && (A -= c * y);
+    var C = "start", S = i.globals.series[s][r] < 0, L = a;
+    switch (this.barCtx.isReversed && (L = a + (S ? -h : h), C = S ? "start" : "end"), f.position) {
+      case "center":
+        u = S ? L + h / 2 - b : Math.max(d.width / 2, L - h / 2) + b;
+        break;
+      case "bottom":
+        u = S ? L + h - g - b : L - h + g + b;
+        break;
+      case "top":
+        u = S ? L - g - b : L - g + b;
+    }
+    var P = L;
+    if (i.globals.seriesGroups.forEach(function(E) {
+      var O;
+      (O = t.barCtx[E.join(",")]) === null || O === void 0 || O.prevX.forEach(function(_) {
+        P = S ? Math.min(_[r], P) : Math.max(_[r], P);
+      });
+    }), this.barCtx.lastActiveBarSerieIndex === o && x.enabled) {
+      var I = new F(this.barCtx.ctx).getTextRects(this.getStackedTotalDataLabel({ realIndex: o, j: r }), p.fontSize);
+      S ? (v = P - g - b - x.offsetX, C = "end") : v = P + b + x.offsetX + (this.barCtx.isReversed ? -(h + g) : g), k = A - d.height / 2 + I.height / 2 + x.offsetY + g, i.globals.barGroups.length > 1 && (k -= i.globals.barGroups.length / 2 * (c / 2));
+    }
+    return i.config.chart.stacked || (p.textAnchor === "start" ? u - d.width < 0 ? u = S ? d.width + g : g : u + d.width > i.globals.gridWidth && (u = S ? i.globals.gridWidth - g : i.globals.gridWidth - d.width - g) : p.textAnchor === "middle" ? u - d.width / 2 < 0 ? u = d.width / 2 + g : u + d.width / 2 > i.globals.gridWidth && (u = i.globals.gridWidth - d.width / 2 - g) : p.textAnchor === "end" && (u < 1 ? u = d.width + g : u + 1 > i.globals.gridWidth && (u = i.globals.gridWidth - d.width - g))), { bcx: a, bcy: l, dataLabelsX: u, dataLabelsY: A, totalDataLabelsX: v, totalDataLabelsY: k, totalDataLabelsAnchor: C };
+  } }, { key: "drawCalculatedDataLabels", value: function(e) {
+    var t = e.x, i = e.y, a = e.val, s = e.i, r = e.j, o = e.textRects, l = e.barHeight, c = e.barWidth, h = e.dataLabelsConfig, d = this.w, u = "rotate(0)";
+    d.config.plotOptions.bar.dataLabels.orientation === "vertical" && (u = "rotate(-90, ".concat(t, ", ").concat(i, ")"));
+    var g = new It(this.barCtx.ctx), p = new F(this.barCtx.ctx), f = h.formatter, x = null, b = d.globals.collapsedSeriesIndices.indexOf(s) > -1;
+    if (h.enabled && !b) {
+      x = p.group({ class: "apexcharts-data-labels", transform: u });
+      var m = "";
+      a !== void 0 && (m = f(a, N(N({}, d), {}, { seriesIndex: s, dataPointIndex: r, w: d }))), !a && d.config.plotOptions.bar.hideZeroBarsWhenGrouped && (m = "");
+      var w = d.globals.series[s][r] < 0, y = d.config.plotOptions.bar.dataLabels.position;
+      d.config.plotOptions.bar.dataLabels.orientation === "vertical" && (y === "top" && (h.textAnchor = w ? "end" : "start"), y === "center" && (h.textAnchor = "middle"), y === "bottom" && (h.textAnchor = w ? "end" : "start")), this.barCtx.isRangeBar && this.barCtx.barOptions.dataLabels.hideOverflowingLabels && c < p.getTextRects(m, parseFloat(h.style.fontSize)).width && (m = ""), d.config.chart.stacked && this.barCtx.barOptions.dataLabels.hideOverflowingLabels && (this.barCtx.isHorizontal ? o.width / 1.6 > Math.abs(c) && (m = "") : o.height / 1.6 > Math.abs(l) && (m = ""));
+      var v = N({}, h);
+      this.barCtx.isHorizontal && a < 0 && (h.textAnchor === "start" ? v.textAnchor = "end" : h.textAnchor === "end" && (v.textAnchor = "start")), g.plotDataLabelsText({ x: t, y: i, text: m, i: s, j: r, parent: x, dataLabelsConfig: v, alwaysDrawDataLabel: !0, offsetCorrection: !0 });
+    }
+    return x;
+  } }, { key: "drawTotalDataLabels", value: function(e) {
+    var t = e.x, i = e.y, a = e.val, s = e.realIndex, r = e.textAnchor, o = e.barTotalDataLabelsConfig;
+    this.w;
+    var l, c = new F(this.barCtx.ctx);
+    return o.enabled && t !== void 0 && i !== void 0 && this.barCtx.lastActiveBarSerieIndex === s && (l = c.drawText({ x: t, y: i, foreColor: o.style.color, text: a, textAnchor: r, fontFamily: o.style.fontFamily, fontSize: o.style.fontSize, fontWeight: o.style.fontWeight })), l;
+  } }]), n;
+}(), rh = function() {
+  function n(e) {
+    q(this, n), this.w = e.w, this.barCtx = e;
+  }
+  return $(n, [{ key: "initVariables", value: function(e) {
+    var t = this.w;
+    this.barCtx.series = e, this.barCtx.totalItems = 0, this.barCtx.seriesLen = 0, this.barCtx.visibleI = -1, this.barCtx.visibleItems = 1;
+    for (var i = 0; i < e.length; i++) if (e[i].length > 0 && (this.barCtx.seriesLen = this.barCtx.seriesLen + 1, this.barCtx.totalItems += e[i].length), t.globals.isXNumeric) for (var a = 0; a < e[i].length; a++) t.globals.seriesX[i][a] > t.globals.minX && t.globals.seriesX[i][a] < t.globals.maxX && this.barCtx.visibleItems++;
+    else this.barCtx.visibleItems = t.globals.dataPoints;
+    this.arrBorderRadius = this.createBorderRadiusArr(t.globals.series), T.isSafari() && (this.arrBorderRadius = this.arrBorderRadius.map(function(s) {
+      return s.map(function(r) {
+        return "none";
+      });
+    })), this.barCtx.seriesLen === 0 && (this.barCtx.seriesLen = 1), this.barCtx.zeroSerieses = [], t.globals.comboCharts || this.checkZeroSeries({ series: e });
+  } }, { key: "initialPositions", value: function(e) {
+    var t, i, a, s, r, o, l, c, h = this.w, d = h.globals.dataPoints;
+    this.barCtx.isRangeBar && (d = h.globals.labels.length);
+    var u = this.barCtx.seriesLen;
+    if (h.config.plotOptions.bar.rangeBarGroupRows && (u = 1), this.barCtx.isHorizontal) r = (a = h.globals.gridHeight / d) / u, h.globals.isXNumeric && (r = (a = h.globals.gridHeight / this.barCtx.totalItems) / this.barCtx.seriesLen), r = r * parseInt(this.barCtx.barOptions.barHeight, 10) / 100, String(this.barCtx.barOptions.barHeight).indexOf("%") === -1 && (r = parseInt(this.barCtx.barOptions.barHeight, 10)), c = this.barCtx.baseLineInvertedY + h.globals.padHorizontal + (this.barCtx.isReversed ? h.globals.gridWidth : 0) - (this.barCtx.isReversed ? 2 * this.barCtx.baseLineInvertedY : 0), this.barCtx.isFunnel && (c = h.globals.gridWidth / 2), i = (a - r * this.barCtx.seriesLen) / 2;
+    else {
+      if (s = h.globals.gridWidth / this.barCtx.visibleItems, h.config.xaxis.convertedCatToNumeric && (s = h.globals.gridWidth / h.globals.dataPoints), o = s / u * parseInt(this.barCtx.barOptions.columnWidth, 10) / 100, h.globals.isXNumeric) {
+        var g = this.barCtx.xRatio;
+        h.globals.minXDiff && h.globals.minXDiff !== 0.5 && h.globals.minXDiff / g > 0 && (s = h.globals.minXDiff / g), (o = s / u * parseInt(this.barCtx.barOptions.columnWidth, 10) / 100) < 1 && (o = 1);
+      }
+      String(this.barCtx.barOptions.columnWidth).indexOf("%") === -1 && (o = parseInt(this.barCtx.barOptions.columnWidth, 10)), l = h.globals.gridHeight - this.barCtx.baseLineY[this.barCtx.translationsIndex] - (this.barCtx.isReversed ? h.globals.gridHeight : 0) + (this.barCtx.isReversed ? 2 * this.barCtx.baseLineY[this.barCtx.translationsIndex] : 0), h.globals.isXNumeric ? t = this.barCtx.getBarXForNumericXAxis({ x: t, j: 0, realIndex: e, barWidth: o }).x : t = h.globals.padHorizontal + T.noExponents(s - o * this.barCtx.seriesLen) / 2;
+    }
+    return h.globals.barHeight = r, h.globals.barWidth = o, { x: t, y: i, yDivision: a, xDivision: s, barHeight: r, barWidth: o, zeroH: l, zeroW: c };
+  } }, { key: "initializeStackedPrevVars", value: function(e) {
+    e.w.globals.seriesGroups.forEach(function(t) {
+      e[t] || (e[t] = {}), e[t].prevY = [], e[t].prevX = [], e[t].prevYF = [], e[t].prevXF = [], e[t].prevYVal = [], e[t].prevXVal = [];
+    });
+  } }, { key: "initializeStackedXYVars", value: function(e) {
+    e.w.globals.seriesGroups.forEach(function(t) {
+      e[t] || (e[t] = {}), e[t].xArrj = [], e[t].xArrjF = [], e[t].xArrjVal = [], e[t].yArrj = [], e[t].yArrjF = [], e[t].yArrjVal = [];
+    });
+  } }, { key: "getPathFillColor", value: function(e, t, i, a) {
+    var s, r, o, l, c = this.w, h = this.barCtx.ctx.fill, d = null, u = this.barCtx.barOptions.distributed ? i : t, g = !1;
+    return this.barCtx.barOptions.colors.ranges.length > 0 && this.barCtx.barOptions.colors.ranges.map(function(p) {
+      e[t][i] >= p.from && e[t][i] <= p.to && (d = p.color, g = !0);
+    }), { color: h.fillPath({ seriesNumber: this.barCtx.barOptions.distributed ? u : a, dataPointIndex: i, color: d, value: e[t][i], fillConfig: (s = c.config.series[t].data[i]) === null || s === void 0 ? void 0 : s.fill, fillType: (r = c.config.series[t].data[i]) !== null && r !== void 0 && (o = r.fill) !== null && o !== void 0 && o.type ? (l = c.config.series[t].data[i]) === null || l === void 0 ? void 0 : l.fill.type : Array.isArray(c.config.fill.type) ? c.config.fill.type[a] : c.config.fill.type }), useRangeColor: g };
+  } }, { key: "getStrokeWidth", value: function(e, t, i) {
+    var a = 0, s = this.w;
+    return this.barCtx.series[e][t] === void 0 || this.barCtx.series[e][t] === null ? this.barCtx.isNullValue = !0 : this.barCtx.isNullValue = !1, s.config.stroke.show && (this.barCtx.isNullValue || (a = Array.isArray(this.barCtx.strokeWidth) ? this.barCtx.strokeWidth[i] : this.barCtx.strokeWidth)), a;
+  } }, { key: "createBorderRadiusArr", value: function(e) {
+    var t, i = this.w, a = !this.w.config.chart.stacked || i.config.plotOptions.bar.borderRadius <= 0, s = e.length, r = 0 | ((t = e[0]) === null || t === void 0 ? void 0 : t.length), o = Array.from({ length: s }, function() {
+      return Array(r).fill(a ? "top" : "none");
+    });
+    if (a) return o;
+    for (var l = 0; l < r; l++) {
+      for (var c = [], h = [], d = 0, u = 0; u < s; u++) {
+        var g = e[u][l];
+        g > 0 ? (c.push(u), d++) : g < 0 && (h.push(u), d++);
+      }
+      if (c.length > 0 && h.length === 0) if (c.length === 1) o[c[0]][l] = "both";
+      else {
+        var p, f = c[0], x = c[c.length - 1], b = Vt(c);
+        try {
+          for (b.s(); !(p = b.n()).done; ) {
+            var m = p.value;
+            o[m][l] = m === f ? "bottom" : m === x ? "top" : "none";
+          }
+        } catch (Y) {
+          b.e(Y);
+        } finally {
+          b.f();
+        }
+      }
+      else if (h.length > 0 && c.length === 0) if (h.length === 1) o[h[0]][l] = "both";
+      else {
+        var w, y = Math.max.apply(Math, h), v = Math.min.apply(Math, h), k = Vt(h);
+        try {
+          for (k.s(); !(w = k.n()).done; ) {
+            var A = w.value;
+            o[A][l] = A === y ? "bottom" : A === v ? "top" : "none";
+          }
+        } catch (Y) {
+          k.e(Y);
+        } finally {
+          k.f();
+        }
+      }
+      else if (c.length > 0 && h.length > 0) {
+        var C, S = c[c.length - 1], L = Vt(c);
+        try {
+          for (L.s(); !(C = L.n()).done; ) {
+            var P = C.value;
+            o[P][l] = P === S ? "top" : "none";
+          }
+        } catch (Y) {
+          L.e(Y);
+        } finally {
+          L.f();
+        }
+        var I, E = Math.max.apply(Math, h), O = Vt(h);
+        try {
+          for (O.s(); !(I = O.n()).done; ) {
+            var _ = I.value;
+            o[_][l] = _ === E ? "bottom" : "none";
+          }
+        } catch (Y) {
+          O.e(Y);
+        } finally {
+          O.f();
+        }
+      } else d === 1 && (o[c[0] || h[0]][l] = "both");
+    }
+    return o;
+  } }, { key: "barBackground", value: function(e) {
+    var t = e.j, i = e.i, a = e.x1, s = e.x2, r = e.y1, o = e.y2, l = e.elSeries, c = this.w, h = new F(this.barCtx.ctx), d = new $e(this.barCtx.ctx).getActiveConfigSeriesIndex();
+    if (this.barCtx.barOptions.colors.backgroundBarColors.length > 0 && d === i) {
+      t >= this.barCtx.barOptions.colors.backgroundBarColors.length && (t %= this.barCtx.barOptions.colors.backgroundBarColors.length);
+      var u = this.barCtx.barOptions.colors.backgroundBarColors[t], g = h.drawRect(a !== void 0 ? a : 0, r !== void 0 ? r : 0, s !== void 0 ? s : c.globals.gridWidth, o !== void 0 ? o : c.globals.gridHeight, this.barCtx.barOptions.colors.backgroundBarRadius, u, this.barCtx.barOptions.colors.backgroundBarOpacity);
+      l.add(g), g.node.classList.add("apexcharts-backgroundBar");
+    }
+  } }, { key: "getColumnPaths", value: function(e) {
+    var t, i = e.barWidth, a = e.barXPosition, s = e.y1, r = e.y2, o = e.strokeWidth, l = e.isReversed, c = e.series, h = e.seriesGroup, d = e.realIndex, u = e.i, g = e.j, p = e.w, f = new F(this.barCtx.ctx);
+    (o = Array.isArray(o) ? o[d] : o) || (o = 0);
+    var x = i, b = a;
+    (t = p.config.series[d].data[g]) !== null && t !== void 0 && t.columnWidthOffset && (b = a - p.config.series[d].data[g].columnWidthOffset / 2, x = i + p.config.series[d].data[g].columnWidthOffset);
+    var m = o / 2, w = b + m, y = b + x - m, v = (c[u][g] >= 0 ? 1 : -1) * (l ? -1 : 1);
+    s += 1e-3 - m * v, r += 1e-3 + m * v;
+    var k = f.move(w, s), A = f.move(w, s), C = f.line(y, s);
+    if (p.globals.previousPaths.length > 0 && (A = this.barCtx.getPreviousPath(d, g, !1)), k = k + f.line(w, r) + f.line(y, r) + C + (p.config.plotOptions.bar.borderRadiusApplication === "around" || this.arrBorderRadius[d][g] === "both" ? " Z" : " z"), A = A + f.line(w, s) + C + C + C + C + C + f.line(w, s) + (p.config.plotOptions.bar.borderRadiusApplication === "around" || this.arrBorderRadius[d][g] === "both" ? " Z" : " z"), this.arrBorderRadius[d][g] !== "none" && (k = f.roundPathCorners(k, p.config.plotOptions.bar.borderRadius)), p.config.chart.stacked) {
+      var S = this.barCtx;
+      (S = this.barCtx[h]).yArrj.push(r - m * v), S.yArrjF.push(Math.abs(s - r + o * v)), S.yArrjVal.push(this.barCtx.series[u][g]);
+    }
+    return { pathTo: k, pathFrom: A };
+  } }, { key: "getBarpaths", value: function(e) {
+    var t, i = e.barYPosition, a = e.barHeight, s = e.x1, r = e.x2, o = e.strokeWidth, l = e.isReversed, c = e.series, h = e.seriesGroup, d = e.realIndex, u = e.i, g = e.j, p = e.w, f = new F(this.barCtx.ctx);
+    (o = Array.isArray(o) ? o[d] : o) || (o = 0);
+    var x = i, b = a;
+    (t = p.config.series[d].data[g]) !== null && t !== void 0 && t.barHeightOffset && (x = i - p.config.series[d].data[g].barHeightOffset / 2, b = a + p.config.series[d].data[g].barHeightOffset);
+    var m = o / 2, w = x + m, y = x + b - m, v = (c[u][g] >= 0 ? 1 : -1) * (l ? -1 : 1);
+    s += 1e-3 + m * v, r += 1e-3 - m * v;
+    var k = f.move(s, w), A = f.move(s, w);
+    p.globals.previousPaths.length > 0 && (A = this.barCtx.getPreviousPath(d, g, !1));
+    var C = f.line(s, y);
+    if (k = k + f.line(r, w) + f.line(r, y) + C + (p.config.plotOptions.bar.borderRadiusApplication === "around" || this.arrBorderRadius[d][g] === "both" ? " Z" : " z"), A = A + f.line(s, w) + C + C + C + C + C + f.line(s, w) + (p.config.plotOptions.bar.borderRadiusApplication === "around" || this.arrBorderRadius[d][g] === "both" ? " Z" : " z"), this.arrBorderRadius[d][g] !== "none" && (k = f.roundPathCorners(k, p.config.plotOptions.bar.borderRadius)), p.config.chart.stacked) {
+      var S = this.barCtx;
+      (S = this.barCtx[h]).xArrj.push(r + m * v), S.xArrjF.push(Math.abs(s - r - o * v)), S.xArrjVal.push(this.barCtx.series[u][g]);
+    }
+    return { pathTo: k, pathFrom: A };
+  } }, { key: "checkZeroSeries", value: function(e) {
+    for (var t = e.series, i = this.w, a = 0; a < t.length; a++) {
+      for (var s = 0, r = 0; r < t[i.globals.maxValsInArrayIndex].length; r++) s += t[a][r];
+      s === 0 && this.barCtx.zeroSerieses.push(a);
+    }
+  } }, { key: "getXForValue", value: function(e, t) {
+    var i = !(arguments.length > 2 && arguments[2] !== void 0) || arguments[2] ? t : null;
+    return e != null && (i = t + e / this.barCtx.invertedYRatio - 2 * (this.barCtx.isReversed ? e / this.barCtx.invertedYRatio : 0)), i;
+  } }, { key: "getYForValue", value: function(e, t, i) {
+    var a = !(arguments.length > 3 && arguments[3] !== void 0) || arguments[3] ? t : null;
+    return e != null && (a = t - e / this.barCtx.yRatio[i] + 2 * (this.barCtx.isReversed ? e / this.barCtx.yRatio[i] : 0)), a;
+  } }, { key: "getGoalValues", value: function(e, t, i, a, s, r) {
+    var o = this, l = this.w, c = [], h = function(g, p) {
+      var f;
+      c.push((Mi(f = {}, e, e === "x" ? o.getXForValue(g, t, !1) : o.getYForValue(g, i, r, !1)), Mi(f, "attrs", p), f));
+    };
+    if (l.globals.seriesGoals[a] && l.globals.seriesGoals[a][s] && Array.isArray(l.globals.seriesGoals[a][s]) && l.globals.seriesGoals[a][s].forEach(function(g) {
+      h(g.value, g);
+    }), this.barCtx.barOptions.isDumbbell && l.globals.seriesRange.length) {
+      var d = this.barCtx.barOptions.dumbbellColors ? this.barCtx.barOptions.dumbbellColors : l.globals.colors, u = { strokeHeight: e === "x" ? 0 : l.globals.markers.size[a], strokeWidth: e === "x" ? l.globals.markers.size[a] : 0, strokeDashArray: 0, strokeLineCap: "round", strokeColor: Array.isArray(d[a]) ? d[a][0] : d[a] };
+      h(l.globals.seriesRangeStart[a][s], u), h(l.globals.seriesRangeEnd[a][s], N(N({}, u), {}, { strokeColor: Array.isArray(d[a]) ? d[a][1] : d[a] }));
+    }
+    return c;
+  } }, { key: "drawGoalLine", value: function(e) {
+    var t = e.barXPosition, i = e.barYPosition, a = e.goalX, s = e.goalY, r = e.barWidth, o = e.barHeight, l = new F(this.barCtx.ctx), c = l.group({ className: "apexcharts-bar-goals-groups" });
+    c.node.classList.add("apexcharts-element-hidden"), this.barCtx.w.globals.delayedElements.push({ el: c.node }), c.attr("clip-path", "url(#gridRectMarkerMask".concat(this.barCtx.w.globals.cuid, ")"));
+    var h = null;
+    return this.barCtx.isHorizontal ? Array.isArray(a) && a.forEach(function(d) {
+      if (d.x >= -1 && d.x <= l.w.globals.gridWidth + 1) {
+        var u = d.attrs.strokeHeight !== void 0 ? d.attrs.strokeHeight : o / 2, g = i + u + o / 2;
+        h = l.drawLine(d.x, g - 2 * u, d.x, g, d.attrs.strokeColor ? d.attrs.strokeColor : void 0, d.attrs.strokeDashArray, d.attrs.strokeWidth ? d.attrs.strokeWidth : 2, d.attrs.strokeLineCap), c.add(h);
+      }
+    }) : Array.isArray(s) && s.forEach(function(d) {
+      if (d.y >= -1 && d.y <= l.w.globals.gridHeight + 1) {
+        var u = d.attrs.strokeWidth !== void 0 ? d.attrs.strokeWidth : r / 2, g = t + u + r / 2;
+        h = l.drawLine(g - 2 * u, d.y, g, d.y, d.attrs.strokeColor ? d.attrs.strokeColor : void 0, d.attrs.strokeDashArray, d.attrs.strokeHeight ? d.attrs.strokeHeight : 2, d.attrs.strokeLineCap), c.add(h);
+      }
+    }), c;
+  } }, { key: "drawBarShadow", value: function(e) {
+    var t = e.prevPaths, i = e.currPaths, a = e.color, s = this.w, r = t.x, o = t.x1, l = t.barYPosition, c = i.x, h = i.x1, d = i.barYPosition, u = l + i.barHeight, g = new F(this.barCtx.ctx), p = new T(), f = g.move(o, u) + g.line(r, u) + g.line(c, d) + g.line(h, d) + g.line(o, u) + (s.config.plotOptions.bar.borderRadiusApplication === "around" || this.arrBorderRadius[realIndex][j] === "both" ? " Z" : " z");
+    return g.drawPath({ d: f, fill: p.shadeColor(0.5, T.rgb2hex(a)), stroke: "none", strokeWidth: 0, fillOpacity: 1, classes: "apexcharts-bar-shadow apexcharts-decoration-element" });
+  } }, { key: "getZeroValueEncounters", value: function(e) {
+    var t, i = e.i, a = e.j, s = this.w, r = 0, o = 0;
+    return (s.config.plotOptions.bar.horizontal ? s.globals.series.map(function(l, c) {
+      return c;
+    }) : ((t = s.globals.columnSeries) === null || t === void 0 ? void 0 : t.i.map(function(l) {
+      return l;
+    })) || []).forEach(function(l) {
+      var c = s.globals.seriesPercent[l][a];
+      c && r++, l < i && c === 0 && o++;
+    }), { nonZeroColumns: r, zeroEncounters: o };
+  } }, { key: "getGroupIndex", value: function(e) {
+    var t = this.w, i = t.globals.seriesGroups.findIndex(function(r) {
+      return r.indexOf(t.globals.seriesNames[e]) > -1;
+    }), a = this.barCtx.columnGroupIndices, s = a.indexOf(i);
+    return s < 0 && (a.push(i), s = a.length - 1), { groupIndex: i, columnGroupIndex: s };
+  } }]), n;
+}(), Et = function() {
+  function n(e, t) {
+    q(this, n), this.ctx = e, this.w = e.w;
+    var i = this.w;
+    this.barOptions = i.config.plotOptions.bar, this.isHorizontal = this.barOptions.horizontal, this.strokeWidth = i.config.stroke.width, this.isNullValue = !1, this.isRangeBar = i.globals.seriesRange.length && this.isHorizontal, this.isVerticalGroupedRangeBar = !i.globals.isBarHorizontal && i.globals.seriesRange.length && i.config.plotOptions.bar.rangeBarGroupRows, this.isFunnel = this.barOptions.isFunnel, this.xyRatios = t, this.xyRatios !== null && (this.xRatio = t.xRatio, this.yRatio = t.yRatio, this.invertedXRatio = t.invertedXRatio, this.invertedYRatio = t.invertedYRatio, this.baseLineY = t.baseLineY, this.baseLineInvertedY = t.baseLineInvertedY), this.yaxisIndex = 0, this.translationsIndex = 0, this.seriesLen = 0, this.pathArr = [];
+    var a = new $e(this.ctx);
+    this.lastActiveBarSerieIndex = a.getActiveConfigSeriesIndex("desc", ["bar", "column"]), this.columnGroupIndices = [];
+    var s = a.getBarSeriesIndices(), r = new Pe(this.ctx);
+    this.stackedSeriesTotals = r.getStackedSeriesTotals(this.w.config.series.map(function(o, l) {
+      return s.indexOf(l) === -1 ? l : -1;
+    }).filter(function(o) {
+      return o !== -1;
+    })), this.barHelpers = new rh(this);
+  }
+  return $(n, [{ key: "draw", value: function(e, t) {
+    var i = this.w, a = new F(this.ctx), s = new Pe(this.ctx, i);
+    e = s.getLogSeries(e), this.series = e, this.yRatio = s.getLogYRatios(this.yRatio), this.barHelpers.initVariables(e);
+    var r = a.group({ class: "apexcharts-bar-series apexcharts-plot-series" });
+    i.config.dataLabels.enabled && this.totalItems > this.barOptions.dataLabels.maxItems && console.warn("WARNING: DataLabels are enabled but there are too many to display. This may cause performance issue when rendering - ApexCharts");
+    for (var o = 0, l = 0; o < e.length; o++, l++) {
+      var c, h, d, u, g = void 0, p = void 0, f = [], x = [], b = i.globals.comboCharts ? t[o] : o, m = this.barHelpers.getGroupIndex(b).columnGroupIndex, w = a.group({ class: "apexcharts-series", rel: o + 1, seriesName: T.escapeString(i.globals.seriesNames[b]), "data:realIndex": b });
+      this.ctx.series.addCollapsedClassToSeries(w, b), e[o].length > 0 && (this.visibleI = this.visibleI + 1);
+      var y = 0, v = 0;
+      this.yRatio.length > 1 && (this.yaxisIndex = i.globals.seriesYAxisReverseMap[b], this.translationsIndex = b);
+      var k = this.translationsIndex;
+      this.isReversed = i.config.yaxis[this.yaxisIndex] && i.config.yaxis[this.yaxisIndex].reversed;
+      var A = this.barHelpers.initialPositions(b);
+      p = A.y, y = A.barHeight, h = A.yDivision, u = A.zeroW, g = A.x, v = A.barWidth, c = A.xDivision, d = A.zeroH, this.isHorizontal || x.push(g + v / 2);
+      var C = a.group({ class: "apexcharts-datalabels", "data:realIndex": b });
+      i.globals.delayedElements.push({ el: C.node }), C.node.classList.add("apexcharts-element-hidden");
+      var S = a.group({ class: "apexcharts-bar-goals-markers" }), L = a.group({ class: "apexcharts-bar-shadows" });
+      i.globals.delayedElements.push({ el: L.node }), L.node.classList.add("apexcharts-element-hidden");
+      for (var P = 0; P < e[o].length; P++) {
+        var I = this.barHelpers.getStrokeWidth(o, P, b), E = null, O = { indexes: { i: o, j: P, realIndex: b, translationsIndex: k, bc: l }, x: g, y: p, strokeWidth: I, elSeries: w };
+        this.isHorizontal ? (E = this.drawBarPaths(N(N({}, O), {}, { barHeight: y, zeroW: u, yDivision: h })), v = this.series[o][P] / this.invertedYRatio) : (E = this.drawColumnPaths(N(N({}, O), {}, { xDivision: c, barWidth: v, zeroH: d })), y = this.series[o][P] / this.yRatio[k]);
+        var _ = this.barHelpers.getPathFillColor(e, o, P, b);
+        if (this.isFunnel && this.barOptions.isFunnel3d && this.pathArr.length && P > 0) {
+          var Y, X = this.barHelpers.drawBarShadow({ color: typeof _.color == "string" && ((Y = _.color) === null || Y === void 0 ? void 0 : Y.indexOf("url")) === -1 ? _.color : T.hexToRgba(i.globals.colors[o]), prevPaths: this.pathArr[this.pathArr.length - 1], currPaths: E });
+          L.add(X), i.config.chart.dropShadow.enabled && new _e(this.ctx).dropShadow(X, i.config.chart.dropShadow, b);
+        }
+        this.pathArr.push(E);
+        var D = this.barHelpers.drawGoalLine({ barXPosition: E.barXPosition, barYPosition: E.barYPosition, goalX: E.goalX, goalY: E.goalY, barHeight: y, barWidth: v });
+        D && S.add(D), p = E.y, g = E.x, P > 0 && x.push(g + v / 2), f.push(p), this.renderSeries(N(N({ realIndex: b, pathFill: _.color }, _.useRangeColor ? { lineFill: _.color } : {}), {}, { j: P, i: o, columnGroupIndex: m, pathFrom: E.pathFrom, pathTo: E.pathTo, strokeWidth: I, elSeries: w, x: g, y: p, series: e, barHeight: Math.abs(E.barHeight ? E.barHeight : y), barWidth: Math.abs(E.barWidth ? E.barWidth : v), elDataLabelsWrap: C, elGoalsMarkers: S, elBarShadows: L, visibleSeries: this.visibleI, type: "bar" }));
+      }
+      i.globals.seriesXvalues[b] = x, i.globals.seriesYvalues[b] = f, r.add(w);
+    }
+    return r;
+  } }, { key: "renderSeries", value: function(e) {
+    var t = e.realIndex, i = e.pathFill, a = e.lineFill, s = e.j, r = e.i, o = e.columnGroupIndex, l = e.pathFrom, c = e.pathTo, h = e.strokeWidth, d = e.elSeries, u = e.x, g = e.y, p = e.y1, f = e.y2, x = e.series, b = e.barHeight, m = e.barWidth, w = e.barXPosition, y = e.barYPosition, v = e.elDataLabelsWrap, k = e.elGoalsMarkers, A = e.elBarShadows, C = e.visibleSeries, S = e.type, L = e.classes, P = this.w, I = new F(this.ctx), E = !1;
+    if (!a) {
+      var O = typeof P.globals.stroke.colors[t] == "function" ? function(B) {
+        var R, z = P.config.stroke.colors;
+        return Array.isArray(z) && z.length > 0 && ((R = z[B]) || (R = ""), typeof R == "function") ? R({ value: P.globals.series[B][s], dataPointIndex: s, w: P }) : R;
+      }(t) : P.globals.stroke.colors[t];
+      a = this.barOptions.distributed ? P.globals.stroke.colors[s] : O;
+    }
+    var _ = new sh(this).handleBarDataLabels({ x: u, y: g, y1: p, y2: f, i: r, j: s, series: x, realIndex: t, columnGroupIndex: o, barHeight: b, barWidth: m, barXPosition: w, barYPosition: y, visibleSeries: C });
+    P.globals.isBarHorizontal || (_.dataLabelsPos.dataLabelsX + m < 0 || _.dataLabelsPos.dataLabelsX - m > P.globals.gridWidth) && (E = !0), P.config.series[r].data[s] && P.config.series[r].data[s].strokeColor && (a = P.config.series[r].data[s].strokeColor), this.isNullValue && (i = "none");
+    var Y = s / P.config.chart.animations.animateGradually.delay * (P.config.chart.animations.speed / P.globals.dataPoints) / 2.4;
+    if (!E) {
+      var X = I.renderPaths({ i: r, j: s, realIndex: t, pathFrom: l, pathTo: c, stroke: a, strokeWidth: h, strokeLineCap: P.config.stroke.lineCap, fill: i, animationDelay: Y, initialSpeed: P.config.chart.animations.speed, dataChangeSpeed: P.config.chart.animations.dynamicAnimation.speed, className: "apexcharts-".concat(S, "-area ").concat(L), chartType: S });
+      X.attr("clip-path", "url(#gridRectBarMask".concat(P.globals.cuid, ")"));
+      var D = P.config.forecastDataPoints;
+      D.count > 0 && s >= P.globals.dataPoints - D.count && (X.node.setAttribute("stroke-dasharray", D.dashArray), X.node.setAttribute("stroke-width", D.strokeWidth), X.node.setAttribute("fill-opacity", D.fillOpacity)), p !== void 0 && f !== void 0 && (X.attr("data-range-y1", p), X.attr("data-range-y2", f)), new _e(this.ctx).setSelectionFilter(X, t, s), d.add(X), X.attr({ cy: _.dataLabelsPos.bcy, cx: _.dataLabelsPos.bcx, j: s, val: P.globals.series[r][s], barHeight: b, barWidth: m }), _.dataLabels !== null && v.add(_.dataLabels), _.totalDataLabels && v.add(_.totalDataLabels), d.add(v), k && d.add(k), A && d.add(A);
+    }
+    return d;
+  } }, { key: "drawBarPaths", value: function(e) {
+    var t, i = e.indexes, a = e.barHeight, s = e.strokeWidth, r = e.zeroW, o = e.x, l = e.y, c = e.yDivision, h = e.elSeries, d = this.w, u = i.i, g = i.j;
+    if (d.globals.isXNumeric) t = (l = (d.globals.seriesX[u][g] - d.globals.minX) / this.invertedXRatio - a) + a * this.visibleI;
+    else if (d.config.plotOptions.bar.hideZeroBarsWhenGrouped) {
+      var p = this.barHelpers.getZeroValueEncounters({ i: u, j: g }), f = p.nonZeroColumns, x = p.zeroEncounters;
+      f > 0 && (a = this.seriesLen * a / f), t = l + a * this.visibleI, t -= a * x;
+    } else t = l + a * this.visibleI;
+    this.isFunnel && (r -= (this.barHelpers.getXForValue(this.series[u][g], r) - r) / 2), o = this.barHelpers.getXForValue(this.series[u][g], r);
+    var b = this.barHelpers.getBarpaths({ barYPosition: t, barHeight: a, x1: r, x2: o, strokeWidth: s, isReversed: this.isReversed, series: this.series, realIndex: i.realIndex, i: u, j: g, w: d });
+    return d.globals.isXNumeric || (l += c), this.barHelpers.barBackground({ j: g, i: u, y1: t - a * this.visibleI, y2: a * this.seriesLen, elSeries: h }), { pathTo: b.pathTo, pathFrom: b.pathFrom, x1: r, x: o, y: l, goalX: this.barHelpers.getGoalValues("x", r, null, u, g), barYPosition: t, barHeight: a };
+  } }, { key: "drawColumnPaths", value: function(e) {
+    var t, i = e.indexes, a = e.x, s = e.y, r = e.xDivision, o = e.barWidth, l = e.zeroH, c = e.strokeWidth, h = e.elSeries, d = this.w, u = i.realIndex, g = i.translationsIndex, p = i.i, f = i.j, x = i.bc;
+    if (d.globals.isXNumeric) {
+      var b = this.getBarXForNumericXAxis({ x: a, j: f, realIndex: u, barWidth: o });
+      a = b.x, t = b.barXPosition;
+    } else if (d.config.plotOptions.bar.hideZeroBarsWhenGrouped) {
+      var m = this.barHelpers.getZeroValueEncounters({ i: p, j: f }), w = m.nonZeroColumns, y = m.zeroEncounters;
+      w > 0 && (o = this.seriesLen * o / w), t = a + o * this.visibleI, t -= o * y;
+    } else t = a + o * this.visibleI;
+    s = this.barHelpers.getYForValue(this.series[p][f], l, g);
+    var v = this.barHelpers.getColumnPaths({ barXPosition: t, barWidth: o, y1: l, y2: s, strokeWidth: c, isReversed: this.isReversed, series: this.series, realIndex: u, i: p, j: f, w: d });
+    return d.globals.isXNumeric || (a += r), this.barHelpers.barBackground({ bc: x, j: f, i: p, x1: t - c / 2 - o * this.visibleI, x2: o * this.seriesLen + c / 2, elSeries: h }), { pathTo: v.pathTo, pathFrom: v.pathFrom, x: a, y: s, goalY: this.barHelpers.getGoalValues("y", null, l, p, f, g), barXPosition: t, barWidth: o };
+  } }, { key: "getBarXForNumericXAxis", value: function(e) {
+    var t = e.x, i = e.barWidth, a = e.realIndex, s = e.j, r = this.w, o = a;
+    return r.globals.seriesX[a].length || (o = r.globals.maxValsInArrayIndex), T.isNumber(r.globals.seriesX[o][s]) && (t = (r.globals.seriesX[o][s] - r.globals.minX) / this.xRatio - i * this.seriesLen / 2), { barXPosition: t + i * this.visibleI, x: t };
+  } }, { key: "getPreviousPath", value: function(e, t) {
+    for (var i = this.w, a = "M 0 0", s = 0; s < i.globals.previousPaths.length; s++) {
+      var r = i.globals.previousPaths[s];
+      r.paths && r.paths.length > 0 && parseInt(r.realIndex, 10) === parseInt(e, 10) && i.globals.previousPaths[s].paths[t] !== void 0 && (a = i.globals.previousPaths[s].paths[t].d);
+    }
+    return a;
+  } }]), n;
+}(), sr = function(n) {
+  oi(t, Et);
+  var e = ni(t);
+  function t() {
+    return q(this, t), e.apply(this, arguments);
+  }
+  return $(t, [{ key: "draw", value: function(i, a) {
+    var s = this, r = this.w;
+    this.graphics = new F(this.ctx), this.bar = new Et(this.ctx, this.xyRatios);
+    var o = new Pe(this.ctx, r);
+    i = o.getLogSeries(i), this.yRatio = o.getLogYRatios(this.yRatio), this.barHelpers.initVariables(i), r.config.chart.stackType === "100%" && (i = r.globals.comboCharts ? a.map(function(p) {
+      return r.globals.seriesPercent[p];
+    }) : r.globals.seriesPercent.slice()), this.series = i, this.barHelpers.initializeStackedPrevVars(this);
+    for (var l = this.graphics.group({ class: "apexcharts-bar-series apexcharts-plot-series" }), c = 0, h = 0, d = function(p, f) {
+      var x = void 0, b = void 0, m = void 0, w = void 0, y = r.globals.comboCharts ? a[p] : p, v = s.barHelpers.getGroupIndex(y), k = v.groupIndex, A = v.columnGroupIndex;
+      s.groupCtx = s[r.globals.seriesGroups[k]];
+      var C = [], S = [], L = 0;
+      s.yRatio.length > 1 && (s.yaxisIndex = r.globals.seriesYAxisReverseMap[y][0], L = y), s.isReversed = r.config.yaxis[s.yaxisIndex] && r.config.yaxis[s.yaxisIndex].reversed;
+      var P = s.graphics.group({ class: "apexcharts-series", seriesName: T.escapeString(r.globals.seriesNames[y]), rel: p + 1, "data:realIndex": y });
+      s.ctx.series.addCollapsedClassToSeries(P, y);
+      var I = s.graphics.group({ class: "apexcharts-datalabels", "data:realIndex": y }), E = s.graphics.group({ class: "apexcharts-bar-goals-markers" }), O = 0, _ = 0, Y = s.initialPositions(c, h, x, b, m, w, L);
+      h = Y.y, O = Y.barHeight, b = Y.yDivision, w = Y.zeroW, c = Y.x, _ = Y.barWidth, x = Y.xDivision, m = Y.zeroH, r.globals.barHeight = O, r.globals.barWidth = _, s.barHelpers.initializeStackedXYVars(s), s.groupCtx.prevY.length === 1 && s.groupCtx.prevY[0].every(function(se) {
+        return isNaN(se);
+      }) && (s.groupCtx.prevY[0] = s.groupCtx.prevY[0].map(function() {
+        return m;
+      }), s.groupCtx.prevYF[0] = s.groupCtx.prevYF[0].map(function() {
+        return 0;
+      }));
+      for (var X = 0; X < r.globals.dataPoints; X++) {
+        var D = s.barHelpers.getStrokeWidth(p, X, y), B = { indexes: { i: p, j: X, realIndex: y, translationsIndex: L, bc: f }, strokeWidth: D, x: c, y: h, elSeries: P, columnGroupIndex: A, seriesGroup: r.globals.seriesGroups[k] }, R = null;
+        s.isHorizontal ? (R = s.drawStackedBarPaths(N(N({}, B), {}, { zeroW: w, barHeight: O, yDivision: b })), _ = s.series[p][X] / s.invertedYRatio) : (R = s.drawStackedColumnPaths(N(N({}, B), {}, { xDivision: x, barWidth: _, zeroH: m })), O = s.series[p][X] / s.yRatio[L]);
+        var z = s.barHelpers.drawGoalLine({ barXPosition: R.barXPosition, barYPosition: R.barYPosition, goalX: R.goalX, goalY: R.goalY, barHeight: O, barWidth: _ });
+        z && E.add(z), h = R.y, c = R.x, C.push(c), S.push(h);
+        var Z = s.barHelpers.getPathFillColor(i, p, X, y), Q = "", W = r.globals.isBarHorizontal ? "apexcharts-flip-x" : "apexcharts-flip-y";
+        (s.barHelpers.arrBorderRadius[y][X] === "bottom" && r.globals.series[y][X] > 0 || s.barHelpers.arrBorderRadius[y][X] === "top" && r.globals.series[y][X] < 0) && (Q = W), P = s.renderSeries(N(N({ realIndex: y, pathFill: Z.color }, Z.useRangeColor ? { lineFill: Z.color } : {}), {}, { j: X, i: p, columnGroupIndex: A, pathFrom: R.pathFrom, pathTo: R.pathTo, strokeWidth: D, elSeries: P, x: c, y: h, series: i, barHeight: O, barWidth: _, elDataLabelsWrap: I, elGoalsMarkers: E, type: "bar", visibleSeries: A, classes: Q }));
+      }
+      r.globals.seriesXvalues[y] = C, r.globals.seriesYvalues[y] = S, s.groupCtx.prevY.push(s.groupCtx.yArrj), s.groupCtx.prevYF.push(s.groupCtx.yArrjF), s.groupCtx.prevYVal.push(s.groupCtx.yArrjVal), s.groupCtx.prevX.push(s.groupCtx.xArrj), s.groupCtx.prevXF.push(s.groupCtx.xArrjF), s.groupCtx.prevXVal.push(s.groupCtx.xArrjVal), l.add(P);
+    }, u = 0, g = 0; u < i.length; u++, g++) d(u, g);
+    return l;
+  } }, { key: "initialPositions", value: function(i, a, s, r, o, l, c) {
+    var h, d, u = this.w;
+    if (this.isHorizontal) {
+      r = u.globals.gridHeight / u.globals.dataPoints;
+      var g = u.config.plotOptions.bar.barHeight;
+      h = String(g).indexOf("%") === -1 ? parseInt(g, 10) : r * parseInt(g, 10) / 100, l = u.globals.padHorizontal + (this.isReversed ? u.globals.gridWidth - this.baseLineInvertedY : this.baseLineInvertedY), a = (r - h) / 2;
+    } else {
+      d = s = u.globals.gridWidth / u.globals.dataPoints;
+      var p = u.config.plotOptions.bar.columnWidth;
+      u.globals.isXNumeric && u.globals.dataPoints > 1 ? d = (s = u.globals.minXDiff / this.xRatio) * parseInt(this.barOptions.columnWidth, 10) / 100 : String(p).indexOf("%") === -1 ? d = parseInt(p, 10) : d *= parseInt(p, 10) / 100, o = this.isReversed ? this.baseLineY[c] : u.globals.gridHeight - this.baseLineY[c], i = u.globals.padHorizontal + (s - d) / 2;
+    }
+    var f = u.globals.barGroups.length || 1;
+    return { x: i, y: a, yDivision: r, xDivision: s, barHeight: h / f, barWidth: d / f, zeroH: o, zeroW: l };
+  } }, { key: "drawStackedBarPaths", value: function(i) {
+    for (var a, s = i.indexes, r = i.barHeight, o = i.strokeWidth, l = i.zeroW, c = i.x, h = i.y, d = i.columnGroupIndex, u = i.seriesGroup, g = i.yDivision, p = i.elSeries, f = this.w, x = h + d * r, b = s.i, m = s.j, w = s.realIndex, y = s.translationsIndex, v = 0, k = 0; k < this.groupCtx.prevXF.length; k++) v += this.groupCtx.prevXF[k][m];
+    var A = b;
+    if (f.config.series[w].name && (A = u.indexOf(f.config.series[w].name)), A > 0) {
+      var C = l;
+      this.groupCtx.prevXVal[A - 1][m] < 0 ? C = this.series[b][m] >= 0 ? this.groupCtx.prevX[A - 1][m] + v - 2 * (this.isReversed ? v : 0) : this.groupCtx.prevX[A - 1][m] : this.groupCtx.prevXVal[A - 1][m] >= 0 && (C = this.series[b][m] >= 0 ? this.groupCtx.prevX[A - 1][m] : this.groupCtx.prevX[A - 1][m] - v + 2 * (this.isReversed ? v : 0)), a = C;
+    } else a = l;
+    c = this.series[b][m] === null ? a : a + this.series[b][m] / this.invertedYRatio - 2 * (this.isReversed ? this.series[b][m] / this.invertedYRatio : 0);
+    var S = this.barHelpers.getBarpaths({ barYPosition: x, barHeight: r, x1: a, x2: c, strokeWidth: o, isReversed: this.isReversed, series: this.series, realIndex: s.realIndex, seriesGroup: u, i: b, j: m, w: f });
+    return this.barHelpers.barBackground({ j: m, i: b, y1: x, y2: r, elSeries: p }), h += g, { pathTo: S.pathTo, pathFrom: S.pathFrom, goalX: this.barHelpers.getGoalValues("x", l, null, b, m, y), barXPosition: a, barYPosition: x, x: c, y: h };
+  } }, { key: "drawStackedColumnPaths", value: function(i) {
+    var a = i.indexes, s = i.x, r = i.y, o = i.xDivision, l = i.barWidth, c = i.zeroH, h = i.columnGroupIndex, d = i.seriesGroup, u = i.elSeries, g = this.w, p = a.i, f = a.j, x = a.bc, b = a.realIndex, m = a.translationsIndex;
+    if (g.globals.isXNumeric) {
+      var w = g.globals.seriesX[b][f];
+      w || (w = 0), s = (w - g.globals.minX) / this.xRatio - l / 2 * g.globals.barGroups.length;
+    }
+    for (var y, v = s + h * l, k = 0, A = 0; A < this.groupCtx.prevYF.length; A++) k += isNaN(this.groupCtx.prevYF[A][f]) ? 0 : this.groupCtx.prevYF[A][f];
+    var C = p;
+    if (d && (C = d.indexOf(g.globals.seriesNames[b])), C > 0 && !g.globals.isXNumeric || C > 0 && g.globals.isXNumeric && g.globals.seriesX[b - 1][f] === g.globals.seriesX[b][f]) {
+      var S, L, P, I = Math.min(this.yRatio.length + 1, b + 1);
+      if (this.groupCtx.prevY[C - 1] !== void 0 && this.groupCtx.prevY[C - 1].length) for (var E = 1; E < I; E++) {
+        var O;
+        if (!isNaN((O = this.groupCtx.prevY[C - E]) === null || O === void 0 ? void 0 : O[f])) {
+          P = this.groupCtx.prevY[C - E][f];
+          break;
+        }
+      }
+      for (var _ = 1; _ < I; _++) {
+        var Y, X;
+        if (((Y = this.groupCtx.prevYVal[C - _]) === null || Y === void 0 ? void 0 : Y[f]) < 0) {
+          L = this.series[p][f] >= 0 ? P - k + 2 * (this.isReversed ? k : 0) : P;
+          break;
+        }
+        if (((X = this.groupCtx.prevYVal[C - _]) === null || X === void 0 ? void 0 : X[f]) >= 0) {
+          L = this.series[p][f] >= 0 ? P : P + k - 2 * (this.isReversed ? k : 0);
+          break;
+        }
+      }
+      L === void 0 && (L = g.globals.gridHeight), y = (S = this.groupCtx.prevYF[0]) !== null && S !== void 0 && S.every(function(B) {
+        return B === 0;
+      }) && this.groupCtx.prevYF.slice(1, C).every(function(B) {
+        return B.every(function(R) {
+          return isNaN(R);
+        });
+      }) ? c : L;
+    } else y = c;
+    r = this.series[p][f] ? y - this.series[p][f] / this.yRatio[m] + 2 * (this.isReversed ? this.series[p][f] / this.yRatio[m] : 0) : y;
+    var D = this.barHelpers.getColumnPaths({ barXPosition: v, barWidth: l, y1: y, y2: r, yRatio: this.yRatio[m], strokeWidth: this.strokeWidth, isReversed: this.isReversed, series: this.series, seriesGroup: d, realIndex: a.realIndex, i: p, j: f, w: g });
+    return this.barHelpers.barBackground({ bc: x, j: f, i: p, x1: v, x2: l, elSeries: u }), { pathTo: D.pathTo, pathFrom: D.pathFrom, goalY: this.barHelpers.getGoalValues("y", null, c, p, f), barXPosition: v, x: g.globals.isXNumeric ? s : s + o, y: r };
+  } }]), t;
+}(), aa = function(n) {
+  oi(t, Et);
+  var e = ni(t);
+  function t() {
+    return q(this, t), e.apply(this, arguments);
+  }
+  return $(t, [{ key: "draw", value: function(i, a, s) {
+    var r = this, o = this.w, l = new F(this.ctx), c = o.globals.comboCharts ? a : o.config.chart.type, h = new Ke(this.ctx);
+    this.candlestickOptions = this.w.config.plotOptions.candlestick, this.boxOptions = this.w.config.plotOptions.boxPlot, this.isHorizontal = o.config.plotOptions.bar.horizontal, this.isOHLC = this.candlestickOptions && this.candlestickOptions.type === "ohlc";
+    var d = new Pe(this.ctx, o);
+    i = d.getLogSeries(i), this.series = i, this.yRatio = d.getLogYRatios(this.yRatio), this.barHelpers.initVariables(i);
+    for (var u = l.group({ class: "apexcharts-".concat(c, "-series apexcharts-plot-series") }), g = function(f) {
+      r.isBoxPlot = o.config.chart.type === "boxPlot" || o.config.series[f].type === "boxPlot";
+      var x, b, m, w, y = void 0, v = void 0, k = [], A = [], C = o.globals.comboCharts ? s[f] : f, S = r.barHelpers.getGroupIndex(C).columnGroupIndex, L = l.group({ class: "apexcharts-series", seriesName: T.escapeString(o.globals.seriesNames[C]), rel: f + 1, "data:realIndex": C });
+      r.ctx.series.addCollapsedClassToSeries(L, C), i[f].length > 0 && (r.visibleI = r.visibleI + 1);
+      var P, I, E = 0;
+      r.yRatio.length > 1 && (r.yaxisIndex = o.globals.seriesYAxisReverseMap[C][0], E = C);
+      var O = r.barHelpers.initialPositions(C);
+      v = O.y, P = O.barHeight, b = O.yDivision, w = O.zeroW, y = O.x, I = O.barWidth, x = O.xDivision, m = O.zeroH, A.push(y + I / 2);
+      for (var _ = l.group({ class: "apexcharts-datalabels", "data:realIndex": C }), Y = l.group({ class: "apexcharts-bar-goals-markers" }), X = function(B) {
+        var R = r.barHelpers.getStrokeWidth(f, B, C), z = null, Z = { indexes: { i: f, j: B, realIndex: C, translationsIndex: E }, x: y, y: v, strokeWidth: R, elSeries: L };
+        z = r.isHorizontal ? r.drawHorizontalBoxPaths(N(N({}, Z), {}, { yDivision: b, barHeight: P, zeroW: w })) : r.drawVerticalBoxPaths(N(N({}, Z), {}, { xDivision: x, barWidth: I, zeroH: m })), v = z.y, y = z.x;
+        var Q = r.barHelpers.drawGoalLine({ barXPosition: z.barXPosition, barYPosition: z.barYPosition, goalX: z.goalX, goalY: z.goalY, barHeight: P, barWidth: I });
+        Q && Y.add(Q), B > 0 && A.push(y + I / 2), k.push(v), z.pathTo.forEach(function(W, se) {
+          var G = !r.isBoxPlot && r.candlestickOptions.wick.useFillColor ? z.color[se] : o.globals.stroke.colors[f], V = h.fillPath({ seriesNumber: C, dataPointIndex: B, color: z.color[se], value: i[f][B] });
+          r.renderSeries({ realIndex: C, pathFill: V, lineFill: G, j: B, i: f, pathFrom: z.pathFrom, pathTo: W, strokeWidth: R, elSeries: L, x: y, y: v, series: i, columnGroupIndex: S, barHeight: P, barWidth: I, elDataLabelsWrap: _, elGoalsMarkers: Y, visibleSeries: r.visibleI, type: o.config.chart.type });
+        });
+      }, D = 0; D < o.globals.dataPoints; D++) X(D);
+      o.globals.seriesXvalues[C] = A, o.globals.seriesYvalues[C] = k, u.add(L);
+    }, p = 0; p < i.length; p++) g(p);
+    return u;
+  } }, { key: "drawVerticalBoxPaths", value: function(i) {
+    var a = i.indexes, s = i.x;
+    i.y;
+    var r = i.xDivision, o = i.barWidth, l = i.zeroH, c = i.strokeWidth, h = this.w, d = new F(this.ctx), u = a.i, g = a.j, p = h.config.plotOptions.candlestick.colors, f = this.boxOptions.colors, x = a.realIndex, b = function(D) {
+      return Array.isArray(D) ? D[x] : D;
+    }, m = b(p.upward), w = b(p.downward), y = this.yRatio[a.translationsIndex], v = this.getOHLCValue(x, g), k = l, A = l, C = v.o < v.c ? [m] : [w];
+    this.isBoxPlot && (C = [b(f.lower), b(f.upper)]);
+    var S = Math.min(v.o, v.c), L = Math.max(v.o, v.c), P = v.m;
+    h.globals.isXNumeric && (s = (h.globals.seriesX[x][g] - h.globals.minX) / this.xRatio - o / 2);
+    var I = s + o * this.visibleI;
+    this.series[u][g] === void 0 || this.series[u][g] === null ? (S = l, L = l) : (S = l - S / y, L = l - L / y, k = l - v.h / y, A = l - v.l / y, P = l - v.m / y);
+    var E = d.move(I, l), O = d.move(I + o / 2, S);
+    if (h.globals.previousPaths.length > 0 && (O = this.getPreviousPath(x, g, !0)), this.isOHLC) {
+      var _ = I + o / 2, Y = l - v.o / y, X = l - v.c / y;
+      E = [d.move(_, k) + d.line(_, A) + d.move(_, Y) + d.line(I, Y) + d.move(_, X) + d.line(I + o, X)];
+    } else E = this.isBoxPlot ? [d.move(I, S) + d.line(I + o / 2, S) + d.line(I + o / 2, k) + d.line(I + o / 4, k) + d.line(I + o - o / 4, k) + d.line(I + o / 2, k) + d.line(I + o / 2, S) + d.line(I + o, S) + d.line(I + o, P) + d.line(I, P) + d.line(I, S + c / 2), d.move(I, P) + d.line(I + o, P) + d.line(I + o, L) + d.line(I + o / 2, L) + d.line(I + o / 2, A) + d.line(I + o - o / 4, A) + d.line(I + o / 4, A) + d.line(I + o / 2, A) + d.line(I + o / 2, L) + d.line(I, L) + d.line(I, P) + "z"] : [d.move(I, L) + d.line(I + o / 2, L) + d.line(I + o / 2, k) + d.line(I + o / 2, L) + d.line(I + o, L) + d.line(I + o, S) + d.line(I + o / 2, S) + d.line(I + o / 2, A) + d.line(I + o / 2, S) + d.line(I, S) + d.line(I, L - c / 2)];
+    return O += d.move(I, S), h.globals.isXNumeric || (s += r), { pathTo: E, pathFrom: O, x: s, y: L, goalY: this.barHelpers.getGoalValues("y", null, l, u, g, a.translationsIndex), barXPosition: I, color: C };
+  } }, { key: "drawHorizontalBoxPaths", value: function(i) {
+    var a = i.indexes;
+    i.x;
+    var s = i.y, r = i.yDivision, o = i.barHeight, l = i.zeroW, c = i.strokeWidth, h = this.w, d = new F(this.ctx), u = a.i, g = a.j, p = this.boxOptions.colors.lower;
+    this.isBoxPlot && (p = [this.boxOptions.colors.lower, this.boxOptions.colors.upper]);
+    var f = this.invertedYRatio, x = a.realIndex, b = this.getOHLCValue(x, g), m = l, w = l, y = Math.min(b.o, b.c), v = Math.max(b.o, b.c), k = b.m;
+    h.globals.isXNumeric && (s = (h.globals.seriesX[x][g] - h.globals.minX) / this.invertedXRatio - o / 2);
+    var A = s + o * this.visibleI;
+    this.series[u][g] === void 0 || this.series[u][g] === null ? (y = l, v = l) : (y = l + y / f, v = l + v / f, m = l + b.h / f, w = l + b.l / f, k = l + b.m / f);
+    var C = d.move(l, A), S = d.move(y, A + o / 2);
+    return h.globals.previousPaths.length > 0 && (S = this.getPreviousPath(x, g, !0)), C = [d.move(y, A) + d.line(y, A + o / 2) + d.line(m, A + o / 2) + d.line(m, A + o / 2 - o / 4) + d.line(m, A + o / 2 + o / 4) + d.line(m, A + o / 2) + d.line(y, A + o / 2) + d.line(y, A + o) + d.line(k, A + o) + d.line(k, A) + d.line(y + c / 2, A), d.move(k, A) + d.line(k, A + o) + d.line(v, A + o) + d.line(v, A + o / 2) + d.line(w, A + o / 2) + d.line(w, A + o - o / 4) + d.line(w, A + o / 4) + d.line(w, A + o / 2) + d.line(v, A + o / 2) + d.line(v, A) + d.line(k, A) + "z"], S += d.move(y, A), h.globals.isXNumeric || (s += r), { pathTo: C, pathFrom: S, x: v, y: s, goalX: this.barHelpers.getGoalValues("x", l, null, u, g), barYPosition: A, color: p };
+  } }, { key: "getOHLCValue", value: function(i, a) {
+    var s = this.w, r = new Pe(this.ctx, s), o = r.getLogValAtSeriesIndex(s.globals.seriesCandleH[i][a], i), l = r.getLogValAtSeriesIndex(s.globals.seriesCandleO[i][a], i), c = r.getLogValAtSeriesIndex(s.globals.seriesCandleM[i][a], i), h = r.getLogValAtSeriesIndex(s.globals.seriesCandleC[i][a], i), d = r.getLogValAtSeriesIndex(s.globals.seriesCandleL[i][a], i);
+    return { o: this.isBoxPlot ? o : l, h: this.isBoxPlot ? l : o, m: c, l: this.isBoxPlot ? h : d, c: this.isBoxPlot ? d : h };
+  } }]), t;
+}(), zn = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w;
+  }
+  return $(n, [{ key: "checkColorRange", value: function() {
+    var e = this.w, t = !1, i = e.config.plotOptions[e.config.chart.type];
+    return i.colorScale.ranges.length > 0 && i.colorScale.ranges.map(function(a, s) {
+      a.from <= 0 && (t = !0);
+    }), t;
+  } }, { key: "getShadeColor", value: function(e, t, i, a) {
+    var s = this.w, r = 1, o = s.config.plotOptions[e].shadeIntensity, l = this.determineColor(e, t, i);
+    s.globals.hasNegs || a ? r = s.config.plotOptions[e].reverseNegativeShade ? l.percent < 0 ? l.percent / 100 * (1.25 * o) : (1 - l.percent / 100) * (1.25 * o) : l.percent <= 0 ? 1 - (1 + l.percent / 100) * o : (1 - l.percent / 100) * o : (r = 1 - l.percent / 100, e === "treemap" && (r = (1 - l.percent / 100) * (1.25 * o)));
+    var c = l.color, h = new T();
+    if (s.config.plotOptions[e].enableShades) if (this.w.config.theme.mode === "dark") {
+      var d = h.shadeColor(-1 * r, l.color);
+      c = T.hexToRgba(T.isColorHex(d) ? d : T.rgb2hex(d), s.config.fill.opacity);
+    } else {
+      var u = h.shadeColor(r, l.color);
+      c = T.hexToRgba(T.isColorHex(u) ? u : T.rgb2hex(u), s.config.fill.opacity);
+    }
+    return { color: c, colorProps: l };
+  } }, { key: "determineColor", value: function(e, t, i) {
+    var a = this.w, s = a.globals.series[t][i], r = a.config.plotOptions[e], o = r.colorScale.inverse ? i : t;
+    r.distributed && a.config.chart.type === "treemap" && (o = i);
+    var l = a.globals.colors[o], c = null, h = Math.min.apply(Math, Oe(a.globals.series[t])), d = Math.max.apply(Math, Oe(a.globals.series[t]));
+    r.distributed || e !== "heatmap" || (h = a.globals.minY, d = a.globals.maxY), r.colorScale.min !== void 0 && (h = r.colorScale.min < a.globals.minY ? r.colorScale.min : a.globals.minY, d = r.colorScale.max > a.globals.maxY ? r.colorScale.max : a.globals.maxY);
+    var u = Math.abs(d) + Math.abs(h), g = 100 * s / (u === 0 ? u - 1e-6 : u);
+    return r.colorScale.ranges.length > 0 && r.colorScale.ranges.map(function(p, f) {
+      if (s >= p.from && s <= p.to) {
+        l = p.color, c = p.foreColor ? p.foreColor : null, h = p.from, d = p.to;
+        var x = Math.abs(d) + Math.abs(h);
+        g = 100 * s / (x === 0 ? x - 1e-6 : x);
+      }
+    }), { color: l, foreColor: c, percent: g };
+  } }, { key: "calculateDataLabels", value: function(e) {
+    var t = e.text, i = e.x, a = e.y, s = e.i, r = e.j, o = e.colorProps, l = e.fontSize, c = this.w.config.dataLabels, h = new F(this.ctx), d = new It(this.ctx), u = null;
+    if (c.enabled) {
+      u = h.group({ class: "apexcharts-data-labels" });
+      var g = c.offsetX, p = c.offsetY, f = i + g, x = a + parseFloat(c.style.fontSize) / 3 + p;
+      d.plotDataLabelsText({ x: f, y: x, text: t, i: s, j: r, color: o.foreColor, parent: u, fontSize: l, dataLabelsConfig: c });
+    }
+    return u;
+  } }, { key: "addListeners", value: function(e) {
+    var t = new F(this.ctx);
+    e.node.addEventListener("mouseenter", t.pathMouseEnter.bind(this, e)), e.node.addEventListener("mouseleave", t.pathMouseLeave.bind(this, e)), e.node.addEventListener("mousedown", t.pathMouseDown.bind(this, e));
+  } }]), n;
+}(), nh = function() {
+  function n(e, t) {
+    q(this, n), this.ctx = e, this.w = e.w, this.xRatio = t.xRatio, this.yRatio = t.yRatio, this.dynamicAnim = this.w.config.chart.animations.dynamicAnimation, this.helpers = new zn(e), this.rectRadius = this.w.config.plotOptions.heatmap.radius, this.strokeWidth = this.w.config.stroke.show ? this.w.config.stroke.width : 0;
+  }
+  return $(n, [{ key: "draw", value: function(e) {
+    var t = this.w, i = new F(this.ctx), a = i.group({ class: "apexcharts-heatmap" });
+    a.attr("clip-path", "url(#gridRectMask".concat(t.globals.cuid, ")"));
+    var s = t.globals.gridWidth / t.globals.dataPoints, r = t.globals.gridHeight / t.globals.series.length, o = 0, l = !1;
+    this.negRange = this.helpers.checkColorRange();
+    var c = e.slice();
+    t.config.yaxis[0].reversed && (l = !0, c.reverse());
+    for (var h = l ? 0 : c.length - 1; l ? h < c.length : h >= 0; l ? h++ : h--) {
+      var d = i.group({ class: "apexcharts-series apexcharts-heatmap-series", seriesName: T.escapeString(t.globals.seriesNames[h]), rel: h + 1, "data:realIndex": h });
+      if (this.ctx.series.addCollapsedClassToSeries(d, h), t.config.chart.dropShadow.enabled) {
+        var u = t.config.chart.dropShadow;
+        new _e(this.ctx).dropShadow(d, u, h);
+      }
+      for (var g = 0, p = t.config.plotOptions.heatmap.shadeIntensity, f = 0, x = 0; x < t.globals.dataPoints; x++) if (t.globals.seriesX.length && !t.globals.allSeriesHasEqualX && t.globals.minX + t.globals.minXDiff * x < t.globals.seriesX[h][f]) g += s;
+      else {
+        if (f >= c[h].length) break;
+        var b = this.helpers.getShadeColor(t.config.chart.type, h, f, this.negRange), m = b.color, w = b.colorProps;
+        t.config.fill.type === "image" && (m = new Ke(this.ctx).fillPath({ seriesNumber: h, dataPointIndex: f, opacity: t.globals.hasNegs ? w.percent < 0 ? 1 - (1 + w.percent / 100) : p + w.percent / 100 : w.percent / 100, patternID: T.randomId(), width: t.config.fill.image.width ? t.config.fill.image.width : s, height: t.config.fill.image.height ? t.config.fill.image.height : r }));
+        var y = this.rectRadius, v = i.drawRect(g, o, s, r, y);
+        if (v.attr({ cx: g, cy: o }), v.node.classList.add("apexcharts-heatmap-rect"), d.add(v), v.attr({ fill: m, i: h, index: h, j: f, val: e[h][f], "stroke-width": this.strokeWidth, stroke: t.config.plotOptions.heatmap.useFillColorAsStroke ? m : t.globals.stroke.colors[0], color: m }), this.helpers.addListeners(v), t.config.chart.animations.enabled && !t.globals.dataChanged) {
+          var k = 1;
+          t.globals.resized || (k = t.config.chart.animations.speed), this.animateHeatMap(v, g, o, s, r, k);
+        }
+        if (t.globals.dataChanged) {
+          var A = 1;
+          if (this.dynamicAnim.enabled && t.globals.shouldAnimate) {
+            A = this.dynamicAnim.speed;
+            var C = t.globals.previousPaths[h] && t.globals.previousPaths[h][f] && t.globals.previousPaths[h][f].color;
+            C || (C = "rgba(255, 255, 255, 0)"), this.animateHeatColor(v, T.isColorHex(C) ? C : T.rgb2hex(C), T.isColorHex(m) ? m : T.rgb2hex(m), A);
+          }
+        }
+        var S = (0, t.config.dataLabels.formatter)(t.globals.series[h][f], { value: t.globals.series[h][f], seriesIndex: h, dataPointIndex: f, w: t }), L = this.helpers.calculateDataLabels({ text: S, x: g + s / 2, y: o + r / 2, i: h, j: f, colorProps: w, series: c });
+        L !== null && d.add(L), g += s, f++;
+      }
+      o += r, a.add(d);
+    }
+    var P = t.globals.yAxisScale[0].result.slice();
+    return t.config.yaxis[0].reversed ? P.unshift("") : P.push(""), t.globals.yAxisScale[0].result = P, a;
+  } }, { key: "animateHeatMap", value: function(e, t, i, a, s, r) {
+    var o = new zt(this.ctx);
+    o.animateRect(e, { x: t + a / 2, y: i + s / 2, width: 0, height: 0 }, { x: t, y: i, width: a, height: s }, r, function() {
+      o.animationCompleted(e);
+    });
+  } }, { key: "animateHeatColor", value: function(e, t, i, a) {
+    e.attr({ fill: t }).animate(a).attr({ fill: i });
+  } }]), n;
+}(), _n = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w;
+  }
+  return $(n, [{ key: "drawYAxisTexts", value: function(e, t, i, a) {
+    var s = this.w, r = s.config.yaxis[0], o = s.globals.yLabelFormatters[0];
+    return new F(this.ctx).drawText({ x: e + r.labels.offsetX, y: t + r.labels.offsetY, text: o(a, i), textAnchor: "middle", fontSize: r.labels.style.fontSize, fontFamily: r.labels.style.fontFamily, foreColor: Array.isArray(r.labels.style.colors) ? r.labels.style.colors[i] : r.labels.style.colors });
+  } }]), n;
+}(), Yn = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w;
+    var t = this.w;
+    this.chartType = this.w.config.chart.type, this.initialAnim = this.w.config.chart.animations.enabled, this.dynamicAnim = this.initialAnim && this.w.config.chart.animations.dynamicAnimation.enabled, this.animBeginArr = [0], this.animDur = 0, this.donutDataLabels = this.w.config.plotOptions.pie.donut.labels, this.lineColorArr = t.globals.stroke.colors !== void 0 ? t.globals.stroke.colors : t.globals.colors, this.defaultSize = Math.min(t.globals.gridWidth, t.globals.gridHeight), this.centerY = this.defaultSize / 2, this.centerX = t.globals.gridWidth / 2, t.config.chart.type === "radialBar" ? this.fullAngle = 360 : this.fullAngle = Math.abs(t.config.plotOptions.pie.endAngle - t.config.plotOptions.pie.startAngle), this.initialAngle = t.config.plotOptions.pie.startAngle % this.fullAngle, t.globals.radialSize = this.defaultSize / 2.05 - t.config.stroke.width - (t.config.chart.sparkline.enabled ? 0 : t.config.chart.dropShadow.blur), this.donutSize = t.globals.radialSize * parseInt(t.config.plotOptions.pie.donut.size, 10) / 100;
+    var i = t.config.plotOptions.pie.customScale, a = t.globals.gridWidth / 2, s = t.globals.gridHeight / 2;
+    this.translateX = a - a * i, this.translateY = s - s * i, this.dataLabelsGroup = new F(this.ctx).group({ class: "apexcharts-datalabels-group", transform: "translate(".concat(this.translateX, ", ").concat(this.translateY, ") scale(").concat(i, ")") }), this.maxY = 0, this.sliceLabels = [], this.sliceSizes = [], this.prevSectorAngleArr = [];
+  }
+  return $(n, [{ key: "draw", value: function(e) {
+    var t = this, i = this.w, a = new F(this.ctx), s = a.group({ class: "apexcharts-pie" });
+    if (i.globals.noData) return s;
+    for (var r = 0, o = 0; o < e.length; o++) r += T.negToZero(e[o]);
+    var l = [], c = a.group();
+    r === 0 && (r = 1e-5), e.forEach(function(w) {
+      t.maxY = Math.max(t.maxY, w);
+    }), i.config.yaxis[0].max && (this.maxY = i.config.yaxis[0].max), i.config.grid.position === "back" && this.chartType === "polarArea" && this.drawPolarElements(s);
+    for (var h = 0; h < e.length; h++) {
+      var d = this.fullAngle * T.negToZero(e[h]) / r;
+      l.push(d), this.chartType === "polarArea" ? (l[h] = this.fullAngle / e.length, this.sliceSizes.push(i.globals.radialSize * e[h] / this.maxY)) : this.sliceSizes.push(i.globals.radialSize);
+    }
+    if (i.globals.dataChanged) {
+      for (var u, g = 0, p = 0; p < i.globals.previousPaths.length; p++) g += T.negToZero(i.globals.previousPaths[p]);
+      for (var f = 0; f < i.globals.previousPaths.length; f++) u = this.fullAngle * T.negToZero(i.globals.previousPaths[f]) / g, this.prevSectorAngleArr.push(u);
+    }
+    if (this.donutSize < 0 && (this.donutSize = 0), this.chartType === "donut") {
+      var x = a.drawCircle(this.donutSize);
+      x.attr({ cx: this.centerX, cy: this.centerY, fill: i.config.plotOptions.pie.donut.background ? i.config.plotOptions.pie.donut.background : "transparent" }), c.add(x);
+    }
+    var b = this.drawArcs(l, e);
+    if (this.sliceLabels.forEach(function(w) {
+      b.add(w);
+    }), c.attr({ transform: "translate(".concat(this.translateX, ", ").concat(this.translateY, ") scale(").concat(i.config.plotOptions.pie.customScale, ")") }), c.add(b), s.add(c), this.donutDataLabels.show) {
+      var m = this.renderInnerDataLabels(this.dataLabelsGroup, this.donutDataLabels, { hollowSize: this.donutSize, centerX: this.centerX, centerY: this.centerY, opacity: this.donutDataLabels.show });
+      s.add(m);
+    }
+    return i.config.grid.position === "front" && this.chartType === "polarArea" && this.drawPolarElements(s), s;
+  } }, { key: "drawArcs", value: function(e, t) {
+    var i = this.w, a = new _e(this.ctx), s = new F(this.ctx), r = new Ke(this.ctx), o = s.group({ class: "apexcharts-slices" }), l = this.initialAngle, c = this.initialAngle, h = this.initialAngle, d = this.initialAngle;
+    this.strokeWidth = i.config.stroke.show ? i.config.stroke.width : 0;
+    for (var u = 0; u < e.length; u++) {
+      var g = s.group({ class: "apexcharts-series apexcharts-pie-series", seriesName: T.escapeString(i.globals.seriesNames[u]), rel: u + 1, "data:realIndex": u });
+      o.add(g), c = d, h = (l = h) + e[u], d = c + this.prevSectorAngleArr[u];
+      var p = h < l ? this.fullAngle + h - l : h - l, f = r.fillPath({ seriesNumber: u, size: this.sliceSizes[u], value: t[u] }), x = this.getChangedPath(c, d), b = s.drawPath({ d: x, stroke: Array.isArray(this.lineColorArr) ? this.lineColorArr[u] : this.lineColorArr, strokeWidth: 0, fill: f, fillOpacity: i.config.fill.opacity, classes: "apexcharts-pie-area apexcharts-".concat(this.chartType.toLowerCase(), "-slice-").concat(u) });
+      if (b.attr({ index: 0, j: u }), a.setSelectionFilter(b, 0, u), i.config.chart.dropShadow.enabled) {
+        var m = i.config.chart.dropShadow;
+        a.dropShadow(b, m, u);
+      }
+      this.addListeners(b, this.donutDataLabels), F.setAttrs(b.node, { "data:angle": p, "data:startAngle": l, "data:strokeWidth": this.strokeWidth, "data:value": t[u] });
+      var w = { x: 0, y: 0 };
+      this.chartType === "pie" || this.chartType === "polarArea" ? w = T.polarToCartesian(this.centerX, this.centerY, i.globals.radialSize / 1.25 + i.config.plotOptions.pie.dataLabels.offset, (l + p / 2) % this.fullAngle) : this.chartType === "donut" && (w = T.polarToCartesian(this.centerX, this.centerY, (i.globals.radialSize + this.donutSize) / 2 + i.config.plotOptions.pie.dataLabels.offset, (l + p / 2) % this.fullAngle)), g.add(b);
+      var y = 0;
+      if (!this.initialAnim || i.globals.resized || i.globals.dataChanged ? this.animBeginArr.push(0) : ((y = p / this.fullAngle * i.config.chart.animations.speed) === 0 && (y = 1), this.animDur = y + this.animDur, this.animBeginArr.push(this.animDur)), this.dynamicAnim && i.globals.dataChanged ? this.animatePaths(b, { size: this.sliceSizes[u], endAngle: h, startAngle: l, prevStartAngle: c, prevEndAngle: d, animateStartingPos: !0, i: u, animBeginArr: this.animBeginArr, shouldSetPrevPaths: !0, dur: i.config.chart.animations.dynamicAnimation.speed }) : this.animatePaths(b, { size: this.sliceSizes[u], endAngle: h, startAngle: l, i: u, totalItems: e.length - 1, animBeginArr: this.animBeginArr, dur: y }), i.config.plotOptions.pie.expandOnClick && this.chartType !== "polarArea" && b.node.addEventListener("mouseup", this.pieClicked.bind(this, u)), i.globals.selectedDataPoints[0] !== void 0 && i.globals.selectedDataPoints[0].indexOf(u) > -1 && this.pieClicked(u), i.config.dataLabels.enabled) {
+        var v = w.x, k = w.y, A = 100 * p / this.fullAngle + "%";
+        if (p !== 0 && i.config.plotOptions.pie.dataLabels.minAngleToShowLabel < e[u]) {
+          var C = i.config.dataLabels.formatter;
+          C !== void 0 && (A = C(i.globals.seriesPercent[u][0], { seriesIndex: u, w: i }));
+          var S = i.globals.dataLabels.style.colors[u], L = s.group({ class: "apexcharts-datalabels" }), P = s.drawText({ x: v, y: k, text: A, textAnchor: "middle", fontSize: i.config.dataLabels.style.fontSize, fontFamily: i.config.dataLabels.style.fontFamily, fontWeight: i.config.dataLabels.style.fontWeight, foreColor: S });
+          if (L.add(P), i.config.dataLabels.dropShadow.enabled) {
+            var I = i.config.dataLabels.dropShadow;
+            a.dropShadow(P, I);
+          }
+          P.node.classList.add("apexcharts-pie-label"), i.config.chart.animations.animate && i.globals.resized === !1 && (P.node.classList.add("apexcharts-pie-label-delay"), P.node.style.animationDelay = i.config.chart.animations.speed / 940 + "s"), this.sliceLabels.push(L);
+        }
+      }
+    }
+    return o;
+  } }, { key: "addListeners", value: function(e, t) {
+    var i = new F(this.ctx);
+    e.node.addEventListener("mouseenter", i.pathMouseEnter.bind(this, e)), e.node.addEventListener("mouseleave", i.pathMouseLeave.bind(this, e)), e.node.addEventListener("mouseleave", this.revertDataLabelsInner.bind(this, e.node, t)), e.node.addEventListener("mousedown", i.pathMouseDown.bind(this, e)), this.donutDataLabels.total.showAlways || (e.node.addEventListener("mouseenter", this.printDataLabelsInner.bind(this, e.node, t)), e.node.addEventListener("mousedown", this.printDataLabelsInner.bind(this, e.node, t)));
+  } }, { key: "animatePaths", value: function(e, t) {
+    var i = this.w, a = t.endAngle < t.startAngle ? this.fullAngle + t.endAngle - t.startAngle : t.endAngle - t.startAngle, s = a, r = t.startAngle, o = t.startAngle;
+    t.prevStartAngle !== void 0 && t.prevEndAngle !== void 0 && (r = t.prevEndAngle, s = t.prevEndAngle < t.prevStartAngle ? this.fullAngle + t.prevEndAngle - t.prevStartAngle : t.prevEndAngle - t.prevStartAngle), t.i === i.config.series.length - 1 && (a + o > this.fullAngle ? t.endAngle = t.endAngle - (a + o) : a + o < this.fullAngle && (t.endAngle = t.endAngle + (this.fullAngle - (a + o)))), a === this.fullAngle && (a = this.fullAngle - 0.01), this.animateArc(e, r, o, a, s, t);
+  } }, { key: "animateArc", value: function(e, t, i, a, s, r) {
+    var o, l = this, c = this.w, h = new zt(this.ctx), d = r.size;
+    (isNaN(t) || isNaN(s)) && (t = i, s = a, r.dur = 0);
+    var u = a, g = i, p = t < i ? this.fullAngle + t - i : t - i;
+    c.globals.dataChanged && r.shouldSetPrevPaths && r.prevEndAngle && (o = l.getPiePath({ me: l, startAngle: r.prevStartAngle, angle: r.prevEndAngle < r.prevStartAngle ? this.fullAngle + r.prevEndAngle - r.prevStartAngle : r.prevEndAngle - r.prevStartAngle, size: d }), e.attr({ d: o })), r.dur !== 0 ? e.animate(r.dur, r.animBeginArr[r.i]).after(function() {
+      l.chartType !== "pie" && l.chartType !== "donut" && l.chartType !== "polarArea" || this.animate(c.config.chart.animations.dynamicAnimation.speed).attr({ "stroke-width": l.strokeWidth }), r.i === c.config.series.length - 1 && h.animationCompleted(e);
+    }).during(function(f) {
+      u = p + (a - p) * f, r.animateStartingPos && (u = s + (a - s) * f, g = t - s + (i - (t - s)) * f), o = l.getPiePath({ me: l, startAngle: g, angle: u, size: d }), e.node.setAttribute("data:pathOrig", o), e.attr({ d: o });
+    }) : (o = l.getPiePath({ me: l, startAngle: g, angle: a, size: d }), r.isTrack || (c.globals.animationEnded = !0), e.node.setAttribute("data:pathOrig", o), e.attr({ d: o, "stroke-width": l.strokeWidth }));
+  } }, { key: "pieClicked", value: function(e) {
+    var t, i = this.w, a = this, s = a.sliceSizes[e] + (i.config.plotOptions.pie.expandOnClick ? 4 : 0), r = i.globals.dom.Paper.findOne(".apexcharts-".concat(a.chartType.toLowerCase(), "-slice-").concat(e));
+    if (r.attr("data:pieClicked") !== "true") {
+      var o = i.globals.dom.baseEl.getElementsByClassName("apexcharts-pie-area");
+      Array.prototype.forEach.call(o, function(d) {
+        d.setAttribute("data:pieClicked", "false");
+        var u = d.getAttribute("data:pathOrig");
+        u && d.setAttribute("d", u);
+      }), i.globals.capturedDataPointIndex = e, r.attr("data:pieClicked", "true");
+      var l = parseInt(r.attr("data:startAngle"), 10), c = parseInt(r.attr("data:angle"), 10);
+      t = a.getPiePath({ me: a, startAngle: l, angle: c, size: s }), c !== 360 && r.plot(t);
+    } else {
+      r.attr({ "data:pieClicked": "false" }), this.revertDataLabelsInner(r.node, this.donutDataLabels);
+      var h = r.attr("data:pathOrig");
+      r.attr({ d: h });
+    }
+  } }, { key: "getChangedPath", value: function(e, t) {
+    var i = "";
+    return this.dynamicAnim && this.w.globals.dataChanged && (i = this.getPiePath({ me: this, startAngle: e, angle: t - e, size: this.size })), i;
+  } }, { key: "getPiePath", value: function(e) {
+    var t, i = e.me, a = e.startAngle, s = e.angle, r = e.size, o = new F(this.ctx), l = a, c = Math.PI * (l - 90) / 180, h = s + a;
+    Math.ceil(h) >= this.fullAngle + this.w.config.plotOptions.pie.startAngle % this.fullAngle && (h = this.fullAngle + this.w.config.plotOptions.pie.startAngle % this.fullAngle - 0.01), Math.ceil(h) > this.fullAngle && (h -= this.fullAngle);
+    var d = Math.PI * (h - 90) / 180, u = i.centerX + r * Math.cos(c), g = i.centerY + r * Math.sin(c), p = i.centerX + r * Math.cos(d), f = i.centerY + r * Math.sin(d), x = T.polarToCartesian(i.centerX, i.centerY, i.donutSize, h), b = T.polarToCartesian(i.centerX, i.centerY, i.donutSize, l), m = s > 180 ? 1 : 0, w = ["M", u, g, "A", r, r, 0, m, 1, p, f];
+    return t = i.chartType === "donut" ? [].concat(w, ["L", x.x, x.y, "A", i.donutSize, i.donutSize, 0, m, 0, b.x, b.y, "L", u, g, "z"]).join(" ") : i.chartType === "pie" || i.chartType === "polarArea" ? [].concat(w, ["L", i.centerX, i.centerY, "L", u, g]).join(" ") : [].concat(w).join(" "), o.roundPathCorners(t, 2 * this.strokeWidth);
+  } }, { key: "drawPolarElements", value: function(e) {
+    var t = this.w, i = new Tn(this.ctx), a = new F(this.ctx), s = new _n(this.ctx), r = a.group(), o = a.group(), l = i.niceScale(0, Math.ceil(this.maxY), 0), c = l.result.reverse(), h = l.result.length;
+    this.maxY = l.niceMax;
+    for (var d = t.globals.radialSize, u = d / (h - 1), g = 0; g < h - 1; g++) {
+      var p = a.drawCircle(d);
+      if (p.attr({ cx: this.centerX, cy: this.centerY, fill: "none", "stroke-width": t.config.plotOptions.polarArea.rings.strokeWidth, stroke: t.config.plotOptions.polarArea.rings.strokeColor }), t.config.yaxis[0].show) {
+        var f = s.drawYAxisTexts(this.centerX, this.centerY - d + parseInt(t.config.yaxis[0].labels.style.fontSize, 10) / 2, g, c[g]);
+        o.add(f);
+      }
+      r.add(p), d -= u;
+    }
+    this.drawSpokes(e), e.add(r), e.add(o);
+  } }, { key: "renderInnerDataLabels", value: function(e, t, i) {
+    var a = this.w, s = new F(this.ctx), r = t.total.show;
+    e.node.innerHTML = "", e.node.style.opacity = i.opacity;
+    var o, l, c = i.centerX, h = this.donutDataLabels.total.label ? i.centerY : i.centerY - i.centerY / 6;
+    o = t.name.color === void 0 ? a.globals.colors[0] : t.name.color;
+    var d = t.name.fontSize, u = t.name.fontFamily, g = t.name.fontWeight;
+    l = t.value.color === void 0 ? a.config.chart.foreColor : t.value.color;
+    var p = t.value.formatter, f = "", x = "";
+    if (r ? (o = t.total.color, d = t.total.fontSize, u = t.total.fontFamily, g = t.total.fontWeight, x = this.donutDataLabels.total.label ? t.total.label : "", f = t.total.formatter(a)) : a.globals.series.length === 1 && (f = p(a.globals.series[0], a), x = a.globals.seriesNames[0]), x && (x = t.name.formatter(x, t.total.show, a)), t.name.show) {
+      var b = s.drawText({ x: c, y: h + parseFloat(t.name.offsetY), text: x, textAnchor: "middle", foreColor: o, fontSize: d, fontWeight: g, fontFamily: u });
+      b.node.classList.add("apexcharts-datalabel-label"), e.add(b);
+    }
+    if (t.value.show) {
+      var m = t.name.show ? parseFloat(t.value.offsetY) + 16 : t.value.offsetY, w = s.drawText({ x: c, y: h + m, text: f, textAnchor: "middle", foreColor: l, fontWeight: t.value.fontWeight, fontSize: t.value.fontSize, fontFamily: t.value.fontFamily });
+      w.node.classList.add("apexcharts-datalabel-value"), e.add(w);
+    }
+    return e;
+  } }, { key: "printInnerLabels", value: function(e, t, i, a) {
+    var s, r = this.w;
+    a ? s = e.name.color === void 0 ? r.globals.colors[parseInt(a.parentNode.getAttribute("rel"), 10) - 1] : e.name.color : r.globals.series.length > 1 && e.total.show && (s = e.total.color);
+    var o = r.globals.dom.baseEl.querySelector(".apexcharts-datalabel-label"), l = r.globals.dom.baseEl.querySelector(".apexcharts-datalabel-value");
+    i = (0, e.value.formatter)(i, r), a || typeof e.total.formatter != "function" || (i = e.total.formatter(r));
+    var c = t === e.total.label;
+    t = this.donutDataLabels.total.label ? e.name.formatter(t, c, r) : "", o !== null && (o.textContent = t), l !== null && (l.textContent = i), o !== null && (o.style.fill = s);
+  } }, { key: "printDataLabelsInner", value: function(e, t) {
+    var i = this.w, a = e.getAttribute("data:value"), s = i.globals.seriesNames[parseInt(e.parentNode.getAttribute("rel"), 10) - 1];
+    i.globals.series.length > 1 && this.printInnerLabels(t, s, a, e);
+    var r = i.globals.dom.baseEl.querySelector(".apexcharts-datalabels-group");
+    r !== null && (r.style.opacity = 1);
+  } }, { key: "drawSpokes", value: function(e) {
+    var t = this, i = this.w, a = new F(this.ctx), s = i.config.plotOptions.polarArea.spokes;
+    if (s.strokeWidth !== 0) {
+      for (var r = [], o = 360 / i.globals.series.length, l = 0; l < i.globals.series.length; l++) r.push(T.polarToCartesian(this.centerX, this.centerY, i.globals.radialSize, i.config.plotOptions.pie.startAngle + o * l));
+      r.forEach(function(c, h) {
+        var d = a.drawLine(c.x, c.y, t.centerX, t.centerY, Array.isArray(s.connectorColors) ? s.connectorColors[h] : s.connectorColors);
+        e.add(d);
+      });
+    }
+  } }, { key: "revertDataLabelsInner", value: function() {
+    var e = this.w;
+    if (this.donutDataLabels.show) {
+      var t = e.globals.dom.Paper.findOne(".apexcharts-datalabels-group"), i = this.renderInnerDataLabels(t, this.donutDataLabels, { hollowSize: this.donutSize, centerX: this.centerX, centerY: this.centerY, opacity: this.donutDataLabels.show });
+      e.globals.dom.Paper.findOne(".apexcharts-radialbar, .apexcharts-pie").add(i);
+    }
+  } }]), n;
+}(), oh = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w, this.chartType = this.w.config.chart.type, this.initialAnim = this.w.config.chart.animations.enabled, this.dynamicAnim = this.initialAnim && this.w.config.chart.animations.dynamicAnimation.enabled, this.animDur = 0;
+    var t = this.w;
+    this.graphics = new F(this.ctx), this.lineColorArr = t.globals.stroke.colors !== void 0 ? t.globals.stroke.colors : t.globals.colors, this.defaultSize = t.globals.svgHeight < t.globals.svgWidth ? t.globals.gridHeight : t.globals.gridWidth, this.isLog = t.config.yaxis[0].logarithmic, this.logBase = t.config.yaxis[0].logBase, this.coreUtils = new Pe(this.ctx), this.maxValue = this.isLog ? this.coreUtils.getLogVal(this.logBase, t.globals.maxY, 0) : t.globals.maxY, this.minValue = this.isLog ? this.coreUtils.getLogVal(this.logBase, this.w.globals.minY, 0) : t.globals.minY, this.polygons = t.config.plotOptions.radar.polygons, this.strokeWidth = t.config.stroke.show ? t.config.stroke.width : 0, this.size = this.defaultSize / 2.1 - this.strokeWidth - t.config.chart.dropShadow.blur, t.config.xaxis.labels.show && (this.size = this.size - t.globals.xAxisLabelsWidth / 1.75), t.config.plotOptions.radar.size !== void 0 && (this.size = t.config.plotOptions.radar.size), this.dataRadiusOfPercent = [], this.dataRadius = [], this.angleArr = [], this.yaxisLabelsTextsPos = [];
+  }
+  return $(n, [{ key: "draw", value: function(e) {
+    var t = this, i = this.w, a = new Ke(this.ctx), s = [], r = new It(this.ctx);
+    e.length && (this.dataPointsLen = e[i.globals.maxValsInArrayIndex].length), this.disAngle = 2 * Math.PI / this.dataPointsLen;
+    var o = i.globals.gridWidth / 2, l = i.globals.gridHeight / 2, c = o + i.config.plotOptions.radar.offsetX, h = l + i.config.plotOptions.radar.offsetY, d = this.graphics.group({ class: "apexcharts-radar-series apexcharts-plot-series", transform: "translate(".concat(c || 0, ", ").concat(h || 0, ")") }), u = [], g = null, p = null;
+    if (this.yaxisLabels = this.graphics.group({ class: "apexcharts-yaxis" }), e.forEach(function(x, b) {
+      var m = x.length === i.globals.dataPoints, w = t.graphics.group().attr({ class: "apexcharts-series", "data:longestSeries": m, seriesName: T.escapeString(i.globals.seriesNames[b]), rel: b + 1, "data:realIndex": b });
+      t.dataRadiusOfPercent[b] = [], t.dataRadius[b] = [], t.angleArr[b] = [], x.forEach(function(E, O) {
+        var _ = Math.abs(t.maxValue - t.minValue);
+        E -= t.minValue, t.isLog && (E = t.coreUtils.getLogVal(t.logBase, E, 0)), t.dataRadiusOfPercent[b][O] = E / _, t.dataRadius[b][O] = t.dataRadiusOfPercent[b][O] * t.size, t.angleArr[b][O] = O * t.disAngle;
+      }), u = t.getDataPointsPos(t.dataRadius[b], t.angleArr[b]);
+      var y = t.createPaths(u, { x: 0, y: 0 });
+      g = t.graphics.group({ class: "apexcharts-series-markers-wrap apexcharts-element-hidden" }), p = t.graphics.group({ class: "apexcharts-datalabels", "data:realIndex": b }), i.globals.delayedElements.push({ el: g.node, index: b });
+      var v = { i: b, realIndex: b, animationDelay: b, initialSpeed: i.config.chart.animations.speed, dataChangeSpeed: i.config.chart.animations.dynamicAnimation.speed, className: "apexcharts-radar", shouldClipToGrid: !1, bindEventsOnPaths: !1, stroke: i.globals.stroke.colors[b], strokeLineCap: i.config.stroke.lineCap }, k = null;
+      i.globals.previousPaths.length > 0 && (k = t.getPreviousPath(b));
+      for (var A = 0; A < y.linePathsTo.length; A++) {
+        var C = t.graphics.renderPaths(N(N({}, v), {}, { pathFrom: k === null ? y.linePathsFrom[A] : k, pathTo: y.linePathsTo[A], strokeWidth: Array.isArray(t.strokeWidth) ? t.strokeWidth[b] : t.strokeWidth, fill: "none", drawShadow: !1 }));
+        w.add(C);
+        var S = a.fillPath({ seriesNumber: b }), L = t.graphics.renderPaths(N(N({}, v), {}, { pathFrom: k === null ? y.areaPathsFrom[A] : k, pathTo: y.areaPathsTo[A], strokeWidth: 0, fill: S, drawShadow: !1 }));
+        if (i.config.chart.dropShadow.enabled) {
+          var P = new _e(t.ctx), I = i.config.chart.dropShadow;
+          P.dropShadow(L, Object.assign({}, I, { noUserSpaceOnUse: !0 }), b);
+        }
+        w.add(L);
+      }
+      x.forEach(function(E, O) {
+        var _ = new Xt(t.ctx).getMarkerConfig({ cssClass: "apexcharts-marker", seriesIndex: b, dataPointIndex: O }), Y = t.graphics.drawMarker(u[O].x, u[O].y, _);
+        Y.attr("rel", O), Y.attr("j", O), Y.attr("index", b), Y.node.setAttribute("default-marker-size", _.pSize);
+        var X = t.graphics.group({ class: "apexcharts-series-markers" });
+        X && X.add(Y), g.add(X), w.add(g);
+        var D = i.config.dataLabels;
+        if (D.enabled) {
+          var B = D.formatter(i.globals.series[b][O], { seriesIndex: b, dataPointIndex: O, w: i });
+          r.plotDataLabelsText({ x: u[O].x, y: u[O].y, text: B, textAnchor: "middle", i: b, j: b, parent: p, offsetCorrection: !1, dataLabelsConfig: N({}, D) });
+        }
+        w.add(p);
+      }), s.push(w);
+    }), this.drawPolygons({ parent: d }), i.config.xaxis.labels.show) {
+      var f = this.drawXAxisTexts();
+      d.add(f);
+    }
+    return s.forEach(function(x) {
+      d.add(x);
+    }), d.add(this.yaxisLabels), d;
+  } }, { key: "drawPolygons", value: function(e) {
+    for (var t = this, i = this.w, a = e.parent, s = new _n(this.ctx), r = i.globals.yAxisScale[0].result.reverse(), o = r.length, l = [], c = this.size / (o - 1), h = 0; h < o; h++) l[h] = c * h;
+    l.reverse();
+    var d = [], u = [];
+    l.forEach(function(g, p) {
+      var f = T.getPolygonPos(g, t.dataPointsLen), x = "";
+      f.forEach(function(b, m) {
+        if (p === 0) {
+          var w = t.graphics.drawLine(b.x, b.y, 0, 0, Array.isArray(t.polygons.connectorColors) ? t.polygons.connectorColors[m] : t.polygons.connectorColors);
+          u.push(w);
+        }
+        m === 0 && t.yaxisLabelsTextsPos.push({ x: b.x, y: b.y }), x += b.x + "," + b.y + " ";
+      }), d.push(x);
+    }), d.forEach(function(g, p) {
+      var f = t.polygons.strokeColors, x = t.polygons.strokeWidth, b = t.graphics.drawPolygon(g, Array.isArray(f) ? f[p] : f, Array.isArray(x) ? x[p] : x, i.globals.radarPolygons.fill.colors[p]);
+      a.add(b);
+    }), u.forEach(function(g) {
+      a.add(g);
+    }), i.config.yaxis[0].show && this.yaxisLabelsTextsPos.forEach(function(g, p) {
+      var f = s.drawYAxisTexts(g.x, g.y, p, r[p]);
+      t.yaxisLabels.add(f);
+    });
+  } }, { key: "drawXAxisTexts", value: function() {
+    var e = this, t = this.w, i = t.config.xaxis.labels, a = this.graphics.group({ class: "apexcharts-xaxis" }), s = T.getPolygonPos(this.size, this.dataPointsLen);
+    return t.globals.labels.forEach(function(r, o) {
+      var l = t.config.xaxis.labels.formatter, c = new It(e.ctx);
+      if (s[o]) {
+        var h = e.getTextPos(s[o], e.size), d = l(r, { seriesIndex: -1, dataPointIndex: o, w: t });
+        c.plotDataLabelsText({ x: h.newX, y: h.newY, text: d, textAnchor: h.textAnchor, i: o, j: o, parent: a, className: "apexcharts-xaxis-label", color: Array.isArray(i.style.colors) && i.style.colors[o] ? i.style.colors[o] : "#a8a8a8", dataLabelsConfig: N({ textAnchor: h.textAnchor, dropShadow: { enabled: !1 } }, i), offsetCorrection: !1 }).on("click", function(u) {
+          if (typeof t.config.chart.events.xAxisLabelClick == "function") {
+            var g = Object.assign({}, t, { labelIndex: o });
+            t.config.chart.events.xAxisLabelClick(u, e.ctx, g);
+          }
+        });
+      }
+    }), a;
+  } }, { key: "createPaths", value: function(e, t) {
+    var i = this, a = [], s = [], r = [], o = [];
+    if (e.length) {
+      s = [this.graphics.move(t.x, t.y)], o = [this.graphics.move(t.x, t.y)];
+      var l = this.graphics.move(e[0].x, e[0].y), c = this.graphics.move(e[0].x, e[0].y);
+      e.forEach(function(h, d) {
+        l += i.graphics.line(h.x, h.y), c += i.graphics.line(h.x, h.y), d === e.length - 1 && (l += "Z", c += "Z");
+      }), a.push(l), r.push(c);
+    }
+    return { linePathsFrom: s, linePathsTo: a, areaPathsFrom: o, areaPathsTo: r };
+  } }, { key: "getTextPos", value: function(e, t) {
+    var i = "middle", a = e.x, s = e.y;
+    return Math.abs(e.x) >= 10 ? e.x > 0 ? (i = "start", a += 10) : e.x < 0 && (i = "end", a -= 10) : i = "middle", Math.abs(e.y) >= t - 10 && (e.y < 0 ? s -= 10 : e.y > 0 && (s += 10)), { textAnchor: i, newX: a, newY: s };
+  } }, { key: "getPreviousPath", value: function(e) {
+    for (var t = this.w, i = null, a = 0; a < t.globals.previousPaths.length; a++) {
+      var s = t.globals.previousPaths[a];
+      s.paths.length > 0 && parseInt(s.realIndex, 10) === parseInt(e, 10) && t.globals.previousPaths[a].paths[0] !== void 0 && (i = t.globals.previousPaths[a].paths[0].d);
+    }
+    return i;
+  } }, { key: "getDataPointsPos", value: function(e, t) {
+    var i = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : this.dataPointsLen;
+    e = e || [], t = t || [];
+    for (var a = [], s = 0; s < i; s++) {
+      var r = {};
+      r.x = e[s] * Math.sin(t[s]), r.y = -e[s] * Math.cos(t[s]), a.push(r);
+    }
+    return a;
+  } }]), n;
+}(), lh = function(n) {
+  oi(t, Yn);
+  var e = ni(t);
+  function t(i) {
+    var a;
+    q(this, t), (a = e.call(this, i)).ctx = i, a.w = i.w, a.animBeginArr = [0], a.animDur = 0;
+    var s = a.w;
+    return a.startAngle = s.config.plotOptions.radialBar.startAngle, a.endAngle = s.config.plotOptions.radialBar.endAngle, a.totalAngle = Math.abs(s.config.plotOptions.radialBar.endAngle - s.config.plotOptions.radialBar.startAngle), a.trackStartAngle = s.config.plotOptions.radialBar.track.startAngle, a.trackEndAngle = s.config.plotOptions.radialBar.track.endAngle, a.barLabels = a.w.config.plotOptions.radialBar.barLabels, a.donutDataLabels = a.w.config.plotOptions.radialBar.dataLabels, a.radialDataLabels = a.donutDataLabels, a.trackStartAngle || (a.trackStartAngle = a.startAngle), a.trackEndAngle || (a.trackEndAngle = a.endAngle), a.endAngle === 360 && (a.endAngle = 359.99), a.margin = parseInt(s.config.plotOptions.radialBar.track.margin, 10), a.onBarLabelClick = a.onBarLabelClick.bind(qr(a)), a;
+  }
+  return $(t, [{ key: "draw", value: function(i) {
+    var a = this.w, s = new F(this.ctx), r = s.group({ class: "apexcharts-radialbar" });
+    if (a.globals.noData) return r;
+    var o = s.group(), l = this.defaultSize / 2, c = a.globals.gridWidth / 2, h = this.defaultSize / 2.05;
+    a.config.chart.sparkline.enabled || (h = h - a.config.stroke.width - a.config.chart.dropShadow.blur);
+    var d = a.globals.fill.colors;
+    if (a.config.plotOptions.radialBar.track.show) {
+      var u = this.drawTracks({ size: h, centerX: c, centerY: l, colorArr: d, series: i });
+      o.add(u);
+    }
+    var g = this.drawArcs({ size: h, centerX: c, centerY: l, colorArr: d, series: i }), p = 360;
+    a.config.plotOptions.radialBar.startAngle < 0 && (p = this.totalAngle);
+    var f = (360 - p) / 360;
+    if (a.globals.radialSize = h - h * f, this.radialDataLabels.value.show) {
+      var x = Math.max(this.radialDataLabels.value.offsetY, this.radialDataLabels.name.offsetY);
+      a.globals.radialSize += x * f;
+    }
+    return o.add(g.g), a.config.plotOptions.radialBar.hollow.position === "front" && (g.g.add(g.elHollow), g.dataLabels && g.g.add(g.dataLabels)), r.add(o), r;
+  } }, { key: "drawTracks", value: function(i) {
+    var a = this.w, s = new F(this.ctx), r = s.group({ class: "apexcharts-tracks" }), o = new _e(this.ctx), l = new Ke(this.ctx), c = this.getStrokeWidth(i);
+    i.size = i.size - c / 2;
+    for (var h = 0; h < i.series.length; h++) {
+      var d = s.group({ class: "apexcharts-radialbar-track apexcharts-track" });
+      r.add(d), d.attr({ rel: h + 1 }), i.size = i.size - c - this.margin;
+      var u = a.config.plotOptions.radialBar.track, g = l.fillPath({ seriesNumber: 0, size: i.size, fillColors: Array.isArray(u.background) ? u.background[h] : u.background, solid: !0 }), p = this.trackStartAngle, f = this.trackEndAngle;
+      Math.abs(f) + Math.abs(p) >= 360 && (f = 360 - Math.abs(this.startAngle) - 0.1);
+      var x = s.drawPath({ d: "", stroke: g, strokeWidth: c * parseInt(u.strokeWidth, 10) / 100, fill: "none", strokeOpacity: u.opacity, classes: "apexcharts-radialbar-area" });
+      if (u.dropShadow.enabled) {
+        var b = u.dropShadow;
+        o.dropShadow(x, b);
+      }
+      d.add(x), x.attr("id", "apexcharts-radialbarTrack-" + h), this.animatePaths(x, { centerX: i.centerX, centerY: i.centerY, endAngle: f, startAngle: p, size: i.size, i: h, totalItems: 2, animBeginArr: 0, dur: 0, isTrack: !0 });
+    }
+    return r;
+  } }, { key: "drawArcs", value: function(i) {
+    var a = this.w, s = new F(this.ctx), r = new Ke(this.ctx), o = new _e(this.ctx), l = s.group(), c = this.getStrokeWidth(i);
+    i.size = i.size - c / 2;
+    var h = a.config.plotOptions.radialBar.hollow.background, d = i.size - c * i.series.length - this.margin * i.series.length - c * parseInt(a.config.plotOptions.radialBar.track.strokeWidth, 10) / 100 / 2, u = d - a.config.plotOptions.radialBar.hollow.margin;
+    a.config.plotOptions.radialBar.hollow.image !== void 0 && (h = this.drawHollowImage(i, l, d, h));
+    var g = this.drawHollow({ size: u, centerX: i.centerX, centerY: i.centerY, fill: h || "transparent" });
+    if (a.config.plotOptions.radialBar.hollow.dropShadow.enabled) {
+      var p = a.config.plotOptions.radialBar.hollow.dropShadow;
+      o.dropShadow(g, p);
+    }
+    var f = 1;
+    !this.radialDataLabels.total.show && a.globals.series.length > 1 && (f = 0);
+    var x = null;
+    if (this.radialDataLabels.show) {
+      var b = a.globals.dom.Paper.findOne(".apexcharts-datalabels-group");
+      x = this.renderInnerDataLabels(b, this.radialDataLabels, { hollowSize: d, centerX: i.centerX, centerY: i.centerY, opacity: f });
+    }
+    a.config.plotOptions.radialBar.hollow.position === "back" && (l.add(g), x && l.add(x));
+    var m = !1;
+    a.config.plotOptions.radialBar.inverseOrder && (m = !0);
+    for (var w = m ? i.series.length - 1 : 0; m ? w >= 0 : w < i.series.length; m ? w-- : w++) {
+      var y = s.group({ class: "apexcharts-series apexcharts-radial-series", seriesName: T.escapeString(a.globals.seriesNames[w]) });
+      l.add(y), y.attr({ rel: w + 1, "data:realIndex": w }), this.ctx.series.addCollapsedClassToSeries(y, w), i.size = i.size - c - this.margin;
+      var v = r.fillPath({ seriesNumber: w, size: i.size, value: i.series[w] }), k = this.startAngle, A = void 0, C = T.negToZero(i.series[w] > 100 ? 100 : i.series[w]) / 100, S = Math.round(this.totalAngle * C) + this.startAngle, L = void 0;
+      a.globals.dataChanged && (A = this.startAngle, L = Math.round(this.totalAngle * T.negToZero(a.globals.previousPaths[w]) / 100) + A), Math.abs(S) + Math.abs(k) > 360 && (S -= 0.01), Math.abs(L) + Math.abs(A) > 360 && (L -= 0.01);
+      var P = S - k, I = Array.isArray(a.config.stroke.dashArray) ? a.config.stroke.dashArray[w] : a.config.stroke.dashArray, E = s.drawPath({ d: "", stroke: v, strokeWidth: c, fill: "none", fillOpacity: a.config.fill.opacity, classes: "apexcharts-radialbar-area apexcharts-radialbar-slice-" + w, strokeDashArray: I });
+      if (F.setAttrs(E.node, { "data:angle": P, "data:value": i.series[w] }), a.config.chart.dropShadow.enabled) {
+        var O = a.config.chart.dropShadow;
+        o.dropShadow(E, O, w);
+      }
+      if (o.setSelectionFilter(E, 0, w), this.addListeners(E, this.radialDataLabels), y.add(E), E.attr({ index: 0, j: w }), this.barLabels.enabled) {
+        var _ = T.polarToCartesian(i.centerX, i.centerY, i.size, k), Y = this.barLabels.formatter(a.globals.seriesNames[w], { seriesIndex: w, w: a }), X = ["apexcharts-radialbar-label"];
+        this.barLabels.onClick || X.push("apexcharts-no-click");
+        var D = this.barLabels.useSeriesColors ? a.globals.colors[w] : a.config.chart.foreColor;
+        D || (D = a.config.chart.foreColor);
+        var B = _.x + this.barLabels.offsetX, R = _.y + this.barLabels.offsetY, z = s.drawText({ x: B, y: R, text: Y, textAnchor: "end", dominantBaseline: "middle", fontFamily: this.barLabels.fontFamily, fontWeight: this.barLabels.fontWeight, fontSize: this.barLabels.fontSize, foreColor: D, cssClass: X.join(" ") });
+        z.on("click", this.onBarLabelClick), z.attr({ rel: w + 1 }), k !== 0 && z.attr({ "transform-origin": "".concat(B, " ").concat(R), transform: "rotate(".concat(k, " 0 0)") }), y.add(z);
+      }
+      var Z = 0;
+      !this.initialAnim || a.globals.resized || a.globals.dataChanged || (Z = a.config.chart.animations.speed), a.globals.dataChanged && (Z = a.config.chart.animations.dynamicAnimation.speed), this.animDur = Z / (1.2 * i.series.length) + this.animDur, this.animBeginArr.push(this.animDur), this.animatePaths(E, { centerX: i.centerX, centerY: i.centerY, endAngle: S, startAngle: k, prevEndAngle: L, prevStartAngle: A, size: i.size, i: w, totalItems: 2, animBeginArr: this.animBeginArr, dur: Z, shouldSetPrevPaths: !0 });
+    }
+    return { g: l, elHollow: g, dataLabels: x };
+  } }, { key: "drawHollow", value: function(i) {
+    var a = new F(this.ctx).drawCircle(2 * i.size);
+    return a.attr({ class: "apexcharts-radialbar-hollow", cx: i.centerX, cy: i.centerY, r: i.size, fill: i.fill }), a;
+  } }, { key: "drawHollowImage", value: function(i, a, s, r) {
+    var o = this.w, l = new Ke(this.ctx), c = T.randomId(), h = o.config.plotOptions.radialBar.hollow.image;
+    if (o.config.plotOptions.radialBar.hollow.imageClipped) l.clippedImgArea({ width: s, height: s, image: h, patternID: "pattern".concat(o.globals.cuid).concat(c) }), r = "url(#pattern".concat(o.globals.cuid).concat(c, ")");
+    else {
+      var d = o.config.plotOptions.radialBar.hollow.imageWidth, u = o.config.plotOptions.radialBar.hollow.imageHeight;
+      if (d === void 0 && u === void 0) {
+        var g = o.globals.dom.Paper.image(h, function(f) {
+          this.move(i.centerX - f.width / 2 + o.config.plotOptions.radialBar.hollow.imageOffsetX, i.centerY - f.height / 2 + o.config.plotOptions.radialBar.hollow.imageOffsetY);
+        });
+        a.add(g);
+      } else {
+        var p = o.globals.dom.Paper.image(h, function(f) {
+          this.move(i.centerX - d / 2 + o.config.plotOptions.radialBar.hollow.imageOffsetX, i.centerY - u / 2 + o.config.plotOptions.radialBar.hollow.imageOffsetY), this.size(d, u);
+        });
+        a.add(p);
+      }
+    }
+    return r;
+  } }, { key: "getStrokeWidth", value: function(i) {
+    var a = this.w;
+    return i.size * (100 - parseInt(a.config.plotOptions.radialBar.hollow.size, 10)) / 100 / (i.series.length + 1) - this.margin;
+  } }, { key: "onBarLabelClick", value: function(i) {
+    var a = parseInt(i.target.getAttribute("rel"), 10) - 1, s = this.barLabels.onClick, r = this.w;
+    s && s(r.globals.seriesNames[a], { w: r, seriesIndex: a });
+  } }]), t;
+}(), ch = function(n) {
+  oi(t, Et);
+  var e = ni(t);
+  function t() {
+    return q(this, t), e.apply(this, arguments);
+  }
+  return $(t, [{ key: "draw", value: function(i, a) {
+    var s = this.w, r = new F(this.ctx);
+    this.rangeBarOptions = this.w.config.plotOptions.rangeBar, this.series = i, this.seriesRangeStart = s.globals.seriesRangeStart, this.seriesRangeEnd = s.globals.seriesRangeEnd, this.barHelpers.initVariables(i);
+    for (var o = r.group({ class: "apexcharts-rangebar-series apexcharts-plot-series" }), l = 0; l < i.length; l++) {
+      var c, h, d, u, g = void 0, p = void 0, f = s.globals.comboCharts ? a[l] : l, x = this.barHelpers.getGroupIndex(f).columnGroupIndex, b = r.group({ class: "apexcharts-series", seriesName: T.escapeString(s.globals.seriesNames[f]), rel: l + 1, "data:realIndex": f });
+      this.ctx.series.addCollapsedClassToSeries(b, f), i[l].length > 0 && (this.visibleI = this.visibleI + 1);
+      var m = 0, w = 0, y = 0;
+      this.yRatio.length > 1 && (this.yaxisIndex = s.globals.seriesYAxisReverseMap[f][0], y = f);
+      var v = this.barHelpers.initialPositions(f);
+      p = v.y, u = v.zeroW, g = v.x, w = v.barWidth, m = v.barHeight, c = v.xDivision, h = v.yDivision, d = v.zeroH;
+      for (var k = r.group({ class: "apexcharts-datalabels", "data:realIndex": f }), A = r.group({ class: "apexcharts-rangebar-goals-markers" }), C = 0; C < s.globals.dataPoints; C++) {
+        var S = this.barHelpers.getStrokeWidth(l, C, f), L = this.seriesRangeStart[l][C], P = this.seriesRangeEnd[l][C], I = null, E = null, O = null, _ = { x: g, y: p, strokeWidth: S, elSeries: b }, Y = this.seriesLen;
+        if (s.config.plotOptions.bar.rangeBarGroupRows && (Y = 1), s.config.series[l].data[C] === void 0) break;
+        if (this.isHorizontal) {
+          O = p + m * this.visibleI;
+          var X = (h - m * Y) / 2;
+          if (s.config.series[l].data[C].x) {
+            var D = this.detectOverlappingBars({ i: l, j: C, barYPosition: O, srty: X, barHeight: m, yDivision: h, initPositions: v });
+            m = D.barHeight, O = D.barYPosition;
+          }
+          w = (I = this.drawRangeBarPaths(N({ indexes: { i: l, j: C, realIndex: f }, barHeight: m, barYPosition: O, zeroW: u, yDivision: h, y1: L, y2: P }, _))).barWidth;
+        } else {
+          s.globals.isXNumeric && (g = (s.globals.seriesX[l][C] - s.globals.minX) / this.xRatio - w / 2), E = g + w * this.visibleI;
+          var B = (c - w * Y) / 2;
+          if (s.config.series[l].data[C].x) {
+            var R = this.detectOverlappingBars({ i: l, j: C, barXPosition: E, srtx: B, barWidth: w, xDivision: c, initPositions: v });
+            w = R.barWidth, E = R.barXPosition;
+          }
+          m = (I = this.drawRangeColumnPaths(N({ indexes: { i: l, j: C, realIndex: f, translationsIndex: y }, barWidth: w, barXPosition: E, zeroH: d, xDivision: c }, _))).barHeight;
+        }
+        var z = this.barHelpers.drawGoalLine({ barXPosition: I.barXPosition, barYPosition: O, goalX: I.goalX, goalY: I.goalY, barHeight: m, barWidth: w });
+        z && A.add(z), p = I.y, g = I.x;
+        var Z = this.barHelpers.getPathFillColor(i, l, C, f);
+        this.renderSeries({ realIndex: f, pathFill: Z.color, lineFill: Z.useRangeColor ? Z.color : s.globals.stroke.colors[f], j: C, i: l, x: g, y: p, y1: L, y2: P, pathFrom: I.pathFrom, pathTo: I.pathTo, strokeWidth: S, elSeries: b, series: i, barHeight: m, barWidth: w, barXPosition: E, barYPosition: O, columnGroupIndex: x, elDataLabelsWrap: k, elGoalsMarkers: A, visibleSeries: this.visibleI, type: "rangebar" });
+      }
+      o.add(b);
+    }
+    return o;
+  } }, { key: "detectOverlappingBars", value: function(i) {
+    var a = i.i, s = i.j, r = i.barYPosition, o = i.barXPosition, l = i.srty, c = i.srtx, h = i.barHeight, d = i.barWidth, u = i.yDivision, g = i.xDivision, p = i.initPositions, f = this.w, x = [], b = f.config.series[a].data[s].rangeName, m = f.config.series[a].data[s].x, w = Array.isArray(m) ? m.join(" ") : m, y = f.globals.labels.map(function(k) {
+      return Array.isArray(k) ? k.join(" ") : k;
+    }).indexOf(w), v = f.globals.seriesRange[a].findIndex(function(k) {
+      return k.x === w && k.overlaps.length > 0;
+    });
+    return this.isHorizontal ? (r = f.config.plotOptions.bar.rangeBarGroupRows ? l + u * y : l + h * this.visibleI + u * y, v > -1 && !f.config.plotOptions.bar.rangeBarOverlap && (x = f.globals.seriesRange[a][v].overlaps).indexOf(b) > -1 && (r = (h = p.barHeight / x.length) * this.visibleI + u * (100 - parseInt(this.barOptions.barHeight, 10)) / 100 / 2 + h * (this.visibleI + x.indexOf(b)) + u * y)) : (y > -1 && !f.globals.timescaleLabels.length && (o = f.config.plotOptions.bar.rangeBarGroupRows ? c + g * y : c + d * this.visibleI + g * y), v > -1 && !f.config.plotOptions.bar.rangeBarOverlap && (x = f.globals.seriesRange[a][v].overlaps).indexOf(b) > -1 && (o = (d = p.barWidth / x.length) * this.visibleI + g * (100 - parseInt(this.barOptions.barWidth, 10)) / 100 / 2 + d * (this.visibleI + x.indexOf(b)) + g * y)), { barYPosition: r, barXPosition: o, barHeight: h, barWidth: d };
+  } }, { key: "drawRangeColumnPaths", value: function(i) {
+    var a = i.indexes, s = i.x, r = i.xDivision, o = i.barWidth, l = i.barXPosition, c = i.zeroH, h = this.w, d = a.i, u = a.j, g = a.realIndex, p = a.translationsIndex, f = this.yRatio[p], x = this.getRangeValue(g, u), b = Math.min(x.start, x.end), m = Math.max(x.start, x.end);
+    this.series[d][u] === void 0 || this.series[d][u] === null ? b = c : (b = c - b / f, m = c - m / f);
+    var w = Math.abs(m - b), y = this.barHelpers.getColumnPaths({ barXPosition: l, barWidth: o, y1: b, y2: m, strokeWidth: this.strokeWidth, series: this.seriesRangeEnd, realIndex: g, i: g, j: u, w: h });
+    if (h.globals.isXNumeric) {
+      var v = this.getBarXForNumericXAxis({ x: s, j: u, realIndex: g, barWidth: o });
+      s = v.x, l = v.barXPosition;
+    } else s += r;
+    return { pathTo: y.pathTo, pathFrom: y.pathFrom, barHeight: w, x: s, y: x.start < 0 && x.end < 0 ? b : m, goalY: this.barHelpers.getGoalValues("y", null, c, d, u, p), barXPosition: l };
+  } }, { key: "preventBarOverflow", value: function(i) {
+    var a = this.w;
+    return i < 0 && (i = 0), i > a.globals.gridWidth && (i = a.globals.gridWidth), i;
+  } }, { key: "drawRangeBarPaths", value: function(i) {
+    var a = i.indexes, s = i.y, r = i.y1, o = i.y2, l = i.yDivision, c = i.barHeight, h = i.barYPosition, d = i.zeroW, u = this.w, g = a.realIndex, p = a.j, f = this.preventBarOverflow(d + r / this.invertedYRatio), x = this.preventBarOverflow(d + o / this.invertedYRatio), b = this.getRangeValue(g, p), m = Math.abs(x - f), w = this.barHelpers.getBarpaths({ barYPosition: h, barHeight: c, x1: f, x2: x, strokeWidth: this.strokeWidth, series: this.seriesRangeEnd, i: g, realIndex: g, j: p, w: u });
+    return u.globals.isXNumeric || (s += l), { pathTo: w.pathTo, pathFrom: w.pathFrom, barWidth: m, x: b.start < 0 && b.end < 0 ? f : x, goalX: this.barHelpers.getGoalValues("x", d, null, g, p), y: s };
+  } }, { key: "getRangeValue", value: function(i, a) {
+    var s = this.w;
+    return { start: s.globals.seriesRangeStart[i][a], end: s.globals.seriesRangeEnd[i][a] };
+  } }]), t;
+}(), hh = function() {
+  function n(e) {
+    q(this, n), this.w = e.w, this.lineCtx = e;
+  }
+  return $(n, [{ key: "sameValueSeriesFix", value: function(e, t) {
+    var i = this.w;
+    if ((i.config.fill.type === "gradient" || i.config.fill.type[e] === "gradient") && new Pe(this.lineCtx.ctx, i).seriesHaveSameValues(e)) {
+      var a = t[e].slice();
+      a[a.length - 1] = a[a.length - 1] + 1e-6, t[e] = a;
+    }
+    return t;
+  } }, { key: "calculatePoints", value: function(e) {
+    var t = e.series, i = e.realIndex, a = e.x, s = e.y, r = e.i, o = e.j, l = e.prevY, c = this.w, h = [], d = [], u = this.lineCtx.categoryAxisCorrection + c.config.markers.offsetX;
+    return c.globals.isXNumeric && (u = (c.globals.seriesX[i][0] - c.globals.minX) / this.lineCtx.xRatio + c.config.markers.offsetX), o === 0 && (h.push(u), d.push(T.isNumber(t[r][0]) ? l + c.config.markers.offsetY : null)), h.push(a + c.config.markers.offsetX), d.push(T.isNumber(t[r][o + 1]) ? s + c.config.markers.offsetY : null), { x: h, y: d };
+  } }, { key: "checkPreviousPaths", value: function(e) {
+    for (var t = e.pathFromLine, i = e.pathFromArea, a = e.realIndex, s = this.w, r = 0; r < s.globals.previousPaths.length; r++) {
+      var o = s.globals.previousPaths[r];
+      (o.type === "line" || o.type === "area") && o.paths.length > 0 && parseInt(o.realIndex, 10) === parseInt(a, 10) && (o.type === "line" ? (this.lineCtx.appendPathFrom = !1, t = s.globals.previousPaths[r].paths[0].d) : o.type === "area" && (this.lineCtx.appendPathFrom = !1, i = s.globals.previousPaths[r].paths[0].d, s.config.stroke.show && s.globals.previousPaths[r].paths[1] && (t = s.globals.previousPaths[r].paths[1].d)));
+    }
+    return { pathFromLine: t, pathFromArea: i };
+  } }, { key: "determineFirstPrevY", value: function(e) {
+    var t, i, a, s = e.i, r = e.realIndex, o = e.series, l = e.prevY, c = e.lineYPosition, h = e.translationsIndex, d = this.w, u = d.config.chart.stacked && !d.globals.comboCharts || d.config.chart.stacked && d.globals.comboCharts && (!this.w.config.chart.stackOnlyBar || ((t = this.w.config.series[r]) === null || t === void 0 ? void 0 : t.type) === "bar" || ((i = this.w.config.series[r]) === null || i === void 0 ? void 0 : i.type) === "column");
+    if (((a = o[s]) === null || a === void 0 ? void 0 : a[0]) !== void 0) l = (c = u && s > 0 ? this.lineCtx.prevSeriesY[s - 1][0] : this.lineCtx.zeroY) - o[s][0] / this.lineCtx.yRatio[h] + 2 * (this.lineCtx.isReversed ? o[s][0] / this.lineCtx.yRatio[h] : 0);
+    else if (u && s > 0 && o[s][0] === void 0) {
+      for (var g = s - 1; g >= 0; g--) if (o[g][0] !== null && o[g][0] !== void 0) {
+        l = c = this.lineCtx.prevSeriesY[g][0];
+        break;
+      }
+    }
+    return { prevY: l, lineYPosition: c };
+  } }]), n;
+}(), dh = function(n) {
+  for (var e, t, i, a, s = function(h) {
+    for (var d = [], u = h[0], g = h[1], p = d[0] = sa(u, g), f = 1, x = h.length - 1; f < x; f++) u = g, g = h[f + 1], d[f] = 0.5 * (p + (p = sa(u, g)));
+    return d[f] = p, d;
+  }(n), r = n.length - 1, o = [], l = 0; l < r; l++) i = sa(n[l], n[l + 1]), Math.abs(i) < 1e-6 ? s[l] = s[l + 1] = 0 : (a = (e = s[l] / i) * e + (t = s[l + 1] / i) * t) > 9 && (a = 3 * i / Math.sqrt(a), s[l] = a * e, s[l + 1] = a * t);
+  for (var c = 0; c <= r; c++) a = (n[Math.min(r, c + 1)][0] - n[Math.max(0, c - 1)][0]) / (6 * (1 + s[c] * s[c])), o.push([a || 0, s[c] * a || 0]);
+  return o;
+}, uh = function(n) {
+  var e = dh(n), t = n[1], i = n[0], a = [], s = e[1], r = e[0];
+  a.push(i, [i[0] + r[0], i[1] + r[1], t[0] - s[0], t[1] - s[1], t[0], t[1]]);
+  for (var o = 2, l = e.length; o < l; o++) {
+    var c = n[o], h = e[o];
+    a.push([c[0] - h[0], c[1] - h[1], c[0], c[1]]);
+  }
+  return a;
+}, gh = function(n, e, t) {
+  var i = n.slice(e, t);
+  if (e) {
+    if (t - e > 1 && i[1].length < 6) {
+      var a = i[0].length;
+      i[1] = [2 * i[0][a - 2] - i[0][a - 4], 2 * i[0][a - 1] - i[0][a - 3]].concat(i[1]);
+    }
+    i[0] = i[0].slice(-2);
+  }
+  return i;
+};
+function sa(n, e) {
+  return (e[1] - n[1]) / (e[0] - n[0]);
+}
+var ra = function() {
+  function n(e, t, i) {
+    q(this, n), this.ctx = e, this.w = e.w, this.xyRatios = t, this.pointsChart = !(this.w.config.chart.type !== "bubble" && this.w.config.chart.type !== "scatter") || i, this.scatter = new Ln(this.ctx), this.noNegatives = this.w.globals.minX === Number.MAX_VALUE, this.lineHelpers = new hh(this), this.markers = new Xt(this.ctx), this.prevSeriesY = [], this.categoryAxisCorrection = 0, this.yaxisIndex = 0;
+  }
+  return $(n, [{ key: "draw", value: function(e, t, i, a) {
+    var s, r = this.w, o = new F(this.ctx), l = r.globals.comboCharts ? t : r.config.chart.type, c = o.group({ class: "apexcharts-".concat(l, "-series apexcharts-plot-series") }), h = new Pe(this.ctx, r);
+    this.yRatio = this.xyRatios.yRatio, this.zRatio = this.xyRatios.zRatio, this.xRatio = this.xyRatios.xRatio, this.baseLineY = this.xyRatios.baseLineY, e = h.getLogSeries(e), this.yRatio = h.getLogYRatios(this.yRatio), this.prevSeriesY = [];
+    for (var d = [], u = 0; u < e.length; u++) {
+      e = this.lineHelpers.sameValueSeriesFix(u, e);
+      var g = r.globals.comboCharts ? i[u] : u, p = this.yRatio.length > 1 ? g : 0;
+      this._initSerieVariables(e, u, g);
+      var f = [], x = [], b = [], m = r.globals.padHorizontal + this.categoryAxisCorrection;
+      this.ctx.series.addCollapsedClassToSeries(this.elSeries, g), r.globals.isXNumeric && r.globals.seriesX.length > 0 && (m = (r.globals.seriesX[g][0] - r.globals.minX) / this.xRatio), b.push(m);
+      var w, y = m, v = void 0, k = y, A = this.zeroY, C = this.zeroY;
+      A = this.lineHelpers.determineFirstPrevY({ i: u, realIndex: g, series: e, prevY: A, lineYPosition: 0, translationsIndex: p }).prevY, r.config.stroke.curve === "monotoneCubic" && e[u][0] === null ? f.push(null) : f.push(A), w = A, l === "rangeArea" && (v = C = this.lineHelpers.determineFirstPrevY({ i: u, realIndex: g, series: a, prevY: C, lineYPosition: 0, translationsIndex: p }).prevY, x.push(f[0] !== null ? C : null));
+      var S = this._calculatePathsFrom({ type: l, series: e, i: u, realIndex: g, translationsIndex: p, prevX: k, prevY: A, prevY2: C }), L = [f[0]], P = [x[0]], I = { type: l, series: e, realIndex: g, translationsIndex: p, i: u, x: m, y: 1, pX: y, pY: w, pathsFrom: S, linePaths: [], areaPaths: [], seriesIndex: i, lineYPosition: 0, xArrj: b, yArrj: f, y2Arrj: x, seriesRangeEnd: a }, E = this._iterateOverDataPoints(N(N({}, I), {}, { iterations: l === "rangeArea" ? e[u].length - 1 : void 0, isRangeStart: !0 }));
+      if (l === "rangeArea") {
+        for (var O = this._calculatePathsFrom({ series: a, i: u, realIndex: g, prevX: k, prevY: C }), _ = this._iterateOverDataPoints(N(N({}, I), {}, { series: a, xArrj: [m], yArrj: L, y2Arrj: P, pY: v, areaPaths: E.areaPaths, pathsFrom: O, iterations: a[u].length - 1, isRangeStart: !1 })), Y = E.linePaths.length / 2, X = 0; X < Y; X++) E.linePaths[X] = _.linePaths[X + Y] + E.linePaths[X];
+        E.linePaths.splice(Y), E.pathFromLine = _.pathFromLine + E.pathFromLine;
+      } else E.pathFromArea += "z";
+      this._handlePaths({ type: l, realIndex: g, i: u, paths: E }), this.elSeries.add(this.elPointsMain), this.elSeries.add(this.elDataLabelsWrap), d.push(this.elSeries);
+    }
+    if (((s = r.config.series[0]) === null || s === void 0 ? void 0 : s.zIndex) !== void 0 && d.sort(function(R, z) {
+      return Number(R.node.getAttribute("zIndex")) - Number(z.node.getAttribute("zIndex"));
+    }), r.config.chart.stacked) for (var D = d.length - 1; D >= 0; D--) c.add(d[D]);
+    else for (var B = 0; B < d.length; B++) c.add(d[B]);
+    return c;
+  } }, { key: "_initSerieVariables", value: function(e, t, i) {
+    var a = this.w, s = new F(this.ctx);
+    this.xDivision = a.globals.gridWidth / (a.globals.dataPoints - (a.config.xaxis.tickPlacement === "on" ? 1 : 0)), this.strokeWidth = Array.isArray(a.config.stroke.width) ? a.config.stroke.width[i] : a.config.stroke.width;
+    var r = 0;
+    if (this.yRatio.length > 1 && (this.yaxisIndex = a.globals.seriesYAxisReverseMap[i], r = i), this.isReversed = a.config.yaxis[this.yaxisIndex] && a.config.yaxis[this.yaxisIndex].reversed, this.zeroY = a.globals.gridHeight - this.baseLineY[r] - (this.isReversed ? a.globals.gridHeight : 0) + (this.isReversed ? 2 * this.baseLineY[r] : 0), this.areaBottomY = this.zeroY, (this.zeroY > a.globals.gridHeight || a.config.plotOptions.area.fillTo === "end") && (this.areaBottomY = a.globals.gridHeight), this.categoryAxisCorrection = this.xDivision / 2, this.elSeries = s.group({ class: "apexcharts-series", zIndex: a.config.series[i].zIndex !== void 0 ? a.config.series[i].zIndex : i, seriesName: T.escapeString(a.globals.seriesNames[i]) }), this.elPointsMain = s.group({ class: "apexcharts-series-markers-wrap", "data:realIndex": i }), a.globals.hasNullValues) {
+      var o = this.markers.plotChartMarkers({ pointsPos: { x: [0], y: [a.globals.gridHeight + a.globals.markers.largestSize] }, seriesIndex: t, j: 0, pSize: 0.1, alwaysDrawMarker: !0, isVirtualPoint: !0 });
+      o !== null && this.elPointsMain.add(o);
+    }
+    this.elDataLabelsWrap = s.group({ class: "apexcharts-datalabels", "data:realIndex": i });
+    var l = e[t].length === a.globals.dataPoints;
+    this.elSeries.attr({ "data:longestSeries": l, rel: t + 1, "data:realIndex": i }), this.appendPathFrom = !0;
+  } }, { key: "_calculatePathsFrom", value: function(e) {
+    var t, i, a, s, r = e.type, o = e.series, l = e.i, c = e.realIndex, h = e.translationsIndex, d = e.prevX, u = e.prevY, g = e.prevY2, p = this.w, f = new F(this.ctx);
+    if (o[l][0] === null) {
+      for (var x = 0; x < o[l].length; x++) if (o[l][x] !== null) {
+        d = this.xDivision * x, u = this.zeroY - o[l][x] / this.yRatio[h], t = f.move(d, u), i = f.move(d, this.areaBottomY);
+        break;
+      }
+    } else t = f.move(d, u), r === "rangeArea" && (t = f.move(d, g) + f.line(d, u)), i = f.move(d, this.areaBottomY) + f.line(d, u);
+    if (a = f.move(0, this.areaBottomY) + f.line(0, this.areaBottomY), s = f.move(0, this.areaBottomY) + f.line(0, this.areaBottomY), p.globals.previousPaths.length > 0) {
+      var b = this.lineHelpers.checkPreviousPaths({ pathFromLine: a, pathFromArea: s, realIndex: c });
+      a = b.pathFromLine, s = b.pathFromArea;
+    }
+    return { prevX: d, prevY: u, linePath: t, areaPath: i, pathFromLine: a, pathFromArea: s };
+  } }, { key: "_handlePaths", value: function(e) {
+    var t = e.type, i = e.realIndex, a = e.i, s = e.paths, r = this.w, o = new F(this.ctx), l = new Ke(this.ctx);
+    this.prevSeriesY.push(s.yArrj), r.globals.seriesXvalues[i] = s.xArrj, r.globals.seriesYvalues[i] = s.yArrj;
+    var c = r.config.forecastDataPoints;
+    if (c.count > 0 && t !== "rangeArea") {
+      var h = r.globals.seriesXvalues[i][r.globals.seriesXvalues[i].length - c.count - 1], d = o.drawRect(h, 0, r.globals.gridWidth, r.globals.gridHeight, 0);
+      r.globals.dom.elForecastMask.appendChild(d.node);
+      var u = o.drawRect(0, 0, h, r.globals.gridHeight, 0);
+      r.globals.dom.elNonForecastMask.appendChild(u.node);
+    }
+    this.pointsChart || r.globals.delayedElements.push({ el: this.elPointsMain.node, index: i });
+    var g = { i: a, realIndex: i, animationDelay: a, initialSpeed: r.config.chart.animations.speed, dataChangeSpeed: r.config.chart.animations.dynamicAnimation.speed, className: "apexcharts-".concat(t) };
+    if (t === "area") for (var p = l.fillPath({ seriesNumber: i }), f = 0; f < s.areaPaths.length; f++) {
+      var x = o.renderPaths(N(N({}, g), {}, { pathFrom: s.pathFromArea, pathTo: s.areaPaths[f], stroke: "none", strokeWidth: 0, strokeLineCap: null, fill: p }));
+      this.elSeries.add(x);
+    }
+    if (r.config.stroke.show && !this.pointsChart) {
+      var b = null;
+      if (t === "line") b = l.fillPath({ seriesNumber: i, i: a });
+      else if (r.config.stroke.fill.type === "solid") b = r.globals.stroke.colors[i];
+      else {
+        var m = r.config.fill;
+        r.config.fill = r.config.stroke.fill, b = l.fillPath({ seriesNumber: i, i: a }), r.config.fill = m;
+      }
+      for (var w = 0; w < s.linePaths.length; w++) {
+        var y = b;
+        t === "rangeArea" && (y = l.fillPath({ seriesNumber: i }));
+        var v = N(N({}, g), {}, { pathFrom: s.pathFromLine, pathTo: s.linePaths[w], stroke: b, strokeWidth: this.strokeWidth, strokeLineCap: r.config.stroke.lineCap, fill: t === "rangeArea" ? y : "none" }), k = o.renderPaths(v);
+        if (this.elSeries.add(k), k.attr("fill-rule", "evenodd"), c.count > 0 && t !== "rangeArea") {
+          var A = o.renderPaths(v);
+          A.node.setAttribute("stroke-dasharray", c.dashArray), c.strokeWidth && A.node.setAttribute("stroke-width", c.strokeWidth), this.elSeries.add(A), A.attr("clip-path", "url(#forecastMask".concat(r.globals.cuid, ")")), k.attr("clip-path", "url(#nonForecastMask".concat(r.globals.cuid, ")"));
+        }
+      }
+    }
+  } }, { key: "_iterateOverDataPoints", value: function(e) {
+    var t, i, a = this, s = e.type, r = e.series, o = e.iterations, l = e.realIndex, c = e.translationsIndex, h = e.i, d = e.x, u = e.y, g = e.pX, p = e.pY, f = e.pathsFrom, x = e.linePaths, b = e.areaPaths, m = e.seriesIndex, w = e.lineYPosition, y = e.xArrj, v = e.yArrj, k = e.y2Arrj, A = e.isRangeStart, C = e.seriesRangeEnd, S = this.w, L = new F(this.ctx), P = this.yRatio, I = f.prevY, E = f.linePath, O = f.areaPath, _ = f.pathFromLine, Y = f.pathFromArea, X = T.isNumber(S.globals.minYArr[l]) ? S.globals.minYArr[l] : S.globals.minY;
+    o || (o = S.globals.dataPoints > 1 ? S.globals.dataPoints - 1 : S.globals.dataPoints);
+    var D = function(ae, te) {
+      return te - ae / P[c] + 2 * (a.isReversed ? ae / P[c] : 0);
+    }, B = u, R = S.config.chart.stacked && !S.globals.comboCharts || S.config.chart.stacked && S.globals.comboCharts && (!this.w.config.chart.stackOnlyBar || ((t = this.w.config.series[l]) === null || t === void 0 ? void 0 : t.type) === "bar" || ((i = this.w.config.series[l]) === null || i === void 0 ? void 0 : i.type) === "column"), z = S.config.stroke.curve;
+    Array.isArray(z) && (z = Array.isArray(m) ? z[m[h]] : z[h]);
+    for (var Z, Q = 0, W = 0; W < o && r[h].length !== 0; W++) {
+      var se = r[h][W + 1] === void 0 || r[h][W + 1] === null;
+      if (S.globals.isXNumeric) {
+        var G = S.globals.seriesX[l][W + 1];
+        S.globals.seriesX[l][W + 1] === void 0 && (G = S.globals.seriesX[l][o - 1]), d = (G - S.globals.minX) / this.xRatio;
+      } else d += this.xDivision;
+      R ? h > 0 && S.globals.collapsedSeries.length < S.config.series.length - 1 ? w = this.prevSeriesY[function(ae) {
+        for (var te = ae; te > 0; te--) {
+          if (!(S.globals.collapsedSeriesIndices.indexOf((m == null ? void 0 : m[te]) || te) > -1)) return te;
+          te--;
+        }
+        return 0;
+      }(h - 1)][W + 1] : w = this.zeroY : w = this.zeroY, se ? u = D(X, w) : (u = D(r[h][W + 1], w), s === "rangeArea" && (B = D(C[h][W + 1], w))), y.push(r[h][W + 1] === null ? null : d), !se || S.config.stroke.curve !== "smooth" && S.config.stroke.curve !== "monotoneCubic" ? (v.push(u), k.push(B)) : (v.push(null), k.push(null));
+      var V = this.lineHelpers.calculatePoints({ series: r, x: d, y: u, realIndex: l, i: h, j: W, prevY: I }), J = this._createPaths({ type: s, series: r, i: h, realIndex: l, j: W, x: d, y: u, y2: B, xArrj: y, yArrj: v, y2Arrj: k, pX: g, pY: p, pathState: Q, segmentStartX: Z, linePath: E, areaPath: O, linePaths: x, areaPaths: b, curve: z, isRangeStart: A });
+      b = J.areaPaths, x = J.linePaths, g = J.pX, p = J.pY, Q = J.pathState, Z = J.segmentStartX, O = J.areaPath, E = J.linePath, !this.appendPathFrom || S.globals.hasNullValues || z === "monotoneCubic" && s === "rangeArea" || (_ += L.line(d, this.areaBottomY), Y += L.line(d, this.areaBottomY)), this.handleNullDataPoints(r, V, h, W, l), this._handleMarkersAndLabels({ type: s, pointsPos: V, i: h, j: W, realIndex: l, isRangeStart: A });
+    }
+    return { yArrj: v, xArrj: y, pathFromArea: Y, areaPaths: b, pathFromLine: _, linePaths: x, linePath: E, areaPath: O };
+  } }, { key: "_handleMarkersAndLabels", value: function(e) {
+    var t = e.type, i = e.pointsPos, a = e.isRangeStart, s = e.i, r = e.j, o = e.realIndex, l = this.w, c = new It(this.ctx);
+    if (this.pointsChart) this.scatter.draw(this.elSeries, r, { realIndex: o, pointsPos: i, zRatio: this.zRatio, elParent: this.elPointsMain });
+    else {
+      l.globals.series[s].length > 1 && this.elPointsMain.node.classList.add("apexcharts-element-hidden");
+      var h = this.markers.plotChartMarkers({ pointsPos: i, seriesIndex: o, j: r + 1 });
+      h !== null && this.elPointsMain.add(h);
+    }
+    var d = c.drawDataLabel({ type: t, isRangeStart: a, pos: i, i: o, j: r + 1 });
+    d !== null && this.elDataLabelsWrap.add(d);
+  } }, { key: "_createPaths", value: function(e) {
+    var t = e.type, i = e.series, a = e.i;
+    e.realIndex;
+    var s, r = e.j, o = e.x, l = e.y, c = e.xArrj, h = e.yArrj, d = e.y2, u = e.y2Arrj, g = e.pX, p = e.pY, f = e.pathState, x = e.segmentStartX, b = e.linePath, m = e.areaPath, w = e.linePaths, y = e.areaPaths, v = e.curve, k = e.isRangeStart, A = new F(this.ctx), C = this.areaBottomY, S = t === "rangeArea", L = t === "rangeArea" && k;
+    switch (v) {
+      case "monotoneCubic":
+        var P = k ? h : u;
+        switch (f) {
+          case 0:
+            if (P[r + 1] === null) break;
+            f = 1;
+          case 1:
+            if (!(S ? c.length === i[a].length : r === i[a].length - 2)) break;
+          case 2:
+            var I = k ? c : c.slice().reverse(), E = k ? P : P.slice().reverse(), O = (s = E, I.map(function(G, V) {
+              return [G, s[V]];
+            }).filter(function(G) {
+              return G[1] !== null;
+            })), _ = O.length > 1 ? uh(O) : O, Y = [];
+            S && (L ? y = O : Y = y.reverse());
+            var X = 0, D = 0;
+            if (function(G, V) {
+              for (var J = function(U) {
+                var we = [], Fe = 0;
+                return U.forEach(function(Qe) {
+                  Qe !== null ? Fe++ : Fe > 0 && (we.push(Fe), Fe = 0);
+                }), Fe > 0 && we.push(Fe), we;
+              }(G), ae = [], te = 0, fe = 0; te < J.length; fe += J[te++]) ae[te] = gh(V, fe, fe + J[te]);
+              return ae;
+            }(E, _).forEach(function(G) {
+              X++;
+              var V = function(te) {
+                for (var fe = "", U = 0; U < te.length; U++) {
+                  var we = te[U], Fe = we.length;
+                  Fe > 4 ? (fe += "C".concat(we[0], ", ").concat(we[1]), fe += ", ".concat(we[2], ", ").concat(we[3]), fe += ", ".concat(we[4], ", ").concat(we[5])) : Fe > 2 && (fe += "S".concat(we[0], ", ").concat(we[1]), fe += ", ".concat(we[2], ", ").concat(we[3]));
+                }
+                return fe;
+              }(G), J = D, ae = (D += G.length) - 1;
+              L ? b = A.move(O[J][0], O[J][1]) + V : S ? b = A.move(Y[J][0], Y[J][1]) + A.line(O[J][0], O[J][1]) + V + A.line(Y[ae][0], Y[ae][1]) : (b = A.move(O[J][0], O[J][1]) + V, m = b + A.line(O[ae][0], C) + A.line(O[J][0], C) + "z", y.push(m)), w.push(b);
+            }), S && X > 1 && !L) {
+              var B = w.slice(X).reverse();
+              w.splice(X), B.forEach(function(G) {
+                return w.push(G);
+              });
+            }
+            f = 0;
+        }
+        break;
+      case "smooth":
+        var R = 0.35 * (o - g);
+        if (i[a][r] === null) f = 0;
+        else switch (f) {
+          case 0:
+            if (x = g, b = L ? A.move(g, u[r]) + A.line(g, p) : A.move(g, p), m = A.move(g, p), i[a][r + 1] === null || i[a][r + 1] === void 0) {
+              w.push(b), y.push(m);
+              break;
+            }
+            if (f = 1, r < i[a].length - 2) {
+              var z = A.curve(g + R, p, o - R, l, o, l);
+              b += z, m += z;
+              break;
+            }
+          case 1:
+            if (i[a][r + 1] === null) b += L ? A.line(g, d) : A.move(g, p), m += A.line(g, C) + A.line(x, C) + "z", w.push(b), y.push(m), f = -1;
+            else {
+              var Z = A.curve(g + R, p, o - R, l, o, l);
+              b += Z, m += Z, r >= i[a].length - 2 && (L && (b += A.curve(o, l, o, l, o, d) + A.move(o, d)), m += A.curve(o, l, o, l, o, C) + A.line(x, C) + "z", w.push(b), y.push(m), f = -1);
+            }
+        }
+        g = o, p = l;
+        break;
+      default:
+        var Q = function(G, V, J) {
+          var ae = [];
+          switch (G) {
+            case "stepline":
+              ae = A.line(V, null, "H") + A.line(null, J, "V");
+              break;
+            case "linestep":
+              ae = A.line(null, J, "V") + A.line(V, null, "H");
+              break;
+            case "straight":
+              ae = A.line(V, J);
+          }
+          return ae;
+        };
+        if (i[a][r] === null) f = 0;
+        else switch (f) {
+          case 0:
+            if (x = g, b = L ? A.move(g, u[r]) + A.line(g, p) : A.move(g, p), m = A.move(g, p), i[a][r + 1] === null || i[a][r + 1] === void 0) {
+              w.push(b), y.push(m);
+              break;
+            }
+            if (f = 1, r < i[a].length - 2) {
+              var W = Q(v, o, l);
+              b += W, m += W;
+              break;
+            }
+          case 1:
+            if (i[a][r + 1] === null) b += L ? A.line(g, d) : A.move(g, p), m += A.line(g, C) + A.line(x, C) + "z", w.push(b), y.push(m), f = -1;
+            else {
+              var se = Q(v, o, l);
+              b += se, m += se, r >= i[a].length - 2 && (L && (b += A.line(o, d)), m += A.line(o, C) + A.line(x, C) + "z", w.push(b), y.push(m), f = -1);
+            }
+        }
+        g = o, p = l;
+    }
+    return { linePaths: w, areaPaths: y, pX: g, pY: p, pathState: f, segmentStartX: x, linePath: b, areaPath: m };
+  } }, { key: "handleNullDataPoints", value: function(e, t, i, a, s) {
+    var r = this.w;
+    if (e[i][a] === null && r.config.markers.showNullDataPoints || e[i].length === 1) {
+      var o = this.strokeWidth - r.config.markers.strokeWidth / 2;
+      o > 0 || (o = 0);
+      var l = this.markers.plotChartMarkers({ pointsPos: t, seriesIndex: s, j: a + 1, pSize: o, alwaysDrawMarker: !0 });
+      l !== null && this.elPointsMain.add(l);
+    }
+  } }]), n;
+}();
+window.TreemapSquared = {}, window.TreemapSquared.generate = /* @__PURE__ */ function() {
+  function n(o, l, c, h) {
+    this.xoffset = o, this.yoffset = l, this.height = h, this.width = c, this.shortestEdge = function() {
+      return Math.min(this.height, this.width);
+    }, this.getCoordinates = function(d) {
+      var u, g = [], p = this.xoffset, f = this.yoffset, x = s(d) / this.height, b = s(d) / this.width;
+      if (this.width >= this.height) for (u = 0; u < d.length; u++) g.push([p, f, p + x, f + d[u] / x]), f += d[u] / x;
+      else for (u = 0; u < d.length; u++) g.push([p, f, p + d[u] / b, f + b]), p += d[u] / b;
+      return g;
+    }, this.cutArea = function(d) {
+      var u;
+      if (this.width >= this.height) {
+        var g = d / this.height, p = this.width - g;
+        u = new n(this.xoffset + g, this.yoffset, p, this.height);
+      } else {
+        var f = d / this.width, x = this.height - f;
+        u = new n(this.xoffset, this.yoffset + f, this.width, x);
+      }
+      return u;
+    };
+  }
+  function e(o, l, c, h, d) {
+    h = h === void 0 ? 0 : h, d = d === void 0 ? 0 : d;
+    var u = t(function(g, p) {
+      var f, x = [], b = p / s(g);
+      for (f = 0; f < g.length; f++) x[f] = g[f] * b;
+      return x;
+    }(o, l * c), [], new n(h, d, l, c), []);
+    return function(g) {
+      var p, f, x = [];
+      for (p = 0; p < g.length; p++) for (f = 0; f < g[p].length; f++) x.push(g[p][f]);
+      return x;
+    }(u);
+  }
+  function t(o, l, c, h) {
+    var d, u, g;
+    if (o.length !== 0) return d = c.shortestEdge(), function(p, f, x) {
+      var b;
+      if (p.length === 0) return !0;
+      (b = p.slice()).push(f);
+      var m = i(p, x), w = i(b, x);
+      return m >= w;
+    }(l, u = o[0], d) ? (l.push(u), t(o.slice(1), l, c, h)) : (g = c.cutArea(s(l), h), h.push(c.getCoordinates(l)), t(o, [], g, h)), h;
+    h.push(c.getCoordinates(l));
+  }
+  function i(o, l) {
+    var c = Math.min.apply(Math, o), h = Math.max.apply(Math, o), d = s(o);
+    return Math.max(Math.pow(l, 2) * h / Math.pow(d, 2), Math.pow(d, 2) / (Math.pow(l, 2) * c));
+  }
+  function a(o) {
+    return o && o.constructor === Array;
+  }
+  function s(o) {
+    var l, c = 0;
+    for (l = 0; l < o.length; l++) c += o[l];
+    return c;
+  }
+  function r(o) {
+    var l, c = 0;
+    if (a(o[0])) for (l = 0; l < o.length; l++) c += r(o[l]);
+    else c = s(o);
+    return c;
+  }
+  return function o(l, c, h, d, u) {
+    d = d === void 0 ? 0 : d, u = u === void 0 ? 0 : u;
+    var g, p, f = [], x = [];
+    if (a(l[0])) {
+      for (p = 0; p < l.length; p++) f[p] = r(l[p]);
+      for (g = e(f, c, h, d, u), p = 0; p < l.length; p++) x.push(o(l[p], g[p][2] - g[p][0], g[p][3] - g[p][1], g[p][0], g[p][1]));
+    } else x = e(l, c, h, d, u);
+    return x;
+  };
+}();
+var fh = function() {
+  function n(e, t) {
+    q(this, n), this.ctx = e, this.w = e.w, this.strokeWidth = this.w.config.stroke.width, this.helpers = new zn(e), this.dynamicAnim = this.w.config.chart.animations.dynamicAnimation, this.labels = [];
+  }
+  return $(n, [{ key: "draw", value: function(e) {
+    var t = this, i = this.w, a = new F(this.ctx), s = new Ke(this.ctx), r = a.group({ class: "apexcharts-treemap" });
+    if (i.globals.noData) return r;
+    var o = [];
+    return e.forEach(function(l) {
+      var c = l.map(function(h) {
+        return Math.abs(h);
+      });
+      o.push(c);
+    }), this.negRange = this.helpers.checkColorRange(), i.config.series.forEach(function(l, c) {
+      l.data.forEach(function(h) {
+        Array.isArray(t.labels[c]) || (t.labels[c] = []), t.labels[c].push(h.x);
+      });
+    }), window.TreemapSquared.generate(o, i.globals.gridWidth, i.globals.gridHeight).forEach(function(l, c) {
+      var h = a.group({ class: "apexcharts-series apexcharts-treemap-series", seriesName: T.escapeString(i.globals.seriesNames[c]), rel: c + 1, "data:realIndex": c });
+      if (i.config.chart.dropShadow.enabled) {
+        var d = i.config.chart.dropShadow;
+        new _e(t.ctx).dropShadow(r, d, c);
+      }
+      var u = a.group({ class: "apexcharts-data-labels" }), g = { xMin: 1 / 0, yMin: 1 / 0, xMax: -1 / 0, yMax: -1 / 0 };
+      l.forEach(function(_, Y) {
+        var X = _[0], D = _[1], B = _[2], R = _[3];
+        g.xMin = Math.min(g.xMin, X), g.yMin = Math.min(g.yMin, D), g.xMax = Math.max(g.xMax, B), g.yMax = Math.max(g.yMax, R);
+        var z = t.helpers.getShadeColor(i.config.chart.type, c, Y, t.negRange), Z = z.color, Q = s.fillPath({ color: Z, seriesNumber: c, dataPointIndex: Y }), W = a.drawRect(X, D, B - X, R - D, i.config.plotOptions.treemap.borderRadius, "#fff", 1, t.strokeWidth, i.config.plotOptions.treemap.useFillColorAsStroke ? Z : i.globals.stroke.colors[c]);
+        W.attr({ cx: X, cy: D, index: c, i: c, j: Y, width: B - X, height: R - D, fill: Q }), W.node.classList.add("apexcharts-treemap-rect"), t.helpers.addListeners(W);
+        var se = { x: X + (B - X) / 2, y: D + (R - D) / 2, width: 0, height: 0 }, G = { x: X, y: D, width: B - X, height: R - D };
+        if (i.config.chart.animations.enabled && !i.globals.dataChanged) {
+          var V = 1;
+          i.globals.resized || (V = i.config.chart.animations.speed), t.animateTreemap(W, se, G, V);
+        }
+        if (i.globals.dataChanged) {
+          var J = 1;
+          t.dynamicAnim.enabled && i.globals.shouldAnimate && (J = t.dynamicAnim.speed, i.globals.previousPaths[c] && i.globals.previousPaths[c][Y] && i.globals.previousPaths[c][Y].rect && (se = i.globals.previousPaths[c][Y].rect), t.animateTreemap(W, se, G, J));
+        }
+        var ae = t.getFontSize(_), te = i.config.dataLabels.formatter(t.labels[c][Y], { value: i.globals.series[c][Y], seriesIndex: c, dataPointIndex: Y, w: i });
+        i.config.plotOptions.treemap.dataLabels.format === "truncate" && (ae = parseInt(i.config.dataLabels.style.fontSize, 10), te = t.truncateLabels(te, ae, X, D, B, R));
+        var fe = null;
+        i.globals.series[c][Y] && (fe = t.helpers.calculateDataLabels({ text: te, x: (X + B) / 2, y: (D + R) / 2 + t.strokeWidth / 2 + ae / 3, i: c, j: Y, colorProps: z, fontSize: ae, series: e })), i.config.dataLabels.enabled && fe && t.rotateToFitLabel(fe, ae, te, X, D, B, R), h.add(W), fe !== null && h.add(fe);
+      });
+      var p = i.config.plotOptions.treemap.seriesTitle;
+      if (i.config.series.length > 1 && p && p.show) {
+        var f = i.config.series[c].name || "";
+        if (f && g.xMin < 1 / 0 && g.yMin < 1 / 0) {
+          var x = p.offsetX, b = p.offsetY, m = p.borderColor, w = p.borderWidth, y = p.borderRadius, v = p.style, k = v.color || i.config.chart.foreColor, A = { left: v.padding.left, right: v.padding.right, top: v.padding.top, bottom: v.padding.bottom }, C = a.getTextRects(f, v.fontSize, v.fontFamily), S = C.width + A.left + A.right, L = C.height + A.top + A.bottom, P = g.xMin + (x || 0), I = g.yMin + (b || 0), E = a.drawRect(P, I, S, L, y, v.background, 1, w, m), O = a.drawText({ x: P + A.left, y: I + A.top + 0.75 * C.height, text: f, fontSize: v.fontSize, fontFamily: v.fontFamily, fontWeight: v.fontWeight, foreColor: k, cssClass: v.cssClass || "" });
+          h.add(E), h.add(O);
+        }
+      }
+      h.add(u), r.add(h);
+    }), r;
+  } }, { key: "getFontSize", value: function(e) {
+    var t = this.w, i = function a(s) {
+      var r, o = 0;
+      if (Array.isArray(s[0])) for (r = 0; r < s.length; r++) o += a(s[r]);
+      else for (r = 0; r < s.length; r++) o += s[r].length;
+      return o;
+    }(this.labels) / function a(s) {
+      var r, o = 0;
+      if (Array.isArray(s[0])) for (r = 0; r < s.length; r++) o += a(s[r]);
+      else for (r = 0; r < s.length; r++) o += 1;
+      return o;
+    }(this.labels);
+    return function(a, s) {
+      var r = a * s, o = Math.pow(r, 0.5);
+      return Math.min(o / i, parseInt(t.config.dataLabels.style.fontSize, 10));
+    }(e[2] - e[0], e[3] - e[1]);
+  } }, { key: "rotateToFitLabel", value: function(e, t, i, a, s, r, o) {
+    var l = new F(this.ctx), c = l.getTextRects(i, t);
+    if (c.width + this.w.config.stroke.width + 5 > r - a && c.width <= o - s) {
+      var h = l.rotateAroundCenter(e.node);
+      e.node.setAttribute("transform", "rotate(-90 ".concat(h.x, " ").concat(h.y, ") translate(").concat(c.height / 3, ")"));
+    }
+  } }, { key: "truncateLabels", value: function(e, t, i, a, s, r) {
+    var o = new F(this.ctx), l = o.getTextRects(e, t).width + this.w.config.stroke.width + 5 > s - i && r - a > s - i ? r - a : s - i, c = o.getTextBasedOnMaxWidth({ text: e, maxWidth: l, fontSize: t });
+    return e.length !== c.length && l / t < 5 ? "" : c;
+  } }, { key: "animateTreemap", value: function(e, t, i, a) {
+    var s = new zt(this.ctx);
+    s.animateRect(e, t, i, a, function() {
+      s.animationCompleted(e);
+    });
+  } }]), n;
+}(), Fn = 86400, ph = 10 / Fn, xh = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w, this.timeScaleArray = [], this.utc = this.w.config.xaxis.labels.datetimeUTC;
+  }
+  return $(n, [{ key: "calculateTimeScaleTicks", value: function(e, t) {
+    var i = this, a = this.w;
+    if (a.globals.allSeriesCollapsed) return a.globals.labels = [], a.globals.timescaleLabels = [], [];
+    var s = new ze(this.ctx), r = (t - e) / 864e5;
+    this.determineInterval(r), a.globals.disableZoomIn = !1, a.globals.disableZoomOut = !1, r < ph ? a.globals.disableZoomIn = !0 : r > 5e4 && (a.globals.disableZoomOut = !0);
+    var o = s.getTimeUnitsfromTimestamp(e, t, this.utc), l = a.globals.gridWidth / r, c = l / 24, h = c / 60, d = h / 60, u = Math.floor(24 * r), g = Math.floor(1440 * r), p = Math.floor(r * Fn), f = Math.floor(r), x = Math.floor(r / 30), b = Math.floor(r / 365), m = { minMillisecond: o.minMillisecond, minSecond: o.minSecond, minMinute: o.minMinute, minHour: o.minHour, minDate: o.minDate, minMonth: o.minMonth, minYear: o.minYear }, w = { firstVal: m, currentMillisecond: m.minMillisecond, currentSecond: m.minSecond, currentMinute: m.minMinute, currentHour: m.minHour, currentMonthDate: m.minDate, currentDate: m.minDate, currentMonth: m.minMonth, currentYear: m.minYear, daysWidthOnXAxis: l, hoursWidthOnXAxis: c, minutesWidthOnXAxis: h, secondsWidthOnXAxis: d, numberOfSeconds: p, numberOfMinutes: g, numberOfHours: u, numberOfDays: f, numberOfMonths: x, numberOfYears: b };
+    switch (this.tickInterval) {
+      case "years":
+        this.generateYearScale(w);
+        break;
+      case "months":
+      case "half_year":
+        this.generateMonthScale(w);
+        break;
+      case "months_days":
+      case "months_fortnight":
+      case "days":
+      case "week_days":
+        this.generateDayScale(w);
+        break;
+      case "hours":
+        this.generateHourScale(w);
+        break;
+      case "minutes_fives":
+      case "minutes":
+        this.generateMinuteScale(w);
+        break;
+      case "seconds_tens":
+      case "seconds_fives":
+      case "seconds":
+        this.generateSecondScale(w);
+    }
+    var y = this.timeScaleArray.map(function(v) {
+      var k = { position: v.position, unit: v.unit, year: v.year, day: v.day ? v.day : 1, hour: v.hour ? v.hour : 0, month: v.month + 1 };
+      return v.unit === "month" ? N(N({}, k), {}, { day: 1, value: v.value + 1 }) : v.unit === "day" || v.unit === "hour" ? N(N({}, k), {}, { value: v.value }) : v.unit === "minute" ? N(N({}, k), {}, { value: v.value, minute: v.value }) : v.unit === "second" ? N(N({}, k), {}, { value: v.value, minute: v.minute, second: v.second }) : v;
+    });
+    return y.filter(function(v) {
+      var k = 1, A = Math.ceil(a.globals.gridWidth / 120), C = v.value;
+      a.config.xaxis.tickAmount !== void 0 && (A = a.config.xaxis.tickAmount), y.length > A && (k = Math.floor(y.length / A));
+      var S = !1, L = !1;
+      switch (i.tickInterval) {
+        case "years":
+          v.unit === "year" && (S = !0);
+          break;
+        case "half_year":
+          k = 7, v.unit === "year" && (S = !0);
+          break;
+        case "months":
+          k = 1, v.unit === "year" && (S = !0);
+          break;
+        case "months_fortnight":
+          k = 15, v.unit !== "year" && v.unit !== "month" || (S = !0), C === 30 && (L = !0);
+          break;
+        case "months_days":
+          k = 10, v.unit === "month" && (S = !0), C === 30 && (L = !0);
+          break;
+        case "week_days":
+          k = 8, v.unit === "month" && (S = !0);
+          break;
+        case "days":
+          k = 1, v.unit === "month" && (S = !0);
+          break;
+        case "hours":
+          v.unit === "day" && (S = !0);
+          break;
+        case "minutes_fives":
+        case "seconds_fives":
+          C % 5 != 0 && (L = !0);
+          break;
+        case "seconds_tens":
+          C % 10 != 0 && (L = !0);
+      }
+      if (i.tickInterval === "hours" || i.tickInterval === "minutes_fives" || i.tickInterval === "seconds_tens" || i.tickInterval === "seconds_fives") {
+        if (!L) return !0;
+      } else if ((C % k == 0 || S) && !L) return !0;
+    });
+  } }, { key: "recalcDimensionsBasedOnFormat", value: function(e, t) {
+    var i = this.w, a = this.formatDates(e), s = this.removeOverlappingTS(a);
+    i.globals.timescaleLabels = s.slice(), new Ii(this.ctx).plotCoords();
+  } }, { key: "determineInterval", value: function(e) {
+    var t = 24 * e, i = 60 * t;
+    switch (!0) {
+      case e / 365 > 5:
+        this.tickInterval = "years";
+        break;
+      case e > 800:
+        this.tickInterval = "half_year";
+        break;
+      case e > 180:
+        this.tickInterval = "months";
+        break;
+      case e > 90:
+        this.tickInterval = "months_fortnight";
+        break;
+      case e > 60:
+        this.tickInterval = "months_days";
+        break;
+      case e > 30:
+        this.tickInterval = "week_days";
+        break;
+      case e > 2:
+        this.tickInterval = "days";
+        break;
+      case t > 2.4:
+        this.tickInterval = "hours";
+        break;
+      case i > 15:
+        this.tickInterval = "minutes_fives";
+        break;
+      case i > 5:
+        this.tickInterval = "minutes";
+        break;
+      case i > 1:
+        this.tickInterval = "seconds_tens";
+        break;
+      case 60 * i > 20:
+        this.tickInterval = "seconds_fives";
+        break;
+      default:
+        this.tickInterval = "seconds";
+    }
+  } }, { key: "generateYearScale", value: function(e) {
+    var t = e.firstVal, i = e.currentMonth, a = e.currentYear, s = e.daysWidthOnXAxis, r = e.numberOfYears, o = t.minYear, l = 0, c = new ze(this.ctx), h = "year";
+    if (t.minDate > 1 || t.minMonth > 0) {
+      var d = c.determineRemainingDaysOfYear(t.minYear, t.minMonth, t.minDate);
+      l = (c.determineDaysOfYear(t.minYear) - d + 1) * s, o = t.minYear + 1, this.timeScaleArray.push({ position: l, value: o, unit: h, year: o, month: T.monthMod(i + 1) });
+    } else t.minDate === 1 && t.minMonth === 0 && this.timeScaleArray.push({ position: l, value: o, unit: h, year: a, month: T.monthMod(i + 1) });
+    for (var u = o, g = l, p = 0; p < r; p++) u++, g = c.determineDaysOfYear(u - 1) * s + g, this.timeScaleArray.push({ position: g, value: u, unit: h, year: u, month: 1 });
+  } }, { key: "generateMonthScale", value: function(e) {
+    var t = e.firstVal, i = e.currentMonthDate, a = e.currentMonth, s = e.currentYear, r = e.daysWidthOnXAxis, o = e.numberOfMonths, l = a, c = 0, h = new ze(this.ctx), d = "month", u = 0;
+    if (t.minDate > 1) {
+      c = (h.determineDaysOfMonths(a + 1, t.minYear) - i + 1) * r, l = T.monthMod(a + 1);
+      var g = s + u, p = T.monthMod(l), f = l;
+      l === 0 && (d = "year", f = g, p = 1, g += u += 1), this.timeScaleArray.push({ position: c, value: f, unit: d, year: g, month: p });
+    } else this.timeScaleArray.push({ position: c, value: l, unit: d, year: s, month: T.monthMod(a) });
+    for (var x = l + 1, b = c, m = 0, w = 1; m < o; m++, w++) {
+      (x = T.monthMod(x)) === 0 ? (d = "year", u += 1) : d = "month";
+      var y = this._getYear(s, x, u);
+      b = h.determineDaysOfMonths(x, y) * r + b;
+      var v = x === 0 ? y : x;
+      this.timeScaleArray.push({ position: b, value: v, unit: d, year: y, month: x === 0 ? 1 : x }), x++;
+    }
+  } }, { key: "generateDayScale", value: function(e) {
+    var t = e.firstVal, i = e.currentMonth, a = e.currentYear, s = e.hoursWidthOnXAxis, r = e.numberOfDays, o = new ze(this.ctx), l = "day", c = t.minDate + 1, h = c, d = function(w, y, v) {
+      return w > o.determineDaysOfMonths(y + 1, v) && (h = 1, l = "month", g = y += 1), y;
+    }, u = (24 - t.minHour) * s, g = c, p = d(h, i, a);
+    t.minHour === 0 && t.minDate === 1 ? (u = 0, g = T.monthMod(t.minMonth), l = "month", h = t.minDate) : t.minDate !== 1 && t.minHour === 0 && t.minMinute === 0 && (u = 0, c = t.minDate, g = c, p = d(h = c, i, a), g !== 1 && (l = "day")), this.timeScaleArray.push({ position: u, value: g, unit: l, year: this._getYear(a, p, 0), month: T.monthMod(p), day: h });
+    for (var f = u, x = 0; x < r; x++) {
+      l = "day", p = d(h += 1, p, this._getYear(a, p, 0));
+      var b = this._getYear(a, p, 0);
+      f = 24 * s + f;
+      var m = h === 1 ? T.monthMod(p) : h;
+      this.timeScaleArray.push({ position: f, value: m, unit: l, year: b, month: T.monthMod(p), day: m });
+    }
+  } }, { key: "generateHourScale", value: function(e) {
+    var t = e.firstVal, i = e.currentDate, a = e.currentMonth, s = e.currentYear, r = e.minutesWidthOnXAxis, o = e.numberOfHours, l = new ze(this.ctx), c = "hour", h = function(k, A) {
+      return k > l.determineDaysOfMonths(A + 1, s) && (x = 1, A += 1), { month: A, date: x };
+    }, d = function(k, A) {
+      return k > l.determineDaysOfMonths(A + 1, s) ? A += 1 : A;
+    }, u = 60 - (t.minMinute + t.minSecond / 60), g = u * r, p = t.minHour + 1, f = p;
+    u === 60 && (g = 0, f = p = t.minHour);
+    var x = i;
+    f >= 24 && (f = 0, c = "day", p = x += 1);
+    var b = h(x, a).month;
+    b = d(x, b), p > 31 && (p = x = 1), this.timeScaleArray.push({ position: g, value: p, unit: c, day: x, hour: f, year: s, month: T.monthMod(b) }), f++;
+    for (var m = g, w = 0; w < o; w++) {
+      c = "hour", f >= 24 && (f = 0, c = "day", b = h(x += 1, b).month, b = d(x, b));
+      var y = this._getYear(s, b, 0);
+      m = 60 * r + m;
+      var v = f === 0 ? x : f;
+      this.timeScaleArray.push({ position: m, value: v, unit: c, hour: f, day: x, year: y, month: T.monthMod(b) }), f++;
+    }
+  } }, { key: "generateMinuteScale", value: function(e) {
+    for (var t = e.currentMillisecond, i = e.currentSecond, a = e.currentMinute, s = e.currentHour, r = e.currentDate, o = e.currentMonth, l = e.currentYear, c = e.minutesWidthOnXAxis, h = e.secondsWidthOnXAxis, d = e.numberOfMinutes, u = a + 1, g = r, p = o, f = l, x = s, b = (60 - i - t / 1e3) * h, m = 0; m < d; m++) u >= 60 && (u = 0, (x += 1) === 24 && (x = 0)), this.timeScaleArray.push({ position: b, value: u, unit: "minute", hour: x, minute: u, day: g, year: this._getYear(f, p, 0), month: T.monthMod(p) }), b += c, u++;
+  } }, { key: "generateSecondScale", value: function(e) {
+    for (var t = e.currentMillisecond, i = e.currentSecond, a = e.currentMinute, s = e.currentHour, r = e.currentDate, o = e.currentMonth, l = e.currentYear, c = e.secondsWidthOnXAxis, h = e.numberOfSeconds, d = i + 1, u = a, g = r, p = o, f = l, x = s, b = (1e3 - t) / 1e3 * c, m = 0; m < h; m++) d >= 60 && (d = 0, ++u >= 60 && (u = 0, ++x === 24 && (x = 0))), this.timeScaleArray.push({ position: b, value: d, unit: "second", hour: x, minute: u, second: d, day: g, year: this._getYear(f, p, 0), month: T.monthMod(p) }), b += c, d++;
+  } }, { key: "createRawDateString", value: function(e, t) {
+    var i = e.year;
+    return e.month === 0 && (e.month = 1), i += "-" + ("0" + e.month.toString()).slice(-2), e.unit === "day" ? i += e.unit === "day" ? "-" + ("0" + t).slice(-2) : "-01" : i += "-" + ("0" + (e.day ? e.day : "1")).slice(-2), e.unit === "hour" ? i += e.unit === "hour" ? "T" + ("0" + t).slice(-2) : "T00" : i += "T" + ("0" + (e.hour ? e.hour : "0")).slice(-2), e.unit === "minute" ? i += ":" + ("0" + t).slice(-2) : i += ":" + (e.minute ? ("0" + e.minute).slice(-2) : "00"), e.unit === "second" ? i += ":" + ("0" + t).slice(-2) : i += ":00", this.utc && (i += ".000Z"), i;
+  } }, { key: "formatDates", value: function(e) {
+    var t = this, i = this.w;
+    return e.map(function(a) {
+      var s = a.value.toString(), r = new ze(t.ctx), o = t.createRawDateString(a, s), l = r.getDate(r.parseDate(o));
+      if (t.utc || (l = r.getDate(r.parseDateWithTimezone(o))), i.config.xaxis.labels.format === void 0) {
+        var c = "dd MMM", h = i.config.xaxis.labels.datetimeFormatter;
+        a.unit === "year" && (c = h.year), a.unit === "month" && (c = h.month), a.unit === "day" && (c = h.day), a.unit === "hour" && (c = h.hour), a.unit === "minute" && (c = h.minute), a.unit === "second" && (c = h.second), s = r.formatDate(l, c);
+      } else s = r.formatDate(l, i.config.xaxis.labels.format);
+      return { dateString: o, position: a.position, value: s, unit: a.unit, year: a.year, month: a.month };
+    });
+  } }, { key: "removeOverlappingTS", value: function(e) {
+    var t, i = this, a = new F(this.ctx), s = !1;
+    e.length > 0 && e[0].value && e.every(function(l) {
+      return l.value.length === e[0].value.length;
+    }) && (s = !0, t = a.getTextRects(e[0].value).width);
+    var r = 0, o = e.map(function(l, c) {
+      if (c > 0 && i.w.config.xaxis.labels.hideOverlappingLabels) {
+        var h = s ? t : a.getTextRects(e[r].value).width, d = e[r].position;
+        return l.position > d + h + 10 ? (r = c, l) : null;
+      }
+      return l;
+    });
+    return o = o.filter(function(l) {
+      return l !== null;
+    });
+  } }, { key: "_getYear", value: function(e, t, i) {
+    return e + Math.floor(t / 12) + i;
+  } }]), n;
+}(), bh = function() {
+  function n(e, t) {
+    q(this, n), this.ctx = t, this.w = t.w, this.el = e;
+  }
+  return $(n, [{ key: "setupElements", value: function() {
+    var e = this.w, t = e.globals, i = e.config, a = i.chart.type;
+    t.axisCharts = ["line", "area", "bar", "rangeBar", "rangeArea", "candlestick", "boxPlot", "scatter", "bubble", "radar", "heatmap", "treemap"].includes(a), t.xyCharts = ["line", "area", "bar", "rangeBar", "rangeArea", "candlestick", "boxPlot", "scatter", "bubble"].includes(a), t.isBarHorizontal = ["bar", "rangeBar", "boxPlot"].includes(a) && i.plotOptions.bar.horizontal, t.chartClass = ".apexcharts".concat(t.chartID), t.dom.baseEl = this.el, t.dom.elWrap = document.createElement("div"), F.setAttrs(t.dom.elWrap, { id: t.chartClass.substring(1), class: "apexcharts-canvas ".concat(t.chartClass.substring(1)) }), this.el.appendChild(t.dom.elWrap), t.dom.Paper = window.SVG().addTo(t.dom.elWrap), t.dom.Paper.attr({ class: "apexcharts-svg", "xmlns:data": "ApexChartsNS", transform: "translate(".concat(i.chart.offsetX, ", ").concat(i.chart.offsetY, ")") }), t.dom.Paper.node.style.background = i.theme.mode !== "dark" || i.chart.background ? i.theme.mode !== "light" || i.chart.background ? i.chart.background : "#fff" : "#343A3F", this.setSVGDimensions(), t.dom.elLegendForeign = document.createElementNS(t.SVGNS, "foreignObject"), F.setAttrs(t.dom.elLegendForeign, { x: 0, y: 0, width: t.svgWidth, height: t.svgHeight }), t.dom.elLegendWrap = document.createElement("div"), t.dom.elLegendWrap.classList.add("apexcharts-legend"), t.dom.elWrap.appendChild(t.dom.elLegendWrap), t.dom.Paper.node.appendChild(t.dom.elLegendForeign), t.dom.elGraphical = t.dom.Paper.group().attr({ class: "apexcharts-inner apexcharts-graphical" }), t.dom.elDefs = t.dom.Paper.defs(), t.dom.Paper.add(t.dom.elGraphical), t.dom.elGraphical.add(t.dom.elDefs);
+  } }, { key: "plotChartType", value: function(e, t) {
+    var i = this.w, a = this.ctx, s = i.config, r = i.globals, o = { line: { series: [], i: [] }, area: { series: [], i: [] }, scatter: { series: [], i: [] }, bubble: { series: [], i: [] }, bar: { series: [], i: [] }, candlestick: { series: [], i: [] }, boxPlot: { series: [], i: [] }, rangeBar: { series: [], i: [] }, rangeArea: { series: [], seriesRangeEnd: [], i: [] } }, l = s.chart.type || "line", c = null, h = 0;
+    r.series.forEach(function(k, A) {
+      var C = e[A].type === "column" ? "bar" : e[A].type || (l === "column" ? "bar" : l);
+      o[C] ? (C === "rangeArea" ? (o[C].series.push(r.seriesRangeStart[A]), o[C].seriesRangeEnd.push(r.seriesRangeEnd[A])) : o[C].series.push(k), o[C].i.push(A), C === "bar" && (i.globals.columnSeries = o.bar)) : ["heatmap", "treemap", "pie", "donut", "polarArea", "radialBar", "radar"].includes(C) ? c = C : console.warn("You have specified an unrecognized series type (".concat(C, ").")), l !== C && C !== "scatter" && h++;
+    }), h > 0 && (c && console.warn("Chart or series type ".concat(c, " cannot appear with other chart or series types.")), o.bar.series.length > 0 && s.plotOptions.bar.horizontal && (h -= o.bar.series.length, o.bar = { series: [], i: [] }, i.globals.columnSeries = { series: [], i: [] }, console.warn("Horizontal bars are not supported in a mixed/combo chart. Please turn off `plotOptions.bar.horizontal`"))), r.comboCharts || (r.comboCharts = h > 0);
+    var d = new ra(a, t), u = new aa(a, t);
+    a.pie = new Yn(a);
+    var g = new lh(a);
+    a.rangeBar = new ch(a, t);
+    var p = new oh(a), f = [];
+    if (r.comboCharts) {
+      var x, b, m = new Pe(a);
+      if (o.area.series.length > 0 && (x = f).push.apply(x, Oe(m.drawSeriesByGroup(o.area, r.areaGroups, "area", d))), o.bar.series.length > 0) if (s.chart.stacked) {
+        var w = new sr(a, t);
+        f.push(w.draw(o.bar.series, o.bar.i));
+      } else a.bar = new Et(a, t), f.push(a.bar.draw(o.bar.series, o.bar.i));
+      if (o.rangeArea.series.length > 0 && f.push(d.draw(o.rangeArea.series, "rangeArea", o.rangeArea.i, o.rangeArea.seriesRangeEnd)), o.line.series.length > 0 && (b = f).push.apply(b, Oe(m.drawSeriesByGroup(o.line, r.lineGroups, "line", d))), o.candlestick.series.length > 0 && f.push(u.draw(o.candlestick.series, "candlestick", o.candlestick.i)), o.boxPlot.series.length > 0 && f.push(u.draw(o.boxPlot.series, "boxPlot", o.boxPlot.i)), o.rangeBar.series.length > 0 && f.push(a.rangeBar.draw(o.rangeBar.series, o.rangeBar.i)), o.scatter.series.length > 0) {
+        var y = new ra(a, t, !0);
+        f.push(y.draw(o.scatter.series, "scatter", o.scatter.i));
+      }
+      if (o.bubble.series.length > 0) {
+        var v = new ra(a, t, !0);
+        f.push(v.draw(o.bubble.series, "bubble", o.bubble.i));
+      }
+    } else switch (s.chart.type) {
+      case "line":
+        f = d.draw(r.series, "line");
+        break;
+      case "area":
+        f = d.draw(r.series, "area");
+        break;
+      case "bar":
+        s.chart.stacked ? f = new sr(a, t).draw(r.series) : (a.bar = new Et(a, t), f = a.bar.draw(r.series));
+        break;
+      case "candlestick":
+        f = new aa(a, t).draw(r.series, "candlestick");
+        break;
+      case "boxPlot":
+        f = new aa(a, t).draw(r.series, s.chart.type);
+        break;
+      case "rangeBar":
+        f = a.rangeBar.draw(r.series);
+        break;
+      case "rangeArea":
+        f = d.draw(r.seriesRangeStart, "rangeArea", void 0, r.seriesRangeEnd);
+        break;
+      case "heatmap":
+        f = new nh(a, t).draw(r.series);
+        break;
+      case "treemap":
+        f = new fh(a, t).draw(r.series);
+        break;
+      case "pie":
+      case "donut":
+      case "polarArea":
+        f = a.pie.draw(r.series);
+        break;
+      case "radialBar":
+        f = g.draw(r.series);
+        break;
+      case "radar":
+        f = p.draw(r.series);
+        break;
+      default:
+        f = d.draw(r.series);
+    }
+    return f;
+  } }, { key: "setSVGDimensions", value: function() {
+    var e = this.w, t = e.globals, i = e.config;
+    i.chart.width = i.chart.width || "100%", i.chart.height = i.chart.height || "auto", t.svgWidth = i.chart.width, t.svgHeight = i.chart.height;
+    var a = T.getDimensions(this.el), s = i.chart.width.toString().split(/[0-9]+/g).pop();
+    s === "%" ? T.isNumber(a[0]) && (a[0].width === 0 && (a = T.getDimensions(this.el.parentNode)), t.svgWidth = a[0] * parseInt(i.chart.width, 10) / 100) : s !== "px" && s !== "" || (t.svgWidth = parseInt(i.chart.width, 10));
+    var r = String(i.chart.height).toString().split(/[0-9]+/g).pop();
+    if (t.svgHeight !== "auto" && t.svgHeight !== "") if (r === "%") {
+      var o = T.getDimensions(this.el.parentNode);
+      t.svgHeight = o[1] * parseInt(i.chart.height, 10) / 100;
+    } else t.svgHeight = parseInt(i.chart.height, 10);
+    else t.svgHeight = t.axisCharts ? t.svgWidth / 1.61 : t.svgWidth / 1.2;
+    if (t.svgWidth = Math.max(t.svgWidth, 0), t.svgHeight = Math.max(t.svgHeight, 0), F.setAttrs(t.dom.Paper.node, { width: t.svgWidth, height: t.svgHeight }), r !== "%") {
+      var l = i.chart.sparkline.enabled ? 0 : t.axisCharts ? i.chart.parentHeightOffset : 0;
+      t.dom.Paper.node.parentNode.parentNode.style.minHeight = "".concat(t.svgHeight + l, "px");
+    }
+    t.dom.elWrap.style.width = "".concat(t.svgWidth, "px"), t.dom.elWrap.style.height = "".concat(t.svgHeight, "px");
+  } }, { key: "shiftGraphPosition", value: function() {
+    var e = this.w.globals, t = e.translateY, i = e.translateX;
+    F.setAttrs(e.dom.elGraphical.node, { transform: "translate(".concat(i, ", ").concat(t, ")") });
+  } }, { key: "resizeNonAxisCharts", value: function() {
+    var e = this.w, t = e.globals, i = 0, a = e.config.chart.sparkline.enabled ? 1 : 15;
+    a += e.config.grid.padding.bottom, ["top", "bottom"].includes(e.config.legend.position) && e.config.legend.show && !e.config.legend.floating && (i = new In(this.ctx).legendHelpers.getLegendDimensions().clwh + 7);
+    var s = e.globals.dom.baseEl.querySelector(".apexcharts-radialbar, .apexcharts-pie"), r = 2.05 * e.globals.radialSize;
+    if (s && !e.config.chart.sparkline.enabled && e.config.plotOptions.radialBar.startAngle !== 0) {
+      var o = T.getBoundingClientRect(s);
+      r = o.bottom;
+      var l = o.bottom - o.top;
+      r = Math.max(2.05 * e.globals.radialSize, l);
+    }
+    var c = Math.ceil(r + t.translateY + i + a);
+    t.dom.elLegendForeign && t.dom.elLegendForeign.setAttribute("height", c), e.config.chart.height && String(e.config.chart.height).includes("%") || (t.dom.elWrap.style.height = "".concat(c, "px"), F.setAttrs(t.dom.Paper.node, { height: c }), t.dom.Paper.node.parentNode.parentNode.style.minHeight = "".concat(c, "px"));
+  } }, { key: "coreCalculations", value: function() {
+    new _a(this.ctx).init();
+  } }, { key: "resetGlobals", value: function() {
+    var e = this, t = function() {
+      return e.w.config.series.map(function() {
+        return [];
+      });
+    }, i = new Mn(), a = this.w.globals;
+    i.initGlobalVars(a), a.seriesXvalues = t(), a.seriesYvalues = t();
+  } }, { key: "isMultipleY", value: function() {
+    return !!(Array.isArray(this.w.config.yaxis) && this.w.config.yaxis.length > 1) && (this.w.globals.isMultipleYAxis = !0, !0);
+  } }, { key: "xySettings", value: function() {
+    var e = this.w, t = null;
+    if (e.globals.axisCharts) {
+      if (e.config.xaxis.crosshairs.position === "back" && new Ya(this.ctx).drawXCrosshairs(), e.config.yaxis[0].crosshairs.position === "back" && new Ya(this.ctx).drawYCrosshairs(), e.config.xaxis.type === "datetime" && e.config.xaxis.labels.formatter === void 0) {
+        this.ctx.timeScale = new xh(this.ctx);
+        var i = [];
+        isFinite(e.globals.minX) && isFinite(e.globals.maxX) && !e.globals.isBarHorizontal ? i = this.ctx.timeScale.calculateTimeScaleTicks(e.globals.minX, e.globals.maxX) : e.globals.isBarHorizontal && (i = this.ctx.timeScale.calculateTimeScaleTicks(e.globals.minY, e.globals.maxY)), this.ctx.timeScale.recalcDimensionsBasedOnFormat(i);
+      }
+      t = new Pe(this.ctx).getCalculatedRatios();
+    }
+    return t;
+  } }, { key: "updateSourceChart", value: function(e) {
+    this.ctx.w.globals.selection = void 0, this.ctx.updateHelpers._updateOptions({ chart: { selection: { xaxis: { min: e.w.globals.minX, max: e.w.globals.maxX } } } }, !1, !1);
+  } }, { key: "setupBrushHandler", value: function() {
+    var e = this, t = this.ctx, i = this.w;
+    if (i.config.chart.brush.enabled && typeof i.config.chart.events.selection != "function") {
+      var a = Array.isArray(i.config.chart.brush.targets) ? i.config.chart.brush.targets : [i.config.chart.brush.target];
+      a.forEach(function(s) {
+        var r = t.constructor.getChartByID(s);
+        r.w.globals.brushSource = e.ctx, typeof r.w.config.chart.events.zoomed != "function" && (r.w.config.chart.events.zoomed = function() {
+          return e.updateSourceChart(r);
+        }), typeof r.w.config.chart.events.scrolled != "function" && (r.w.config.chart.events.scrolled = function() {
+          return e.updateSourceChart(r);
+        });
+      }), i.config.chart.events.selection = function(s, r) {
+        a.forEach(function(o) {
+          t.constructor.getChartByID(o).ctx.updateHelpers._updateOptions({ xaxis: { min: r.xaxis.min, max: r.xaxis.max } }, !1, !1, !1, !1);
+        });
+      };
+    }
+  } }]), n;
+}(), mh = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w;
+  }
+  return $(n, [{ key: "_updateOptions", value: function(e) {
+    var t = this, i = arguments.length > 1 && arguments[1] !== void 0 && arguments[1], a = !(arguments.length > 2 && arguments[2] !== void 0) || arguments[2], s = !(arguments.length > 3 && arguments[3] !== void 0) || arguments[3], r = arguments.length > 4 && arguments[4] !== void 0 && arguments[4];
+    return new Promise(function(o) {
+      var l = [t.ctx];
+      s && (l = t.ctx.getSyncedCharts()), t.ctx.w.globals.isExecCalled && (l = [t.ctx], t.ctx.w.globals.isExecCalled = !1), l.forEach(function(c, h) {
+        var d = c.w;
+        if (d.globals.shouldAnimate = a, i || (d.globals.resized = !0, d.globals.dataChanged = !0, a && c.series.getPreviousPaths()), e && Tt(e) === "object" && (c.config = new si(e), e = Pe.extendArrayProps(c.config, e, d), c.w.globals.chartID !== t.ctx.w.globals.chartID && delete e.series, d.config = T.extend(d.config, e), r && (d.globals.lastXAxis = e.xaxis ? T.clone(e.xaxis) : [], d.globals.lastYAxis = e.yaxis ? T.clone(e.yaxis) : [], d.globals.initialConfig = T.extend({}, d.config), d.globals.initialSeries = T.clone(d.config.series), e.series))) {
+          for (var u = 0; u < d.globals.collapsedSeriesIndices.length; u++) {
+            var g = d.config.series[d.globals.collapsedSeriesIndices[u]];
+            d.globals.collapsedSeries[u].data = d.globals.axisCharts ? g.data.slice() : g;
+          }
+          for (var p = 0; p < d.globals.ancillaryCollapsedSeriesIndices.length; p++) {
+            var f = d.config.series[d.globals.ancillaryCollapsedSeriesIndices[p]];
+            d.globals.ancillaryCollapsedSeries[p].data = d.globals.axisCharts ? f.data.slice() : f;
+          }
+          c.series.emptyCollapsedSeries(d.config.series);
+        }
+        return c.update(e).then(function() {
+          h === l.length - 1 && o(c);
+        });
+      });
+    });
+  } }, { key: "_updateSeries", value: function(e, t) {
+    var i = this, a = arguments.length > 2 && arguments[2] !== void 0 && arguments[2];
+    return new Promise(function(s) {
+      var r, o = i.w;
+      return o.globals.shouldAnimate = t, o.globals.dataChanged = !0, t && i.ctx.series.getPreviousPaths(), o.globals.axisCharts ? ((r = e.map(function(l, c) {
+        return i._extendSeries(l, c);
+      })).length === 0 && (r = [{ data: [] }]), o.config.series = r) : o.config.series = e.slice(), a && (o.globals.initialConfig.series = T.clone(o.config.series), o.globals.initialSeries = T.clone(o.config.series)), i.ctx.update().then(function() {
+        s(i.ctx);
+      });
+    });
+  } }, { key: "_extendSeries", value: function(e, t) {
+    var i = this.w, a = i.config.series[t];
+    return N(N({}, i.config.series[t]), {}, { name: e.name ? e.name : a == null ? void 0 : a.name, color: e.color ? e.color : a == null ? void 0 : a.color, type: e.type ? e.type : a == null ? void 0 : a.type, group: e.group ? e.group : a == null ? void 0 : a.group, hidden: e.hidden !== void 0 ? e.hidden : a == null ? void 0 : a.hidden, data: e.data ? e.data : a == null ? void 0 : a.data, zIndex: e.zIndex !== void 0 ? e.zIndex : t });
+  } }, { key: "toggleDataPointSelection", value: function(e, t) {
+    var i = this.w, a = null, s = ".apexcharts-series[data\\:realIndex='".concat(e, "']");
+    return i.globals.axisCharts ? a = i.globals.dom.Paper.findOne("".concat(s, " path[j='").concat(t, "'], ").concat(s, " circle[j='").concat(t, "'], ").concat(s, " rect[j='").concat(t, "']")) : t === void 0 && (a = i.globals.dom.Paper.findOne("".concat(s, " path[j='").concat(e, "']")), i.config.chart.type !== "pie" && i.config.chart.type !== "polarArea" && i.config.chart.type !== "donut" || this.ctx.pie.pieClicked(e)), a ? (new F(this.ctx).pathMouseDown(a, null), a.node ? a.node : null) : (console.warn("toggleDataPointSelection: Element not found"), null);
+  } }, { key: "forceXAxisUpdate", value: function(e) {
+    var t = this.w;
+    if (["min", "max"].forEach(function(a) {
+      e.xaxis[a] !== void 0 && (t.config.xaxis[a] = e.xaxis[a], t.globals.lastXAxis[a] = e.xaxis[a]);
+    }), e.xaxis.categories && e.xaxis.categories.length && (t.config.xaxis.categories = e.xaxis.categories), t.config.xaxis.convertedCatToNumeric) {
+      var i = new ai(e);
+      e = i.convertCatToNumericXaxis(e, this.ctx);
+    }
+    return e;
+  } }, { key: "forceYAxisUpdate", value: function(e) {
+    return e.chart && e.chart.stacked && e.chart.stackType === "100%" && (Array.isArray(e.yaxis) ? e.yaxis.forEach(function(t, i) {
+      e.yaxis[i].min = 0, e.yaxis[i].max = 100;
+    }) : (e.yaxis.min = 0, e.yaxis.max = 100)), e;
+  } }, { key: "revertDefaultAxisMinMax", value: function(e) {
+    var t = this, i = this.w, a = i.globals.lastXAxis, s = i.globals.lastYAxis;
+    e && e.xaxis && (a = e.xaxis), e && e.yaxis && (s = e.yaxis), i.config.xaxis.min = a.min, i.config.xaxis.max = a.max;
+    var r = function(o) {
+      s[o] !== void 0 && (i.config.yaxis[o].min = s[o].min, i.config.yaxis[o].max = s[o].max);
+    };
+    i.config.yaxis.map(function(o, l) {
+      i.globals.zoomed || s[l] !== void 0 ? r(l) : t.ctx.opts.yaxis[l] !== void 0 && (o.min = t.ctx.opts.yaxis[l].min, o.max = t.ctx.opts.yaxis[l].max);
+    });
+  } }]), n;
+}();
+(function() {
+  function n() {
+    for (var s = arguments.length > 0 && arguments[0] !== d ? arguments[0] : [], r = arguments.length > 1 ? arguments[1] : d, o = arguments.length > 2 ? arguments[2] : d, l = arguments.length > 3 ? arguments[3] : d, c = arguments.length > 4 ? arguments[4] : d, h = arguments.length > 5 ? arguments[5] : d, d = arguments.length > 6 ? arguments[6] : d, u = s.slice(r, o || d), g = l.slice(c, h || d), p = 0, f = { pos: [0, 0], start: [0, 0] }, x = { pos: [0, 0], start: [0, 0] }; u[p] = e.call(f, u[p]), g[p] = e.call(x, g[p]), u[p][0] != g[p][0] || u[p][0] == "M" || u[p][0] == "A" && (u[p][4] != g[p][4] || u[p][5] != g[p][5]) ? (Array.prototype.splice.apply(u, [p, 1].concat(i.call(f, u[p]))), Array.prototype.splice.apply(g, [p, 1].concat(i.call(x, g[p])))) : (u[p] = t.call(f, u[p]), g[p] = t.call(x, g[p])), !(++p == u.length && p == g.length); )
+      p == u.length && u.push(["C", f.pos[0], f.pos[1], f.pos[0], f.pos[1], f.pos[0], f.pos[1]]), p == g.length && g.push(["C", x.pos[0], x.pos[1], x.pos[0], x.pos[1], x.pos[0], x.pos[1]]);
+    return { start: u, dest: g };
+  }
+  function e(s) {
+    switch (s[0]) {
+      case "z":
+      case "Z":
+        s[0] = "L", s[1] = this.start[0], s[2] = this.start[1];
+        break;
+      case "H":
+        s[0] = "L", s[2] = this.pos[1];
+        break;
+      case "V":
+        s[0] = "L", s[2] = s[1], s[1] = this.pos[0];
+        break;
+      case "T":
+        s[0] = "Q", s[3] = s[1], s[4] = s[2], s[1] = this.reflection[1], s[2] = this.reflection[0];
+        break;
+      case "S":
+        s[0] = "C", s[6] = s[4], s[5] = s[3], s[4] = s[2], s[3] = s[1], s[2] = this.reflection[1], s[1] = this.reflection[0];
+    }
+    return s;
+  }
+  function t(s) {
+    var r = s.length;
+    return this.pos = [s[r - 2], s[r - 1]], "SCQT".indexOf(s[0]) != -1 && (this.reflection = [2 * this.pos[0] - s[r - 4], 2 * this.pos[1] - s[r - 3]]), s;
+  }
+  function i(s) {
+    var r = [s];
+    switch (s[0]) {
+      case "M":
+        return this.pos = this.start = [s[1], s[2]], r;
+      case "L":
+        s[5] = s[3] = s[1], s[6] = s[4] = s[2], s[1] = this.pos[0], s[2] = this.pos[1];
+        break;
+      case "Q":
+        s[6] = s[4], s[5] = s[3], s[4] = 1 * s[4] / 3 + 2 * s[2] / 3, s[3] = 1 * s[3] / 3 + 2 * s[1] / 3, s[2] = 1 * this.pos[1] / 3 + 2 * s[2] / 3, s[1] = 1 * this.pos[0] / 3 + 2 * s[1] / 3;
+        break;
+      case "A":
+        r = function(o, l) {
+          var c, h, d, u, g, p, f, x, b, m, w, y, v, k, A, C, S, L, P, I, E, O, _, Y, X, D, B = Math.abs(l[1]), R = Math.abs(l[2]), z = l[3] % 360, Z = l[4], Q = l[5], W = l[6], se = l[7], G = new pe(o), V = new pe(W, se), J = [];
+          if (B === 0 || R === 0 || G.x === V.x && G.y === V.y) return [["C", G.x, G.y, V.x, V.y, V.x, V.y]];
+          for (c = new pe((G.x - V.x) / 2, (G.y - V.y) / 2).transform(new ie().rotate(z)), h = c.x * c.x / (B * B) + c.y * c.y / (R * R), h > 1 && (B *= h = Math.sqrt(h), R *= h), d = new ie().rotate(z).scale(1 / B, 1 / R).rotate(-z), G = G.transform(d), V = V.transform(d), u = [V.x - G.x, V.y - G.y], p = u[0] * u[0] + u[1] * u[1], g = Math.sqrt(p), u[0] /= g, u[1] /= g, f = p < 4 ? Math.sqrt(1 - p / 4) : 0, Z === Q && (f *= -1), x = new pe((V.x + G.x) / 2 + f * -u[1], (V.y + G.y) / 2 + f * u[0]), b = new pe(G.x - x.x, G.y - x.y), m = new pe(V.x - x.x, V.y - x.y), w = Math.acos(b.x / Math.sqrt(b.x * b.x + b.y * b.y)), b.y < 0 && (w *= -1), y = Math.acos(m.x / Math.sqrt(m.x * m.x + m.y * m.y)), m.y < 0 && (y *= -1), Q && w > y && (y += 2 * Math.PI), !Q && w < y && (y -= 2 * Math.PI), k = Math.ceil(2 * Math.abs(w - y) / Math.PI), C = [], S = w, v = (y - w) / k, A = 4 * Math.tan(v / 4) / 3, E = 0; E <= k; E++) P = Math.cos(S), L = Math.sin(S), I = new pe(x.x + P, x.y + L), C[E] = [new pe(I.x + A * L, I.y - A * P), I, new pe(I.x - A * L, I.y + A * P)], S += v;
+          for (C[0][0] = C[0][1].clone(), C[C.length - 1][2] = C[C.length - 1][1].clone(), d = new ie().rotate(z).scale(B, R).rotate(-z), E = 0, O = C.length; E < O; E++) C[E][0] = C[E][0].transform(d), C[E][1] = C[E][1].transform(d), C[E][2] = C[E][2].transform(d);
+          for (E = 1, O = C.length; E < O; E++) _ = (I = C[E - 1][2]).x, Y = I.y, X = (I = C[E][0]).x, D = I.y, W = (I = C[E][1]).x, se = I.y, J.push(["C", _, Y, X, D, W, se]);
+          return J;
+        }(this.pos, s), s = r[0];
+    }
+    return s[0] = "C", this.pos = [s[5], s[6]], this.reflection = [2 * s[5] - s[3], 2 * s[6] - s[4]], r;
+  }
+  function a() {
+    var s = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : [], r = arguments.length > 1 ? arguments[1] : void 0;
+    if (r === !1) return !1;
+    for (var o = r, l = s.length; o < l; ++o) if (s[o][0] == "M") return o;
+    return !1;
+  }
+  re(Ze, { morph: function(s, r, o, l, c) {
+    for (var h = this.parse(s), d = this.parse(r), u = 0, g = 0, p = !1, f = !1; u !== !1 || g !== !1; ) {
+      var x;
+      p = a(h, u !== !1 && u + 1), f = a(d, g !== !1 && g + 1), u === !1 && (u = (x = new Ze(b.start).bbox()).height == 0 || x.width == 0 ? h.push(h[0]) - 1 : h.push(["M", x.x + x.width / 2, x.y + x.height / 2]) - 1), g === !1 && (g = (x = new Ze(b.dest).bbox()).height == 0 || x.width == 0 ? d.push(d[0]) - 1 : d.push(["M", x.x + x.width / 2, x.y + x.height / 2]) - 1);
+      var b = n(h, u, p, d, g, f);
+      h = h.slice(0, u).concat(b.start, p === !1 ? [] : h.slice(p)), d = d.slice(0, g).concat(b.dest, f === !1 ? [] : d.slice(f)), u = p !== !1 && u + b.start.length, g = f !== !1 && g + b.dest.length;
+    }
+    this._array = h, this.destination = new Ze(), this.destination._array = d;
+    var m = this.fromArray(h.map(function(w, y) {
+      var v = d[y].map(function(k, A) {
+        return A === 0 ? k : l.step(w[A], d[y][A], o, c[y], c);
+      });
+      return v;
+    }));
+    return m;
+  } });
+})();
+const rr = (n) => (n.changedTouches && (n = n.changedTouches[0]), { x: n.clientX, y: n.clientY });
+class vh {
+  constructor(e) {
+    e.remember("_draggable", this), this.el = e, this.drag = this.drag.bind(this), this.startDrag = this.startDrag.bind(this), this.endDrag = this.endDrag.bind(this);
+  }
+  init(e) {
+    e ? (this.el.on("mousedown.drag", this.startDrag), this.el.on("touchstart.drag", this.startDrag, { passive: !1 })) : (this.el.off("mousedown.drag"), this.el.off("touchstart.drag"));
+  }
+  startDrag(e) {
+    const t = !e.type.indexOf("mouse");
+    if (t && e.which !== 1 && e.buttons !== 0 || this.el.dispatch("beforedrag", { event: e, handler: this }).defaultPrevented) return;
+    e.preventDefault(), e.stopPropagation(), this.init(!1), this.box = this.el.bbox(), this.lastClick = this.el.point(rr(e));
+    const i = (t ? "mouseup" : "touchend") + ".drag";
+    tt(window, (t ? "mousemove" : "touchmove") + ".drag", this.drag, this, { passive: !1 }), tt(window, i, this.endDrag, this, { passive: !1 }), this.el.fire("dragstart", { event: e, handler: this, box: this.box });
+  }
+  drag(e) {
+    const { box: t, lastClick: i } = this, a = this.el.point(rr(e)), s = a.x - i.x, r = a.y - i.y;
+    if (!s && !r) return t;
+    const o = t.x + s, l = t.y + r;
+    this.box = new Le(o, l, t.w, t.h), this.lastClick = a, this.el.dispatch("dragmove", { event: e, handler: this, box: this.box }).defaultPrevented || this.move(o, l);
+  }
+  move(e, t) {
+    this.el.type === "svg" ? nt.prototype.move.call(this.el, e, t) : this.el.move(e, t);
+  }
+  endDrag(e) {
+    this.drag(e), this.el.fire("dragend", { event: e, handler: this, box: this.box }), qe(window, "mousemove.drag"), qe(window, "touchmove.drag"), qe(window, "mouseup.drag"), qe(window, "touchend.drag"), this.init(!0);
+  }
+}
+/*!
+* @svgdotjs/svg.select.js - An extension of svg.js which allows to select elements with mouse
+* @version 4.0.1
+* https://github.com/svgdotjs/svg.select.js
+*
+* @copyright Ulrich-Matthias Schäfer
+* @license MIT
+*
+* BUILT: Mon Jul 01 2024 15:04:42 GMT+0200 (Central European Summer Time)
+*/
+function Fa(n, e, t, i = null) {
+  return function(a) {
+    a.preventDefault(), a.stopPropagation();
+    var s = a.pageX || a.touches[0].pageX, r = a.pageY || a.touches[0].pageY;
+    e.fire(n, { x: s, y: r, event: a, index: i, points: t });
+  };
+}
+function Xa([n, e], { a: t, b: i, c: a, d: s, e: r, f: o }) {
+  return [n * t + e * a + r, n * i + e * s + o];
+}
+re(Ye, { draggable(n = !0) {
+  return (this.remember("_draggable") || new vh(this)).init(n), this;
+} });
+let Xn = class {
+  constructor(n) {
+    this.el = n, n.remember("_selectHandler", this), this.selection = new nt(), this.order = ["lt", "t", "rt", "r", "rb", "b", "lb", "l", "rot"], this.mutationHandler = this.mutationHandler.bind(this);
+    const e = li();
+    this.observer = new e.MutationObserver(this.mutationHandler);
+  }
+  init(n) {
+    this.createHandle = n.createHandle || this.createHandleFn, this.createRot = n.createRot || this.createRotFn, this.updateHandle = n.updateHandle || this.updateHandleFn, this.updateRot = n.updateRot || this.updateRotFn, this.el.root().put(this.selection), this.updatePoints(), this.createSelection(), this.createResizeHandles(), this.updateResizeHandles(), this.createRotationHandle(), this.updateRotationHandle(), this.observer.observe(this.el.node, { attributes: !0 });
+  }
+  active(n, e) {
+    if (!n) return this.selection.clear().remove(), void this.observer.disconnect();
+    this.init(e);
+  }
+  createSelection() {
+    this.selection.polygon(this.handlePoints).addClass("svg_select_shape");
+  }
+  updateSelection() {
+    this.selection.get(0).plot(this.handlePoints);
+  }
+  createResizeHandles() {
+    this.handlePoints.forEach((n, e, t) => {
+      const i = this.order[e];
+      this.createHandle.call(this, this.selection, n, e, t, i), this.selection.get(e + 1).addClass("svg_select_handle svg_select_handle_" + i).on("mousedown.selection touchstart.selection", Fa(i, this.el, this.handlePoints, e));
+    });
+  }
+  createHandleFn(n) {
+    n.polyline();
+  }
+  updateHandleFn(n, e, t, i) {
+    const a = i.at(t - 1), s = i[(t + 1) % i.length], r = e, o = [r[0] - a[0], r[1] - a[1]], l = [r[0] - s[0], r[1] - s[1]], c = Math.sqrt(o[0] * o[0] + o[1] * o[1]), h = Math.sqrt(l[0] * l[0] + l[1] * l[1]), d = [o[0] / c, o[1] / c], u = [l[0] / h, l[1] / h], g = [r[0] - 10 * d[0], r[1] - 10 * d[1]], p = [r[0] - 10 * u[0], r[1] - 10 * u[1]];
+    n.plot([g, r, p]);
+  }
+  updateResizeHandles() {
+    this.handlePoints.forEach((n, e, t) => {
+      const i = this.order[e];
+      this.updateHandle.call(this, this.selection.get(e + 1), n, e, t, i);
+    });
+  }
+  createRotFn(n) {
+    n.line(), n.circle(5);
+  }
+  getPoint(n) {
+    return this.handlePoints[this.order.indexOf(n)];
+  }
+  getPointHandle(n) {
+    return this.selection.get(this.order.indexOf(n) + 1);
+  }
+  updateRotFn(n, e) {
+    const t = this.getPoint("t");
+    n.get(0).plot(t[0], t[1], e[0], e[1]), n.get(1).center(e[0], e[1]);
+  }
+  createRotationHandle() {
+    const n = this.selection.group().addClass("svg_select_handle_rot").on("mousedown.selection touchstart.selection", Fa("rot", this.el, this.handlePoints));
+    this.createRot.call(this, n);
+  }
+  updateRotationHandle() {
+    const n = this.selection.findOne("g.svg_select_handle_rot");
+    this.updateRot(n, this.rotationPoint, this.handlePoints);
+  }
+  updatePoints() {
+    const n = this.el.bbox(), e = this.el.parent().screenCTM().inverseO().multiplyO(this.el.screenCTM());
+    this.handlePoints = this.getHandlePoints(n).map((t) => Xa(t, e)), this.rotationPoint = Xa(this.getRotationPoint(n), e);
+  }
+  getHandlePoints({ x: n, x2: e, y: t, y2: i, cx: a, cy: s } = this.el.bbox()) {
+    return [[n, t], [a, t], [e, t], [e, s], [e, i], [a, i], [n, i], [n, s]];
+  }
+  getRotationPoint({ y: n, cx: e } = this.el.bbox()) {
+    return [e, n - 20];
+  }
+  mutationHandler() {
+    this.updatePoints(), this.updateSelection(), this.updateResizeHandles(), this.updateRotationHandle();
+  }
+};
+const nr = (n) => function(e = !0, t = {}) {
+  typeof e == "object" && (t = e, e = !0);
+  let i = this.remember("_" + n.name);
+  return i || (e.prototype instanceof Xn ? (i = new e(this), e = !0) : i = new n(this), this.remember("_" + n.name, i)), i.active(e, t), this;
+};
+/*!
+* @svgdotjs/svg.resize.js - An extension for svg.js which allows to resize elements which are selected
+* @version 2.0.4
+* https://github.com/svgdotjs/svg.resize.js
+*
+* @copyright [object Object]
+* @license MIT
+*
+* BUILT: Fri Sep 13 2024 12:43:14 GMT+0200 (Central European Summer Time)
+*/
+/*!
+* @svgdotjs/svg.select.js - An extension of svg.js which allows to select elements with mouse
+* @version 4.0.1
+* https://github.com/svgdotjs/svg.select.js
+*
+* @copyright Ulrich-Matthias Schäfer
+* @license MIT
+*
+* BUILT: Mon Jul 01 2024 15:04:42 GMT+0200 (Central European Summer Time)
+*/
+function Ha(n, e, t, i = null) {
+  return function(a) {
+    a.preventDefault(), a.stopPropagation();
+    var s = a.pageX || a.touches[0].pageX, r = a.pageY || a.touches[0].pageY;
+    e.fire(n, { x: s, y: r, event: a, index: i, points: t });
+  };
+}
+function Da([n, e], { a: t, b: i, c: a, d: s, e: r, f: o }) {
+  return [n * t + e * a + r, n * i + e * s + o];
+}
+re(Ye, { select: nr(Xn) }), re([pt, xt, ft], { pointSelect: nr(class {
+  constructor(n) {
+    this.el = n, n.remember("_pointSelectHandler", this), this.selection = new nt(), this.order = ["lt", "t", "rt", "r", "rb", "b", "lb", "l", "rot"], this.mutationHandler = this.mutationHandler.bind(this);
+    const e = li();
+    this.observer = new e.MutationObserver(this.mutationHandler);
+  }
+  init(n) {
+    this.createHandle = n.createHandle || this.createHandleFn, this.updateHandle = n.updateHandle || this.updateHandleFn, this.el.root().put(this.selection), this.updatePoints(), this.createSelection(), this.createPointHandles(), this.updatePointHandles(), this.observer.observe(this.el.node, { attributes: !0 });
+  }
+  active(n, e) {
+    if (!n) return this.selection.clear().remove(), void this.observer.disconnect();
+    this.init(e);
+  }
+  createSelection() {
+    this.selection.polygon(this.points).addClass("svg_select_shape_pointSelect");
+  }
+  updateSelection() {
+    this.selection.get(0).plot(this.points);
+  }
+  createPointHandles() {
+    this.points.forEach((n, e, t) => {
+      this.createHandle.call(this, this.selection, n, e, t), this.selection.get(e + 1).addClass("svg_select_handle_point").on("mousedown.selection touchstart.selection", Fa("point", this.el, this.points, e));
+    });
+  }
+  createHandleFn(n) {
+    n.circle(5);
+  }
+  updateHandleFn(n, e) {
+    n.center(e[0], e[1]);
+  }
+  updatePointHandles() {
+    this.points.forEach((n, e, t) => {
+      this.updateHandle.call(this, this.selection.get(e + 1), n, e, t);
+    });
+  }
+  updatePoints() {
+    const n = this.el.parent().screenCTM().inverseO().multiplyO(this.el.screenCTM());
+    this.points = this.el.array().map((e) => Xa(e, n));
+  }
+  mutationHandler() {
+    this.updatePoints(), this.updateSelection(), this.updatePointHandles();
+  }
+}) });
+class Hn {
+  constructor(e) {
+    this.el = e, e.remember("_selectHandler", this), this.selection = new nt(), this.order = ["lt", "t", "rt", "r", "rb", "b", "lb", "l", "rot"], this.mutationHandler = this.mutationHandler.bind(this);
+    const t = li();
+    this.observer = new t.MutationObserver(this.mutationHandler);
+  }
+  init(e) {
+    this.createHandle = e.createHandle || this.createHandleFn, this.createRot = e.createRot || this.createRotFn, this.updateHandle = e.updateHandle || this.updateHandleFn, this.updateRot = e.updateRot || this.updateRotFn, this.el.root().put(this.selection), this.updatePoints(), this.createSelection(), this.createResizeHandles(), this.updateResizeHandles(), this.createRotationHandle(), this.updateRotationHandle(), this.observer.observe(this.el.node, { attributes: !0 });
+  }
+  active(e, t) {
+    if (!e) return this.selection.clear().remove(), void this.observer.disconnect();
+    this.init(t);
+  }
+  createSelection() {
+    this.selection.polygon(this.handlePoints).addClass("svg_select_shape");
+  }
+  updateSelection() {
+    this.selection.get(0).plot(this.handlePoints);
+  }
+  createResizeHandles() {
+    this.handlePoints.forEach((e, t, i) => {
+      const a = this.order[t];
+      this.createHandle.call(this, this.selection, e, t, i, a), this.selection.get(t + 1).addClass("svg_select_handle svg_select_handle_" + a).on("mousedown.selection touchstart.selection", Ha(a, this.el, this.handlePoints, t));
+    });
+  }
+  createHandleFn(e) {
+    e.polyline();
+  }
+  updateHandleFn(e, t, i, a) {
+    const s = a.at(i - 1), r = a[(i + 1) % a.length], o = t, l = [o[0] - s[0], o[1] - s[1]], c = [o[0] - r[0], o[1] - r[1]], h = Math.sqrt(l[0] * l[0] + l[1] * l[1]), d = Math.sqrt(c[0] * c[0] + c[1] * c[1]), u = [l[0] / h, l[1] / h], g = [c[0] / d, c[1] / d], p = [o[0] - 10 * u[0], o[1] - 10 * u[1]], f = [o[0] - 10 * g[0], o[1] - 10 * g[1]];
+    e.plot([p, o, f]);
+  }
+  updateResizeHandles() {
+    this.handlePoints.forEach((e, t, i) => {
+      const a = this.order[t];
+      this.updateHandle.call(this, this.selection.get(t + 1), e, t, i, a);
+    });
+  }
+  createRotFn(e) {
+    e.line(), e.circle(5);
+  }
+  getPoint(e) {
+    return this.handlePoints[this.order.indexOf(e)];
+  }
+  getPointHandle(e) {
+    return this.selection.get(this.order.indexOf(e) + 1);
+  }
+  updateRotFn(e, t) {
+    const i = this.getPoint("t");
+    e.get(0).plot(i[0], i[1], t[0], t[1]), e.get(1).center(t[0], t[1]);
+  }
+  createRotationHandle() {
+    const e = this.selection.group().addClass("svg_select_handle_rot").on("mousedown.selection touchstart.selection", Ha("rot", this.el, this.handlePoints));
+    this.createRot.call(this, e);
+  }
+  updateRotationHandle() {
+    const e = this.selection.findOne("g.svg_select_handle_rot");
+    this.updateRot(e, this.rotationPoint, this.handlePoints);
+  }
+  updatePoints() {
+    const e = this.el.bbox(), t = this.el.parent().screenCTM().inverseO().multiplyO(this.el.screenCTM());
+    this.handlePoints = this.getHandlePoints(e).map((i) => Da(i, t)), this.rotationPoint = Da(this.getRotationPoint(e), t);
+  }
+  getHandlePoints({ x: e, x2: t, y: i, y2: a, cx: s, cy: r } = this.el.bbox()) {
+    return [[e, i], [s, i], [t, i], [t, r], [t, a], [s, a], [e, a], [e, r]];
+  }
+  getRotationPoint({ y: e, cx: t } = this.el.bbox()) {
+    return [t, e - 20];
+  }
+  mutationHandler() {
+    this.updatePoints(), this.updateSelection(), this.updateResizeHandles(), this.updateRotationHandle();
+  }
+}
+const or = (n) => function(e = !0, t = {}) {
+  typeof e == "object" && (t = e, e = !0);
+  let i = this.remember("_" + n.name);
+  return i || (e.prototype instanceof Hn ? (i = new e(this), e = !0) : i = new n(this), this.remember("_" + n.name, i)), i.active(e, t), this;
+};
+re(Ye, { select: or(Hn) }), re([pt, xt, ft], { pointSelect: or(class {
+  constructor(n) {
+    this.el = n, n.remember("_pointSelectHandler", this), this.selection = new nt(), this.order = ["lt", "t", "rt", "r", "rb", "b", "lb", "l", "rot"], this.mutationHandler = this.mutationHandler.bind(this);
+    const e = li();
+    this.observer = new e.MutationObserver(this.mutationHandler);
+  }
+  init(n) {
+    this.createHandle = n.createHandle || this.createHandleFn, this.updateHandle = n.updateHandle || this.updateHandleFn, this.el.root().put(this.selection), this.updatePoints(), this.createSelection(), this.createPointHandles(), this.updatePointHandles(), this.observer.observe(this.el.node, { attributes: !0 });
+  }
+  active(n, e) {
+    if (!n) return this.selection.clear().remove(), void this.observer.disconnect();
+    this.init(e);
+  }
+  createSelection() {
+    this.selection.polygon(this.points).addClass("svg_select_shape_pointSelect");
+  }
+  updateSelection() {
+    this.selection.get(0).plot(this.points);
+  }
+  createPointHandles() {
+    this.points.forEach((n, e, t) => {
+      this.createHandle.call(this, this.selection, n, e, t), this.selection.get(e + 1).addClass("svg_select_handle_point").on("mousedown.selection touchstart.selection", Ha("point", this.el, this.points, e));
+    });
+  }
+  createHandleFn(n) {
+    n.circle(5);
+  }
+  updateHandleFn(n, e) {
+    n.center(e[0], e[1]);
+  }
+  updatePointHandles() {
+    this.points.forEach((n, e, t) => {
+      this.updateHandle.call(this, this.selection.get(e + 1), n, e, t);
+    });
+  }
+  updatePoints() {
+    const n = this.el.parent().screenCTM().inverseO().multiplyO(this.el.screenCTM());
+    this.points = this.el.array().map((e) => Da(e, n));
+  }
+  mutationHandler() {
+    this.updatePoints(), this.updateSelection(), this.updatePointHandles();
+  }
+}) });
+const pi = (n) => (n.changedTouches && (n = n.changedTouches[0]), { x: n.clientX, y: n.clientY }), lr = (n) => {
+  let e = 1 / 0, t = 1 / 0, i = -1 / 0, a = -1 / 0;
+  for (let s = 0; s < n.length; s++) {
+    const r = n[s];
+    e = Math.min(e, r[0]), t = Math.min(t, r[1]), i = Math.max(i, r[0]), a = Math.max(a, r[1]);
+  }
+  return new Le(e, t, i - e, a - t);
+};
+class cr {
+  constructor(e) {
+    this.el = e, e.remember("_ResizeHandler", this), this.lastCoordinates = null, this.eventType = "", this.lastEvent = null, this.handleResize = this.handleResize.bind(this), this.resize = this.resize.bind(this), this.endResize = this.endResize.bind(this), this.rotate = this.rotate.bind(this), this.movePoint = this.movePoint.bind(this);
+  }
+  active(e, t) {
+    this.preserveAspectRatio = t.preserveAspectRatio ?? !1, this.aroundCenter = t.aroundCenter ?? !1, this.grid = t.grid ?? 0, this.degree = t.degree ?? 0, this.el.off(".resize"), e && (this.el.on(["lt.resize", "rt.resize", "rb.resize", "lb.resize", "t.resize", "r.resize", "b.resize", "l.resize", "rot.resize", "point.resize"], this.handleResize), this.lastEvent && (this.eventType === "rot" ? this.rotate(this.lastEvent) : this.eventType === "point" ? this.movePoint(this.lastEvent) : this.resize(this.lastEvent)));
+  }
+  handleResize(e) {
+    this.eventType = e.type;
+    const { event: t, index: i, points: a } = e.detail, s = !t.type.indexOf("mouse");
+    if (s && (t.which || t.buttons) !== 1 || this.el.dispatch("beforeresize", { event: e, handler: this }).defaultPrevented) return;
+    this.box = this.el.bbox(), this.startPoint = this.el.point(pi(t)), this.index = i, this.points = a.slice();
+    const r = (s ? "mousemove" : "touchmove") + ".resize", o = (s ? "mouseup" : "touchcancel.resize touchend") + ".resize";
+    e.type === "point" ? tt(window, r, this.movePoint) : e.type === "rot" ? tt(window, r, this.rotate) : tt(window, r, this.resize), tt(window, o, this.endResize);
+  }
+  resize(e) {
+    this.lastEvent = e;
+    const t = this.snapToGrid(this.el.point(pi(e)));
+    let i = t.x - this.startPoint.x, a = t.y - this.startPoint.y;
+    this.preserveAspectRatio && this.aroundCenter && (i *= 2, a *= 2);
+    const s = this.box.x + i, r = this.box.y + a, o = this.box.x2 + i, l = this.box.y2 + a;
+    let c = new Le(this.box);
+    if (this.eventType.includes("l") && (c.x = Math.min(s, this.box.x2), c.x2 = Math.max(s, this.box.x2)), this.eventType.includes("r") && (c.x = Math.min(o, this.box.x), c.x2 = Math.max(o, this.box.x)), this.eventType.includes("t") && (c.y = Math.min(r, this.box.y2), c.y2 = Math.max(r, this.box.y2)), this.eventType.includes("b") && (c.y = Math.min(l, this.box.y), c.y2 = Math.max(l, this.box.y)), c.width = c.x2 - c.x, c.height = c.y2 - c.y, this.preserveAspectRatio) {
+      const h = c.width / this.box.width, d = c.height / this.box.height, u = ["lt", "t", "rt", "r", "rb", "b", "lb", "l"], g = (u.indexOf(this.eventType) + 4) % u.length, p = this.aroundCenter ? [this.box.cx, this.box.cy] : this.points[g];
+      let f = this.eventType.includes("t") || this.eventType.includes("b") ? d : h;
+      f = this.eventType.length === 2 ? Math.max(h, d) : f, c = function(x, b, m) {
+        const w = [[x.x, x.y], [x.x + x.width, x.y], [x.x + x.width, x.y + x.height], [x.x, x.y + x.height]].map(([y, v]) => {
+          const k = y - b[0], A = (v - b[1]) * m;
+          return [k * m + b[0], A + b[1]];
+        });
+        return lr(w);
+      }(this.box, p, f);
+    }
+    this.el.dispatch("resize", { box: new Le(c), angle: 0, eventType: this.eventType, event: e, handler: this }).defaultPrevented || this.el.size(c.width, c.height).move(c.x, c.y);
+  }
+  movePoint(e) {
+    this.lastEvent = e;
+    const { x: t, y: i } = this.snapToGrid(this.el.point(pi(e))), a = this.el.array().slice();
+    a[this.index] = [t, i], this.el.dispatch("resize", { box: lr(a), angle: 0, eventType: this.eventType, event: e, handler: this }).defaultPrevented || this.el.plot(a);
+  }
+  rotate(e) {
+    this.lastEvent = e;
+    const t = this.startPoint, i = this.el.point(pi(e)), { cx: a, cy: s } = this.box, r = t.x - a, o = t.y - s, l = i.x - a, c = i.y - s, h = Math.sqrt(r * r + o * o) * Math.sqrt(l * l + c * c);
+    if (h === 0) return;
+    let d = Math.acos((r * l + o * c) / h) / Math.PI * 180;
+    if (!d) return;
+    i.x < t.x && (d = -d);
+    const u = new ie(this.el), { x: g, y: p } = new pe(a, s).transformO(u), { rotate: f } = u.decompose(), x = this.snapToAngle(f + d) - f;
+    this.el.dispatch("resize", { box: this.box, angle: x, eventType: this.eventType, event: e, handler: this }).defaultPrevented || this.el.transform(u.rotateO(x, g, p));
+  }
+  endResize(e) {
+    this.eventType !== "rot" && this.eventType !== "point" && this.resize(e), this.lastEvent = null, this.eventType = "", qe(window, "mousemove.resize touchmove.resize"), qe(window, "mouseup.resize touchend.resize");
+  }
+  snapToGrid(e) {
+    return this.grid && (e.x = Math.round(e.x / this.grid) * this.grid, e.y = Math.round(e.y / this.grid) * this.grid), e;
+  }
+  snapToAngle(e) {
+    return this.degree && (e = Math.round(e / this.degree) * this.degree), e;
+  }
+}
+re(Ye, { resize: function(n = !0, e = {}) {
+  typeof n == "object" && (e = n, n = !0);
+  let t = this.remember("_ResizeHandler");
+  return t || (n.prototype instanceof cr ? (t = new n(this), n = !0) : t = new cr(this), this.remember("_resizeHandler", t)), t.active(n, e), this;
+} }), window.SVG === void 0 && (window.SVG = zc), window.Apex === void 0 && (window.Apex = {});
+var hr = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w;
+  }
+  return $(n, [{ key: "initModules", value: function() {
+    this.ctx.publicMethods = ["updateOptions", "updateSeries", "appendData", "appendSeries", "isSeriesHidden", "highlightSeries", "toggleSeries", "showSeries", "hideSeries", "setLocale", "resetSeries", "zoomX", "toggleDataPointSelection", "dataURI", "exportToCSV", "addXaxisAnnotation", "addYaxisAnnotation", "addPointAnnotation", "clearAnnotations", "removeAnnotation", "paper", "destroy"], this.ctx.eventList = ["click", "mousedown", "mousemove", "mouseleave", "touchstart", "touchmove", "touchleave", "mouseup", "touchend"], this.ctx.animations = new zt(this.ctx), this.ctx.axes = new jc(this.ctx), this.ctx.core = new bh(this.ctx.el, this.ctx), this.ctx.config = new si({}), this.ctx.data = new ls(this.ctx), this.ctx.grid = new Pn(this.ctx), this.ctx.graphics = new F(this.ctx), this.ctx.coreUtils = new Pe(this.ctx), this.ctx.crosshairs = new Ya(this.ctx), this.ctx.events = new Wc(this.ctx), this.ctx.exports = new Zt(this.ctx), this.ctx.fill = new Ke(this.ctx), this.ctx.localization = new Bc(this.ctx), this.ctx.options = new gt(), this.ctx.responsive = new Gc(this.ctx), this.ctx.series = new $e(this.ctx), this.ctx.theme = new Vc(this.ctx), this.ctx.formatters = new di(this.ctx), this.ctx.titleSubtitle = new Uc(this.ctx), this.ctx.legend = new In(this.ctx), this.ctx.toolbar = new En(this.ctx), this.ctx.tooltip = new ar(this.ctx), this.ctx.dimensions = new Ii(this.ctx), this.ctx.updateHelpers = new mh(this.ctx), this.ctx.zoomPanSelection = new Qc(this.ctx), this.ctx.w.globals.tooltip = new ar(this.ctx);
+  } }]), n;
+}(), dr = function() {
+  function n(e) {
+    q(this, n), this.ctx = e, this.w = e.w;
+  }
+  return $(n, [{ key: "clear", value: function(e) {
+    var t = e.isUpdating;
+    this.ctx.zoomPanSelection && this.ctx.zoomPanSelection.destroy(), this.ctx.toolbar && this.ctx.toolbar.destroy(), this.ctx.animations = null, this.ctx.axes = null, this.ctx.annotations = null, this.ctx.core = null, this.ctx.data = null, this.ctx.grid = null, this.ctx.series = null, this.ctx.responsive = null, this.ctx.theme = null, this.ctx.formatters = null, this.ctx.titleSubtitle = null, this.ctx.legend = null, this.ctx.dimensions = null, this.ctx.options = null, this.ctx.crosshairs = null, this.ctx.zoomPanSelection = null, this.ctx.updateHelpers = null, this.ctx.toolbar = null, this.ctx.localization = null, this.ctx.w.globals.tooltip = null, this.clearDomElements({ isUpdating: t });
+  } }, { key: "killSVG", value: function(e) {
+    e.each(function() {
+      this.removeClass("*"), this.off();
+    }, !0), e.clear();
+  } }, { key: "clearDomElements", value: function(e) {
+    var t = this, i = e.isUpdating, a = this.w.globals.dom.Paper.node;
+    a.parentNode && a.parentNode.parentNode && !i && (a.parentNode.parentNode.style.minHeight = "unset");
+    var s = this.w.globals.dom.baseEl;
+    s && this.ctx.eventList.forEach(function(o) {
+      s.removeEventListener(o, t.ctx.events.documentEvent);
+    });
+    var r = this.w.globals.dom;
+    if (this.ctx.el !== null) for (; this.ctx.el.firstChild; ) this.ctx.el.removeChild(this.ctx.el.firstChild);
+    this.killSVG(r.Paper), r.Paper.remove(), r.elWrap = null, r.elGraphical = null, r.elLegendWrap = null, r.elLegendForeign = null, r.baseEl = null, r.elGridRect = null, r.elGridRectMask = null, r.elGridRectBarMask = null, r.elGridRectMarkerMask = null, r.elForecastMask = null, r.elNonForecastMask = null, r.elDefs = null;
+  } }]), n;
+}(), na = /* @__PURE__ */ new WeakMap(), yh = function() {
+  function n(e, t) {
+    q(this, n), this.opts = t, this.ctx = this, this.w = new Nc(t).init(), this.el = e, this.w.globals.cuid = T.randomId(), this.w.globals.chartID = this.w.config.chart.id ? T.escapeString(this.w.config.chart.id) : this.w.globals.cuid, new hr(this).initModules(), this.lastUpdateOptions = null, this.create = T.bind(this.create, this), this.windowResizeHandler = this._windowResizeHandler.bind(this), this.parentResizeHandler = this._parentResizeCallback.bind(this);
+  }
+  return $(n, [{ key: "render", value: function() {
+    var e = this;
+    return new Promise(function(t, i) {
+      if (T.elementExists(e.el)) {
+        Apex._chartInstances === void 0 && (Apex._chartInstances = []), e.w.config.chart.id && Apex._chartInstances.push({ id: e.w.globals.chartID, group: e.w.config.chart.group, chart: e }), e.setLocale(e.w.config.chart.defaultLocale);
+        var a = e.w.config.chart.events.beforeMount;
+        typeof a == "function" && a(e, e.w), e.events.fireEvent("beforeMount", [e, e.w]), window.addEventListener("resize", e.windowResizeHandler), function(u, g) {
+          var p = !1;
+          if (u.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) {
+            var f = u.getBoundingClientRect();
+            u.style.display !== "none" && f.width !== 0 || (p = !0);
+          }
+          var x = new ResizeObserver(function(b) {
+            p && g.call(u, b), p = !0;
+          });
+          u.nodeType === Node.DOCUMENT_FRAGMENT_NODE ? Array.from(u.children).forEach(function(b) {
+            return x.observe(b);
+          }) : x.observe(u), na.set(g, x);
+        }(e.el.parentNode, e.parentResizeHandler);
+        var s = e.el.getRootNode && e.el.getRootNode(), r = T.is("ShadowRoot", s), o = e.el.ownerDocument, l = r ? s.getElementById("apexcharts-css") : o.getElementById("apexcharts-css");
+        if (!l) {
+          var c;
+          (l = document.createElement("style")).id = "apexcharts-css", l.textContent = `@keyframes opaque {
+  0% {
+    opacity: 0
+  }
+
+  to {
+    opacity: 1
+  }
+}
+
+@keyframes resizeanim {
+
+  0%,
+  to {
+    opacity: 0
+  }
+}
+
+.apexcharts-canvas {
+  position: relative;
+  direction: ltr !important;
+  user-select: none
+}
+
+.apexcharts-canvas ::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 6px
+}
+
+.apexcharts-canvas ::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, .5);
+  box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5)
+}
+
+.apexcharts-inner {
+  position: relative
+}
+
+.apexcharts-text tspan {
+  font-family: inherit
+}
+
+rect.legend-mouseover-inactive,
+.legend-mouseover-inactive rect,
+.legend-mouseover-inactive path,
+.legend-mouseover-inactive circle,
+.legend-mouseover-inactive line,
+.legend-mouseover-inactive text.apexcharts-yaxis-title-text,
+.legend-mouseover-inactive text.apexcharts-yaxis-label {
+  transition: .15s ease all;
+  opacity: .2
+}
+
+.apexcharts-legend-text {
+  padding-left: 15px;
+  margin-left: -15px;
+}
+
+.apexcharts-series-collapsed {
+  opacity: 0
+}
+
+.apexcharts-tooltip {
+  border-radius: 5px;
+  box-shadow: 2px 2px 6px -4px #999;
+  cursor: default;
+  font-size: 14px;
+  left: 62px;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  white-space: nowrap;
+  z-index: 12;
+  transition: .15s ease all
+}
+
+.apexcharts-tooltip.apexcharts-active {
+  opacity: 1;
+  transition: .15s ease all
+}
+
+.apexcharts-tooltip.apexcharts-theme-light {
+  border: 1px solid #e3e3e3;
+  background: rgba(255, 255, 255, .96)
+}
+
+.apexcharts-tooltip.apexcharts-theme-dark {
+  color: #fff;
+  background: rgba(30, 30, 30, .8)
+}
+
+.apexcharts-tooltip * {
+  font-family: inherit
+}
+
+.apexcharts-tooltip-title {
+  padding: 6px;
+  font-size: 15px;
+  margin-bottom: 4px
+}
+
+.apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
+  background: #eceff1;
+  border-bottom: 1px solid #ddd
+}
+
+.apexcharts-tooltip.apexcharts-theme-dark .apexcharts-tooltip-title {
+  background: rgba(0, 0, 0, .7);
+  border-bottom: 1px solid #333
+}
+
+.apexcharts-tooltip-text-goals-value,
+.apexcharts-tooltip-text-y-value,
+.apexcharts-tooltip-text-z-value {
+  display: inline-block;
+  margin-left: 5px;
+  font-weight: 600
+}
+
+.apexcharts-tooltip-text-goals-label:empty,
+.apexcharts-tooltip-text-goals-value:empty,
+.apexcharts-tooltip-text-y-label:empty,
+.apexcharts-tooltip-text-y-value:empty,
+.apexcharts-tooltip-text-z-value:empty,
+.apexcharts-tooltip-title:empty {
+  display: none
+}
+
+.apexcharts-tooltip-text-goals-label,
+.apexcharts-tooltip-text-goals-value {
+  padding: 6px 0 5px
+}
+
+.apexcharts-tooltip-goals-group,
+.apexcharts-tooltip-text-goals-label,
+.apexcharts-tooltip-text-goals-value {
+  display: flex
+}
+
+.apexcharts-tooltip-text-goals-label:not(:empty),
+.apexcharts-tooltip-text-goals-value:not(:empty) {
+  margin-top: -6px
+}
+
+.apexcharts-tooltip-marker {
+  display: inline-block;
+  position: relative;
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  line-height: 16px;
+  margin-right: 4px;
+  text-align: center;
+  vertical-align: middle;
+  color: inherit;
+}
+
+.apexcharts-tooltip-marker::before {
+  content: "";
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  color: currentcolor;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-size: 26px;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 14px;
+  font-weight: 900;
+}
+
+.apexcharts-tooltip-marker[shape="circle"]::before {
+  content: "\\25CF";
+}
+
+.apexcharts-tooltip-marker[shape="square"]::before,
+.apexcharts-tooltip-marker[shape="rect"]::before {
+  content: "\\25A0";
+  transform: translate(-1px, -2px);
+}
+
+.apexcharts-tooltip-marker[shape="line"]::before {
+  content: "\\2500";
+}
+
+.apexcharts-tooltip-marker[shape="diamond"]::before {
+  content: "\\25C6";
+  font-size: 28px;
+}
+
+.apexcharts-tooltip-marker[shape="triangle"]::before {
+  content: "\\25B2";
+  font-size: 22px;
+}
+
+.apexcharts-tooltip-marker[shape="cross"]::before {
+  content: "\\2715";
+  font-size: 18px;
+}
+
+.apexcharts-tooltip-marker[shape="plus"]::before {
+  content: "\\2715";
+  transform: rotate(45deg) translate(-1px, -1px);
+  font-size: 18px;
+}
+
+.apexcharts-tooltip-marker[shape="star"]::before {
+  content: "\\2605";
+  font-size: 18px;
+}
+
+.apexcharts-tooltip-marker[shape="sparkle"]::before {
+  content: "\\2726";
+  font-size: 20px;
+}
+
+.apexcharts-tooltip-series-group {
+  padding: 0 10px;
+  display: none;
+  text-align: left;
+  justify-content: left;
+  align-items: center
+}
+
+.apexcharts-tooltip-series-group.apexcharts-active .apexcharts-tooltip-marker {
+  opacity: 1
+}
+
+.apexcharts-tooltip-series-group.apexcharts-active,
+.apexcharts-tooltip-series-group:last-child {
+  padding-bottom: 4px
+}
+
+.apexcharts-tooltip-y-group {
+  padding: 6px 0 5px
+}
+
+.apexcharts-custom-tooltip,
+.apexcharts-tooltip-box {
+  padding: 4px 8px
+}
+
+.apexcharts-tooltip-boxPlot {
+  display: flex;
+  flex-direction: column-reverse
+}
+
+.apexcharts-tooltip-box>div {
+  margin: 4px 0
+}
+
+.apexcharts-tooltip-box span.value {
+  font-weight: 700
+}
+
+.apexcharts-tooltip-rangebar {
+  padding: 5px 8px
+}
+
+.apexcharts-tooltip-rangebar .category {
+  font-weight: 600;
+  color: #777
+}
+
+.apexcharts-tooltip-rangebar .series-name {
+  font-weight: 700;
+  display: block;
+  margin-bottom: 5px
+}
+
+.apexcharts-xaxistooltip,
+.apexcharts-yaxistooltip {
+  opacity: 0;
+  pointer-events: none;
+  color: #373d3f;
+  font-size: 13px;
+  text-align: center;
+  border-radius: 2px;
+  position: absolute;
+  z-index: 10;
+  background: #eceff1;
+  border: 1px solid #90a4ae
+}
+
+.apexcharts-xaxistooltip {
+  padding: 9px 10px;
+  transition: .15s ease all
+}
+
+.apexcharts-xaxistooltip.apexcharts-theme-dark {
+  background: rgba(0, 0, 0, .7);
+  border: 1px solid rgba(0, 0, 0, .5);
+  color: #fff
+}
+
+.apexcharts-xaxistooltip:after,
+.apexcharts-xaxistooltip:before {
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none
+}
+
+.apexcharts-xaxistooltip:after {
+  border-color: transparent;
+  border-width: 6px;
+  margin-left: -6px
+}
+
+.apexcharts-xaxistooltip:before {
+  border-color: transparent;
+  border-width: 7px;
+  margin-left: -7px
+}
+
+.apexcharts-xaxistooltip-bottom:after,
+.apexcharts-xaxistooltip-bottom:before {
+  bottom: 100%
+}
+
+.apexcharts-xaxistooltip-top:after,
+.apexcharts-xaxistooltip-top:before {
+  top: 100%
+}
+
+.apexcharts-xaxistooltip-bottom:after {
+  border-bottom-color: #eceff1
+}
+
+.apexcharts-xaxistooltip-bottom:before {
+  border-bottom-color: #90a4ae
+}
+
+.apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:after,
+.apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:before {
+  border-bottom-color: rgba(0, 0, 0, .5)
+}
+
+.apexcharts-xaxistooltip-top:after {
+  border-top-color: #eceff1
+}
+
+.apexcharts-xaxistooltip-top:before {
+  border-top-color: #90a4ae
+}
+
+.apexcharts-xaxistooltip-top.apexcharts-theme-dark:after,
+.apexcharts-xaxistooltip-top.apexcharts-theme-dark:before {
+  border-top-color: rgba(0, 0, 0, .5)
+}
+
+.apexcharts-xaxistooltip.apexcharts-active {
+  opacity: 1;
+  transition: .15s ease all
+}
+
+.apexcharts-yaxistooltip {
+  padding: 4px 10px
+}
+
+.apexcharts-yaxistooltip.apexcharts-theme-dark {
+  background: rgba(0, 0, 0, .7);
+  border: 1px solid rgba(0, 0, 0, .5);
+  color: #fff
+}
+
+.apexcharts-yaxistooltip:after,
+.apexcharts-yaxistooltip:before {
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none
+}
+
+.apexcharts-yaxistooltip:after {
+  border-color: transparent;
+  border-width: 6px;
+  margin-top: -6px
+}
+
+.apexcharts-yaxistooltip:before {
+  border-color: transparent;
+  border-width: 7px;
+  margin-top: -7px
+}
+
+.apexcharts-yaxistooltip-left:after,
+.apexcharts-yaxistooltip-left:before {
+  left: 100%
+}
+
+.apexcharts-yaxistooltip-right:after,
+.apexcharts-yaxistooltip-right:before {
+  right: 100%
+}
+
+.apexcharts-yaxistooltip-left:after {
+  border-left-color: #eceff1
+}
+
+.apexcharts-yaxistooltip-left:before {
+  border-left-color: #90a4ae
+}
+
+.apexcharts-yaxistooltip-left.apexcharts-theme-dark:after,
+.apexcharts-yaxistooltip-left.apexcharts-theme-dark:before {
+  border-left-color: rgba(0, 0, 0, .5)
+}
+
+.apexcharts-yaxistooltip-right:after {
+  border-right-color: #eceff1
+}
+
+.apexcharts-yaxistooltip-right:before {
+  border-right-color: #90a4ae
+}
+
+.apexcharts-yaxistooltip-right.apexcharts-theme-dark:after,
+.apexcharts-yaxistooltip-right.apexcharts-theme-dark:before {
+  border-right-color: rgba(0, 0, 0, .5)
+}
+
+.apexcharts-yaxistooltip.apexcharts-active {
+  opacity: 1
+}
+
+.apexcharts-yaxistooltip-hidden {
+  display: none
+}
+
+.apexcharts-xcrosshairs,
+.apexcharts-ycrosshairs {
+  pointer-events: none;
+  opacity: 0;
+  transition: .15s ease all
+}
+
+.apexcharts-xcrosshairs.apexcharts-active,
+.apexcharts-ycrosshairs.apexcharts-active {
+  opacity: 1;
+  transition: .15s ease all
+}
+
+.apexcharts-ycrosshairs-hidden {
+  opacity: 0
+}
+
+.apexcharts-selection-rect {
+  cursor: move
+}
+
+.svg_select_shape {
+  stroke-width: 1;
+  stroke-dasharray: 10 10;
+  stroke: black;
+  stroke-opacity: 0.1;
+  pointer-events: none;
+  fill: none;
+}
+
+.svg_select_handle {
+  stroke-width: 3;
+  stroke: black;
+  fill: none;
+}
+
+.svg_select_handle_r {
+  cursor: e-resize;
+}
+
+.svg_select_handle_l {
+  cursor: w-resize;
+}
+
+.apexcharts-svg.apexcharts-zoomable.hovering-zoom {
+  cursor: crosshair
+}
+
+.apexcharts-svg.apexcharts-zoomable.hovering-pan {
+  cursor: move
+}
+
+.apexcharts-menu-icon,
+.apexcharts-pan-icon,
+.apexcharts-reset-icon,
+.apexcharts-selection-icon,
+.apexcharts-toolbar-custom-icon,
+.apexcharts-zoom-icon,
+.apexcharts-zoomin-icon,
+.apexcharts-zoomout-icon {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  line-height: 24px;
+  color: #6e8192;
+  text-align: center
+}
+
+.apexcharts-menu-icon svg,
+.apexcharts-reset-icon svg,
+.apexcharts-zoom-icon svg,
+.apexcharts-zoomin-icon svg,
+.apexcharts-zoomout-icon svg {
+  fill: #6e8192
+}
+
+.apexcharts-selection-icon svg {
+  fill: #444;
+  transform: scale(.76)
+}
+
+.apexcharts-theme-dark .apexcharts-menu-icon svg,
+.apexcharts-theme-dark .apexcharts-pan-icon svg,
+.apexcharts-theme-dark .apexcharts-reset-icon svg,
+.apexcharts-theme-dark .apexcharts-selection-icon svg,
+.apexcharts-theme-dark .apexcharts-toolbar-custom-icon svg,
+.apexcharts-theme-dark .apexcharts-zoom-icon svg,
+.apexcharts-theme-dark .apexcharts-zoomin-icon svg,
+.apexcharts-theme-dark .apexcharts-zoomout-icon svg {
+  fill: #f3f4f5
+}
+
+.apexcharts-canvas .apexcharts-reset-zoom-icon.apexcharts-selected svg,
+.apexcharts-canvas .apexcharts-selection-icon.apexcharts-selected svg,
+.apexcharts-canvas .apexcharts-zoom-icon.apexcharts-selected svg {
+  fill: #008ffb
+}
+
+.apexcharts-theme-light .apexcharts-menu-icon:hover svg,
+.apexcharts-theme-light .apexcharts-reset-icon:hover svg,
+.apexcharts-theme-light .apexcharts-selection-icon:not(.apexcharts-selected):hover svg,
+.apexcharts-theme-light .apexcharts-zoom-icon:not(.apexcharts-selected):hover svg,
+.apexcharts-theme-light .apexcharts-zoomin-icon:hover svg,
+.apexcharts-theme-light .apexcharts-zoomout-icon:hover svg {
+  fill: #333
+}
+
+.apexcharts-menu-icon,
+.apexcharts-selection-icon {
+  position: relative
+}
+
+.apexcharts-reset-icon {
+  margin-left: 5px
+}
+
+.apexcharts-menu-icon,
+.apexcharts-reset-icon,
+.apexcharts-zoom-icon {
+  transform: scale(.85)
+}
+
+.apexcharts-zoomin-icon,
+.apexcharts-zoomout-icon {
+  transform: scale(.7)
+}
+
+.apexcharts-zoomout-icon {
+  margin-right: 3px
+}
+
+.apexcharts-pan-icon {
+  transform: scale(.62);
+  position: relative;
+  left: 1px;
+  top: 0
+}
+
+.apexcharts-pan-icon svg {
+  fill: #fff;
+  stroke: #6e8192;
+  stroke-width: 2
+}
+
+.apexcharts-pan-icon.apexcharts-selected svg {
+  stroke: #008ffb
+}
+
+.apexcharts-pan-icon:not(.apexcharts-selected):hover svg {
+  stroke: #333
+}
+
+.apexcharts-toolbar {
+  position: absolute;
+  z-index: 11;
+  max-width: 176px;
+  text-align: right;
+  border-radius: 3px;
+  padding: 0 6px 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center
+}
+
+.apexcharts-menu {
+  background: #fff;
+  position: absolute;
+  top: 100%;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 3px;
+  right: 10px;
+  opacity: 0;
+  min-width: 110px;
+  transition: .15s ease all;
+  pointer-events: none
+}
+
+.apexcharts-menu.apexcharts-menu-open {
+  opacity: 1;
+  pointer-events: all;
+  transition: .15s ease all
+}
+
+.apexcharts-menu-item {
+  padding: 6px 7px;
+  font-size: 12px;
+  cursor: pointer
+}
+
+.apexcharts-theme-light .apexcharts-menu-item:hover {
+  background: #eee
+}
+
+.apexcharts-theme-dark .apexcharts-menu {
+  background: rgba(0, 0, 0, .7);
+  color: #fff
+}
+
+@media screen and (min-width:768px) {
+  .apexcharts-canvas:hover .apexcharts-toolbar {
+    opacity: 1
+  }
+}
+
+.apexcharts-canvas .apexcharts-element-hidden,
+.apexcharts-datalabel.apexcharts-element-hidden,
+.apexcharts-hide .apexcharts-series-points {
+  opacity: 0;
+}
+
+.apexcharts-hidden-element-shown {
+  opacity: 1;
+  transition: 0.25s ease all;
+}
+
+.apexcharts-datalabel,
+.apexcharts-datalabel-label,
+.apexcharts-datalabel-value,
+.apexcharts-datalabels,
+.apexcharts-pie-label {
+  cursor: default;
+  pointer-events: none
+}
+
+.apexcharts-pie-label-delay {
+  opacity: 0;
+  animation-name: opaque;
+  animation-duration: .3s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease
+}
+
+.apexcharts-radialbar-label {
+  cursor: pointer;
+}
+
+.apexcharts-annotation-rect,
+.apexcharts-area-series .apexcharts-area,
+.apexcharts-gridline,
+.apexcharts-line,
+.apexcharts-point-annotation-label,
+.apexcharts-radar-series path:not(.apexcharts-marker),
+.apexcharts-radar-series polygon,
+.apexcharts-toolbar svg,
+.apexcharts-tooltip .apexcharts-marker,
+.apexcharts-xaxis-annotation-label,
+.apexcharts-yaxis-annotation-label,
+.apexcharts-zoom-rect,
+.no-pointer-events {
+  pointer-events: none
+}
+
+.apexcharts-tooltip-active .apexcharts-marker {
+  transition: .15s ease all
+}
+
+.apexcharts-radar-series .apexcharts-yaxis {
+  pointer-events: none;
+}
+
+.resize-triggers {
+  animation: 1ms resizeanim;
+  visibility: hidden;
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden
+}
+
+.contract-trigger:before,
+.resize-triggers,
+.resize-triggers>div {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0
+}
+
+.resize-triggers>div {
+  height: 100%;
+  width: 100%;
+  background: #eee;
+  overflow: auto
+}
+
+.contract-trigger:before {
+  overflow: hidden;
+  width: 200%;
+  height: 200%
+}
+
+.apexcharts-bar-goals-markers {
+  pointer-events: none
+}
+
+.apexcharts-bar-shadows {
+  pointer-events: none
+}
+
+.apexcharts-rangebar-goals-markers {
+  pointer-events: none
+}
+
+.apexcharts-disable-transitions * {
+  transition: none !important;
+}`;
+          var h = ((c = e.opts.chart) === null || c === void 0 ? void 0 : c.nonce) || e.w.config.chart.nonce;
+          h && l.setAttribute("nonce", h), r ? s.prepend(l) : o.head.appendChild(l);
+        }
+        var d = e.create(e.w.config.series, {});
+        if (!d) return t(e);
+        e.mount(d).then(function() {
+          typeof e.w.config.chart.events.mounted == "function" && e.w.config.chart.events.mounted(e, e.w), e.events.fireEvent("mounted", [e, e.w]), t(d);
+        }).catch(function(u) {
+          i(u);
+        });
+      } else i(new Error("Element not found"));
+    });
+  } }, { key: "create", value: function(e, t) {
+    var i = this, a = this.w;
+    new hr(this).initModules();
+    var s = this.w.globals;
+    if (s.noData = !1, s.animationEnded = !1, !T.elementExists(this.el) || (this.responsive.checkResponsiveConfig(t), a.config.xaxis.convertedCatToNumeric && new ai(a.config).convertCatToNumericXaxis(a.config, this.ctx), this.core.setupElements(), a.config.chart.type === "treemap" && (a.config.grid.show = !1, a.config.yaxis[0].show = !1), s.svgWidth === 0)) return s.animationEnded = !0, null;
+    var r = e;
+    e.forEach(function(u, g) {
+      u.hidden && (r = i.legend.legendHelpers.getSeriesAfterCollapsing({ realIndex: g }));
+    });
+    var o = Pe.checkComboSeries(r, a.config.chart.type);
+    s.comboCharts = o.comboCharts, s.comboBarCount = o.comboBarCount;
+    var l = r.every(function(u) {
+      return u.data && u.data.length === 0;
+    });
+    (r.length === 0 || l && s.collapsedSeries.length < 1) && this.series.handleNoData(), this.events.setupEventHandlers(), this.data.parseData(r), this.theme.init(), new Xt(this).setGlobalMarkerSize(), this.formatters.setLabelFormatters(), this.titleSubtitle.draw(), s.noData && s.collapsedSeries.length !== s.series.length && !a.config.legend.showForSingleSeries || this.legend.init(), this.series.hasAllSeriesEqualX(), s.axisCharts && (this.core.coreCalculations(), a.config.xaxis.type !== "category" && this.formatters.setLabelFormatters(), this.ctx.toolbar.minX = a.globals.minX, this.ctx.toolbar.maxX = a.globals.maxX), this.formatters.heatmapLabelFormatters(), new Pe(this).getLargestMarkerSize(), this.dimensions.plotCoords();
+    var c = this.core.xySettings();
+    this.grid.createGridMask();
+    var h = this.core.plotChartType(r, c), d = new It(this);
+    return d.bringForward(), a.config.dataLabels.background.enabled && d.dataLabelsBackground(), this.core.shiftGraphPosition(), a.globals.dataPoints > 50 && a.globals.dom.elWrap.classList.add("apexcharts-disable-transitions"), { elGraph: h, xyRatios: c, dimensions: { plot: { left: a.globals.translateX, top: a.globals.translateY, width: a.globals.gridWidth, height: a.globals.gridHeight } } };
+  } }, { key: "mount", value: function() {
+    var e = this, t = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : null, i = this, a = i.w;
+    return new Promise(function(s, r) {
+      if (i.el === null) return r(new Error("Not enough data to display or target element not found"));
+      (t === null || a.globals.allSeriesCollapsed) && i.series.handleNoData(), i.grid = new Pn(i);
+      var o, l, c = i.grid.drawGrid();
+      if (i.annotations = new Dc(i), i.annotations.drawImageAnnos(), i.annotations.drawTextAnnos(), a.config.grid.position === "back" && (c && a.globals.dom.elGraphical.add(c.el), c != null && (o = c.elGridBorders) !== null && o !== void 0 && o.node && a.globals.dom.elGraphical.add(c.elGridBorders)), Array.isArray(t.elGraph)) for (var h = 0; h < t.elGraph.length; h++) a.globals.dom.elGraphical.add(t.elGraph[h]);
+      else a.globals.dom.elGraphical.add(t.elGraph);
+      a.config.grid.position === "front" && (c && a.globals.dom.elGraphical.add(c.el), c != null && (l = c.elGridBorders) !== null && l !== void 0 && l.node && a.globals.dom.elGraphical.add(c.elGridBorders)), a.config.xaxis.crosshairs.position === "front" && i.crosshairs.drawXCrosshairs(), a.config.yaxis[0].crosshairs.position === "front" && i.crosshairs.drawYCrosshairs(), a.config.chart.type !== "treemap" && i.axes.drawAxis(a.config.chart.type, c);
+      var d = new ri(e.ctx, c), u = new cs(e.ctx, c);
+      if (c !== null && (d.xAxisLabelCorrections(c.xAxisTickWidth), u.setYAxisTextAlignments(), a.config.yaxis.map(function(p, f) {
+        a.globals.ignoreYAxisIndexes.indexOf(f) === -1 && u.yAxisTitleRotate(f, p.opposite);
+      })), i.annotations.drawAxesAnnotations(), !a.globals.noData) {
+        if (a.config.tooltip.enabled && !a.globals.noData && i.w.globals.tooltip.drawTooltip(t.xyRatios), a.globals.axisCharts && (a.globals.isXNumeric || a.config.xaxis.convertedCatToNumeric || a.globals.isRangeBar)) (a.config.chart.zoom.enabled || a.config.chart.selection && a.config.chart.selection.enabled || a.config.chart.pan && a.config.chart.pan.enabled) && i.zoomPanSelection.init({ xyRatios: t.xyRatios });
+        else {
+          var g = a.config.chart.toolbar.tools;
+          ["zoom", "zoomin", "zoomout", "selection", "pan", "reset"].forEach(function(p) {
+            g[p] = !1;
+          });
+        }
+        a.config.chart.toolbar.show && !a.globals.allSeriesCollapsed && i.toolbar.createToolbar();
+      }
+      a.globals.memory.methodsToExec.length > 0 && a.globals.memory.methodsToExec.forEach(function(p) {
+        p.method(p.params, !1, p.context);
+      }), a.globals.axisCharts || a.globals.noData || i.core.resizeNonAxisCharts(), s(i);
+    });
+  } }, { key: "destroy", value: function() {
+    window.removeEventListener("resize", this.windowResizeHandler), function(t, i) {
+      var a = na.get(i);
+      a && (a.disconnect(), na.delete(i));
+    }(this.el.parentNode, this.parentResizeHandler);
+    var e = this.w.config.chart.id;
+    e && Apex._chartInstances.forEach(function(t, i) {
+      t.id === T.escapeString(e) && Apex._chartInstances.splice(i, 1);
+    }), new dr(this.ctx).clear({ isUpdating: !1 });
+  } }, { key: "updateOptions", value: function(e) {
+    var t = this, i = arguments.length > 1 && arguments[1] !== void 0 && arguments[1], a = !(arguments.length > 2 && arguments[2] !== void 0) || arguments[2], s = !(arguments.length > 3 && arguments[3] !== void 0) || arguments[3], r = !(arguments.length > 4 && arguments[4] !== void 0) || arguments[4], o = this.w;
+    return o.globals.selection = void 0, this.lastUpdateOptions && JSON.stringify(this.lastUpdateOptions) === JSON.stringify(e) ? this : (this.lastUpdateOptions = T.clone(e), e.series && (this.series.resetSeries(!1, !0, !1), e.series.length && e.series[0].data && (e.series = e.series.map(function(l, c) {
+      return t.updateHelpers._extendSeries(l, c);
+    })), this.updateHelpers.revertDefaultAxisMinMax()), e.xaxis && (e = this.updateHelpers.forceXAxisUpdate(e)), e.yaxis && (e = this.updateHelpers.forceYAxisUpdate(e)), o.globals.collapsedSeriesIndices.length > 0 && this.series.clearPreviousPaths(), e.theme && (e = this.theme.updateThemeOptions(e)), this.updateHelpers._updateOptions(e, i, a, s, r));
+  } }, { key: "updateSeries", value: function() {
+    var e = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : [], t = !(arguments.length > 1 && arguments[1] !== void 0) || arguments[1], i = !(arguments.length > 2 && arguments[2] !== void 0) || arguments[2];
+    return this.series.resetSeries(!1), this.updateHelpers.revertDefaultAxisMinMax(), this.updateHelpers._updateSeries(e, t, i);
+  } }, { key: "appendSeries", value: function(e) {
+    var t = !(arguments.length > 1 && arguments[1] !== void 0) || arguments[1], i = !(arguments.length > 2 && arguments[2] !== void 0) || arguments[2], a = this.w.config.series.slice();
+    return a.push(e), this.series.resetSeries(!1), this.updateHelpers.revertDefaultAxisMinMax(), this.updateHelpers._updateSeries(a, t, i);
+  } }, { key: "appendData", value: function(e) {
+    var t = !(arguments.length > 1 && arguments[1] !== void 0) || arguments[1], i = this;
+    i.w.globals.dataChanged = !0, i.series.getPreviousPaths();
+    for (var a = i.w.config.series.slice(), s = 0; s < a.length; s++) if (e[s] !== null && e[s] !== void 0) for (var r = 0; r < e[s].data.length; r++) a[s].data.push(e[s].data[r]);
+    return i.w.config.series = a, t && (i.w.globals.initialSeries = T.clone(i.w.config.series)), this.update();
+  } }, { key: "update", value: function(e) {
+    var t = this;
+    return new Promise(function(i, a) {
+      if (t.lastUpdateOptions && JSON.stringify(t.lastUpdateOptions) === JSON.stringify(e)) return i(t);
+      t.lastUpdateOptions = T.clone(e), new dr(t.ctx).clear({ isUpdating: !0 });
+      var s = t.create(t.w.config.series, e);
+      if (!s) return i(t);
+      t.mount(s).then(function() {
+        typeof t.w.config.chart.events.updated == "function" && t.w.config.chart.events.updated(t, t.w), t.events.fireEvent("updated", [t, t.w]), t.w.globals.isDirty = !0, i(t);
+      }).catch(function(r) {
+        a(r);
+      });
+    });
+  } }, { key: "getSyncedCharts", value: function() {
+    var e = this.getGroupedCharts(), t = [this];
+    return e.length && (t = [], e.forEach(function(i) {
+      t.push(i);
+    })), t;
+  } }, { key: "getGroupedCharts", value: function() {
+    var e = this;
+    return Apex._chartInstances.filter(function(t) {
+      if (t.group) return !0;
+    }).map(function(t) {
+      return e.w.config.chart.group === t.group ? t.chart : e;
+    });
+  } }, { key: "toggleSeries", value: function(e) {
+    return this.series.toggleSeries(e);
+  } }, { key: "highlightSeriesOnLegendHover", value: function(e, t) {
+    return this.series.toggleSeriesOnHover(e, t);
+  } }, { key: "showSeries", value: function(e) {
+    this.series.showSeries(e);
+  } }, { key: "hideSeries", value: function(e) {
+    this.series.hideSeries(e);
+  } }, { key: "highlightSeries", value: function(e) {
+    this.series.highlightSeries(e);
+  } }, { key: "isSeriesHidden", value: function(e) {
+    this.series.isSeriesHidden(e);
+  } }, { key: "resetSeries", value: function() {
+    var e = !(arguments.length > 0 && arguments[0] !== void 0) || arguments[0], t = !(arguments.length > 1 && arguments[1] !== void 0) || arguments[1];
+    this.series.resetSeries(e, t);
+  } }, { key: "addEventListener", value: function(e, t) {
+    this.events.addEventListener(e, t);
+  } }, { key: "removeEventListener", value: function(e, t) {
+    this.events.removeEventListener(e, t);
+  } }, { key: "addXaxisAnnotation", value: function(e) {
+    var t = !(arguments.length > 1 && arguments[1] !== void 0) || arguments[1], i = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : void 0, a = this;
+    i && (a = i), a.annotations.addXaxisAnnotationExternal(e, t, a);
+  } }, { key: "addYaxisAnnotation", value: function(e) {
+    var t = !(arguments.length > 1 && arguments[1] !== void 0) || arguments[1], i = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : void 0, a = this;
+    i && (a = i), a.annotations.addYaxisAnnotationExternal(e, t, a);
+  } }, { key: "addPointAnnotation", value: function(e) {
+    var t = !(arguments.length > 1 && arguments[1] !== void 0) || arguments[1], i = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : void 0, a = this;
+    i && (a = i), a.annotations.addPointAnnotationExternal(e, t, a);
+  } }, { key: "clearAnnotations", value: function() {
+    var e = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : void 0, t = this;
+    e && (t = e), t.annotations.clearAnnotations(t);
+  } }, { key: "removeAnnotation", value: function(e) {
+    var t = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : void 0, i = this;
+    t && (i = t), i.annotations.removeAnnotation(i, e);
+  } }, { key: "getChartArea", value: function() {
+    return this.w.globals.dom.baseEl.querySelector(".apexcharts-inner");
+  } }, { key: "getSeriesTotalXRange", value: function(e, t) {
+    return this.coreUtils.getSeriesTotalsXRange(e, t);
+  } }, { key: "getHighestValueInSeries", value: function() {
+    var e = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : 0;
+    return new _a(this.ctx).getMinYMaxY(e).highestY;
+  } }, { key: "getLowestValueInSeries", value: function() {
+    var e = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : 0;
+    return new _a(this.ctx).getMinYMaxY(e).lowestY;
+  } }, { key: "getSeriesTotal", value: function() {
+    return this.w.globals.seriesTotals;
+  } }, { key: "toggleDataPointSelection", value: function(e, t) {
+    return this.updateHelpers.toggleDataPointSelection(e, t);
+  } }, { key: "zoomX", value: function(e, t) {
+    this.ctx.toolbar.zoomUpdateOptions(e, t);
+  } }, { key: "setLocale", value: function(e) {
+    this.localization.setCurrentLocaleValues(e);
+  } }, { key: "dataURI", value: function(e) {
+    return new Zt(this.ctx).dataURI(e);
+  } }, { key: "getSvgString", value: function(e) {
+    return new Zt(this.ctx).getSvgString(e);
+  } }, { key: "exportToCSV", value: function() {
+    var e = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
+    return new Zt(this.ctx).exportToCSV(e);
+  } }, { key: "paper", value: function() {
+    return this.w.globals.dom.Paper;
+  } }, { key: "_parentResizeCallback", value: function() {
+    this.w.globals.animationEnded && this.w.config.chart.redrawOnParentResize && this._windowResize();
+  } }, { key: "_windowResize", value: function() {
+    var e = this;
+    clearTimeout(this.w.globals.resizeTimer), this.w.globals.resizeTimer = window.setTimeout(function() {
+      e.w.globals.resized = !0, e.w.globals.dataChanged = !1, e.ctx.update();
+    }, 150);
+  } }, { key: "_windowResizeHandler", value: function() {
+    var e = this.w.config.chart.redrawOnWindowResize;
+    typeof e == "function" && (e = e()), e && this._windowResize();
+  } }], [{ key: "getChartByID", value: function(e) {
+    var t = T.escapeString(e);
+    if (Apex._chartInstances) {
+      var i = Apex._chartInstances.filter(function(a) {
+        return a.id === t;
+      })[0];
+      return i && i.chart;
+    }
+  } }, { key: "initOnLoad", value: function() {
+    for (var e = document.querySelectorAll("[data-apexcharts]"), t = 0; t < e.length; t++)
+      new n(e[t], JSON.parse(e[t].getAttribute("data-options"))).render();
+  } }, { key: "exec", value: function(e, t) {
+    var i = this.getChartByID(e);
+    if (i) {
+      i.w.globals.isExecCalled = !0;
+      var a = null;
+      if (i.publicMethods.indexOf(t) !== -1) {
+        for (var s = arguments.length, r = new Array(s > 2 ? s - 2 : 0), o = 2; o < s; o++) r[o - 2] = arguments[o];
+        a = i[t].apply(i, r);
+      }
+      return a;
+    }
+  } }, { key: "merge", value: function(e, t) {
+    return T.extend(e, t);
+  } }]), n;
+}();
+const wh = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: yh
+}, Symbol.toStringTag, { value: "Module" })), kh = /* @__PURE__ */ go(wh);
+var Na = { exports: {} }, xi = { exports: {} }, be = {};
+/** @license React v16.13.1
+ * react-is.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+var ur;
+function Ah() {
+  if (ur) return be;
+  ur = 1;
+  var n = typeof Symbol == "function" && Symbol.for, e = n ? Symbol.for("react.element") : 60103, t = n ? Symbol.for("react.portal") : 60106, i = n ? Symbol.for("react.fragment") : 60107, a = n ? Symbol.for("react.strict_mode") : 60108, s = n ? Symbol.for("react.profiler") : 60114, r = n ? Symbol.for("react.provider") : 60109, o = n ? Symbol.for("react.context") : 60110, l = n ? Symbol.for("react.async_mode") : 60111, c = n ? Symbol.for("react.concurrent_mode") : 60111, h = n ? Symbol.for("react.forward_ref") : 60112, d = n ? Symbol.for("react.suspense") : 60113, u = n ? Symbol.for("react.suspense_list") : 60120, g = n ? Symbol.for("react.memo") : 60115, p = n ? Symbol.for("react.lazy") : 60116, f = n ? Symbol.for("react.block") : 60121, x = n ? Symbol.for("react.fundamental") : 60117, b = n ? Symbol.for("react.responder") : 60118, m = n ? Symbol.for("react.scope") : 60119;
+  function w(v) {
+    if (typeof v == "object" && v !== null) {
+      var k = v.$$typeof;
+      switch (k) {
+        case e:
+          switch (v = v.type, v) {
+            case l:
+            case c:
+            case i:
+            case s:
+            case a:
+            case d:
+              return v;
+            default:
+              switch (v = v && v.$$typeof, v) {
+                case o:
+                case h:
+                case p:
+                case g:
+                case r:
+                  return v;
+                default:
+                  return k;
+              }
+          }
+        case t:
+          return k;
+      }
+    }
+  }
+  function y(v) {
+    return w(v) === c;
+  }
+  return be.AsyncMode = l, be.ConcurrentMode = c, be.ContextConsumer = o, be.ContextProvider = r, be.Element = e, be.ForwardRef = h, be.Fragment = i, be.Lazy = p, be.Memo = g, be.Portal = t, be.Profiler = s, be.StrictMode = a, be.Suspense = d, be.isAsyncMode = function(v) {
+    return y(v) || w(v) === l;
+  }, be.isConcurrentMode = y, be.isContextConsumer = function(v) {
+    return w(v) === o;
+  }, be.isContextProvider = function(v) {
+    return w(v) === r;
+  }, be.isElement = function(v) {
+    return typeof v == "object" && v !== null && v.$$typeof === e;
+  }, be.isForwardRef = function(v) {
+    return w(v) === h;
+  }, be.isFragment = function(v) {
+    return w(v) === i;
+  }, be.isLazy = function(v) {
+    return w(v) === p;
+  }, be.isMemo = function(v) {
+    return w(v) === g;
+  }, be.isPortal = function(v) {
+    return w(v) === t;
+  }, be.isProfiler = function(v) {
+    return w(v) === s;
+  }, be.isStrictMode = function(v) {
+    return w(v) === a;
+  }, be.isSuspense = function(v) {
+    return w(v) === d;
+  }, be.isValidElementType = function(v) {
+    return typeof v == "string" || typeof v == "function" || v === i || v === c || v === s || v === a || v === d || v === u || typeof v == "object" && v !== null && (v.$$typeof === p || v.$$typeof === g || v.$$typeof === r || v.$$typeof === o || v.$$typeof === h || v.$$typeof === x || v.$$typeof === b || v.$$typeof === m || v.$$typeof === f);
+  }, be.typeOf = w, be;
+}
+var me = {};
+/** @license React v16.13.1
+ * react-is.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+var gr;
+function Ch() {
+  return gr || (gr = 1, process.env.NODE_ENV !== "production" && function() {
+    var n = typeof Symbol == "function" && Symbol.for, e = n ? Symbol.for("react.element") : 60103, t = n ? Symbol.for("react.portal") : 60106, i = n ? Symbol.for("react.fragment") : 60107, a = n ? Symbol.for("react.strict_mode") : 60108, s = n ? Symbol.for("react.profiler") : 60114, r = n ? Symbol.for("react.provider") : 60109, o = n ? Symbol.for("react.context") : 60110, l = n ? Symbol.for("react.async_mode") : 60111, c = n ? Symbol.for("react.concurrent_mode") : 60111, h = n ? Symbol.for("react.forward_ref") : 60112, d = n ? Symbol.for("react.suspense") : 60113, u = n ? Symbol.for("react.suspense_list") : 60120, g = n ? Symbol.for("react.memo") : 60115, p = n ? Symbol.for("react.lazy") : 60116, f = n ? Symbol.for("react.block") : 60121, x = n ? Symbol.for("react.fundamental") : 60117, b = n ? Symbol.for("react.responder") : 60118, m = n ? Symbol.for("react.scope") : 60119;
+    function w(U) {
+      return typeof U == "string" || typeof U == "function" || // Note: its typeof might be other than 'symbol' or 'number' if it's a polyfill.
+      U === i || U === c || U === s || U === a || U === d || U === u || typeof U == "object" && U !== null && (U.$$typeof === p || U.$$typeof === g || U.$$typeof === r || U.$$typeof === o || U.$$typeof === h || U.$$typeof === x || U.$$typeof === b || U.$$typeof === m || U.$$typeof === f);
+    }
+    function y(U) {
+      if (typeof U == "object" && U !== null) {
+        var we = U.$$typeof;
+        switch (we) {
+          case e:
+            var Fe = U.type;
+            switch (Fe) {
+              case l:
+              case c:
+              case i:
+              case s:
+              case a:
+              case d:
+                return Fe;
+              default:
+                var Qe = Fe && Fe.$$typeof;
+                switch (Qe) {
+                  case o:
+                  case h:
+                  case p:
+                  case g:
+                  case r:
+                    return Qe;
+                  default:
+                    return we;
+                }
+            }
+          case t:
+            return we;
+        }
+      }
+    }
+    var v = l, k = c, A = o, C = r, S = e, L = h, P = i, I = p, E = g, O = t, _ = s, Y = a, X = d, D = !1;
+    function B(U) {
+      return D || (D = !0, console.warn("The ReactIs.isAsyncMode() alias has been deprecated, and will be removed in React 17+. Update your code to use ReactIs.isConcurrentMode() instead. It has the exact same API.")), R(U) || y(U) === l;
+    }
+    function R(U) {
+      return y(U) === c;
+    }
+    function z(U) {
+      return y(U) === o;
+    }
+    function Z(U) {
+      return y(U) === r;
+    }
+    function Q(U) {
+      return typeof U == "object" && U !== null && U.$$typeof === e;
+    }
+    function W(U) {
+      return y(U) === h;
+    }
+    function se(U) {
+      return y(U) === i;
+    }
+    function G(U) {
+      return y(U) === p;
+    }
+    function V(U) {
+      return y(U) === g;
+    }
+    function J(U) {
+      return y(U) === t;
+    }
+    function ae(U) {
+      return y(U) === s;
+    }
+    function te(U) {
+      return y(U) === a;
+    }
+    function fe(U) {
+      return y(U) === d;
+    }
+    me.AsyncMode = v, me.ConcurrentMode = k, me.ContextConsumer = A, me.ContextProvider = C, me.Element = S, me.ForwardRef = L, me.Fragment = P, me.Lazy = I, me.Memo = E, me.Portal = O, me.Profiler = _, me.StrictMode = Y, me.Suspense = X, me.isAsyncMode = B, me.isConcurrentMode = R, me.isContextConsumer = z, me.isContextProvider = Z, me.isElement = Q, me.isForwardRef = W, me.isFragment = se, me.isLazy = G, me.isMemo = V, me.isPortal = J, me.isProfiler = ae, me.isStrictMode = te, me.isSuspense = fe, me.isValidElementType = w, me.typeOf = y;
+  }()), me;
+}
+var fr;
+function Dn() {
+  return fr || (fr = 1, process.env.NODE_ENV === "production" ? xi.exports = Ah() : xi.exports = Ch()), xi.exports;
+}
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+var oa, pr;
+function Sh() {
+  if (pr) return oa;
+  pr = 1;
+  var n = Object.getOwnPropertySymbols, e = Object.prototype.hasOwnProperty, t = Object.prototype.propertyIsEnumerable;
+  function i(s) {
+    if (s == null)
+      throw new TypeError("Object.assign cannot be called with null or undefined");
+    return Object(s);
+  }
+  function a() {
+    try {
+      if (!Object.assign)
+        return !1;
+      var s = new String("abc");
+      if (s[5] = "de", Object.getOwnPropertyNames(s)[0] === "5")
+        return !1;
+      for (var r = {}, o = 0; o < 10; o++)
+        r["_" + String.fromCharCode(o)] = o;
+      var l = Object.getOwnPropertyNames(r).map(function(h) {
+        return r[h];
+      });
+      if (l.join("") !== "0123456789")
+        return !1;
+      var c = {};
+      return "abcdefghijklmnopqrst".split("").forEach(function(h) {
+        c[h] = h;
+      }), Object.keys(Object.assign({}, c)).join("") === "abcdefghijklmnopqrst";
+    } catch {
+      return !1;
+    }
+  }
+  return oa = a() ? Object.assign : function(s, r) {
+    for (var o, l = i(s), c, h = 1; h < arguments.length; h++) {
+      o = Object(arguments[h]);
+      for (var d in o)
+        e.call(o, d) && (l[d] = o[d]);
+      if (n) {
+        c = n(o);
+        for (var u = 0; u < c.length; u++)
+          t.call(o, c[u]) && (l[c[u]] = o[c[u]]);
+      }
+    }
+    return l;
+  }, oa;
+}
+var la, xr;
+function hs() {
+  if (xr) return la;
+  xr = 1;
+  var n = "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED";
+  return la = n, la;
+}
+var ca, br;
+function Nn() {
+  return br || (br = 1, ca = Function.call.bind(Object.prototype.hasOwnProperty)), ca;
+}
+var ha, mr;
+function Mh() {
+  if (mr) return ha;
+  mr = 1;
+  var n = function() {
+  };
+  if (process.env.NODE_ENV !== "production") {
+    var e = hs(), t = {}, i = Nn();
+    n = function(s) {
+      var r = "Warning: " + s;
+      typeof console < "u" && console.error(r);
+      try {
+        throw new Error(r);
+      } catch {
+      }
+    };
+  }
+  function a(s, r, o, l, c) {
+    if (process.env.NODE_ENV !== "production") {
+      for (var h in s)
+        if (i(s, h)) {
+          var d;
+          try {
+            if (typeof s[h] != "function") {
+              var u = Error(
+                (l || "React class") + ": " + o + " type `" + h + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof s[h] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`."
+              );
+              throw u.name = "Invariant Violation", u;
+            }
+            d = s[h](r, h, l, o, null, e);
+          } catch (p) {
+            d = p;
+          }
+          if (d && !(d instanceof Error) && n(
+            (l || "React class") + ": type specification of " + o + " `" + h + "` is invalid; the type checker function must return `null` or an `Error` but returned a " + typeof d + ". You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument)."
+          ), d instanceof Error && !(d.message in t)) {
+            t[d.message] = !0;
+            var g = c ? c() : "";
+            n(
+              "Failed " + o + " type: " + d.message + (g ?? "")
+            );
+          }
+        }
+    }
+  }
+  return a.resetWarningCache = function() {
+    process.env.NODE_ENV !== "production" && (t = {});
+  }, ha = a, ha;
+}
+var da, vr;
+function Lh() {
+  if (vr) return da;
+  vr = 1;
+  var n = Dn(), e = Sh(), t = hs(), i = Nn(), a = Mh(), s = function() {
+  };
+  process.env.NODE_ENV !== "production" && (s = function(o) {
+    var l = "Warning: " + o;
+    typeof console < "u" && console.error(l);
+    try {
+      throw new Error(l);
+    } catch {
+    }
+  });
+  function r() {
+    return null;
+  }
+  return da = function(o, l) {
+    var c = typeof Symbol == "function" && Symbol.iterator, h = "@@iterator";
+    function d(R) {
+      var z = R && (c && R[c] || R[h]);
+      if (typeof z == "function")
+        return z;
+    }
+    var u = "<<anonymous>>", g = {
+      array: b("array"),
+      bigint: b("bigint"),
+      bool: b("boolean"),
+      func: b("function"),
+      number: b("number"),
+      object: b("object"),
+      string: b("string"),
+      symbol: b("symbol"),
+      any: m(),
+      arrayOf: w,
+      element: y(),
+      elementType: v(),
+      instanceOf: k,
+      node: L(),
+      objectOf: C,
+      oneOf: A,
+      oneOfType: S,
+      shape: I,
+      exact: E
+    };
+    function p(R, z) {
+      return R === z ? R !== 0 || 1 / R === 1 / z : R !== R && z !== z;
+    }
+    function f(R, z) {
+      this.message = R, this.data = z && typeof z == "object" ? z : {}, this.stack = "";
+    }
+    f.prototype = Error.prototype;
+    function x(R) {
+      if (process.env.NODE_ENV !== "production")
+        var z = {}, Z = 0;
+      function Q(se, G, V, J, ae, te, fe) {
+        if (J = J || u, te = te || V, fe !== t) {
+          if (l) {
+            var U = new Error(
+              "Calling PropTypes validators directly is not supported by the `prop-types` package. Use `PropTypes.checkPropTypes()` to call them. Read more at http://fb.me/use-check-prop-types"
+            );
+            throw U.name = "Invariant Violation", U;
+          } else if (process.env.NODE_ENV !== "production" && typeof console < "u") {
+            var we = J + ":" + V;
+            !z[we] && // Avoid spamming the console because they are often not actionable except for lib authors
+            Z < 3 && (s(
+              "You are manually calling a React.PropTypes validation function for the `" + te + "` prop on `" + J + "`. This is deprecated and will throw in the standalone `prop-types` package. You may be seeing this warning due to a third-party PropTypes library. See https://fb.me/react-warning-dont-call-proptypes for details."
+            ), z[we] = !0, Z++);
+          }
+        }
+        return G[V] == null ? se ? G[V] === null ? new f("The " + ae + " `" + te + "` is marked as required " + ("in `" + J + "`, but its value is `null`.")) : new f("The " + ae + " `" + te + "` is marked as required in " + ("`" + J + "`, but its value is `undefined`.")) : null : R(G, V, J, ae, te);
+      }
+      var W = Q.bind(null, !1);
+      return W.isRequired = Q.bind(null, !0), W;
+    }
+    function b(R) {
+      function z(Z, Q, W, se, G, V) {
+        var J = Z[Q], ae = Y(J);
+        if (ae !== R) {
+          var te = X(J);
+          return new f(
+            "Invalid " + se + " `" + G + "` of type " + ("`" + te + "` supplied to `" + W + "`, expected ") + ("`" + R + "`."),
+            { expectedType: R }
+          );
+        }
+        return null;
+      }
+      return x(z);
+    }
+    function m() {
+      return x(r);
+    }
+    function w(R) {
+      function z(Z, Q, W, se, G) {
+        if (typeof R != "function")
+          return new f("Property `" + G + "` of component `" + W + "` has invalid PropType notation inside arrayOf.");
+        var V = Z[Q];
+        if (!Array.isArray(V)) {
+          var J = Y(V);
+          return new f("Invalid " + se + " `" + G + "` of type " + ("`" + J + "` supplied to `" + W + "`, expected an array."));
+        }
+        for (var ae = 0; ae < V.length; ae++) {
+          var te = R(V, ae, W, se, G + "[" + ae + "]", t);
+          if (te instanceof Error)
+            return te;
+        }
+        return null;
+      }
+      return x(z);
+    }
+    function y() {
+      function R(z, Z, Q, W, se) {
+        var G = z[Z];
+        if (!o(G)) {
+          var V = Y(G);
+          return new f("Invalid " + W + " `" + se + "` of type " + ("`" + V + "` supplied to `" + Q + "`, expected a single ReactElement."));
+        }
+        return null;
+      }
+      return x(R);
+    }
+    function v() {
+      function R(z, Z, Q, W, se) {
+        var G = z[Z];
+        if (!n.isValidElementType(G)) {
+          var V = Y(G);
+          return new f("Invalid " + W + " `" + se + "` of type " + ("`" + V + "` supplied to `" + Q + "`, expected a single ReactElement type."));
+        }
+        return null;
+      }
+      return x(R);
+    }
+    function k(R) {
+      function z(Z, Q, W, se, G) {
+        if (!(Z[Q] instanceof R)) {
+          var V = R.name || u, J = B(Z[Q]);
+          return new f("Invalid " + se + " `" + G + "` of type " + ("`" + J + "` supplied to `" + W + "`, expected ") + ("instance of `" + V + "`."));
+        }
+        return null;
+      }
+      return x(z);
+    }
+    function A(R) {
+      if (!Array.isArray(R))
+        return process.env.NODE_ENV !== "production" && (arguments.length > 1 ? s(
+          "Invalid arguments supplied to oneOf, expected an array, got " + arguments.length + " arguments. A common mistake is to write oneOf(x, y, z) instead of oneOf([x, y, z])."
+        ) : s("Invalid argument supplied to oneOf, expected an array.")), r;
+      function z(Z, Q, W, se, G) {
+        for (var V = Z[Q], J = 0; J < R.length; J++)
+          if (p(V, R[J]))
+            return null;
+        var ae = JSON.stringify(R, function(fe, U) {
+          var we = X(U);
+          return we === "symbol" ? String(U) : U;
+        });
+        return new f("Invalid " + se + " `" + G + "` of value `" + String(V) + "` " + ("supplied to `" + W + "`, expected one of " + ae + "."));
+      }
+      return x(z);
+    }
+    function C(R) {
+      function z(Z, Q, W, se, G) {
+        if (typeof R != "function")
+          return new f("Property `" + G + "` of component `" + W + "` has invalid PropType notation inside objectOf.");
+        var V = Z[Q], J = Y(V);
+        if (J !== "object")
+          return new f("Invalid " + se + " `" + G + "` of type " + ("`" + J + "` supplied to `" + W + "`, expected an object."));
+        for (var ae in V)
+          if (i(V, ae)) {
+            var te = R(V, ae, W, se, G + "." + ae, t);
+            if (te instanceof Error)
+              return te;
+          }
+        return null;
+      }
+      return x(z);
+    }
+    function S(R) {
+      if (!Array.isArray(R))
+        return process.env.NODE_ENV !== "production" && s("Invalid argument supplied to oneOfType, expected an instance of array."), r;
+      for (var z = 0; z < R.length; z++) {
+        var Z = R[z];
+        if (typeof Z != "function")
+          return s(
+            "Invalid argument supplied to oneOfType. Expected an array of check functions, but received " + D(Z) + " at index " + z + "."
+          ), r;
+      }
+      function Q(W, se, G, V, J) {
+        for (var ae = [], te = 0; te < R.length; te++) {
+          var fe = R[te], U = fe(W, se, G, V, J, t);
+          if (U == null)
+            return null;
+          U.data && i(U.data, "expectedType") && ae.push(U.data.expectedType);
+        }
+        var we = ae.length > 0 ? ", expected one of type [" + ae.join(", ") + "]" : "";
+        return new f("Invalid " + V + " `" + J + "` supplied to " + ("`" + G + "`" + we + "."));
+      }
+      return x(Q);
+    }
+    function L() {
+      function R(z, Z, Q, W, se) {
+        return O(z[Z]) ? null : new f("Invalid " + W + " `" + se + "` supplied to " + ("`" + Q + "`, expected a ReactNode."));
+      }
+      return x(R);
+    }
+    function P(R, z, Z, Q, W) {
+      return new f(
+        (R || "React class") + ": " + z + " type `" + Z + "." + Q + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + W + "`."
+      );
+    }
+    function I(R) {
+      function z(Z, Q, W, se, G) {
+        var V = Z[Q], J = Y(V);
+        if (J !== "object")
+          return new f("Invalid " + se + " `" + G + "` of type `" + J + "` " + ("supplied to `" + W + "`, expected `object`."));
+        for (var ae in R) {
+          var te = R[ae];
+          if (typeof te != "function")
+            return P(W, se, G, ae, X(te));
+          var fe = te(V, ae, W, se, G + "." + ae, t);
+          if (fe)
+            return fe;
+        }
+        return null;
+      }
+      return x(z);
+    }
+    function E(R) {
+      function z(Z, Q, W, se, G) {
+        var V = Z[Q], J = Y(V);
+        if (J !== "object")
+          return new f("Invalid " + se + " `" + G + "` of type `" + J + "` " + ("supplied to `" + W + "`, expected `object`."));
+        var ae = e({}, Z[Q], R);
+        for (var te in ae) {
+          var fe = R[te];
+          if (i(R, te) && typeof fe != "function")
+            return P(W, se, G, te, X(fe));
+          if (!fe)
+            return new f(
+              "Invalid " + se + " `" + G + "` key `" + te + "` supplied to `" + W + "`.\nBad object: " + JSON.stringify(Z[Q], null, "  ") + `
+Valid keys: ` + JSON.stringify(Object.keys(R), null, "  ")
+            );
+          var U = fe(V, te, W, se, G + "." + te, t);
+          if (U)
+            return U;
+        }
+        return null;
+      }
+      return x(z);
+    }
+    function O(R) {
+      switch (typeof R) {
+        case "number":
+        case "string":
+        case "undefined":
+          return !0;
+        case "boolean":
+          return !R;
+        case "object":
+          if (Array.isArray(R))
+            return R.every(O);
+          if (R === null || o(R))
+            return !0;
+          var z = d(R);
+          if (z) {
+            var Z = z.call(R), Q;
+            if (z !== R.entries) {
+              for (; !(Q = Z.next()).done; )
+                if (!O(Q.value))
+                  return !1;
+            } else
+              for (; !(Q = Z.next()).done; ) {
+                var W = Q.value;
+                if (W && !O(W[1]))
+                  return !1;
+              }
+          } else
+            return !1;
+          return !0;
+        default:
+          return !1;
+      }
+    }
+    function _(R, z) {
+      return R === "symbol" ? !0 : z ? z["@@toStringTag"] === "Symbol" || typeof Symbol == "function" && z instanceof Symbol : !1;
+    }
+    function Y(R) {
+      var z = typeof R;
+      return Array.isArray(R) ? "array" : R instanceof RegExp ? "object" : _(z, R) ? "symbol" : z;
+    }
+    function X(R) {
+      if (typeof R > "u" || R === null)
+        return "" + R;
+      var z = Y(R);
+      if (z === "object") {
+        if (R instanceof Date)
+          return "date";
+        if (R instanceof RegExp)
+          return "regexp";
+      }
+      return z;
+    }
+    function D(R) {
+      var z = X(R);
+      switch (z) {
+        case "array":
+        case "object":
+          return "an " + z;
+        case "boolean":
+        case "date":
+        case "regexp":
+          return "a " + z;
+        default:
+          return z;
+      }
+    }
+    function B(R) {
+      return !R.constructor || !R.constructor.name ? u : R.constructor.name;
+    }
+    return g.checkPropTypes = a, g.resetWarningCache = a.resetWarningCache, g.PropTypes = g, g;
+  }, da;
+}
+var ua, yr;
+function Ph() {
+  if (yr) return ua;
+  yr = 1;
+  var n = hs();
+  function e() {
+  }
+  function t() {
+  }
+  return t.resetWarningCache = e, ua = function() {
+    function i(r, o, l, c, h, d) {
+      if (d !== n) {
+        var u = new Error(
+          "Calling PropTypes validators directly is not supported by the `prop-types` package. Use PropTypes.checkPropTypes() to call them. Read more at http://fb.me/use-check-prop-types"
+        );
+        throw u.name = "Invariant Violation", u;
+      }
+    }
+    i.isRequired = i;
+    function a() {
+      return i;
+    }
+    var s = {
+      array: i,
+      bigint: i,
+      bool: i,
+      func: i,
+      number: i,
+      object: i,
+      string: i,
+      symbol: i,
+      any: i,
+      arrayOf: a,
+      element: i,
+      elementType: i,
+      instanceOf: a,
+      node: i,
+      objectOf: a,
+      oneOf: a,
+      oneOfType: a,
+      shape: a,
+      exact: a,
+      checkPropTypes: t,
+      resetWarningCache: e
+    };
+    return s.PropTypes = s, s;
+  }, ua;
+}
+if (process.env.NODE_ENV !== "production") {
+  var Th = Dn(), Ih = !0;
+  Na.exports = Lh()(Th.isElement, Ih);
+} else
+  Na.exports = Ph()();
+var Eh = Na.exports;
+(function(n) {
+  Object.defineProperty(n, "__esModule", { value: !0 }), n.default = w;
+  var e = o(Ee), t = s(kh), i = s(Eh), a = ["type", "width", "height", "series", "options"];
+  function s(y) {
+    return y && y.__esModule ? y : { default: y };
+  }
+  function r(y) {
+    var v, k;
+    return typeof WeakMap != "function" ? null : (v = /* @__PURE__ */ new WeakMap(), k = /* @__PURE__ */ new WeakMap(), (r = function(A) {
+      return A ? k : v;
+    })(y));
+  }
+  function o(y, v) {
+    if (!v && y && y.__esModule) return y;
+    if (y === null || d(y) != "object" && typeof y != "function") return { default: y };
+    if (v = r(v), v && v.has(y)) return v.get(y);
+    var k, A, C = { __proto__: null }, S = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for (k in y) k !== "default" && {}.hasOwnProperty.call(y, k) && ((A = S ? Object.getOwnPropertyDescriptor(y, k) : null) && (A.get || A.set) ? Object.defineProperty(C, k, A) : C[k] = y[k]);
+    return C.default = y, v && v.set(y, C), C;
+  }
+  function l() {
+    return (l = Object.assign ? Object.assign.bind() : function(y) {
+      for (var v = 1; v < arguments.length; v++) {
+        var k, A = arguments[v];
+        for (k in A) !{}.hasOwnProperty.call(A, k) || (y[k] = A[k]);
+      }
+      return y;
+    }).apply(null, arguments);
+  }
+  function c(y, v) {
+    if (y == null) return {};
+    var k, A = h(y, v);
+    if (Object.getOwnPropertySymbols) for (var C = Object.getOwnPropertySymbols(y), S = 0; S < C.length; S++) k = C[S], v.includes(k) || {}.propertyIsEnumerable.call(y, k) && (A[k] = y[k]);
+    return A;
+  }
+  function h(y, v) {
+    if (y == null) return {};
+    var k, A = {};
+    for (k in y) if ({}.hasOwnProperty.call(y, k)) {
+      if (v.includes(k)) continue;
+      A[k] = y[k];
+    }
+    return A;
+  }
+  function d(y) {
+    return (d = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(v) {
+      return typeof v;
+    } : function(v) {
+      return v && typeof Symbol == "function" && v.constructor === Symbol && v !== Symbol.prototype ? "symbol" : typeof v;
+    })(y);
+  }
+  function u(y, v) {
+    var k, A = Object.keys(y);
+    return Object.getOwnPropertySymbols && (k = Object.getOwnPropertySymbols(y), v && (k = k.filter(function(C) {
+      return Object.getOwnPropertyDescriptor(y, C).enumerable;
+    })), A.push.apply(A, k)), A;
+  }
+  function g(y) {
+    for (var v = 1; v < arguments.length; v++) {
+      var k = arguments[v] != null ? arguments[v] : {};
+      v % 2 ? u(Object(k), !0).forEach(function(A) {
+        p(y, A, k[A]);
+      }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(y, Object.getOwnPropertyDescriptors(k)) : u(Object(k)).forEach(function(A) {
+        Object.defineProperty(y, A, Object.getOwnPropertyDescriptor(k, A));
+      });
+    }
+    return y;
+  }
+  function p(y, v, k) {
+    return (v = f(v)) in y ? Object.defineProperty(y, v, { value: k, enumerable: !0, configurable: !0, writable: !0 }) : y[v] = k, y;
+  }
+  function f(y) {
+    return y = x(y, "string"), d(y) == "symbol" ? y : y + "";
+  }
+  function x(y, v) {
+    if (d(y) != "object" || !y) return y;
+    var k = y[Symbol.toPrimitive];
+    if (k === void 0) return (v === "string" ? String : Number)(y);
+    if (k = k.call(y, v), d(k) != "object") return k;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  function b(y, v) {
+    var k = g({}, y);
+    return v.forEach(function(A) {
+      delete k[A];
+    }), k;
+  }
+  function m(y, v) {
+    var k = 2 < arguments.length && arguments[2] !== void 0 ? arguments[2] : /* @__PURE__ */ new WeakSet();
+    if (y !== v) {
+      if (d(y) !== "object" || y === null || d(v) !== "object" || v === null) return !1;
+      if (!k.has(y) && !k.has(v)) {
+        k.add(y), k.add(v);
+        var A = Object.keys(y), C = Object.keys(v);
+        if (A.length !== C.length) return !1;
+        for (var S = 0, L = A; S < L.length; S++) {
+          var P = L[S];
+          if (!C.includes(P) || !m(y[P], v[P], k)) return !1;
+        }
+      }
+    }
+    return !0;
+  }
+  function w(X) {
+    function v(D) {
+      return D && d(D) === "object" && !Array.isArray(D);
+    }
+    var P = X.type, k = P === void 0 ? "line" : P, P = X.width, A = P === void 0 ? "100%" : P, P = X.height, C = P === void 0 ? "auto" : P, S = X.series, L = X.options, P = c(X, a), I = (0, e.useRef)(null), E = (0, e.useRef)(null), O = (0, e.useRef)(), _ = ((0, e.useEffect)(function() {
+      O.current = L;
+      var D = I.current;
+      return E.current = new t.default(D, _()), E.current.render(), function() {
+        E.current && typeof E.current.destroy == "function" && E.current.destroy();
+      };
+    }, []), (0, e.useEffect)(function() {
+      var D = !m(E.current.w.config.series, S), B = !m(O.current, L) || C !== E.current.opts.chart.height || A !== E.current.opts.chart.width;
+      (D || B) && (!D || B ? E.current.updateOptions(_()) : E.current.updateSeries(S)), O.current = L;
+    }, [L, S, C, A]), function() {
+      return Y(L, { chart: { type: k, height: C, width: A }, series: S });
+    }), Y = function(D, B) {
+      var R = g({}, D);
+      return v(D) && v(B) && Object.keys(B).forEach(function(z) {
+        v(B[z]) && z in D ? R[z] = Y(D[z], B[z]) : Object.assign(R, p({}, z, B[z]));
+      }), R;
+    }, X = b(P, Object.keys(w.propTypes));
+    return e.default.createElement("div", l({ ref: I }, X));
+  }
+  w.propTypes = { type: i.default.string.isRequired, series: i.default.array.isRequired, options: i.default.object.isRequired, width: i.default.oneOfType([i.default.string, i.default.number]), height: i.default.oneOfType([i.default.string, i.default.number]) };
+})(Ur);
+const Rh = /* @__PURE__ */ uo(Ur), wr = {
+  chart: {
+    toolbar: {
+      show: !1
+    },
+    zoom: {
+      enabled: !1
+    }
+  },
+  colors: ["#3B82F6", "#10B981", "#F59E0B", "#EF4444", "#8B5CF6"],
+  grid: {
+    borderColor: "#E5E7EB",
+    strokeDashArray: 4,
+    xaxis: {
+      lines: {
+        show: !0
+      }
+    },
+    yaxis: {
+      lines: {
+        show: !0
+      }
+    }
+  },
+  stroke: {
+    curve: "smooth",
+    width: 2
+  },
+  tooltip: {
+    theme: "light",
+    x: {
+      show: !0
+    }
+  }
+}, Gh = ({
+  type: n,
+  series: e,
+  width: t = "100%",
+  height: i = 350,
+  options: a = {},
+  className: s
+}) => {
+  const r = {
+    ...wr,
+    ...a,
+    chart: {
+      ...wr.chart,
+      ...a.chart,
+      type: n
+    }
+  };
+  return /* @__PURE__ */ ee.jsx("div", { className: s, children: /* @__PURE__ */ ee.jsx(
+    Rh,
+    {
+      type: n,
+      series: e,
+      options: r,
+      width: t,
+      height: i
+    }
+  ) });
+}, Oh = {
+  sm: "w-4 h-4",
+  md: "w-6 h-6",
+  lg: "w-8 h-8"
+}, zh = {
+  primary: "text-primary",
+  warning: "text-warning-500",
+  default: "text-default-400"
+}, Vh = ({
+  rating: n,
+  maxRating: e = 5,
+  size: t = "md",
+  color: i = "warning",
+  readOnly: a = !1,
+  onRatingChange: s,
+  className: r
+}) => {
+  const [o, l] = ho(null), c = (g) => {
+    a || l(g);
+  }, h = () => {
+    a || l(null);
+  }, d = (g) => {
+    !a && s && s(g);
+  }, u = o !== null ? o : n;
+  return /* @__PURE__ */ ee.jsx("div", { className: Re("flex items-center gap-1", r), children: [...Array(e)].map((g, p) => {
+    const f = p + 1, x = f <= u, b = o !== null && f <= o;
+    return /* @__PURE__ */ ee.jsx(
+      "button",
+      {
+        className: Re(
+          "transition-colors duration-200",
+          Oh[t],
+          x || b ? zh[i] : "text-default-200",
+          !a && "cursor-pointer"
+        ),
+        onMouseEnter: () => c(f),
+        onMouseLeave: h,
+        onClick: () => d(f),
+        disabled: a,
+        "aria-label": `Rate ${f} out of ${e}`,
+        children: /* @__PURE__ */ ee.jsx(
+          Si,
+          {
+            icon: x || b ? "mdi:star" : "mdi:star-outline",
+            className: "w-full h-full"
+          }
+        )
+      },
+      p
+    );
+  }) });
+}, _h = {
+  solid: {
+    primary: "bg-primary text-white",
+    success: "bg-success-500 text-white",
+    warning: "bg-warning-500 text-black",
+    danger: "bg-danger-500 text-white",
+    default: "bg-default-200 text-default-800"
+  },
+  outline: {
+    primary: "border border-primary text-primary",
+    success: "border border-success-500 text-success-500",
+    warning: "border border-warning-500 text-warning-500",
+    danger: "border border-danger-500 text-danger-500",
+    default: "border border-default-400 text-default-800"
+  },
+  soft: {
+    primary: "bg-primary/20 text-primary",
+    success: "bg-success-500/20 text-success-700",
+    warning: "bg-warning-500/20 text-warning-700",
+    danger: "bg-danger-500/20 text-danger-700",
+    default: "bg-default-100 text-default-800"
+  }
+}, Yh = {
+  sm: "text-xs px-2 py-0.5",
+  md: "text-sm px-3 py-1",
+  lg: "text-base px-4 py-1.5"
+}, Uh = ({
+  children: n,
+  variant: e = "solid",
+  color: t = "default",
+  size: i = "md",
+  onClose: a,
+  className: s,
+  icon: r
+}) => /* @__PURE__ */ ee.jsxs(
+  "div",
+  {
+    className: Re(
+      "inline-flex items-center gap-1.5 rounded-full font-medium",
+      _h[e][t],
+      Yh[i],
+      s
+    ),
+    children: [
+      r && /* @__PURE__ */ ee.jsx("span", { className: "inline-flex items-center", children: /* @__PURE__ */ ee.jsx(Si, { icon: r, className: "w-4 h-4" }) }),
+      n,
+      a && /* @__PURE__ */ ee.jsx(
+        "button",
+        {
+          onClick: a,
+          className: "ml-1 rounded-full hover:bg-black/10 p-0.5",
+          "aria-label": "Close",
+          children: /* @__PURE__ */ ee.jsx(Si, { icon: "mdi:close", className: "w-3 h-3" })
+        }
+      )
+    ]
+  }
+), Fh = Rt("flex items-center text-sm", {
+  variants: {
+    variant: {
+      default: "text-neutral-600",
+      light: "text-neutral-400",
+      dark: "text-neutral-800"
+    },
+    size: {
+      sm: "text-xs",
+      md: "text-sm",
+      lg: "text-base"
+    }
+  },
+  defaultVariants: {
+    variant: "default",
+    size: "md"
+  }
+}), Xh = Ee.forwardRef(
+  ({
+    className: n,
+    variant: e,
+    size: t,
+    items: i,
+    separator: a = /* @__PURE__ */ ee.jsx(Qt, { icon: "mdi:slash-forward", className: "h-4 w-4 flex-shrink-0" }),
+    activeLastItem: s = !0,
+    ...r
+  }, o) => /* @__PURE__ */ ee.jsx(
+    "nav",
+    {
+      ref: o,
+      className: Re(Fh({ variant: e, size: t }), n),
+      "aria-label": "Breadcrumb",
+      ...r,
+      children: /* @__PURE__ */ ee.jsx("ol", { className: "flex flex-wrap items-center gap-1.5", children: i.map((l, c) => {
+        const h = c === i.length - 1, d = h && s;
+        return /* @__PURE__ */ ee.jsxs(
+          "li",
+          {
+            className: Re(
+              "flex items-center gap-1.5",
+              d && "text-primary-500 font-medium"
+            ),
+            children: [
+              l.icon && /* @__PURE__ */ ee.jsx(
+                Qt,
+                {
+                  icon: l.icon,
+                  className: Re(
+                    "flex-shrink-0",
+                    t === "sm" && "h-3.5 w-3.5",
+                    t === "md" && "h-4 w-4",
+                    t === "lg" && "h-5 w-5"
+                  )
+                }
+              ),
+              l.href && !d ? /* @__PURE__ */ ee.jsx(
+                "a",
+                {
+                  href: l.href,
+                  className: Re(
+                    "transition-colors duration-200",
+                    "hover:text-primary-500 hover:underline focus:outline-none",
+                    "focus-visible:text-primary-500 focus-visible:underline",
+                    "active:text-primary-600"
+                  ),
+                  children: /* @__PURE__ */ ee.jsx("span", { className: "truncate max-w-[200px] inline-block align-bottom", children: l.label })
+                }
+              ) : /* @__PURE__ */ ee.jsx("span", { className: Re(
+                "truncate max-w-[200px] inline-block",
+                d && "text-primary-500"
+              ), children: l.label }),
+              !h && /* @__PURE__ */ ee.jsx("span", { className: Re(
+                "text-neutral-400 flex-shrink-0",
+                t === "sm" && "scale-90",
+                t === "lg" && "scale-110"
+              ), children: a })
+            ]
+          },
+          l.label
+        );
+      }) })
+    }
+  )
+);
+Xh.displayName = "Breadcrumbs";
+const Hh = Rt(
+  "pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-md border p-4 pr-8 shadow-lg transition-all",
+  {
+    variants: {
+      variant: {
+        default: "bg-white border-neutral-200 text-neutral-900",
+        success: "bg-success-50 border-success-200 text-success-700",
+        error: "bg-danger-50 border-danger-200 text-danger-700",
+        warning: "bg-warning-50 border-warning-200 text-warning-700",
+        info: "bg-info-50 border-info-200 text-info-700"
+      }
+    },
+    defaultVariants: {
+      variant: "default"
+    }
+  }
+), Dh = {
+  default: "mdi:bell",
+  success: "mdi:check-circle",
+  error: "mdi:alert-circle",
+  warning: "mdi:alert",
+  info: "mdi:information"
+}, Nh = Ee.forwardRef(
+  ({
+    className: n,
+    variant: e = "default",
+    title: t,
+    description: i,
+    showClose: a = !0,
+    onClose: s,
+    duration: r = 5e3,
+    icon: o,
+    showIcon: l = !0,
+    ...c
+  }, h) => {
+    Ee.useEffect(() => {
+      if (r && s) {
+        const u = setTimeout(s, r);
+        return () => clearTimeout(u);
+      }
+    }, [r, s]);
+    const d = o || (l ? Dh[e || "default"] : void 0);
+    return /* @__PURE__ */ ee.jsxs(
+      "div",
+      {
+        ref: h,
+        className: Re(Hh({ variant: e }), n),
+        ...c,
+        children: [
+          /* @__PURE__ */ ee.jsxs("div", { className: "flex items-start gap-3", children: [
+            d && /* @__PURE__ */ ee.jsx(
+              Qt,
+              {
+                icon: d,
+                className: Re(
+                  "h-5 w-5 shrink-0",
+                  e === "default" && "text-neutral-700",
+                  e === "success" && "text-success-700",
+                  e === "error" && "text-danger-700",
+                  e === "warning" && "text-warning-700",
+                  e === "info" && "text-info-700"
+                )
+              }
+            ),
+            /* @__PURE__ */ ee.jsxs("div", { className: "grid gap-1", children: [
+              t && /* @__PURE__ */ ee.jsx("div", { className: "text-sm font-semibold", children: t }),
+              i && /* @__PURE__ */ ee.jsx("div", { className: "text-sm opacity-90", children: i })
+            ] })
+          ] }),
+          a && /* @__PURE__ */ ee.jsx(
+            "button",
+            {
+              onClick: s,
+              className: Re(
+                "absolute right-2 top-2 rounded-md p-1 transition-opacity hover:opacity-70 focus:outline-none focus:ring-2",
+                e === "default" && "text-neutral-700/50 hover:text-neutral-700",
+                e === "success" && "text-success-700/50 hover:text-success-700",
+                e === "error" && "text-danger-700/50 hover:text-danger-700",
+                e === "warning" && "text-warning-700/50 hover:text-warning-700",
+                e === "info" && "text-info-700/50 hover:text-info-700"
+              ),
+              children: /* @__PURE__ */ ee.jsx(Qt, { icon: "mdi:close", className: "h-4 w-4" })
+            }
+          )
+        ]
+      }
+    );
+  }
+);
+Nh.displayName = "Toast";
+const Wh = ({
+  label: n,
+  value: e,
+  icon: t,
+  className: i = ""
+}) => /* @__PURE__ */ ee.jsxs(Vr, { className: `bg-white grid grid-cols-4 justify-between p-4 shadow-sm hover:bg-primary-50 ${i}`, children: [
+  /* @__PURE__ */ ee.jsxs("div", { className: "space-y-1 pr-8 col-span-3", children: [
+    /* @__PURE__ */ ee.jsx(Bs, { variant: "label", children: n }),
+    /* @__PURE__ */ ee.jsx(Bs, { variant: "value", children: e })
+  ] }),
+  /* @__PURE__ */ ee.jsx("div", { className: "text-cyan-400 self-center justify-self-end", children: t })
+] }), qh = ({
+  widgets: n,
+  className: e = ""
+}) => /* @__PURE__ */ ee.jsx("div", { className: `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ${e}`, children: n.map((t) => /* @__PURE__ */ ee.jsx(
+  Wh,
+  {
+    label: t.label,
+    value: t.value,
+    icon: t.icon
+  },
+  t.id
+)) });
+export {
+  Xh as Breadcrumbs,
+  $o as Button,
+  Vr as Card,
+  Gh as Chart,
+  Qt as Icon,
+  tc as Input,
+  Ql as Select,
+  Vh as StarRating,
+  jh as StatusIndicator,
+  Uh as Tag,
+  Bs as Text,
+  Nh as Toast,
+  Wh as WidgetCard,
+  qh as WidgetCardGroup,
+  qo as buttonVariants,
+  sc as cardVariants,
+  Re as cn
+};
