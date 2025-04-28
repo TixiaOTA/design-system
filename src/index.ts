@@ -12,7 +12,7 @@ export * from './components/molecules/Breadcrumbs';
 export * from './components/molecules/Toast';
 export * from './components/molecules/WidgetCard';
 export * from './components/organisms/WidgetCardGroup';
-export * from './components/Icons';
+export * from './components/atoms/Icons';
 
 // Utils
 export * from './utils/cn'; 

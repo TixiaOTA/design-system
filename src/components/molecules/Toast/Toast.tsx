@@ -1,7 +1,7 @@
 import React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/utils/cn';
-import { Icon } from '@/components/Icons/index';
+import { Icon } from '@/components/atoms/Icons/Icons';
 
 const toastVariants = cva(
   'pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-md border p-4 pr-8 shadow-lg transition-all',
