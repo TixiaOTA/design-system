@@ -3,11 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "main": "./dist/tixia-design-system.umd.js",
-  "module": "./dist/tixia-design-system.es.js",
+  "module": "./dist/tixia-design-system.mjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
+  "exports": {
+    ".": {
+      "import": "./dist/tixia-design-system.mjs",
+      "require": "./dist/tixia-design-system.umd.js"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

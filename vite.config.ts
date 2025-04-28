@@ -13,7 +13,11 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'TixiaDesignSystem',
-      fileName: 'tixia-design-system',
+      fileName: (format) => {
+        if (format === 'es') return 'tixia-design-system.mjs';
+        return `tixia-design-system.${format}.js`;
+      },
+      formats: ['es', 'umd']
     },
     rollupOptions: {
       external: ['react', 'react-dom'],
@@ -25,4 +29,4 @@ export default defineConfig({
       },
     },
   },
-}); 
+});
