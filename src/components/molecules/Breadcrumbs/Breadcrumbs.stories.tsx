@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Breadcrumbs } from './Breadcrumbs';
-import { Icon } from '@/components/Icons';
+import { Icon } from '@/components/Icons/index';
 
 const meta = {
   title: 'Molecules/Breadcrumbs',
