@@ -42,7 +42,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    icon: 'mdi:home',
+    icon: 'mdi:steam',
     size: 24,
   },
 };
