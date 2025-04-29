@@ -155,7 +155,7 @@ export const FormExample: Story = {
         type="password"
         placeholder="Enter your password"
         labelPlacement="left"
-        rightIcon={<Icon icon="mdi:eye" />}
+        rightIcon="mdi:eye"
       />
     </div>
   ),
