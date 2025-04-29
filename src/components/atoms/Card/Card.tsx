@@ -62,7 +62,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
     variant = 'default', 
     padding = 'md', 
     shadow = 'none', 
-    rounded = 'none', 
+    rounded = 'md', 
     asChild = false, 
     ...props 
   }, ref) => {

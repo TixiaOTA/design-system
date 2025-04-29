@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       colors: {
         primary: {
+          DEFAULT: '#007C99',
           50: '#E6F7FA',  // Lightest tint
           100: '#B3E6F0',
           200: '#80D5E6',
@@ -19,12 +20,13 @@ module.exports = {
           900: '#003833',  // Darkest shade
         },
         secondary: {
+          DEFAULT: '#005671',
           50: "#F5F8FF",
           100: "#E0E9FF",
           200: "#CCDAFF",
           300: "#99B5FF",
           400: "#668FFF",
-          500: "#3366FF",
+          500: "#005671",
           600: "#0040FF",
           700: "#002DB3",
           800: "#001A66",
@@ -32,6 +34,7 @@ module.exports = {
         },
         // Semantic Colors
         success: {
+          DEFAULT: '#00B37D',
           50: "#E6F9F0",
           100: "#B3EED9",
           200: "#80E3C2",
@@ -44,6 +47,7 @@ module.exports = {
           900: "#004D1A",
         },
         warning: {
+          DEFAULT: '#FFB300',
           50: "#FFF9E6",
           100: "#FFEEB3",
           200: "#FFE380",
@@ -56,6 +60,7 @@ module.exports = {
           900: "#332700",
         },
         danger: {
+          DEFAULT: '#E60000',
           50: "#FFE6E6",
           100: "#FFB3B3",
           200: "#FF8080",
@@ -68,6 +73,7 @@ module.exports = {
           900: "#1A0000",
         },
         info: {
+          DEFAULT: '#0073E6',
           50: "#E6F2FF",
           100: "#B3D9FF",
           200: "#80C0FF",
@@ -81,6 +87,7 @@ module.exports = {
         },
         // Neutral Colors
         neutral: {
+          DEFAULT: '#6C757D',
           50: "#F8F9FA",
           100: "#E9ECEF",
           200: "#DEE2E6",
