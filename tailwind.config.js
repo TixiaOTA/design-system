@@ -20,13 +20,13 @@ module.exports = {
           900: '#003833',  // Darkest shade
         },
         secondary: {
-          DEFAULT: '#005671',
+          DEFAULT: '#336AFF',
           50: "#F5F8FF",
           100: "#E0E9FF",
           200: "#CCDAFF",
           300: "#99B5FF",
           400: "#668FFF",
-          500: "#005671",
+          500: "#336AFF",
           600: "#0040FF",
           700: "#002DB3",
           800: "#001A66",

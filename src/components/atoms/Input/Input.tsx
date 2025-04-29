@@ -9,7 +9,7 @@ const inputVariants = cva(
       variant: {
         default: 'border-neutral-200 hover:border-primary-300 focus:border-primary-300 hover:bg-primary-50',
         error: 'border-danger-500 hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50',
-        success: 'border-success-500 hover:border-success-600 focus:border-success-600',
+        success: 'border-success-500 hover:border-success-600 focus:border-success-600 hover:bg-success-50',
       },
       inputSize: {
         sm: 'h-8 px-2 py-1 text-sm',
