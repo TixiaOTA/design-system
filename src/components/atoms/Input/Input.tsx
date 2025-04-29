@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/utils/cn';
+import { Icon } from '@iconify/react';
 
 const inputVariants = cva(
   'w-full rounded-md border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
@@ -34,9 +35,9 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
   /** Size of the input */
   size?: InputSize;
   /** Icon to display on the left side of the input */
-  leftIcon?: React.ReactNode;
+  leftIcon?: string;
   /** Icon to display on the right side of the input */
-  rightIcon?: React.ReactNode;
+  rightIcon?: string;
   /** Whether the input is in an error state */
   error?: boolean;
   /** Error message to display below the input */
@@ -78,7 +79,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       <div className="relative">
         {leftIcon && (
           <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500">
-            {leftIcon}
+            <Icon icon={leftIcon} className="w-4 h-4" />
           </div>
         )}
         <input
@@ -98,7 +99,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         />
         {rightIcon && (
           <div className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500">
-            {rightIcon}
+            <Icon icon={rightIcon} className="w-4 h-4" />
           </div>
         )}
       </div>

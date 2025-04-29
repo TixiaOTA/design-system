@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Input } from './Input';
-import { Icon } from '../Icons';
+import { Icon } from '@iconify/react';
 
-const meta = {
+const meta: Meta<typeof Input> = {
   title: 'Atoms/Input',
   component: Input,
   parameters: {
@@ -10,27 +10,44 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    type: {
-      control: 'select',
-      options: ['text', 'password', 'email', 'number', 'tel', 'url'],
-    },
     variant: {
       control: 'select',
-      options: ['default', 'error', 'success'],
+      options: ['default', 'outline', 'filled', 'error'],
     },
     size: {
       control: 'select',
       options: ['sm', 'md', 'lg'],
     },
+    leftIcon: {
+      control: 'text',
+    },
+    rightIcon: {
+      control: 'text',
+    },
+    error: {
+      control: 'boolean',
+    },
+    errorText: {
+      control: 'text',
+    },
+    helperText: {
+      control: 'text',
+    },
+    label: {
+      control: 'text',
+    },
+    required: {
+      control: 'boolean',
+    },
     labelPlacement: {
-      control: 'radio',
+      control: 'select',
       options: ['top', 'left'],
     },
   },
 } satisfies Meta<typeof Input>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Input>;
 
 export const Default: Story = {
   args: {
@@ -97,27 +114,23 @@ export const WithSuccess: Story = {
 
 export const WithLeftIcon: Story = {
   args: {
-    label: 'Search',
     placeholder: 'Search...',
-    leftIcon: <Icon icon="mdi:search" />,
+    leftIcon: 'mdi:magnify',
   },
 };
 
 export const WithRightIcon: Story = {
   args: {
-    label: 'Password',
-    placeholder: 'Enter your password',
-    type: 'password',
-    rightIcon: <Icon icon="mdi:eye" />,
+    placeholder: 'Password',
+    rightIcon: 'mdi:eye',
   },
 };
 
 export const WithBothIcons: Story = {
   args: {
-    label: 'Search',
     placeholder: 'Search...',
-    leftIcon: <Icon icon="mdi:search" />,
-    rightIcon: <Icon icon="mdi:close" />,
+    leftIcon: 'mdi:magnify',
+    rightIcon: 'mdi:close',
   },
 };
 

@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/utils/cn';
+import { Icon } from '@iconify/react';
 
 const buttonVariants = cva(
   'inline-flex items-center justify-center gap-2 font-medium transition-all duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed',
@@ -70,8 +71,8 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   rounded?: ButtonRounded;
   fullWidth?: boolean;
   isLoading?: boolean;
-  leftIcon?: React.ReactNode;
-  rightIcon?: React.ReactNode;
+  leftIcon?: string;
+  rightIcon?: string;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -97,9 +98,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {isLoading && (
           <span className="animate-spin inline-block w-4 h-4 border-2 border-current border-r-transparent rounded-full" />
         )}
-        {!isLoading && leftIcon}
-        {children}
-        {!isLoading && rightIcon}
+        {!isLoading && leftIcon && <Icon icon={leftIcon} className="w-4 h-4" />}
+        <span>{children}</span>
+        {!isLoading && rightIcon && <Icon icon={rightIcon} className="w-4 h-4" />}
       </button>
     );
   }
