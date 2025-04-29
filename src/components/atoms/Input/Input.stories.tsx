@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Input } from './Input';
-import { Icon } from '@/components/atoms/Icons/Icons';
+import { Icon } from '../Icons';
 
 const meta = {
   title: 'Atoms/Input',
@@ -22,6 +22,10 @@ const meta = {
       control: 'select',
       options: ['sm', 'md', 'lg'],
     },
+    labelPlacement: {
+      control: 'radio',
+      options: ['top', 'left'],
+    },
   },
 } satisfies Meta<typeof Input>;
 
@@ -34,11 +38,21 @@ export const Default: Story = {
   },
 };
 
-export const WithLabel: Story = {
+export const WithTopLabel: Story = {
   args: {
     label: 'Email',
     placeholder: 'Enter your email',
     type: 'email',
+    labelPlacement: 'top',
+  },
+};
+
+export const WithLeftLabel: Story = {
+  args: {
+    label: 'Email',
+    placeholder: 'Enter your email',
+    type: 'email',
+    labelPlacement: 'left',
   },
 };
 
@@ -65,7 +79,8 @@ export const WithError: Story = {
     label: 'Email',
     placeholder: 'Enter your email',
     type: 'email',
-    error: 'Invalid email address',
+    error: true,
+    errorText: 'Invalid email address',
     value: 'invalid-email',
   },
 };
@@ -104,6 +119,33 @@ export const WithBothIcons: Story = {
     leftIcon: <Icon icon="mdi:search" />,
     rightIcon: <Icon icon="mdi:close" />,
   },
+};
+
+export const FormExample: Story = {
+  render: () => (
+    <div className="space-y-4 w-[400px]">
+      <Input
+        label="Full Name"
+        placeholder="Enter your full name"
+        labelPlacement="left"
+      />
+      <Input
+        label="Email"
+        type="email"
+        placeholder="Enter your email"
+        labelPlacement="left"
+        error={true}
+        errorText="Please enter a valid email address"
+      />
+      <Input
+        label="Password"
+        type="password"
+        placeholder="Enter your password"
+        labelPlacement="left"
+        rightIcon={<Icon icon="mdi:eye" />}
+      />
+    </div>
+  ),
 };
 
 export const Small: Story = {
