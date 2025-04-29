@@ -2993,7 +2993,7 @@ const Uo = ni(
     className: n,
     variant: e = "primary",
     size: t = "md",
-    rounded: i = "none",
+    rounded: i = "md",
     fullWidth: a = !1,
     isLoading: s = !1,
     leftIcon: r,
@@ -4493,9 +4493,10 @@ const tc = {
 }, Bh = ({
   variant: n = "p",
   children: e,
-  className: t
+  className: t,
+  as: i
 }) => {
-  const i = n, a = "text-gray-900", s = {
+  const a = {
     h1: "text-4xl font-bold",
     h2: "text-3xl font-bold",
     h3: "text-2xl font-bold",
@@ -4504,9 +4505,41 @@ const tc = {
     h6: "text-base font-bold",
     p: "text-base",
     span: "text-base",
-    label: "text-sm font-medium"
-  };
-  return /* @__PURE__ */ ee.jsx(i, { className: Le(a, s[n], t), children: e });
+    label: "text-sm font-medium",
+    heading3: "text-2xl font-bold",
+    body1: "text-base",
+    display1: "text-5xl font-bold",
+    display2: "text-4xl font-bold",
+    heading1: "text-4xl font-bold",
+    heading2: "text-3xl font-bold",
+    heading4: "text-xl font-bold",
+    subtitle1: "text-lg font-medium",
+    subtitle2: "text-base font-medium",
+    body2: "text-sm",
+    caption: "text-xs",
+    value: "text-base font-medium"
+  }, r = i || ((o) => {
+    switch (o) {
+      case "display1":
+      case "display2":
+      case "heading1":
+      case "heading2":
+      case "heading3":
+      case "heading4":
+        return "h" + o.slice(-1);
+      case "body1":
+      case "body2":
+      case "subtitle1":
+      case "subtitle2":
+        return "p";
+      case "caption":
+      case "value":
+        return "span";
+      default:
+        return o;
+    }
+  })(n);
+  return /* @__PURE__ */ ee.jsx(r, { className: Le("text-gray-900", a[n], t), children: e });
 }, ac = ni(
   "border bg-card text-card-foreground",
   {
@@ -16198,21 +16231,36 @@ const Rh = /* @__PURE__ */ ho(Vr), wr = {
     success: "bg-success-500 text-white",
     warning: "bg-warning-500 text-white",
     error: "bg-error-500 text-white",
-    info: "bg-info-500 text-white"
+    info: "bg-info-500 text-white",
+    danger: "bg-danger-500 text-white",
+    default: "bg-neutral-500 text-white"
   },
   outline: {
     primary: "border border-primary-500 text-primary-500",
     success: "border border-success-500 text-success-500",
     warning: "border border-warning-500 text-warning-500",
     error: "border border-error-500 text-error-500",
-    info: "border border-info-500 text-info-500"
+    info: "border border-info-500 text-info-500",
+    danger: "border border-danger-500 text-danger-500",
+    default: "border border-neutral-500 text-neutral-500"
   },
   subtle: {
     primary: "bg-primary-100 text-primary-700",
     success: "bg-success-100 text-success-700",
     warning: "bg-warning-100 text-warning-700",
     error: "bg-error-100 text-error-700",
-    info: "bg-info-100 text-info-700"
+    info: "bg-info-100 text-info-700",
+    danger: "bg-danger-100 text-danger-700",
+    default: "bg-neutral-100 text-neutral-700"
+  },
+  soft: {
+    primary: "bg-primary-50 text-primary-600",
+    success: "bg-success-50 text-success-600",
+    warning: "bg-warning-50 text-warning-600",
+    error: "bg-error-50 text-error-600",
+    info: "bg-info-50 text-info-600",
+    danger: "bg-danger-50 text-danger-600",
+    default: "bg-neutral-50 text-neutral-600"
   }
 }, Yh = {
   sm: "text-xs px-2 py-0.5",
@@ -16358,6 +16406,7 @@ const Hh = Ot(
         ref: l,
         className: Le(
           "flex items-start gap-3 rounded-lg p-4 shadow-lg",
+          "border border-gray-200",
           {
             "bg-white": e === "default",
             "bg-success-50": e === "success",
