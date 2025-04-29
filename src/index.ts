@@ -1,6 +1,7 @@
 // Atoms
 export * from './components/atoms/Button';
 export * from './components/atoms/Select';
+export * from './components/atoms/SelectItem';
 export * from './components/atoms/Input';
 export * from './components/atoms/StatusIndicator';
 export * from './components/atoms/Text';

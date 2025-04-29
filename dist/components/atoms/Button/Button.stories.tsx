@@ -13,6 +13,11 @@ const meta: Meta<typeof Button> = {
         "primary",
         "secondary",
         "outline",
+        "outline-primary",
+        "outline-secondary",
+        "outline-success",
+        "outline-warning",
+        "outline-danger",
         "ghost",
         "link",
         "success",
@@ -57,6 +62,62 @@ export const Secondary: Story = {
   },
 };
 
+export const Outline: Story = {
+  args: {
+    children: "Outline Button",
+    variant: "outline",
+  },
+};
+
+export const OutlinePrimary: Story = {
+  args: {
+    children: "Outline Primary Button",
+    variant: "outline-primary",
+  },
+};
+
+export const OutlineSecondary: Story = {
+  args: {
+    children: "Outline Secondary Button",
+    variant: "outline-secondary",
+  },
+};
+
+export const OutlineSuccess: Story = {
+  args: {
+    children: "Outline Success Button",
+    variant: "outline-success",
+  },
+};
+
+export const OutlineWarning: Story = {
+  args: {
+    children: "Outline Warning Button",
+    variant: "outline-warning",
+  },
+};
+
+export const OutlineDanger: Story = {
+  args: {
+    children: "Outline Danger Button",
+    variant: "outline-danger",
+  },
+};
+
+export const Ghost: Story = {
+  args: {
+    children: "Ghost Button",
+    variant: "ghost",
+  },
+};
+
+export const Link: Story = {
+  args: {
+    children: "Link Button",
+    variant: "link",
+  },
+};
+
 export const Success: Story = {
   args: {
     children: "Success Button",
@@ -75,41 +136,6 @@ export const Danger: Story = {
   args: {
     children: "Danger Button",
     variant: "danger",
-  },
-};
-
-export const Outline: Story = {
-  args: {
-    children: "Outline Button",
-    variant: "outline",
-  },
-};
-
-export const Ghost: Story = {
-  args: {
-    children: "Ghost Button",
-    variant: "ghost",
-  },
-};
-
-export const Link: Story = {
-  args: {
-    children: "Link Button",
-    variant: "link",
-  },
-};
-
-export const Small: Story = {
-  args: {
-    children: "Small Button",
-    size: "sm",
-  },
-};
-
-export const Large: Story = {
-  args: {
-    children: "Large Button",
-    size: "lg",
   },
 };
 

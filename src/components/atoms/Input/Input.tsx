@@ -3,12 +3,12 @@ import { cva } from 'class-variance-authority';
 import { cn } from '@/utils/cn';
 
 const inputVariants = cva(
-  'w-full rounded-md border bg-white px-3 py-2 text-sm ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+  'w-full rounded-md border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
-        default: 'border-neutral-200 hover:border-primary-300 focus:border-primary-300',
-        error: 'border-danger-500 hover:border-danger-600 focus:border-danger-600',
+        default: 'border-neutral-200 hover:border-primary-300 focus:border-primary-300 hover:bg-primary-50',
+        error: 'border-danger-500 hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50',
         success: 'border-success-500 hover:border-success-600 focus:border-success-600',
       },
       inputSize: {
