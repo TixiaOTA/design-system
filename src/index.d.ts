@@ -13,3 +13,5 @@ export * from './components/atoms/Avatar';
 export * from './components/atoms/Badge';
 export * from './components/atoms/Dialog';
 export * from './components/atoms/Skeleton';
+export * from './components/atoms/Divider';
+export * from './components/atoms/CheckBox';
