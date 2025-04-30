@@ -120,7 +120,7 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
       transparent: 'bg-transparent',
     };
 
-    const handleBackdropClick = (e: React.MouseEvent) => {
+    const handleBackdropClick = () => {
       if (closeOnBackdropClick) {
         onClose();
       }
