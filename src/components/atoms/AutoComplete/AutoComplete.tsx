@@ -58,6 +58,16 @@ export interface AutoCompleteProps extends Omit<React.InputHTMLAttributes<HTMLIn
   labelPlacement?: 'top' | 'left';
   /** Whether the input should take full width */
   fullWidth?: boolean;
+  /** Whether to show clear icon when there's input */
+  showClear?: boolean;
+  /** Callback when clear button is clicked */
+  onClear?: () => void;
+}
+
+interface AutoCompleteOpenEvent extends CustomEvent {
+  detail: {
+    id: string;
+  };
 }
 
 const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
@@ -85,6 +95,8 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       onChange,
       onFocus,
       onBlur,
+      showClear = false,
+      onClear,
       ...props
     },
     ref
@@ -99,24 +111,29 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
     const id = `autocomplete-${reactId.replace(/:/g, '')}`;
 
     const updateDropdownPosition = () => {
-      if (isOpen && inputRef.current && dropdownRef.current) {
-        const inputRect = inputRef.current.getBoundingClientRect();
-        const dropdown = dropdownRef.current;
+      if (!isOpen || !inputRef.current || !dropdownRef.current) return;
 
-        if (dropdownPosition === 'bottom') {
-          dropdown.style.position = 'fixed';
-          dropdown.style.top = `${inputRect.bottom + 4}px`;
-          dropdown.style.left = `${inputRect.left}px`;
-          dropdown.style.width = `${inputRect.width}px`;
-          dropdown.style.maxHeight = `${window.innerHeight - inputRect.bottom - 8}px`;
-        } else {
-          dropdown.style.position = 'fixed';
-          dropdown.style.bottom = `${window.innerHeight - inputRect.top + 4}px`;
-          dropdown.style.left = `${inputRect.left}px`;
-          dropdown.style.width = `${inputRect.width}px`;
-          dropdown.style.maxHeight = `${inputRect.top - 8}px`;
-        }
-      }
+      const { bottom, top, left, width } = inputRef.current.getBoundingClientRect();
+      const dropdown = dropdownRef.current;
+      const commonStyles = {
+        position: 'fixed',
+        left: `${left}px`,
+        width: `${width}px`,
+      };
+
+      const styles = dropdownPosition === 'bottom'
+        ? {
+            ...commonStyles,
+            top: `${bottom + 4}px`,
+            maxHeight: `${window.innerHeight - bottom - 8}px`,
+          }
+        : {
+            ...commonStyles,
+            bottom: `${window.innerHeight - top + 4}px`,
+            maxHeight: `${top - 8}px`,
+          };
+
+      Object.assign(dropdown.style, styles);
     };
 
     useEffect(() => {
@@ -137,7 +154,7 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       };
 
       const handleOtherAutocompleteOpen = (e: Event) => {
-        const customEvent = e as CustomEvent;
+        const customEvent = e as AutoCompleteOpenEvent;
         if (customEvent.detail.id !== id) {
           setIsOpen(false);
         }
@@ -172,20 +189,40 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       };
     }, [isOpen, id]);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setInputValue(e.target.value);
-      onChange?.(e);
-      if (!isControlled) {
-        setIsOpen(true);
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const { value } = event.target;
+      setInputValue(value);
+      
+      if (!value.trim()) {
+        setIsOpen(false);
+        return;
       }
+      
+      setIsOpen(true);
+      onChange?.(event);
+    };
+
+    const handleClear = (e: React.MouseEvent<HTMLInputElement>) => {
+      e.stopPropagation();
+      setInputValue('');
+      onClear?.();
+      const syntheticEvent = new Event('change') as unknown as React.ChangeEvent<HTMLInputElement>;
+      syntheticEvent.target = { value: '' } as HTMLInputElement;
+      onChange?.(syntheticEvent);
     };
 
     const handleSelect = (option: { value: string; label: string }) => {
-      setInputValue(option.label);
-      onSelect?.(option.value);
-      if (!isControlled) {
-        setIsOpen(false);
-      }
+      if (!option) return;
+      
+      const { value, label } = option;
+      setInputValue(label);
+      setIsOpen(false);
+      onSelect?.(value);
+
+      const selectEvent = new CustomEvent('autocomplete-select', {
+        detail: { selectedOption: option }
+      });
+      inputRef.current?.dispatchEvent(selectEvent);
     };
 
     const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -204,11 +241,17 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       onBlur?.(e);
     };
 
-    const filteredOptions = options.filter((option) =>
-      option.label.toLowerCase().includes((inputValue || '').toLowerCase())
+    const filteredOptions = options.filter(({ label }) => 
+      label.toLowerCase().includes((inputValue || '').toLowerCase().trim())
     );
 
     const showDropdown = isControlled ? controlledIsOpen : isOpen;
+
+    // Determine if we should show the clear button
+    const shouldShowClear = showClear && inputValue && !props.disabled && !props.readOnly;
+
+    // If we have a clear button and a right icon, use the clear button instead
+    const effectiveRightIcon = shouldShowClear ? 'mdi:close' : rightIcon;
 
     const renderDropdown = () => {
       if (!showDropdown) return null;
@@ -258,7 +301,7 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
             variant={variant}
             size={size}
             leftIcon={leftIcon}
-            rightIcon={rightIcon}
+            rightIcon={effectiveRightIcon}
             error={error}
             errorText={errorText}
             helperText={helperText}
@@ -268,6 +311,7 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
             fullWidth={fullWidth}
             className={className}
             {...props}
+            onClick={shouldShowClear ? handleClear : props.onClick}
           />
         </div>
         {renderDropdown()}
