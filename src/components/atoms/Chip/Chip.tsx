@@ -3,11 +3,11 @@ import { cn } from '@/utils/cn';
 import { Icon } from '@iconify/react';
 import type { IconifyIcon } from '@iconify/react';
 
-export type TagVariant = 'solid' | 'outline' | 'subtle' | 'soft';
-export type TagColor = 'primary' | 'success' | 'warning' | 'error' | 'info' | 'danger' | 'default';
-export type TagSize = 'sm' | 'md' | 'lg';
+export type ChipVariant = 'solid' | 'outline' | 'subtle' | 'soft';
+export type ChipColor = 'primary' | 'success' | 'warning' | 'error' | 'info' | 'danger' | 'default';
+export type ChipSize = 'sm' | 'md' | 'lg';
 
-const variantStyles: Record<TagVariant, Record<TagColor, string>> = {
+const variantStyles: Record<ChipVariant, Record<ChipColor, string>> = {
   solid: {
     primary: 'bg-primary-500 text-white',
     success: 'bg-success-500 text-white',
@@ -46,23 +46,23 @@ const variantStyles: Record<TagVariant, Record<TagColor, string>> = {
   }
 };
 
-const sizeStyles: Record<TagSize, string> = {
+const sizeStyles: Record<ChipSize, string> = {
   sm: 'text-xs px-2 py-0.5',
   md: 'text-sm px-3 py-1',
   lg: 'text-base px-4 py-1.5'
 };
 
-export interface TagProps {
+export interface ChipProps {
   children: React.ReactNode;
-  variant?: TagVariant;
-  color?: TagColor;
-  size?: TagSize;
+  variant?: ChipVariant;
+  color?: ChipColor;
+  size?: ChipSize;
   onClose?: () => void;
   className?: string;
   icon?: string | IconifyIcon;
 }
 
-const Tag: React.FC<TagProps> = ({
+const Chip: React.FC<ChipProps> = ({
   children,
   variant = 'solid',
   color = 'primary',
@@ -99,4 +99,4 @@ const Tag: React.FC<TagProps> = ({
   );
 };
 
-export { Tag }; 
+export { Chip }; 

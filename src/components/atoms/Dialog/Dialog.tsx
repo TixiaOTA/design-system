@@ -3,6 +3,8 @@ import { createPortal } from 'react-dom';
 import { cn } from '@/utils/cn';
 import { Icon } from '@iconify/react';
 
+export type DialogSize = 'sm' | 'md' | 'lg' | 'xl' | 'fullscreen';
+
 interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;
   onClose: () => void;
@@ -11,6 +13,7 @@ interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
   backdrop?: 'blur' | 'dark' | 'transparent';
   header?: React.ReactNode;
   closeOnBackdropClick?: boolean;
+  size?: DialogSize;
 }
 
 interface DialogTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
@@ -55,6 +58,14 @@ const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
   )
 );
 
+const sizeClasses: Record<DialogSize, string> = {
+  sm: 'max-w-sm',
+  md: 'max-w-md',
+  lg: 'max-w-lg',
+  xl: 'max-w-4xl',
+  fullscreen: 'w-full h-full max-w-none max-h-none rounded-none'
+};
+
 const Dialog = forwardRef<HTMLDivElement, DialogProps>(
   ({ 
     isOpen, 
@@ -64,6 +75,7 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
     backdrop = 'dark',
     header,
     closeOnBackdropClick = true,
+    size = 'md',
     ...props 
   }, ref) => {
     const [isVisible, setIsVisible] = useState(false);
@@ -119,14 +131,16 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
         className={cn(
           'fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-300',
           backdropClasses[backdrop],
-          isAnimating ? 'opacity-100' : 'opacity-0'
+          isAnimating ? 'opacity-100' : 'opacity-0',
+          size === 'fullscreen' && 'items-start'
         )}
         onClick={handleBackdropClick}
       >
         <div
           ref={ref}
           className={cn(
-            'relative w-full max-w-md transform rounded-lg bg-white p-6 shadow-xl transition-all duration-300',
+            'relative transform rounded-lg bg-white p-6 shadow-xl transition-all duration-300',
+            sizeClasses[size],
             isAnimating ? 'scale-100 opacity-100' : 'scale-95 opacity-0',
             className
           )}

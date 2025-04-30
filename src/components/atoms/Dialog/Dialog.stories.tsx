@@ -6,6 +6,9 @@ import { Button } from '../Button/Button';
 const meta: Meta<typeof Dialog> = {
   title: 'Atoms/Dialog',
   component: Dialog,
+  parameters: {
+    layout: 'centered',
+  },
   tags: ['autodocs'],
   argTypes: {
     isOpen: { control: 'boolean' },
@@ -33,7 +36,7 @@ const InteractiveDialogWithHeader = () => {
     <>
       <Button onClick={() => setIsOpen(true)}>Open Dialog with Header</Button>
       <Dialog 
-        isOpen={isOpen} 
+        isOpen={isOpen}
         onClose={handleClose}
         backdrop="blur"
         header={<DialogTitle>Custom Header</DialogTitle>}
@@ -237,4 +240,53 @@ export const WithoutHeader: Story = {
       },
     },
   },
+};
+
+const DialogTemplate = (args: any) => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>Open Dialog</Button>
+      <Dialog {...args} isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <DialogTitle>Dialog Title</DialogTitle>
+        <DialogBody>
+          This is the dialog content. You can put any content here.
+        </DialogBody>
+        <DialogActions>
+          <Button variant="outline" onClick={() => setIsOpen(false)}>
+            Cancel
+          </Button>
+          <Button onClick={() => setIsOpen(false)}>Confirm</Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};
+
+export const Small: Story = {
+  render: (args) => <DialogTemplate {...args} size="sm" />,
+};
+
+export const Medium: Story = {
+  render: (args) => <DialogTemplate {...args} size="md" />,
+};
+
+export const Large: Story = {
+  render: (args) => <DialogTemplate {...args} size="lg" />,
+};
+
+export const ExtraLarge: Story = {
+  render: (args) => <DialogTemplate {...args} size="xl" />,
+};
+
+export const Fullscreen: Story = {
+  render: (args) => <DialogTemplate {...args} size="fullscreen" />,
+};
+
+export const WithBlurBackdrop: Story = {
+  render: (args) => <DialogTemplate {...args} backdrop="blur" />,
+};
+
+export const WithTransparentBackdrop: Story = {
+  render: (args) => <DialogTemplate {...args} backdrop="transparent" />,
 };

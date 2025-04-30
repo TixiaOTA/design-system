@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Tag } from './Tag';
+import { Chip } from './Chip';
 
 const meta = {
-  title: 'Atoms/Tag',
-  component: Tag,
+  title: 'Atoms/Chip',
+  component: Chip,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
-} satisfies Meta<typeof Tag>;
+} satisfies Meta<typeof Chip>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -16,21 +16,21 @@ type Story = StoryObj<typeof meta>;
 // Basic variants
 export const Solid: Story = {
   args: {
-    children: 'Solid Tag',
+    children: 'Solid Chip',
     variant: 'solid',
   },
 };
 
 export const Outline: Story = {
   args: {
-    children: 'Outline Tag',
+    children: 'Outline Chip',
     variant: 'outline',
   },
 };
 
 export const Soft: Story = {
   args: {
-    children: 'Soft Tag',
+    children: 'Soft Chip',
     variant: 'soft',
   },
 };
@@ -38,28 +38,28 @@ export const Soft: Story = {
 // Colors
 export const Primary: Story = {
   args: {
-    children: 'Primary Tag',
+    children: 'Primary Chip',
     color: 'primary',
   },
 };
 
 export const Success: Story = {
   args: {
-    children: 'Success Tag',
+    children: 'Success Chip',
     color: 'success',
   },
 };
 
 export const Warning: Story = {
   args: {
-    children: 'Warning Tag',
+    children: 'Warning Chip',
     color: 'warning',
   },
 };
 
 export const Danger: Story = {
   args: {
-    children: 'Danger Tag',
+    children: 'Danger Chip',
     color: 'danger',
   },
 };
@@ -67,21 +67,21 @@ export const Danger: Story = {
 // Sizes
 export const Small: Story = {
   args: {
-    children: 'Small Tag',
+    children: 'Small Chip',
     size: 'sm',
   },
 };
 
 export const Medium: Story = {
   args: {
-    children: 'Medium Tag',
+    children: 'Medium Chip',
     size: 'md',
   },
 };
 
 export const Large: Story = {
   args: {
-    children: 'Large Tag',
+    children: 'Large Chip',
     size: 'lg',
   },
 };
@@ -89,7 +89,7 @@ export const Large: Story = {
 // With Icon
 export const WithIcon: Story = {
   args: {
-    children: 'Tag with Icon',
+    children: 'Chip with Icon',
     icon: 'mdi:star',
   },
 };
@@ -97,7 +97,7 @@ export const WithIcon: Story = {
 // With Close Button
 export const WithCloseButton: Story = {
   args: {
-    children: 'Closeable Tag',
+    children: 'Closeable Chip',
     onClose: () => alert('Close clicked'),
   },
 };
@@ -105,7 +105,7 @@ export const WithCloseButton: Story = {
 // With Icon and Close Button
 export const WithIconAndClose: Story = {
   args: {
-    children: 'Complete Tag',
+    children: 'Complete Chip',
     icon: 'mdi:star',
     onClose: () => alert('Close clicked'),
   },
@@ -114,13 +114,13 @@ export const WithIconAndClose: Story = {
 // All Variants
 export const AllVariants: Story = {
   args: {
-    children: 'Tag',
+    children: 'Chip',
   },
   render: (args) => (
     <div className="flex flex-wrap gap-2">
-      <Tag {...args} variant="solid">Solid</Tag>
-      <Tag {...args} variant="outline">Outline</Tag>
-      <Tag {...args} variant="soft">Soft</Tag>
+      <Chip {...args} variant="solid">Solid</Chip>
+      <Chip {...args} variant="outline">Outline</Chip>
+      <Chip {...args} variant="soft">Soft</Chip>
     </div>
   ),
 };
@@ -128,15 +128,15 @@ export const AllVariants: Story = {
 // All Colors
 export const AllColors: Story = {
   args: {
-    children: 'Tag',
+    children: 'Chip',
   },
   render: (args) => (
     <div className="flex flex-wrap gap-2">
-      <Tag {...args} color="primary">Primary</Tag>
-      <Tag {...args} color="success">Success</Tag>
-      <Tag {...args} color="warning">Warning</Tag>
-      <Tag {...args} color="danger">Danger</Tag>
-      <Tag {...args} color="default">Default</Tag>
+      <Chip {...args} color="primary">Primary</Chip>
+      <Chip {...args} color="success">Success</Chip>
+      <Chip {...args} color="warning">Warning</Chip>
+      <Chip {...args} color="danger">Danger</Chip>
+      <Chip {...args} color="default">Default</Chip>
     </div>
   ),
 }; 
