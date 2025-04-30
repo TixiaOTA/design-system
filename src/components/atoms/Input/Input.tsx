@@ -4,7 +4,7 @@ import { cn } from '@/utils/cn';
 import { Icon } from '@iconify/react';
 
 const inputVariants = cva(
-  'w-full rounded-md border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+  'rounded-md border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
@@ -17,10 +17,15 @@ const inputVariants = cva(
         md: 'h-10 px-3 py-2 text-base',
         lg: 'h-12 px-4 py-3 text-lg',
       },
+      fullWidth: {
+        true: 'w-full',
+        false: 'w-fit',
+      },
     },
     defaultVariants: {
       variant: 'default',
       inputSize: 'md',
+      fullWidth: true,
     },
   }
 );
@@ -52,6 +57,8 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
   labelPlacement?: LabelPlacement;
   /** Additional className for the wrapper div */
   wrapperClassName?: string;
+  /** Whether the input should take full width */
+  fullWidth?: boolean;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -68,6 +75,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     label, 
     required = false,
     labelPlacement = 'top',
+    fullWidth = true,
     id: providedId,
     ...props 
   }, ref) => {
@@ -76,7 +84,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     const errorId = `${id}-error`;
 
     const inputField = (
-      <div className="relative">
+      <div className={cn("relative", !fullWidth && "inline-block")}>
         {leftIcon && (
           <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500">
             <Icon icon={leftIcon} className="w-4 h-4" />
@@ -87,7 +95,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           type="text"
           ref={ref}
           className={cn(
-            inputVariants({ variant: error ? 'error' : variant, inputSize: size }),
+            inputVariants({ variant: error ? 'error' : variant, inputSize: size, fullWidth }),
             leftIcon && 'pl-10',
             rightIcon && 'pr-10',
             className
@@ -122,7 +130,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
     if (labelPlacement === 'left') {
       return (
-        <div className={cn("w-full", wrapperClassName)}>
+        <div className={cn(fullWidth ? "w-full" : "inline-block", wrapperClassName)}>
           <div className="flex items-start gap-4">
             {label && (
               <label
@@ -133,7 +141,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
                 {required && <span className="text-danger-500 ml-0.5">*</span>}
               </label>
             )}
-            <div className="flex-1">
+            <div className={cn("flex-1", !fullWidth && "inline-block")}>
               {inputField}
               {helperOrError}
             </div>
@@ -143,7 +151,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     }
 
     return (
-      <div className={cn("w-full", wrapperClassName)}>
+      <div className={cn(fullWidth ? "w-full" : "inline-block", wrapperClassName)}>
         {label && (
           <label
             htmlFor={id}
