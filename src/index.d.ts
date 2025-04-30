@@ -9,3 +9,7 @@ export * from './components/atoms/Text';
 export * from './components/molecules/Breadcrumbs';
 export * from './components/molecules/Toast';
 export * from './components/molecules/WidgetCard'; 
+export * from './components/atoms/Avatar';
+export * from './components/atoms/Badge';
+export * from './components/atoms/Dialog';
+export * from './components/atoms/Skeleton';

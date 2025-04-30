@@ -247,8 +247,7 @@ const DialogTemplate = (args: any) => {
   return (
     <>
       <Button onClick={() => setIsOpen(true)}>Open Dialog</Button>
-      <Dialog {...args} isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <DialogTitle>Dialog Title</DialogTitle>
+      <Dialog {...args} isOpen={isOpen} onClose={() => setIsOpen(false)} header={<DialogTitle>Dialog Title</DialogTitle>}>
         <DialogBody>
           This is the dialog content. You can put any content here.
         </DialogBody>

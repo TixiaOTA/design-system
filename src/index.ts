@@ -14,6 +14,10 @@ export * from './components/molecules/Toast';
 export * from './components/molecules/WidgetCard';
 export * from './components/organisms/WidgetCardGroup';
 export * from './components/atoms/Icons';
+export * from './components/atoms/Avatar';
+export * from './components/atoms/Badge';
+export * from './components/atoms/Dialog';
+export * from './components/atoms/Skeleton';
 
 // Utils
 export * from './utils/cn'; 
