@@ -16,7 +16,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({
   animation = 'pulse',
   height,
   width,
-  color = 'info',
+  color = 'neutral',
 }) => {
   const baseClasses = 'bg-gray-200 dark:bg-gray-700';
   
