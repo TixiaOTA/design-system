@@ -25,6 +25,23 @@ const config: StorybookConfig = {
     }
     config.plugins = [...(config.plugins || []), tsconfigPaths()];
     return config;
-  }
+  },
+  staticDirs: [{ from: '../public', to: '/' }],
+  managerHead: (head) => `
+    ${head}
+    <style>
+      .sidebar-header img {
+        width: 120px !important;
+        max-width: none !important;
+        height: auto !important;
+        margin: 8px 0 !important;
+      }
+      .sidebar-header a {
+        width: auto !important;
+        display: block !important;
+      }
+    </style>
+  `,
 };
+
 export default config;
