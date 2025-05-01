@@ -106,7 +106,7 @@ export const TopPosition: Story = {
 
 export const DifferentSizes: Story = {
   render: () => (
-    <div className="space-y-4">
+    <div className="flex gap-2">
       <AutoComplete
         options={options}
         size="sm"
