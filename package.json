@@ -15,17 +15,18 @@
       "require": "./dist/tixia-design-system.umd.js"
     }
   },
-"scripts": {
-  "dev": "vite",
-  "build": "tsc -p tsconfig.build.json && vite build && cp -r src/components dist/",
-  "storybook": "storybook dev",
-  "build-storybook": "storybook build",
-  "preview": "vite preview"
-},
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -p tsconfig.build.json && vite build && cp -r src/components dist/",
+    "storybook": "storybook dev",
+    "build-storybook": "storybook build",
+    "preview": "vite preview"
+  },
   "dependencies": {
     "@heroui/react": "^2.7.6",
     "@iconify/react": "^4.1.1",
     "apexcharts": "^4.7.0",
+    "dayjs": "^1.11.13",
     "framer-motion": "^12.9.1",
     "react": "^18.2.0",
     "react-apexcharts": "^1.7.0",

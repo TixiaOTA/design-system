@@ -7,6 +7,7 @@ export interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElemen
   disabled?: boolean;
   indeterminate?: boolean;
   variantSize?: 'sm' | 'md' | 'lg';
+  variant?: 'square' | 'circle';
   color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error';
 }
 
@@ -16,6 +17,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   disabled = false,
   indeterminate = false,
   variantSize = 'sm',
+  variant = 'square',
   color = 'primary',
   className = '',
   ...props
@@ -27,15 +29,24 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   };
 
   const colorClasses = {
-    primary: 'checked:bg-primary-600 checked:border-primary-600 hover:border-primary-600 focus:ring-primary-500',
-    secondary: 'checked:bg-secondary-600 checked:border-secondary-600 hover:border-secondary-600 focus:ring-secondary-500',
-    success: 'checked:bg-success-600 checked:border-success-600 hover:border-success-600 focus:ring-success-500',
-    warning: 'checked:bg-warning-600 checked:border-warning-600 hover:border-warning-600 focus:ring-warning-500',
-    error: 'checked:bg-danger-600 checked:border-danger-600 hover:border-danger-600 focus:ring-danger-500',
+    primary: 'checked:bg-primary-600 checked:border-primary-600 hover:border-primary-600',
+    secondary: 'checked:bg-secondary-600 checked:border-secondary-600 hover:border-secondary-600',
+    success: 'checked:bg-success-600 checked:border-success-600 hover:border-success-600',
+    warning: 'checked:bg-warning-600 checked:border-warning-600 hover:border-warning-600',
+    error: 'checked:bg-danger-600 checked:border-danger-600 hover:border-danger-600',
+  };
+
+  const variantClasses = {
+    square: 'rounded',
+    circle: 'rounded-full',
   };
 
   const checkboxClasses = twMerge(
-    'rounded border-2 transition-colors duration-200',
+    'border-2 transition-colors duration-200',
+    'appearance-none cursor-pointer',
+    'checked:bg-no-repeat checked:bg-center',
+    variant === 'circle' ? 'checked:bg-[url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSI2IiBjeT0iNiIgcj0iNCIgZmlsbD0id2hpdGUiLz48L3N2Zz4=")]' : 'checked:bg-[url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTAgM0w0LjUgOC41TDIgNiIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=")]',
+    variantClasses[variant],
     sizeClasses[variantSize],
     colorClasses[color],
     disabled && 'opacity-50 cursor-not-allowed',
@@ -43,8 +54,8 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   );
 
   const labelClasses = twMerge(
-    'ml-2 text-sm',
-    disabled && 'opacity-50',
+    'ml-2 text-sm font-medium',
+    disabled && 'opacity-50 cursor-not-allowed',
     error && 'text-danger-600'
   );
 
