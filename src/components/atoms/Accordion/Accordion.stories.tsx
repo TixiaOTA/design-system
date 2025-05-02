@@ -68,8 +68,8 @@ export const CustomStyling: Story = {
   args: {
     items: sampleItems,
     className: 'max-w-md mx-auto',
-    itemClassName: 'bg-gray-50 dark:bg-gray-900',
+    itemClassName: 'bg-primary',
     headerClassName: 'font-semibold text-lg',
-    contentClassName: 'text-gray-600 dark:text-gray-300',
+    contentClassName: 'text-gray-600',
   },
 }; 

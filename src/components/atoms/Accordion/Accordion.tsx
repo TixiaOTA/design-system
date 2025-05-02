@@ -68,7 +68,7 @@ export const Accordion: React.FC<AccordionProps> = ({
               className={clsx(
                 'w-full flex items-center justify-between p-4',
                 'text-left transition-colors',
-                'hover:bg-gray-50',
+                'hover:bg-primary-50',
                 isDisabled && 'opacity-50 cursor-not-allowed',
                 headerClassName
               )}
