@@ -20,6 +20,8 @@ export * from './components/atoms/Dialog';
 export * from './components/atoms/Skeleton';
 export * from './components/atoms/Divider';
 export * from './components/atoms/CheckBox';
+export * from './components/atoms/Notification';
+
 
 // Utils
 export * from './utils/cn'; 

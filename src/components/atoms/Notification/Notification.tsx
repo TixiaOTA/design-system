@@ -25,7 +25,7 @@ export const Notification: React.FC<NotificationProps> = ({
   title,
   message,
   icon,
-  duration = 5000,
+  duration = 0, // 5000
   showClose = true,
   className,
   onClose,
