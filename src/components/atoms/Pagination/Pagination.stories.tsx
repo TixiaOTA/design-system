@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Pagination } from './Pagination';
+import { useState } from 'react';
 
 const meta: Meta<typeof Pagination> = {
   title: 'Atoms/Pagination',
@@ -60,6 +61,31 @@ export const FewPages: Story = {
   args: {
     currentPage: 1,
     totalPages: 3,
+    siblingCount: 1,
+  },
+};
+
+export const WithPerPageSelector: Story = {
+  render: (args) => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const [perPage, setPerPage] = useState(10);
+    const perPageOptions = [5, 10, 20, 50, 100];
+    return (
+      <Pagination
+        {...args}
+        currentPage={currentPage}
+        totalPages={10}
+        perPage={perPage}
+        perPageOptions={perPageOptions}
+        onPageChange={setCurrentPage}
+        onPerPageChange={(val) => {
+          setPerPage(val);
+          setCurrentPage(1); // Reset to first page on perPage change
+        }}
+      />
+    );
+  },
+  args: {
     siblingCount: 1,
   },
 }; 

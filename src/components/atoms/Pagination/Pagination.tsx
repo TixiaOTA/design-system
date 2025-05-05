@@ -1,5 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
+import { Select } from '../Select/Select';
+import { SelectItem } from '../SelectItem/SelectItem';
 
 export interface PaginationProps {
   currentPage: number;
@@ -7,6 +9,9 @@ export interface PaginationProps {
   onPageChange: (page: number) => void;
   siblingCount?: number;
   className?: string;
+  perPageOptions?: number[];
+  perPage?: number;
+  onPerPageChange?: (perPage: number) => void;
 }
 
 export const Pagination: React.FC<PaginationProps> = ({
@@ -15,6 +20,9 @@ export const Pagination: React.FC<PaginationProps> = ({
   onPageChange,
   siblingCount = 1,
   className,
+  perPageOptions,
+  perPage,
+  onPerPageChange,
 }) => {
   const range = (start: number, end: number) => {
     const length = end - start + 1;
@@ -54,11 +62,29 @@ export const Pagination: React.FC<PaginationProps> = ({
 
   return (
     <nav className={clsx('flex items-center justify-center space-x-1', className)}>
+      {perPageOptions && perPageOptions.length > 0 && (
+        <div className="flex items-center gap-2 mr-4">
+          <span className="text-neutral-700 text-sm">Menampilkan</span>
+          <Select
+            value={perPage?.toString()}
+            onChange={val => onPerPageChange && onPerPageChange(Number(val))}
+            size="sm"
+            className="w-16"
+            fullWidth={false}
+            aria-label="Items per page"
+          >
+            {perPageOptions.map(option => (
+              <SelectItem key={option} value={option.toString()}>{option}</SelectItem>
+            ))}
+          </Select>
+          <span className="text-neutral-700 text-sm">data per halaman</span>
+        </div>
+      )}
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
         className={clsx(
-          'px-3 py-1 rounded-md',
+          'px-3 py-1 rounded-md text-sm',
           currentPage === 1
             ? 'text-gray-400 cursor-not-allowed'
             : 'text-gray-700 hover:bg-gray-100'
@@ -76,7 +102,7 @@ export const Pagination: React.FC<PaginationProps> = ({
             key={index}
             onClick={() => !isEllipsis && onPageChange(page)}
             className={clsx(
-              'px-3 py-1 rounded-md',
+              'px-3 py-1 rounded-md text-sm',
               isCurrentPage
                 ? 'bg-primary text-white'
                 : 'text-gray-700 hover:bg-gray-100',
@@ -92,7 +118,7 @@ export const Pagination: React.FC<PaginationProps> = ({
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
         className={clsx(
-          'px-3 py-1 rounded-md',
+          'px-3 py-1 rounded-md text-sm',
           currentPage === totalPages
             ? 'text-gray-400 cursor-not-allowed'
             : 'text-gray-700 hover:bg-gray-100'
