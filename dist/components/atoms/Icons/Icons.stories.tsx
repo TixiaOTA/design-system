@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Icon } from '.';
+import { Text } from '../Text/Text';
 
 const meta = {
   title: 'Foundation/Icon',
@@ -138,3 +139,15 @@ export const Colors: Story = {
     </div>
   ),
 }; 
+
+export const Link: Story = {
+  args: {
+    icon: 'mdi:home',
+    size: 24,
+  },
+  render: () => (
+    <div className="flex gap-4 flex-wrap">
+      <a target="_blank" rel="noopener noreferrer" href="https://icon-sets.iconify.design/"><Text className='underline text-primary' variant="subtitle1">Click to open Iconify</Text></a>
+    </div>
+  ),
+};

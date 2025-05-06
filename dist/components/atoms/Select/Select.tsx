@@ -11,7 +11,7 @@ const SELECT_OPEN_EVENT = 'select-dropdown-opened';
 export type SelectPosition = 'bottom' | 'top' | 'left' | 'right';
 
 const selectVariants = cva(
-  'w-full rounded-md border bg-white px-3 py-2 text-sm ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+  'rounded-md border bg-white px-3 py-2 text-sm ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
@@ -24,10 +24,15 @@ const selectVariants = cva(
         md: 'h-10 px-3 py-2 text-base',
         lg: 'h-12 px-4 py-3 text-lg',
       },
+      fullWidth: {
+        true: 'w-full',
+        false: 'w-fit',
+      },
     },
     defaultVariants: {
       variant: 'default',
       size: 'md',
+      fullWidth: true,
     },
   }
 );
@@ -65,6 +70,8 @@ export interface SelectProps
   disabled?: boolean;
   /** Position of the dropdown */
   position?: SelectPosition;
+  /** Whether the select should take full width */
+  fullWidth?: boolean;
   variant?: SelectVariant;
   size?: SelectSize;
   /** Children components (SelectItem) */
@@ -87,6 +94,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
       onChange,
       disabled = false,
       position = 'bottom',
+      fullWidth = true,
       children,
       ...props
     },
@@ -286,7 +294,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
     };
 
     return (
-      <div className="w-full" ref={ref} {...props}>
+      <div className={cn(fullWidth ? "w-full" : "inline-block")} ref={ref} {...props}>
         {label && (
           <label
             htmlFor={id}
@@ -296,14 +304,14 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
             {required && <span className="text-danger-500 ml-0.5">*</span>}
           </label>
         )}
-        <div className="relative">
+        <div className={cn("relative", !fullWidth && "inline-block")}>
           <button
             id={id}
             ref={buttonRef}
             type="button"
             className={cn(
-              selectVariants({ variant: error ? 'error' : variant, size }),
-              'flex w-full items-center justify-between',
+              selectVariants({ variant: error ? 'error' : variant, size, fullWidth }),
+              'flex items-center justify-between',
               disabled && 'cursor-not-allowed opacity-50',
               className
             )}

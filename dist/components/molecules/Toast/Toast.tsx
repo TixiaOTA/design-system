@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 import { cn } from '@/utils/cn';
 import { Icon } from '@iconify/react';
 import type { IconifyIcon } from '@iconify/react';
+import { ToastPosition } from './ToastContext';
 
 export type ToastVariant = 'default' | 'success' | 'error' | 'warning' | 'info';
 
@@ -14,6 +15,7 @@ export interface ToastProps extends React.HTMLAttributes<HTMLDivElement> {
   showIcon?: boolean;
   duration?: number;
   showClose?: boolean;
+  position?: ToastPosition;
 }
 
 const Toast = forwardRef<HTMLDivElement, ToastProps>(
@@ -24,7 +26,8 @@ const Toast = forwardRef<HTMLDivElement, ToastProps>(
     description, 
     onClose, 
     icon, 
-    showIcon = true, 
+    showIcon = true,
+    showClose = true,
     ...props 
   }, ref) => {
     const defaultIconMap: Record<ToastVariant, string> = {
@@ -46,7 +49,7 @@ const Toast = forwardRef<HTMLDivElement, ToastProps>(
           {
             'bg-white': variant === 'default',
             'bg-success-50': variant === 'success',
-            'bg-error-50': variant === 'error',
+            'bg-danger-50': variant === 'error',
             'bg-warning-50': variant === 'warning',
             'bg-info-50': variant === 'info'
           },
@@ -60,7 +63,7 @@ const Toast = forwardRef<HTMLDivElement, ToastProps>(
             className={cn('h-5 w-5 flex-shrink-0', {
               'text-gray-500': variant === 'default',
               'text-success-500': variant === 'success',
-              'text-error-500': variant === 'error',
+              'text-danger-500': variant === 'error',
               'text-warning-500': variant === 'warning',
               'text-info-500': variant === 'info'
             })}
@@ -72,7 +75,7 @@ const Toast = forwardRef<HTMLDivElement, ToastProps>(
               className={cn('text-sm font-medium', {
                 'text-gray-900': variant === 'default',
                 'text-success-900': variant === 'success',
-                'text-error-900': variant === 'error',
+                'text-danger-900': variant === 'error',
                 'text-warning-900': variant === 'warning',
                 'text-info-900': variant === 'info'
               })}
@@ -85,7 +88,7 @@ const Toast = forwardRef<HTMLDivElement, ToastProps>(
               className={cn('mt-1 text-sm', {
                 'text-gray-500': variant === 'default',
                 'text-success-700': variant === 'success',
-                'text-error-700': variant === 'error',
+                'text-danger-700': variant === 'error',
                 'text-warning-700': variant === 'warning',
                 'text-info-700': variant === 'info'
               })}
@@ -94,7 +97,7 @@ const Toast = forwardRef<HTMLDivElement, ToastProps>(
             </p>
           )}
         </div>
-        {onClose && (
+        {showClose && onClose && (
           <button
             type="button"
             onClick={onClose}
@@ -103,7 +106,7 @@ const Toast = forwardRef<HTMLDivElement, ToastProps>(
               {
                 'text-gray-400 hover:text-gray-500': variant === 'default',
                 'text-success-400 hover:text-success-500': variant === 'success',
-                'text-error-400 hover:text-error-500': variant === 'error',
+                'text-danger-400 hover:text-danger-500': variant === 'error',
                 'text-warning-400 hover:text-warning-500': variant === 'warning',
                 'text-info-400 hover:text-info-500': variant === 'info'
               }

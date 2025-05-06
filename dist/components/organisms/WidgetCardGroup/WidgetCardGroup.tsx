@@ -13,7 +13,7 @@ const WidgetCardGroup: React.FC<WidgetCardGroupProps> = ({
   className
 }) => {
   return (
-    <div className={cn('grid gap-4 sm:grid-cols-2 lg:grid-cols-4', className)}>
+    <div className={cn('w-full grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4', className)}>
       {widgets.map((widget, index) => (
         <WidgetCard key={index} {...widget} />
       ))}

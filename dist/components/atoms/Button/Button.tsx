@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/utils/cn';
+import { Icon } from '@iconify/react';
 
 const buttonVariants = cva(
   'inline-flex items-center justify-center gap-2 font-medium transition-all duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed',
@@ -10,11 +11,11 @@ const buttonVariants = cva(
         primary: 'bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 shadow-sm hover:shadow-md active:shadow-none',
         secondary: 'bg-secondary-500 text-white hover:bg-secondary-600 active:bg-secondary-700 shadow-sm hover:shadow-md active:shadow-none',
         outline: 'border border-neutral-300 text-primary-500 hover:bg-primary-50 active:bg-primary-100 hover:border-primary-500',
-        'outline-primary': 'border-1 border-primary-600 text-primary-600 hover:bg-primary-50',
-        'outline-secondary': 'border-1 border-secondary-600 text-secondary-600 hover:bg-secondary-50',
-        'outline-success': 'border-1 border-success-600 text-success-600 hover:bg-success-50',
-        'outline-warning': 'border-1 border-warning-600 text-warning-600 hover:bg-warning-50',
-        'outline-danger': 'border-1 border-danger-600 text-danger-600 hover:bg-danger-50',
+        'outline-primary': 'border border-primary-600 text-primary-600 hover:bg-primary-50',
+        'outline-secondary': 'border border-secondary-600 text-secondary-600 hover:bg-secondary-50',
+        'outline-success': 'border border-success-600 text-success-600 hover:bg-success-50',
+        'outline-warning': 'border border-warning-600 text-warning-600 hover:bg-warning-50',
+        'outline-danger': 'border border-danger-600 text-danger-600 hover:bg-danger-50',
         ghost: 'text-primary-500 hover:bg-primary-50 active:bg-primary-100',
         link: 'text-primary-500 hover:underline p-0',
         success: 'bg-success-500 text-white hover:bg-success-600 active:bg-success-700 shadow-sm hover:shadow-md active:shadow-none',
@@ -70,8 +71,8 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   rounded?: ButtonRounded;
   fullWidth?: boolean;
   isLoading?: boolean;
-  leftIcon?: React.ReactNode;
-  rightIcon?: React.ReactNode;
+  leftIcon?: string;
+  rightIcon?: string;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -97,9 +98,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {isLoading && (
           <span className="animate-spin inline-block w-4 h-4 border-2 border-current border-r-transparent rounded-full" />
         )}
-        {!isLoading && leftIcon}
-        {children}
-        {!isLoading && rightIcon}
+        {!isLoading && leftIcon && <Icon icon={leftIcon} className="w-4 h-4" />}
+        <span>{children}</span>
+        {!isLoading && rightIcon && <Icon icon={rightIcon} className="w-4 h-4" />}
       </button>
     );
   }

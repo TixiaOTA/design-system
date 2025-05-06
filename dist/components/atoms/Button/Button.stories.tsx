@@ -175,22 +175,22 @@ export const RoundedVariants: Story = {
 export const WithStartIcon: Story = {
   args: {
     children: "Search",
-    leftIcon: <Icon icon="mdi:search" />,
+    leftIcon: "mdi:search",
   },
 };
 
 export const WithEndIcon: Story = {
   args: {
     children: "Next",
-    rightIcon: <Icon icon="mdi:arrow-right" />,
+    rightIcon: "mdi:arrow-right",
   },
 };
 
 export const WithBothIcons: Story = {
   args: {
     children: "Add Item",
-    leftIcon: <Icon icon="mdi:plus" />,
-    rightIcon: <Icon icon="mdi:arrow-right" />,
+    leftIcon: "mdi:plus",
+    rightIcon: "mdi:arrow-right",
   },
 };
 
@@ -233,13 +233,13 @@ export const SemanticVariants: Story = {
 export const SemanticWithIcons: Story = {
   render: () => (
     <div className="flex gap-2">
-      <Button variant="success" leftIcon={<Icon icon="mdi:plus" />}>
+      <Button variant="success" leftIcon="mdi:plus">
         Add Success
       </Button>
-      <Button variant="warning" leftIcon={<Icon icon="mdi:search" />}>
+      <Button variant="warning" leftIcon="mdi:search">
         Search Warning
       </Button>
-      <Button variant="danger" leftIcon={<Icon icon="mdi:arrow-right" />}>
+      <Button variant="danger" leftIcon="mdi:arrow-right">
         Delete Danger
       </Button>
     </div>
