@@ -1,6 +1,6 @@
 import React from 'react';
 declare const toggleVariants: (props?: ({
-    variant?: "primary" | "success" | "warning" | "danger" | null | undefined;
+    variant?: "success" | "primary" | "warning" | "danger" | null | undefined;
     size?: "sm" | "md" | "lg" | null | undefined;
 } & import("class-variance-authority/dist/types").ClassProp) | undefined) => string;
 export type ToggleVariant = 'primary' | 'success' | 'warning' | 'danger';

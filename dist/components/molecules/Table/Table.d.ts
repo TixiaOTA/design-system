@@ -15,4 +15,4 @@ export interface TableProps<T> {
     isLoading?: boolean;
     loadingState?: React.ReactNode;
 }
-export declare const Table: <T extends Record<string, any>>({ columns, data, className, headerClassName, rowClassName, cellClassName, emptyState, isLoading, loadingState, }: TableProps<T>) => string | number | true | Iterable<React.ReactNode> | import("react/jsx-runtime").JSX.Element;
+export declare const Table: <T extends Record<string, any>>({ columns, data, className, headerClassName, rowClassName, cellClassName, emptyState, isLoading, loadingState, }: TableProps<T>) => string | number | true | import("react/jsx-runtime").JSX.Element | Iterable<React.ReactNode>;

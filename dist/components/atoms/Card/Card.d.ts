@@ -1,6 +1,6 @@
 import React from 'react';
 declare const cardVariants: (props?: ({
-    variant?: "outline" | "ghost" | "default" | "elevated" | null | undefined;
+    variant?: "default" | "outline" | "ghost" | "elevated" | null | undefined;
     padding?: "sm" | "md" | "lg" | "none" | null | undefined;
     shadow?: "sm" | "md" | "lg" | "none" | "xl" | null | undefined;
     rounded?: "sm" | "md" | "lg" | "none" | "full" | "xl" | null | undefined;

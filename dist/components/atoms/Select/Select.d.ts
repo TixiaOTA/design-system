@@ -2,7 +2,7 @@ import React from 'react';
 import { type VariantProps } from 'class-variance-authority';
 export type SelectPosition = 'bottom' | 'top' | 'left' | 'right';
 declare const selectVariants: (props?: ({
-    variant?: "success" | "default" | "error" | null | undefined;
+    variant?: "default" | "error" | "success" | null | undefined;
     size?: "sm" | "md" | "lg" | null | undefined;
     fullWidth?: boolean | null | undefined;
 } & import("class-variance-authority/dist/types").ClassProp) | undefined) => string;
