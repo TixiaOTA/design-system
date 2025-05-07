@@ -2,6 +2,8 @@ import React from "react";
 import clsx from "clsx";
 import { Select } from "../Select/Select";
 import { SelectItem } from "../SelectItem/SelectItem";
+import { Button } from "../Button/Button";
+import { Icon } from "../Icons/Icons";
 
 export interface PaginationProps {
   currentPage: number;
@@ -66,11 +68,14 @@ export const Pagination: React.FC<PaginationProps> = ({
 
   return (
     <nav
-      className={clsx("flex items-center justify-center space-x-1", className)}
+      className={clsx("flex items-center justify-between space-x-1", className)}
     >
-      {perPageOptions && perPageOptions.length > 0 && (
-        <div className="sm:flex hidden justify-between items-center text-sm gap-10 text-neutral-700">
-          <div>{`${currentPage} - ${totalPages} dari ${totalData} ${label}`}</div>
+      <div className="hidden sm:block text-sm text-neutral-700">
+        <b>{`${currentPage} - ${totalPages}`}</b> dari {totalData} {label}
+      </div>
+
+      <div className="flex items-center gap-2">
+        {perPageOptions && perPageOptions.length > 0 && (
           <div className="flex items-center gap-2 mr-4">
             <span className="text-neutral-700 text-sm">Menampilkan</span>
             <Select
@@ -91,54 +96,57 @@ export const Pagination: React.FC<PaginationProps> = ({
             </Select>
             <span className="text-neutral-700 text-sm">data per halaman</span>
           </div>
-        </div>
-      )}
-      <button
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className={clsx(
-          "px-3 py-1 rounded-md text-sm",
-          currentPage === 1
-            ? "text-gray-400 cursor-not-allowed"
-            : "text-gray-700 hover:bg-gray-100"
         )}
-      >
-        Previous
-      </button>
+        <Button
+          variant="ghost"
+          onClick={() => onPageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className={clsx(
+            "px-3 py-1 rounded-md text-sm",
+            currentPage === 1
+              ? "text-gray-400 cursor-not-allowed"
+              : "text-gray-700 hover:bg-gray-100"
+          )}
+        >
+          <Icon size="18" icon="mdi:chevron-left" />
+        </Button>
 
-      {pages.map((page, index) => {
-        const isCurrentPage = page === currentPage;
-        const isEllipsis = typeof page === "string" && page === "...";
+        {pages.map((page, index) => {
+          const isCurrentPage = page === currentPage;
+          const isEllipsis = typeof page === "string" && page === "...";
 
-        return (
-          <button
-            key={index}
-            onClick={() => !isEllipsis && onPageChange(page)}
-            className={clsx(
-              "px-3 py-1 rounded-md text-sm",
-              isCurrentPage
-                ? "bg-primary text-white"
-                : "text-gray-700 hover:bg-gray-100",
-              isEllipsis && "cursor-default"
-            )}
-          >
-            {page}
-          </button>
-        );
-      })}
+          return (
+            <Button
+              variant="ghost"
+              key={index}
+              onClick={() => !isEllipsis && onPageChange(page)}
+              className={clsx(
+                "px-3 py-1 rounded-md text-sm",
+                isCurrentPage
+                  ? "bg-primary text-white hover:bg-primary"
+                  : "text-gray-700",
+                isEllipsis && "cursor-default"
+              )}
+            >
+              {page}
+            </Button>
+          );
+        })}
 
-      <button
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className={clsx(
-          "px-3 py-1 rounded-md text-sm",
-          currentPage === totalPages
-            ? "text-gray-400 cursor-not-allowed"
-            : "text-gray-700 hover:bg-gray-100"
-        )}
-      >
-        Next
-      </button>
+        <Button
+          variant="ghost"
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className={clsx(
+            "px-3 py-1 rounded-md text-sm",
+            currentPage === totalPages
+              ? "text-gray-400 cursor-not-allowed"
+              : "text-gray-700"
+          )}
+        >
+          <Icon size="18" icon="mdi:chevron-right" />
+        </Button>
+      </div>
     </nav>
   );
 };

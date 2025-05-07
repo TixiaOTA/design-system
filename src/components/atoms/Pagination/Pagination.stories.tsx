@@ -22,6 +22,7 @@ export const Default: Story = {
     currentPage: 1,
     totalPages: 10,
     siblingCount: 1,
+    totalData: 100,
   },
 };
 
@@ -30,6 +31,7 @@ export const MiddlePage: Story = {
     currentPage: 5,
     totalPages: 10,
     siblingCount: 1,
+    totalData: 100,
   },
 };
 
@@ -38,6 +40,7 @@ export const LastPage: Story = {
     currentPage: 10,
     totalPages: 10,
     siblingCount: 1,
+    totalData: 100,
   },
 };
 
@@ -46,6 +49,7 @@ export const ManyPages: Story = {
     currentPage: 1,
     totalPages: 20,
     siblingCount: 1,
+    totalData: 100,
   },
 };
 
@@ -54,6 +58,7 @@ export const CustomSiblingCount: Story = {
     currentPage: 5,
     totalPages: 20,
     siblingCount: 2,
+    totalData: 100,
   },
 };
 
@@ -62,6 +67,7 @@ export const FewPages: Story = {
     currentPage: 1,
     totalPages: 3,
     siblingCount: 1,
+    totalData: 100,
   },
 };
 
