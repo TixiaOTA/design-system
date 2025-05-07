@@ -110,19 +110,43 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
       if (isOpen && buttonRef.current && dropdownRef.current) {
         const buttonRect = buttonRef.current.getBoundingClientRect();
         const dropdown = dropdownRef.current;
+        
+        // Constants for space calculations
+        const spaceBelow = window.innerHeight - buttonRect.bottom;
+        const spaceAbove = buttonRect.top;
+        
+        // Check if dropdown would touch bottom of page
+        const dropdownBottom = buttonRect.bottom + dropdown.offsetHeight + 4; // 4px for gap
+        const touchesBottom = dropdownBottom >= window.innerHeight;
+        const hasMoreSpaceAbove = spaceAbove > spaceBelow;
+        const shouldFlip = touchesBottom && hasMoreSpaceAbove;
 
-        if (position === 'bottom') {
+        if (position === 'bottom' || position === 'top') {
           dropdown.style.position = 'fixed';
-          dropdown.style.top = `${buttonRect.bottom + 4}px`;
           dropdown.style.left = `${buttonRect.left}px`;
           dropdown.style.width = `${buttonRect.width}px`;
-          dropdown.style.maxHeight = `${window.innerHeight - buttonRect.bottom - 8}px`;
-        } else if (position === 'top') {
-          dropdown.style.position = 'fixed';
-          dropdown.style.bottom = `${window.innerHeight - buttonRect.top + 4}px`;
-          dropdown.style.left = `${buttonRect.left}px`;
-          dropdown.style.width = `${buttonRect.width}px`;
-          dropdown.style.maxHeight = `${buttonRect.top - 8}px`;
+
+          if (position === 'bottom' && shouldFlip) {
+            // Move to top if touches bottom
+            dropdown.style.bottom = `${window.innerHeight - buttonRect.top + 4}px`;
+            dropdown.style.top = 'auto';
+            dropdown.style.maxHeight = `${spaceAbove - 8}px`;
+          } else if (position === 'bottom') {
+            // Stay at bottom
+            dropdown.style.top = `${buttonRect.bottom + 4}px`;
+            dropdown.style.bottom = 'auto';
+            dropdown.style.maxHeight = `${spaceBelow - 8}px`;
+          } else if (position === 'top' && !shouldFlip) {
+            // Move to bottom if more space below
+            dropdown.style.top = `${buttonRect.bottom + 4}px`;
+            dropdown.style.bottom = 'auto';
+            dropdown.style.maxHeight = `${spaceBelow - 8}px`;
+          } else {
+            // Stay at top
+            dropdown.style.bottom = `${window.innerHeight - buttonRect.top + 4}px`;
+            dropdown.style.top = 'auto';
+            dropdown.style.maxHeight = `${spaceAbove - 8}px`;
+          }
         } else if (position === 'left') {
           dropdown.style.position = 'fixed';
           dropdown.style.right = `${window.innerWidth - buttonRect.left + 4}px`;

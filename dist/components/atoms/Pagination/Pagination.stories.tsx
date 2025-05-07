@@ -75,7 +75,9 @@ export const WithPerPageSelector: Story = {
         {...args}
         currentPage={currentPage}
         totalPages={10}
+        totalData={100}
         perPage={perPage}
+        label="user"
         perPageOptions={perPageOptions}
         onPageChange={setCurrentPage}
         onPerPageChange={(val) => {

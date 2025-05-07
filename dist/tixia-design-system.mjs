@@ -17405,8 +17405,8 @@ const ld = ({
   }, x) => {
     const [m, b] = Ie(!1), w = Be(null), y = Be(null), k = `select-${Xe.useId().replace(/:/g, "")}`, A = () => {
       if (m && w.current && y.current) {
-        const I = w.current.getBoundingClientRect(), T = y.current;
-        u === "bottom" ? (T.style.position = "fixed", T.style.top = `${I.bottom + 4}px`, T.style.left = `${I.left}px`, T.style.width = `${I.width}px`, T.style.maxHeight = `${window.innerHeight - I.bottom - 8}px`) : u === "top" ? (T.style.position = "fixed", T.style.bottom = `${window.innerHeight - I.top + 4}px`, T.style.left = `${I.left}px`, T.style.width = `${I.width}px`, T.style.maxHeight = `${I.top - 8}px`) : u === "left" ? (T.style.position = "fixed", T.style.right = `${window.innerWidth - I.left + 4}px`, T.style.top = `${I.top}px`, T.style.maxHeight = `${window.innerHeight - I.top - 8}px`) : u === "right" && (T.style.position = "fixed", T.style.left = `${I.right + 4}px`, T.style.top = `${I.top}px`, T.style.maxHeight = `${window.innerHeight - I.top - 8}px`);
+        const I = w.current.getBoundingClientRect(), T = y.current, O = window.innerHeight - I.bottom, N = I.top, Y = I.bottom + T.offsetHeight + 4 >= window.innerHeight, X = N > O, z = Y && X;
+        u === "bottom" || u === "top" ? (T.style.position = "fixed", T.style.left = `${I.left}px`, T.style.width = `${I.width}px`, u === "bottom" && z ? (T.style.bottom = `${window.innerHeight - I.top + 4}px`, T.style.top = "auto", T.style.maxHeight = `${N - 8}px`) : u === "bottom" ? (T.style.top = `${I.bottom + 4}px`, T.style.bottom = "auto", T.style.maxHeight = `${O - 8}px`) : u === "top" && !z ? (T.style.top = `${I.bottom + 4}px`, T.style.bottom = "auto", T.style.maxHeight = `${O - 8}px`) : (T.style.bottom = `${window.innerHeight - I.top + 4}px`, T.style.top = "auto", T.style.maxHeight = `${N - 8}px`)) : u === "left" ? (T.style.position = "fixed", T.style.right = `${window.innerWidth - I.left + 4}px`, T.style.top = `${I.top}px`, T.style.maxHeight = `${window.innerHeight - I.top - 8}px`) : u === "right" && (T.style.position = "fixed", T.style.left = `${I.right + 4}px`, T.style.top = `${I.top}px`, T.style.maxHeight = `${window.innerHeight - I.top - 8}px`);
       }
     };
     ot(() => {
@@ -17543,90 +17543,101 @@ ro.displayName = "Select";
 const Nd = ({
   currentPage: n,
   totalPages: e,
-  onPageChange: t,
-  siblingCount: i = 1,
-  className: s,
-  perPageOptions: a,
-  perPage: r,
-  onPerPageChange: o
+  totalData: t,
+  onPageChange: i,
+  siblingCount: s = 1,
+  className: a,
+  perPageOptions: r,
+  perPage: o = 10,
+  label: l = "",
+  onPerPageChange: c
 }) => {
-  const l = (d, u) => {
-    const g = u - d + 1;
-    return Array.from({ length: g }, (p, f) => f + d);
-  }, h = (() => {
-    const d = i * 2 + 3, u = d + 2;
-    if (e > u) {
-      const g = Math.max(2, n - i), p = Math.min(e - 1, n + i);
-      let f = l(g, p);
-      const x = g > 2, m = e - p > 1, b = d - (f.length + 1);
-      if (x && !m)
-        f = [...l(g - b, g - 1), ...f];
-      else if (!x && m) {
-        const w = l(p + 1, p + b);
-        f = [...f, ...w];
-      } else x && m && (f = [...f]);
-      return [1, ...f, e];
+  const h = (g, p) => {
+    const f = p - g + 1;
+    return Array.from({ length: f }, (x, m) => m + g);
+  }, u = (() => {
+    const g = s * 2 + 3, p = g + 2;
+    if (e > p) {
+      const f = Math.max(2, n - s), x = Math.min(e - 1, n + s);
+      let m = h(f, x);
+      const b = f > 2, w = e - x > 1, y = g - (m.length + 1);
+      if (b && !w)
+        m = [...h(f - y, f - 1), ...m];
+      else if (!b && w) {
+        const v = h(x + 1, x + y);
+        m = [...m, ...v];
+      } else b && w && (m = [...m]);
+      return [1, ...m, e];
     }
-    return l(1, e);
+    return h(1, e);
   })();
-  return /* @__PURE__ */ M.jsxs("nav", { className: fe("flex items-center justify-center space-x-1", s), children: [
-    a && a.length > 0 && /* @__PURE__ */ M.jsxs("div", { className: "flex items-center gap-2 mr-4", children: [
-      /* @__PURE__ */ M.jsx("span", { className: "text-neutral-700 text-sm", children: "Menampilkan" }),
-      /* @__PURE__ */ M.jsx(
-        ro,
-        {
-          value: r == null ? void 0 : r.toString(),
-          onChange: (d) => o && o(Number(d)),
-          size: "sm",
-          className: "w-16",
-          fullWidth: !1,
-          "aria-label": "Items per page",
-          children: a.map((d) => /* @__PURE__ */ M.jsx(Wi, { value: d.toString(), children: d }, d))
-        }
-      ),
-      /* @__PURE__ */ M.jsx("span", { className: "text-neutral-700 text-sm", children: "data per halaman" })
-    ] }),
-    /* @__PURE__ */ M.jsx(
-      "button",
-      {
-        onClick: () => t(n - 1),
-        disabled: n === 1,
-        className: fe(
-          "px-3 py-1 rounded-md text-sm",
-          n === 1 ? "text-gray-400 cursor-not-allowed" : "text-gray-700 hover:bg-gray-100"
+  return /* @__PURE__ */ M.jsxs(
+    "nav",
+    {
+      className: fe("flex items-center justify-center space-x-1", a),
+      children: [
+        r && r.length > 0 && /* @__PURE__ */ M.jsxs("div", { className: "sm:flex hidden justify-between items-center text-sm gap-10 text-neutral-700", children: [
+          /* @__PURE__ */ M.jsx("div", { children: `${n} - ${e} dari ${t} ${l}` }),
+          /* @__PURE__ */ M.jsxs("div", { className: "flex items-center gap-2 mr-4", children: [
+            /* @__PURE__ */ M.jsx("span", { className: "text-neutral-700 text-sm", children: "Menampilkan" }),
+            /* @__PURE__ */ M.jsx(
+              ro,
+              {
+                value: o == null ? void 0 : o.toString(),
+                onChange: (g) => c && c(Number(g)),
+                size: "sm",
+                className: "w-16",
+                fullWidth: !1,
+                "aria-label": "Items per page",
+                children: r.map((g) => /* @__PURE__ */ M.jsx(Wi, { value: g.toString(), children: g }, g))
+              }
+            ),
+            /* @__PURE__ */ M.jsx("span", { className: "text-neutral-700 text-sm", children: "data per halaman" })
+          ] })
+        ] }),
+        /* @__PURE__ */ M.jsx(
+          "button",
+          {
+            onClick: () => i(n - 1),
+            disabled: n === 1,
+            className: fe(
+              "px-3 py-1 rounded-md text-sm",
+              n === 1 ? "text-gray-400 cursor-not-allowed" : "text-gray-700 hover:bg-gray-100"
+            ),
+            children: "Previous"
+          }
         ),
-        children: "Previous"
-      }
-    ),
-    h.map((d, u) => {
-      const g = d === n, p = typeof d == "string" && d === "...";
-      return /* @__PURE__ */ M.jsx(
-        "button",
-        {
-          onClick: () => !p && t(d),
-          className: fe(
-            "px-3 py-1 rounded-md text-sm",
-            g ? "bg-primary text-white" : "text-gray-700 hover:bg-gray-100",
-            p && "cursor-default"
-          ),
-          children: d
-        },
-        u
-      );
-    }),
-    /* @__PURE__ */ M.jsx(
-      "button",
-      {
-        onClick: () => t(n + 1),
-        disabled: n === e,
-        className: fe(
-          "px-3 py-1 rounded-md text-sm",
-          n === e ? "text-gray-400 cursor-not-allowed" : "text-gray-700 hover:bg-gray-100"
-        ),
-        children: "Next"
-      }
-    )
-  ] });
+        u.map((g, p) => {
+          const f = g === n, x = typeof g == "string" && g === "...";
+          return /* @__PURE__ */ M.jsx(
+            "button",
+            {
+              onClick: () => !x && i(g),
+              className: fe(
+                "px-3 py-1 rounded-md text-sm",
+                f ? "bg-primary text-white" : "text-gray-700 hover:bg-gray-100",
+                x && "cursor-default"
+              ),
+              children: g
+            },
+            p
+          );
+        }),
+        /* @__PURE__ */ M.jsx(
+          "button",
+          {
+            onClick: () => i(n + 1),
+            disabled: n === e,
+            className: fe(
+              "px-3 py-1 rounded-md text-sm",
+              n === e ? "text-gray-400 cursor-not-allowed" : "text-gray-700 hover:bg-gray-100"
+            ),
+            children: "Next"
+          }
+        )
+      ]
+    }
+  );
 }, _d = ({
   label: n,
   checked: e = !1,
