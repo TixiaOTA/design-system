@@ -4,77 +4,96 @@ import type { TableVariant, TableColumn } from './Table';
 import { Button } from '../../atoms/Button';
 import { Icon } from '../../atoms/Icons';
 
-const meta: Meta<typeof Table> = {
+const meta: Meta<typeof Table<User>> = {
   title: 'Molecules/Table',
   component: Table,
   tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof Table>;
+type Story = StoryObj<typeof Table<User>>;
 
-const sampleData: Record<string, any>[] = [
+interface User {
+  no: number;
+  nama: string;
+  email: string;
+  nomorTelepon: string;
+  jenisKelamin: string;
+  kewarganegaraan: string;
+  status: string;
+  saldo: number;
+}
+
+const sampleData: User[] = [
   {
     no: 1,
-    nama: 'steve jobs',
+    nama: 'Steve Jobs',
     email: 'stevejobs@gmail.com',
     nomorTelepon: '081234567890',
     jenisKelamin: 'Laki-laki',
     kewarganegaraan: 'Indonesia',
     status: 'Suspend',
+    saldo: 1500000,
   },
   {
     no: 2,
     nama: 'Bill Gates',
     email: 'billgates@gmail.com',
     nomorTelepon: '081234567890',
-    jenisKelamin: '-',
+    jenisKelamin: 'Laki-laki',
     kewarganegaraan: 'Indonesia',
     status: 'Aktif',
+    saldo: 2500000,
   },
   {
     no: 3,
     nama: 'Kucing Persia',
     email: 'kucingpersia@gmail.com',
     nomorTelepon: '081234567890',
-    jenisKelamin: '-',
+    jenisKelamin: 'Perempuan',
     kewarganegaraan: 'Indonesia',
     status: 'Aktif',
+    saldo: 3500000,
   },
 ];
 
-const schema: TableColumn<Record<string, any>>[] = [
+const schema: TableColumn<User>[] = [
   { 
     name: 'nama',
     label: 'Nama', 
     accessorKey: 'nama',
     type: 'string',
-    sortable: true
+    sortable: true,
+    align: 'left'
   },
   { 
     name: 'email',
     label: 'Email', 
     accessorKey: 'email',
     type: 'string',
-    sortable: true
+    sortable: true,
+    align: 'left'
   },
   { 
     name: 'nomorTelepon',
     label: 'Nomor Telepon', 
     accessorKey: 'nomorTelepon',
-    type: 'string'
+    type: 'string',
+    align: 'left'
   },
   { 
     name: 'jenisKelamin',
     label: 'Jenis Kelamin', 
     accessorKey: 'jenisKelamin',
-    type: 'string'
+    type: 'string',
+    align: 'center'
   },
   { 
     name: 'kewarganegaraan',
     label: 'Kewarganegaraan', 
     accessorKey: 'kewarganegaraan',
-    type: 'string'
+    type: 'string',
+    align: 'center'
   },
   {
     name: 'status',
@@ -82,11 +101,25 @@ const schema: TableColumn<Record<string, any>>[] = [
     accessorKey: 'status',
     type: 'string',
     sortable: true,
-    render: (value: string, row: Record<string, any>) => (
+    align: 'center',
+    render: (value: string) => (
       <span
         className={value === 'Suspend' ? 'text-red-500' : 'text-blue-500'}
       >
         {value}
+      </span>
+    ),
+  },
+  {
+    name: 'saldo',
+    label: 'Saldo',
+    accessorKey: 'saldo',
+    type: 'number',
+    sortable: true,
+    align: 'right',
+    render: (value: number) => (
+      <span>
+        Rp {value.toLocaleString('id-ID')}
       </span>
     ),
   },
@@ -96,6 +129,7 @@ export const Default: Story = {
   args: {
     schema,
     data: sampleData,
+    showIndex: true,
   },
 };
 
@@ -103,7 +137,7 @@ export const WithPagination: Story = {
   args: {
     schema,
     data: sampleData,
-    showNumbering: true,
+    showIndex: true,
     pageSize: 10,
     pageCount: 5,
     currentPage: 1,
@@ -114,23 +148,11 @@ export const WithPagination: Story = {
   },
 };
 
-export const WithoutPagination: Story = {
-  args: {
-    schema,
-    data: sampleData,
-    showNumbering: true,
-    pageSize: 10,
-    pageCount: 5,
-    currentPage: 1,
-    totalData: 50,
-    showPagination: false,
-  },
-};
-
 export const WithSorting: Story = {
   args: {
     schema,
     data: sampleData,
+    showIndex: true,
     onSortChange: (sort, sortBy) => console.log('Sort changed:', sort, sortBy),
   },
 };
@@ -140,6 +162,7 @@ export const Loading: Story = {
     schema,
     data: [],
     isLoading: true,
+    showIndex: true,
   },
 };
 
@@ -147,6 +170,7 @@ export const Empty: Story = {
   args: {
     schema,
     data: [],
+    showIndex: true,
     emptyState: (
       <div className="flex items-center justify-center gap-2">
         <span>No data found</span>
@@ -165,8 +189,9 @@ export const WithRowClick: Story = {
         label: 'Aksi',
         accessorKey: 'no',
         type: 'other',
-        render: (_, row: Record<string, any>) => (
-          <div className="flex gap-2">
+        align: 'center',
+        render: (_, row: User) => (
+          <div className="flex gap-2 justify-center">
             <Button
               variant="ghost"
               size="sm"
@@ -192,7 +217,8 @@ export const WithRowClick: Story = {
       },
     ],
     data: sampleData,
-    onRowClick: (row: Record<string, any>, index: number) => {
+    showIndex: true,
+    onRowClick: (row: User, index: number) => {
       alert('Row clicked: ' + row.nama + ' at index: ' + index);
     },
   },
@@ -207,19 +233,20 @@ export const WithVariants: Story = {
         {variants.map((variant) => (
           <div key={variant} className="space-y-2">
             <h3 className="text-lg font-semibold capitalize">{variant} Variant</h3>
-            <Table<Record<string, any>>
+            <Table<User>
               schema={schema}
               data={sampleData}
               variant={variant}
+              showIndex
               showPagination
               pageSize={5}
               pageCount={2}
               currentPage={1}
               totalData={10}
-              onPageChange={(page) => alert('Page changed:' + page)}
-              onPageSizeChange={(size) => alert('Page size changed:' + size)}
-              onSortChange={(sort, sortBy) => alert('Sort changed:' + sort + ' ' + sortBy)}
-              onRowClick={(row, index) => alert('Row clicked:' + row + ' at index:' + index)}
+              onPageChange={(page) => console.log('Page changed:', page)}
+              onPageSizeChange={(size) => console.log('Page size changed:', size)}
+              onSortChange={(sort, sortBy) => console.log('Sort changed:', sort, sortBy)}
+              onRowClick={(row, index) => console.log('Row clicked:', row.nama, 'at index:', index)}
             />
           </div>
         ))}

@@ -1,5 +1,6 @@
 import React from 'react';
 export type TableVariant = 'primary' | 'secondary' | 'warning' | 'danger' | 'ghost' | 'success';
+type ColumnAlignment = 'left' | 'center' | 'right';
 export interface TableColumn<T> {
     name: string;
     label: string;
@@ -7,9 +8,10 @@ export interface TableColumn<T> {
     type: 'string' | 'number' | 'date' | 'other';
     sortable?: boolean;
     sort?: 'asc' | 'desc';
+    align?: ColumnAlignment;
     render?: (value: any, row: T, index?: number) => React.ReactNode;
 }
-export interface TableProps<T> {
+export interface TableProps<T extends Record<string, any>> {
     schema: TableColumn<T>[];
     data: T[];
     className?: string;
@@ -19,7 +21,7 @@ export interface TableProps<T> {
     emptyState?: React.ReactNode;
     isLoading?: boolean;
     loadingState?: React.ReactNode;
-    showNumbering?: boolean;
+    showIndex?: boolean;
     pageSize?: number;
     pageCount?: number;
     currentPage?: number;
@@ -31,4 +33,5 @@ export interface TableProps<T> {
     showPagination?: boolean;
     variant?: TableVariant;
 }
-export declare const Table: <T extends Record<string, any>>({ schema, data, className, headerClassName, rowClassName, cellClassName, emptyState, isLoading, loadingState, showNumbering, pageSize, pageCount, currentPage, totalData, onPageChange, onPageSizeChange, onSortChange, onRowClick, showPagination, variant, }: TableProps<T>) => string | number | true | import("react/jsx-runtime").JSX.Element | Iterable<React.ReactNode>;
+export declare const Table: <T extends Record<string, any>>({ schema, data, className, headerClassName, rowClassName, cellClassName, emptyState, isLoading, loadingState, showIndex, pageSize, pageCount, currentPage, totalData, onPageChange, onPageSizeChange, onSortChange, onRowClick, showPagination, variant, }: TableProps<T>) => string | number | true | import("react/jsx-runtime").JSX.Element | Iterable<React.ReactNode>;
+export {};

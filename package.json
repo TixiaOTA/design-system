@@ -25,6 +25,7 @@
   "dependencies": {
     "@heroui/react": "^2.7.6",
     "@iconify/react": "^4.1.1",
+    "@tanstack/react-table": "^8.21.3",
     "apexcharts": "^4.7.0",
     "dayjs": "^1.11.13",
     "framer-motion": "^12.9.1",

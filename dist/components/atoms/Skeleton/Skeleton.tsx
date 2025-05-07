@@ -38,7 +38,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({
     warning: 'bg-yellow-100 dark:bg-yellow-900',
     error: 'bg-red-100 dark:bg-red-900',
     info: 'bg-cyan-100 dark:bg-cyan-900',
-    neutral: 'bg-gray-200 dark:bg-gray-600',
+    neutral: 'bg-gray-200 dark:bg-gray-200',
   };
 
   const skeletonClasses = twMerge(

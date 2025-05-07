@@ -265,7 +265,6 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
 
     const handleSelect = (value: string) => {
       if (disabled) return;
-      console.log({value});
       onChange?.(value);
       setIsOpen(false);
     };

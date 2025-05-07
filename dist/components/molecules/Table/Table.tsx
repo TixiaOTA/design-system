@@ -3,8 +3,22 @@ import { cn } from '../../../utils/cn';
 import { Icon } from '../../atoms/Icons';
 import { Pagination } from '../../atoms/Pagination';
 import { Skeleton } from '../../atoms/Skeleton';
+import {
+  useReactTable,
+  getCoreRowModel,
+  getSortedRowModel,
+  getPaginationRowModel,
+  flexRender,
+  SortingState,
+  ColumnDef,
+  Row,
+  Header,
+  HeaderGroup,
+} from '@tanstack/react-table';
 
 export type TableVariant = 'primary' | 'secondary' | 'warning' | 'danger' | 'ghost' | 'success';
+
+type ColumnAlignment = 'left' | 'center' | 'right';
 
 export interface TableColumn<T> {
   name: string;
@@ -13,10 +27,11 @@ export interface TableColumn<T> {
   type: 'string' | 'number' | 'date' | 'other';
   sortable?: boolean;
   sort?: 'asc' | 'desc';
+  align?: ColumnAlignment;
   render?: (value: any, row: T, index?: number) => React.ReactNode;
 }
 
-export interface TableProps<T> {
+export interface TableProps<T extends Record<string, any>> {
   schema: TableColumn<T>[];
   data: T[];
   className?: string;
@@ -26,7 +41,7 @@ export interface TableProps<T> {
   emptyState?: React.ReactNode;
   isLoading?: boolean;
   loadingState?: React.ReactNode;
-  showNumbering?: boolean;
+  showIndex?: boolean;
   pageSize?: number;
   pageCount?: number;
   currentPage?: number;
@@ -146,7 +161,7 @@ export const Table = <T extends Record<string, any>>({
   emptyState,
   isLoading,
   loadingState,
-  showNumbering = false,
+  showIndex = false,
   pageSize = 10,
   pageCount = 1,
   currentPage = 1,
@@ -158,27 +173,73 @@ export const Table = <T extends Record<string, any>>({
   showPagination = false,
   variant = 'primary',
 }: TableProps<T>) => {
-  const [sorting, setSorting] = useState<{ id: string; desc: boolean } | null>(null);
+  const [sorting, setSorting] = useState<SortingState>(() => {
+    const sortedColumn = schema.find(col => col.sortable && col.sort);
+    if (sortedColumn) {
+      return [{
+        id: sortedColumn.accessorKey.toString(),
+        desc: sortedColumn.sort === 'desc'
+      }];
+    }
+    return [];
+  });
+
+  const columns = React.useMemo<ColumnDef<T, any>[]>(() => {
+    const baseColumns = schema.map(col => ({
+      accessorKey: col.accessorKey,
+      header: col.label,
+      enableSorting: !!col.sortable,
+      cell: col.render ? 
+        ({ row }: { row: Row<T> }) => col.render?.(row.original[col.accessorKey], row.original, row.index) :
+        ({ row }: { row: Row<T> }) => row.original[col.accessorKey] || '-',
+      meta: {
+        align: col.align || 'left'
+      }
+    }));
+
+    if (showIndex) {
+      return [{
+        accessorKey: 'no',
+        header: 'No.',
+        enableSorting: false,
+        cell: ({ row }: { row: Row<T> }) => (currentPage - 1) * pageSize + row.index + 1,
+        meta: {
+          align: 'left'
+        }
+      }, ...baseColumns];
+    }
+
+    return baseColumns;
+  }, [schema, showIndex, currentPage, pageSize]);
+
+  const table = useReactTable({
+    data,
+    columns,
+    state: {
+      sorting,
+    },
+    onSortingChange: (updater: SortingState | ((old: SortingState) => SortingState)) => {
+      const newSorting = typeof updater === 'function' ? updater(sorting) : updater;
+      setSorting(newSorting);
+      
+      if (newSorting.length > 0) {
+        onSortChange?.(newSorting[0].desc ? 'desc' : 'asc', newSorting[0].id);
+      } else {
+        onSortChange?.('', '');
+      }
+    },
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    manualPagination: true,
+    pageCount: pageCount,
+  });
+
   const variantStyles = getVariantStyles(variant);
 
   if (isLoading) {
     return loadingState || <TableLoading schema={schema} variant={variant} />;
   }
-
-  const handleSort = (column: TableColumn<T>) => {
-    if (!column.sortable) return;
-    
-    const currentSort = sorting?.id === column.accessorKey.toString();
-    const newSort = !currentSort ? 'asc' : '';
-    
-    if (newSort === '') {
-      setSorting(null);
-    } else {
-      setSorting({ id: column.accessorKey.toString(), desc: false });
-    }
-    
-    onSortChange?.(newSort, column.accessorKey.toString());
-  };
 
   const handleRowClick = (event: React.MouseEvent<HTMLTableRowElement>, row: T, index: number) => {
     const target = event.target as HTMLElement;
@@ -197,65 +258,65 @@ export const Table = <T extends Record<string, any>>({
     }
   };
 
-  const displayColumns: TableColumn<T>[] = showNumbering 
-    ? [{ 
-        name: 'no',
-        label: 'No.', 
-        accessorKey: 'no' as keyof T,
-        type: 'number',
-        render: (_: any, __: any, index: number = 0) => (currentPage - 1) * pageSize + index + 1 
-      }, ...schema]
-    : schema;
-
   return (
     <div className="bg-white rounded-md">
       <div className="p-0 w-full max-h-[50vh] overflow-auto rounded-t-md [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <table className={cn('w-full border-spacing-0 border-separate', className)}>
           <thead className={cn("border-2 sticky top-0 z-10 rounded-t-md", variantStyles.border)}>
-            <tr>
-              {displayColumns.map((column, index) => (
-                <th
-                  key={index}
-                  className={cn(
-                    'text-sm text-wrap border-y p-4 text-left',
-                    variantStyles.header,
-                    {
-                      'cursor-pointer': column.sortable,
-                      'rounded-tl-md': index === 0,
-                      'rounded-tr-md': index === displayColumns.length - 1,
-                    },
-                    headerClassName
-                  )}
-                  onClick={() => handleSort(column)}
-                >
-                  <div className="flex items-center gap-2">
-                    {column.label}
-                    {column.sortable && (
-                      <Icon
-                        icon={
-                          sorting?.id === column.accessorKey.toString()
-                            ? 'mdi:keyboard-arrow-down'
-                            : 'mdi:unfold-more-horizontal'
-                        }
-                        className={cn('h-4 w-4', {
-                          'text-white': variant !== 'ghost',
-                          'text-gray-700': variant === 'ghost',
-                        })}
-                      />
+            {table.getHeaderGroups().map((headerGroup: HeaderGroup<T>) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header: Header<T, unknown>, index: number) => (
+                  <th
+                    key={header.id}
+                    className={cn(
+                      'text-sm text-wrap border-y p-4',
+                      variantStyles.header,
+                      {
+                        'cursor-pointer': header.column.getCanSort(),
+                        'rounded-tl-md': index === 0,
+                        'rounded-tr-md': index === headerGroup.headers.length - 1,
+                        'text-left': (header.column.columnDef.meta as { align?: ColumnAlignment })?.align === 'left',
+                        'text-center': (header.column.columnDef.meta as { align?: ColumnAlignment })?.align === 'center',
+                        'text-right': (header.column.columnDef.meta as { align?: ColumnAlignment })?.align === 'right',
+                      },
+                      headerClassName
                     )}
-                  </div>
-                </th>
-              ))}
-            </tr>
+                    onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className={cn({
+                        'font-semibold': index === 0
+                      })}>
+                        {flexRender(header.column.columnDef.header, header.getContext())}
+                      </span>
+                      {header.column.getCanSort() && (
+                        <Icon
+                          icon={
+                            header.column.getIsSorted()
+                              ? header.column.getIsSorted() === 'desc'
+                                ? 'mdi:keyboard-arrow-up'
+                                : 'mdi:keyboard-arrow-down'
+                              : 'mdi:unfold-more-horizontal'
+                          }
+                          className={cn('h-4 w-4', {
+                            'text-white': variant !== 'ghost',
+                            'text-gray-700': variant === 'ghost',
+                          })}
+                        />
+                      )}
+                    </div>
+                  </th>
+                ))}
+              </tr>
+            ))}
           </thead>
           <tbody className="max-h-[50vh]">
-            {data.length === 0 ? (
+            {table.getRowModel().rows.length === 0 ? (
               <tr>
                 <td
-                  colSpan={displayColumns.length}
+                  colSpan={table.getAllColumns().length}
                   className={cn(
-                    "text-center py-28 border h-full font-bold text-3xl text-default-400 w-full",
-                    variantStyles.border
+                    "text-center py-28 border h-full font-bold text-3xl text-default-400 w-full rounded-b-md",
                   )}
                 >
                   {emptyState || (
@@ -267,9 +328,9 @@ export const Table = <T extends Record<string, any>>({
                 </td>
               </tr>
             ) : (
-              data.map((row, rowIndex) => (
+              table.getRowModel().rows.map((row: Row<T>, rowIndex: number) => (
                 <tr
-                  key={rowIndex}
+                  key={row.id}
                   className={cn(
                     'p-3',
                     variantStyles.row,
@@ -280,19 +341,22 @@ export const Table = <T extends Record<string, any>>({
                     },
                     rowClassName
                   )}
-                  onClick={(event) => handleRowClick(event, row, rowIndex)}
+                  onClick={(event) => handleRowClick(event, row.original, rowIndex)}
                 >
-                  {displayColumns.map((column, colIndex) => (
+                  {row.getVisibleCells().map((cell) => (
                     <td
-                      key={`${rowIndex}-${colIndex}`}
+                      key={cell.id}
                       className={cn(
-                        'text-left text-nowrap text-sm p-4',
+                        "px-4 py-3 text-sm text-gray-900",
+                        {
+                          'text-left': (cell.column.columnDef.meta as { align?: ColumnAlignment })?.align === 'left',
+                          'text-center': (cell.column.columnDef.meta as { align?: ColumnAlignment })?.align === 'center',
+                          'text-right': (cell.column.columnDef.meta as { align?: ColumnAlignment })?.align === 'right',
+                        },
                         cellClassName
                       )}
                     >
-                      {column.render
-                        ? column.render(row[column.accessorKey], row, rowIndex)
-                        : row[column.accessorKey] || '-'}
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </td>
                   ))}
                 </tr>
