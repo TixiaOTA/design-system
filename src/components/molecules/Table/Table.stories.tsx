@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Table } from './Table';
-import type { TableVariant } from './Table';
+import type { TableVariant, TableColumn } from './Table';
+import { Button } from '../../atoms/Button';
+import { Icon } from '../../atoms/Icons';
 
 const meta: Meta<typeof Table> = {
   title: 'Molecules/Table',
@@ -11,17 +13,7 @@ const meta: Meta<typeof Table> = {
 export default meta;
 type Story = StoryObj<typeof Table>;
 
-interface User {
-  no: number;
-  nama: string;
-  email: string;
-  nomorTelepon: string;
-  jenisKelamin: string;
-  kewarganegaraan: string;
-  status: string;
-}
-
-const sampleData: User[] = [
+const sampleData: Record<string, any>[] = [
   {
     no: 1,
     nama: 'steve jobs',
@@ -51,17 +43,46 @@ const sampleData: User[] = [
   },
 ];
 
-const columns = [
-  { header: 'Nama', accessor: 'nama' as const, sortable: true, sort: 'asc' },
-  { header: 'Email', accessor: 'email' as const, sortable: true, sort: 'asc' },
-  { header: 'Nomor Telepon', accessor: 'nomorTelepon' as const },
-  { header: 'Jenis Kelamin', accessor: 'jenisKelamin' as const },
-  { header: 'Kewarganegaraan', accessor: 'kewarganegaraan' as const },
+const schema: TableColumn<Record<string, any>>[] = [
+  { 
+    name: 'nama',
+    label: 'Nama', 
+    accessorKey: 'nama',
+    type: 'string',
+    sortable: true
+  },
+  { 
+    name: 'email',
+    label: 'Email', 
+    accessorKey: 'email',
+    type: 'string',
+    sortable: true
+  },
+  { 
+    name: 'nomorTelepon',
+    label: 'Nomor Telepon', 
+    accessorKey: 'nomorTelepon',
+    type: 'string'
+  },
+  { 
+    name: 'jenisKelamin',
+    label: 'Jenis Kelamin', 
+    accessorKey: 'jenisKelamin',
+    type: 'string'
+  },
+  { 
+    name: 'kewarganegaraan',
+    label: 'Kewarganegaraan', 
+    accessorKey: 'kewarganegaraan',
+    type: 'string'
+  },
   {
-    header: 'Status',
-    accessor: 'status' as const,
+    name: 'status',
+    label: 'Status',
+    accessorKey: 'status',
+    type: 'string',
     sortable: true,
-    render: (value: string) => (
+    render: (value: string, row: Record<string, any>) => (
       <span
         className={value === 'Suspend' ? 'text-red-500' : 'text-blue-500'}
       >
@@ -73,14 +94,14 @@ const columns = [
 
 export const Default: Story = {
   args: {
-    columns,
+    schema,
     data: sampleData,
   },
 };
 
 export const WithPagination: Story = {
   args: {
-    columns,
+    schema,
     data: sampleData,
     showNumbering: true,
     pageSize: 10,
@@ -95,7 +116,7 @@ export const WithPagination: Story = {
 
 export const WithoutPagination: Story = {
   args: {
-    columns,
+    schema,
     data: sampleData,
     showNumbering: true,
     pageSize: 10,
@@ -108,7 +129,7 @@ export const WithoutPagination: Story = {
 
 export const WithSorting: Story = {
   args: {
-    columns,
+    schema,
     data: sampleData,
     onSortChange: (sort, sortBy) => console.log('Sort changed:', sort, sortBy),
   },
@@ -116,7 +137,7 @@ export const WithSorting: Story = {
 
 export const Loading: Story = {
   args: {
-    columns,
+    schema,
     data: [],
     isLoading: true,
   },
@@ -124,7 +145,7 @@ export const Loading: Story = {
 
 export const Empty: Story = {
   args: {
-    columns,
+    schema,
     data: [],
     emptyState: (
       <div className="flex items-center justify-center gap-2">
@@ -137,54 +158,42 @@ export const Empty: Story = {
 
 export const WithRowClick: Story = {
   args: {
-    columns: [
-      { header: 'Nama', accessor: 'nama' as const, sortable: true },
-      { header: 'Email', accessor: 'email' as const, sortable: true },
-      { header: 'Nomor Telepon', accessor: 'nomorTelepon' as const },
-      { header: 'Jenis Kelamin', accessor: 'jenisKelamin' as const },
-      { header: 'Kewarganegaraan', accessor: 'kewarganegaraan' as const },
+    schema: [
+      ...schema,
       {
-        header: 'Status',
-        accessor: 'status' as const,
-        sortable: true,
-        render: (value: string) => (
-          <span
-            className={value === 'Suspend' ? 'text-red-500' : 'text-blue-500'}
-          >
-            {value}
-          </span>
-        ),
-      },
-      {
-        header: 'Actions',
-        accessor: 'no' as const,
-        render: (_, row) => (
+        name: 'actions',
+        label: 'Aksi',
+        accessorKey: 'no',
+        type: 'other',
+        render: (_, row: Record<string, any>) => (
           <div className="flex gap-2">
-            <button
-              className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={(e) => {
                 e.stopPropagation();
-                alert('Edit clicked for:' + row);
+                alert('Edit clicked for: ' + row.nama);
               }}
             >
-              Edit
-            </button>
-            <button
-              className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+              <Icon icon="mdi:pencil" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={(e) => {
                 e.stopPropagation();
-                alert('Delete clicked for:' + row);
+                alert('Delete clicked for: ' + row.nama);
               }}
             >
-              Delete
-            </button>
+              <Icon icon="mdi:delete" />
+            </Button>
           </div>
         ),
       },
     ],
     data: sampleData,
-    onRowClick: (row, index) => {
-      alert('Row clicked:' + row + 'at index:' + index);
+    onRowClick: (row: Record<string, any>, index: number) => {
+      alert('Row clicked: ' + row.nama + ' at index: ' + index);
     },
   },
 };
@@ -198,8 +207,8 @@ export const WithVariants: Story = {
         {variants.map((variant) => (
           <div key={variant} className="space-y-2">
             <h3 className="text-lg font-semibold capitalize">{variant} Variant</h3>
-            <Table
-              columns={columns}
+            <Table<Record<string, any>>
+              schema={schema}
               data={sampleData}
               variant={variant}
               showPagination
@@ -207,6 +216,10 @@ export const WithVariants: Story = {
               pageCount={2}
               currentPage={1}
               totalData={10}
+              onPageChange={(page) => alert('Page changed:' + page)}
+              onPageSizeChange={(size) => alert('Page size changed:' + size)}
+              onSortChange={(sort, sortBy) => alert('Sort changed:' + sort + ' ' + sortBy)}
+              onRowClick={(row, index) => alert('Row clicked:' + row + ' at index:' + index)}
             />
           </div>
         ))}

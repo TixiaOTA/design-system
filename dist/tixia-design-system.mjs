@@ -18728,8 +18728,8 @@ const lo = (n) => {
     border: e.border[n],
     stripe: e.stripe[n]
   };
-}, Md = ({ columns: n, variant: e = "primary" }) => {
-  const t = [{ header: "No.", accessor: "no" }, ...n], i = lo(e);
+}, Md = ({ schema: n, variant: e = "primary" }) => {
+  const t = [{ name: "no", label: "No.", accessorKey: "no", type: "number" }, ...n], i = lo(e);
   return /* @__PURE__ */ C.jsx("div", { className: "bg-white rounded-md", children: /* @__PURE__ */ C.jsx("div", { className: "p-0 w-full max-h-[50vh] overflow-auto rounded-t-md [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]", children: /* @__PURE__ */ C.jsxs("table", { className: "w-full border-spacing-0 border-separate", children: [
     /* @__PURE__ */ C.jsx("thead", { className: ie("border-2 sticky top-0 z-10 rounded-t-md", i.border), children: /* @__PURE__ */ C.jsx("tr", { children: t.map((s, r) => /* @__PURE__ */ C.jsx(
       "th",
@@ -18742,7 +18742,7 @@ const lo = (n) => {
             "rounded-tr-md": r === t.length - 1
           }
         ),
-        children: s.header
+        children: s.label
       },
       r
     )) }) }),
@@ -18766,7 +18766,7 @@ const lo = (n) => {
     )) })
   ] }) }) });
 }, Ud = ({
-  columns: n,
+  schema: n,
   data: e,
   className: t,
   headerClassName: i,
@@ -18789,17 +18789,19 @@ const lo = (n) => {
 }) => {
   const [y, v] = Pe(null), k = lo(w);
   if (o)
-    return l || /* @__PURE__ */ C.jsx(Md, { columns: n, variant: w });
+    return l || /* @__PURE__ */ C.jsx(Md, { schema: n, variant: w });
   const A = (L) => {
     if (!L.sortable) return;
-    const E = (y == null ? void 0 : y.id) === L.accessor.toString() ? "" : "asc";
-    v(E === "" ? null : { id: L.accessor.toString(), desc: !1 }), x == null || x(E, L.accessor.toString());
+    const E = (y == null ? void 0 : y.id) === L.accessorKey.toString() ? "" : "asc";
+    v(E === "" ? null : { id: L.accessorKey.toString(), desc: !1 }), x == null || x(E, L.accessorKey.toString());
   }, S = (L, P, E) => {
     const D = L.target;
     D.tagName === "BUTTON" || D.tagName === "A" || D.tagName === "INPUT" || D.tagName === "SELECT" || D.closest("button") !== null || D.closest("a") !== null || D.closest("input") !== null || D.closest("select") !== null || m == null || m(P, E);
   }, M = c ? [{
-    header: "No.",
-    accessor: "no",
+    name: "no",
+    label: "No.",
+    accessorKey: "no",
+    type: "number",
     render: (L, P, E = 0) => (u - 1) * h + E + 1
   }, ...n] : n;
   return /* @__PURE__ */ C.jsxs("div", { className: "bg-white rounded-md", children: [
@@ -18819,11 +18821,11 @@ const lo = (n) => {
           ),
           onClick: () => A(L),
           children: /* @__PURE__ */ C.jsxs("div", { className: "flex items-center gap-2", children: [
-            L.header,
+            L.label,
             L.sortable && /* @__PURE__ */ C.jsx(
               gt,
               {
-                icon: (y == null ? void 0 : y.id) === L.accessor.toString() ? "mdi:unfold-less-horizontal" : "mdi:unfold-more-horizontal",
+                icon: (y == null ? void 0 : y.id) === L.accessorKey.toString() ? "mdi:keyboard-arrow-down" : "mdi:unfold-more-horizontal",
                 className: ie("h-4 w-4", {
                   "text-white": w !== "ghost",
                   "text-gray-700": w === "ghost"
@@ -18839,7 +18841,8 @@ const lo = (n) => {
         {
           colSpan: M.length,
           className: ie(
-            "text-center py-28 border h-full font-bold text-3xl text-default-400 w-full"
+            "text-center py-28 border h-full font-bold text-3xl text-default-400 w-full",
+            k.border
           ),
           children: a || /* @__PURE__ */ C.jsxs("div", { className: "flex mx-auto w-full text-center justify-center gap-3 items-center", children: [
             /* @__PURE__ */ C.jsx("p", { children: "Data Not Found" }),
@@ -18867,7 +18870,7 @@ const lo = (n) => {
                 "text-left text-nowrap text-sm p-4",
                 r
               ),
-              children: E.render ? E.render(L[E.accessor], L, P) : L[E.accessor] || "-"
+              children: E.render ? E.render(L[E.accessorKey], L, P) : L[E.accessorKey] || "-"
             },
             `${P}-${D}`
           ))

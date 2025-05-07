@@ -7,14 +7,17 @@ import { Skeleton } from '../../atoms/Skeleton';
 export type TableVariant = 'primary' | 'secondary' | 'warning' | 'danger' | 'ghost' | 'success';
 
 export interface TableColumn<T> {
-  header: string;
-  accessor: keyof T;
-  render?: (value: any, row: T, index?: number) => React.ReactNode;
+  name: string;
+  label: string;
+  accessorKey: keyof T;
+  type: 'string' | 'number' | 'date' | 'other';
   sortable?: boolean;
+  sort?: 'asc' | 'desc';
+  render?: (value: any, row: T, index?: number) => React.ReactNode;
 }
 
 export interface TableProps<T> {
-  columns: TableColumn<T>[];
+  schema: TableColumn<T>[];
   data: T[];
   className?: string;
   headerClassName?: string;
@@ -34,7 +37,6 @@ export interface TableProps<T> {
   onRowClick?: (row: T, index: number) => void;
   showPagination?: boolean;
   variant?: TableVariant;
-  sort?: 'asc' | 'desc';
 }
 
 const getVariantStyles = (variant: TableVariant) => {
@@ -81,8 +83,8 @@ const getVariantStyles = (variant: TableVariant) => {
   };
 };
 
-const TableLoading = <T,>({ columns, variant = 'primary' }: { columns: TableColumn<T>[]; variant?: TableVariant }) => {
-  const displayColumns = [{ header: 'No.', accessor: 'no' as keyof T }, ...columns];
+const TableLoading = <T,>({ schema, variant = 'primary' }: { schema: TableColumn<T>[]; variant?: TableVariant }) => {
+  const displayColumns = [{ name: 'no', label: 'No.', accessorKey: 'no' as keyof T, type: 'number' }, ...schema];
   const variantStyles = getVariantStyles(variant);
   
   return (
@@ -103,7 +105,7 @@ const TableLoading = <T,>({ columns, variant = 'primary' }: { columns: TableColu
                     }
                   )}
                 >
-                  {column.header}
+                  {column.label}
                 </th>
               ))}
             </tr>
@@ -135,7 +137,7 @@ const TableLoading = <T,>({ columns, variant = 'primary' }: { columns: TableColu
 };
 
 export const Table = <T extends Record<string, any>>({
-  columns,
+  schema,
   data,
   className,
   headerClassName,
@@ -160,26 +162,25 @@ export const Table = <T extends Record<string, any>>({
   const variantStyles = getVariantStyles(variant);
 
   if (isLoading) {
-    return loadingState || <TableLoading columns={columns} variant={variant} />;
+    return loadingState || <TableLoading schema={schema} variant={variant} />;
   }
 
   const handleSort = (column: TableColumn<T>) => {
     if (!column.sortable) return;
     
-    const currentSort = sorting?.id === column.accessor.toString();
+    const currentSort = sorting?.id === column.accessorKey.toString();
     const newSort = !currentSort ? 'asc' : '';
     
     if (newSort === '') {
       setSorting(null);
     } else {
-      setSorting({ id: column.accessor.toString(), desc: false });
+      setSorting({ id: column.accessorKey.toString(), desc: false });
     }
     
-    onSortChange?.(newSort, column.accessor.toString());
+    onSortChange?.(newSort, column.accessorKey.toString());
   };
 
   const handleRowClick = (event: React.MouseEvent<HTMLTableRowElement>, row: T, index: number) => {
-    // Check if the click originated from an interactive element
     const target = event.target as HTMLElement;
     const isInteractiveElement = 
       target.tagName === 'BUTTON' ||
@@ -198,11 +199,13 @@ export const Table = <T extends Record<string, any>>({
 
   const displayColumns: TableColumn<T>[] = showNumbering 
     ? [{ 
-        header: 'No.', 
-        accessor: 'no' as keyof T, 
+        name: 'no',
+        label: 'No.', 
+        accessorKey: 'no' as keyof T,
+        type: 'number',
         render: (_: any, __: any, index: number = 0) => (currentPage - 1) * pageSize + index + 1 
-      }, ...columns]
-    : columns;
+      }, ...schema]
+    : schema;
 
   return (
     <div className="bg-white rounded-md">
@@ -226,12 +229,12 @@ export const Table = <T extends Record<string, any>>({
                   onClick={() => handleSort(column)}
                 >
                   <div className="flex items-center gap-2">
-                    {column.header}
+                    {column.label}
                     {column.sortable && (
                       <Icon
                         icon={
-                          sorting?.id === column.accessor.toString()
-                            ? 'mdi:unfold-less-horizontal'
+                          sorting?.id === column.accessorKey.toString()
+                            ? 'mdi:keyboard-arrow-down'
                             : 'mdi:unfold-more-horizontal'
                         }
                         className={cn('h-4 w-4', {
@@ -252,6 +255,7 @@ export const Table = <T extends Record<string, any>>({
                   colSpan={displayColumns.length}
                   className={cn(
                     "text-center py-28 border h-full font-bold text-3xl text-default-400 w-full",
+                    variantStyles.border
                   )}
                 >
                   {emptyState || (
@@ -287,8 +291,8 @@ export const Table = <T extends Record<string, any>>({
                       )}
                     >
                       {column.render
-                        ? column.render(row[column.accessor], row, rowIndex)
-                        : row[column.accessor] || '-'}
+                        ? column.render(row[column.accessorKey], row, rowIndex)
+                        : row[column.accessorKey] || '-'}
                     </td>
                   ))}
                 </tr>
