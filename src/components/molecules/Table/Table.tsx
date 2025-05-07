@@ -34,6 +34,7 @@ export interface TableProps<T> {
   onRowClick?: (row: T, index: number) => void;
   showPagination?: boolean;
   variant?: TableVariant;
+  sort?: 'asc' | 'desc';
 }
 
 const getVariantStyles = (variant: TableVariant) => {
@@ -166,12 +167,12 @@ export const Table = <T extends Record<string, any>>({
     if (!column.sortable) return;
     
     const currentSort = sorting?.id === column.accessor.toString();
-    const newSort = !currentSort ? 'asc' : sorting?.desc ? '' : 'desc';
+    const newSort = !currentSort ? 'asc' : '';
     
     if (newSort === '') {
       setSorting(null);
     } else {
-      setSorting({ id: column.accessor.toString(), desc: newSort === 'desc' });
+      setSorting({ id: column.accessor.toString(), desc: false });
     }
     
     onSortChange?.(newSort, column.accessor.toString());
@@ -230,9 +231,7 @@ export const Table = <T extends Record<string, any>>({
                       <Icon
                         icon={
                           sorting?.id === column.accessor.toString()
-                            ? sorting.desc
-                              ? 'mdi:chevron-down'
-                              : 'mdi:chevron-up'
+                            ? 'mdi:unfold-less-horizontal'
                             : 'mdi:unfold-more-horizontal'
                         }
                         className={cn('h-4 w-4', {

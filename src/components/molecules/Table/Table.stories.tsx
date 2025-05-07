@@ -52,8 +52,8 @@ const sampleData: User[] = [
 ];
 
 const columns = [
-  { header: 'Nama', accessor: 'nama' as const, sortable: true },
-  { header: 'Email', accessor: 'email' as const, sortable: true },
+  { header: 'Nama', accessor: 'nama' as const, sortable: true, sort: 'asc' },
+  { header: 'Email', accessor: 'email' as const, sortable: true, sort: 'asc' },
   { header: 'Nomor Telepon', accessor: 'nomorTelepon' as const },
   { header: 'Jenis Kelamin', accessor: 'jenisKelamin' as const },
   { header: 'Kewarganegaraan', accessor: 'kewarganegaraan' as const },
