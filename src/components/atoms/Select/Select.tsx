@@ -11,13 +11,15 @@ const SELECT_OPEN_EVENT = 'select-dropdown-opened';
 export type SelectPosition = 'bottom' | 'top' | 'left' | 'right';
 
 const selectVariants = cva(
-  'rounded-md border bg-white px-3 py-2 text-sm ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+  'rounded-md px-3 py-2 text-sm ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
-        default: 'border-neutral-200 hover:border-primary-300 focus:border-primary-300 hover:bg-primary-50',
-        error: 'border-danger-500 hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50',
-        success: 'border-success-500 hover:border-success-600 focus:border-success-600',
+        default: 'border border-neutral-200 hover:border-primary-300 focus:border-primary-300 hover:bg-primary-50 bg-white',
+        error: 'border border-danger-500 hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50 bg-white',
+        success: 'border border-success-500 hover:border-success-600 focus:border-success-600 bg-white',
+        ghost: 'border-0 hover:bg-neutral-100 focus:bg-neutral-100 bg-transparent',
+        underline: 'border-0 border-b-2 border-neutral-200 rounded-none bg-transparent hover:border-primary-300 focus:border-primary-300 hover:bg-transparent focus:bg-transparent',
       },
       size: {
         sm: 'h-8 px-2 py-1 text-sm',
@@ -37,7 +39,7 @@ const selectVariants = cva(
   }
 );
 
-export type SelectVariant = 'default' | 'error' | 'success';
+export type SelectVariant = 'default' | 'error' | 'success' | 'ghost' | 'underline';
 export type SelectSize = 'sm' | 'md' | 'lg';
 
 export interface SelectOption {
@@ -76,6 +78,10 @@ export interface SelectProps
   size?: SelectSize;
   /** Children components (SelectItem) */
   children?: React.ReactNode;
+  /** Icon to display on the left side of the select */
+  leftIcon?: string;
+  /** Icon to display on the right side of the select */
+  rightIcon?: string;
 }
 
 const Select = forwardRef<HTMLDivElement, SelectProps>(
@@ -96,6 +102,8 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
       position = 'bottom',
       fullWidth = true,
       children,
+      leftIcon,
+      rightIcon,
       ...props
     },
     ref
@@ -337,6 +345,8 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
               selectVariants({ variant: error ? 'error' : variant, size, fullWidth }),
               'flex items-center justify-between',
               disabled && 'cursor-not-allowed opacity-50',
+              leftIcon && 'pl-10',
+              rightIcon && 'pr-10',
               className
             )}
             onClick={handleOpen}
@@ -345,15 +355,26 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
             aria-describedby={error ? `${id}-error` : helperText ? `${id}-helper` : undefined}
             disabled={disabled}
           >
+            {leftIcon && (
+              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500">
+                <Icon icon={leftIcon} className="w-4 h-4" />
+              </div>
+            )}
             <span className="flex items-center text-neutral-500 gap-2 min-w-0 flex-1">
               <span className="truncate">
                 {getSelectedLabel() || placeholder}
               </span>
             </span>
-            <Icon
-              icon="mdi:chevron-down"
-              className={cn('transition-transform flex-shrink-0 ml-2', isOpen && 'rotate-180')}
-            />
+            {rightIcon ? (
+              <div className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500">
+                <Icon icon={rightIcon} className="w-4 h-4" />
+              </div>
+            ) : (
+              <Icon
+                icon="mdi:chevron-down"
+                className={cn('transition-transform flex-shrink-0 ml-2', isOpen && 'rotate-180')}
+              />
+            )}
           </button>
           {renderDropdown()}
         </div>

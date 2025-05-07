@@ -19,7 +19,7 @@ export interface AutoCompleteProps extends Omit<React.InputHTMLAttributes<HTMLIn
         label: string;
     }) => React.ReactNode;
     /** Input variant that determines the visual style */
-    variant?: 'default' | 'error' | 'success';
+    variant?: 'default' | 'error' | 'success' | 'ghost' | 'underline';
     /** Size of the input */
     size?: 'sm' | 'md' | 'lg';
     /** Icon to display on the left side of the input */

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Select } from './Select';
 import { SelectItem } from '../SelectItem';
 import { Icon } from '../../atoms/Icons/Icons';
+import { Icon as IconifyIcon } from '@iconify/react';
 
 const meta = {
   title: 'Atoms/Select',
@@ -32,7 +33,7 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['default', 'error', 'success'],
+      options: ['default', 'error', 'success', 'ghost', 'underline'],
     },
     size: {
       control: 'select',
@@ -221,31 +222,103 @@ export const WithLongOptions: Story = {
   },
 };
 
-export const PositionTop: Story = {
+export const TixiaLanguage: Story = {
   args: {
-    label: 'Dropdown Position Top',
-    options: defaultOptions,
-    placeholder: 'Select a flavor...',
-    position: 'top',
-    className: 'mt-32', // Add margin to show dropdown above
+    variant: 'ghost',
+    value: 'id',
+    leftIcon: 'circle-flags:id',
+    options: [
+      {
+        value: 'id',
+        label: 'ID',
+        icon: <Icon icon="circle-flags:id" className="h-4 w-4" />,
+      },
+      {
+        value: 'en',
+        label: 'EN',
+        icon: <Icon icon="circle-flags:en" className="h-4 w-4" />,
+      },
+    ],
+  },
+  render: (args) => (
+    <div className="flex items-center gap-2">
+      <Select {...args}>
+        <SelectItem value="id">ID</SelectItem>
+        <SelectItem value="en">EN</SelectItem>
+      </Select>
+    </div>
+  ),
+};
+
+export const WithLeftIcon: Story = {
+  args: {
+    ...Default.args,
+    label: 'Select with Left Icon',
+    leftIcon: 'mdi:account',
   },
 };
 
-export const PositionLeft: Story = {
+export const WithRightIcon: Story = {
   args: {
-    label: 'Dropdown Position Left',
-    options: defaultOptions,
-    placeholder: 'Select a flavor...',
-    position: 'left',
-    className: 'ml-32', // Add margin to show dropdown on the left
+    ...Default.args,
+    label: 'Select with Right Icon',
+    rightIcon: 'mdi:menu-down',
   },
 };
 
-export const PositionRight: Story = {
+export const WithBothIcons: Story = {
   args: {
-    label: 'Dropdown Position Right',
+    ...Default.args,
+    label: 'Select with Both Icons',
+    leftIcon: 'mdi:account',
+    rightIcon: 'mdi:menu-down',
+  },
+};
+
+export const WithCustomOptions: Story = {
+  args: {
+    ...Default.args,
+    label: 'Select with Custom Options',
+    options: [
+      { label: 'Option 1', value: '1', icon: <IconifyIcon icon="mdi:star" /> },
+      { label: 'Option 2', value: '2', icon: <IconifyIcon icon="mdi:heart" /> },
+      { label: 'Option 3', value: '3', icon: <IconifyIcon icon="mdi:check" /> },
+    ],
+  },
+};
+
+export const DifferentPositions: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <Select
+        {...Default.args}
+        label="Bottom Position (Default)"
+        position="bottom"
+      />
+      <Select
+        {...Default.args}
+        label="Top Position"
+        position="top"
+      />
+      <Select
+        {...Default.args}
+        label="Left Position"
+        position="left"
+      />
+      <Select
+        {...Default.args}
+        label="Right Position"
+        position="right"
+      />
+    </div>
+  ),
+};
+
+export const WithUnderline: Story = {
+  args: {
+    label: 'Underline Select',
     options: defaultOptions,
     placeholder: 'Select a flavor...',
-    position: 'right',
+    variant: 'underline',
   },
-}; 
+};

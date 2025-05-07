@@ -11,7 +11,7 @@ const meta: Meta<typeof Input> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['default', 'outline', 'filled', 'error'],
+      options: ['default', 'error', 'success', 'ghost', 'underline'],
     },
     size: {
       control: 'select',
@@ -194,5 +194,13 @@ export const ReadOnly: Story = {
     label: 'Read-only input',
     value: 'You cannot edit this',
     readOnly: true,
+  },
+};
+
+export const WithUnderline: Story = {
+  args: {
+    label: 'Underline Input',
+    placeholder: 'Enter text...',
+    variant: 'underline',
   },
 }; 

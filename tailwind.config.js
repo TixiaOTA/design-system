@@ -20,17 +20,17 @@ module.exports = {
           900: '#003833',  // Darkest shade
         },
         secondary: {
-          DEFAULT: '#336AFF',
-          50: "#F5F8FF",
-          100: "#E0E9FF",
-          200: "#CCDAFF",
-          300: "#99B5FF",
-          400: "#668FFF",
-          500: "#336AFF",
-          600: "#0040FF",
-          700: "#002DB3",
-          800: "#001A66",
-          900: "#000D33",
+          DEFAULT: '#CEEAE7',
+          50: '#F5FCFB',  // Lightest tint
+          100: '#E8F7F5',
+          200: '#DCF2EF',
+          300: '#CEEAE7', // Base color
+          400: '#B8DCD9',
+          500: '#CEEAE7', // Base color
+          600: '#9EC9C5',
+          700: '#7EA8A3',
+          800: '#5E8781',
+          900: '#3E665F', // Darkest shade
         },
         // Semantic Colors
         success: {

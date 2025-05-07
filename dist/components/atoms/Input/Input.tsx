@@ -11,6 +11,8 @@ const inputVariants = cva(
         default: 'border-neutral-200 hover:border-primary-300 focus:border-primary-300 hover:bg-primary-50',
         error: 'border-danger-500 hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50',
         success: 'border-success-500 hover:border-success-600 focus:border-success-600 hover:bg-success-50',
+        ghost: 'border-transparent bg-transparent hover:bg-primary-50 focus:bg-primary-50',
+        underline: 'border-0 border-b-2 border-neutral-200 rounded-none bg-transparent hover:border-primary-300 focus:border-primary-300 hover:bg-transparent focus:bg-transparent',
       },
       inputSize: {
         sm: 'h-8 px-2 py-1 text-sm',
@@ -30,7 +32,7 @@ const inputVariants = cva(
   }
 );
 
-export type InputVariant = 'default' | 'error' | 'success';
+export type InputVariant = 'default' | 'error' | 'success' | 'ghost' | 'underline';
 export type InputSize = 'sm' | 'md' | 'lg';
 export type LabelPlacement = 'top' | 'left';
 

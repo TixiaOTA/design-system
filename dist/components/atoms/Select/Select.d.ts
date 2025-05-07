@@ -2,11 +2,11 @@ import React from 'react';
 import { type VariantProps } from 'class-variance-authority';
 export type SelectPosition = 'bottom' | 'top' | 'left' | 'right';
 declare const selectVariants: (props?: ({
-    variant?: "default" | "error" | "success" | null | undefined;
+    variant?: "default" | "error" | "success" | "ghost" | "underline" | null | undefined;
     size?: "sm" | "md" | "lg" | null | undefined;
     fullWidth?: boolean | null | undefined;
 } & import("class-variance-authority/dist/types").ClassProp) | undefined) => string;
-export type SelectVariant = 'default' | 'error' | 'success';
+export type SelectVariant = 'default' | 'error' | 'success' | 'ghost' | 'underline';
 export type SelectSize = 'sm' | 'md' | 'lg';
 export interface SelectOption {
     label: string;
@@ -41,6 +41,10 @@ export interface SelectProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 
     size?: SelectSize;
     /** Children components (SelectItem) */
     children?: React.ReactNode;
+    /** Icon to display on the left side of the select */
+    leftIcon?: string;
+    /** Icon to display on the right side of the select */
+    rightIcon?: string;
 }
 declare const Select: React.ForwardRefExoticComponent<SelectProps & React.RefAttributes<HTMLDivElement>>;
 export { Select };

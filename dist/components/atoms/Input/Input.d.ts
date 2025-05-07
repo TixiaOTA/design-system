@@ -1,5 +1,5 @@
 import React from 'react';
-export type InputVariant = 'default' | 'error' | 'success';
+export type InputVariant = 'default' | 'error' | 'success' | 'ghost' | 'underline';
 export type InputSize = 'sm' | 'md' | 'lg';
 export type LabelPlacement = 'top' | 'left';
 export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
