@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { DatePicker } from './DatePicker';
 
-const meta = {
+const meta: Meta<typeof DatePicker> = {
   title: 'Atoms/DatePicker',
   component: DatePicker,
   parameters: {
@@ -17,11 +17,24 @@ const meta = {
       control: 'select',
       options: ['sm', 'md', 'lg'],
     },
+    rounded: {
+      control: 'select',
+      options: ['none', 'sm', 'md', 'lg', 'full'],
+    },
     labelPlacement: {
       control: 'select',
       options: ['top', 'left'],
     },
     isRangeSelection: {
+      control: 'boolean',
+    },
+    disabled: {
+      control: 'boolean',
+    },
+    required: {
+      control: 'boolean',
+    },
+    fullWidth: {
       control: 'boolean',
     },
   },
@@ -116,4 +129,71 @@ export const LeftLabel: Story = {
     labelPlacement: 'left',
     placeholder: 'Select date',
   },
+};
+
+export const WithRangeSelection: Story = {
+  args: {
+    label: 'Date Range',
+    placeholder: 'Select date range',
+    isRangeSelection: true,
+  },
+};
+
+export const WithValidation: Story = {
+  args: {
+    label: 'Date',
+    placeholder: 'Select date',
+    required: true,
+    errorText: 'This field is required',
+  },
+};
+
+export const WithHelperText: Story = {
+  args: {
+    label: 'Date',
+    placeholder: 'Select date',
+    helperText: 'Select a date within the next 30 days',
+  },
+};
+
+export const SizeVariants: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <DatePicker label="Small" size="sm" placeholder="Select date" />
+      <DatePicker label="Medium" size="md" placeholder="Select date" />
+      <DatePicker label="Large" size="lg" placeholder="Select date" />
+    </div>
+  ),
+};
+
+export const RoundedVariants: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <DatePicker label="No Rounded" rounded="none" placeholder="Select date" />
+      <DatePicker label="Small Rounded" rounded="sm" placeholder="Select date" />
+      <DatePicker label="Medium Rounded" rounded="md" placeholder="Select date" />
+      <DatePicker label="Large Rounded" rounded="lg" placeholder="Select date" />
+      <DatePicker label="Full Rounded" rounded="full" placeholder="Select date" />
+    </div>
+  ),
+};
+
+export const VariantExamples: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <DatePicker label="Default" variant="default" placeholder="Select date" />
+      <DatePicker label="Error" variant="error" errorText="Invalid date" placeholder="Select date" />
+      <DatePicker label="Success" variant="success" placeholder="Select date" />
+    </div>
+  ),
+};
+
+export const LayoutExamples: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <DatePicker label="Top Label" labelPlacement="top" placeholder="Select date" />
+      <DatePicker label="Left Label" labelPlacement="left" placeholder="Select date" />
+      <DatePicker label="Full Width" fullWidth placeholder="Select date" />
+    </div>
+  ),
 }; 

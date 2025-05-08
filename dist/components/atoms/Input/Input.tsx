@@ -4,7 +4,7 @@ import { cn } from '@/utils/cn';
 import { Icon } from '@iconify/react';
 
 const inputVariants = cva(
-  'rounded-md border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+  'border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
@@ -14,10 +14,17 @@ const inputVariants = cva(
         ghost: 'border-transparent bg-transparent hover:bg-primary-50 focus:bg-primary-50',
         underline: 'border-0 border-b-2 border-neutral-200 rounded-none bg-transparent hover:border-primary-300 focus:border-primary-300 hover:bg-transparent focus:bg-transparent',
       },
-      inputSize: {
+      size: {
         sm: 'h-8 px-2 py-1 text-sm',
         md: 'h-10 px-3 py-2 text-base',
         lg: 'h-12 px-4 py-3 text-lg',
+      },
+      rounded: {
+        none: 'rounded-none',
+        sm: 'rounded-sm',
+        md: 'rounded-md',
+        lg: 'rounded-lg',
+        full: 'rounded-full',
       },
       fullWidth: {
         true: 'w-full',
@@ -26,7 +33,8 @@ const inputVariants = cva(
     },
     defaultVariants: {
       variant: 'default',
-      inputSize: 'md',
+      size: 'md',
+      rounded: 'md',
       fullWidth: true,
     },
   }
@@ -34,17 +42,16 @@ const inputVariants = cva(
 
 export type InputVariant = 'default' | 'error' | 'success' | 'ghost' | 'underline';
 export type InputSize = 'sm' | 'md' | 'lg';
+export type InputRounded = 'none' | 'sm' | 'md' | 'lg' | 'full';
 export type LabelPlacement = 'top' | 'left';
 
 export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
-  /** Input variant that determines the visual style */
+  /** Visual style variant */
   variant?: InputVariant;
   /** Size of the input */
   size?: InputSize;
-  /** Icon to display on the left side of the input */
-  leftIcon?: string;
-  /** Icon to display on the right side of the input */
-  rightIcon?: string;
+  /** Border radius of the input */
+  rounded?: InputRounded;
   /** Whether the input is in an error state */
   error?: boolean;
   /** Error message to display below the input */
@@ -57,27 +64,29 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
   required?: boolean;
   /** Position of the label relative to the input */
   labelPlacement?: LabelPlacement;
-  /** Additional className for the wrapper div */
-  wrapperClassName?: string;
   /** Whether the input should take full width */
   fullWidth?: boolean;
+  /** Icon to display on the left side of the input */
+  leftIcon?: string;
+  /** Icon to display on the right side of the input */
+  rightIcon?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ 
     className, 
-    wrapperClassName,
     variant = 'default', 
     size = 'md', 
-    leftIcon, 
-    rightIcon, 
+    rounded = 'md', 
     error = false,
     errorText, 
     helperText, 
     label, 
     required = false,
     labelPlacement = 'top',
-    fullWidth = true,
+    fullWidth = false,
+    leftIcon, 
+    rightIcon, 
     id: providedId,
     ...props 
   }, ref) => {
@@ -97,7 +106,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           type="text"
           ref={ref}
           className={cn(
-            inputVariants({ variant: error ? 'error' : variant, inputSize: size, fullWidth }),
+            inputVariants({ variant: error ? 'error' : variant, size, rounded, fullWidth }),
             leftIcon && 'pl-10',
             rightIcon && 'pr-10',
             className
@@ -132,7 +141,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
     if (labelPlacement === 'left') {
       return (
-        <div className={cn(fullWidth ? "w-full" : "inline-block", wrapperClassName)}>
+        <div className={cn(fullWidth ? "w-full" : "inline-block", className)}>
           <div className="flex items-start gap-4">
             {label && (
               <label
@@ -153,7 +162,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     }
 
     return (
-      <div className={cn(fullWidth ? "w-full" : "inline-block", wrapperClassName)}>
+      <div className={cn(fullWidth ? "w-full" : "inline-block", className)}>
         {label && (
           <label
             htmlFor={id}

@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import { Icon } from '@iconify/react';
 
 const datePickerVariants = cva(
-  'rounded-md border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+  'border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
@@ -19,6 +19,13 @@ const datePickerVariants = cva(
         md: 'h-10 px-3 py-2 text-base',
         lg: 'h-12 px-4 py-3 text-lg',
       },
+      rounded: {
+        none: 'rounded-none',
+        sm: 'rounded-sm',
+        md: 'rounded-md',
+        lg: 'rounded-lg',
+        full: 'rounded-full',
+      },
       fullWidth: {
         true: 'w-full',
         false: 'w-fit',
@@ -27,6 +34,7 @@ const datePickerVariants = cva(
     defaultVariants: {
       variant: 'default',
       size: 'md',
+      rounded: 'md',
       fullWidth: true,
     },
   }
@@ -51,6 +59,8 @@ export interface DatePickerProps extends Omit<React.InputHTMLAttributes<HTMLInpu
   variant?: 'default' | 'error' | 'success';
   /** Size of the input */
   size?: 'sm' | 'md' | 'lg';
+  /** Border radius of the input */
+  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
   /** Whether the input is disabled */
   disabled?: boolean;
   /** Error message to display below the input */
@@ -79,6 +89,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       maxDate,
       variant = 'default',
       size = 'md',
+      rounded = 'md',
       disabled = false,
       errorText,
       helperText,
@@ -240,7 +251,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
             placeholder={placeholder}
             onClick={() => !disabled && setIsOpen(!isOpen)}
             readOnly
-            className={cn(datePickerVariants({ variant, size, fullWidth }))}
+            className={cn(datePickerVariants({ variant, size, rounded, fullWidth }))}
             disabled={disabled}
             {...props}
           />

@@ -18,6 +18,10 @@ const meta = {
       control: 'select',
       options: ['sm', 'md', 'lg'],
     },
+    rounded: {
+      control: 'select',
+      options: ['none', 'sm', 'md', 'lg', 'full'],
+    },
     dropdownPosition: {
       control: 'select',
       options: ['top', 'bottom'],
@@ -36,6 +40,7 @@ const defaultOptions = [
   { value: 'strawberry', label: 'Strawberry' },
 ];
 
+// Basic Examples
 export const Default: Story = {
   args: {
     options: defaultOptions,
@@ -60,6 +65,7 @@ export const WithHelperText: Story = {
   },
 };
 
+// Variant Examples
 export const WithError: Story = {
   args: {
     label: 'Fruit Search',
@@ -98,6 +104,69 @@ export const WithUnderline: Story = {
   },
 };
 
+// Rounded Examples
+export const RoundedVariants: Story = {
+  args: {
+    options: defaultOptions,
+    placeholder: 'Search fruits...',
+  },
+  render: (args) => (
+    <div className="space-y-4">
+      <AutoComplete
+        {...args}
+        label="No Rounded"
+        rounded="none"
+      />
+      <AutoComplete
+        {...args}
+        label="Small Rounded"
+        rounded="sm"
+      />
+      <AutoComplete
+        {...args}
+        label="Medium Rounded"
+        rounded="md"
+      />
+      <AutoComplete
+        {...args}
+        label="Large Rounded"
+        rounded="lg"
+      />
+      <AutoComplete
+        {...args}
+        label="Full Rounded"
+        rounded="full"
+      />
+    </div>
+  ),
+};
+
+// Size Examples
+export const Small: Story = {
+  args: {
+    options: defaultOptions,
+    placeholder: 'Search fruits...',
+    size: 'sm',
+  },
+};
+
+export const Medium: Story = {
+  args: {
+    options: defaultOptions,
+    placeholder: 'Search fruits...',
+    size: 'md',
+  },
+};
+
+export const Large: Story = {
+  args: {
+    options: defaultOptions,
+    placeholder: 'Search fruits...',
+    size: 'lg',
+  },
+};
+
+// Icon Examples
 export const WithLeftIcon: Story = {
   args: {
     label: 'Fruit Search',
@@ -130,36 +199,13 @@ export const WithCustomOption: Story = {
   },
 };
 
+// State Examples
 export const Loading: Story = {
   args: {
     label: 'Fruit Search',
     options: defaultOptions,
     placeholder: 'Search fruits...',
     loading: true,
-  },
-};
-
-export const Small: Story = {
-  args: {
-    options: defaultOptions,
-    placeholder: 'Search fruits...',
-    size: 'sm',
-  },
-};
-
-export const Medium: Story = {
-  args: {
-    options: defaultOptions,
-    placeholder: 'Search fruits...',
-    size: 'md',
-  },
-};
-
-export const Large: Story = {
-  args: {
-    options: defaultOptions,
-    placeholder: 'Search fruits...',
-    size: 'lg',
   },
 };
 
@@ -181,6 +227,7 @@ export const Required: Story = {
   },
 };
 
+// Dropdown Position Examples
 export const WithTopDropdown: Story = {
   args: {
     label: 'Fruit Search',
@@ -190,21 +237,22 @@ export const WithTopDropdown: Story = {
   },
 };
 
+// Form Example
 export const FormExample: Story = {
   args: {
     options: defaultOptions,
     placeholder: 'Search fruits...',
   },
-  render: () => (
+  render: (args) => (
     <div className="space-y-4 w-[400px]">
       <AutoComplete
+        {...args}
         label="Fruit Search"
-        options={defaultOptions}
-        placeholder="Search fruits..."
         variant="underline"
         showClear
       />
       <AutoComplete
+        {...args}
         label="Vegetable Search"
         options={[
           { value: 'carrot', label: 'Carrot' },

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Skeleton } from '.';
+import { Skeleton } from './Skeleton';
 
 const meta: Meta<typeof Skeleton> = {
   title: 'Atoms/Skeleton',
@@ -8,21 +8,14 @@ const meta: Meta<typeof Skeleton> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['text', 'circular', 'rectangular'],
+      options: ['default', 'primary', 'success', 'warning', 'danger', 'info'],
     },
-    animation: {
+    rounded: {
       control: 'select',
-      options: ['pulse', 'wave'],
+      options: ['none', 'sm', 'md', 'lg', 'full'],
     },
-    color: {
-      control: 'select',
-      options: ['primary', 'secondary', 'success', 'warning', 'error', 'info', 'neutral'],
-    },
-    height: {
-      control: 'text',
-    },
-    width: {
-      control: 'text',
+    fullWidth: {
+      control: 'boolean',
     },
   },
 };
@@ -30,102 +23,88 @@ const meta: Meta<typeof Skeleton> = {
 export default meta;
 type Story = StoryObj<typeof Skeleton>;
 
-// Basic variants
-export const Text: Story = {
+export const Default: Story = {
   args: {
-    variant: 'text',
+    width: 200,
+    height: 20,
+    variant: 'default',
+    rounded: 'md',
   },
 };
 
-export const Circular: Story = {
-  args: {
-    variant: 'circular',
-    height: '40px',
-    width: '40px',
-  },
-};
-
-export const Rectangular: Story = {
-  args: {
-    variant: 'rectangular',
-    height: '100px',
-    width: '200px',
-  },
-};
-
-// Color variants
-export const ColorVariants: Story = {
-  render: () => (
-    <div className="flex flex-col gap-4">
-      <div className="flex gap-2">
-        <Skeleton variant="text" color="primary" width="200px" />
-        <Skeleton variant="text" color="secondary" width="200px" />
-        <Skeleton variant="text" color="neutral" width="200px" />
-      </div>
-      <div className="flex gap-2">
-        <Skeleton variant="text" color="success" width="200px" />
-        <Skeleton variant="text" color="warning" width="200px" />
-        <Skeleton variant="text" color="error" width="200px" />
-      </div>
-      <div className="flex gap-2">
-        <Skeleton variant="text" color="info" width="200px" />
-      </div>
-    </div>
-  ),
-};
-
-// Animation variants
-export const PulseAnimation: Story = {
-  args: {
-    variant: 'text',
-    animation: 'pulse',
-  },
-};
-
-export const WaveAnimation: Story = {
-  args: {
-    variant: 'text',
-    animation: 'wave',
-  },
-};
-
-// Common use cases
-export const AvatarWithText: Story = {
-  render: () => (
-    <div className="flex items-center space-x-4">
-      <Skeleton variant="circular" height="40px" width="40px" color="neutral" />
-      <div className="space-y-2">
-        <Skeleton variant="text" width="200px" color="neutral" />
-        <Skeleton variant="text" width="150px" color="neutral" />
-      </div>
-    </div>
-  ),
-};
-
-export const CardSkeleton: Story = {
-  render: () => (
-    <div className="p-4 border rounded-lg space-y-4">
-      <Skeleton variant="rectangular" height="200px" width="100%" color="neutral" />
-      <div className="space-y-2">
-        <Skeleton variant="text" width="80%" color="neutral" />
-        <Skeleton variant="text" width="60%" color="neutral" />
-      </div>
-    </div>
-  ),
-};
-
-export const ListSkeleton: Story = {
+export const VariantExamples: Story = {
   render: () => (
     <div className="space-y-4">
-      {[...Array(5)].map((_, index) => (
-        <div key={index} className="flex items-center space-x-4">
-          <Skeleton variant="circular" height="40px" width="40px" color="neutral" />
-          <div className="flex-1 space-y-2">
-            <Skeleton variant="text" width="80%" color="neutral" />
-            <Skeleton variant="text" width="60%" color="neutral" />
-          </div>
-        </div>
-      ))}
+      <Skeleton width={200} height={20} variant="default" />
+      <Skeleton width={200} height={20} variant="primary" />
+      <Skeleton width={200} height={20} variant="success" />
+      <Skeleton width={200} height={20} variant="warning" />
+      <Skeleton width={200} height={20} variant="danger" />
+      <Skeleton width={200} height={20} variant="info" />
+    </div>
+  ),
+};
+
+export const RoundedVariants: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <Skeleton width={200} height={20} rounded="none" />
+      <Skeleton width={200} height={20} rounded="sm" />
+      <Skeleton width={200} height={20} rounded="md" />
+      <Skeleton width={200} height={20} rounded="lg" />
+      <Skeleton width={200} height={20} rounded="full" />
+    </div>
+  ),
+};
+
+export const SizeExamples: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <Skeleton width={100} height={20} />
+      <Skeleton width={200} height={20} />
+      <Skeleton width={300} height={20} />
+      <Skeleton width={400} height={20} />
+    </div>
+  ),
+};
+
+export const HeightExamples: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <Skeleton width={200} height={10} />
+      <Skeleton width={200} height={20} />
+      <Skeleton width={200} height={30} />
+      <Skeleton width={200} height={40} />
+    </div>
+  ),
+};
+
+export const FullWidthExamples: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <Skeleton height={20} fullWidth />
+      <Skeleton height={20} fullWidth variant="primary" />
+      <Skeleton height={20} fullWidth variant="success" />
+      <Skeleton height={20} fullWidth variant="warning" />
+      <Skeleton height={20} fullWidth variant="danger" />
+      <Skeleton height={20} fullWidth variant="info" />
+    </div>
+  ),
+};
+
+export const LayoutExamples: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <div className="flex gap-4">
+        <Skeleton width={100} height={20} />
+        <Skeleton width={100} height={20} />
+        <Skeleton width={100} height={20} />
+      </div>
+      <Skeleton height={20} fullWidth />
+      <div className="flex gap-4">
+        <Skeleton width={150} height={20} />
+        <Skeleton width={150} height={20} />
+      </div>
     </div>
   ),
 };

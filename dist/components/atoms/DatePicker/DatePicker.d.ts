@@ -17,6 +17,8 @@ export interface DatePickerProps extends Omit<React.InputHTMLAttributes<HTMLInpu
     variant?: 'default' | 'error' | 'success';
     /** Size of the input */
     size?: 'sm' | 'md' | 'lg';
+    /** Border radius of the input */
+    rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
     /** Whether the input is disabled */
     disabled?: boolean;
     /** Error message to display below the input */

@@ -5,6 +5,7 @@ export interface BadgeProps {
   children: React.ReactNode;
   variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'error';
   size?: 'small' | 'medium' | 'large';
+  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
   className?: string;
 }
 
@@ -12,6 +13,7 @@ export const Badge: React.FC<BadgeProps> = ({
   children,
   variant = 'primary',
   size = 'medium',
+  rounded = 'md',
   className = '',
 }) => {
   const variantClasses = {
@@ -28,10 +30,19 @@ export const Badge: React.FC<BadgeProps> = ({
     large: 'px-3 py-1.5 text-base',
   };
 
+  const roundedClasses = {
+    none: 'rounded-none',
+    sm: 'rounded-sm',
+    md: 'rounded-md',
+    lg: 'rounded-lg',
+    full: 'rounded-full',
+  };
+
   const badgeClasses = twMerge(
-    'inline-flex items-center font-medium rounded-full',
+    'inline-flex items-center font-medium',
     variantClasses[variant],
     sizeClasses[size],
+    roundedClasses[rounded],
     className
   );
 

@@ -6,6 +6,7 @@ import type { IconifyIcon } from '@iconify/react';
 export type ChipVariant = 'solid' | 'outline' | 'subtle' | 'soft';
 export type ChipColor = 'primary' | 'success' | 'warning' | 'error' | 'info' | 'danger' | 'default';
 export type ChipSize = 'sm' | 'md' | 'lg';
+export type ChipRounded = 'none' | 'sm' | 'md' | 'lg' | 'full';
 
 const variantStyles: Record<ChipVariant, Record<ChipColor, string>> = {
   solid: {
@@ -52,11 +53,20 @@ const sizeStyles: Record<ChipSize, string> = {
   lg: 'text-base px-4 py-1.5'
 };
 
+const roundedStyles: Record<ChipRounded, string> = {
+  none: 'rounded-none',
+  sm: 'rounded-sm',
+  md: 'rounded-md',
+  lg: 'rounded-lg',
+  full: 'rounded-full'
+};
+
 export interface ChipProps {
   children: React.ReactNode;
   variant?: ChipVariant;
   color?: ChipColor;
   size?: ChipSize;
+  rounded?: ChipRounded;
   onClose?: () => void;
   className?: string;
   icon?: string | IconifyIcon;
@@ -67,6 +77,7 @@ const Chip: React.FC<ChipProps> = ({
   variant = 'solid',
   color = 'primary',
   size = 'md',
+  rounded = 'md',
   onClose,
   className,
   icon
@@ -74,9 +85,10 @@ const Chip: React.FC<ChipProps> = ({
   return (
     <div
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-full font-medium',
+        'inline-flex items-center gap-1.5 font-medium',
         variantStyles[variant][color],
         sizeStyles[size],
+        roundedStyles[rounded],
         className
       )}
     >

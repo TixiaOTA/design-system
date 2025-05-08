@@ -48,6 +48,7 @@ const meta: Meta<typeof Button> = {
 export default meta;
 type Story = StoryObj<typeof Button>;
 
+// Basic Variants
 export const Primary: Story = {
   args: {
     children: "Primary Button",
@@ -62,6 +63,7 @@ export const Secondary: Story = {
   },
 };
 
+// Outline Variants
 export const Outline: Story = {
   args: {
     children: "Outline Button",
@@ -71,53 +73,19 @@ export const Outline: Story = {
 
 export const OutlinePrimary: Story = {
   args: {
-    children: "Outline Primary Button",
+    children: "Outline Primary",
     variant: "outline-primary",
   },
 };
 
 export const OutlineSecondary: Story = {
   args: {
-    children: "Outline Secondary Button",
+    children: "Outline Secondary",
     variant: "outline-secondary",
   },
 };
 
-export const OutlineSuccess: Story = {
-  args: {
-    children: "Outline Success Button",
-    variant: "outline-success",
-  },
-};
-
-export const OutlineWarning: Story = {
-  args: {
-    children: "Outline Warning Button",
-    variant: "outline-warning",
-  },
-};
-
-export const OutlineDanger: Story = {
-  args: {
-    children: "Outline Danger Button",
-    variant: "outline-danger",
-  },
-};
-
-export const Ghost: Story = {
-  args: {
-    children: "Ghost Button",
-    variant: "ghost",
-  },
-};
-
-export const Link: Story = {
-  args: {
-    children: "Link Button",
-    variant: "link",
-  },
-};
-
+// Semantic Variants
 export const Success: Story = {
   args: {
     children: "Success Button",
@@ -139,6 +107,22 @@ export const Danger: Story = {
   },
 };
 
+// Text Variants
+export const Ghost: Story = {
+  args: {
+    children: "Ghost Button",
+    variant: "ghost",
+  },
+};
+
+export const Link: Story = {
+  args: {
+    children: "Link Button",
+    variant: "link",
+  },
+};
+
+// Loading States
 export const Loading: Story = {
   args: {
     children: "Loading Button",
@@ -146,32 +130,40 @@ export const Loading: Story = {
   },
 };
 
-export const Disabled: Story = {
+export const LoadingWithIcon: Story = {
   args: {
-    children: "Disabled Button",
-    disabled: true,
+    children: "Loading Button",
+    isLoading: true,
+    leftIcon: "mdi:loading",
   },
 };
 
-export const FullWidth: Story = {
-  args: {
-    children: "Full Width Button",
-    fullWidth: true,
-  },
-};
-
-export const RoundedVariants: Story = {
+// Size Variants
+export const SizeVariants: Story = {
   render: () => (
-    <div className="flex gap-2">
-      <Button rounded="none">none</Button>
-      <Button rounded="sm">sm</Button>
-      <Button rounded="md">md</Button>
-      <Button rounded="lg">lg</Button>
-      <Button rounded="full">full</Button>
+    <div className="flex items-center gap-2">
+      <Button size="xs">Extra Small</Button>
+      <Button size="sm">Small</Button>
+      <Button size="md">Medium</Button>
+      <Button size="lg">Large</Button>
     </div>
   ),
 };
 
+// Rounded Variants
+export const RoundedVariants: Story = {
+  render: () => (
+    <div className="flex gap-2">
+      <Button rounded="none">None</Button>
+      <Button rounded="sm">Small</Button>
+      <Button rounded="md">Medium</Button>
+      <Button rounded="lg">Large</Button>
+      <Button rounded="full">Full</Button>
+    </div>
+  ),
+};
+
+// Icon Variants
 export const WithStartIcon: Story = {
   args: {
     children: "Search",
@@ -194,6 +186,7 @@ export const WithBothIcons: Story = {
   },
 };
 
+// Icon Only Buttons
 export const IconOnly: Story = {
   args: {
     "aria-label": "Search",
@@ -220,28 +213,45 @@ export const IconOnlyLarge: Story = {
   },
 };
 
-export const SemanticVariants: Story = {
+// Semantic Variants with Icons
+export const SemanticWithIcons: Story = {
   render: () => (
     <div className="flex gap-2">
-      <Button variant="success">Success Action</Button>
-      <Button variant="warning">Warning Action</Button>
-      <Button variant="danger">Danger Action</Button>
+      <Button variant="success" leftIcon="mdi:check">
+        Success Action
+      </Button>
+      <Button variant="warning" leftIcon="mdi:alert">
+        Warning Action
+      </Button>
+      <Button variant="danger" leftIcon="mdi:delete">
+        Danger Action
+      </Button>
     </div>
   ),
 };
 
-export const SemanticWithIcons: Story = {
+// Full Width
+export const FullWidth: Story = {
+  args: {
+    children: "Full Width Button",
+    fullWidth: true,
+  },
+};
+
+// Interactive States
+export const InteractiveStates: Story = {
   render: () => (
-    <div className="flex gap-2">
-      <Button variant="success" leftIcon="mdi:plus">
-        Add Success
-      </Button>
-      <Button variant="warning" leftIcon="mdi:search">
-        Search Warning
-      </Button>
-      <Button variant="danger" leftIcon="mdi:arrow-right">
-        Delete Danger
-      </Button>
+    <div className="flex flex-col gap-4">
+      <div className="flex gap-2">
+        <Button>Default</Button>
+        <Button disabled>Disabled</Button>
+        <Button isLoading>Loading</Button>
+      </div>
+      <div className="flex gap-2">
+        <Button variant="outline">Default</Button>
+        <Button variant="outline" disabled>Disabled</Button>
+        <Button variant="outline" isLoading>Loading</Button>
+      </div>
     </div>
   ),
 };

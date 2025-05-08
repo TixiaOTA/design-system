@@ -1,65 +1,68 @@
-import React from 'react';
-import { twMerge } from 'tailwind-merge';
+import { cn } from '@/utils/cn';
+import { cva } from 'class-variance-authority';
+
+const skeletonVariants = cva(
+  'animate-pulse bg-neutral-200',
+  {
+    variants: {
+      variant: {
+        default: 'bg-neutral-200',
+        primary: 'bg-primary-200',
+        success: 'bg-success-200',
+        warning: 'bg-warning-200',
+        danger: 'bg-danger-200',
+        info: 'bg-info-200',
+      },
+      rounded: {
+        none: 'rounded-none',
+        sm: 'rounded-sm',
+        md: 'rounded-md',
+        lg: 'rounded-lg',
+        full: 'rounded-full',
+      },
+      fullWidth: {
+        true: 'w-full',
+        false: 'w-fit',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+      rounded: 'md',
+      fullWidth: false,
+    },
+  }
+);
 
 export interface SkeletonProps {
+  /** The width of the skeleton */
+  width?: string | number;
+  /** The height of the skeleton */
+  height?: string | number;
+  /** The visual style variant */
+  variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  /** Border radius of the skeleton */
+  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
+  /** Whether the skeleton should take full width */
+  fullWidth?: boolean;
+  /** Additional class name */
   className?: string;
-  variant?: 'text' | 'circular' | 'rectangular';
-  animation?: 'pulse' | 'wave';
-  height?: string;
-  width?: string;
-  color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info' | 'neutral';
 }
 
-export const Skeleton: React.FC<SkeletonProps> = ({
-  className = '',
-  variant = 'text',
-  animation = 'pulse',
-  height,
+export const Skeleton = ({
   width,
-  color = 'neutral',
-}) => {
-  const baseClasses = 'bg-gray-200 dark:bg-gray-700';
-  
-  const variantClasses = {
-    text: 'h-4 rounded',
-    circular: 'rounded-full',
-    rectangular: 'rounded',
-  };
-
-  const animationClasses = {
-    pulse: 'animate-pulse',
-    wave: 'animate-wave',
-  };
-
-  const colorClasses = {
-    primary: 'bg-blue-100 dark:bg-blue-900',
-    secondary: 'bg-gray-100 dark:bg-gray-700',
-    success: 'bg-green-100 dark:bg-green-900',
-    warning: 'bg-yellow-100 dark:bg-yellow-900',
-    error: 'bg-red-100 dark:bg-red-900',
-    info: 'bg-cyan-100 dark:bg-cyan-900',
-    neutral: 'bg-gray-200 dark:bg-gray-200',
-  };
-
-  const skeletonClasses = twMerge(
-    baseClasses,
-    variantClasses[variant],
-    animationClasses[animation],
-    colorClasses[color],
-    className
-  );
-
-  const style = {
-    ...(height && { height }),
-    ...(width && { width }),
-  };
-
+  height,
+  variant = 'default',
+  rounded = 'md',
+  fullWidth = false,
+  className,
+}: SkeletonProps) => {
   return (
     <div
-      className={skeletonClasses}
-      style={style}
-      role="status"
-      aria-label="Loading"
+      className={cn(skeletonVariants({ variant, rounded, fullWidth }), className)}
+      style={{
+        width: !fullWidth && typeof width === 'number' ? `${width}px` : width,
+        height: typeof height === 'number' ? `${height}px` : height,
+      }}
     />
   );
 };

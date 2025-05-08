@@ -1,18 +1,21 @@
 import React from 'react';
 export type NotificationType = 'info' | 'success' | 'warning' | 'error';
 export interface NotificationProps {
-    type?: NotificationType;
+    /** The title of the notification */
     title?: string;
-    message: string;
+    /** The content of the notification */
+    children: React.ReactNode;
+    /** The icon to display */
     icon?: string;
-    duration?: number;
+    /** The visual style variant */
+    variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+    /** Border radius of the notification */
+    rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
+    /** Whether to show a close button */
     showClose?: boolean;
-    className?: string;
+    /** Callback when the notification is closed */
     onClose?: () => void;
-    actions?: {
-        label: string;
-        onClick: () => void;
-        className?: string;
-    }[];
+    /** Additional class name */
+    className?: string;
 }
-export declare const Notification: React.FC<NotificationProps>;
+export declare const Notification: ({ title, children, icon, variant, rounded, showClose, onClose, className, }: NotificationProps) => import("react/jsx-runtime").JSX.Element;

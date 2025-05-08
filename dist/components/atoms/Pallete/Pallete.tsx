@@ -47,16 +47,16 @@ export const Pallete: React.FC<PalleteProps> = ({ className }) => {
       <div className="col-span-full">
         <h3 className="text-lg font-semibold mb-4">Secondary Colors</h3>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-          <ColorSwatch name="Secondary 50" value="#F5F8FF" colorClass="bg-secondary-50" />
-          <ColorSwatch name="Secondary 100" value="#E0E9FF" colorClass="bg-secondary-100" />
-          <ColorSwatch name="Secondary 200" value="#CCDAFF" colorClass="bg-secondary-200" />
-          <ColorSwatch name="Secondary 300" value="#99B5FF" colorClass="bg-secondary-300" />
-          <ColorSwatch name="Secondary 400" value="#668FFF" colorClass="bg-secondary-400" />
-          <ColorSwatch name="Secondary 500" value="#005671" colorClass="bg-secondary-500" />
-          <ColorSwatch name="Secondary 600" value="#0040FF" colorClass="bg-secondary-600" />
-          <ColorSwatch name="Secondary 700" value="#002DB3" colorClass="bg-secondary-700" />
-          <ColorSwatch name="Secondary 800" value="#001A66" colorClass="bg-secondary-800" />
-          <ColorSwatch name="Secondary 900" value="#000D33" colorClass="bg-secondary-900" />
+          <ColorSwatch name="Secondary 50" value="#F5FCFB" colorClass="bg-secondary-50" />
+          <ColorSwatch name="Secondary 100" value="#E8F7F5" colorClass="bg-secondary-100" />
+          <ColorSwatch name="Secondary 200" value="#DCF2EF" colorClass="bg-secondary-200" />
+          <ColorSwatch name="Secondary 300" value="#CEEAE7" colorClass="bg-secondary-300" />
+          <ColorSwatch name="Secondary 400" value="#B8DCD9" colorClass="bg-secondary-400" />
+          <ColorSwatch name="Secondary 500" value="#A2CECB" colorClass="bg-secondary-500" />
+          <ColorSwatch name="Secondary 600" value="#8CC0BD" colorClass="bg-secondary-600" />
+          <ColorSwatch name="Secondary 700" value="#76B2AF" colorClass="bg-secondary-700" />
+          <ColorSwatch name="Secondary 800" value="#60A4A1" colorClass="bg-secondary-800" />
+          <ColorSwatch name="Secondary 900" value="#4A9693" colorClass="bg-secondary-900" />
         </div>
       </div>
 
@@ -86,7 +86,7 @@ export const Pallete: React.FC<PalleteProps> = ({ className }) => {
           <ColorSwatch name="Warning 200" value="#FFE380" colorClass="bg-warning-200" />
           <ColorSwatch name="Warning 300" value="#FFD84D" colorClass="bg-warning-300" />
           <ColorSwatch name="Warning 400" value="#FFCD1A" colorClass="bg-warning-400" />
-          <ColorSwatch name="Warning 500" value="#FFB300" colorClass="bg-warning-500" />
+          <ColorSwatch name="Warning 500" value="#FF9319" colorClass="bg-warning-500" />
           <ColorSwatch name="Warning 600" value="#CC9000" colorClass="bg-warning-600" />
           <ColorSwatch name="Warning 700" value="#996D00" colorClass="bg-warning-700" />
           <ColorSwatch name="Warning 800" value="#664A00" colorClass="bg-warning-800" />
@@ -103,7 +103,7 @@ export const Pallete: React.FC<PalleteProps> = ({ className }) => {
           <ColorSwatch name="Danger 200" value="#FF8080" colorClass="bg-danger-200" />
           <ColorSwatch name="Danger 300" value="#FF4D4D" colorClass="bg-danger-300" />
           <ColorSwatch name="Danger 400" value="#FF1A1A" colorClass="bg-danger-400" />
-          <ColorSwatch name="Danger 500" value="#E60000" colorClass="bg-danger-500" />
+          <ColorSwatch name="Danger 500" value="#CA0000" colorClass="bg-danger-500" />
           <ColorSwatch name="Danger 600" value="#B30000" colorClass="bg-danger-600" />
           <ColorSwatch name="Danger 700" value="#800000" colorClass="bg-danger-700" />
           <ColorSwatch name="Danger 800" value="#4D0000" colorClass="bg-danger-800" />
@@ -142,6 +142,23 @@ export const Pallete: React.FC<PalleteProps> = ({ className }) => {
           <ColorSwatch name="Neutral 700" value="#343A40" colorClass="bg-neutral-700" />
           <ColorSwatch name="Neutral 800" value="#212529" colorClass="bg-neutral-800" />
           <ColorSwatch name="Neutral 900" value="#121416" colorClass="bg-neutral-900" />
+        </div>
+      </div>
+
+      {/* Disabled Colors */}
+      <div className="col-span-full">
+        <h3 className="text-lg font-semibold mb-4">Disabled Colors</h3>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+          <ColorSwatch name="Disabled 50" value="#F8F9FA" colorClass="bg-disabled-50" />
+          <ColorSwatch name="Disabled 100" value="#E9ECEF" colorClass="bg-disabled-100" />
+          <ColorSwatch name="Disabled 200" value="#DEE2E6" colorClass="bg-disabled-200" />
+          <ColorSwatch name="Disabled 300" value="#CED4DA" colorClass="bg-disabled-300" />
+          <ColorSwatch name="Disabled 400" value="#ADB5BD" colorClass="bg-disabled-400" />
+          <ColorSwatch name="Disabled 500" value="#959595" colorClass="bg-disabled-500" />
+          <ColorSwatch name="Disabled 600" value="#495057" colorClass="bg-disabled-600" />
+          <ColorSwatch name="Disabled 700" value="#343A40" colorClass="bg-disabled-700" />
+          <ColorSwatch name="Disabled 800" value="#212529" colorClass="bg-disabled-800" />
+          <ColorSwatch name="Disabled 900" value="#121416" colorClass="bg-disabled-900" />
         </div>
       </div>
     </div>

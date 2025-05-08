@@ -3,11 +3,14 @@ import { cn } from '@/utils/cn';
 import { Icon } from '@iconify/react';
 import type { IconifyIcon } from '@iconify/react';
 import { ToastPosition } from './ToastContext';
+import { Button } from '../../atoms/Button';
 
 export type ToastVariant = 'default' | 'success' | 'error' | 'warning' | 'info';
+export type ToastRounded = 'none' | 'sm' | 'md' | 'lg' | 'full';
 
 export interface ToastProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: ToastVariant;
+  rounded?: ToastRounded;
   title?: string;
   description?: string;
   onClose?: () => void;
@@ -18,10 +21,19 @@ export interface ToastProps extends React.HTMLAttributes<HTMLDivElement> {
   position?: ToastPosition;
 }
 
+const roundedStyles: Record<ToastRounded, string> = {
+  none: 'rounded-none',
+  sm: 'rounded-sm',
+  md: 'rounded-md',
+  lg: 'rounded-lg',
+  full: 'rounded-full'
+};
+
 const Toast = forwardRef<HTMLDivElement, ToastProps>(
   ({ 
     className, 
     variant = 'default', 
+    rounded = 'lg',
     title, 
     description, 
     onClose, 
@@ -39,13 +51,16 @@ const Toast = forwardRef<HTMLDivElement, ToastProps>(
     };
 
     const iconToShow = icon || (showIcon ? defaultIconMap[variant] : undefined);
+    const hasContent = title || description;
 
     return (
       <div
         ref={ref}
         className={cn(
-          'flex items-start gap-3 rounded-lg p-4 shadow-lg',
+          'flex',
+          description ? 'items-start gap-3 p-4' : 'items-center gap-2 py-2.5 px-3',
           'border border-gray-200',
+          roundedStyles[rounded],
           {
             'bg-white': variant === 'default',
             'bg-success-50': variant === 'success',
@@ -60,19 +75,23 @@ const Toast = forwardRef<HTMLDivElement, ToastProps>(
         {iconToShow && (
           <Icon
             icon={iconToShow}
-            className={cn('h-5 w-5 flex-shrink-0', {
-              'text-gray-500': variant === 'default',
-              'text-success-500': variant === 'success',
-              'text-danger-500': variant === 'error',
-              'text-warning-500': variant === 'warning',
-              'text-info-500': variant === 'info'
-            })}
+            className={cn(
+              'flex-shrink-0',
+              description ? 'h-5 w-5 mt-0.5' : 'h-4 w-4',
+              {
+                'text-gray-500': variant === 'default',
+                'text-success-500': variant === 'success',
+                'text-danger-500': variant === 'error',
+                'text-warning-500': variant === 'warning',
+                'text-info-500': variant === 'info'
+              }
+            )}
           />
         )}
         <div className="flex-1">
           {title && (
             <h3
-              className={cn('text-sm font-medium', {
+              className={cn('text-sm font-medium leading-5', {
                 'text-gray-900': variant === 'default',
                 'text-success-900': variant === 'success',
                 'text-danger-900': variant === 'error',
@@ -85,7 +104,7 @@ const Toast = forwardRef<HTMLDivElement, ToastProps>(
           )}
           {description && (
             <p
-              className={cn('mt-1 text-sm', {
+              className={cn(title ? 'mt-1' : '', 'text-sm leading-5', {
                 'text-gray-500': variant === 'default',
                 'text-success-700': variant === 'success',
                 'text-danger-700': variant === 'error',
@@ -96,13 +115,20 @@ const Toast = forwardRef<HTMLDivElement, ToastProps>(
               {description}
             </p>
           )}
+          {!hasContent && (
+            <span className="text-sm leading-5">
+              {props.children}
+            </span>
+          )}
         </div>
         {showClose && onClose && (
-          <button
-            type="button"
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={onClose}
             className={cn(
-              'ml-4 flex-shrink-0 rounded-md p-1 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2',
+              'flex-shrink-0 !p-1',
+              description ? 'ml-4' : 'ml-2',
               {
                 'text-gray-400 hover:text-gray-500': variant === 'default',
                 'text-success-400 hover:text-success-500': variant === 'success',
@@ -112,8 +138,8 @@ const Toast = forwardRef<HTMLDivElement, ToastProps>(
               }
             )}
           >
-            <Icon icon="mdi:close" className="h-5 w-5" />
-          </button>
+            <Icon icon="mdi:close" className={cn(description ? 'h-5 w-5' : 'h-4 w-4')} />
+          </Button>
         )}
       </div>
     );

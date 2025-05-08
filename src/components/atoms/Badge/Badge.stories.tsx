@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Badge } from './Badge';
 
-const meta: Meta<typeof Badge> = {
+const meta = {
   title: 'Atoms/Badge',
   component: Badge,
   tags: ['autodocs'],
@@ -14,11 +14,21 @@ const meta: Meta<typeof Badge> = {
       control: 'select',
       options: ['small', 'medium', 'large'],
     },
+    rounded: {
+      control: 'select',
+      options: ['none', 'sm', 'md', 'lg', 'full'],
+    },
   },
-};
+} satisfies Meta<typeof Badge>;
 
 export default meta;
 type Story = StoryObj<typeof Badge>;
+
+export const Default: Story = {
+  args: {
+    children: 'Badge',
+  },
+};
 
 // Basic variants
 export const Primary: Story = {
@@ -67,13 +77,15 @@ export const SizeVariants: Story = {
   ),
 };
 
-// Semantic variants
-export const SemanticVariants: Story = {
+// Rounded variants
+export const RoundedVariants: Story = {
   render: () => (
-    <div className="flex gap-2">
-      <Badge variant="success">Success</Badge>
-      <Badge variant="warning">Warning</Badge>
-      <Badge variant="error">Error</Badge>
+    <div className="flex gap-2 items-center">
+      <Badge rounded="none">No Rounded</Badge>
+      <Badge rounded="sm">Small Rounded</Badge>
+      <Badge rounded="md">Medium Rounded</Badge>
+      <Badge rounded="lg">Large Rounded</Badge>
+      <Badge rounded="full">Full Rounded</Badge>
     </div>
   ),
 };
@@ -81,15 +93,25 @@ export const SemanticVariants: Story = {
 // All variants
 export const AllVariants: Story = {
   render: () => (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-4">
       <div className="flex gap-2">
         <Badge variant="primary">Primary</Badge>
         <Badge variant="secondary">Secondary</Badge>
-      </div>
-      <div className="flex gap-2">
         <Badge variant="success">Success</Badge>
         <Badge variant="warning">Warning</Badge>
         <Badge variant="error">Error</Badge>
+      </div>
+      <div className="flex gap-2">
+        <Badge size="small">Small</Badge>
+        <Badge size="medium">Medium</Badge>
+        <Badge size="large">Large</Badge>
+      </div>
+      <div className="flex gap-2">
+        <Badge rounded="none">None</Badge>
+        <Badge rounded="sm">Small</Badge>
+        <Badge rounded="md">Medium</Badge>
+        <Badge rounded="lg">Large</Badge>
+        <Badge rounded="full">Full</Badge>
       </div>
     </div>
   ),

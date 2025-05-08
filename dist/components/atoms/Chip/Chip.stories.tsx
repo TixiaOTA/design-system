@@ -4,105 +4,97 @@ import { Chip } from './Chip';
 const meta = {
   title: 'Atoms/Chip',
   component: Chip,
-  parameters: {
-    layout: 'centered',
-  },
   tags: ['autodocs'],
+  argTypes: {
+    variant: {
+      control: 'select',
+      options: ['solid', 'outline', 'subtle', 'soft'],
+    },
+    color: {
+      control: 'select',
+      options: ['primary', 'success', 'warning', 'error', 'info', 'danger', 'default'],
+    },
+    size: {
+      control: 'select',
+      options: ['sm', 'md', 'lg'],
+    },
+    rounded: {
+      control: 'select',
+      options: ['none', 'sm', 'md', 'lg', 'full'],
+    },
+  },
 } satisfies Meta<typeof Chip>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof Chip>;
 
-// Basic variants
-export const Solid: Story = {
+export const Default: Story = {
   args: {
-    children: 'Solid Chip',
-    variant: 'solid',
+    children: 'Chip',
   },
 };
 
-export const Outline: Story = {
-  args: {
-    children: 'Outline Chip',
-    variant: 'outline',
-  },
+export const Variants: Story = {
+  render: () => (
+    <div className="flex flex-wrap gap-2">
+      <Chip variant="solid">Solid</Chip>
+      <Chip variant="outline">Outline</Chip>
+      <Chip variant="subtle">Subtle</Chip>
+      <Chip variant="soft">Soft</Chip>
+    </div>
+  ),
 };
 
-export const Soft: Story = {
-  args: {
-    children: 'Soft Chip',
-    variant: 'soft',
-  },
+export const Colors: Story = {
+  render: () => (
+    <div className="flex flex-wrap gap-2">
+      <Chip color="primary">Primary</Chip>
+      <Chip color="success">Success</Chip>
+      <Chip color="warning">Warning</Chip>
+      <Chip color="error">Error</Chip>
+      <Chip color="info">Info</Chip>
+      <Chip color="danger">Danger</Chip>
+      <Chip color="default">Default</Chip>
+    </div>
+  ),
 };
 
-// Colors
-export const Primary: Story = {
-  args: {
-    children: 'Primary Chip',
-    color: 'primary',
-  },
+export const Sizes: Story = {
+  render: () => (
+    <div className="flex flex-wrap gap-2 items-center">
+      <Chip size="sm">Small</Chip>
+      <Chip size="md">Medium</Chip>
+      <Chip size="lg">Large</Chip>
+    </div>
+  ),
 };
 
-export const Success: Story = {
-  args: {
-    children: 'Success Chip',
-    color: 'success',
-  },
+export const RoundedVariants: Story = {
+  render: () => (
+    <div className="flex flex-wrap gap-2 items-center">
+      <Chip rounded="none">No Rounded</Chip>
+      <Chip rounded="sm">Small Rounded</Chip>
+      <Chip rounded="md">Medium Rounded</Chip>
+      <Chip rounded="lg">Large Rounded</Chip>
+      <Chip rounded="full">Full Rounded</Chip>
+    </div>
+  ),
 };
 
-export const Warning: Story = {
-  args: {
-    children: 'Warning Chip',
-    color: 'warning',
-  },
-};
-
-export const Danger: Story = {
-  args: {
-    children: 'Danger Chip',
-    color: 'danger',
-  },
-};
-
-// Sizes
-export const Small: Story = {
-  args: {
-    children: 'Small Chip',
-    size: 'sm',
-  },
-};
-
-export const Medium: Story = {
-  args: {
-    children: 'Medium Chip',
-    size: 'md',
-  },
-};
-
-export const Large: Story = {
-  args: {
-    children: 'Large Chip',
-    size: 'lg',
-  },
-};
-
-// With Icon
 export const WithIcon: Story = {
   args: {
-    children: 'Chip with Icon',
+    children: 'With Icon',
     icon: 'mdi:star',
   },
 };
 
-// With Close Button
-export const WithCloseButton: Story = {
+export const WithClose: Story = {
   args: {
     children: 'Closeable Chip',
     onClose: () => alert('Close clicked'),
   },
 };
 
-// With Icon and Close Button
 export const WithIconAndClose: Story = {
   args: {
     children: 'Complete Chip',
@@ -111,32 +103,39 @@ export const WithIconAndClose: Story = {
   },
 };
 
-// All Variants
 export const AllVariants: Story = {
-  args: {
-    children: 'Chip',
-  },
-  render: (args) => (
-    <div className="flex flex-wrap gap-2">
-      <Chip {...args} variant="solid">Solid</Chip>
-      <Chip {...args} variant="outline">Outline</Chip>
-      <Chip {...args} variant="soft">Soft</Chip>
-    </div>
-  ),
-};
-
-// All Colors
-export const AllColors: Story = {
-  args: {
-    children: 'Chip',
-  },
-  render: (args) => (
-    <div className="flex flex-wrap gap-2">
-      <Chip {...args} color="primary">Primary</Chip>
-      <Chip {...args} color="success">Success</Chip>
-      <Chip {...args} color="warning">Warning</Chip>
-      <Chip {...args} color="danger">Danger</Chip>
-      <Chip {...args} color="default">Default</Chip>
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-wrap gap-2">
+        <Chip variant="solid">Solid</Chip>
+        <Chip variant="outline">Outline</Chip>
+        <Chip variant="subtle">Subtle</Chip>
+        <Chip variant="soft">Soft</Chip>
+      </div>
+      <div className="flex flex-wrap gap-2">
+        <Chip color="primary">Primary</Chip>
+        <Chip color="success">Success</Chip>
+        <Chip color="warning">Warning</Chip>
+        <Chip color="danger">Danger</Chip>
+        <Chip color="default">Default</Chip>
+      </div>
+      <div className="flex flex-wrap gap-2">
+        <Chip size="sm">Small</Chip>
+        <Chip size="md">Medium</Chip>
+        <Chip size="lg">Large</Chip>
+      </div>
+      <div className="flex flex-wrap gap-2">
+        <Chip rounded="none">None</Chip>
+        <Chip rounded="sm">Small</Chip>
+        <Chip rounded="md">Medium</Chip>
+        <Chip rounded="lg">Large</Chip>
+        <Chip rounded="full">Full</Chip>
+      </div>
+      <div className="flex flex-wrap gap-2">
+        <Chip icon="mdi:star">With Icon</Chip>
+        <Chip onClose={() => {}}>With Close</Chip>
+        <Chip icon="mdi:star" onClose={() => {}}>With Both</Chip>
+      </div>
     </div>
   ),
 }; 

@@ -1,148 +1,117 @@
-import React, { useEffect, useState } from 'react';
-import clsx from 'clsx';
+import React from 'react';
 import { Icon } from '@iconify/react';
+import { cva } from 'class-variance-authority';
+import { cn } from '@/utils/cn';
 
 export type NotificationType = 'info' | 'success' | 'warning' | 'error';
 
+const notificationVariants = cva(
+  'flex items-start gap-3 p-4 shadow-sm',
+  {
+    variants: {
+      variant: {
+        default: 'bg-white border border-neutral-200',
+        primary: 'bg-primary-50 border border-primary-200',
+        success: 'bg-success-50 border border-success-200',
+        warning: 'bg-warning-50 border border-warning-200',
+        danger: 'bg-danger-50 border border-danger-200',
+        info: 'bg-info-50 border border-info-200',
+      },
+      rounded: {
+        none: 'rounded-none',
+        sm: 'rounded-sm',
+        md: 'rounded-md',
+        lg: 'rounded-lg',
+        full: 'rounded-full',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+      rounded: 'md',
+    },
+  }
+);
+
 export interface NotificationProps {
-  type?: NotificationType;
+  /** The title of the notification */
   title?: string;
-  message: string;
+  /** The content of the notification */
+  children: React.ReactNode;
+  /** The icon to display */
   icon?: string;
-  duration?: number;
+  /** The visual style variant */
+  variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  /** Border radius of the notification */
+  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
+  /** Whether to show a close button */
   showClose?: boolean;
-  className?: string;
+  /** Callback when the notification is closed */
   onClose?: () => void;
-  actions?: {
-    label: string;
-    onClick: () => void;
-    className?: string;
-  }[];
+  /** Additional class name */
+  className?: string;
 }
 
-export const Notification: React.FC<NotificationProps> = ({
-  type = 'info',
+export const Notification = ({
   title,
-  message,
+  children,
   icon,
-  duration = 0, // 5000
-  showClose = true,
-  className,
+  variant = 'default',
+  rounded = 'md',
+  showClose = false,
   onClose,
-  actions = [],
-}) => {
-  const [isVisible, setIsVisible] = useState(true);
-
-  useEffect(() => {
-    if (duration > 0) {
-      const timer = setTimeout(() => {
-        handleClose();
-      }, duration);
-
-      return () => clearTimeout(timer);
+  className,
+}: NotificationProps) => {
+  const getIconColor = () => {
+    switch (variant) {
+      case 'primary':
+        return 'text-primary-600';
+      case 'success':
+        return 'text-success-600';
+      case 'warning':
+        return 'text-warning-600';
+      case 'danger':
+        return 'text-danger-600';
+      case 'info':
+        return 'text-info-600';
+      default:
+        return 'text-neutral-600';
     }
-  }, [duration]);
-
-  const handleClose = () => {
-    setIsVisible(false);
-    setTimeout(() => {
-      onClose?.();
-    }, 300); // Wait for animation to complete
   };
 
   const getIcon = () => {
     if (icon) return icon;
-    switch (type) {
+    switch (variant) {
+      case 'primary':
+        return 'mdi:information';
       case 'success':
         return 'mdi:check-circle';
       case 'warning':
         return 'mdi:alert';
-      case 'error':
-        return 'mdi:close-circle';
+      case 'danger':
+        return 'mdi:alert-circle';
+      case 'info':
+        return 'mdi:information';
       default:
         return 'mdi:information';
     }
   };
 
-  const getTypeClasses = () => {
-    switch (type) {
-      case 'success':
-        return 'bg-green-50 border-green-200 text-green-800';
-      case 'warning':
-        return 'bg-yellow-50 border-yellow-200 text-yellow-800';
-      case 'error':
-        return 'bg-red-50 border-red-200 text-red-800';
-      default:
-        return 'bg-blue-50 border-blue-200 text-blue-800';
-    }
-  };
-
-  if (!isVisible) return null;
-
   return (
-    <div
-      className={clsx(
-        'relative p-4 rounded-lg border transition-all duration-300',
-        'transform translate-y-0 opacity-100',
-        getTypeClasses(),
-        className
-      )}
-    >
-      <div className="flex items-start">
-        <Icon
-          icon={getIcon()}
-          className={clsx(
-            'w-5 h-5 flex-shrink-0 mt-0.5',
-            type === 'success' && 'text-green-500',
-            type === 'warning' && 'text-yellow-500',
-            type === 'error' && 'text-red-500',
-            type === 'info' && 'text-blue-500'
-          )}
-        />
-        <div className="ml-3 flex-1">
-          {title && (
-            <h3 className="text-sm font-medium mb-1">{title}</h3>
-          )}
-          <p className="text-sm">{message}</p>
-          {actions.length > 0 && (
-            <div className="mt-3 flex space-x-2">
-              {actions.map((action, index) => (
-                <button
-                  key={index}
-                  onClick={action.onClick}
-                  className={clsx(
-                    'text-sm font-medium px-3 py-1 rounded-md transition-colors',
-                    type === 'success' && 'text-green-700 hover:bg-green-100',
-                    type === 'warning' && 'text-yellow-700 hover:bg-yellow-100',
-                    type === 'error' && 'text-red-700 hover:bg-red-100',
-                    type === 'info' && 'text-blue-700 hover:bg-blue-100',
-                    action.className
-                  )}
-                >
-                  {action.label}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-        {showClose && (
-          <button
-            onClick={handleClose}
-            className={clsx(
-              'absolute top-4 right-4 p-1 rounded-full transition-colors',
-              type === 'success' && 'hover:bg-green-100',
-              type === 'warning' && 'hover:bg-yellow-100',
-              type === 'error' && 'hover:bg-red-100',
-              type === 'info' && 'hover:bg-blue-100'
-            )}
-          >
-            <Icon
-              icon="mdi:close"
-              className="w-4 h-4"
-            />
-          </button>
-        )}
+    <div className={cn(notificationVariants({ variant, rounded }), className)}>
+      {icon && <Icon icon={getIcon()} className={cn('h-5 w-5 flex-shrink-0', getIconColor())} />}
+      <div className="flex-1">
+        {title && <h3 className="text-sm font-medium text-neutral-900">{title}</h3>}
+        <div className="mt-1 text-sm text-neutral-500">{children}</div>
       </div>
+      {showClose && (
+        <button
+          type="button"
+          className="ml-auto flex-shrink-0 text-neutral-400 hover:text-neutral-500"
+          onClick={onClose}
+        >
+          <Icon icon="mdi:close" className="h-5 w-5" />
+        </button>
+      )}
     </div>
   );
 }; 

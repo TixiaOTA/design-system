@@ -1,12 +1,31 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { TimePicker } from './TimePicker';
 
-const meta: Meta<typeof TimePicker> = {
+const meta = {
   title: 'Atoms/TimePicker',
   component: TimePicker,
   parameters: {
     layout: 'centered',
+    docs: {
+      story: {
+        inline: true,
+        height: 'auto',
+        iframeHeight: 400,
+      },
+    },
   },
+  decorators: [
+    (Story) => (
+      <div style={{ 
+        width: '100%',
+        maxWidth: '300px',
+        margin: '0 auto',
+        padding: '20px',
+      }}>
+        <Story />
+      </div>
+    ),
+  ],
   tags: ['autodocs'],
   argTypes: {
     variant: {
@@ -17,16 +36,15 @@ const meta: Meta<typeof TimePicker> = {
       control: 'select',
       options: ['sm', 'md', 'lg'],
     },
-    format: {
+    rounded: {
       control: 'select',
-      options: ['12h', '24h'],
+      options: ['none', 'sm', 'md', 'lg', 'full'],
     },
-    labelPlacement: {
-      control: 'select',
-      options: ['top', 'left'],
+    use24Hour: {
+      control: 'boolean',
     },
   },
-};
+} satisfies Meta<typeof TimePicker>;
 
 export default meta;
 type Story = StoryObj<typeof TimePicker>;
@@ -44,68 +62,64 @@ export const WithLabel: Story = {
   },
 };
 
+export const WithError: Story = {
+  args: {
+    label: 'Time',
+    placeholder: 'Select time',
+    errorText: 'Please select a valid time',
+  },
+};
+
+export const WithHelperText: Story = {
+  args: {
+    label: 'Time',
+    placeholder: 'Select time',
+    helperText: 'Select your preferred time',
+  },
+};
+
 export const Required: Story = {
   args: {
     label: 'Time',
+    placeholder: 'Select time',
     required: true,
-    placeholder: 'Select time',
-  },
-};
-
-export const Error: Story = {
-  args: {
-    label: 'Time',
-    variant: 'error',
-    errorText: 'Please select a valid time',
-    placeholder: 'Select time',
-  },
-};
-
-export const Success: Story = {
-  args: {
-    label: 'Time',
-    variant: 'success',
-    helperText: 'Time selected successfully',
-    placeholder: 'Select time',
   },
 };
 
 export const Disabled: Story = {
   args: {
     label: 'Time',
-    disabled: true,
     placeholder: 'Select time',
+    disabled: true,
   },
 };
 
 export const TwentyFourHour: Story = {
   args: {
     label: 'Time (24h)',
-    format: '24h',
     placeholder: 'Select time',
+    use24Hour: true,
   },
 };
 
-export const Small: Story = {
-  args: {
-    label: 'Time',
-    size: 'sm',
-    placeholder: 'Select time',
-  },
+export const SizeVariants: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <TimePicker size="sm" placeholder="Small" />
+      <TimePicker size="md" placeholder="Medium" />
+      <TimePicker size="lg" placeholder="Large" />
+    </div>
+  ),
 };
 
-export const Large: Story = {
-  args: {
-    label: 'Time',
-    size: 'lg',
-    placeholder: 'Select time',
-  },
-};
-
-export const LeftLabel: Story = {
-  args: {
-    label: 'Time',
-    labelPlacement: 'left',
-    placeholder: 'Select time',
-  },
+export const RoundedVariants: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <TimePicker rounded="none" placeholder="No rounded" />
+      <TimePicker rounded="sm" placeholder="Small rounded" />
+      <TimePicker rounded="md" placeholder="Medium rounded" />
+      <TimePicker rounded="lg" placeholder="Large rounded" />
+      <TimePicker rounded="full" placeholder="Full rounded" />
+    </div>
+  ),
 }; 

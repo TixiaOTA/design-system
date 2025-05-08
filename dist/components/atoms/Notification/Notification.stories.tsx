@@ -6,107 +6,122 @@ const meta: Meta<typeof Notification> = {
   component: Notification,
   tags: ['autodocs'],
   argTypes: {
-    type: {
+    variant: {
       control: 'select',
-      options: ['info', 'success', 'warning', 'error'],
+      options: ['default', 'primary', 'success', 'warning', 'danger', 'info'],
     },
-    duration: { control: 'number' },
-    showClose: { control: 'boolean' },
+    rounded: {
+      control: 'select',
+      options: ['none', 'sm', 'md', 'lg', 'full'],
+    },
+    showClose: {
+      control: 'boolean',
+    },
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof Notification>;
 
-export const Info: Story = {
+export const Default: Story = {
   args: {
-    type: 'info',
-    title: 'Information',
-    message: 'This is an information notification.',
+    title: 'Notification Title',
+    children: 'This is a default notification message.',
   },
 };
 
-export const Success: Story = {
+export const WithIcon: Story = {
   args: {
-    type: 'success',
-    title: 'Success',
-    message: 'Your changes have been saved successfully.',
-  },
-};
-
-export const Warning: Story = {
-  args: {
-    type: 'warning',
-    title: 'Warning',
-    message: 'Please review your changes before proceeding.',
-  },
-};
-
-export const Error: Story = {
-  args: {
-    type: 'error',
-    title: 'Error',
-    message: 'Something went wrong. Please try again.',
-  },
-};
-
-export const WithActions: Story = {
-  args: {
-    type: 'info',
-    title: 'Update Available',
-    message: 'A new version of the application is available.',
-    actions: [
-      {
-        label: 'Update Now',
-        onClick: () => alert('Updating...'),
-      },
-      {
-        label: 'Later',
-        onClick: () => alert('Remind me later'),
-      },
-    ],
-  },
-};
-
-export const CustomIcon: Story = {
-  args: {
-    type: 'info',
-    title: 'Custom Icon',
-    message: 'This notification uses a custom icon.',
+    title: 'Notification with Icon',
+    children: 'This notification includes a custom icon.',
     icon: 'mdi:bell',
   },
 };
 
-export const NoCloseButton: Story = {
+export const WithCloseButton: Story = {
   args: {
-    type: 'info',
-    title: 'No Close Button',
-    message: 'This notification cannot be closed manually.',
-    showClose: false,
+    title: 'Notification with Close Button',
+    children: 'This notification can be closed.',
+    showClose: true,
   },
 };
 
-export const NoAutoClose: Story = {
-  args: {
-    type: 'info',
-    title: 'No Auto Close',
-    message: 'This notification will stay visible until manually closed.',
-    duration: 0,
-  },
+export const VariantExamples: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <Notification
+        title="Default Notification"
+        variant="default"
+      >
+        This is a default notification.
+      </Notification>
+      <Notification
+        title="Primary Notification"
+        variant="primary"
+      >
+        This is a primary notification.
+      </Notification>
+      <Notification
+        title="Success Notification"
+        variant="success"
+      >
+        This is a success notification.
+      </Notification>
+      <Notification
+        title="Warning Notification"
+        variant="warning"
+      >
+        This is a warning notification.
+      </Notification>
+      <Notification
+        title="Danger Notification"
+        variant="danger"
+      >
+        This is a danger notification.
+      </Notification>
+      <Notification
+        title="Info Notification"
+        variant="info"
+      >
+        This is an info notification.
+      </Notification>
+    </div>
+  ),
 };
 
-export const CustomStyling: Story = {
-  args: {
-    type: 'info',
-    title: 'Custom Styling',
-    message: 'This notification has custom styling.',
-    className: 'max-w-md mx-auto',
-    actions: [
-      {
-        label: 'Custom Action',
-        onClick: () => alert('Custom action clicked'),
-        className: 'bg-primary text-white hover:bg-primary/90',
-      },
-    ],
-  },
+export const RoundedVariants: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <Notification
+        title="No Rounded"
+        rounded="none"
+      >
+        This notification has no rounded corners.
+      </Notification>
+      <Notification
+        title="Small Rounded"
+        rounded="sm"
+      >
+        This notification has small rounded corners.
+      </Notification>
+      <Notification
+        title="Medium Rounded"
+        rounded="md"
+      >
+        This notification has medium rounded corners.
+      </Notification>
+      <Notification
+        title="Large Rounded"
+        rounded="lg"
+      >
+        This notification has large rounded corners.
+      </Notification>
+      <Notification
+        title="Full Rounded"
+        rounded="full"
+      >
+        This notification has fully rounded corners.
+      </Notification>
+    </div>
+  ),
 }; 

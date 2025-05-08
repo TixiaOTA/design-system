@@ -61,8 +61,8 @@ export type ButtonVariant =
   | 'link' 
   | 'success' 
   | 'warning' 
-  | 'danger';
-export type ButtonSize = 'sm' | 'md' | 'lg';
+  | 'danger'
+export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 export type ButtonRounded = 'none' | 'sm' | 'md' | 'lg' | 'full';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {

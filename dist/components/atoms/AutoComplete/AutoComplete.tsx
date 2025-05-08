@@ -40,6 +40,8 @@ export interface AutoCompleteProps extends Omit<React.InputHTMLAttributes<HTMLIn
   variant?: 'default' | 'error' | 'success' | 'ghost' | 'underline';
   /** Size of the input */
   size?: 'sm' | 'md' | 'lg';
+  /** Border radius of the input */
+  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
   /** Icon to display on the left side of the input */
   leftIcon?: string;
   /** Icon to display on the right side of the input */
@@ -82,6 +84,7 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       renderOption,
       variant = 'default',
       size = 'md',
+      rounded = 'md',
       leftIcon,
       rightIcon,
       error = false,
@@ -300,6 +303,7 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
             onBlur={handleBlur}
             variant={variant}
             size={size}
+            rounded={rounded}
             leftIcon={leftIcon}
             rightIcon={effectiveRightIcon}
             error={error}

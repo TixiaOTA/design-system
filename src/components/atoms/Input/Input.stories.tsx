@@ -4,9 +4,6 @@ import { Input } from './Input';
 const meta: Meta<typeof Input> = {
   title: 'Atoms/Input',
   component: Input,
-  parameters: {
-    layout: 'centered',
-  },
   tags: ['autodocs'],
   argTypes: {
     variant: {
@@ -17,190 +14,119 @@ const meta: Meta<typeof Input> = {
       control: 'select',
       options: ['sm', 'md', 'lg'],
     },
-    leftIcon: {
-      control: 'text',
-    },
-    rightIcon: {
-      control: 'text',
-    },
-    error: {
-      control: 'boolean',
-    },
-    errorText: {
-      control: 'text',
-    },
-    helperText: {
-      control: 'text',
-    },
-    label: {
-      control: 'text',
-    },
-    required: {
-      control: 'boolean',
+    rounded: {
+      control: 'select',
+      options: ['none', 'sm', 'md', 'lg', 'full'],
     },
     labelPlacement: {
       control: 'select',
       options: ['top', 'left'],
     },
+    fullWidth: {
+      control: 'boolean',
+    },
   },
-} satisfies Meta<typeof Input>;
+};
 
 export default meta;
 type Story = StoryObj<typeof Input>;
 
+// Basic Examples
 export const Default: Story = {
   args: {
     placeholder: 'Enter text...',
   },
 };
 
-export const WithTopLabel: Story = {
+export const WithLabel: Story = {
   args: {
-    label: 'Email',
-    placeholder: 'Enter your email',
-    type: 'email',
-    labelPlacement: 'top',
-  },
-};
-
-export const WithLeftLabel: Story = {
-  args: {
-    label: 'Email',
-    placeholder: 'Enter your email',
-    type: 'email',
-    labelPlacement: 'left',
-  },
-};
-
-export const Required: Story = {
-  args: {
-    label: 'Email',
-    placeholder: 'Enter your email',
-    type: 'email',
-    required: true,
+    label: 'Username',
+    placeholder: 'Enter username...',
   },
 };
 
 export const WithHelperText: Story = {
   args: {
     label: 'Password',
-    placeholder: 'Enter your password',
     type: 'password',
-    helperText: 'Password must be at least 8 characters',
+    placeholder: 'Enter password...',
+    helperText: 'Must be at least 8 characters',
   },
 };
 
 export const WithError: Story = {
   args: {
     label: 'Email',
-    placeholder: 'Enter your email',
     type: 'email',
+    placeholder: 'Enter email...',
     error: true,
-    errorText: 'Invalid email address',
-    value: 'invalid-email',
+    errorText: 'Please enter a valid email address',
   },
 };
 
-export const WithSuccess: Story = {
+export const WithIcons: Story = {
   args: {
-    label: 'Email',
-    placeholder: 'Enter your email',
-    type: 'email',
-    variant: 'success',
-    value: 'valid@email.com',
-  },
-};
-
-export const WithLeftIcon: Story = {
-  args: {
-    placeholder: 'Search...',
-    leftIcon: 'mdi:magnify',
-  },
-};
-
-export const WithRightIcon: Story = {
-  args: {
-    placeholder: 'Password',
-    rightIcon: 'mdi:eye',
-  },
-};
-
-export const WithBothIcons: Story = {
-  args: {
+    label: 'Search',
     placeholder: 'Search...',
     leftIcon: 'mdi:magnify',
     rightIcon: 'mdi:close',
   },
 };
 
-export const FormExample: Story = {
+// Variant Examples
+export const VariantExamples: Story = {
   render: () => (
-    <div className="space-y-4 w-[400px]">
-      <Input
-        label="Full Name"
-        placeholder="Enter your full name"
-        labelPlacement="left"
-      />
-      <Input
-        label="Email"
-        type="email"
-        placeholder="Enter your email"
-        labelPlacement="left"
-        error={true}
-        errorText="Please enter a valid email address"
-      />
-      <Input
-        label="Password"
-        type="password"
-        placeholder="Enter your password"
-        labelPlacement="left"
-        rightIcon="mdi:eye"
-      />
+    <div className="flex flex-col gap-4">
+      <Input placeholder="Default variant" variant="default" />
+      <Input placeholder="Error variant" variant="error" />
+      <Input placeholder="Success variant" variant="success" />
+      <Input placeholder="Ghost variant" variant="ghost" />
+      <Input placeholder="Underline variant" variant="underline" />
     </div>
   ),
 };
 
-export const Small: Story = {
-  args: {
-    size: 'sm',
-    placeholder: 'Small input',
-  },
+// Size Examples
+export const SizeVariants: Story = {
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <Input placeholder="Small size" size="sm" />
+      <Input placeholder="Medium size" size="md" />
+      <Input placeholder="Large size" size="lg" />
+    </div>
+  ),
 };
 
-export const Medium: Story = {
-  args: {
-    size: 'md',
-    placeholder: 'Medium input',
-  },
+// Rounded Examples
+export const RoundedVariants: Story = {
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <Input placeholder="None rounded" rounded="none" />
+      <Input placeholder="Small rounded" rounded="sm" />
+      <Input placeholder="Medium rounded" rounded="md" />
+      <Input placeholder="Large rounded" rounded="lg" />
+      <Input placeholder="Full rounded" rounded="full" />
+    </div>
+  ),
 };
 
-export const Large: Story = {
-  args: {
-    size: 'lg',
-    placeholder: 'Large input',
-  },
+// State Examples
+export const States: Story = {
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <Input label="Required Field" placeholder="This field is required..." required />
+      <Input label="Disabled Input" placeholder="This input is disabled..." disabled />
+      <Input label="Read Only" placeholder="This input is read only..." readOnly />
+    </div>
+  ),
 };
 
-export const Disabled: Story = {
-  args: {
-    label: 'Disabled input',
-    placeholder: 'You cannot edit this',
-    disabled: true,
-  },
-};
-
-export const ReadOnly: Story = {
-  args: {
-    label: 'Read-only input',
-    value: 'You cannot edit this',
-    readOnly: true,
-  },
-};
-
-export const WithUnderline: Story = {
-  args: {
-    label: 'Underline Input',
-    placeholder: 'Enter text...',
-    variant: 'underline',
-  },
+// Layout Examples
+export const LayoutExamples: Story = {
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <Input label="Full Width Input" placeholder="This input takes full width..." fullWidth />
+      <Input label="Left Label" placeholder="Label on the left..." labelPlacement="left" />
+    </div>
+  ),
 }; 

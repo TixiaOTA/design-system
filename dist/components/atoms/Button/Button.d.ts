@@ -6,7 +6,7 @@ declare const buttonVariants: (props?: ({
     fullWidth?: boolean | null | undefined;
 } & import("class-variance-authority/dist/types").ClassProp) | undefined) => string;
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'outline-primary' | 'outline-secondary' | 'outline-success' | 'outline-warning' | 'outline-danger' | 'ghost' | 'link' | 'success' | 'warning' | 'danger';
-export type ButtonSize = 'sm' | 'md' | 'lg';
+export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 export type ButtonRounded = 'none' | 'sm' | 'md' | 'lg' | 'full';
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: ButtonVariant;
