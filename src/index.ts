@@ -39,6 +39,7 @@ export * from './components/molecules/WidgetCard';
 export * from './components/molecules/ErrorWrapper';
 // Organisms
 export * from './components/organisms/WidgetCardGroup';
+export * from './components/organisms/OnboardDialog';
 
 // Utils
 export * from './utils/cn'; 
