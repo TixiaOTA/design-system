@@ -36,7 +36,7 @@ export * from './components/molecules/Breadcrumbs';
 export * from './components/molecules/Table';
 export * from './components/molecules/Toast';
 export * from './components/molecules/WidgetCard';
-
+export * from './components/molecules/ErrorWrapper';
 // Organisms
 export * from './components/organisms/WidgetCardGroup';
 
