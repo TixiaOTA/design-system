@@ -26,6 +26,13 @@ const selectVariants = cva(
         md: 'h-10 px-3 py-2 text-base',
         lg: 'h-12 px-4 py-3 text-lg',
       },
+      rounded: {
+        none: 'rounded-none',
+        sm: 'rounded-sm',
+        md: 'rounded-md',
+        lg: 'rounded-lg',
+        full: 'rounded-full',
+      },
       fullWidth: {
         true: 'w-full',
         false: 'w-fit',
@@ -82,6 +89,8 @@ export interface SelectProps
   leftIcon?: string;
   /** Icon to display on the right side of the select */
   rightIcon?: string;
+  /** Border radius of the select */
+  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
 }
 
 const Select = forwardRef<HTMLDivElement, SelectProps>(
@@ -90,6 +99,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
       className,
       variant = 'default',
       size = 'md',
+      rounded = 'md',
       options,
       label,
       error = false,
@@ -309,7 +319,14 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
         <div
           ref={dropdownRef}
           className={cn(
-            'fixed z-[9999] min-w-[8rem] rounded-md border border-neutral-200 bg-white py-1 shadow-lg',
+            'fixed z-[9999] min-w-[8rem] border border-neutral-200 bg-white py-1 shadow-lg',
+            {
+              'rounded-none': rounded === 'none',
+              'rounded-sm': rounded === 'sm',
+              'rounded-md': rounded === 'md',
+              'rounded-lg': rounded === 'lg',
+              'rounded-xl': rounded === 'full',
+            },
             position === 'left' || position === 'right' ? 'w-max' : 'w-full'
           )}
           onClick={(e) => e.stopPropagation()}
@@ -341,7 +358,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
             ref={buttonRef}
             type="button"
             className={cn(
-              selectVariants({ variant: error ? 'error' : variant, size, fullWidth }),
+              selectVariants({ variant: error ? 'error' : variant, size, rounded, fullWidth }),
               'flex items-center justify-between',
               disabled && 'cursor-not-allowed opacity-50',
               leftIcon && 'pl-10',

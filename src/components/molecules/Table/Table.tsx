@@ -316,7 +316,7 @@ export const Table = <T extends Record<string, any>>({
                 <td
                   colSpan={table.getAllColumns().length}
                   className={cn(
-                    "text-center py-28 border h-full font-bold text-3xl text-default-400 w-full rounded-b-md",
+                    "text-center border h-full w-full rounded-b-md",
                   )}
                 >
                   {emptyState || (

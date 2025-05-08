@@ -3,6 +3,7 @@ import { Table } from './Table';
 import type { TableVariant, TableColumn } from './Table';
 import { Button } from '../../atoms/Button';
 import { Icon } from '../../atoms/Icons';
+import { ErrorWrapper } from '../ErrorWrapper/ErrorWrapper';
 
 const meta: Meta<typeof Table<User>> = {
   title: 'Molecules/Table',
@@ -172,10 +173,7 @@ export const Empty: Story = {
     data: [],
     showIndex: true,
     emptyState: (
-      <div className="flex items-center justify-center gap-2">
-        <span>No data found</span>
-        <span role="img" aria-label="sad face">😢</span>
-      </div>
+      <ErrorWrapper variant="data-not-found" />
     ),
   },
 };

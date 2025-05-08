@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Card } from './Card';
 import { Text } from '../Text/Text';
+import { ErrorWrapper } from '../../molecules/ErrorWrapper/ErrorWrapper';
 
 const meta = {
   title: 'Atoms/Card',
@@ -116,6 +117,22 @@ export const WithContent: Story = {
       <p style={{ margin: 0 }}>
         This is a card with some content. It can contain any type of content including text, images, or other components.
       </p>
+    </Card>
+  ),
+};
+
+export const ErrorCard: Story = {
+  render: () => (
+    <Card shadow="lg" rounded="lg">
+      <ErrorWrapper error={{
+        code: "INFORMATION_UNAVAILABLE",
+        message: "Data belum ada",
+      }}>
+      <h3 style={{ margin: '0 0 1rem 0' }}>Card Title</h3>
+      <p style={{ margin: 0 }}>
+        This is a card with some content. It can contain any type of content including text, images, or other components.
+      </p>
+      </ErrorWrapper>
     </Card>
   ),
 };

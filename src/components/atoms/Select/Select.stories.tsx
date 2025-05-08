@@ -39,6 +39,10 @@ const meta = {
       control: 'select',
       options: ['sm', 'md', 'lg'],
     },
+    rounded: {
+      control: 'select',
+      options: ['none', 'sm', 'md', 'lg', 'full'],
+    },
     position: {
       control: 'select',
       options: ['bottom', 'top', 'left', 'right'],
@@ -321,4 +325,38 @@ export const WithUnderline: Story = {
     placeholder: 'Select a flavor...',
     variant: 'underline',
   },
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <Select size="sm" options={defaultOptions} placeholder="Small" />
+      <Select size="md" options={defaultOptions} placeholder="Medium" />
+      <Select size="lg" options={defaultOptions} placeholder="Large" />
+    </div>
+  ),
+};
+
+export const Variants: Story = {
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <Select variant="default" options={defaultOptions} placeholder="Default" />
+      <Select variant="error" options={defaultOptions} placeholder="Error" />
+      <Select variant="success" options={defaultOptions} placeholder="Success" />
+      <Select variant="ghost" options={defaultOptions} placeholder="Ghost" />
+      <Select variant="underline" options={defaultOptions} placeholder="Underline" />
+    </div>
+  ),
+};
+
+export const RoundedVariants: Story = {
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <Select rounded="none" options={defaultOptions} placeholder="No Rounded" />
+      <Select rounded="sm" options={defaultOptions} placeholder="Small Rounded" />
+      <Select rounded="md" options={defaultOptions} placeholder="Medium Rounded" />
+      <Select rounded="lg" options={defaultOptions} placeholder="Large Rounded" />
+      <Select rounded="full" options={defaultOptions} placeholder="Full Rounded" />
+    </div>
+  ),
 };
