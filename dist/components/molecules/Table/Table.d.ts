@@ -22,16 +22,18 @@ export interface TableProps<T extends Record<string, any>> {
     isLoading?: boolean;
     loadingState?: React.ReactNode;
     showIndex?: boolean;
-    pageSize?: number;
-    pageCount?: number;
-    currentPage?: number;
-    totalData?: number;
     onPageChange?: (page: number) => void;
     onPageSizeChange?: (size: number) => void;
     onSortChange?: (sort: string, sortBy: string) => void;
     onRowClick?: (row: T, index: number) => void;
     showPagination?: boolean;
     variant?: TableVariant;
+    meta?: {
+        current_page: number;
+        total_page: number;
+        total_data: number;
+        limit_number: number;
+    };
 }
-export declare const Table: <T extends Record<string, any>>({ schema, data, className, headerClassName, rowClassName, cellClassName, emptyState, isLoading, loadingState, showIndex, pageSize, pageCount, currentPage, totalData, onPageChange, onPageSizeChange, onSortChange, onRowClick, showPagination, variant, }: TableProps<T>) => string | number | true | import("react/jsx-runtime").JSX.Element | Iterable<React.ReactNode>;
+export declare const Table: <T extends Record<string, any>>({ schema, data, className, headerClassName, rowClassName, cellClassName, emptyState, isLoading, loadingState, showIndex, onPageChange, onPageSizeChange, onSortChange, onRowClick, showPagination, variant, meta, }: TableProps<T>) => string | number | true | import("react/jsx-runtime").JSX.Element | Iterable<React.ReactNode>;
 export {};

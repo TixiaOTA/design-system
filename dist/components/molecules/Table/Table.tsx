@@ -42,16 +42,18 @@ export interface TableProps<T extends Record<string, any>> {
   isLoading?: boolean;
   loadingState?: React.ReactNode;
   showIndex?: boolean;
-  pageSize?: number;
-  pageCount?: number;
-  currentPage?: number;
-  totalData?: number;
   onPageChange?: (page: number) => void;
   onPageSizeChange?: (size: number) => void;
   onSortChange?: (sort: string, sortBy: string) => void;
   onRowClick?: (row: T, index: number) => void;
   showPagination?: boolean;
   variant?: TableVariant;
+  meta?: {
+    current_page: number;
+    total_page: number;
+    total_data: number;
+    limit_number: number;
+  };
 }
 
 const getVariantStyles = (variant: TableVariant) => {
@@ -162,17 +164,20 @@ export const Table = <T extends Record<string, any>>({
   isLoading,
   loadingState,
   showIndex = false,
-  pageSize = 10,
-  pageCount = 1,
-  currentPage = 1,
-  totalData = 0,
   onPageChange,
   onPageSizeChange,
   onSortChange,
   onRowClick,
   showPagination = false,
   variant = 'primary',
+  meta = {
+    current_page: 1,
+    total_page: 1,
+    total_data: 0,
+    limit_number: 10,
+  },
 }: TableProps<T>) => {
+
   const [sorting, setSorting] = useState<SortingState>(() => {
     const sortedColumn = schema.find(col => col.sortable && col.sort);
     if (sortedColumn) {
@@ -202,7 +207,7 @@ export const Table = <T extends Record<string, any>>({
         accessorKey: 'no',
         header: 'No.',
         enableSorting: false,
-        cell: ({ row }: { row: Row<T> }) => (currentPage - 1) * pageSize + row.index + 1,
+        cell: ({ row }: { row: Row<T> }) => (meta.current_page - 1) * meta.limit_number + row.index + 1,
         meta: {
           align: 'left'
         }
@@ -210,7 +215,7 @@ export const Table = <T extends Record<string, any>>({
     }
 
     return baseColumns;
-  }, [schema, showIndex, currentPage, pageSize]);
+  }, [schema, showIndex, meta]);
 
   const table = useReactTable({
     data,
@@ -232,7 +237,7 @@ export const Table = <T extends Record<string, any>>({
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     manualPagination: true,
-    pageCount: pageCount,
+    pageCount: meta.total_page,
   });
 
   const variantStyles = getVariantStyles(variant);
@@ -369,11 +374,11 @@ export const Table = <T extends Record<string, any>>({
       {!!data.length && showPagination && (
         <div className="p-4 bg-white rounded-b-md">
           <Pagination
-            currentPage={currentPage}
-            totalPages={pageCount}
-            totalData={totalData}
+            currentPage={meta.current_page}
+            totalPages={meta.total_page}
+            totalData={meta.total_data}
             onPageChange={onPageChange || (() => {})}
-            perPage={pageSize}
+            perPage={meta.limit_number}
             onPerPageChange={onPageSizeChange || (() => {})}
             perPageOptions={[5, 10, 20, 50, 100]}
             siblingCount={1}

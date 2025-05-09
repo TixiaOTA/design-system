@@ -139,11 +139,13 @@ export const WithPagination: Story = {
     schema,
     data: sampleData,
     showIndex: true,
-    pageSize: 10,
-    pageCount: 5,
-    currentPage: 1,
-    totalData: 50,
     showPagination: true,
+    meta: {
+      current_page: 1,
+      total_page: 5,
+      total_data: 50,
+      limit_number: 10
+    },
     onPageChange: (page) => console.log('Page changed:', page),
     onPageSizeChange: (size) => console.log('Page size changed:', size),
   },
@@ -237,10 +239,12 @@ export const WithVariants: Story = {
               variant={variant}
               showIndex
               showPagination
-              pageSize={5}
-              pageCount={2}
-              currentPage={1}
-              totalData={10}
+              meta={{
+                current_page: 1,
+                total_page: 2,
+                total_data: 10,
+                limit_number: 5
+              }}
               onPageChange={(page) => console.log('Page changed:', page)}
               onPageSizeChange={(size) => console.log('Page size changed:', size)}
               onSortChange={(sort, sortBy) => console.log('Sort changed:', sort, sortBy)}
