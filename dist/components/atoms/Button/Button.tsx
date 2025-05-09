@@ -38,12 +38,16 @@ const buttonVariants = cva(
       fullWidth: {
         true: 'w-full',
       },
+      isIconOnly: {
+        true: 'p-2 aspect-square',
+      },
     },
     defaultVariants: {
       variant: 'primary',
       size: 'md',
       rounded: 'none',
       fullWidth: false,
+      isIconOnly: false,
     },
   }
 );
@@ -73,6 +77,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   isLoading?: boolean;
   leftIcon?: string;
   rightIcon?: string;
+  isIconOnly?: boolean;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -84,13 +89,26 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     fullWidth = false, 
     isLoading = false, 
     leftIcon, 
-    rightIcon, 
+    rightIcon,
+    isIconOnly = false,
     children, 
     ...props 
   }, ref) => {
+    const hasIcon = Boolean(leftIcon || rightIcon);
+    const isIconButton = isIconOnly || (hasIcon && !children);
+
     return (
       <button
-        className={cn(buttonVariants({ variant, size, rounded, fullWidth, className }))}
+        className={cn(
+          buttonVariants({ 
+            variant, 
+            size, 
+            rounded: isIconButton ? 'full' : rounded, 
+            fullWidth, 
+            isIconOnly: isIconButton,
+            className 
+          })
+        )}
         ref={ref}
         disabled={props.disabled || isLoading}
         {...props}
@@ -99,7 +117,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           <span className="animate-spin inline-block w-4 h-4 border-2 border-current border-r-transparent rounded-full" />
         )}
         {!isLoading && leftIcon && <Icon icon={leftIcon} className="w-4 h-4" />}
-        <span>{children}</span>
+        {children && <span>{children}</span>}
         {!isLoading && rightIcon && <Icon icon={rightIcon} className="w-4 h-4" />}
       </button>
     );

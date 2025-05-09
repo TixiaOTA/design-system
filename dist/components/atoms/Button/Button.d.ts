@@ -4,6 +4,7 @@ declare const buttonVariants: (props?: ({
     size?: "sm" | "md" | "lg" | "xs" | null | undefined;
     rounded?: "sm" | "md" | "lg" | "none" | "full" | null | undefined;
     fullWidth?: boolean | null | undefined;
+    isIconOnly?: boolean | null | undefined;
 } & import("class-variance-authority/dist/types").ClassProp) | undefined) => string;
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'outline-primary' | 'outline-secondary' | 'outline-success' | 'outline-warning' | 'outline-danger' | 'ghost' | 'link' | 'success' | 'warning' | 'danger';
 export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
@@ -16,6 +17,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
     isLoading?: boolean;
     leftIcon?: string;
     rightIcon?: string;
+    isIconOnly?: boolean;
 }
 declare const Button: React.ForwardRefExoticComponent<ButtonProps & React.RefAttributes<HTMLButtonElement>>;
 export { Button };

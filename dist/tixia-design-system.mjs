@@ -4684,13 +4684,17 @@ const Ag = ({
       },
       fullWidth: {
         true: "w-full"
+      },
+      isIconOnly: {
+        true: "p-2 aspect-square"
       }
     },
     defaultVariants: {
       variant: "primary",
       size: "md",
       rounded: "none",
-      fullWidth: !1
+      fullWidth: !1,
+      isIconOnly: !1
     }
   }
 ), et = Ue(
@@ -4703,23 +4707,36 @@ const Ag = ({
     isLoading: a = !1,
     leftIcon: n,
     rightIcon: o,
-    children: l,
-    ...c
-  }, h) => /* @__PURE__ */ M.jsxs(
-    "button",
-    {
-      className: Q(xh({ variant: e, size: t, rounded: i, fullWidth: r, className: s })),
-      ref: h,
-      disabled: c.disabled || a,
-      ...c,
-      children: [
-        a && /* @__PURE__ */ M.jsx("span", { className: "animate-spin inline-block w-4 h-4 border-2 border-current border-r-transparent rounded-full" }),
-        !a && n && /* @__PURE__ */ M.jsx(Ie, { icon: n, className: "w-4 h-4" }),
-        /* @__PURE__ */ M.jsx("span", { children: l }),
-        !a && o && /* @__PURE__ */ M.jsx(Ie, { icon: o, className: "w-4 h-4" })
-      ]
-    }
-  )
+    isIconOnly: l = !1,
+    children: c,
+    ...h
+  }, d) => {
+    const g = l || !!(n || o) && !c;
+    return /* @__PURE__ */ M.jsxs(
+      "button",
+      {
+        className: Q(
+          xh({
+            variant: e,
+            size: t,
+            rounded: g ? "full" : i,
+            fullWidth: r,
+            isIconOnly: g,
+            className: s
+          })
+        ),
+        ref: d,
+        disabled: h.disabled || a,
+        ...h,
+        children: [
+          a && /* @__PURE__ */ M.jsx("span", { className: "animate-spin inline-block w-4 h-4 border-2 border-current border-r-transparent rounded-full" }),
+          !a && n && /* @__PURE__ */ M.jsx(Ie, { icon: n, className: "w-4 h-4" }),
+          c && /* @__PURE__ */ M.jsx("span", { children: c }),
+          !a && o && /* @__PURE__ */ M.jsx(Ie, { icon: o, className: "w-4 h-4" })
+        ]
+      }
+    );
+  }
 );
 et.displayName = "Button";
 const mh = ct(

@@ -42,6 +42,15 @@ const meta: Meta<typeof Button> = {
     fullWidth: {
       control: "boolean",
     },
+    leftIcon: {
+      control: "text",
+    },
+    rightIcon: {
+      control: "text",
+    },
+    isIconOnly: {
+      control: "boolean",
+    },
   },
 };
 
@@ -192,6 +201,7 @@ export const IconOnly: Story = {
     "aria-label": "Search",
     children: <Icon icon="mdi:search" />,
     rounded: "full",
+    isIconOnly: true,
   },
 };
 
@@ -201,6 +211,7 @@ export const IconOnlySmall: Story = {
     children: <Icon icon="mdi:plus" />,
     size: "sm",
     rounded: "full",
+    isIconOnly: true,
   },
 };
 
@@ -210,6 +221,7 @@ export const IconOnlyLarge: Story = {
     children: <Icon icon="mdi:arrow-right" />,
     size: "lg",
     rounded: "full",
+    isIconOnly: true,
   },
 };
 
@@ -254,4 +266,73 @@ export const InteractiveStates: Story = {
       </div>
     </div>
   ),
+};
+
+export const Default: Story = {
+  args: {
+    children: 'Button',
+  },
+};
+
+export const WithLeftIcon: Story = {
+  args: {
+    children: 'Button',
+    leftIcon: 'mdi:plus',
+  },
+};
+
+export const WithRightIcon: Story = {
+  args: {
+    children: 'Button',
+    rightIcon: 'mdi:arrow-right',
+  },
+};
+
+export const IconOnlyVariants: Story = {
+  render: () => (
+    <div className="flex gap-4 items-center">
+      <Button leftIcon="mdi:plus" isIconOnly variant="primary" />
+      <Button leftIcon="mdi:plus" isIconOnly variant="secondary" />
+      <Button leftIcon="mdi:plus" isIconOnly variant="outline" />
+      <Button leftIcon="mdi:plus" isIconOnly variant="ghost" />
+      <Button leftIcon="mdi:plus" isIconOnly variant="success" />
+      <Button leftIcon="mdi:plus" isIconOnly variant="warning" />
+      <Button leftIcon="mdi:plus" isIconOnly variant="danger" />
+    </div>
+  ),
+};
+
+export const IconOnlySizes: Story = {
+  render: () => (
+    <div className="flex gap-4 items-center">
+      <Button leftIcon="mdi:plus" isIconOnly size="xs" />
+      <Button leftIcon="mdi:plus" isIconOnly size="sm" />
+      <Button leftIcon="mdi:plus" isIconOnly size="md" />
+      <Button leftIcon="mdi:plus" isIconOnly size="lg" />
+    </div>
+  ),
+};
+
+export const IconOnlyLoading: Story = {
+  args: {
+    leftIcon: 'mdi:plus',
+    isIconOnly: true,
+    isLoading: true,
+  },
+};
+
+export const IconOnlyDisabled: Story = {
+  args: {
+    leftIcon: 'mdi:plus',
+    isIconOnly: true,
+    disabled: true,
+  },
+};
+
+export const IconOnlyWithTooltip: Story = {
+  args: {
+    leftIcon: 'mdi:plus',
+    isIconOnly: true,
+    title: 'Add new item',
+  },
 };
