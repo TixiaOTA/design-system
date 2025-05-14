@@ -19,7 +19,7 @@ const WidgetCard: React.FC<WidgetCardProps> = ({
 }) => {
   return (
     <Card className={cn(
-        'flex items-center gap-4 rounded-lg w-full bg-white p-4 shadow-sm hover:bg-neutral-50 transition-shadow duration-200',
+        'flex items-center gap-4 rounded-lg w-full bg-white p-4 shadow-sm hover:bg-neutral-50 transition-shadow duration-200 justify-between',
         className
       )}>
       <div>

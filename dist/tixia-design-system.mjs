@@ -20971,7 +20971,7 @@ const rl = Pl(void 0), bg = {
   icon: t,
   className: i
 }) => /* @__PURE__ */ M.jsxs(Vn, { className: Q(
-  "flex items-center gap-4 rounded-lg w-full bg-white p-4 shadow-sm hover:bg-neutral-50 transition-shadow duration-200",
+  "flex items-center gap-4 rounded-lg w-full bg-white p-4 shadow-sm hover:bg-neutral-50 transition-shadow duration-200 justify-between",
   i
 ), children: [
   /* @__PURE__ */ M.jsxs("div", { children: [
