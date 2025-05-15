@@ -1,4 +1,4 @@
-import React, { forwardRef, useState, useRef, useEffect } from 'react';
+import React, { forwardRef, useState, useRef, useEffect, RefCallback } from 'react';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/utils/cn';
 import { Button } from '@/components/atoms/Button';
@@ -132,52 +132,120 @@ const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(
       
       if (newValue.length === length) {
         onComplete?.(newValue);
+        
+        // Auto-submit when complete if no submit button is shown
+        if (!showSubmitButton) {
+          onSubmit?.(newValue);
+        }
       }
     };
 
+    // Remove the problematic useEffect with direct event listeners and create a ref callback instead
+    const setInputRef = (index: number): RefCallback<HTMLInputElement> => (element) => {
+      inputRefs.current[index] = element;
+      
+      // No need to add/remove listeners manually - React will handle this
+    };
+
+    // Add a handler for the onFocus event that we'll pass to each input
+    const handleInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+      // Select the content when the input is focused
+      e.target.select();
+    };
+
+    // Modify handleChange to better handle character replacement
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
       const inputValue = e.target.value;
-      const lastChar = inputValue.slice(-1);
+      let newChar = '';
       
-      if (numericOnly && !/^\d*$/.test(lastChar)) {
+      // Handle different input scenarios
+      if (inputValue.length >= 1) {
+        // Get the last character if multiple were somehow entered
+        newChar = inputValue.slice(-1);
+      } else if (inputValue.length === 0) {
+        // Handle deletion
+        const newValue = currentValue.split('');
+        newValue[index] = '';
+        updateValue(newValue.join(''));
         return;
       }
       
-      if (inputValue) {
-        // Update the current input and create a new OTP value
-        const newValue = currentValue.split('');
-        if (newValue.length <= index) {
-          // Add padding if necessary
-          while (newValue.length < index) {
-            newValue.push('');
-          }
-          newValue.push(lastChar);
-        } else {
-          newValue[index] = lastChar;
-        }
-        
-        updateValue(newValue.join(''));
-        
-        // Move focus to the next input
-        if (index < length - 1 && lastChar) {
-          inputRefs.current[index + 1]?.focus();
-        }
+      // Validate for numeric only if needed
+      if (numericOnly && !/^\d$/.test(newChar)) {
+        return;
+      }
+      
+      // Update the value
+      const newValue = currentValue.split('');
+      
+      // Ensure we have enough slots in the array
+      while (newValue.length <= index) {
+        newValue.push('');
+      }
+      
+      // Update the specific position
+      newValue[index] = newChar;
+      const updatedValue = newValue.join('');
+      updateValue(updatedValue);
+      
+      // Move focus to next input if appropriate
+      if (index < length - 1 && newChar) {
+        // Always move to next input if a valid character was entered
+        inputRefs.current[index + 1]?.focus();
       }
     };
 
+    // Enhance keyDown handler to improve overall input experience
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-      if (e.key === 'Backspace' && !currentValue[index] && index > 0) {
-        // If current input is empty and backspace is pressed, move focus to previous input
+      // Handle delete/backspace operations
+      if (e.key === 'Backspace') {
         const newValue = currentValue.split('');
-        newValue[index - 1] = '';
-        updateValue(newValue.join(''));
+        
+        // If current field has a value, clear it but stay on current field
+        if (currentValue[index]) {
+          e.preventDefault(); // Prevent default only if we're clearing a value
+          newValue[index] = '';
+          updateValue(newValue.join(''));
+        } 
+        // If current field is empty and not the first field, move to previous field and clear it
+        else if (index > 0) {
+          e.preventDefault();
+          newValue[index - 1] = '';
+          updateValue(newValue.join(''));
+          inputRefs.current[index - 1]?.focus();
+        }
+      } 
+      // Handle Delete key to clear current position
+      else if (e.key === 'Delete') {
+        if (currentValue[index]) {
+          e.preventDefault();
+          const newValue = currentValue.split('');
+          newValue[index] = '';
+          updateValue(newValue.join(''));
+        }
+      }
+      // Handle arrow keys for navigation
+      else if (e.key === 'ArrowLeft' && index > 0) {
+        e.preventDefault();
         inputRefs.current[index - 1]?.focus();
-      } else if (e.key === 'ArrowLeft' && index > 0) {
-        // Move focus to previous input on left arrow
-        inputRefs.current[index - 1]?.focus();
-      } else if (e.key === 'ArrowRight' && index < length - 1) {
-        // Move focus to next input on right arrow
+      } 
+      else if (e.key === 'ArrowRight' && index < length - 1) {
+        e.preventDefault();
         inputRefs.current[index + 1]?.focus();
+      }
+      // If user is typing a valid character, handle it specially
+      else if (
+        !e.ctrlKey && !e.altKey && !e.metaKey && 
+        e.key.length === 1
+      ) {
+        // For numeric only mode, validate first
+        if (numericOnly && !/^\d$/.test(e.key)) {
+          e.preventDefault();
+          return;
+        }
+        
+        // No need to prevent default here as we want the input to be updated
+        // The onChange handler will catch this input and process it
       }
     };
 
@@ -192,11 +260,12 @@ const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(
       // Only use the first 'length' characters
       const relevantData = pastedData.slice(0, length);
       
-      // Fill the OTP inputs with the pasted data
-      updateValue(relevantData.padEnd(length, ''));
+      // Fill the OTP inputs with the pasted data, replacing existing values
+      const newValue = relevantData.padEnd(currentValue.length, '').slice(0, length);
+      updateValue(newValue);
       
-      // Focus the next empty input or the last input
-      const nextEmptyIndex = relevantData.length < length ? relevantData.length : length - 1;
+      // Focus the next empty input or the last input if all are filled
+      const nextEmptyIndex = newValue.length < length ? newValue.length : length - 1;
       inputRefs.current[nextEmptyIndex]?.focus();
     };
 
@@ -223,7 +292,7 @@ const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(
             {Array.from({ length }).map((_, index) => (
               <input
                 key={index}
-                ref={(el) => (inputRefs.current[index] = el)}
+                ref={setInputRef(index)}
                 type={numericOnly ? 'tel' : 'text'}
                 inputMode={numericOnly ? 'numeric' : 'text'}
                 maxLength={1}
@@ -231,6 +300,7 @@ const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(
                 onChange={(e) => handleChange(e, index)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
                 onPaste={index === 0 ? handlePaste : undefined}
+                onFocus={handleInputFocus}
                 disabled={disabled}
                 autoFocus={autoFocus && index === 0}
                 className={cn(
