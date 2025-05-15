@@ -13,7 +13,7 @@ const variantStyles: Record<ChipVariant, Record<ChipColor, string>> = {
     primary: 'bg-primary-500 text-white',
     success: 'bg-success-500 text-white',
     warning: 'bg-warning-500 text-white',
-    error: 'bg-error-500 text-white',
+    error: 'bg-danger-500 text-white',
     info: 'bg-info-500 text-white',
     danger: 'bg-danger-500 text-white',
     default: 'bg-neutral-500 text-white'
