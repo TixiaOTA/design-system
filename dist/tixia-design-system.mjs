@@ -20981,60 +20981,60 @@ const rl = Pl(void 0), bg = {
   t && /* @__PURE__ */ M.jsx("div", { className: "flex h-12 w-12 items-center justify-center rounded-lg bg-primary-50", children: /* @__PURE__ */ M.jsx(Ie, { icon: t, className: "h-6 w-6 text-primary-600" }) })
 ] }), yg = {
   400: {
-    image: "/img/illustration-server-error.png",
+    image: "/img/error.svg",
     message: "Bad request. Please check your input and try again."
   },
   401: {
-    image: "/img/illustration-restricted-access.png",
+    image: "/img/error.svg",
     message: "Please sign in to access this resource."
   },
   403: {
-    image: "/img/illustration-restricted-access.png",
+    image: "/img/error.svg",
     message: "You do not have permission to access this resource."
   },
   404: {
-    image: "/img/illustration-page-not-found.png",
+    image: "/img/page-not-found.svg",
     message: "The page you are looking for does not exist."
   },
   500: {
-    image: "/img/illustration-server-error.png",
+    image: "/img/error.svg",
     message: "Something went wrong on our end. Please try again later."
   },
   502: {
-    image: "/img/illustration-server-error.png",
+    image: "/img/error.svg",
     message: "Bad gateway. Our servers are having trouble connecting."
   },
   503: {
-    image: "/img/illustration-server-error.png",
+    image: "/img/error.svg",
     message: "Service unavailable. We are currently performing maintenance."
   },
   504: {
-    image: "/img/illustration-server-error.png",
+    image: "/img/error.svg",
     message: "Gateway timeout. The server took too long to respond."
   }
 }, sl = {
   NO_INTERNET: {
-    image: "/img/illustration-no-internet.png",
+    image: "/img/no-internet.svg",
     message: "Please check your internet connection and try again."
   },
   DATA_NOT_FOUND: {
-    image: "/img/illustration-data-not-found.png",
+    image: "/img/search-not-found.svg",
     message: "No data available for your request."
   },
   UNDER_DEVELOPMENT: {
-    image: "/img/illustration-under-development.png",
+    image: "/img/under-development.svg",
     message: "This feature is currently under development."
   },
   INFORMATION_UNAVAILABLE: {
-    image: "/img/illustration-information-unavailable.png",
+    image: "/img/search-not-found.svg",
     message: "The requested information is currently unavailable."
   },
   SUCCESS: {
-    image: "/img/illustration-ok.png",
+    image: "/img/payment-success.svg",
     message: "Operation completed successfully."
   },
   CHECKED: {
-    image: "/img/illustration-checked.png",
+    image: "/img/payment-success.svg",
     message: "All checks have passed successfully."
   }
 }, wg = {
@@ -21048,7 +21048,7 @@ const rl = Pl(void 0), bg = {
   ...yg,
   ...sl
 }, Kr = {
-  image: "/img/illustration-server-error.png",
+  image: "/img/error.svg",
   message: "An unexpected error occurred. Our team is currently investigating the issue."
 }, Sg = (s) => typeof s == "object" && s !== null && ("code" in s || "message" in s), Wg = ({ error: s, reload: e, children: t, className: i = "", variant: r }) => {
   if (r) {
