@@ -1,7 +1,7 @@
 import React from 'react';
 import { WidgetCard } from '../../molecules/WidgetCard/WidgetCard';
 import type { WidgetCardProps } from '../../molecules/WidgetCard/WidgetCard';
-import { cn } from '@/utils/cn';
+import { cn } from '../../../utils/cn';
 
 export interface WidgetCardGroupProps {
   widgets: WidgetCardProps[];

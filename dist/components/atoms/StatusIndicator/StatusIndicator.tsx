@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@/utils/cn';
+import { cn } from '../../../utils/cn';
 
 export type StatusIndicatorStatus = 'active' | 'inactive' | 'pending' | 'warning' | 'error';
 export type StatusIndicatorSize = 'sm' | 'md' | 'lg';

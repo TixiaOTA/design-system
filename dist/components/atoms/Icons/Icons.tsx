@@ -1,5 +1,5 @@
 import { Icon as IconifyIcon } from '@iconify/react';
-import { cn } from '@/utils/cn';
+import { cn } from '../../../utils/cn';
 
 export interface IconProps {
   /** The icon name from Iconify (e.g., 'mdi:home') */

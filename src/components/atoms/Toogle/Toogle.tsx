@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { cva } from 'class-variance-authority';
-import { cn } from '@/utils/cn';
+import { cn } from '../../../utils/cn';
 
 const toggleVariants = cva(
   'relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',

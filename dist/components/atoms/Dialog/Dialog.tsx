@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { cn } from '@/utils/cn';
+import { cn } from '../../../utils/cn';
 import { Icon } from '@iconify/react';
 
 export type DialogSize = 'sm' | 'md' | 'lg' | 'xl' | 'fullscreen';

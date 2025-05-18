@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
 import { cva } from 'class-variance-authority';
-import { cn } from '@/utils/cn';
+import { cn } from '../../../utils/cn';
 
 export type NotificationType = 'info' | 'success' | 'warning' | 'error';
 

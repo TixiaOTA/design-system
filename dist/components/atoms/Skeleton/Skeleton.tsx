@@ -1,4 +1,4 @@
-import { cn } from '@/utils/cn';
+import { cn } from '../../../utils/cn';
 import { cva } from 'class-variance-authority';
 
 const skeletonVariants = cva(

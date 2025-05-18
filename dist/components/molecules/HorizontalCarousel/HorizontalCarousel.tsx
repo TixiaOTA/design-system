@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { cn } from '@/utils/cn';
+import { cn } from '../../../utils/cn';
 import { Icon } from '../../atoms/Icons/Icons';
 
 export interface HorizontalCarouselProps {

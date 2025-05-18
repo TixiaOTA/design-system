@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@/utils/cn';
+import { cn } from '../../../utils/cn';
 
 export type TextVariant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'label' | 'heading3' | 'body1' | 'display1' | 'display2' | 'heading1' | 'heading2' | 'heading4' | 'subtitle1' | 'subtitle2' | 'body2' | 'caption' | 'value';
 

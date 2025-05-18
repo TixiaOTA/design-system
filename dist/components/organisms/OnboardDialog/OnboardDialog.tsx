@@ -7,7 +7,7 @@ import {
 } from "../../atoms/Dialog";
 import { Text } from "../../atoms/Text";
 import { Button } from "../../atoms/Button";
-import { cn } from "@/utils/cn";
+import { cn } from "../../../utils/cn";
 
 const DotIndicator: React.FC<{
   steps: OnboardStep[];

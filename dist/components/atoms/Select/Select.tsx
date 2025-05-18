@@ -1,7 +1,7 @@
 import React, { forwardRef, useState, Children, isValidElement, cloneElement, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '@/utils/cn';
+import { cn } from '../../../utils/cn';
 import { Icon } from '../../atoms/Icons/Icons';
 import { SelectItem, SelectItemProps } from '../SelectItem';
 

@@ -1,7 +1,7 @@
 import React, { forwardRef, useState, useRef, useEffect, RefCallback } from 'react';
 import { cva } from 'class-variance-authority';
-import { cn } from '@/utils/cn';
-import { Button } from '@/components/atoms/Button';
+import { cn } from '../../../utils/cn';
+import { Button } from '../../atoms/Button';
 
 const inputOTPVariants = cva(
   'border bg-white flex items-center justify-center aspect-square transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 text-center',

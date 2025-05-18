@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { cva } from 'class-variance-authority';
-import { cn } from '@/utils/cn';
+import { cn } from '../../../utils/cn';
 
 const cardVariants = cva(
   'border bg-card text-card-foreground',

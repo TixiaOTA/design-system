@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Toast, ToastProps } from './Toast';
-import { cn } from '@/utils/cn';
+import { cn } from '../../../utils/cn';
 
 export type ToastPosition = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center';
 

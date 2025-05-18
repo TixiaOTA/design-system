@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@/utils/cn';
+import { cn } from '../../../utils/cn';
 import { Icon } from '@iconify/react';
 import { Divider } from '../../atoms/Divider';
 

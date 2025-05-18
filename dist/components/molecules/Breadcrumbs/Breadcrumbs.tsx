@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '@/utils/cn';
+import { cn } from '../../../utils/cn';
 import { Icon } from '../../atoms/Icons/Icons';
 
 const breadcrumbsVariants = cva('flex items-center text-sm', {
