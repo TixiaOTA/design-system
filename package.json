@@ -1,7 +1,7 @@
 {
   "name": "@tixia/design-system",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "main": "./dist/tixia-design-system.umd.js",
   "module": "./dist/tixia-design-system.mjs",
   "types": "./dist/index.d.ts",
@@ -14,6 +14,9 @@
       "import": "./dist/tixia-design-system.mjs",
       "require": "./dist/tixia-design-system.umd.js"
     }
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "dev": "vite",
