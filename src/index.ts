@@ -38,6 +38,7 @@ export * from './components/molecules/Toast';
 export * from './components/molecules/WidgetCard';
 export * from './components/molecules/ErrorWrapper';
 export * from './components/molecules/InputOTP';
+export * from './components/molecules/BadgeNotif'
 // Organisms
 export * from './components/organisms/WidgetCardGroup';
 export * from './components/organisms/OnboardDialog';
