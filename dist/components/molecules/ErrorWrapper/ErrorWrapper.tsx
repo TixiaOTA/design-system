@@ -16,6 +16,8 @@ interface ErrorWrapperProps {
   children?: ReactNode;
   className?: string;
   variant?: ErrorVariant;
+  customImage?: string;
+  customMessage?: string;
 }
 
 // HTTP Status Codes with their default messages
@@ -109,81 +111,49 @@ const isValidErrorObject = (error: unknown): error is { code?: string; message?:
   );
 };
 
-const ErrorWrapper = ({ error, reload, children, className = '', variant }: ErrorWrapperProps) => {
-  // Handle variant-based error
-  if (variant) {
-    const errorCode = variantToErrorCode[variant];
-    const variantConfig = appErrorConfig[errorCode];
-    
-    return (
-      <div className={`flex flex-col items-center justify-center p-8 text-center gap-4 ${className}`}>
-        <img 
-          src={variantConfig.image} 
-          alt="Error illustration" 
-          className="max-w-[300px] h-auto"
-        />
-        <Text variant="body1" className="m-0">
-          {variantConfig.message}
-        </Text>
-        {reload && (
-          <Button
-            onClick={reload}
-            rounded="full"
-            variant="primary"
-            size="md"
-          >
-            Try Again
-          </Button>
-        )}
-      </div>
-    );
-  }
-
-  if (!error) {
+const ErrorWrapper = ({ 
+  error, 
+  reload, 
+  children, 
+  className = '', 
+  variant,
+  customImage,
+  customMessage 
+}: ErrorWrapperProps) => {
+  // If no error and no variant, show children
+  if (!error && !variant) {
     return children ? <>{children}</> : null;
   }
 
-  // Handle malformed error object
-  if (!isValidErrorObject(error)) {
-    return (
-      <div className={`flex flex-col items-center justify-center p-8 text-center gap-4 ${className}`}>
-        <img 
-          src={defaultErrorConfig.image} 
-          alt="Error illustration" 
-          className="max-w-[300px] h-auto"
-        />
-        <Text variant="body1" className="m-0">
-          {defaultErrorConfig.message}
-        </Text>
-        {reload && (
-          <Button
-            onClick={reload}
-            rounded="full"
-            variant="primary"
-            size="md"
-          >
-            Try Again
-          </Button>
-        )}
-      </div>
-    );
-  }
+  // Get the appropriate configuration based on variant or error
+  const getErrorConfig = () => {
+    if (variant) {
+      const errorCode = variantToErrorCode[variant];
+      return appErrorConfig[errorCode];
+    }
 
-  const currentErrorConfig = error.code && allErrorConfigs[error.code] 
-    ? allErrorConfigs[error.code] 
-    : defaultErrorConfig;
-    
-  const errorMessage = error.message || currentErrorConfig.message;
+    if (!isValidErrorObject(error)) {
+      return defaultErrorConfig;
+    }
+
+    return error.code && allErrorConfigs[error.code] 
+      ? allErrorConfigs[error.code] 
+      : defaultErrorConfig;
+  };
+
+  const errorConfig = getErrorConfig();
+  const displayImage = customImage || errorConfig.image;
+  const displayMessage = customMessage || (isValidErrorObject(error) ? error.message : null) || errorConfig.message;
 
   return (
     <div className={`flex flex-col items-center justify-center p-8 text-center gap-4 ${className}`}>
       <img 
-        src={currentErrorConfig.image} 
+        src={displayImage} 
         alt="Error illustration" 
         className="max-w-[300px] h-auto"
       />
       <Text variant="body1" className="m-0">
-        {errorMessage}
+        {displayMessage}
       </Text>
       {reload && (
         <Button

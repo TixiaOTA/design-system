@@ -13,57 +13,22 @@ const meta: Meta<typeof ErrorWrapper> = {
 export default meta;
 type Story = StoryObj<typeof ErrorWrapper>;
 
-// Variant-based stories
-export const NoInternetVariant: Story = {
+// Basic usage stories
+export const NoError: Story = {
   args: {
-    variant: "no-internet",
+    children: <div>This content will be shown when there is no error</div>,
   },
 };
 
-export const DataNotFoundVariant: Story = {
+export const WithChildren: Story = {
   args: {
-    variant: "data-not-found",
+    children: <div>This is the content that will be shown when there is no error</div>,
   },
 };
 
-export const UnderDevelopmentVariant: Story = {
+// Error-based stories
+export const WithErrorCode: Story = {
   args: {
-    variant: "under-development",
-  },
-};
-
-export const InformationUnavailableVariant: Story = {
-  args: {
-    variant: "information-unavailable",
-  },
-};
-
-export const SuccessVariant: Story = {
-  args: {
-    variant: "success",
-  },
-};
-
-export const CheckedVariant: Story = {
-  args: {
-    variant: "checked",
-  },
-};
-
-// Original error object based stories
-export const Default: Story = {
-  args: {
-    children: <div>Content that will be hidden when error occurs</div>,
-    error: {
-      code: "500",
-      message: "Something went wrong. Please try again later.",
-    },
-  },
-};
-
-export const PageNotFound: Story = {
-  args: {
-    children: <div>Content that will be hidden when error occurs</div>,
     error: {
       code: "404",
       message: "The page you are looking for does not exist.",
@@ -71,29 +36,77 @@ export const PageNotFound: Story = {
   },
 };
 
-export const RestrictedAccess: Story = {
+export const WithErrorAndReload: Story = {
   args: {
-    children: <div>Content that will be hidden when error occurs</div>,
+    error: {
+      code: "500",
+      message: "Something went wrong on our end. Please try again later.",
+    },
+    reload: () => alert("Reload clicked"),
+  },
+};
+
+// Variant-based stories
+export const WithVariant: Story = {
+  args: {
+    variant: "no-internet",
+    reload: () => alert("Reload clicked"),
+  },
+};
+
+export const WithVariantAndCustomMessage: Story = {
+  args: {
+    variant: "data-not-found",
+    customMessage: "We couldn't find what you're looking for. Please try a different search term.",
+    reload: () => alert("Reload clicked"),
+  },
+};
+
+// Custom content stories
+export const WithCustomContent: Story = {
+  args: {
+    customImage: "https://placehold.co/300x200",
+    customMessage: "This is a completely custom error state",
+    reload: () => alert("Reload clicked"),
+  },
+};
+
+export const WithCustomImageOnly: Story = {
+  args: {
+    error: {
+      code: "404",
+    },
+    customImage: "https://placehold.co/300x200",
+    reload: () => alert("Reload clicked"),
+  },
+};
+
+export const WithCustomMessageOnly: Story = {
+  args: {
+    error: {
+      code: "500",
+    },
+    customMessage: "This is a custom error message that overrides the default one",
+    reload: () => alert("Reload clicked"),
+  },
+};
+
+// Complex combinations
+export const WithVariantAndCustomImage: Story = {
+  args: {
+    variant: "under-development",
+    customImage: "https://placehold.co/300x200",
+    reload: () => alert("Reload clicked"),
+  },
+};
+
+export const WithErrorAndCustomContent: Story = {
+  args: {
     error: {
       code: "403",
-      message: "You do not have permission to access this resource.",
     },
-  },
-};
-
-export const WithReload: Story = {
-  args: {
-    children: <div>Content that will be hidden when error occurs</div>,
-    error: {
-      code: "INFORMATION_UNAVAILABLE",
-      message: "The requested information is currently unavailable.",
-    },
-    reload: () => "",
-  },
-};
-
-export const NoError: Story = {
-  args: {
-    children: <div>This content will be shown when there is no error</div>,
+    customImage: "https://placehold.co/300x200",
+    customMessage: "Custom access denied message",
+    reload: () => alert("Reload clicked"),
   },
 };
