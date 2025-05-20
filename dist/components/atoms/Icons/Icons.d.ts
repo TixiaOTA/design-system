@@ -13,5 +13,9 @@ export interface IconProps {
     flip?: 'horizontal' | 'vertical' | 'both';
     /** Whether the icon should spin */
     spin?: boolean;
+    /** Whether to load icon inline */
+    inline?: boolean;
+    /** Mode of the icon (svg, mask, bg) */
+    mode?: 'svg' | 'mask' | 'bg';
 }
-export declare const Icon: ({ icon, className, size, color, rotate, flip, spin, ...props }: IconProps) => import("react/jsx-runtime").JSX.Element;
+export declare const Icon: ({ icon, className, size, color, rotate, flip, spin, inline, mode, ...props }: IconProps) => import("react/jsx-runtime").JSX.Element | null;

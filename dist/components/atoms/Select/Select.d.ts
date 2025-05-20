@@ -2,7 +2,7 @@ import React from 'react';
 import { type VariantProps } from 'class-variance-authority';
 export type SelectPosition = 'bottom' | 'top' | 'left' | 'right';
 declare const selectVariants: (props?: ({
-    variant?: "default" | "error" | "success" | "ghost" | "underline" | null | undefined;
+    variant?: "error" | "default" | "success" | "ghost" | "underline" | null | undefined;
     size?: "sm" | "md" | "lg" | null | undefined;
     rounded?: "sm" | "md" | "lg" | "none" | "full" | null | undefined;
     fullWidth?: boolean | null | undefined;

@@ -16,6 +16,10 @@ export interface IconProps {
   flip?: 'horizontal' | 'vertical' | 'both';
   /** Whether the icon should spin */
   spin?: boolean;
+  /** Whether to load icon inline */
+  inline?: boolean;
+  /** Mode of the icon (svg, mask, bg) */
+  mode?: 'svg' | 'mask' | 'bg';
 }
 
 export const Icon = ({
@@ -26,24 +30,49 @@ export const Icon = ({
   rotate,
   flip,
   spin,
+  inline = false,
+  mode = 'svg',
   ...props
 }: IconProps) => {
   const [IconifyIcon, setIconifyIcon] = useState<any>(null);
-  const [isMounted, setIsMounted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    
+    let isMounted = true;
+
     const loadIcon = async () => {
-      const { Icon } = await import('@iconify/react');
-      setIconifyIcon(() => Icon);
-      setIsMounted(true);
+      try {
+        const { Icon } = await import('@iconify/react');
+        
+        if (isMounted) {
+          setIconifyIcon(() => Icon);
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error('Failed to load icon:', error);
+        if (isMounted) {
+          setError(error as Error);
+          setIsLoading(false);
+        }
+      }
     };
+
     loadIcon();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  if (!isMounted || !IconifyIcon) {
+  // Show placeholder during loading
+  if (isLoading) {
     return <span style={{ width: size, height: size }} />;
+  }
+
+  // Show nothing if there's an error
+  if (error || !IconifyIcon) {
+    return null;
   }
 
   return (
@@ -60,6 +89,8 @@ export const Icon = ({
       height={size}
       width={size}
       flip={flip}
+      inline={inline}
+      mode={mode}
       {...props}
     />
   );
