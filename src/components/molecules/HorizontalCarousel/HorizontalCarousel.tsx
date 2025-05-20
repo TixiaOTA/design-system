@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { cn } from '../../../utils/cn';
 import { Icon } from '../../atoms/Icons/Icons';
+import { getWindow } from '../../../utils/ssr';
 
 export interface HorizontalCarouselProps {
   children: React.ReactNode[];
@@ -29,10 +30,11 @@ export const HorizontalCarousel: React.FC<HorizontalCarouselProps> = ({
     const container = containerRef.current;
     if (!container) return;
     container.addEventListener('scroll', updateScrollButtons);
-    window.addEventListener('resize', updateScrollButtons);
+    const win = getWindow();
+    win.addEventListener('resize', updateScrollButtons);
     return () => {
       container.removeEventListener('scroll', updateScrollButtons);
-      window.removeEventListener('resize', updateScrollButtons);
+      win.removeEventListener('resize', updateScrollButtons);
     };
   }, []);
 

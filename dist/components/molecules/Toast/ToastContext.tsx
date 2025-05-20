@@ -2,6 +2,7 @@ import React, { createContext, useContext, useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Toast, ToastProps } from './Toast';
 import { cn } from '../../../utils/cn';
+import { getDocument } from '../../../utils/ssr';
 
 export type ToastPosition = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center';
 
@@ -70,6 +71,9 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     'bottom-center': [],
   });
 
+  const doc = getDocument();
+  if (!('body' in doc)) return <ToastContext.Provider value={{ showToast, removeToast }}>{children}</ToastContext.Provider>;
+
   return (
     <ToastContext.Provider value={{ showToast, removeToast }}>
       {children}
@@ -95,7 +99,7 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             </div>
           ))}
         </>,
-        document.body
+        doc.body
       )}
     </ToastContext.Provider>
   );

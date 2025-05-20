@@ -2,6 +2,7 @@ import React, { forwardRef, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { cn } from '../../../utils/cn';
 import { Icon } from '@iconify/react';
+import { getDocument } from '../../../utils/ssr';
 
 export type DialogSize = 'sm' | 'md' | 'lg' | 'xl' | 'fullscreen';
 
@@ -85,30 +86,38 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
       if (isOpen) {
         setIsVisible(true);
         setIsAnimating(true);
-        document.body.style.overflow = 'hidden';
+        const doc = getDocument();
+        if ('body' in doc) {
+          doc.body.style.overflow = 'hidden';
+        }
       } else {
         setIsAnimating(false);
         const timer = setTimeout(() => {
           setIsVisible(false);
-          document.body.style.overflow = '';
+          const doc = getDocument();
+          if ('body' in doc) {
+            doc.body.style.overflow = '';
+          }
         }, 300); // Match animation duration
         return () => clearTimeout(timer);
       }
     }, [isOpen]);
 
     useEffect(() => {
-      const handleEscape = (event: KeyboardEvent) => {
-        if (event.key === 'Escape') {
+      const handleEscape = (event: Event) => {
+        if (event instanceof KeyboardEvent && event.key === 'Escape') {
           onClose();
         }
       };
 
       if (isOpen) {
-        document.addEventListener('keydown', handleEscape);
+        const doc = getDocument();
+        doc.addEventListener('keydown', handleEscape);
       }
 
       return () => {
-        document.removeEventListener('keydown', handleEscape);
+        const doc = getDocument();
+        doc.removeEventListener('keydown', handleEscape);
       };
     }, [isOpen, onClose]);
 
@@ -125,6 +134,9 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
         onClose();
       }
     };
+
+    const doc = getDocument();
+    if (!('body' in doc)) return null;
 
     return createPortal(
       <div
@@ -155,7 +167,7 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
           {children}
         </div>
       </div>,
-      document.body
+      doc.body
     );
   }
 );

@@ -4,6 +4,7 @@ import { cva } from 'class-variance-authority';
 import { cn } from '../../../utils/cn';
 import { Input } from '../Input/Input';
 import { SelectItem } from '../SelectItem/SelectItem';
+import { getWindow, getDocument } from '../../../utils/ssr';
 
 // Create a custom event for autocomplete dropdown management
 const AUTOCOMPLETE_OPEN_EVENT = 'autocomplete-dropdown-opened';
@@ -118,6 +119,7 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
 
       const { bottom, top, left, width } = inputRef.current.getBoundingClientRect();
       const dropdown = dropdownRef.current;
+      const win = getWindow();
       const commonStyles = {
         position: 'fixed',
         left: `${left}px`,
@@ -128,11 +130,11 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
         ? {
             ...commonStyles,
             top: `${bottom + 4}px`,
-            maxHeight: `${window.innerHeight - bottom - 8}px`,
+            maxHeight: `${win.innerHeight - bottom - 8}px`,
           }
         : {
             ...commonStyles,
-            bottom: `${window.innerHeight - top + 4}px`,
+            bottom: `${win.innerHeight - top + 4}px`,
             maxHeight: `${top - 8}px`,
           };
 
@@ -140,10 +142,9 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
     };
 
     useEffect(() => {
-      setInputValue(value as string || '');
-    }, [value]);
+      const win = getWindow();
+      const doc = getDocument();
 
-    useEffect(() => {
       const handleScroll = () => {
         if (isOpen) {
           updateDropdownPosition();
@@ -163,7 +164,7 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
         }
       };
 
-      const handleClickOutside = (e: MouseEvent) => {
+      const handleClickOutside = (e: Event) => {
         const target = e.target as HTMLElement;
         if (
           wrapperRef.current &&
@@ -177,20 +178,24 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
 
       if (isOpen) {
         updateDropdownPosition();
-        window.addEventListener('scroll', handleScroll, true);
-        window.addEventListener('resize', handleResize);
+        win.addEventListener('scroll', handleScroll, true);
+        win.addEventListener('resize', handleResize);
       }
 
-      document.addEventListener(AUTOCOMPLETE_OPEN_EVENT, handleOtherAutocompleteOpen);
-      document.addEventListener('click', handleClickOutside);
+      doc.addEventListener(AUTOCOMPLETE_OPEN_EVENT, handleOtherAutocompleteOpen);
+      doc.addEventListener('click', handleClickOutside);
 
       return () => {
-        window.removeEventListener('scroll', handleScroll, true);
-        window.removeEventListener('resize', handleResize);
-        document.removeEventListener(AUTOCOMPLETE_OPEN_EVENT, handleOtherAutocompleteOpen);
-        document.removeEventListener('click', handleClickOutside);
+        win.removeEventListener('scroll', handleScroll, true);
+        win.removeEventListener('resize', handleResize);
+        doc.removeEventListener(AUTOCOMPLETE_OPEN_EVENT, handleOtherAutocompleteOpen);
+        doc.removeEventListener('click', handleClickOutside);
       };
     }, [isOpen, id]);
+
+    useEffect(() => {
+      setInputValue(value as string || '');
+    }, [value]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = event.target;
@@ -230,7 +235,8 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
 
     const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
       if (!isControlled) {
-        document.dispatchEvent(
+        const doc = getDocument();
+        doc.dispatchEvent(
           new CustomEvent(AUTOCOMPLETE_OPEN_EVENT, {
             detail: { id },
           })
@@ -258,6 +264,9 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
 
     const renderDropdown = () => {
       if (!showDropdown) return null;
+
+      const doc = getDocument();
+      if (!('body' in doc)) return null;
 
       const dropdown = (
         <div
@@ -289,7 +298,7 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
         </div>
       );
 
-      return createPortal(dropdown, document.body);
+      return createPortal(dropdown, doc.body);
     };
 
     return (

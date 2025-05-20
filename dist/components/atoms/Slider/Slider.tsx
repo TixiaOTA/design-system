@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import clsx from 'clsx';
+import { getWindow } from '../../../utils/ssr';
 
 export interface SliderProps {
   min?: number;
@@ -47,9 +48,9 @@ export const Slider: React.FC<SliderProps> = ({
     updateValueFromEvent(e);
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
+  const handleMouseMove = (e: Event) => {
     if (!isDragging || disabled) return;
-    updateValueFromEvent(e);
+    updateValueFromEvent(e as MouseEvent);
   };
 
   const handleMouseUp = () => {
@@ -68,12 +69,14 @@ export const Slider: React.FC<SliderProps> = ({
 
   useEffect(() => {
     if (isDragging) {
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('mouseup', handleMouseUp);
+      const win = getWindow();
+      win.addEventListener('mousemove', handleMouseMove);
+      win.addEventListener('mouseup', handleMouseUp);
     }
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
+      const win = getWindow();
+      win.removeEventListener('mousemove', handleMouseMove);
+      win.removeEventListener('mouseup', handleMouseUp);
     };
   }, [isDragging]);
 

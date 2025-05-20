@@ -4,6 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../../utils/cn';
 import { Icon } from '../../atoms/Icons/Icons';
 import { SelectItem, SelectItemProps } from '../SelectItem';
+import { getWindow, getDocument } from '../../../utils/ssr';
 
 // Create a custom event for select dropdown management
 const SELECT_OPEN_EVENT = 'select-dropdown-opened';
@@ -128,14 +129,15 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
       if (isOpen && buttonRef.current && dropdownRef.current) {
         const buttonRect = buttonRef.current.getBoundingClientRect();
         const dropdown = dropdownRef.current;
+        const win = getWindow();
         
         // Constants for space calculations
-        const spaceBelow = window.innerHeight - buttonRect.bottom;
+        const spaceBelow = win.innerHeight - buttonRect.bottom;
         const spaceAbove = buttonRect.top;
         
         // Check if dropdown would touch bottom of page
         const dropdownBottom = buttonRect.bottom + dropdown.offsetHeight + 4; // 4px for gap
-        const touchesBottom = dropdownBottom >= window.innerHeight;
+        const touchesBottom = dropdownBottom >= win.innerHeight;
         const hasMoreSpaceAbove = spaceAbove > spaceBelow;
         const shouldFlip = touchesBottom && hasMoreSpaceAbove;
 
@@ -146,7 +148,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
 
           if (position === 'bottom' && shouldFlip) {
             // Move to top if touches bottom
-            dropdown.style.bottom = `${window.innerHeight - buttonRect.top + 4}px`;
+            dropdown.style.bottom = `${win.innerHeight - buttonRect.top + 4}px`;
             dropdown.style.top = 'auto';
             dropdown.style.maxHeight = `${spaceAbove - 8}px`;
           } else if (position === 'bottom') {
@@ -161,25 +163,27 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
             dropdown.style.maxHeight = `${spaceBelow - 8}px`;
           } else {
             // Stay at top
-            dropdown.style.bottom = `${window.innerHeight - buttonRect.top + 4}px`;
+            dropdown.style.bottom = `${win.innerHeight - buttonRect.top + 4}px`;
             dropdown.style.top = 'auto';
             dropdown.style.maxHeight = `${spaceAbove - 8}px`;
           }
         } else if (position === 'left') {
           dropdown.style.position = 'fixed';
-          dropdown.style.right = `${window.innerWidth - buttonRect.left + 4}px`;
+          dropdown.style.right = `${win.innerWidth - buttonRect.left + 4}px`;
           dropdown.style.top = `${buttonRect.top}px`;
-          dropdown.style.maxHeight = `${window.innerHeight - buttonRect.top - 8}px`;
+          dropdown.style.maxHeight = `${win.innerHeight - buttonRect.top - 8}px`;
         } else if (position === 'right') {
           dropdown.style.position = 'fixed';
           dropdown.style.left = `${buttonRect.right + 4}px`;
           dropdown.style.top = `${buttonRect.top}px`;
-          dropdown.style.maxHeight = `${window.innerHeight - buttonRect.top - 8}px`;
+          dropdown.style.maxHeight = `${win.innerHeight - buttonRect.top - 8}px`;
         }
       }
     };
 
     useEffect(() => {
+      const win = getWindow();
+
       const handleScroll = () => {
         if (isOpen) {
           updateDropdownPosition();
@@ -194,17 +198,19 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
 
       if (isOpen) {
         updateDropdownPosition();
-        window.addEventListener('scroll', handleScroll, true);
-        window.addEventListener('resize', handleResize);
+        win.addEventListener('scroll', handleScroll, true);
+        win.addEventListener('resize', handleResize);
       }
 
       return () => {
-        window.removeEventListener('scroll', handleScroll, true);
-        window.removeEventListener('resize', handleResize);
+        win.removeEventListener('scroll', handleScroll, true);
+        win.removeEventListener('resize', handleResize);
       };
     }, [isOpen, position]);
 
     useEffect(() => {
+      const doc = getDocument();
+
       const handleOtherSelectOpen = (e: Event) => {
         const customEvent = e as CustomEvent;
         if (customEvent.detail.id !== id) {
@@ -212,7 +218,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
         }
       };
 
-      const handleClickOutside = (e: MouseEvent) => {
+      const handleClickOutside = (e: Event) => {
         const target = e.target as HTMLElement;
         const selectButton = buttonRef.current;
         const dropdown = dropdownRef.current;
@@ -227,12 +233,12 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
         }
       };
 
-      document.addEventListener(SELECT_OPEN_EVENT, handleOtherSelectOpen);
-      document.addEventListener('click', handleClickOutside);
+      doc.addEventListener(SELECT_OPEN_EVENT, handleOtherSelectOpen);
+      doc.addEventListener('click', handleClickOutside);
 
       return () => {
-        document.removeEventListener(SELECT_OPEN_EVENT, handleOtherSelectOpen);
-        document.removeEventListener('click', handleClickOutside);
+        doc.removeEventListener(SELECT_OPEN_EVENT, handleOtherSelectOpen);
+        doc.removeEventListener('click', handleClickOutside);
       };
     }, [id]);
 
@@ -244,12 +250,12 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
         return;
       }
 
-      document.dispatchEvent(
+      const doc = getDocument();
+      doc.dispatchEvent(
         new CustomEvent(SELECT_OPEN_EVENT, {
           detail: { id },
         })
       );
-      
       setIsOpen(true);
     };
 
@@ -338,7 +344,10 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
         </div>
       );
 
-      return createPortal(dropdown, document.body);
+      const doc = getDocument();
+      if (!('body' in doc)) return null;
+
+      return createPortal(dropdown, doc.body);
     };
 
     return (

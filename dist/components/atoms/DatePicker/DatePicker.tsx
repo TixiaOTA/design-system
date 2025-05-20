@@ -4,6 +4,7 @@ import { cva } from 'class-variance-authority';
 import { cn } from '../../../utils/cn';
 import dayjs from 'dayjs';
 import { Icon } from '@iconify/react';
+import { getWindow, getDocument } from '../../../utils/ssr';
 
 const datePickerVariants = cva(
   'border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
@@ -116,17 +117,21 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
 
       const { bottom, left, width } = inputRef.current.getBoundingClientRect();
       const dropdown = dropdownRef.current;
+      const win = getWindow();
       
       Object.assign(dropdown.style, {
         position: 'fixed',
         left: `${left}px`,
         top: `${bottom + 4}px`,
         width: `${width}px`,
-        maxHeight: `${window.innerHeight - bottom - 8}px`,
+        maxHeight: `${win.innerHeight - bottom - 8}px`,
       });
     };
 
     useEffect(() => {
+      const win = getWindow();
+      const doc = getDocument();
+
       const handleScroll = () => {
         if (isOpen) {
           updateDropdownPosition();
@@ -139,7 +144,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
         }
       };
 
-      const handleClickOutside = (e: MouseEvent) => {
+      const handleClickOutside = (e: Event) => {
         const target = e.target as HTMLElement;
         if (
           wrapperRef.current &&
@@ -153,16 +158,16 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
 
       if (isOpen) {
         updateDropdownPosition();
-        window.addEventListener('scroll', handleScroll, true);
-        window.addEventListener('resize', handleResize);
+        win.addEventListener('scroll', handleScroll, true);
+        win.addEventListener('resize', handleResize);
       }
 
-      document.addEventListener('click', handleClickOutside);
+      doc.addEventListener('click', handleClickOutside);
 
       return () => {
-        window.removeEventListener('scroll', handleScroll, true);
-        window.removeEventListener('resize', handleResize);
-        document.removeEventListener('click', handleClickOutside);
+        win.removeEventListener('scroll', handleScroll, true);
+        win.removeEventListener('resize', handleResize);
+        doc.removeEventListener('click', handleClickOutside);
       };
     }, [isOpen]);
 
@@ -230,6 +235,83 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
       return start;
     };
 
+    const renderDropdown = () => {
+      if (!isOpen) return null;
+
+      const doc = getDocument();
+      if (!('body' in doc)) return null;
+
+      return createPortal(
+        <div
+          ref={dropdownRef}
+          className="fixed z-[9999] bg-white border border-gray-200 rounded-md shadow-lg"
+        >
+          <div className="flex items-center justify-between p-2 border-b border-gray-200">
+            <button
+              onClick={handlePrevMonth}
+              className="p-1 rounded-full hover:bg-primary-50 active:bg-primary-100 transition-colors duration-200"
+            >
+              <Icon
+                icon="mdi:chevron-left"
+                className="w-5 h-5 text-neutral-600"
+              />
+            </button>
+            <span className="font-medium text-gray-900">
+              {dayjs(currentMonth).format('MMMM YYYY')}
+            </span>
+            <button
+              onClick={handleNextMonth}
+              className="p-1 rounded-full hover:bg-primary-50 active:bg-primary-100 transition-colors duration-200"
+            >
+              <Icon
+                icon="mdi:chevron-right"
+                className="w-5 h-5 text-neutral-600"
+              />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-7 gap-1 p-2">
+            {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map((day) => (
+              <div
+                key={day}
+                className="text-center text-sm font-medium text-gray-500"
+              >
+                {day}
+              </div>
+            ))}
+
+            {Array.from({ length: firstDayOfMonth }).map((_, index) => (
+              <div key={`empty-${index}`} />
+            ))}
+
+            {days.map((day) => {
+              const isSelected = selectedDate && dayjs(day).isSame(selectedDate, 'day');
+              const isDisabled = isDateDisabled(day);
+              const isCurrentMonth = dayjs(day).isSame(currentMonth, 'month');
+
+              return (
+                <button
+                  key={day.toString()}
+                  onClick={() => !isDisabled && handleDateSelect(day)}
+                  disabled={isDisabled}
+                  className={cn(
+                    'p-2 rounded-full text-sm transition-colors duration-200',
+                    isSelected && 'bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700',
+                    !isSelected && !isDisabled && 'hover:bg-primary-50 active:bg-primary-100',
+                    !isCurrentMonth && 'text-neutral-400',
+                    isDisabled && 'opacity-50 cursor-not-allowed'
+                  )}
+                >
+                  {dayjs(day).format('D')}
+                </button>
+              );
+            })}
+          </div>
+        </div>,
+        doc.body
+      );
+    };
+
     return (
       <div ref={wrapperRef} className={cn('relative', fullWidth && 'w-full', className)}>
         {label && (
@@ -257,76 +339,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           />
         </div>
 
-        {isOpen &&
-          createPortal(
-            <div
-              ref={dropdownRef}
-              className="fixed z-[9999] bg-white border border-gray-200 rounded-md shadow-lg"
-            >
-              <div className="flex items-center justify-between p-2 border-b border-gray-200">
-                <button
-                  onClick={handlePrevMonth}
-                  className="p-1 rounded-full hover:bg-primary-50 active:bg-primary-100 transition-colors duration-200"
-                >
-                  <Icon
-                    icon="mdi:chevron-left"
-                    className="w-5 h-5 text-neutral-600"
-                  />
-                </button>
-                <span className="font-medium text-gray-900">
-                  {dayjs(currentMonth).format('MMMM YYYY')}
-                </span>
-                <button
-                  onClick={handleNextMonth}
-                  className="p-1 rounded-full hover:bg-primary-50 active:bg-primary-100 transition-colors duration-200"
-                >
-                  <Icon
-                    icon="mdi:chevron-right"
-                    className="w-5 h-5 text-neutral-600"
-                  />
-                </button>
-              </div>
-
-              <div className="grid grid-cols-7 gap-1 p-2">
-                {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map((day) => (
-                  <div
-                    key={day}
-                    className="text-center text-sm font-medium text-gray-500"
-                  >
-                    {day}
-                  </div>
-                ))}
-
-                {Array.from({ length: firstDayOfMonth }).map((_, index) => (
-                  <div key={`empty-${index}`} />
-                ))}
-
-                {days.map((day) => {
-                  const isSelected = selectedDate && dayjs(day).isSame(selectedDate, 'day');
-                  const isDisabled = isDateDisabled(day);
-                  const isCurrentMonth = dayjs(day).isSame(currentMonth, 'month');
-
-                  return (
-                    <button
-                      key={day.toString()}
-                      onClick={() => !isDisabled && handleDateSelect(day)}
-                      disabled={isDisabled}
-                      className={cn(
-                        'p-2 rounded-full text-sm transition-colors duration-200',
-                        isSelected && 'bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700',
-                        !isSelected && !isDisabled && 'hover:bg-primary-50 active:bg-primary-100',
-                        !isCurrentMonth && 'text-neutral-400',
-                        isDisabled && 'opacity-50 cursor-not-allowed'
-                      )}
-                    >
-                      {dayjs(day).format('D')}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>,
-            document.body
-          )}
+        {renderDropdown()}
 
         {errorText && (
           <p className="mt-1 text-sm text-red-500">{errorText}</p>

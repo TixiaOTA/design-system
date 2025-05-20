@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import clsx from 'clsx';
+import { getWindow } from '../../../utils/ssr';
 
 export interface TooltipProps {
   content: React.ReactNode;
@@ -56,12 +57,14 @@ export const Tooltip: React.FC<TooltipProps> = ({
   useEffect(() => {
     if (isVisible) {
       updatePosition();
-      window.addEventListener('scroll', updatePosition);
-      window.addEventListener('resize', updatePosition);
+      const win = getWindow();
+      win.addEventListener('scroll', updatePosition);
+      win.addEventListener('resize', updatePosition);
     }
     return () => {
-      window.removeEventListener('scroll', updatePosition);
-      window.removeEventListener('resize', updatePosition);
+      const win = getWindow();
+      win.removeEventListener('scroll', updatePosition);
+      win.removeEventListener('resize', updatePosition);
     };
   }, [isVisible, position]);
 
