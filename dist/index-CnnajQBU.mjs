@@ -2961,7 +2961,7 @@ const re = ({
   rotate: s,
   flip: o,
   spin: i,
-  inline: a = !1,
+  inline: a = !0,
   mode: u = "svg",
   ...d
 }) => {
@@ -3515,7 +3515,7 @@ const Mo = ({
     ...m
   }, h) => {
     const c = u || !!(i || a) && !d;
-    return /* @__PURE__ */ l.jsxs(
+    return /* @__PURE__ */ l.jsx(
       "button",
       {
         className: $(
@@ -3531,12 +3531,11 @@ const Mo = ({
         ref: h,
         disabled: m.disabled || o,
         ...m,
-        children: [
-          o && /* @__PURE__ */ l.jsx("span", { className: "animate-spin inline-block w-4 h-4 border-2 border-current border-r-transparent rounded-full" }),
-          !o && i && /* @__PURE__ */ l.jsx(re, { icon: i, className: "w-4 h-4" }),
+        children: o ? /* @__PURE__ */ l.jsx("span", { className: "animate-spin inline-block w-4 h-4 border-2 border-current border-r-transparent rounded-full" }) : /* @__PURE__ */ l.jsxs(l.Fragment, { children: [
+          i && /* @__PURE__ */ l.jsx(re, { icon: i, className: "w-4 h-4", inline: !0 }),
           d && /* @__PURE__ */ l.jsx("span", { children: d }),
-          !o && a && /* @__PURE__ */ l.jsx(re, { icon: a, className: "w-4 h-4" })
-        ]
+          a && /* @__PURE__ */ l.jsx(re, { icon: a, className: "w-4 h-4", inline: !0 })
+        ] })
       }
     );
   }
@@ -3646,7 +3645,7 @@ const sr = {
   Re(() => {
     if (typeof window > "u") return;
     (async () => {
-      const { default: f } = await import("./react-apexcharts.min-Bp4c8GL1.mjs").then((c) => c.r);
+      const { default: f } = await import("./react-apexcharts.min-C4OCZAlQ.mjs").then((c) => c.r);
       a(() => f), d(!0);
     })();
   }, []);

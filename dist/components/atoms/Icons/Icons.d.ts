@@ -13,7 +13,7 @@ export interface IconProps {
     flip?: 'horizontal' | 'vertical' | 'both';
     /** Whether the icon should spin */
     spin?: boolean;
-    /** Whether to load icon inline */
+    /** Whether to load icon inline (default: true for SSR compatibility) */
     inline?: boolean;
     /** Mode of the icon (svg, mask, bg) */
     mode?: 'svg' | 'mask' | 'bg';
