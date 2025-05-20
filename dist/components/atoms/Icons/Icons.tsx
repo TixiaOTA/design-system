@@ -1,4 +1,3 @@
-import { Icon as IconifyIcon } from '@iconify/react';
 import { cn } from '../../../utils/cn';
 import { useEffect, useState } from 'react';
 
@@ -29,13 +28,19 @@ export const Icon = ({
   spin,
   ...props
 }: IconProps) => {
+  const [IconifyIcon, setIconifyIcon] = useState<any>(null);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
+    const loadIcon = async () => {
+      const { Icon } = await import('@iconify/react');
+      setIconifyIcon(() => Icon);
+      setIsMounted(true);
+    };
+    loadIcon();
   }, []);
 
-  if (!isMounted) {
+  if (!isMounted || !IconifyIcon) {
     return <span style={{ width: size, height: size }} />;
   }
 
