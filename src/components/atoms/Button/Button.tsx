@@ -113,15 +113,12 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={props.disabled || isLoading}
         {...props}
       >
-        {isLoading ? (
+        {isLoading && (
           <span className="animate-spin inline-block w-4 h-4 border-2 border-current border-r-transparent rounded-full" />
-        ) : (
-          <>
-            {leftIcon && <Icon icon={leftIcon} className="w-4 h-4" inline />}
-            {children && <span>{children}</span>}
-            {rightIcon && <Icon icon={rightIcon} className="w-4 h-4" inline />}
-          </>
         )}
+        {leftIcon && !isLoading && <Icon icon={leftIcon} className="w-4 h-4" inline />}
+        {children && <span>{children}</span>}
+        {rightIcon && !isLoading && <Icon icon={rightIcon} className="w-4 h-4" inline />}
       </button>
     );
   }
