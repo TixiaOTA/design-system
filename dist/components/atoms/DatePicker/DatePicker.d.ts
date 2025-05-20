@@ -1,3 +1,4 @@
+import React from 'react';
 export interface DatePickerProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'onChange' | 'value'> {
     /** The selected date value */
     value?: Date;
@@ -34,4 +35,4 @@ export interface DatePickerProps extends Omit<React.InputHTMLAttributes<HTMLInpu
     /** Whether the input should take full width */
     fullWidth?: boolean;
 }
-export declare const DatePicker: import("react").ForwardRefExoticComponent<DatePickerProps & import("react").RefAttributes<HTMLInputElement>>;
+export declare const DatePicker: React.ForwardRefExoticComponent<DatePickerProps & React.RefAttributes<HTMLInputElement>>;

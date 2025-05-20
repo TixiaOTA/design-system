@@ -5,6 +5,7 @@ import { cn } from '../../../utils/cn';
 import dayjs from 'dayjs';
 import { Icon } from '../../atoms/Icons/Icons';
 import { getWindow, getDocument } from '../../../utils/ssr';
+import React from 'react';
 
 const datePickerVariants = cva(
   'border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
