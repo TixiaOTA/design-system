@@ -83,7 +83,7 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             <div
               key={position}
               className={cn(
-                'fixed z-50 flex flex-col gap-2 min-w-[320px] max-w-[420px]',
+                'fixed z-[100] flex flex-col gap-2 min-w-[320px] max-w-[420px]',
                 positionStyles[position],
                 position.includes('bottom') ? 'flex-col-reverse' : 'flex-col'
               )}
