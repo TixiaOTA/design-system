@@ -1,5 +1,6 @@
 import { Icon as IconifyIcon } from '@iconify/react';
 import { cn } from '../../../utils/cn';
+import { useEffect, useState } from 'react';
 
 export interface IconProps {
   /** The icon name from Iconify (e.g., 'mdi:home') */
@@ -28,6 +29,16 @@ export const Icon = ({
   spin,
   ...props
 }: IconProps) => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return <span style={{ width: size, height: size }} />;
+  }
+
   return (
     <IconifyIcon
       icon={icon}
