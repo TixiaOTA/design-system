@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Select } from './Select';
 import { SelectItem } from '../SelectItem';
 import { Icon } from '../../atoms/Icons/Icons';
-import { Icon as IconifyIcon } from '@iconify/react';
 
 const meta = {
   title: 'Atoms/Select',
@@ -284,9 +283,9 @@ export const WithCustomOptions: Story = {
     ...Default.args,
     label: 'Select with Custom Options',
     options: [
-      { label: 'Option 1', value: '1', icon: <IconifyIcon icon="mdi:star" /> },
-      { label: 'Option 2', value: '2', icon: <IconifyIcon icon="mdi:heart" /> },
-      { label: 'Option 3', value: '3', icon: <IconifyIcon icon="mdi:check" /> },
+      { label: 'Option 1', value: '1', icon: <Icon icon="mdi:star" /> },
+      { label: 'Option 2', value: '2', icon: <Icon icon="mdi:heart" /> },
+      { label: 'Option 3', value: '3', icon: <Icon icon="mdi:check" /> },
     ],
   },
 };

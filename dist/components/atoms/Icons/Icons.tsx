@@ -32,6 +32,8 @@ export const Icon = ({
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const loadIcon = async () => {
       const { Icon } = await import('@iconify/react');
       setIconifyIcon(() => Icon);

@@ -1,7 +1,7 @@
-import { Icon as IconifyIcon } from '@iconify/react';
+import { Icon } from '../../atoms/Icons/Icons';
 import { cn } from '@/utils/cn';
 
-export interface BadgeNotifProps  {
+export interface BadgeNotifProps {
   /** The icon name from Iconify (e.g., 'mdi:home') */
   icon: string;
   /** Variant of the icon */
@@ -58,16 +58,13 @@ export const BadgeNotif = ({
 
   return (
    <div className='relative inline-block'>
-        <IconifyIcon
+        <Icon
             icon={icon}
             className={cn(
                 className
             )}
-            style={{
-                color
-            }}
-            height={32}
-            width={32}
+            color={color}
+            size={32}
             {...props}
         />
         <div 

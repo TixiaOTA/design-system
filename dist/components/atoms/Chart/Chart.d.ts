@@ -1,5 +1,5 @@
 import React from 'react';
-import { ApexOptions } from 'apexcharts';
+import type { ApexOptions } from 'apexcharts';
 export type ChartType = 'line' | 'area' | 'bar' | 'pie' | 'donut' | 'scatter' | 'bubble' | 'radar' | 'heatmap';
 export interface ChartProps {
     /** Type of the chart */

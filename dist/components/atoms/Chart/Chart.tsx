@@ -1,6 +1,5 @@
-import React from 'react';
-import ReactApexChart from 'react-apexcharts';
-import { ApexOptions } from 'apexcharts';
+import React, { useEffect, useState } from 'react';
+import type { ApexOptions } from 'apexcharts';
 
 export type ChartType =
   | 'line'
@@ -72,6 +71,20 @@ export const Chart: React.FC<ChartProps> = ({
   options = {},
   className,
 }) => {
+  const [ChartComponent, setChartComponent] = useState<any>(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const loadChart = async () => {
+      const { default: ReactApexChart } = await import('react-apexcharts');
+      setChartComponent(() => ReactApexChart);
+      setIsMounted(true);
+    };
+    loadChart();
+  }, []);
+
   const chartOptions: ApexOptions = {
     ...defaultOptions,
     ...options,
@@ -82,9 +95,13 @@ export const Chart: React.FC<ChartProps> = ({
     },
   };
 
+  if (!isMounted || !ChartComponent) {
+    return <div style={{ width, height }} className={className} />;
+  }
+
   return (
     <div className={className}>
-      <ReactApexChart
+      <ChartComponent
         type={type}
         series={series}
         options={chartOptions}
