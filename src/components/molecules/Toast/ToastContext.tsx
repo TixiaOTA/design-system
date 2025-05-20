@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useCallback, useState, useEffect } from 'react';
+import React, { createContext, useContext, useCallback, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Toast, ToastProps } from './Toast';
 import { cn } from '../../../utils/cn';
 import { getDocument } from '../../../utils/ssr';
@@ -28,11 +29,6 @@ const positionStyles: Record<ToastPosition, string> = {
 
 export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [toasts, setToasts] = useState<ToastItem[]>([]);
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const removeToast = useCallback((id: string) => {
     setToasts((prev) => prev.filter((toast) => toast.id !== id));
@@ -75,20 +71,14 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     'bottom-center': [],
   });
 
-  if (!isMounted) {
-    return <ToastContext.Provider value={{ showToast, removeToast }}>{children}</ToastContext.Provider>;
-  }
-
   const doc = getDocument();
-  if (!('body' in doc)) {
-    return <ToastContext.Provider value={{ showToast, removeToast }}>{children}</ToastContext.Provider>;
-  }
+  if (!('body' in doc)) return <ToastContext.Provider value={{ showToast, removeToast }}>{children}</ToastContext.Provider>;
 
   return (
     <ToastContext.Provider value={{ showToast, removeToast }}>
       {children}
-      {isMounted && (
-        <div className="fixed inset-0 pointer-events-none">
+      {createPortal(
+        <>
           {(Object.entries(toastsByPosition) as [ToastPosition, ToastItem[]][]).map(([position, items]) => (
             <div
               key={position}
@@ -108,7 +98,8 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
               ))}
             </div>
           ))}
-        </div>
+        </>,
+        doc.body
       )}
     </ToastContext.Provider>
   );
