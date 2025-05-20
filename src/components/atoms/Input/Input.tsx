@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { cva } from 'class-variance-authority';
 import { cn } from '../../../utils/cn';
-import { Icon } from '@iconify/react';
+import { Icon } from '../../atoms/Icons/Icons';
 
 const inputVariants = cva(
   'border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',

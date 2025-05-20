@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '../../../utils/cn';
-import { Icon } from '@iconify/react';
+import { Icon } from '../../atoms/Icons/Icons';
 import { Divider } from '../../atoms/Divider';
 
 export type StepStatus = 'completed' | 'active' | 'pending';

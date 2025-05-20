@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { cn } from '../../../utils/cn';
-import { Icon } from '@iconify/react';
+import { Icon } from '../../atoms/Icons/Icons';
 import { getDocument } from '../../../utils/ssr';
 
 export type DialogSize = 'sm' | 'md' | 'lg' | 'xl' | 'fullscreen';

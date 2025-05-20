@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
 import { cn } from '../../../utils/cn';
-import { Icon } from '@iconify/react';
-import type { IconifyIcon } from '@iconify/react';
+import { Icon } from '../../atoms/Icons/Icons';
 import { ToastPosition } from './ToastContext';
 import { Button } from '../../atoms/Button';
 
@@ -14,7 +13,7 @@ export interface ToastProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
   description?: string;
   onClose?: () => void;
-  icon?: string | IconifyIcon;
+  icon?: string;
   showIcon?: boolean;
   duration?: number;
   showClose?: boolean;

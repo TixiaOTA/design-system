@@ -1,6 +1,6 @@
 import React from 'react';
 declare const buttonVariants: (props?: ({
-    variant?: "success" | "ghost" | "link" | "primary" | "secondary" | "warning" | "outline" | "outline-primary" | "outline-secondary" | "outline-success" | "outline-warning" | "outline-danger" | "danger" | null | undefined;
+    variant?: "link" | "success" | "ghost" | "primary" | "secondary" | "warning" | "outline" | "outline-primary" | "outline-secondary" | "outline-success" | "outline-warning" | "outline-danger" | "danger" | null | undefined;
     size?: "sm" | "md" | "lg" | "xs" | null | undefined;
     rounded?: "sm" | "md" | "lg" | "none" | "full" | null | undefined;
     fullWidth?: boolean | null | undefined;

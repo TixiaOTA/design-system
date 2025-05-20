@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useRef } from 'react';
 import clsx from 'clsx';
-import { Icon } from '@iconify/react';
+import { Icon } from '../../atoms/Icons/Icons';
 
 export interface FileUploadProps {
   accept?: string[];

@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import clsx from 'clsx';
-import { Icon } from '@iconify/react';
+import { Icon } from '../../atoms/Icons/Icons';
 
 export interface TabItem {
   id: string;

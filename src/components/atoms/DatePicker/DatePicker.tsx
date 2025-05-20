@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { cva } from 'class-variance-authority';
 import { cn } from '../../../utils/cn';
 import dayjs from 'dayjs';
-import { Icon } from '@iconify/react';
+import { Icon } from '../../atoms/Icons/Icons';
 import { getWindow, getDocument } from '../../../utils/ssr';
 
 const datePickerVariants = cva(

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { AutoComplete } from './AutoComplete';
-import { Icon } from '@iconify/react';
+import { Icon } from '../../atoms/Icons/Icons';
 
 const meta = {
   title: 'Atoms/AutoComplete',

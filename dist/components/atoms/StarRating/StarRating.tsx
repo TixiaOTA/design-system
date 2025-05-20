@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { cn } from '../../../utils/cn';
-import { Icon } from '@iconify/react';
+import { Icon } from '../../atoms/Icons/Icons';
 
 export type StarRatingSize = 'sm' | 'md' | 'lg';
 export type StarRatingColor = 'primary' | 'warning' | 'default';

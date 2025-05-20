@@ -1,7 +1,6 @@
 import React from 'react';
 import { cn } from '../../../utils/cn';
-import { Icon } from '@iconify/react';
-import type { IconifyIcon } from '@iconify/react';
+import { Icon } from '../../atoms/Icons/Icons';
 
 export type ChipVariant = 'solid' | 'outline' | 'subtle' | 'soft';
 export type ChipColor = 'primary' | 'success' | 'warning' | 'error' | 'info' | 'danger' | 'default';
@@ -69,7 +68,7 @@ export interface ChipProps {
   rounded?: ChipRounded;
   onClose?: () => void;
   className?: string;
-  icon?: string | IconifyIcon;
+  icon?: string;
 }
 
 const Chip: React.FC<ChipProps> = ({

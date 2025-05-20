@@ -1,13 +1,12 @@
 import React from 'react';
 import { cn } from '../../../utils/cn';
-import { Icon } from '@iconify/react';
-import type { IconifyIcon } from '@iconify/react';
+import { Icon } from '../../atoms/Icons/Icons';
 import { Card } from '../../atoms/Card';
 
 export interface WidgetCardProps {
   label: string;
   value: string | number;
-  icon?: string | IconifyIcon;
+  icon?: string;
   className?: string;
 }
 
