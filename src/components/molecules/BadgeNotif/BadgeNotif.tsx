@@ -1,85 +1,91 @@
+import React from 'react';
 import { Icon } from '../../atoms/Icons/Icons';
 import { cn } from '@/utils/cn';
 
+const ICON_COLOR_MAP = {
+  primary: '#007C99', // tailwind primary.DEFAULT
+  secondary: '#CEEAE7', // tailwind secondary.DEFAULT
+  danger: '#CA0000', // tailwind danger.DEFAULT
+  warning: '#FF9319', // tailwind warning.DEFAULT
+  info: '#0073E6', // tailwind info.DEFAULT
+  success: '#00B37D', // tailwind success.DEFAULT
+  disabled: '#959595', // tailwind disabled.DEFAULT
+};
+
+export type IconColor = keyof typeof ICON_COLOR_MAP | string;
+
 export interface BadgeNotifProps {
   /** The icon name from Iconify (e.g., 'mdi:home') */
-  icon: string;
-  /** Variant of the icon */
-  variant: 'number' | 'dot';
+  icon?: string;
   /** Custom CSS classes */
   className?: string;
-  /** Color of the icon */
-  color?: string;
-  /** Color of the icon */
-  plusIcon?: boolean
-   /** Number of the notification */
-  badgeContent?: number
-   /** Position of the notification */
-  position: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left'
+  /** Color of the icon. Accepts a color name (primary, secondary, etc.) or a custom color value. */
+  color?: IconColor;
+  /** Number of the notification */
+  value?: number;
+  /** Maximum number to display before showing maxValue+ */
+  maxValue?: number;
+  /** Custom node to wrap (icon, card, etc) */
+  children?: React.ReactNode;
 }
-
 
 export const BadgeNotif = ({
-    icon,
-    variant = 'number',
-    className,
-    color = '#007C99',
-    plusIcon,
-    badgeContent = 10,
-    position= 'top-right',
-    ...props
+  icon,
+  className,
+  color = 'primary',
+  value,
+  maxValue = 99,
+  children,
+  ...props
 }: BadgeNotifProps) => {
-    let widthClass = '';
-    let positionClass = '';
-  
-    if (variant === 'number') {
-        if (plusIcon || (badgeContent && badgeContent > 99)) {
-          widthClass = 'w-7';
-        } else {
-          const length = typeof badgeContent === 'number' ? String(badgeContent).length : 1;
-          widthClass = length === 1 ? 'w-5' : 'w-6';
-        }
+  // Always top-right
+  const positionClass = 'top-0 right-0';
+
+  // Determine badge content and style
+  const showNumber = typeof value === 'number' && !isNaN(value);
+  let badgeText = '';
+  if (showNumber) {
+    if (value > maxValue) {
+      badgeText = `${maxValue}+`;
+    } else {
+      badgeText = String(value);
     }
-  
-    switch (position) {
-      case 'top-right':
-        positionClass = variant === 'number' ? '-top-1 -right-2.5' : '-top-1 right-0';
-        break;
-      case 'top-left':
-        positionClass = variant === 'number' ? '-top-1 -left-2.5' : '-top-1 left-0';
-        break;
-      case 'bottom-right':
-        positionClass = variant === 'number' ? 'bottom-0 -right-3' : 'bottom-0 right-0';
-        break;
-      case 'bottom-left':
-        positionClass = variant === 'number' ? 'bottom-0 -left-3' : 'bottom-0 left-0';
-        break;
-    }
+  }
+
+  // Dynamic badge width for content
+  const badgePadding = showNumber ? 'px-2' : '';
+  const badgeMinWidth = showNumber ? 'min-w-[20px]' : 'w-2.5 h-2.5';
+  const badgeHeight = showNumber ? 'h-5' : 'h-2.5';
+
+  // Determine icon color
+  const iconColor =
+    typeof color === 'string' && color in ICON_COLOR_MAP
+      ? ICON_COLOR_MAP[color as keyof typeof ICON_COLOR_MAP]
+      : color;
 
   return (
-   <div className='relative inline-block'>
-        <Icon
-            icon={icon}
-            className={cn(
-                className
-            )}
-            color={color}
-            size={32}
-            {...props}
-        />
-        <div 
-            className={cn(
-                'absolute h-5 rounded-xl flex justify-center items-center text-[10px] bg-[#FF4C4C] text-white font-semiboldbold',
-                positionClass,
-                variant === 'number' ? `${widthClass} h-5` : 'w-2.5 h-2.5',
-                variant === 'dot' ? '' : 'p-1'
-              )}
-        >
-            {variant === 'number' &&
-            (badgeContent && badgeContent > 99 ? '99' : badgeContent)}
-            {variant === 'number' &&
-            (plusIcon || (badgeContent && badgeContent > 99)) && '+'}
-        </div>
-   </div>
-  )
-}
+    <div className={cn('relative inline-block', className)}>
+      {children ? (
+        children
+      ) : icon ? (
+        <Icon icon={icon} color={iconColor} size={32} {...props} />
+      ) : null}
+      <span
+        className={cn(
+          'absolute flex items-center justify-center rounded-xl bg-[#FF4C4C] text-white text-[10px] font-semibold',
+          positionClass,
+          badgePadding,
+          badgeMinWidth,
+          badgeHeight,
+          !showNumber && 'p-0',
+          !showNumber && 'rounded-full'
+        )}
+        style={{
+          transform: 'translate(50%,-50%)',
+        }}
+      >
+        {showNumber ? badgeText : ''}
+      </span>
+    </div>
+  );
+};

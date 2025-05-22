@@ -1,5 +1,7 @@
 import { BadgeNotif } from "./BadgeNotif";
+import { Card } from '../../atoms/Card/Card';
 import type { Meta, StoryObj } from '@storybook/react';
+import { Button } from "@/components/atoms/Button/Button";
 
 const meta: Meta<typeof BadgeNotif> = {
     title: 'Molecules/BadgeNotif',
@@ -14,26 +16,20 @@ const meta: Meta<typeof BadgeNotif> = {
             description: 'The icon name from Iconify',
         },
         color: {
-            control: 'color',
-            description: 'Color of the icon',
-        },
-        plusIcon: {
-            control: 'boolean',
-            description: 'Adding plus after number',
-        },
-        badgeContent: {
             control: 'text',
-            description: 'Content of badge ',
+            description: 'Color of the icon. Accepts a color name (primary, secondary, etc.) or a custom color value.',
         },
-        position: {
-            control: 'select',
-            options: ['top-right', 'top-left', 'bottom-right', 'bottom-left'],
-            description: 'Position the icon',
+        value: {
+            control: 'number',
+            description: 'Content of badge (number only)',
         },
-        variant: {
-            control: 'select',
-            options: ['dot', 'number'],
-            description: 'Variant the icon',
+        maxValue: {
+            control: 'number',
+            description: 'Maximum number to display before showing maxValue+',
+        },
+        children: {
+            control: false,
+            description: 'Custom node to wrap (icon, card, etc)',
         },
     },
   };
@@ -41,133 +37,72 @@ const meta: Meta<typeof BadgeNotif> = {
   export default meta;
   type Story = StoryObj<typeof BadgeNotif>;
 
-  export const Default: Story = {
+  export const WithIcon: Story = {
     args: {
       icon: 'mdi:bell-outline',
-      color: '#007C99',
-      plusIcon: false,
-      badgeContent: 10,
-      position: 'top-right'
+      color: 'primary',
+      value: 10,
     }
   };
 
-  export const CommonIcons: Story = {
-    render: () => {
-        const icons = ['mdi:bell-outline', 'mdi:email-outline'];
-    
-        return (
-          <div className="flex gap-20">
-            {icons.map((icon, index) => (
-              <BadgeNotif
-                key={index}
-                icon={icon}
-                variant="number"
-                color="#007C99"
-                plusIcon={false}
-                badgeContent={10}
-                position="top-right"
-              />
-            ))}
-          </div>
-        );
-      }
+  export const WithCard: Story = {
+    render: () => (
+      <BadgeNotif value={5}>
+        <Card style={{ width: 120, height: 80, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <span>Card Content</span>
+        </Card>
+      </BadgeNotif>
+    )
   };
 
-  export const Color: Story = {
-    render: () => {
-        const colors = ['#007C99', '#EF4444', '#F59E0B', '#10B981'];
-    
-        return (
-          <div className="flex gap-20">
-            {colors.map((color, index) => (
-              <BadgeNotif
-                key={index}
-                icon='mdi:bell-outline'
-                variant="number"
-                color={color}
-                plusIcon={false}
-                badgeContent={10}
-                position="top-right"
-              />
-            ))}
-          </div>
-        );
-      }
-  };
-
-  export const PlusIcon: Story = {
+  export const DotOnly: Story = {
     args: {
-        icon: 'mdi:bell-outline',
-        color: '#007C99',
-        plusIcon: true,
-        badgeContent: 99,
-        position: 'top-right'
+      icon: 'mdi:bell-outline',
+      color: 'primary',
+      value: undefined,
     }
   };
 
-  export const BadgeContent: Story = {
-    render: () => {
-        const badgeContents  = [1, 20, 100];
-    
-        return (
-          <div className="flex gap-20">
-            {badgeContents.map((badgeContent, index) => (
-              <BadgeNotif
-                key={index}
-                icon={'mdi:bell-outline'}
-                variant="number"
-                color="#007C99"
-                plusIcon={false}
-                badgeContent={badgeContent}
-                position='top-right'
-              />
-            ))}
-          </div>
-        );
-      }
-  };
-
-  export const positions: Story = {
-    render: () => {
-        const allPosition  = ['top-right', 'bottom-right', 'bottom-left', 'top-left'] as const;
-    
-        return (
-          <div className="flex gap-20">
-            {allPosition.map((position, index) => (
-              <BadgeNotif
-                key={index}
-                icon={'mdi:bell-outline'}
-                variant="number"
-                color="#007C99"
-                plusIcon={false}
-                badgeContent={10}
-                position={position}
-              />
-            ))}
-          </div>
-        );
-      }
-  };
-
-  export const Variants: Story = {
-    render: () => {
-        const allVariants  = ['dot', 'number'] as const;
-    
-        return (
-          <div className="flex gap-20">
-            {allVariants.map((variant, index) => (
-              <BadgeNotif
-                key={index}
-                icon={'mdi:bell-outline'}
-                variant={variant}
-                color="#007C99"
-                plusIcon={false}
-                badgeContent={10}
-                position='top-right'
-              />
-            ))}
-          </div>
-        );
-      }
+  export const LongContent: Story = {
+    args: {
+      icon: 'mdi:bell-outline',
+      color: 'primary',
+      value: 12345,
     }
+  };
+
+  export const MaxValue: Story = {
+    args: {
+      icon: 'mdi:bell-outline',
+      color: 'primary',
+      value: 150,
+      maxValue: 99,
+    }
+  };
+
+  export const CustomNode: Story = {
+    render: () => (
+      <BadgeNotif value={100}>
+        <Button>Click me</Button>
+      </BadgeNotif>
+    )
+  };
+
+  export const ColorVariants: Story = {
+    render: () => {
+      const variants = ['primary', 'secondary', 'danger', 'warning', 'info', 'success', 'disabled'] as const;
+      return (
+        <div className="flex gap-8">
+          {variants.map((variant) => (
+            <BadgeNotif
+              key={variant}
+              icon="mdi:bell-outline"
+              color={variant}
+              value={10}
+            />
+          ))}
+        </div>
+      );
+    }
+  };
 
