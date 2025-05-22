@@ -1,87 +1,137 @@
-# Tixia Design System
+# TIXIA Design System
 
-A modern, accessible, and customizable design system built with React, TypeScript, and Tailwind CSS.
+A comprehensive design system for TIXIA applications.
 
-## Features
+## Versioning and Publishing
 
-- 🎨 Built with Tailwind CSS for styling
-- ⚛️ React components with TypeScript
-- 📚 Storybook for component documentation
-- 🎯 Atomic design principles
-- 🚀 Vite for fast development and building
-- 📦 Published as an npm package
+This project follows [Semantic Versioning](https://semver.org/) and uses automated versioning through GitHub Actions. The versioning system is designed to make it easy for consuming projects to stay up to date with the latest changes.
 
-## Installation
+### Commit Message Convention
 
-```bash
-# Install the package
-npm install @tixia/design-system
+We follow the [Conventional Commits](https://www.conventionalcommits.org/) specification for commit messages. This helps in automatically determining the version bump type.
 
-# or with yarn
-yarn add @tixia/design-system
+Format:
+```
+<type>(<scope>): <description>
+
+[optional body]
+
+[optional footer(s)]
 ```
 
-## Usage
+Types that trigger version bumps:
+- `feat:` - Triggers a minor version bump (new feature)
+- `fix:` - Triggers a patch version bump (bug fix)
+- `BREAKING CHANGE:` or `!:` - Triggers a major version bump (breaking changes)
 
-```tsx
-import { Button } from '@tixia/design-system';
+Examples:
+```bash
+# Minor version bump (new feature)
+git commit -m "feat(button): add loading state to button component"
 
-function App() {
-  return (
-    <Button variant="primary" size="lg">
-      Click me
-    </Button>
-  );
-}
+# Patch version bump (bug fix)
+git commit -m "fix(table): resolve alignment issue in table cells"
+
+# Major version bump (breaking change)
+git commit -m "feat(api)!: restructure component props interface"
+# or
+git commit -m "feat(api): restructure component props interface
+
+BREAKING CHANGE: All components now require new prop structure"
+```
+
+### Publishing Process
+
+1. **Making Changes**
+   - Create a new branch for your changes
+   - Make your changes following the commit convention
+   - Update the CHANGELOG.md under the [Unreleased] section
+   - Create a pull request to the main branch
+
+2. **Updating CHANGELOG.md**
+   - Add your changes under the appropriate section in [Unreleased]:
+     ```markdown
+     ## [Unreleased]
+     
+     ### Added
+     - New feature description
+     
+     ### Changed
+     - Change description
+     
+     ### Fixed
+     - Bug fix description
+     ```
+
+3. **Merging to Main**
+   - When your PR is merged to main, the GitHub Action will:
+     - Analyze commit messages since the last tag
+     - Determine the version bump type
+     - Update package.json version
+     - Update CHANGELOG.md
+     - Create a new git tag
+     - Create a GitHub release
+     - Build and package the design system
+
+4. **Consuming Projects**
+   - Projects using the design system will see update notifications when running `npm install`
+   - The notification will show:
+     - Current version
+     - Latest version
+     - Type of update (major/minor/patch)
+     - Link to release notes
+
+### Manual Version Bump (if needed)
+
+If you need to manually bump the version:
+
+```bash
+# For patch version (0.0.x)
+npm version patch
+
+# For minor version (0.x.0)
+npm version minor
+
+# For major version (x.0.0)
+npm version major
+```
+
+### Checking for Updates
+
+Projects using the design system can check for updates by:
+
+```bash
+# Check current version
+npm list @tixia/design-system
+
+# Update to latest version
+npm install @tixia/design-system@latest
 ```
 
 ## Development
 
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
-4. Start Storybook:
-   ```bash
-   npm run storybook
-   ```
-
-## Project Structure
-
-```
-src/
-  ├── components/
-  │   ├── atoms/         # Basic building blocks
-  │   ├── molecules/     # Groups of atoms
-  │   ├── organisms/     # Complex components
-  │   └── templates/     # Page layouts
-  ├── styles/           # Global styles and theme
-  └── utils/            # Utility functions
-```
-
-## Building for Production
-
 ```bash
-npm run build
-```
+# Install dependencies
+npm install
 
-This will generate the following files in the `dist` directory:
-- `tixia-design-system.umd.js` - UMD bundle
-- `tixia-design-system.es.js` - ES module bundle
-- `index.d.ts` - TypeScript type definitions
+# Start development server
+npm run dev
+
+# Build the package
+npm run build
+
+# Run Storybook
+npm run storybook
+```
 
 ## Contributing
 
-1. Create a new branch for your feature
-2. Make your changes
-3. Add tests if necessary
-4. Submit a pull request
+1. Create a new branch for your feature/fix
+2. Make your changes following the commit convention
+3. Update CHANGELOG.md
+4. Create a pull request
+5. Wait for review and merge
 
 ## License
 
-MIT 
+[Your License Here] 

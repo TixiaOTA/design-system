@@ -1,0 +1,128 @@
+name: Version and Release
+
+on:
+  push:
+    branches:
+      - main  # or your default branch name
+
+jobs:
+  version-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Get commit messages since last tag
+        id: get_commits
+        run: |
+          git fetch --tags
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          COMMITS=$(git log $LAST_TAG..HEAD --pretty=format:"%s")
+          echo "commits<<EOF" >> $GITHUB_OUTPUT
+          echo "$COMMITS" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Determine version bump
+        id: version_bump
+        run: |
+          COMMITS="${{ steps.get_commits.outputs.commits }}"
+          if echo "$COMMITS" | grep -q "BREAKING CHANGE\|!:"; then
+            echo "bump=major" >> $GITHUB_OUTPUT
+          elif echo "$COMMITS" | grep -q "feat:"; then
+            echo "bump=minor" >> $GITHUB_OUTPUT
+          else
+            echo "bump=patch" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Bump version
+        id: bump_version
+        uses: phips28/gh-action-bump-version@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          minor-wording: 'feat:'
+          major-wording: 'BREAKING CHANGE'
+          patch-wording: 'fix:'
+          version-file: 'package.json'
+          commit-message: 'chore: bump version to {version}'
+          tag-prefix: 'v'
+
+      - name: Update CHANGELOG.md
+        run: |
+          # Get the new version
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          CURRENT_DATE=$(date +%Y-%m-%d)
+          
+          # Create a temporary file for the new changelog
+          awk -v version="$NEW_VERSION" -v date="$CURRENT_DATE" '
+          /^## \[Unreleased\]/ {
+            print "## [" version "] - " date;
+            print "";
+            next;
+          }
+          /^## \[[0-9]+\.[0-9]+\.[0-9]+\]/ {
+            print "## [Unreleased]";
+            print "";
+            print "### Added";
+            print "- List new features here";
+            print "";
+            print "### Changed";
+            print "- List changes in existing functionality here";
+            print "";
+            print "### Deprecated";
+            print "- List soon-to-be removed features here";
+            print "";
+            print "### Removed";
+            print "- List now removed features here";
+            print "";
+            print "### Fixed";
+            print "- List any bug fixes here";
+            print "";
+            print "### Security";
+            print "- List security fixes here";
+            print "";
+            print $0;
+            next;
+          }
+          { print }
+          ' CHANGELOG.md > CHANGELOG.md.new
+          
+          mv CHANGELOG.md.new CHANGELOG.md
+          
+          # Commit the updated CHANGELOG.md
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add CHANGELOG.md
+          git commit -m "docs: update CHANGELOG.md for version $NEW_VERSION"
+          git push
+
+      - name: Build package
+        run: npm run build
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            dist/**/*
+          generate_release_notes: true
+          body_path: CHANGELOG.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
