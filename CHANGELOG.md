@@ -8,8 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Test update notification system
-- Added version check functionality
+- List new features here
 
 ### Changed
 - List changes in existing functionality here
@@ -26,7 +25,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 - List security fixes here
 
-## [0.1.0] - YYYY-MM-DD
+## [0.1.1] - 2024-03-19
+
+### Added
+- Version management system
+- Update notification system
+- Automatic changelog updates
+
+### Changed
+- Improved version checking mechanism
+- Enhanced update notifications
+
+### Fixed
+- Version update detection
+- Changelog formatting
+
+## [0.1.0] - 2024-03-19
 
 ### Added
 - Initial release of the design system
