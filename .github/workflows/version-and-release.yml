@@ -34,22 +34,95 @@ jobs:
         run: |
           git fetch --tags
           LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
-          COMMITS=$(git log $LAST_TAG..HEAD --pretty=format:"%s")
+          COMMITS=$(git log $LAST_TAG..HEAD --pretty=format:"%s%n%b")
           echo "commits<<EOF" >> $GITHUB_OUTPUT
           echo "$COMMITS" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Determine version bump
-        id: version_bump
+      - name: Update CHANGELOG.md
         run: |
+          # Get the new version
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          CURRENT_DATE=$(date +%Y-%m-%d)
+          
+          # Create temporary files
+          TEMP_CHANGELOG="temp_changelog.md"
+          echo "# Changelog" > $TEMP_CHANGELOG
+          echo "" >> $TEMP_CHANGELOG
+          echo "All notable changes to this project will be documented in this file." >> $TEMP_CHANGELOG
+          echo "" >> $TEMP_CHANGELOG
+          echo "The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)," >> $TEMP_CHANGELOG
+          echo "and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)." >> $TEMP_CHANGELOG
+          echo "" >> $TEMP_CHANGELOG
+          
+          # Add Unreleased section
+          echo "## [Unreleased]" >> $TEMP_CHANGELOG
+          echo "" >> $TEMP_CHANGELOG
+          echo "### Added" >> $TEMP_CHANGELOG
+          echo "- List new features here" >> $TEMP_CHANGELOG
+          echo "" >> $TEMP_CHANGELOG
+          echo "### Changed" >> $TEMP_CHANGELOG
+          echo "- List changes in existing functionality here" >> $TEMP_CHANGELOG
+          echo "" >> $TEMP_CHANGELOG
+          echo "### Deprecated" >> $TEMP_CHANGELOG
+          echo "- List soon-to-be removed features here" >> $TEMP_CHANGELOG
+          echo "" >> $TEMP_CHANGELOG
+          echo "### Removed" >> $TEMP_CHANGELOG
+          echo "- List now removed features here" >> $TEMP_CHANGELOG
+          echo "" >> $TEMP_CHANGELOG
+          echo "### Fixed" >> $TEMP_CHANGELOG
+          echo "- List any bug fixes here" >> $TEMP_CHANGELOG
+          echo "" >> $TEMP_CHANGELOG
+          echo "### Security" >> $TEMP_CHANGELOG
+          echo "- List security fixes here" >> $TEMP_CHANGELOG
+          echo "" >> $TEMP_CHANGELOG
+          
+          # Add new version section with commit messages
+          echo "## [$NEW_VERSION] - $CURRENT_DATE" >> $TEMP_CHANGELOG
+          echo "" >> $TEMP_CHANGELOG
+          
+          # Process commit messages
           COMMITS="${{ steps.get_commits.outputs.commits }}"
-          if echo "$COMMITS" | grep -q "BREAKING CHANGE\|!:"; then
-            echo "bump=major" >> $GITHUB_OUTPUT
-          elif echo "$COMMITS" | grep -q "feat:"; then
-            echo "bump=minor" >> $GITHUB_OUTPUT
-          else
-            echo "bump=patch" >> $GITHUB_OUTPUT
+          
+          # Initialize sections
+          echo "### Added" >> $TEMP_CHANGELOG
+          echo "$COMMITS" | grep -i "^feat:" | sed 's/^feat:/- /' >> $TEMP_CHANGELOG || echo "- No new features" >> $TEMP_CHANGELOG
+          echo "" >> $TEMP_CHANGELOG
+          
+          echo "### Changed" >> $TEMP_CHANGELOG
+          echo "$COMMITS" | grep -i "^chore:" | sed 's/^chore:/- /' >> $TEMP_CHANGELOG || echo "- No changes" >> $TEMP_CHANGELOG
+          echo "" >> $TEMP_CHANGELOG
+          
+          echo "### Fixed" >> $TEMP_CHANGELOG
+          echo "$COMMITS" | grep -i "^fix:" | sed 's/^fix:/- /' >> $TEMP_CHANGELOG || echo "- No fixes" >> $TEMP_CHANGELOG
+          echo "" >> $TEMP_CHANGELOG
+          
+          echo "### Security" >> $TEMP_CHANGELOG
+          echo "$COMMITS" | grep -i "^security:" | sed 's/^security:/- /' >> $TEMP_CHANGELOG || echo "- No security updates" >> $TEMP_CHANGELOG
+          echo "" >> $TEMP_CHANGELOG
+          
+          # Add breaking changes if any
+          if echo "$COMMITS" | grep -q "BREAKING CHANGE"; then
+            echo "### Breaking Changes" >> $TEMP_CHANGELOG
+            echo "$COMMITS" | grep -A 1 "BREAKING CHANGE" | sed 's/BREAKING CHANGE:/- /' >> $TEMP_CHANGELOG
+            echo "" >> $TEMP_CHANGELOG
           fi
+          
+          # Append existing changelog content
+          if [ -f "CHANGELOG.md" ]; then
+            # Skip the header and unreleased section
+            tail -n +$(grep -n "^## \[[0-9]" CHANGELOG.md | head -n 1 | cut -d: -f1) CHANGELOG.md >> $TEMP_CHANGELOG
+          fi
+          
+          # Replace the original changelog
+          mv $TEMP_CHANGELOG CHANGELOG.md
+          
+          # Commit the updated CHANGELOG.md
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add CHANGELOG.md
+          git commit -m "docs: update CHANGELOG.md for version $NEW_VERSION"
+          git push
 
       - name: Bump version
         id: bump_version
@@ -63,55 +136,6 @@ jobs:
           version-file: 'package.json'
           commit-message: 'chore: bump version to {version}'
           tag-prefix: 'v'
-
-      - name: Update CHANGELOG.md
-        run: |
-          # Get the new version
-          NEW_VERSION=$(node -p "require('./package.json').version")
-          CURRENT_DATE=$(date +%Y-%m-%d)
-          
-          # Create a temporary file for the new changelog
-          awk -v version="$NEW_VERSION" -v date="$CURRENT_DATE" '
-          /^## \[Unreleased\]/ {
-            print "## [" version "] - " date;
-            print "";
-            next;
-          }
-          /^## \[[0-9]+\.[0-9]+\.[0-9]+\]/ {
-            print "## [Unreleased]";
-            print "";
-            print "### Added";
-            print "- List new features here";
-            print "";
-            print "### Changed";
-            print "- List changes in existing functionality here";
-            print "";
-            print "### Deprecated";
-            print "- List soon-to-be removed features here";
-            print "";
-            print "### Removed";
-            print "- List now removed features here";
-            print "";
-            print "### Fixed";
-            print "- List any bug fixes here";
-            print "";
-            print "### Security";
-            print "- List security fixes here";
-            print "";
-            print $0;
-            next;
-          }
-          { print }
-          ' CHANGELOG.md > CHANGELOG.md.new
-          
-          mv CHANGELOG.md.new CHANGELOG.md
-          
-          # Commit the updated CHANGELOG.md
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add CHANGELOG.md
-          git commit -m "docs: update CHANGELOG.md for version $NEW_VERSION"
-          git push
 
       - name: Build package
         run: npm run build

@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Test update notification system
+- Added version check functionality
 
 ### Changed
 - List changes in existing functionality here

@@ -5,7 +5,11 @@ const semver = require('semver');
 
 const checkForUpdates = async () => {
   try {
+    console.log('Checking for updates...');
+    console.log('Current version:', version);
+    
     const latest = await latestVersion('@tixia/design-system');
+    console.log('Latest version:', latest);
     
     if (semver.gt(latest, version)) {
       const updateType = semver.diff(latest, version);
@@ -23,10 +27,11 @@ const checkForUpdates = async () => {
       console.log('\n' + chalk.gray('For more details, visit:'));
       console.log(chalk.cyan('https://github.com/your-org/design-system/releases'));
       console.log('\n');
+    } else {
+      console.log('No updates available');
     }
   } catch (error) {
-    // Silently fail if we can't check for updates
-    // This prevents the script from breaking the installation process
+    console.error('Error checking for updates:', error.message);
   }
 };
 
