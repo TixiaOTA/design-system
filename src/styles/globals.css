@@ -14,4 +14,41 @@
   }
 }
 
-@layer base {} 
+@layer base {}
+
+@keyframes progress-indeterminate {
+  0% { left: -40%; width: 40%; }
+  100% { left: 100%; width: 40%; }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}
+
+.animate-progress-indeterminate {
+  position: relative;
+  animation: progress-indeterminate 1.5s infinite linear;
+}
+
+.animate-dash {
+  animation: dash 1.5s infinite linear;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+} 
