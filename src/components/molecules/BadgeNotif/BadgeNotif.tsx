@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from '../../atoms/Icons/Icons';
-import { cn } from '@/utils/cn';
+import { cn } from '../../../utils/cn';
 
 const ICON_COLOR_MAP = {
   primary: '#007C99', // tailwind primary.DEFAULT
