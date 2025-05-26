@@ -1,7 +1,7 @@
 import { BadgeNotif } from "./BadgeNotif";
 import { Card } from '../../atoms/Card/Card';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from "@/components/atoms/Button/Button";
+import { Button } from "../../../components/atoms/Button/Button";
 
 const meta: Meta<typeof BadgeNotif> = {
     title: 'Molecules/BadgeNotif',
