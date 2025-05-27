@@ -75,6 +75,34 @@ This will generate the following files in the `dist` directory:
 - `tixia-design-system.es.js` - ES module bundle
 - `index.d.ts` - TypeScript type definitions
 
+## Version Management and Deployment
+
+When making changes to the design system, follow these steps to properly version and deploy your changes:
+
+1. Make your changes in the design system
+2. Commit and push your changes:
+   ```bash
+   git commit && git push
+   ```
+3. Update the version in `package.json`:
+   ```json
+   {
+     "version": "0.2.0"
+   }
+   ```
+4. Create and push a new tag:
+   ```bash
+   git tag v0.2.0 && git push origin v0.2.0
+   ```
+
+### Upgrading in Consuming Projects
+
+To upgrade to a specific version in projects using the design system:
+
+```bash
+npm install git@github.com:TixiaOTA/design-system.git#v0.2.0
+```
+
 ## Contributing
 
 1. Create a new branch for your feature
