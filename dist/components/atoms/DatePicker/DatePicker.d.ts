@@ -1,38 +1,11 @@
-import React from 'react';
-export interface DatePickerProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'onChange' | 'value'> {
-    /** The selected date value */
-    value?: Date;
-    /** End date for range selection */
-    endDate?: Date;
-    /** Callback when date is selected */
-    onChange?: (date: Date) => void;
-    /** Callback when end date is selected */
-    onEndDateChange?: (date: Date) => void;
-    /** Whether to enable range selection */
-    isRangeSelection?: boolean;
-    /** Minimum selectable date */
-    minDate?: Date;
-    /** Maximum selectable date */
-    maxDate?: Date;
-    /** Visual style variant */
-    variant?: 'default' | 'error' | 'success';
-    /** Size of the input */
-    size?: 'sm' | 'md' | 'lg';
-    /** Border radius of the input */
-    rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
-    /** Whether the input is disabled */
-    disabled?: boolean;
-    /** Error message to display below the input */
-    errorText?: string;
-    /** Helper text to display below the input */
-    helperText?: string;
-    /** Label for the input */
-    label?: string;
-    /** Whether the input is required */
-    required?: boolean;
-    /** Position of the label relative to the input */
-    labelPlacement?: 'top' | 'left';
-    /** Whether the input should take full width */
-    fullWidth?: boolean;
+import React from "react";
+import { PrimitiveDatePickerProps } from "./PrimitiveDatePicker";
+export type DatePickerMode = "single" | "range";
+export interface DatePickerProps extends Omit<PrimitiveDatePickerProps, "onChange" | "value"> {
+    mode?: DatePickerMode;
+    value?: Date | [Date, Date];
+    onChange?: (date: Date | [Date | undefined, Date | undefined]) => void;
+    monthsToShow?: 1 | 2;
+    calendarFooter?: React.ReactNode;
 }
-export declare const DatePicker: React.ForwardRefExoticComponent<DatePickerProps & React.RefAttributes<HTMLInputElement>>;
+export declare const DatePicker: React.FC<DatePickerProps>;
