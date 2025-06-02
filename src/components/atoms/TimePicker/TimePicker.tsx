@@ -125,14 +125,9 @@ export const PrimitiveTimePicker = forwardRef<HTMLInputElement, PrimitiveTimePic
 
       const inputRect = inputRef.current.getBoundingClientRect();
       const dropdown = dropdownRef.current;
-      const dropdownHeight = dropdown.offsetHeight;
       const win = getWindow();
 
       const spaceBelow = win.innerHeight - inputRect.bottom;
-      const spaceAbove = inputRect.top;
-      const touchesBottom = inputRect.bottom + dropdownHeight + 4 >= win.innerHeight;
-      const hasMoreSpaceAbove = spaceAbove > spaceBelow;
-      const shouldFlip = touchesBottom && hasMoreSpaceAbove;
 
       // Always position below the input
       dropdown.style.top = `${inputRect.bottom + 4}px`;

@@ -4,7 +4,6 @@ export * from './components/atoms/Avatar';
 export * from './components/atoms/Badge';
 export * from './components/atoms/Button';
 export * from './components/atoms/Card';
-export * from './components/atoms/Chart';
 export * from './components/atoms/CheckBox';
 export * from './components/atoms/Chip';
 export * from './components/atoms/DatePicker';

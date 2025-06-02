@@ -1,7 +1,7 @@
 import React from 'react';
 import { type VariantProps } from 'class-variance-authority';
 declare const breadcrumbsVariants: (props?: ({
-    variant?: "default" | "light" | "dark" | null | undefined;
+    variant?: "default" | "dark" | "light" | null | undefined;
     size?: "sm" | "md" | "lg" | null | undefined;
 } & import("class-variance-authority/dist/types").ClassProp) | undefined) => string;
 export type BreadcrumbsVariant = 'default' | 'light' | 'dark';
