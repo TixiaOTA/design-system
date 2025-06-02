@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { cva } from 'class-variance-authority';
 import { cn } from '../../../utils/cn';
 import { Button } from '../Button';
+import { Icon } from '../Icons/Icons';
 import { getWindow, getDocument } from '../../../utils/ssr';
 
 // Create a custom event for timepicker dropdown management
@@ -16,6 +17,8 @@ const timePickerVariants = cva(
         default: 'border-neutral-200 hover:border-primary-300 focus:border-primary-300 hover:bg-primary-50',
         error: 'border-danger-500 hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50',
         success: 'border-success-500 hover:border-success-600 focus:border-success-600 hover:bg-success-50',
+        ghost: 'border-transparent bg-transparent hover:bg-primary-50 focus:bg-primary-50',
+        underline: 'border-0 border-b-2 border-neutral-200 rounded-none bg-transparent hover:border-primary-300 focus:border-primary-300 hover:bg-transparent focus:bg-transparent',
       },
       size: {
         sm: 'h-8 px-2 py-1 text-sm',
@@ -43,7 +46,7 @@ const timePickerVariants = cva(
   }
 );
 
-export interface TimePickerProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'onChange' | 'value'> {
+export interface PrimitiveTimePickerProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'onChange' | 'value'> {
   /** The selected time value */
   value?: string;
   /** Callback when time is selected */
@@ -51,7 +54,7 @@ export interface TimePickerProps extends Omit<React.InputHTMLAttributes<HTMLInpu
   /** Whether to use 24-hour format */
   use24Hour?: boolean;
   /** Visual style variant */
-  variant?: 'default' | 'error' | 'success';
+  variant?: 'default' | 'error' | 'success' | 'ghost' | 'underline';
   /** Size of the input */
   size?: 'sm' | 'md' | 'lg';
   /** Border radius of the input */
@@ -70,9 +73,17 @@ export interface TimePickerProps extends Omit<React.InputHTMLAttributes<HTMLInpu
   labelPlacement?: 'top' | 'left';
   /** Whether the input should take full width */
   fullWidth?: boolean;
+  /** Icon to display on the left side of the input */
+  leftIcon?: string;
+  /** Icon to display on the right side of the input */
+  rightIcon?: string;
+  /** Custom formatter for the displayed time value */
+  valueFormatter?: (time: string) => string;
+  /** Whether to close the dropdown after selection */
+  closeOnSelect?: boolean;
 }
 
-export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
+export const PrimitiveTimePicker = forwardRef<HTMLInputElement, PrimitiveTimePickerProps>(
   (
     {
       value,
@@ -90,6 +101,10 @@ export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
       fullWidth = false,
       className,
       placeholder = 'Select time',
+      leftIcon,
+      rightIcon,
+      valueFormatter,
+      closeOnSelect = true,
       ...props
     },
     ref
@@ -119,15 +134,12 @@ export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
       const hasMoreSpaceAbove = spaceAbove > spaceBelow;
       const shouldFlip = touchesBottom && hasMoreSpaceAbove;
 
-      if (shouldFlip) {
-        dropdown.style.bottom = `${win.innerHeight - inputRect.top + 4}px`;
-        dropdown.style.top = 'auto';
-        dropdown.style.maxHeight = `${spaceAbove - 8}px`;
-      } else {
-        dropdown.style.top = `${inputRect.bottom + 4}px`;
-        dropdown.style.bottom = 'auto';
-        dropdown.style.maxHeight = `${spaceBelow - 8}px`;
-      }
+      // Always position below the input
+      dropdown.style.top = `${inputRect.bottom + 4}px`;
+      dropdown.style.bottom = 'auto';
+      dropdown.style.left = `${inputRect.left}px`;
+      dropdown.style.maxHeight = `${spaceBelow - 8}px`;
+      dropdown.style.width = `${inputRect.width}px`;
     };
 
     useEffect(() => {
@@ -216,7 +228,9 @@ export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
       const time = `${formattedHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
       setSelectedTime(time);
       onChange?.(time);
-      setIsOpen(false);
+      if (closeOnSelect) {
+        setIsOpen(false);
+      }
     };
 
     const generateHours = () => {
@@ -226,6 +240,8 @@ export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
     const generateMinutes = () => {
       return Array.from({ length: 60 }, (_, i) => i);
     };
+
+    const displayValue = valueFormatter ? valueFormatter(selectedTime) : selectedTime;
 
     const doc = getDocument();
     if (!('body' in doc)) return null;
@@ -243,18 +259,33 @@ export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
             {required && <span className="text-red-500 ml-1">*</span>}
           </label>
         )}
-        <div ref={inputRef}>
+        <div ref={inputRef} className="relative">
+          {leftIcon && (
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 flex items-center justify-center">
+              <Icon icon={leftIcon} size={20} />
+            </div>
+          )}
           <input
             ref={ref}
             type="text"
-            value={selectedTime}
+            value={displayValue}
             placeholder={placeholder}
             onClick={handleOpen}
             readOnly
-            className={cn(timePickerVariants({ variant, size, rounded, fullWidth }))}
+            className={cn(
+              timePickerVariants({ variant, size, rounded, fullWidth }),
+              leftIcon && 'pl-10',
+              rightIcon && 'pr-10',
+              'text-left'
+            )}
             disabled={disabled}
             {...props}
           />
+          {rightIcon && (
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 flex items-center justify-center">
+              <Icon icon={rightIcon} size={20} />
+            </div>
+          )}
         </div>
         {isOpen &&
           createPortal(
@@ -264,12 +295,18 @@ export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
               onClick={(e) => e.stopPropagation()}
             >
               <div className="p-4">
-                <div className="grid grid-cols-3 gap-4 text-sm font-medium text-gray-500">
+                <div className={cn(
+                  "grid gap-4 text-sm font-medium text-gray-500",
+                  use24Hour ? "grid-cols-2" : "grid-cols-3"
+                )}>
                   <span>Hours</span>
                   <span>Minutes</span>
                   {!use24Hour && <span>AM/PM</span>}
                 </div>
-                <div className="flex justify-between gap-4 mt-2">
+                <div className={cn(
+                  "flex mt-2",
+                  use24Hour ? "justify-center gap-8" : "justify-center gap-4"
+                )}>
                   <div className="w-24 flex flex-col">
                     <div className="overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] hover:scrollbar-thumb-neutral-200 hover:scrollbar-track-transparent [&::-webkit-scrollbar]:hidden hover:[&::-webkit-scrollbar]:block hover:[&::-webkit-scrollbar]:w-1.5 hover:[&::-webkit-scrollbar-thumb]:rounded-full" style={{ maxHeight: '200px' }}>
                       <div className="flex flex-col gap-1 py-1">
@@ -353,4 +390,35 @@ export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(
   }
 );
 
-TimePicker.displayName = 'TimePicker'; 
+PrimitiveTimePicker.displayName = 'PrimitiveTimePicker';
+
+export interface TimePickerProps extends Omit<PrimitiveTimePickerProps, 'onChange' | 'value'> {
+  /** The selected time value */
+  value?: string;
+  /** Callback when time is selected */
+  onChange?: (time: string) => void;
+  /** Custom formatter for the displayed time value */
+  valueFormatter?: (time: string) => string;
+  /** Whether to close the dropdown after selection */
+  closeOnSelect?: boolean;
+}
+
+export const TimePicker: React.FC<TimePickerProps> = ({
+  value,
+  onChange,
+  valueFormatter,
+  closeOnSelect,
+  ...props
+}) => {
+  return (
+    <PrimitiveTimePicker
+      value={value}
+      onChange={onChange}
+      valueFormatter={valueFormatter}
+      closeOnSelect={closeOnSelect}
+      {...props}
+    />
+  );
+};
+
+TimePicker.displayName = 'TimePicker';

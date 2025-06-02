@@ -30,7 +30,7 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['default', 'error', 'success'],
+      options: ['default', 'error', 'success', 'ghost', 'underline'],
     },
     size: {
       control: 'select',
@@ -43,6 +43,10 @@ const meta = {
     use24Hour: {
       control: 'boolean',
     },
+    labelPlacement: {
+      control: 'select',
+      options: ['top', 'left'],
+    },
   },
 } satisfies Meta<typeof TimePicker>;
 
@@ -52,6 +56,8 @@ type Story = StoryObj<typeof TimePicker>;
 export const Default: Story = {
   args: {
     placeholder: 'Select time',
+    leftIcon: 'mdi:clock',
+    rightIcon: 'mdi:chevron-down',
   },
 };
 
@@ -59,6 +65,8 @@ export const WithLabel: Story = {
   args: {
     label: 'Time',
     placeholder: 'Select time',
+    leftIcon: 'mdi:clock',
+    rightIcon: 'mdi:chevron-down',
   },
 };
 
@@ -67,6 +75,8 @@ export const WithError: Story = {
     label: 'Time',
     placeholder: 'Select time',
     errorText: 'Please select a valid time',
+    leftIcon: 'mdi:clock',
+    rightIcon: 'mdi:chevron-down',
   },
 };
 
@@ -75,6 +85,8 @@ export const WithHelperText: Story = {
     label: 'Time',
     placeholder: 'Select time',
     helperText: 'Select your preferred time',
+    leftIcon: 'mdi:clock',
+    rightIcon: 'mdi:chevron-down',
   },
 };
 
@@ -83,6 +95,8 @@ export const Required: Story = {
     label: 'Time',
     placeholder: 'Select time',
     required: true,
+    leftIcon: 'mdi:clock',
+    rightIcon: 'mdi:chevron-down',
   },
 };
 
@@ -91,6 +105,8 @@ export const Disabled: Story = {
     label: 'Time',
     placeholder: 'Select time',
     disabled: true,
+    leftIcon: 'mdi:clock',
+    rightIcon: 'mdi:chevron-down',
   },
 };
 
@@ -99,27 +115,153 @@ export const TwentyFourHour: Story = {
     label: 'Time (24h)',
     placeholder: 'Select time',
     use24Hour: true,
+    leftIcon: 'mdi:clock',
+    rightIcon: 'mdi:chevron-down',
   },
 };
 
-export const SizeVariants: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <TimePicker size="sm" placeholder="Small" />
-      <TimePicker size="md" placeholder="Medium" />
-      <TimePicker size="lg" placeholder="Large" />
-    </div>
-  ),
+export const WithIcons: Story = {
+  args: {
+    label: 'With Icons',
+    placeholder: 'Select time',
+    leftIcon: 'mdi:clock',
+    rightIcon: 'mdi:chevron-down',
+  },
+};
+
+export const GhostVariant: Story = {
+  args: {
+    label: 'Ghost Variant',
+    variant: 'ghost',
+    placeholder: 'Select time',
+    leftIcon: 'mdi:clock',
+    rightIcon: 'mdi:chevron-down',
+  },
+};
+
+export const UnderlineVariant: Story = {
+  args: {
+    label: 'Underline Variant',
+    variant: 'underline',
+    placeholder: 'Select time',
+    leftIcon: 'mdi:clock',
+    rightIcon: 'mdi:chevron-down',
+  },
 };
 
 export const RoundedVariants: Story = {
   render: () => (
     <div className="space-y-4">
-      <TimePicker rounded="none" placeholder="No rounded" />
-      <TimePicker rounded="sm" placeholder="Small rounded" />
-      <TimePicker rounded="md" placeholder="Medium rounded" />
-      <TimePicker rounded="lg" placeholder="Large rounded" />
-      <TimePicker rounded="full" placeholder="Full rounded" />
+      <TimePicker rounded="none" placeholder="No rounded" leftIcon="mdi:clock" rightIcon="mdi:chevron-down" />
+      <TimePicker rounded="sm" placeholder="Small rounded" leftIcon="mdi:clock" rightIcon="mdi:chevron-down" />
+      <TimePicker rounded="md" placeholder="Medium rounded" leftIcon="mdi:clock" rightIcon="mdi:chevron-down" />
+      <TimePicker rounded="lg" placeholder="Large rounded" leftIcon="mdi:clock" rightIcon="mdi:chevron-down" />
+      <TimePicker rounded="full" placeholder="Full rounded" leftIcon="mdi:clock" rightIcon="mdi:chevron-down" />
+    </div>
+  ),
+};
+
+export const AllVariants: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <TimePicker
+        label="Default"
+        variant="default"
+        placeholder="Select time"
+        leftIcon="mdi:clock"
+        rightIcon="mdi:chevron-down"
+      />
+      <TimePicker
+        label="Error"
+        variant="error"
+        errorText="Invalid time"
+        placeholder="Select time"
+        leftIcon="mdi:clock"
+        rightIcon="mdi:chevron-down"
+      />
+      <TimePicker
+        label="Success"
+        variant="success"
+        placeholder="Select time"
+        leftIcon="mdi:clock"
+        rightIcon="mdi:chevron-down"
+      />
+      <TimePicker
+        label="Ghost"
+        variant="ghost"
+        placeholder="Select time"
+        leftIcon="mdi:clock"
+        rightIcon="mdi:chevron-down"
+      />
+      <TimePicker
+        label="Underline"
+        variant="underline"
+        placeholder="Select time"
+        leftIcon="mdi:clock"
+        rightIcon="mdi:chevron-down"
+      />
+    </div>
+  ),
+};
+
+export const WithCustomFormatter: Story = {
+  args: {
+    label: 'Custom Format',
+    placeholder: 'Select time',
+    valueFormatter: (time) => {
+      const [hours, minutes] = time.split(':');
+      return `${hours}:${minutes} ${Number(hours) < 12 ? 'AM' : 'PM'}`;
+    },
+    leftIcon: 'mdi:clock',
+    rightIcon: 'mdi:chevron-down',
+  },
+};
+
+export const LeftLabel: Story = {
+  args: {
+    label: 'Time',
+    labelPlacement: 'left',
+    placeholder: 'Select time',
+    leftIcon: 'mdi:clock',
+    rightIcon: 'mdi:chevron-down',
+  },
+};
+
+export const WithValidation: Story = {
+  args: {
+    label: 'Time',
+    placeholder: 'Select time',
+    required: true,
+    errorText: 'This field is required',
+    leftIcon: 'mdi:clock',
+    rightIcon: 'mdi:chevron-down',
+  },
+};
+
+export const LayoutExamples: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <TimePicker
+        label="Top Label"
+        labelPlacement="top"
+        placeholder="Select time"
+        leftIcon="mdi:clock"
+        rightIcon="mdi:chevron-down"
+      />
+      <TimePicker
+        label="Left Label"
+        labelPlacement="left"
+        placeholder="Select time"
+        leftIcon="mdi:clock"
+        rightIcon="mdi:chevron-down"
+      />
+      <TimePicker 
+        label="Full Width" 
+        fullWidth 
+        placeholder="Select time"
+        leftIcon="mdi:clock"
+        rightIcon="mdi:chevron-down"
+      />
     </div>
   ),
 }; 
