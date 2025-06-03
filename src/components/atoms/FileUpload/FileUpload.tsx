@@ -2,6 +2,10 @@ import React, { useCallback, useState, useRef } from 'react';
 import clsx from 'clsx';
 import { Icon } from '../../atoms/Icons/Icons';
 
+export type FileUploadVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'default' | 'light' | 'dark' | 'info';
+export type FileUploadShadow = 'none' | 'sm' | 'md' | 'lg' | 'xl';
+export type FileUploadRounded = 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
+
 export interface FileUploadProps {
   accept?: string[];
   maxSize?: number; // in bytes
@@ -11,7 +15,97 @@ export interface FileUploadProps {
   className?: string;
   disabled?: boolean;
   placeholder?: string;
+  variant?: FileUploadVariant;
+  shadow?: FileUploadShadow;
+  rounded?: FileUploadRounded;
+  children?: React.ReactNode;
+  showFileList?: boolean;
+  showPlaceholder?: boolean;
+  showMaxSize?: boolean;
+  icon?: string;
 }
+
+const variantStyles: Record<FileUploadVariant, { 
+  border: string;
+  hover: string;
+  active: string;
+  text: string;
+  bg: string;
+}> = {
+  primary: {
+    border: 'border-primary-200',
+    hover: 'hover:border-primary-300',
+    active: 'border-primary-400',
+    text: 'text-primary-700',
+    bg: 'bg-primary-50',
+  },
+  secondary: {
+    border: 'border-secondary-200',
+    hover: 'hover:border-secondary-300',
+    active: 'border-secondary-400',
+    text: 'text-secondary-700',
+    bg: 'bg-secondary-50',
+  },
+  success: {
+    border: 'border-success-200',
+    hover: 'hover:border-success-300',
+    active: 'border-success-400',
+    text: 'text-success-700',
+    bg: 'bg-success-50',
+  },
+  warning: {
+    border: 'border-warning-200',
+    hover: 'hover:border-warning-300',
+    active: 'border-warning-400',
+    text: 'text-warning-700',
+    bg: 'bg-warning-50',
+  },
+  default: {
+    border: 'border-gray-200',
+    hover: 'hover:border-gray-300',
+    active: 'border-gray-400',
+    text: 'text-gray-700',
+    bg: 'bg-gray-50',
+  },
+  light: {
+    border: 'border-light-200',
+    hover: 'hover:border-light-300',
+    active: 'border-light-400',
+    text: 'text-light-900',
+    bg: 'bg-light-50',
+  },
+  dark: {
+    border: 'border-dark-200',
+    hover: 'hover:border-dark-300',
+    active: 'border-dark-400',
+    text: 'text-dark-50',
+    bg: 'bg-dark-50',
+  },
+  info: {
+    border: 'border-info-200',
+    hover: 'hover:border-info-300',
+    active: 'border-info-400',
+    text: 'text-info-700',
+    bg: 'bg-info-50',
+  },
+};
+
+const shadowStyles: Record<FileUploadShadow, string> = {
+  none: '',
+  sm: 'shadow-sm',
+  md: 'shadow-md',
+  lg: 'shadow-lg',
+  xl: 'shadow-xl',
+};
+
+const roundedStyles: Record<FileUploadRounded, string> = {
+  none: 'rounded-none',
+  sm: 'rounded-sm',
+  md: 'rounded-md',
+  lg: 'rounded-lg',
+  xl: 'rounded-xl',
+  full: 'rounded-full',
+};
 
 export const FileUpload: React.FC<FileUploadProps> = ({
   accept = ['*'],
@@ -22,6 +116,14 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   className,
   disabled = false,
   placeholder = 'Drag and drop files here or click to browse',
+  variant = 'default',
+  shadow = 'none',
+  rounded = 'lg',
+  children,
+  showFileList = true,
+  showPlaceholder = true,
+  showMaxSize = true,
+  icon = 'mdi:upload',
 }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -135,21 +237,29 @@ export const FileUpload: React.FC<FileUploadProps> = ({
     return <Icon icon="mdi:file" className="w-5 h-5" />;
   };
 
+  const styles = variantStyles[variant];
+
   return (
     <div className={clsx('w-full', className)}>
       <div
         className={clsx(
-          'border-2 border-dashed rounded-lg p-6 text-center transition-colors',
-          'bg-neutral-50',
-          'border-neutral-300',
-          isDragging && 'border-primary bg-primary-50',
+          'p-6 text-center transition-colors',
+          !children && [
+            'border-2 border-dashed',
+            styles.border,
+            styles.bg,
+            isDragging && styles.active,
+            !disabled && styles.hover,
+          ],
           disabled && 'opacity-50 cursor-not-allowed',
-          !disabled && 'cursor-pointer hover:border-primary/50'
+          shadowStyles[shadow],
+          roundedStyles[rounded],
+          !children && 'cursor-pointer'
         )}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        onClick={() => !disabled && fileInputRef.current?.click()}
+        onClick={() => !disabled && !children && fileInputRef.current?.click()}
       >
         <input
           ref={fileInputRef}
@@ -160,27 +270,44 @@ export const FileUpload: React.FC<FileUploadProps> = ({
           className="hidden"
           disabled={disabled}
         />
-        <Icon icon="mdi:upload" className="w-12 h-12 mx-auto mb-4 text-neutral-400" />
-        <p className="text-neutral-600">{placeholder}</p>
-        <p className="text-sm text-neutral-500 mt-2">
-          Max file size: {maxSize / (1024 * 1024)}MB
-        </p>
+        
+        {children ? (
+          <div onClick={() => !disabled && fileInputRef.current?.click()}>
+            {children}
+          </div>
+        ) : (
+          <>
+            <Icon icon={icon} className="w-12 h-12 mx-auto mb-4 text-neutral-400" />
+            {showPlaceholder && (
+              <p className={clsx('text-neutral-600', styles.text)}>{placeholder}</p>
+            )}
+            {showMaxSize && (
+              <p className="text-sm text-neutral-500 mt-2">
+                Max file size: {maxSize / (1024 * 1024)}MB
+              </p>
+            )}
+          </>
+        )}
       </div>
 
       {error && (
         <p className="mt-2 text-sm text-danger">{error}</p>
       )}
 
-      {value.length > 0 && (
+      {showFileList && value.length > 0 && (
         <div className="mt-4 space-y-2">
           {value.map((file, index) => (
             <div
               key={`${file.name}-${index}`}
-              className="flex items-center justify-between p-2 rounded-md bg-neutral-100"
+              className={clsx(
+                'flex items-center justify-between p-2',
+                roundedStyles[rounded],
+                styles.bg
+              )}
             >
               <div className="flex items-center space-x-2">
                 {getFileIcon(file)}
-                <span className="text-sm text-neutral-700">
+                <span className={clsx('text-sm', styles.text)}>
                   {file.name}
                 </span>
                 <span className="text-xs text-neutral-500">
