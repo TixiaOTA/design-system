@@ -4,22 +4,25 @@ A modern, accessible, and customizable design system built with React, TypeScrip
 
 ## Features
 
-- 🎨 Built with Tailwind CSS for styling
-- ⚛️ React components with TypeScript
-- 📚 Storybook for component documentation
-- 🎯 Atomic design principles
-- 🚀 Vite for fast development and building
-- 📦 Published as an npm package
+- 🎨 Built with Tailwind CSS for styling  
+- ⚛️ React components with TypeScript  
+- 📚 Storybook for component documentation  
+- 🎯 Atomic design principles  
+- 🚀 Vite for fast development and building  
+- 📦 Shared as a GitHub-based package for internal projects
+
+---
 
 ## Installation
 
 ```bash
-# Install the package
-npm install @tixia/design-system
-
-# or with yarn
-yarn add @tixia/design-system
+# Install the design system via Git tag
+npm install git@github.com:TixiaOTA/design-system.git#v0.2.0
 ```
+
+> 🔁 Replace `v0.2.0` with the latest version listed in the design system release notes.
+
+---
 
 ## Usage
 
@@ -34,6 +37,8 @@ function App() {
   );
 }
 ```
+
+---
 
 ## Development
 
@@ -51,6 +56,8 @@ function App() {
    npm run storybook
    ```
 
+---
+
 ## Project Structure
 
 ```
@@ -60,9 +67,11 @@ src/
   │   ├── molecules/     # Groups of atoms
   │   ├── organisms/     # Complex components
   │   └── templates/     # Page layouts
-  ├── styles/           # Global styles and theme
-  └── utils/            # Utility functions
+  ├── styles/            # Global styles and theme
+  └── utils/             # Utility functions
 ```
+
+---
 
 ## Building for Production
 
@@ -75,41 +84,64 @@ This will generate the following files in the `dist` directory:
 - `tixia-design-system.es.js` - ES module bundle
 - `index.d.ts` - TypeScript type definitions
 
-## Version Management and Deployment
+---
 
-When making changes to the design system, follow these steps to properly version and deploy your changes:
+## 🔖 Version Management & Automated Releases
 
-1. Make your changes in the design system
-2. Commit and push your changes:
-   ```bash
-   git commit && git push
-   ```
-3. Update the version in `package.json`:
-   ```json
-   {
-     "version": "0.2.0"
-   }
-   ```
-4. Create and push a new tag:
-   ```bash
-   git tag v0.2.0 && git push origin v0.2.0
-   ```
+We use Semantic Versioning and an automated script (`release.ts`) to manage releases.
 
-### Upgrading in Consuming Projects
+### 🛠 Bump Version & Generate Changelog
 
-To upgrade to a specific version in projects using the design system:
+To release a new version, run one of the following:
+
+```bash
+npm run release:patch   # Bugfixes, internal updates
+npm run release:minor   # New components, features (non-breaking)
+npm run release:major   # Breaking changes, large refactors
+```
+
+This will:
+
+- Update the version in `package.json`
+- Prepend commit history to `CHANGELOG.md`
+- Create a Git tag (e.g. `v0.2.0`)
+- Push to the `master` branch
+
+> ⚠️ You must be on the `master` branch to run the release script.
+
+---
+
+### 🧠 Semantic Versioning Guide
+
+| Command         | Example         | Use when...                             | Breaking? |
+|----------------|------------------|------------------------------------------|-----------|
+| `release:patch`| `0.1.3 → 0.1.4`  | Bug fixes, small internal changes        | ❌ No     |
+| `release:minor`| `0.1.4 → 0.2.0`  | New components or features (safe)        | ❌ No     |
+| `release:major`| `0.2.0 → 1.0.0`  | API or prop changes, removals            | ✅ Yes    |
+
+---
+
+### 🔼 Upgrading in Consuming Projects
+
+To upgrade a project using this design system:
 
 ```bash
 npm install git@github.com:TixiaOTA/design-system.git#v0.2.0
 ```
 
+> Check `CHANGELOG.md` to review changes before upgrading.
+
+---
+
 ## Contributing
 
-1. Create a new branch for your feature
+1. Create a new branch
 2. Make your changes
 3. Add tests if necessary
 4. Submit a pull request
 
+---
+
 ## License
 
-MIT 
+MIT
