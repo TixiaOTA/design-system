@@ -145,20 +145,37 @@ export const Pallete: React.FC<PalleteProps> = ({ className }) => {
         </div>
       </div>
 
-      {/* Disabled Colors */}
+      {/* Light Theme Colors */}
       <div className="col-span-full">
-        <h3 className="text-lg font-semibold mb-4">Disabled Colors</h3>
+        <h3 className="text-lg font-semibold mb-4">Light Theme Colors</h3>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-          <ColorSwatch name="Disabled 50" value="#F8F9FA" colorClass="bg-disabled-50" />
-          <ColorSwatch name="Disabled 100" value="#E9ECEF" colorClass="bg-disabled-100" />
-          <ColorSwatch name="Disabled 200" value="#DEE2E6" colorClass="bg-disabled-200" />
-          <ColorSwatch name="Disabled 300" value="#CED4DA" colorClass="bg-disabled-300" />
-          <ColorSwatch name="Disabled 400" value="#ADB5BD" colorClass="bg-disabled-400" />
-          <ColorSwatch name="Disabled 500" value="#959595" colorClass="bg-disabled-500" />
-          <ColorSwatch name="Disabled 600" value="#495057" colorClass="bg-disabled-600" />
-          <ColorSwatch name="Disabled 700" value="#343A40" colorClass="bg-disabled-700" />
-          <ColorSwatch name="Disabled 800" value="#212529" colorClass="bg-disabled-800" />
-          <ColorSwatch name="Disabled 900" value="#121416" colorClass="bg-disabled-900" />
+          <ColorSwatch name="Light 50" value="#FFFFFF" colorClass="bg-light-50" />
+          <ColorSwatch name="Light 100" value="#F8F9FA" colorClass="bg-light-100" />
+          <ColorSwatch name="Light 200" value="#F1F3F5" colorClass="bg-light-200" />
+          <ColorSwatch name="Light 300" value="#E9ECEF" colorClass="bg-light-300" />
+          <ColorSwatch name="Light 400" value="#DEE2E6" colorClass="bg-light-400" />
+          <ColorSwatch name="Light 500" value="#CED4DA" colorClass="bg-light-500" />
+          <ColorSwatch name="Light 600" value="#ADB5BD" colorClass="bg-light-600" />
+          <ColorSwatch name="Light 700" value="#6C757D" colorClass="bg-light-700" />
+          <ColorSwatch name="Light 800" value="#495057" colorClass="bg-light-800" />
+          <ColorSwatch name="Light 900" value="#343A40" colorClass="bg-light-900" />
+        </div>
+      </div>
+
+      {/* Dark Theme Colors */}
+      <div className="col-span-full">
+        <h3 className="text-lg font-semibold mb-4">Dark Theme Colors</h3>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+          <ColorSwatch name="Dark 50" value="#343A40" colorClass="bg-dark-50" />
+          <ColorSwatch name="Dark 100" value="#212529" colorClass="bg-dark-100" />
+          <ColorSwatch name="Dark 200" value="#1A1D20" colorClass="bg-dark-200" />
+          <ColorSwatch name="Dark 300" value="#16181A" colorClass="bg-dark-300" />
+          <ColorSwatch name="Dark 400" value="#141618" colorClass="bg-dark-400" />
+          <ColorSwatch name="Dark 500" value="#121416" colorClass="bg-dark-500" />
+          <ColorSwatch name="Dark 600" value="#0F1113" colorClass="bg-dark-600" />
+          <ColorSwatch name="Dark 700" value="#0C0E10" colorClass="bg-dark-700" />
+          <ColorSwatch name="Dark 800" value="#090B0D" colorClass="bg-dark-800" />
+          <ColorSwatch name="Dark 900" value="#06080A" colorClass="bg-dark-900" />
         </div>
       </div>
     </div>

@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import { Icon } from '../../atoms/Icons/Icons';
 
+export type AccordionVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'default' | 'light' | 'dark' | 'info';
+export type AccordionShadow = 'none' | 'sm' | 'md' | 'lg' | 'xl';
+export type AccordionRounded = 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
+
 export interface AccordionItem {
   id: string;
-  title: React.ReactNode;
-  content: React.ReactNode;
+  title: string | React.ReactNode;
+  content: string | React.ReactNode;
   disabled?: boolean;
 }
 
@@ -16,10 +20,71 @@ export interface AccordionProps {
   icon?: string;
   iconPosition?: 'left' | 'right';
   className?: string;
-  itemClassName?: string;
-  headerClassName?: string;
   contentClassName?: string;
+  variant?: AccordionVariant;
+  shadow?: AccordionShadow;
+  rounded?: AccordionRounded;
 }
+
+const variantStyles: Record<AccordionVariant, { hover: string; active: string; text: string }> = {
+  primary: {
+    hover: 'hover:bg-primary-50',
+    active: 'bg-primary-50',
+    text: 'text-primary-700',
+  },
+  secondary: {
+    hover: 'hover:bg-secondary-50',
+    active: 'bg-secondary-50',
+    text: 'text-secondary-700',
+  },
+  success: {
+    hover: 'hover:bg-success-50',
+    active: 'bg-success-50',
+    text: 'text-success-700',
+  },
+  warning: {
+    hover: 'hover:bg-warning-50',
+    active: 'bg-warning-50',
+    text: 'text-warning-700',
+  },
+  default: {
+    hover: 'hover:bg-gray-50',
+    active: 'bg-gray-50',
+    text: 'text-gray-700',
+  },
+  light: {
+    hover: 'hover:bg-light-50',
+    active: 'bg-light-50',
+    text: 'text-light-900',
+  },
+  dark: {
+    hover: 'hover:bg-dark-50',
+    active: 'bg-dark-50',
+    text: 'text-dark-50',
+  },
+  info: {
+    hover: 'hover:bg-info-50',
+    active: 'bg-info-50',
+    text: 'text-info-700',
+  },
+};
+
+const shadowStyles: Record<AccordionShadow, string> = {
+  none: '',
+  sm: 'shadow-sm',
+  md: 'shadow-md',
+  lg: 'shadow-lg',
+  xl: 'shadow-xl',
+};
+
+const roundedStyles: Record<AccordionRounded, string> = {
+  none: 'rounded-none',
+  sm: 'rounded-sm',
+  md: 'rounded-md',
+  lg: 'rounded-lg',
+  xl: 'rounded-xl',
+  full: 'rounded-full',
+};
 
 export const Accordion: React.FC<AccordionProps> = ({
   items,
@@ -28,9 +93,10 @@ export const Accordion: React.FC<AccordionProps> = ({
   icon = 'mdi:chevron-down',
   iconPosition = 'right',
   className,
-  itemClassName,
-  headerClassName,
   contentClassName,
+  variant = 'primary',
+  shadow = 'none',
+  rounded = 'lg',
 }) => {
   const [openIds, setOpenIds] = useState<string[]>(defaultOpenIds);
 
@@ -46,6 +112,8 @@ export const Accordion: React.FC<AccordionProps> = ({
     }
   };
 
+  const styles = variantStyles[variant];
+
   return (
     <div className={clsx('w-full space-y-2', className)}>
       {items.map((item) => {
@@ -56,10 +124,12 @@ export const Accordion: React.FC<AccordionProps> = ({
           <div
             key={item.id}
             className={clsx(
-              'border rounded-lg overflow-hidden',
+              'border overflow-hidden',
               'bg-white',
               'border-gray-200',
-              itemClassName
+              shadowStyles[shadow],
+              roundedStyles[rounded],
+              'transition-shadow duration-200',
             )}
           >
             <button
@@ -68,9 +138,10 @@ export const Accordion: React.FC<AccordionProps> = ({
               className={clsx(
                 'w-full flex items-center justify-between p-4',
                 'text-left transition-colors',
-                'hover:bg-primary-50',
+                styles.hover,
+                isOpen && styles.active,
+                styles.text,
                 isDisabled && 'opacity-50 cursor-not-allowed',
-                headerClassName
               )}
             >
               {iconPosition === 'left' && (
@@ -95,16 +166,23 @@ export const Accordion: React.FC<AccordionProps> = ({
                 </div>
               )}
             </button>
-            {isOpen && (
-              <div
-                className={clsx(
-                  'p-4 border-t border-gray-200',
-                  contentClassName
-                )}
-              >
-                {item.content}
+            <div
+              className={clsx(
+                'grid transition-all duration-200 ease-in-out',
+                isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+              )}
+            >
+              <div className="overflow-hidden">
+                <div
+                  className={clsx(
+                    'p-4 border-t border-gray-200',
+                    contentClassName
+                  )}
+                >
+                  {item.content}
+                </div>
               </div>
-            )}
+            </div>
           </div>
         );
       })}
