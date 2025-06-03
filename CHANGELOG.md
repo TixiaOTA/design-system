@@ -1,4 +1,8 @@
 
+## [v0.2.1] - 2025-06-03
+- feat: add IntphoneInput
+
+
 ## [v0.2.0] - 2025-06-03
 - feat: update bundled dependencies
 - feat: enhance accordion
