@@ -1,17 +1,17 @@
 import fs from 'fs';
 import { execSync } from 'child_process';
 
-// ✅ Ensure you are on main
+// ✅ Ensure you are on master
 const branch = execSync('git rev-parse --abbrev-ref HEAD').toString().trim();
-if (branch !== 'main') {
-  console.error(`🚫 You are on branch "${branch}". Switch to 'main' before releasing.`);
+if (branch !== 'master') {
+  console.error(`🚫 You are on branch "${branch}". Switch to 'master' before releasing.`);
   process.exit(1);
 }
 
 // 🔧 Bump type
 const type = process.argv[2];
 if (!['patch', 'minor', 'major'].includes(type)) {
-  console.error('Usage: node scripts/release.ts [patch|minor|major]');
+  console.error('Usage: ts-node scripts/release.ts [patch|minor|major]');
   process.exit(1);
 }
 
@@ -34,7 +34,7 @@ let previousTag = '';
 try {
   previousTag = execSync('git describe --tags --abbrev=0').toString().trim();
 } catch {
-  console.log('No previous tag found. Using all commits.');
+  console.log('ℹ️ No previous tag found. Using all commits.');
 }
 
 // 📝 Generate changelog from commits
@@ -59,6 +59,6 @@ fs.writeFileSync(changelogPath, entry + '\n' + existing);
 execSync('git add package.json CHANGELOG.md', { stdio: 'inherit' });
 execSync(`git commit -m "Release v${newVersion}"`, { stdio: 'inherit' });
 execSync(`git tag v${newVersion}`, { stdio: 'inherit' });
-execSync(`git push origin main --tags`, { stdio: 'inherit' });
+execSync(`git push origin master --tags`, { stdio: 'inherit' });
 
 console.log(`✅ Released v${newVersion} on branch "${branch}" with changelog.`);
