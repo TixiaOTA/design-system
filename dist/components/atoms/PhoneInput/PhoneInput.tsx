@@ -297,7 +297,7 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
                 <div className="max-h-[300px] overflow-y-auto">
                   {filteredCountries.map((country) => (
                     <button
-                      key={country.iso}
+                      key={country.iso + country.code}
                       type="button"
                       onClick={() => handleCountrySelect(country)}
                       className={cn(
