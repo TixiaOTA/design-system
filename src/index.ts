@@ -30,6 +30,7 @@ export * from './components/atoms/TimePicker';
 export * from './components/atoms/Toogle';
 export * from './components/atoms/Tooltip';
 export * from './components/atoms/Progress/progress';
+export * from './components/atoms/PhoneInput';
 
 // Molecules
 export * from './components/molecules/Breadcrumbs';
