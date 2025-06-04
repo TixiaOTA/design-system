@@ -10,13 +10,13 @@ import { getWindow, getDocument } from '../../../utils/ssr';
 const TIMEPICKER_OPEN_EVENT = 'timepicker-dropdown-opened';
 
 const timePickerVariants = cva(
-  'border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+  'border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
         default: 'border-neutral-200 hover:border-primary-300 focus:border-primary-300 hover:bg-primary-50',
-        error: 'border-danger-500 hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50',
-        success: 'border-success-500 hover:border-success-600 focus:border-success-600 hover:bg-success-50',
+        error: 'border-danger hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50',
+        success: 'border-success hover:border-success-600 focus:border-success-600 hover:bg-success-50',
         ghost: 'border-transparent bg-transparent hover:bg-primary-50 focus:bg-primary-50',
         underline: 'border-0 border-b-2 border-neutral-200 rounded-none bg-transparent hover:border-primary-300 focus:border-primary-300 hover:bg-transparent focus:bg-transparent',
       },
@@ -251,12 +251,12 @@ export const PrimitiveTimePicker = forwardRef<HTMLInputElement, PrimitiveTimePic
             )}
           >
             {label}
-            {required && <span className="text-red-500 ml-1">*</span>}
+            {required && <span className="text-red ml-1">*</span>}
           </label>
         )}
         <div ref={inputRef} className="relative">
           {leftIcon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 flex items-center justify-center">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral flex items-center justify-center">
               <Icon icon={leftIcon} size={20} />
             </div>
           )}
@@ -277,7 +277,7 @@ export const PrimitiveTimePicker = forwardRef<HTMLInputElement, PrimitiveTimePic
             {...props}
           />
           {rightIcon && (
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 flex items-center justify-center">
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral flex items-center justify-center">
               <Icon icon={rightIcon} size={20} />
             </div>
           )}
@@ -291,7 +291,7 @@ export const PrimitiveTimePicker = forwardRef<HTMLInputElement, PrimitiveTimePic
             >
               <div className="p-4">
                 <div className={cn(
-                  "grid gap-4 text-sm font-medium text-gray-500",
+                  "grid gap-4 text-sm font-medium text-gray",
                   use24Hour ? "grid-cols-2" : "grid-cols-3"
                 )}>
                   <span>Hours</span>
@@ -379,7 +379,7 @@ export const PrimitiveTimePicker = forwardRef<HTMLInputElement, PrimitiveTimePic
             doc.body
           )}
         {errorText && <p className="mt-1 text-sm text-danger-600">{errorText}</p>}
-        {helperText && <p className="mt-1 text-sm text-gray-500">{helperText}</p>}
+        {helperText && <p className="mt-1 text-sm text-gray">{helperText}</p>}
       </div>
     );
   }

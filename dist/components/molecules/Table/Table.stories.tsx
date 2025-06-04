@@ -105,7 +105,7 @@ const schema: TableColumn<User>[] = [
     align: 'center',
     render: (value: string) => (
       <span
-        className={value === 'Suspend' ? 'text-red-500' : 'text-blue-500'}
+        className={value === 'Suspend' ? 'text-red' : 'text-blue'}
       >
         {value}
       </span>

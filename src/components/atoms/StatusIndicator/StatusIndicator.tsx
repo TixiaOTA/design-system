@@ -13,23 +13,23 @@ export interface StatusIndicatorProps {
 
 const statusConfig = {
   active: {
-    bgColor: 'bg-success-500',
+    bgColor: 'bg-success',
     label: 'Active'
   },
   inactive: {
-    bgColor: 'bg-default-400',
+    bgColor: 'bg-default',
     label: 'Inactive'
   },
   pending: {
-    bgColor: 'bg-warning-500',
+    bgColor: 'bg-warning',
     label: 'Pending'
   },
   warning: {
-    bgColor: 'bg-warning-500',
+    bgColor: 'bg-warning',
     label: 'Warning'
   },
   error: {
-    bgColor: 'bg-danger-500',
+    bgColor: 'bg-danger',
     label: 'Error'
   }
 };

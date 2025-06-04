@@ -6,16 +6,16 @@ import { createPortal } from "react-dom";
 import { COUNTRIES } from "./constant";
 
 const phoneInputVariants = cva(
-  "border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+  "border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {
         default:
           "border-neutral-200 hover:border-primary-300 focus:border-primary-300 hover:bg-primary-50",
         error:
-          "border-danger-500 hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50",
+          "border-danger hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50",
         success:
-          "border-success-500 hover:border-success-600 focus:border-success-600 hover:bg-success-50",
+          "border-success hover:border-success-600 focus:border-success-600 hover:bg-success-50",
         ghost:
           "border-transparent bg-transparent hover:bg-primary-50 focus:bg-primary-50",
         underline:
@@ -232,7 +232,7 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
         {label && (
           <label htmlFor={id} className="mb-1.5 block text-sm text-neutral-900">
             {label}
-            {required && <span className="text-danger-500 ml-0.5">*</span>}
+            {required && <span className="text-danger ml-0.5">*</span>}
           </label>
         )}
         <div className={cn("relative", !fullWidth && "inline-block")}>
@@ -322,12 +322,12 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
             )}
         </div>
         {error && errorText && (
-          <p className="mt-1 text-xs text-danger-500" id={errorId}>
+          <p className="mt-1 text-xs text-danger" id={errorId}>
             {errorText}
           </p>
         )}
         {!error && helperText && (
-          <p className="mt-1 text-xs text-neutral-500" id={helperId}>
+          <p className="mt-1 text-xs text-neutral" id={helperId}>
             {helperText}
           </p>
         )}

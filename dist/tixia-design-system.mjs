@@ -2981,13 +2981,13 @@ const H = ({
     }
   );
 }, ca = we(
-  "border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+  "border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {
         default: "border-neutral-200 hover:border-primary-300 focus:border-primary-300 hover:bg-primary-50",
-        error: "border-danger-500 hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50",
-        success: "border-success-500 hover:border-success-600 focus:border-success-600 hover:bg-success-50",
+        error: "border-danger hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50",
+        success: "border-success hover:border-success-600 focus:border-success-600 hover:bg-success-50",
         ghost: "border-transparent bg-transparent hover:bg-primary-50 focus:bg-primary-50",
         underline: "border-0 border-b-2 border-neutral-200 rounded-none bg-transparent hover:border-primary-300 focus:border-primary-300 hover:bg-transparent focus:bg-transparent"
       },
@@ -3034,7 +3034,7 @@ const H = ({
     ...N
   }, h) => {
     const m = u || Ae.useId(), v = `${m}-helper`, y = `${m}-error`, $ = /* @__PURE__ */ e.jsxs("div", { className: b("relative", !g && "inline-block"), children: [
-      x && /* @__PURE__ */ e.jsx("div", { className: "absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500", children: /* @__PURE__ */ e.jsx(H, { icon: x, className: "w-4 h-4" }) }),
+      x && /* @__PURE__ */ e.jsx("div", { className: "absolute left-3 top-1/2 -translate-y-1/2 text-neutral", children: /* @__PURE__ */ e.jsx(H, { icon: x, className: "w-4 h-4" }) }),
       /* @__PURE__ */ e.jsx(
         "input",
         {
@@ -3053,10 +3053,10 @@ const H = ({
           ...N
         }
       ),
-      p && /* @__PURE__ */ e.jsx("div", { className: "absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500", children: /* @__PURE__ */ e.jsx(H, { icon: p, className: "w-4 h-4" }) })
+      p && /* @__PURE__ */ e.jsx("div", { className: "absolute right-3 top-1/2 -translate-y-1/2 text-neutral", children: /* @__PURE__ */ e.jsx(H, { icon: p, className: "w-4 h-4" }) })
     ] }), T = /* @__PURE__ */ e.jsxs(e.Fragment, { children: [
-      o && l && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-danger-500", id: y, children: l }),
-      !o && d && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-neutral-500", id: v, children: d })
+      o && l && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-danger", id: y, children: l }),
+      !o && d && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-neutral", id: v, children: d })
     ] });
     return f === "left" ? /* @__PURE__ */ e.jsx("div", { className: b(g ? "w-full" : "inline-block", r), children: /* @__PURE__ */ e.jsxs("div", { className: "flex items-start gap-4", children: [
       i && /* @__PURE__ */ e.jsxs(
@@ -3066,7 +3066,7 @@ const H = ({
           className: "block text-sm text-neutral-900 pt-2",
           children: [
             i,
-            c && /* @__PURE__ */ e.jsx("span", { className: "text-danger-500 ml-0.5", children: "*" })
+            c && /* @__PURE__ */ e.jsx("span", { className: "text-danger ml-0.5", children: "*" })
           ]
         }
       ),
@@ -3082,7 +3082,7 @@ const H = ({
           className: "mb-1.5 block text-sm text-neutral-900",
           children: [
             i,
-            c && /* @__PURE__ */ e.jsx("span", { className: "text-danger-500 ml-0.5", children: "*" })
+            c && /* @__PURE__ */ e.jsx("span", { className: "text-danger ml-0.5", children: "*" })
           ]
         }
       ),
@@ -3243,7 +3243,7 @@ const Ur = typeof window < "u", Ee = () => Ur ? window : {
             "overflow-auto"
           ),
           onClick: (oe) => oe.stopPropagation(),
-          children: l ? /* @__PURE__ */ e.jsx("div", { className: "flex items-center justify-center py-2", children: /* @__PURE__ */ e.jsx("div", { className: "h-4 w-4 animate-spin rounded-full border-2 border-primary-500 border-t-transparent" }) }) : W.length > 0 ? W.map((oe) => /* @__PURE__ */ e.jsx(
+          children: l ? /* @__PURE__ */ e.jsx("div", { className: "flex items-center justify-center py-2", children: /* @__PURE__ */ e.jsx("div", { className: "h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" }) }) : W.length > 0 ? W.map((oe) => /* @__PURE__ */ e.jsx(
             Ze,
             {
               value: oe.value,
@@ -3252,7 +3252,7 @@ const Ur = typeof window < "u", Ee = () => Ur ? window : {
               children: d ? d(oe) : oe.label
             },
             oe.value
-          )) : /* @__PURE__ */ e.jsx("div", { className: "px-2 py-2 text-sm text-neutral-500", children: "No options found" })
+          )) : /* @__PURE__ */ e.jsx("div", { className: "px-2 py-2 text-sm text-neutral", children: "No options found" })
         }
       );
       return _e(K, F.body);
@@ -3458,7 +3458,7 @@ const fa = {
   return /* @__PURE__ */ e.jsx("div", { className: i, children: r ? /* @__PURE__ */ e.jsx("img", { src: r, alt: t, className: "w-full h-full object-cover" }) : /* @__PURE__ */ e.jsx(
     "svg",
     {
-      className: "w-6 h-6 text-gray-500",
+      className: "w-6 h-6 text-gray",
       viewBox: "0 0 24 24",
       fill: "none",
       xmlns: "http://www.w3.org/2000/svg",
@@ -3507,19 +3507,19 @@ const fa = {
   {
     variants: {
       variant: {
-        primary: "bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 shadow-sm hover:shadow-md active:shadow-none",
-        secondary: "bg-secondary-500 text-white hover:bg-secondary-600 active:bg-secondary-700 shadow-sm hover:shadow-md active:shadow-none",
-        outline: "border border-neutral-300 text-primary-500 hover:bg-primary-50 active:bg-primary-100 hover:border-primary-500",
+        primary: "bg-primary text-white hover:bg-primary-600 active:bg-primary-700 shadow-sm hover:shadow-md active:shadow-none",
+        secondary: "bg-secondary text-white hover:bg-secondary-600 active:bg-secondary-700 shadow-sm hover:shadow-md active:shadow-none",
+        outline: "border border-neutral-300 text-primary hover:bg-primary-50 active:bg-primary-100 hover:border-primary",
         "outline-primary": "border border-primary-600 text-primary-600 hover:bg-primary-50",
         "outline-secondary": "border border-secondary-600 text-secondary-600 hover:bg-secondary-50",
         "outline-success": "border border-success-600 text-success-600 hover:bg-success-50",
         "outline-warning": "border border-warning-600 text-warning-600 hover:bg-warning-50",
         "outline-danger": "border border-danger-600 text-danger-600 hover:bg-danger-50",
-        ghost: "text-primary-500 hover:bg-primary-50 active:bg-primary-100",
-        link: "text-primary-500 hover:underline p-0",
-        success: "bg-success-500 text-white hover:bg-success-600 active:bg-success-700 shadow-sm hover:shadow-md active:shadow-none",
-        warning: "bg-warning-500 text-white hover:bg-warning-600 active:bg-warning-700 shadow-sm hover:shadow-md active:shadow-none",
-        danger: "bg-danger-500 text-white hover:bg-danger-600 active:bg-danger-700 shadow-sm hover:shadow-md active:shadow-none"
+        ghost: "text-primary hover:bg-primary-50 active:bg-primary-100",
+        link: "text-primary hover:underline p-0",
+        success: "bg-success text-white hover:bg-success-600 active:bg-success-700 shadow-sm hover:shadow-md active:shadow-none",
+        warning: "bg-warning text-white hover:bg-warning-600 active:bg-warning-700 shadow-sm hover:shadow-md active:shadow-none",
+        danger: "bg-danger text-white hover:bg-danger-600 active:bg-danger-700 shadow-sm hover:shadow-md active:shadow-none"
       },
       size: {
         xs: "text-xs px-2 py-1",
@@ -3708,22 +3708,22 @@ const js = ({
   ] });
 }, ha = {
   solid: {
-    primary: "bg-primary-500 text-white",
-    success: "bg-success-500 text-white",
-    warning: "bg-warning-500 text-white",
-    error: "bg-danger-500 text-white",
-    info: "bg-info-500 text-white",
-    danger: "bg-danger-500 text-white",
-    default: "bg-neutral-500 text-white"
+    primary: "bg-primary text-white",
+    success: "bg-success text-white",
+    warning: "bg-warning text-white",
+    error: "bg-danger text-white",
+    info: "bg-info text-white",
+    danger: "bg-danger text-white",
+    default: "bg-neutral text-white"
   },
   outline: {
-    primary: "border border-primary-500 text-primary-500",
-    success: "border border-success-500 text-success-500",
-    warning: "border border-warning-500 text-warning-500",
-    error: "border border-error-500 text-error-500",
-    info: "border border-info-500 text-info-500",
-    danger: "border border-danger-500 text-danger-500",
-    default: "border border-neutral-500 text-neutral-500"
+    primary: "border border-primary text-primary",
+    success: "border border-success text-success",
+    warning: "border border-warning text-warning",
+    error: "border border-error text-error",
+    info: "border border-info text-info",
+    danger: "border border-danger text-danger",
+    default: "border border-neutral text-neutral"
   },
   subtle: {
     primary: "bg-primary-100 text-primary-700",
@@ -3818,13 +3818,13 @@ const ja = /* @__PURE__ */ Lr(ka);
 de.extend(wa);
 de.extend(ja);
 const Na = we(
-  "border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+  "border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {
         default: "border-neutral-200 hover:border-primary-300 focus:border-primary-300 hover:bg-primary-50",
-        error: "border-danger-500 hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50",
-        success: "border-success-500 hover:border-success-600 focus:border-success-600 hover:bg-success-50",
+        error: "border-danger hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50",
+        success: "border-success hover:border-success-600 focus:border-success-600 hover:bg-success-50",
         ghost: "border-transparent bg-transparent hover:bg-primary-50 focus:bg-primary-50",
         underline: "border-0 border-b-2 border-neutral-200 rounded-none bg-transparent hover:border-primary-300 focus:border-primary-300 hover:bg-transparent focus:bg-transparent"
       },
@@ -3982,8 +3982,8 @@ const Na = we(
                               "div",
                               {
                                 className: b(
-                                  "text-center text-xs font-medium text-neutral-500",
-                                  ke && "text-danger-500"
+                                  "text-center text-xs font-medium text-neutral",
+                                  ke && "text-danger"
                                 ),
                                 children: te
                               },
@@ -4010,14 +4010,14 @@ const Na = we(
                                   className: b(
                                     "p-2 text-sm transition-colors duration-200 w-10 h-10 rounded-full",
                                     We && "!text-danger",
-                                    ue && "bg-primary-500 !text-white hover:bg-primary-600 active:bg-primary-700",
+                                    ue && "bg-primary !text-white hover:bg-primary-600 active:bg-primary-700",
                                     ue && !De && "rounded-full",
                                     !ue && !ke && "hover:bg-primary-50 active:bg-primary-100",
                                     !Me && "text-neutral-400",
                                     ke && "opacity-50 cursor-not-allowed",
                                     // inRange && "bg-primary-50 text-primary-900 rounded-none",
-                                    De && Ke && "!bg-primary-500 !text-white !rounded-full",
-                                    De && qe && "!bg-primary-500 !text-white !rounded-full"
+                                    De && Ke && "!bg-primary !text-white !rounded-full",
+                                    De && qe && "!bg-primary !text-white !rounded-full"
                                   ),
                                   children: de(te).format("D")
                                 },
@@ -4043,7 +4043,7 @@ const Na = we(
         className: b("relative", !u && "inline-block"),
         ref: C,
         children: [
-          m && /* @__PURE__ */ e.jsx("div", { className: "absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500", children: /* @__PURE__ */ e.jsx(H, { icon: m, className: "w-4 h-4" }) }),
+          m && /* @__PURE__ */ e.jsx("div", { className: "absolute left-3 top-1/2 -translate-y-1/2 text-neutral", children: /* @__PURE__ */ e.jsx(H, { icon: m, className: "w-4 h-4" }) }),
           /* @__PURE__ */ e.jsx(
             "input",
             {
@@ -4063,12 +4063,12 @@ const Na = we(
               ...k
             }
           ),
-          v && /* @__PURE__ */ e.jsx("div", { className: "absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500", children: /* @__PURE__ */ e.jsx(H, { icon: v, className: "w-4 h-4" }) })
+          v && /* @__PURE__ */ e.jsx("div", { className: "absolute right-3 top-1/2 -translate-y-1/2 text-neutral", children: /* @__PURE__ */ e.jsx(H, { icon: v, className: "w-4 h-4" }) })
         ]
       }
     ), J = /* @__PURE__ */ e.jsxs(e.Fragment, { children: [
-      c && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-danger-500", children: c }),
-      !c && f && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-neutral-500", children: f })
+      c && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-danger", children: c }),
+      !c && f && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-neutral", children: f })
     ] });
     return p === "left" ? /* @__PURE__ */ e.jsxs(
       "div",
@@ -4079,7 +4079,7 @@ const Na = we(
           /* @__PURE__ */ e.jsxs("div", { className: "flex items-start gap-4", children: [
             g && /* @__PURE__ */ e.jsxs("label", { className: "block text-sm text-neutral-900 pt-2", children: [
               g,
-              x && /* @__PURE__ */ e.jsx("span", { className: "text-danger-500 ml-0.5", children: "*" })
+              x && /* @__PURE__ */ e.jsx("span", { className: "text-danger ml-0.5", children: "*" })
             ] }),
             /* @__PURE__ */ e.jsxs("div", { className: b("flex-1", !u && "inline-block"), children: [
               W,
@@ -4097,7 +4097,7 @@ const Na = we(
         children: [
           g && /* @__PURE__ */ e.jsxs("label", { className: "mb-1.5 block text-sm text-neutral-900", children: [
             g,
-            x && /* @__PURE__ */ e.jsx("span", { className: "text-danger-500 ml-0.5", children: "*" })
+            x && /* @__PURE__ */ e.jsx("span", { className: "text-danger ml-0.5", children: "*" })
           ] }),
           W,
           J,
@@ -4178,7 +4178,7 @@ const Zr = ye(
           "button",
           {
             onClick: t,
-            className: "ml-4 rounded-full p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-700",
+            className: "ml-4 rounded-full p-1 text-gray hover:bg-gray-100 hover:text-gray-700",
             "aria-label": "Close dialog",
             children: /* @__PURE__ */ e.jsx(H, { icon: "mdi:close", className: "h-5 w-5" })
           }
@@ -4502,7 +4502,7 @@ const Ta = ({
           }, children: x }) : /* @__PURE__ */ e.jsxs(e.Fragment, { children: [
             /* @__PURE__ */ e.jsx(H, { icon: h, className: "w-12 h-12 mx-auto mb-4 text-neutral-400" }),
             u && /* @__PURE__ */ e.jsx("p", { className: Q("text-neutral-600", S.text), children: i }),
-            N && /* @__PURE__ */ e.jsxs("p", { className: "text-sm text-neutral-500 mt-2", children: [
+            N && /* @__PURE__ */ e.jsxs("p", { className: "text-sm text-neutral mt-2", children: [
               "Max file size: ",
               t / (1024 * 1024),
               "MB"
@@ -4524,7 +4524,7 @@ const Ta = ({
           /* @__PURE__ */ e.jsxs("div", { className: "flex items-center space-x-2", children: [
             G(M),
             /* @__PURE__ */ e.jsx("span", { className: Q("text-sm", S.text), children: M.name }),
-            /* @__PURE__ */ e.jsxs("span", { className: "text-xs text-neutral-500", children: [
+            /* @__PURE__ */ e.jsxs("span", { className: "text-xs text-neutral", children: [
               "(",
               (M.size / 1024).toFixed(1),
               " KB)"
@@ -4534,7 +4534,7 @@ const Ta = ({
             "button",
             {
               onClick: () => z(P),
-              className: "p-1 text-neutral-500 hover:text-danger",
+              className: "p-1 text-neutral hover:text-danger",
               children: /* @__PURE__ */ e.jsx(H, { icon: "mdi:close", className: "w-4 h-4" })
             }
           )
@@ -4614,26 +4614,26 @@ const Ta = ({
     a && /* @__PURE__ */ e.jsx(H, { icon: f(), className: b("h-5 w-5 flex-shrink-0", c()) }),
     /* @__PURE__ */ e.jsxs("div", { className: "flex-1", children: [
       r && /* @__PURE__ */ e.jsx("h3", { className: "text-sm font-medium text-neutral-900", children: r }),
-      /* @__PURE__ */ e.jsx("div", { className: "mt-1 text-sm text-neutral-500", children: t })
+      /* @__PURE__ */ e.jsx("div", { className: "mt-1 text-sm text-neutral", children: t })
     ] }),
     l && /* @__PURE__ */ e.jsx(
       "button",
       {
         type: "button",
-        className: "ml-auto flex-shrink-0 text-neutral-400 hover:text-neutral-500",
+        className: "ml-auto flex-shrink-0 text-neutral-400 hover:text-neutral",
         onClick: d,
         children: /* @__PURE__ */ e.jsx(H, { icon: "mdi:close", className: "h-5 w-5" })
       }
     )
   ] });
 }, sr = "select-dropdown-opened", _a = we(
-  "rounded-md px-3 py-2 text-sm ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+  "rounded-md px-3 py-2 text-sm ring-0 transition-colors placeholder:text-neutral placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {
         default: "border border-neutral-200 hover:border-primary-300 focus:border-primary-300 hover:bg-primary-50 bg-white",
-        error: "border border-danger-500 hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50 bg-white",
-        success: "border border-success-500 hover:border-success-600 focus:border-success-600 bg-white",
+        error: "border border-danger hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50 bg-white",
+        success: "border border-success hover:border-success-600 focus:border-success-600 bg-white",
         ghost: "border-0 hover:bg-neutral-100 focus:bg-neutral-100 bg-transparent",
         underline: "border-0 border-b-2 border-neutral-200 rounded-none bg-transparent hover:border-primary-300 focus:border-primary-300 hover:bg-transparent focus:bg-transparent"
       },
@@ -4783,7 +4783,7 @@ const Ta = ({
           className: "mb-1.5 block text-sm text-neutral-900",
           children: [
             l,
-            c && /* @__PURE__ */ e.jsx("span", { className: "text-danger-500 ml-0.5", children: "*" })
+            c && /* @__PURE__ */ e.jsx("span", { className: "text-danger ml-0.5", children: "*" })
           ]
         }
       ),
@@ -4808,9 +4808,9 @@ const Ta = ({
             "aria-describedby": d ? `${R}-error` : i ? `${R}-helper` : void 0,
             disabled: p,
             children: [
-              m && /* @__PURE__ */ e.jsx("div", { className: "absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500", children: /* @__PURE__ */ e.jsx(H, { icon: m, className: "w-4 h-4" }) }),
-              /* @__PURE__ */ e.jsx("span", { className: "flex items-center text-neutral-500 gap-2 min-w-0 flex-1", children: /* @__PURE__ */ e.jsx("span", { className: "truncate", children: S() || f }) }),
-              v ? /* @__PURE__ */ e.jsx("div", { className: "absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500", children: /* @__PURE__ */ e.jsx(H, { icon: v, className: "w-4 h-4" }) }) : /* @__PURE__ */ e.jsx(
+              m && /* @__PURE__ */ e.jsx("div", { className: "absolute left-3 top-1/2 -translate-y-1/2 text-neutral", children: /* @__PURE__ */ e.jsx(H, { icon: m, className: "w-4 h-4" }) }),
+              /* @__PURE__ */ e.jsx("span", { className: "flex items-center text-neutral gap-2 min-w-0 flex-1", children: /* @__PURE__ */ e.jsx("span", { className: "truncate", children: S() || f }) }),
+              v ? /* @__PURE__ */ e.jsx("div", { className: "absolute right-3 top-1/2 -translate-y-1/2 text-neutral", children: /* @__PURE__ */ e.jsx(H, { icon: v, className: "w-4 h-4" }) }) : /* @__PURE__ */ e.jsx(
                 H,
                 {
                   icon: "mdi:chevron-down",
@@ -4822,8 +4822,8 @@ const Ta = ({
         ),
         Y()
       ] }),
-      d && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-danger-500", id: `${R}-error`, children: d }),
-      !d && i && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-neutral-500", id: `${R}-helper`, children: i })
+      d && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-danger", id: `${R}-error`, children: d }),
+      !d && i && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-neutral", id: `${R}-helper`, children: i })
     ] });
   }
 );
@@ -5094,7 +5094,7 @@ const Da = ({
     f.length > 0 && /* @__PURE__ */ e.jsx("div", { className: "flex justify-between mt-2", children: f.map((L) => /* @__PURE__ */ e.jsx(
       "div",
       {
-        className: "text-xs text-gray-500",
+        className: "text-xs text-gray",
         style: { left: `${(L.value - r) / (t - r) * 100}%` },
         children: L.label
       },
@@ -5108,7 +5108,7 @@ const Da = ({
   lg: "w-8 h-8"
 }, Va = {
   primary: "text-primary",
-  warning: "text-warning-500",
+  warning: "text-warning",
   default: "text-default-400"
 }, Ms = ({
   rating: r,
@@ -5155,23 +5155,23 @@ const Da = ({
   }) });
 }, Ba = {
   active: {
-    bgColor: "bg-success-500",
+    bgColor: "bg-success",
     label: "Active"
   },
   inactive: {
-    bgColor: "bg-default-400",
+    bgColor: "bg-default",
     label: "Inactive"
   },
   pending: {
-    bgColor: "bg-warning-500",
+    bgColor: "bg-warning",
     label: "Pending"
   },
   warning: {
-    bgColor: "bg-warning-500",
+    bgColor: "bg-warning",
     label: "Warning"
   },
   error: {
-    bgColor: "bg-danger-500",
+    bgColor: "bg-danger",
     label: "Error"
   }
 }, Fa = {
@@ -5202,11 +5202,11 @@ const Da = ({
 }, Qr = (r) => {
   switch (r) {
     case "completed":
-      return "text-white bg-primary-500 ring-4 ring-primary-50";
+      return "text-white bg-primary ring-4 ring-primary-50";
     case "active":
-      return "text-primary-500 bg-primary-50 ring-4 ring-primary-50";
+      return "text-primary bg-primary-50 ring-4 ring-primary-50";
     default:
-      return "text-neutral-400 bg-neutral-50 ring-4 ring-neutral-50";
+      return "text-neutral bg-neutral-50 ring-4 ring-neutral-50";
   }
 }, Wa = ({
   steps: r,
@@ -5247,12 +5247,12 @@ const Da = ({
               {
                 className: b(
                   "text-sm font-medium",
-                  d === "active" ? "text-primary-500" : d === "completed" ? "text-neutral-900" : "text-neutral-500"
+                  d === "active" ? "text-primary" : d === "completed" ? "text-neutral-900" : "text-neutral"
                 ),
                 children: o.label
               }
             ),
-            o.description && /* @__PURE__ */ e.jsx("span", { className: "text-xs text-neutral-500", children: o.description })
+            o.description && /* @__PURE__ */ e.jsx("span", { className: "text-xs text-neutral", children: o.description })
           ] })
         ] }),
         l < r.length - 1 && /* @__PURE__ */ e.jsx(
@@ -5260,7 +5260,7 @@ const Da = ({
           {
             className: b(
               "transition-all duration-200",
-              l < t ? "bg-primary-500" : "bg-neutral-200"
+              l < t ? "bg-primary" : "bg-neutral-200"
             )
           }
         )
@@ -5306,12 +5306,12 @@ const Da = ({
               {
                 className: b(
                   "text-sm font-medium",
-                  d === "active" ? "text-primary-500" : d === "completed" ? "text-neutral-900" : "text-neutral-500"
+                  d === "active" ? "text-primary00" : d === "completed" ? "text-neutral-900" : "text-neutral"
                 ),
                 children: o.label
               }
             ),
-            o.description && /* @__PURE__ */ e.jsx("span", { className: "text-xs text-neutral-500", children: o.description })
+            o.description && /* @__PURE__ */ e.jsx("span", { className: "text-xs text-neutral", children: o.description })
           ] })
         ] }),
         l < r.length - 1 && /* @__PURE__ */ e.jsx(
@@ -5320,7 +5320,7 @@ const Da = ({
             className: b(
               "absolute transition-all duration-200",
               s === "default" ? "left-4 w-[1px] top-10 bottom-[-24px]" : "left-0 w-[1px] top-6 bottom-[-24px]",
-              l < t ? "bg-primary-500" : "bg-neutral-200"
+              l < t ? "bg-primary" : "bg-neutral-200"
             )
           }
         )
@@ -5537,13 +5537,13 @@ const Da = ({
   })(r);
   return /* @__PURE__ */ e.jsx(d, { className: b("text-gray-900", o[r], a), children: t });
 }, nr = "timepicker-dropdown-opened", Ua = we(
-  "border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+  "border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {
         default: "border-neutral-200 hover:border-primary-300 focus:border-primary-300 hover:bg-primary-50",
-        error: "border-danger-500 hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50",
-        success: "border-success-500 hover:border-success-600 focus:border-success-600 hover:bg-success-50",
+        error: "border-danger hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50",
+        success: "border-success hover:border-success-600 focus:border-success-600 hover:bg-success-50",
         ghost: "border-transparent bg-transparent hover:bg-primary-50 focus:bg-primary-50",
         underline: "border-0 border-b-2 border-neutral-200 rounded-none bg-transparent hover:border-primary-300 focus:border-primary-300 hover:bg-transparent focus:bg-transparent"
       },
@@ -5642,12 +5642,12 @@ const Da = ({
           ),
           children: [
             f,
-            g && /* @__PURE__ */ e.jsx("span", { className: "text-red-500 ml-1", children: "*" })
+            g && /* @__PURE__ */ e.jsx("span", { className: "text-red ml-1", children: "*" })
           ]
         }
       ),
       /* @__PURE__ */ e.jsxs("div", { ref: E, className: "relative", children: [
-        h && /* @__PURE__ */ e.jsx("div", { className: "absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 flex items-center justify-center", children: /* @__PURE__ */ e.jsx(H, { icon: h, size: 20 }) }),
+        h && /* @__PURE__ */ e.jsx("div", { className: "absolute left-3 top-1/2 -translate-y-1/2 text-neutral flex items-center justify-center", children: /* @__PURE__ */ e.jsx(H, { icon: h, size: 20 }) }),
         /* @__PURE__ */ e.jsx(
           "input",
           {
@@ -5667,7 +5667,7 @@ const Da = ({
             ...$
           }
         ),
-        m && /* @__PURE__ */ e.jsx("div", { className: "absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 flex items-center justify-center", children: /* @__PURE__ */ e.jsx(H, { icon: m, size: 20 }) })
+        m && /* @__PURE__ */ e.jsx("div", { className: "absolute right-3 top-1/2 -translate-y-1/2 text-neutral flex items-center justify-center", children: /* @__PURE__ */ e.jsx(H, { icon: m, size: 20 }) })
       ] }),
       D && _e(
         /* @__PURE__ */ e.jsx(
@@ -5678,7 +5678,7 @@ const Da = ({
             onClick: (W) => W.stopPropagation(),
             children: /* @__PURE__ */ e.jsxs("div", { className: "p-4", children: [
               /* @__PURE__ */ e.jsxs("div", { className: b(
-                "grid gap-4 text-sm font-medium text-gray-500",
+                "grid gap-4 text-sm font-medium text-gray",
                 a ? "grid-cols-2" : "grid-cols-3"
               ), children: [
                 /* @__PURE__ */ e.jsx("span", { children: "Hours" }),
@@ -5757,7 +5757,7 @@ const Da = ({
         ne.body
       ),
       i && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-sm text-danger-600", children: i }),
-      c && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-sm text-gray-500", children: c })
+      c && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-sm text-gray", children: c })
     ] }) : null;
   }
 );
@@ -5784,10 +5784,10 @@ const Ka = we(
   {
     variants: {
       variant: {
-        primary: "bg-neutral-200 data-[state=checked]:bg-primary-500 focus-visible:ring-primary-500",
-        success: "bg-neutral-200 data-[state=checked]:bg-success-500 focus-visible:ring-success-500",
-        warning: "bg-neutral-200 data-[state=checked]:bg-warning-500 focus-visible:ring-warning-500",
-        danger: "bg-neutral-200 data-[state=checked]:bg-danger-500 focus-visible:ring-danger-500"
+        primary: "bg-neutral-200 data-[state=checked]:bg-primary focus-visible:ring-primary",
+        success: "bg-neutral-200 data-[state=checked]:bg-success focus-visible:ring-success",
+        warning: "bg-neutral-200 data-[state=checked]:bg-warning focus-visible:ring-warning",
+        danger: "bg-neutral-200 data-[state=checked]:bg-danger focus-visible:ring-danger"
       },
       size: {
         sm: "h-4 w-7",
@@ -5864,13 +5864,13 @@ const Ka = we(
             className: "text-sm text-neutral-900",
             children: [
               o,
-              l && /* @__PURE__ */ e.jsx("span", { className: "text-danger-500 ml-0.5", children: "*" })
+              l && /* @__PURE__ */ e.jsx("span", { className: "text-danger ml-0.5", children: "*" })
             ]
           }
         )
       ] }),
-      c && i && /* @__PURE__ */ e.jsx("p", { className: "text-xs text-danger-500", id: N, children: i }),
-      !c && d && /* @__PURE__ */ e.jsx("p", { className: "text-xs text-neutral-500", id: u, children: d })
+      c && i && /* @__PURE__ */ e.jsx("p", { className: "text-xs text-danger", id: N, children: i }),
+      !c && d && /* @__PURE__ */ e.jsx("p", { className: "text-xs text-neutral", id: u, children: d })
     ] });
   }
 );
@@ -5880,13 +5880,13 @@ const Ja = we(
   {
     variants: {
       color: {
-        primary: "bg-primary-500 text-white",
-        secondary: "bg-secondary-500 text-white",
-        success: "bg-success-500 text-white",
-        warning: "bg-warning-500 text-white",
-        danger: "bg-danger-500 text-white",
-        info: "bg-info-500 text-white",
-        neutral: "bg-neutral-500 text-white",
+        primary: "bg-primary text-white",
+        secondary: "bg-secondary text-white",
+        success: "bg-success text-white",
+        warning: "bg-warning text-white",
+        danger: "bg-danger text-white",
+        info: "bg-info text-white",
+        neutral: "bg-neutral text-white",
         light: "bg-white text-neutral-900 border border-neutral-200"
       },
       size: {
@@ -5903,13 +5903,13 @@ const Ja = we(
 ), Xa = we("absolute w-2 h-2 transform rotate-45", {
   variants: {
     color: {
-      primary: "bg-primary-500",
-      secondary: "bg-secondary-500",
-      success: "bg-success-500",
-      warning: "bg-warning-500",
-      danger: "bg-danger-500",
-      info: "bg-info-500",
-      neutral: "bg-neutral-500",
+      primary: "bg-primary",
+      secondary: "bg-secondary",
+      success: "bg-success",
+      warning: "bg-warning",
+      danger: "bg-danger",
+      info: "bg-info",
+      neutral: "bg-neutral",
       light: "bg-white border-r border-b border-neutral-200"
     }
   },
@@ -6034,12 +6034,12 @@ const Ja = we(
         circular: "inline-block"
       },
       color: {
-        primary: "text-primary-500",
-        secondary: "text-secondary-500",
-        success: "text-success-500",
-        warning: "text-warning-500",
-        danger: "text-danger-500",
-        info: "text-info-500"
+        primary: "text-primary",
+        secondary: "text-secondary",
+        success: "text-success",
+        warning: "text-warning",
+        danger: "text-danger",
+        info: "text-info"
       },
       size: {
         sm: "h-1",
@@ -6058,15 +6058,15 @@ const Ja = we(
   md: 36,
   lg: 48
 }, rs = {
-  primary: "bg-primary-500",
-  secondary: "bg-secondary-500",
-  success: "bg-success-500",
-  warning: "bg-warning-500",
-  danger: "bg-danger-500",
-  info: "bg-info-500"
+  primary: "bg-primary",
+  secondary: "bg-secondary",
+  success: "bg-success",
+  warning: "bg-warning",
+  danger: "bg-danger",
+  info: "bg-info"
 }, ts = {
   primary: "#007C99",
-  // Tailwind primary-500
+  // Tailwind primary
   secondary: "#CEEAE7",
   success: "#00B37D",
   warning: "#F59E0B",
@@ -6419,13 +6419,13 @@ const or = [
   { name: "Zambia", code: "+260", iso: "zm", flag: "flagpack:zm" },
   { name: "Zimbabwe", code: "+263", iso: "zw", flag: "flagpack:zw" }
 ], ss = we(
-  "border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+  "border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {
         default: "border-neutral-200 hover:border-primary-300 focus:border-primary-300 hover:bg-primary-50",
-        error: "border-danger-500 hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50",
-        success: "border-success-500 hover:border-success-600 focus:border-success-600 hover:bg-success-50",
+        error: "border-danger hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50",
+        success: "border-success hover:border-success-600 focus:border-success-600 hover:bg-success-50",
         ghost: "border-transparent bg-transparent hover:bg-primary-50 focus:bg-primary-50",
         underline: "border-0 border-b-2 border-neutral-200 rounded-none bg-transparent hover:border-primary-300 focus:border-primary-300 hover:bg-transparent focus:bg-transparent"
       },
@@ -6528,7 +6528,7 @@ const or = [
         children: [
           i && /* @__PURE__ */ e.jsxs("label", { htmlFor: R, className: "mb-1.5 block text-sm text-neutral-900", children: [
             i,
-            c && /* @__PURE__ */ e.jsx("span", { className: "text-danger-500 ml-0.5", children: "*" })
+            c && /* @__PURE__ */ e.jsx("span", { className: "text-danger ml-0.5", children: "*" })
           ] }),
           /* @__PURE__ */ e.jsxs("div", { className: b("relative", !f && "inline-block"), children: [
             /* @__PURE__ */ e.jsxs("div", { className: "flex", children: [
@@ -6623,8 +6623,8 @@ const or = [
               typeof document < "u" ? document.body : document
             )
           ] }),
-          o && l && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-danger-500", id: G, children: l }),
-          !o && d && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-neutral-500", id: z, children: d })
+          o && l && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-danger", id: G, children: l }),
+          !o && d && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-neutral", id: z, children: d })
         ]
       }
     );
@@ -6671,7 +6671,7 @@ const os = we("flex items-center text-sm", {
           {
             className: b(
               "flex items-center gap-1.5",
-              x && "text-primary-500 font-medium"
+              x && "text-primary font-medium"
             ),
             children: [
               c.icon && /* @__PURE__ */ e.jsx(
@@ -6692,15 +6692,15 @@ const os = we("flex items-center text-sm", {
                   href: c.href,
                   className: b(
                     "transition-colors duration-200",
-                    "hover:text-primary-500 hover:underline focus:outline-none",
-                    "focus-visible:text-primary-500 focus-visible:underline",
+                    "hover:text-primary hover:underline focus:outline-none",
+                    "focus-visible:text-primary focus-visible:underline",
                     "active:text-primary-600"
                   ),
                   children: /* @__PURE__ */ e.jsx("span", { className: "truncate max-w-[200px] inline-block align-bottom", children: c.label })
                 }
               ) : /* @__PURE__ */ e.jsx("span", { className: b(
                 "truncate max-w-[200px] inline-block",
-                x && "text-primary-500"
+                x && "text-primary"
               ), children: c.label }),
               !g && /* @__PURE__ */ e.jsx("span", { className: b(
                 "text-neutral-400 flex-shrink-0",
@@ -7027,11 +7027,11 @@ const rt = (r) => {
                 "flex-shrink-0",
                 o ? "h-5 w-5 mt-0.5" : "h-4 w-4",
                 {
-                  "text-gray-500": t === "default",
-                  "text-success-500": t === "success",
-                  "text-danger-500": t === "error",
-                  "text-warning-500": t === "warning",
-                  "text-info-500": t === "info"
+                  "text-gray": t === "default",
+                  "text-success": t === "success",
+                  "text-danger": t === "error",
+                  "text-warning": t === "warning",
+                  "text-info": t === "info"
                 }
               )
             }
@@ -7054,7 +7054,7 @@ const rt = (r) => {
               "p",
               {
                 className: b(s ? "mt-1" : "", "text-sm leading-5", {
-                  "text-gray-500": t === "default",
+                  "text-gray": t === "default",
                   "text-success-700": t === "success",
                   "text-danger-700": t === "error",
                   "text-warning-700": t === "warning",
@@ -7075,11 +7075,11 @@ const rt = (r) => {
                 "flex-shrink-0 !p-1",
                 o ? "ml-4" : "ml-2",
                 {
-                  "text-gray-400 hover:text-gray-500": t === "default",
-                  "text-success-400 hover:text-success-500": t === "success",
-                  "text-danger-400 hover:text-danger-500": t === "error",
-                  "text-warning-400 hover:text-warning-500": t === "warning",
-                  "text-info-400 hover:text-info-500": t === "info"
+                  "text-gray-400 hover:text-gray": t === "default",
+                  "text-success-400 hover:text-success": t === "success",
+                  "text-danger-400 hover:text-danger": t === "error",
+                  "text-warning-400 hover:text-warning": t === "warning",
+                  "text-info-400 hover:text-info": t === "info"
                 }
               ),
               children: /* @__PURE__ */ e.jsx(H, { icon: "mdi:close", className: b(o ? "h-5 w-5" : "h-4 w-4") })
@@ -7159,7 +7159,7 @@ const dr = Nt(void 0), ds = {
   s
 ), children: [
   /* @__PURE__ */ e.jsxs("div", { children: [
-    /* @__PURE__ */ e.jsx("p", { className: "text-sm font-medium text-gray-500", children: r }),
+    /* @__PURE__ */ e.jsx("p", { className: "text-sm font-medium text-gray", children: r }),
     /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-2xl font-semibold text-gray-900", children: t })
   ] }),
   a && /* @__PURE__ */ e.jsx("div", { className: "flex h-12 w-12 items-center justify-center rounded-lg bg-primary-50", children: /* @__PURE__ */ e.jsx(H, { icon: a, className: "h-6 w-6 text-primary-600" }) })
@@ -7274,13 +7274,13 @@ const dr = Nt(void 0), ds = {
     )
   ] });
 }, gs = we(
-  "border bg-white flex items-center justify-center aspect-square transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 text-center",
+  "border bg-white flex items-center justify-center aspect-square transition-colors placeholder:text-neutral placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 text-center",
   {
     variants: {
       variant: {
         default: "border-neutral-200 hover:border-primary-300 focus:border-primary-300 hover:bg-primary-50",
-        error: "border-danger-500 hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50",
-        success: "border-success-500 hover:border-success-600 focus:border-success-600 hover:bg-success-50",
+        error: "border-danger hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50",
+        success: "border-success hover:border-success-600 focus:border-success-600 hover:bg-success-50",
         ghost: "border-transparent bg-transparent hover:bg-primary-50 focus:bg-primary-50",
         underline: "border-0 border-b-2 border-neutral-200 rounded-none bg-transparent hover:border-primary-300 focus:border-primary-300 hover:bg-transparent focus:bg-transparent"
       },
@@ -7393,7 +7393,7 @@ const dr = Nt(void 0), ds = {
     return /* @__PURE__ */ e.jsxs("div", { ref: _, className: b("w-full", r), ...L, children: [
       i && /* @__PURE__ */ e.jsxs("label", { className: "mb-1.5 block text-sm text-neutral-900", children: [
         i,
-        f && /* @__PURE__ */ e.jsx("span", { className: "text-danger-500 ml-0.5", children: "*" })
+        f && /* @__PURE__ */ e.jsx("span", { className: "text-danger ml-0.5", children: "*" })
       ] }),
       /* @__PURE__ */ e.jsxs("div", { className: "flex flex-col items-center space-y-4", children: [
         /* @__PURE__ */ e.jsx("div", { className: "flex items-center justify-center gap-2", children: Array.from({ length: u }).map((I, V) => /* @__PURE__ */ e.jsx(
@@ -7421,8 +7421,8 @@ const dr = Nt(void 0), ds = {
           },
           V
         )) }),
-        o && l && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-danger-500 self-start", children: l }),
-        !o && d && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-neutral-500 self-start", children: d }),
+        o && l && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-danger self-start", children: l }),
+        !o && d && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-neutral self-start", children: d }),
         c && /* @__PURE__ */ e.jsx("p", { className: "text-sm text-neutral-600", children: c }),
         g && /* @__PURE__ */ e.jsx(
           Re,

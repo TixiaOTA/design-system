@@ -54,7 +54,7 @@ export const InteractiveDemo: Story = {
     return (
       <div className="flex flex-col items-center gap-4">
         <button
-          className="px-4 py-2 bg-primary-500 text-white rounded-md shadow hover:bg-primary-600 transition"
+          className="px-4 py-2 bg-primary text-white rounded-md shadow hover:bg-primary-600 transition"
           onClick={handleOpen}
         >
           Start Onboarding

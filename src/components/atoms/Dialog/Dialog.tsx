@@ -49,7 +49,7 @@ const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
       {onClose && (
         <button
           onClick={onClose}
-          className="ml-4 rounded-full p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+          className="ml-4 rounded-full p-1 text-gray hover:bg-gray-100 hover:text-gray-700"
           aria-label="Close dialog"
         >
           <Icon icon="mdi:close" className="h-5 w-5" />

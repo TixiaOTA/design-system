@@ -140,7 +140,7 @@ export const CustomComponents: Story = {
         <Icon
           icon="mdi:package-variant"
           size={48}
-          className="text-primary-500"
+          className="text-primary"
         />
         <span className="text-lg font-medium text-neutral-700">
           No items available
@@ -153,8 +153,8 @@ export const CustomComponents: Story = {
 
     const customEndComponent = (
       <div className="flex items-center justify-center gap-2 py-4">
-        <Icon icon="mdi:check-circle" size={24} className="text-primary-500" />
-        <span className="text-sm font-medium text-primary-500">
+        <Icon icon="mdi:check-circle" size={24} className="text-primary" />
+        <span className="text-sm font-medium text-primary">
           You've reached the end
         </span>
       </div>

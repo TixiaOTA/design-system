@@ -4,13 +4,13 @@ import { cn } from '../../../utils/cn';
 import { Button } from '../../atoms/Button';
 
 const inputOTPVariants = cva(
-  'border bg-white flex items-center justify-center aspect-square transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 text-center',
+  'border bg-white flex items-center justify-center aspect-square transition-colors placeholder:text-neutral placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 text-center',
   {
     variants: {
       variant: {
         default: 'border-neutral-200 hover:border-primary-300 focus:border-primary-300 hover:bg-primary-50',
-        error: 'border-danger-500 hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50',
-        success: 'border-success-500 hover:border-success-600 focus:border-success-600 hover:bg-success-50',
+        error: 'border-danger hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50',
+        success: 'border-success hover:border-success-600 focus:border-success-600 hover:bg-success-50',
         ghost: 'border-transparent bg-transparent hover:bg-primary-50 focus:bg-primary-50',
         underline: 'border-0 border-b-2 border-neutral-200 rounded-none bg-transparent hover:border-primary-300 focus:border-primary-300 hover:bg-transparent focus:bg-transparent',
       },
@@ -283,7 +283,7 @@ const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(
         {label && (
           <label className="mb-1.5 block text-sm text-neutral-900">
             {label}
-            {required && <span className="text-danger-500 ml-0.5">*</span>}
+            {required && <span className="text-danger ml-0.5">*</span>}
           </label>
         )}
         
@@ -316,13 +316,13 @@ const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(
           </div>
           
           {(error && errorText) && (
-            <p className="mt-1 text-xs text-danger-500 self-start">
+            <p className="mt-1 text-xs text-danger self-start">
               {errorText}
             </p>
           )}
           
           {(!error && helperText) && (
-            <p className="mt-1 text-xs text-neutral-500 self-start">
+            <p className="mt-1 text-xs text-neutral self-start">
               {helperText}
             </p>
           )}

@@ -8,19 +8,19 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: 'bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 shadow-sm hover:shadow-md active:shadow-none',
-        secondary: 'bg-secondary-500 text-white hover:bg-secondary-600 active:bg-secondary-700 shadow-sm hover:shadow-md active:shadow-none',
-        outline: 'border border-neutral-300 text-primary-500 hover:bg-primary-50 active:bg-primary-100 hover:border-primary-500',
+        primary: 'bg-primary text-white hover:bg-primary-600 active:bg-primary-700 shadow-sm hover:shadow-md active:shadow-none',
+        secondary: 'bg-secondary text-white hover:bg-secondary-600 active:bg-secondary-700 shadow-sm hover:shadow-md active:shadow-none',
+        outline: 'border border-neutral-300 text-primary hover:bg-primary-50 active:bg-primary-100 hover:border-primary',
         'outline-primary': 'border border-primary-600 text-primary-600 hover:bg-primary-50',
         'outline-secondary': 'border border-secondary-600 text-secondary-600 hover:bg-secondary-50',
         'outline-success': 'border border-success-600 text-success-600 hover:bg-success-50',
         'outline-warning': 'border border-warning-600 text-warning-600 hover:bg-warning-50',
         'outline-danger': 'border border-danger-600 text-danger-600 hover:bg-danger-50',
-        ghost: 'text-primary-500 hover:bg-primary-50 active:bg-primary-100',
-        link: 'text-primary-500 hover:underline p-0',
-        success: 'bg-success-500 text-white hover:bg-success-600 active:bg-success-700 shadow-sm hover:shadow-md active:shadow-none',
-        warning: 'bg-warning-500 text-white hover:bg-warning-600 active:bg-warning-700 shadow-sm hover:shadow-md active:shadow-none',
-        danger: 'bg-danger-500 text-white hover:bg-danger-600 active:bg-danger-700 shadow-sm hover:shadow-md active:shadow-none',
+        ghost: 'text-primary hover:bg-primary-50 active:bg-primary-100',
+        link: 'text-primary hover:underline p-0',
+        success: 'bg-success text-white hover:bg-success-600 active:bg-success-700 shadow-sm hover:shadow-md active:shadow-none',
+        warning: 'bg-warning text-white hover:bg-warning-600 active:bg-warning-700 shadow-sm hover:shadow-md active:shadow-none',
+        danger: 'bg-danger text-white hover:bg-danger-600 active:bg-danger-700 shadow-sm hover:shadow-md active:shadow-none',
       },
       size: {
         xs: 'text-xs px-2 py-1',

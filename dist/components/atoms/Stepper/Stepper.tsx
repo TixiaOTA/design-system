@@ -36,11 +36,11 @@ const getStepIconByStatus = (status: StepStatus, customIcon?: string) => {
 const getStepColorByStatus = (status: StepStatus) => {
   switch (status) {
     case 'completed':
-      return 'text-white bg-primary-500 ring-4 ring-primary-50';
+      return 'text-white bg-primary ring-4 ring-primary-50';
     case 'active':
-      return 'text-primary-500 bg-primary-50 ring-4 ring-primary-50';
+      return 'text-primary bg-primary-50 ring-4 ring-primary-50';
     default:
-      return 'text-neutral-400 bg-neutral-50 ring-4 ring-neutral-50';
+      return 'text-neutral bg-neutral-50 ring-4 ring-neutral-50';
   }
 };
 
@@ -88,16 +88,16 @@ const HorizontalStepper: React.FC<Omit<StepperProps, 'orientation'>> = ({
                   className={cn(
                     'text-sm font-medium',
                     status === 'active'
-                      ? 'text-primary-500'
+                      ? 'text-primary'
                       : status === 'completed'
                       ? 'text-neutral-900'
-                      : 'text-neutral-500'
+                      : 'text-neutral'
                   )}
                 >
                   {step.label}
                 </span>
                 {step.description && (
-                  <span className="text-xs text-neutral-500">
+                  <span className="text-xs text-neutral">
                     {step.description}
                   </span>
                 )}
@@ -107,7 +107,7 @@ const HorizontalStepper: React.FC<Omit<StepperProps, 'orientation'>> = ({
               <Divider
                 className={cn(
                   'transition-all duration-200',
-                  index < activeStep ? 'bg-primary-500' : 'bg-neutral-200'
+                  index < activeStep ? 'bg-primary' : 'bg-neutral-200'
                 )}
               />
             )}
@@ -161,16 +161,16 @@ const VerticalStepper: React.FC<Omit<StepperProps, 'orientation'>> = ({
                   className={cn(
                     'text-sm font-medium',
                     status === 'active'
-                      ? 'text-primary-500'
+                      ? 'text-primary00'
                       : status === 'completed'
                       ? 'text-neutral-900'
-                      : 'text-neutral-500'
+                      : 'text-neutral'
                   )}
                 >
                   {step.label}
                 </span>
                 {step.description && (
-                  <span className="text-xs text-neutral-500">
+                  <span className="text-xs text-neutral">
                     {step.description}
                   </span>
                 )}
@@ -183,7 +183,7 @@ const VerticalStepper: React.FC<Omit<StepperProps, 'orientation'>> = ({
                   variant === 'default' 
                     ? 'left-4 w-[1px] top-10 bottom-[-24px]'
                     : 'left-0 w-[1px] top-6 bottom-[-24px]',
-                  index < activeStep ? 'bg-primary-500' : 'bg-neutral-200'
+                  index < activeStep ? 'bg-primary' : 'bg-neutral-200'
                 )}
               />
             )}

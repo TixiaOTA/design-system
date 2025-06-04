@@ -121,6 +121,6 @@ export const CustomStyle: Story = {
   args: {
     variant: 'body1',
     children: 'Custom styled text',
-    className: 'text-blue-500 italic',
+    className: 'text-blue italic',
   },
 }; 

@@ -7,10 +7,10 @@ const toggleVariants = cva(
   {
     variants: {
       variant: {
-        primary: 'bg-neutral-200 data-[state=checked]:bg-primary-500 focus-visible:ring-primary-500',
-        success: 'bg-neutral-200 data-[state=checked]:bg-success-500 focus-visible:ring-success-500',
-        warning: 'bg-neutral-200 data-[state=checked]:bg-warning-500 focus-visible:ring-warning-500',
-        danger: 'bg-neutral-200 data-[state=checked]:bg-danger-500 focus-visible:ring-danger-500',
+        primary: 'bg-neutral-200 data-[state=checked]:bg-primary focus-visible:ring-primary',
+        success: 'bg-neutral-200 data-[state=checked]:bg-success focus-visible:ring-success',
+        warning: 'bg-neutral-200 data-[state=checked]:bg-warning focus-visible:ring-warning',
+        danger: 'bg-neutral-200 data-[state=checked]:bg-danger focus-visible:ring-danger',
       },
       size: {
         sm: 'h-4 w-7',
@@ -113,17 +113,17 @@ const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(
               className="text-sm text-neutral-900"
             >
               {label}
-              {required && <span className="text-danger-500 ml-0.5">*</span>}
+              {required && <span className="text-danger ml-0.5">*</span>}
             </label>
           )}
         </div>
         {error && errorText && (
-          <p className="text-xs text-danger-500" id={errorId}>
+          <p className="text-xs text-danger" id={errorId}>
             {errorText}
           </p>
         )}
         {!error && helperText && (
-          <p className="text-xs text-neutral-500" id={helperId}>
+          <p className="text-xs text-neutral" id={helperId}>
             {helperText}
           </p>
         )}

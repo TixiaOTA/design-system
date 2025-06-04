@@ -111,7 +111,7 @@ export const Slider: React.FC<SliderProps> = ({
           {marks.map((mark) => (
             <div
               key={mark.value}
-              className="text-xs text-gray-500"
+              className="text-xs text-gray"
               style={{ left: `${((mark.value - min) / (max - min)) * 100}%` }}
             >
               {mark.label}

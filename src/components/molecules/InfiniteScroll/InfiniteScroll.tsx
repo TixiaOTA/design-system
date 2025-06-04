@@ -69,8 +69,8 @@ export const InfiniteScroll = <T,>({
 
   const defaultLoadingComponent = (
     <div className="flex items-center justify-center gap-2 py-4">
-      <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary-500 border-t-transparent" />
-      <span className="text-sm text-neutral-500">Loading more...</span>
+      <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+      <span className="text-sm text-neutral">Loading more...</span>
     </div>
   );
 
@@ -78,7 +78,7 @@ export const InfiniteScroll = <T,>({
 
   const defaultEndComponent = (
     <div className="flex items-center justify-center gap-2 py-4">
-      <span className="text-sm text-neutral-500">No more items to load</span>
+      <span className="text-sm text-neutral">No more items to load</span>
     </div>
   );
 

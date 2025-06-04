@@ -279,7 +279,7 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
         >
           {loading ? (
             <div className="flex items-center justify-center py-2">
-              <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary-500 border-t-transparent" />
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
             </div>
           ) : filteredOptions.length > 0 ? (
             filteredOptions.map((option) => (
@@ -293,7 +293,7 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
               </SelectItem>
             ))
           ) : (
-            <div className="px-2 py-2 text-sm text-neutral-500">No options found</div>
+            <div className="px-2 py-2 text-sm text-neutral">No options found</div>
           )}
         </div>
       );

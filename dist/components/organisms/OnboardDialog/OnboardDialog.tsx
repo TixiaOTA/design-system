@@ -21,7 +21,7 @@ const DotIndicator: React.FC<{
         type="button"
         className={cn(
           idx === current
-            ? "inline-block w-6 h-3 rounded-full bg-primary-500 transition-all focus:outline-none"
+            ? "inline-block w-6 h-3 rounded-full bg-primary transition-all focus:outline-none"
             : "inline-block w-3 h-3 rounded-full bg-neutral-200 transition-all focus:outline-none",
           setStep ? "cursor-pointer" : "cursor-default"
         )}

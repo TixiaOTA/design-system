@@ -40,7 +40,7 @@ export const Avatar: React.FC<AvatarProps> = ({
         <img src={src} alt={alt} className="w-full h-full object-cover" />
       ) : (
         <svg
-          className="w-6 h-6 text-gray-500"
+          className="w-6 h-6 text-gray"
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

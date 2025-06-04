@@ -101,12 +101,12 @@ export const Notification = ({
       {icon && <Icon icon={getIcon()} className={cn('h-5 w-5 flex-shrink-0', getIconColor())} />}
       <div className="flex-1">
         {title && <h3 className="text-sm font-medium text-neutral-900">{title}</h3>}
-        <div className="mt-1 text-sm text-neutral-500">{children}</div>
+        <div className="mt-1 text-sm text-neutral">{children}</div>
       </div>
       {showClose && (
         <button
           type="button"
-          className="ml-auto flex-shrink-0 text-neutral-400 hover:text-neutral-500"
+          className="ml-auto flex-shrink-0 text-neutral-400 hover:text-neutral"
           onClick={onClose}
         >
           <Icon icon="mdi:close" className="h-5 w-5" />

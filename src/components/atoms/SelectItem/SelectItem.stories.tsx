@@ -41,7 +41,7 @@ export const WithCustomContent: Story = {
     value: 'option4',
     children: (
       <div className="flex items-center gap-2">
-        <span className="h-2 w-2 rounded-full bg-primary-500" />
+        <span className="h-2 w-2 rounded-full bg-primary" />
         <span>Custom Option</span>
       </div>
     ),

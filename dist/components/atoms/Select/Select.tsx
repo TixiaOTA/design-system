@@ -12,13 +12,13 @@ const SELECT_OPEN_EVENT = 'select-dropdown-opened';
 export type SelectPosition = 'bottom' | 'top' | 'left' | 'right';
 
 const selectVariants = cva(
-  'rounded-md px-3 py-2 text-sm ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+  'rounded-md px-3 py-2 text-sm ring-0 transition-colors placeholder:text-neutral placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
         default: 'border border-neutral-200 hover:border-primary-300 focus:border-primary-300 hover:bg-primary-50 bg-white',
-        error: 'border border-danger-500 hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50 bg-white',
-        success: 'border border-success-500 hover:border-success-600 focus:border-success-600 bg-white',
+        error: 'border border-danger hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50 bg-white',
+        success: 'border border-success hover:border-success-600 focus:border-success-600 bg-white',
         ghost: 'border-0 hover:bg-neutral-100 focus:bg-neutral-100 bg-transparent',
         underline: 'border-0 border-b-2 border-neutral-200 rounded-none bg-transparent hover:border-primary-300 focus:border-primary-300 hover:bg-transparent focus:bg-transparent',
       },
@@ -358,7 +358,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
             className="mb-1.5 block text-sm text-neutral-900"
           >
             {label}
-            {required && <span className="text-danger-500 ml-0.5">*</span>}
+            {required && <span className="text-danger ml-0.5">*</span>}
           </label>
         )}
         <div className={cn("relative", !fullWidth && "inline-block")}>
@@ -381,17 +381,17 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
             disabled={disabled}
           >
             {leftIcon && (
-              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500">
+              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral">
                 <Icon icon={leftIcon} className="w-4 h-4" />
               </div>
             )}
-            <span className="flex items-center text-neutral-500 gap-2 min-w-0 flex-1">
+            <span className="flex items-center text-neutral gap-2 min-w-0 flex-1">
               <span className="truncate">
                 {getSelectedLabel() || placeholder}
               </span>
             </span>
             {rightIcon ? (
-              <div className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500">
+              <div className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral">
                 <Icon icon={rightIcon} className="w-4 h-4" />
               </div>
             ) : (
@@ -404,12 +404,12 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
           {renderDropdown()}
         </div>
         {error && (
-          <p className="mt-1 text-xs text-danger-500" id={`${id}-error`}>
+          <p className="mt-1 text-xs text-danger" id={`${id}-error`}>
             {error}
           </p>
         )}
         {!error && helperText && (
-          <p className="mt-1 text-xs text-neutral-500" id={`${id}-helper`}>
+          <p className="mt-1 text-xs text-neutral" id={`${id}-helper`}>
             {helperText}
           </p>
         )}

@@ -79,7 +79,7 @@ const Breadcrumbs = forwardRef<HTMLDivElement, BreadcrumbsProps>(
                 key={item.label}
                 className={cn(
                   'flex items-center gap-1.5',
-                  isActive && 'text-primary-500 font-medium'
+                  isActive && 'text-primary font-medium'
                 )}
               >
                 {item.icon && (
@@ -98,8 +98,8 @@ const Breadcrumbs = forwardRef<HTMLDivElement, BreadcrumbsProps>(
                     href={item.href}
                     className={cn(
                       'transition-colors duration-200',
-                      'hover:text-primary-500 hover:underline focus:outline-none',
-                      'focus-visible:text-primary-500 focus-visible:underline',
+                      'hover:text-primary hover:underline focus:outline-none',
+                      'focus-visible:text-primary focus-visible:underline',
                       'active:text-primary-600'
                     )}
                   >
@@ -110,7 +110,7 @@ const Breadcrumbs = forwardRef<HTMLDivElement, BreadcrumbsProps>(
                 ) : (
                   <span className={cn(
                     'truncate max-w-[200px] inline-block',
-                    isActive && 'text-primary-500'
+                    isActive && 'text-primary'
                   )}>
                     {item.label}
                   </span>

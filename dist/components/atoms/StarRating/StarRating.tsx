@@ -23,7 +23,7 @@ const sizeConfig = {
 
 const colorConfig = {
   primary: 'text-primary',
-  warning: 'text-warning-500',
+  warning: 'text-warning',
   default: 'text-default-400'
 };
 

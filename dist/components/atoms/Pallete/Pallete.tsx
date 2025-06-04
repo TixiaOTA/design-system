@@ -14,7 +14,7 @@ const ColorSwatch: React.FC<ColorSwatchProps> = ({ name, value, colorClass }) =>
         className={`w-full h-20 rounded-lg ${colorClass}`}
       />
       <div className="text-sm font-medium text-neutral-700">{name}</div>
-      <div className="text-xs text-neutral-500">{value}</div>
+      <div className="text-xs text-neutral">{value}</div>
     </div>
   </Card>
 );

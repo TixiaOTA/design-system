@@ -12,16 +12,16 @@ dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
 
 const primitiveDatePickerVariants = cva(
-  "border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+  "border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {
         default:
           "border-neutral-200 hover:border-primary-300 focus:border-primary-300 hover:bg-primary-50",
         error:
-          "border-danger-500 hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50",
+          "border-danger hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50",
         success:
-          "border-success-500 hover:border-success-600 focus:border-success-600 hover:bg-success-50",
+          "border-success hover:border-success-600 focus:border-success-600 hover:bg-success-50",
         ghost:
           "border-transparent bg-transparent hover:bg-primary-50 focus:bg-primary-50",
         underline:
@@ -292,8 +292,8 @@ export const PrimitiveDatePicker = forwardRef<
                           <div
                             key={day}
                             className={cn(
-                              "text-center text-xs font-medium text-neutral-500",
-                              weekend && "text-danger-500"
+                              "text-center text-xs font-medium text-neutral",
+                              weekend && "text-danger"
                             )}
                           >
                             {day}
@@ -342,7 +342,7 @@ export const PrimitiveDatePicker = forwardRef<
                                 "p-2 text-sm transition-colors duration-200 w-10 h-10 rounded-full",
                                 isWeekend && "!text-danger",
                                 isSelected &&
-                                  "bg-primary-500 !text-white hover:bg-primary-600 active:bg-primary-700",
+                                  "bg-primary !text-white hover:bg-primary-600 active:bg-primary-700",
                                 isSelected && !isModeRange && "rounded-full",
                                 !isSelected &&
                                   !isDisabled &&
@@ -352,21 +352,21 @@ export const PrimitiveDatePicker = forwardRef<
                                 // inRange && "bg-primary-50 text-primary-900 rounded-none",
                                 isModeRange &&
                                   isRangeStart &&
-                                  "!bg-primary-500 !text-white !rounded-full",
+                                  "!bg-primary !text-white !rounded-full",
                                 isModeRange &&
                                   isRangeEnd &&
-                                  "!bg-primary-500 !text-white !rounded-full"
+                                  "!bg-primary !text-white !rounded-full"
                               )}
                             >
                               {dayjs(day).format("D")}
                             </button>
                           </div>
                           {/* show price if exists TO BE DEVELOPED
-                          displayType normal text neutral while HIGHLIGHT_CHEAP === text-success-500 */}
+                          displayType normal text neutral while HIGHLIGHT_CHEAP === text-success */}
                           {/* <div
                             className={cn(
                               "text-[10px] text-neutral",
-                              id === 15 && "text-success-500"
+                              id === 15 && "text-success"
                             )}
                           >
                             1 BTC
@@ -392,7 +392,7 @@ export const PrimitiveDatePicker = forwardRef<
         ref={inputRef}
       >
         {leftIcon && (
-          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500">
+          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral">
             <Icon icon={leftIcon} className="w-4 h-4" />
           </div>
         )}
@@ -413,7 +413,7 @@ export const PrimitiveDatePicker = forwardRef<
           {...props}
         />
         {rightIcon && (
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500">
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral">
             <Icon icon={rightIcon} className="w-4 h-4" />
           </div>
         )}
@@ -423,10 +423,10 @@ export const PrimitiveDatePicker = forwardRef<
     const helperOrError = (
       <>
         {errorText && (
-          <p className="mt-1 text-xs text-danger-500">{errorText}</p>
+          <p className="mt-1 text-xs text-danger">{errorText}</p>
         )}
         {!errorText && helperText && (
-          <p className="mt-1 text-xs text-neutral-500">{helperText}</p>
+          <p className="mt-1 text-xs text-neutral">{helperText}</p>
         )}
       </>
     );
@@ -441,7 +441,7 @@ export const PrimitiveDatePicker = forwardRef<
             {label && (
               <label className="block text-sm text-neutral-900 pt-2">
                 {label}
-                {required && <span className="text-danger-500 ml-0.5">*</span>}
+                {required && <span className="text-danger ml-0.5">*</span>}
               </label>
             )}
             <div className={cn("flex-1", !fullWidth && "inline-block")}>
@@ -462,7 +462,7 @@ export const PrimitiveDatePicker = forwardRef<
         {label && (
           <label className="mb-1.5 block text-sm text-neutral-900">
             {label}
-            {required && <span className="text-danger-500 ml-0.5">*</span>}
+            {required && <span className="text-danger ml-0.5">*</span>}
           </label>
         )}
         {inputField}

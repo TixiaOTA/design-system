@@ -9,22 +9,22 @@ export type ChipRounded = 'none' | 'sm' | 'md' | 'lg' | 'full';
 
 const variantStyles: Record<ChipVariant, Record<ChipColor, string>> = {
   solid: {
-    primary: 'bg-primary-500 text-white',
-    success: 'bg-success-500 text-white',
-    warning: 'bg-warning-500 text-white',
-    error: 'bg-danger-500 text-white',
-    info: 'bg-info-500 text-white',
-    danger: 'bg-danger-500 text-white',
-    default: 'bg-neutral-500 text-white'
+    primary: 'bg-primary text-white',
+    success: 'bg-success text-white',
+    warning: 'bg-warning text-white',
+    error: 'bg-danger text-white',
+    info: 'bg-info text-white',
+    danger: 'bg-danger text-white',
+    default: 'bg-neutral text-white'
   },
   outline: {
-    primary: 'border border-primary-500 text-primary-500',
-    success: 'border border-success-500 text-success-500',
-    warning: 'border border-warning-500 text-warning-500',
-    error: 'border border-error-500 text-error-500',
-    info: 'border border-info-500 text-info-500',
-    danger: 'border border-danger-500 text-danger-500',
-    default: 'border border-neutral-500 text-neutral-500'
+    primary: 'border border-primary text-primary',
+    success: 'border border-success text-success',
+    warning: 'border border-warning text-warning',
+    error: 'border border-error text-error',
+    info: 'border border-info text-info',
+    danger: 'border border-danger text-danger',
+    default: 'border border-neutral text-neutral'
   },
   subtle: {
     primary: 'bg-primary-100 text-primary-700',

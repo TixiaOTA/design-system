@@ -78,11 +78,11 @@ const Toast = forwardRef<HTMLDivElement, ToastProps>(
               'flex-shrink-0',
               description ? 'h-5 w-5 mt-0.5' : 'h-4 w-4',
               {
-                'text-gray-500': variant === 'default',
-                'text-success-500': variant === 'success',
-                'text-danger-500': variant === 'error',
-                'text-warning-500': variant === 'warning',
-                'text-info-500': variant === 'info'
+                'text-gray': variant === 'default',
+                'text-success': variant === 'success',
+                'text-danger': variant === 'error',
+                'text-warning': variant === 'warning',
+                'text-info': variant === 'info'
               }
             )}
           />
@@ -104,7 +104,7 @@ const Toast = forwardRef<HTMLDivElement, ToastProps>(
           {description && (
             <p
               className={cn(title ? 'mt-1' : '', 'text-sm leading-5', {
-                'text-gray-500': variant === 'default',
+                'text-gray': variant === 'default',
                 'text-success-700': variant === 'success',
                 'text-danger-700': variant === 'error',
                 'text-warning-700': variant === 'warning',
@@ -129,11 +129,11 @@ const Toast = forwardRef<HTMLDivElement, ToastProps>(
               'flex-shrink-0 !p-1',
               description ? 'ml-4' : 'ml-2',
               {
-                'text-gray-400 hover:text-gray-500': variant === 'default',
-                'text-success-400 hover:text-success-500': variant === 'success',
-                'text-danger-400 hover:text-danger-500': variant === 'error',
-                'text-warning-400 hover:text-warning-500': variant === 'warning',
-                'text-info-400 hover:text-info-500': variant === 'info'
+                'text-gray-400 hover:text-gray': variant === 'default',
+                'text-success-400 hover:text-success': variant === 'success',
+                'text-danger-400 hover:text-danger': variant === 'error',
+                'text-warning-400 hover:text-warning': variant === 'warning',
+                'text-info-400 hover:text-info': variant === 'info'
               }
             )}
           >

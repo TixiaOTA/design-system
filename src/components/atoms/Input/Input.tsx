@@ -4,13 +4,13 @@ import { cn } from '../../../utils/cn';
 import { Icon } from '../../atoms/Icons/Icons';
 
 const inputVariants = cva(
-  'border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral-500 placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+  'border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
         default: 'border-neutral-200 hover:border-primary-300 focus:border-primary-300 hover:bg-primary-50',
-        error: 'border-danger-500 hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50',
-        success: 'border-success-500 hover:border-success-600 focus:border-success-600 hover:bg-success-50',
+        error: 'border-danger hover:border-danger-600 focus:border-danger-600 hover:bg-danger-50',
+        success: 'border-success hover:border-success-600 focus:border-success-600 hover:bg-success-50',
         ghost: 'border-transparent bg-transparent hover:bg-primary-50 focus:bg-primary-50',
         underline: 'border-0 border-b-2 border-neutral-200 rounded-none bg-transparent hover:border-primary-300 focus:border-primary-300 hover:bg-transparent focus:bg-transparent',
       },
@@ -97,7 +97,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     const inputField = (
       <div className={cn("relative", !fullWidth && "inline-block")}>
         {leftIcon && (
-          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500">
+          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral">
             <Icon icon={leftIcon} className="w-4 h-4" />
           </div>
         )}
@@ -117,7 +117,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
         {rightIcon && (
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500">
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral">
             <Icon icon={rightIcon} className="w-4 h-4" />
           </div>
         )}
@@ -127,12 +127,12 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     const helperOrError = (
       <>
         {error && errorText && (
-          <p className="mt-1 text-xs text-danger-500" id={errorId}>
+          <p className="mt-1 text-xs text-danger" id={errorId}>
             {errorText}
           </p>
         )}
         {!error && helperText && (
-          <p className="mt-1 text-xs text-neutral-500" id={helperId}>
+          <p className="mt-1 text-xs text-neutral" id={helperId}>
             {helperText}
           </p>
         )}
@@ -149,7 +149,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
                 className="block text-sm text-neutral-900 pt-2"
               >
                 {label}
-                {required && <span className="text-danger-500 ml-0.5">*</span>}
+                {required && <span className="text-danger ml-0.5">*</span>}
               </label>
             )}
             <div className={cn("flex-1", !fullWidth && "inline-block")}>
@@ -169,7 +169,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             className="mb-1.5 block text-sm text-neutral-900"
           >
             {label}
-            {required && <span className="text-danger-500 ml-0.5">*</span>}
+            {required && <span className="text-danger ml-0.5">*</span>}
           </label>
         )}
         {inputField}

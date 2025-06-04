@@ -12,12 +12,12 @@ const progressVariants = cva(
         circular: 'inline-block',
       },
       color: {
-        primary: 'text-primary-500',
-        secondary: 'text-secondary-500',
-        success: 'text-success-500',
-        warning: 'text-warning-500',
-        danger: 'text-danger-500',
-        info: 'text-info-500',
+        primary: 'text-primary',
+        secondary: 'text-secondary',
+        success: 'text-success',
+        warning: 'text-warning',
+        danger: 'text-danger',
+        info: 'text-info',
       },
       size: {
         sm: 'h-1',
@@ -40,16 +40,16 @@ const circularSizeMap = {
 };
 
 const barColorMap = {
-  primary: 'bg-primary-500',
-  secondary: 'bg-secondary-500',
-  success: 'bg-success-500',
-  warning: 'bg-warning-500',
-  danger: 'bg-danger-500',
-  info: 'bg-info-500',
+  primary: 'bg-primary',
+  secondary: 'bg-secondary',
+  success: 'bg-success',
+  warning: 'bg-warning',
+  danger: 'bg-danger',
+  info: 'bg-info',
 };
 
 const circularColorMap = {
-  primary: '#007C99', // Tailwind primary-500
+  primary: '#007C99', // Tailwind primary
   secondary: '#CEEAE7',
   success: '#00B37D',
   warning: '#F59E0B',

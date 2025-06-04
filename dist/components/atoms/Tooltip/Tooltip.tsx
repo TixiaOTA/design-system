@@ -9,13 +9,13 @@ const tooltipVariants = cva(
   {
     variants: {
       color: {
-        primary: "bg-primary-500 text-white",
-        secondary: "bg-secondary-500 text-white",
-        success: "bg-success-500 text-white",
-        warning: "bg-warning-500 text-white",
-        danger: "bg-danger-500 text-white",
-        info: "bg-info-500 text-white",
-        neutral: "bg-neutral-500 text-white",
+        primary: "bg-primary text-white",
+        secondary: "bg-secondary text-white",
+        success: "bg-success text-white",
+        warning: "bg-warning text-white",
+        danger: "bg-danger text-white",
+        info: "bg-info text-white",
+        neutral: "bg-neutral text-white",
         light: "bg-white text-neutral-900 border border-neutral-200",
       },
       size: {
@@ -34,13 +34,13 @@ const tooltipVariants = cva(
 const arrowVariants = cva("absolute w-2 h-2 transform rotate-45", {
   variants: {
     color: {
-      primary: "bg-primary-500",
-      secondary: "bg-secondary-500",
-      success: "bg-success-500",
-      warning: "bg-warning-500",
-      danger: "bg-danger-500",
-      info: "bg-info-500",
-      neutral: "bg-neutral-500",
+      primary: "bg-primary",
+      secondary: "bg-secondary",
+      success: "bg-success",
+      warning: "bg-warning",
+      danger: "bg-danger",
+      info: "bg-info",
+      neutral: "bg-neutral",
       light: "bg-white border-r border-b border-neutral-200",
     },
   },

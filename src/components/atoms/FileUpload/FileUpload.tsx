@@ -282,7 +282,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
               <p className={clsx('text-neutral-600', styles.text)}>{placeholder}</p>
             )}
             {showMaxSize && (
-              <p className="text-sm text-neutral-500 mt-2">
+              <p className="text-sm text-neutral mt-2">
                 Max file size: {maxSize / (1024 * 1024)}MB
               </p>
             )}
@@ -310,14 +310,14 @@ export const FileUpload: React.FC<FileUploadProps> = ({
                 <span className={clsx('text-sm', styles.text)}>
                   {file.name}
                 </span>
-                <span className="text-xs text-neutral-500">
+                <span className="text-xs text-neutral">
                   ({(file.size / 1024).toFixed(1)} KB)
                 </span>
               </div>
               {!disabled && (
                 <button
                   onClick={() => removeFile(index)}
-                  className="p-1 text-neutral-500 hover:text-danger"
+                  className="p-1 text-neutral hover:text-danger"
                 >
                   <Icon icon="mdi:close" className="w-4 h-4" />
                 </button>
