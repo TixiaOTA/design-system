@@ -4676,7 +4676,7 @@ const Ta = ({
     onChange: x,
     disabled: p = !1,
     position: u = "bottom",
-    fullWidth: N = !0,
+    fullWidth: N = !1,
     children: h,
     leftIcon: m,
     rightIcon: v,
@@ -5910,7 +5910,7 @@ const Ja = we(
       danger: "bg-danger",
       info: "bg-info",
       neutral: "bg-neutral",
-      light: "bg-white border-r border-b border-neutral-200"
+      light: "bg-white"
     }
   },
   defaultVariants: {
@@ -6001,7 +6001,11 @@ const Ja = we(
                   a === "top" && "bottom-[-4px] left-1/2 -translate-x-1/2",
                   a === "bottom" && "top-[-4px] left-1/2 -translate-x-1/2",
                   a === "left" && "right-[-4px] top-1/2 -translate-y-1/2",
-                  a === "right" && "left-[-4px] top-1/2 -translate-y-1/2"
+                  a === "right" && "left-[-4px] top-1/2 -translate-y-1/2",
+                  l === "light" && a === "top" && "border-r border-b border-neutral-200",
+                  l === "light" && a === "bottom" && "border-l border-t border-neutral-200",
+                  l === "light" && a === "left" && "border-t border-r border-neutral-200",
+                  l === "light" && a === "right" && "border-l border-b border-neutral-200"
                 )
               }
             )
@@ -6011,7 +6015,7 @@ const Ja = we(
       k.body
     ) : null;
   };
-  return /* @__PURE__ */ e.jsxs(
+  return /* @__PURE__ */ e.jsx("div", { className: "relative", children: /* @__PURE__ */ e.jsxs(
     "div",
     {
       ref: h,
@@ -6024,7 +6028,7 @@ const Ja = we(
         _()
       ]
     }
-  );
+  ) });
 }, Qa = we(
   "relative overflow-hidden",
   {
@@ -6464,7 +6468,7 @@ const or = [
     helperText: d,
     label: i,
     required: c = !1,
-    fullWidth: f = !0,
+    fullWidth: f = !1,
     value: g = "",
     onChange: x,
     disabled: p = !1,

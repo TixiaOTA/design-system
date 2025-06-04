@@ -98,7 +98,7 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
     helperText,
     label,
     required = false,
-    fullWidth = true,
+    fullWidth = false,
     value = "",
     onChange,
     disabled = false,

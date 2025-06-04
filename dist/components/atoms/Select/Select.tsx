@@ -111,7 +111,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
       onChange,
       disabled = false,
       position = 'bottom',
-      fullWidth = true,
+      fullWidth = false,
       children,
       leftIcon,
       rightIcon,

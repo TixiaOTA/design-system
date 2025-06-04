@@ -41,7 +41,7 @@ const arrowVariants = cva("absolute w-2 h-2 transform rotate-45", {
       danger: "bg-danger",
       info: "bg-info",
       neutral: "bg-neutral",
-      light: "bg-white border-r border-b border-neutral-200",
+      light: "bg-white",
     },
   },
   defaultVariants: {
@@ -61,7 +61,15 @@ export interface TooltipProps {
   /** Additional class name for the tooltip */
   className?: string;
   /** Color variant of the tooltip */
-  color?: "primary" | "secondary" | "success" | "warning" | "danger" | "info" | "neutral" | "light";
+  color?:
+    | "primary"
+    | "secondary"
+    | "success"
+    | "warning"
+    | "danger"
+    | "info"
+    | "neutral"
+    | "light";
   /** Size of the tooltip text */
   size?: "sm" | "md" | "lg";
   /** Whether the tooltip is controlled externally */
@@ -242,7 +250,19 @@ export const Tooltip: React.FC<TooltipProps> = ({
             position === "top" && "bottom-[-4px] left-1/2 -translate-x-1/2",
             position === "bottom" && "top-[-4px] left-1/2 -translate-x-1/2",
             position === "left" && "right-[-4px] top-1/2 -translate-y-1/2",
-            position === "right" && "left-[-4px] top-1/2 -translate-y-1/2"
+            position === "right" && "left-[-4px] top-1/2 -translate-y-1/2",
+            color === "light" &&
+              position === "top" &&
+              "border-r border-b border-neutral-200",
+            color === "light" &&
+              position === "bottom" &&
+              "border-l border-t border-neutral-200",
+            color === "light" &&
+              position === "left" &&
+              "border-t border-r border-neutral-200",
+            color === "light" &&
+              position === "right" &&
+              "border-l border-b border-neutral-200"
           )}
         />
       </div>,
@@ -251,15 +271,17 @@ export const Tooltip: React.FC<TooltipProps> = ({
   };
 
   return (
-    <div
-      ref={triggerRef}
-      className="relative inline-block"
-      onMouseEnter={trigger === "hover" ? handleShow : undefined}
-      onMouseLeave={trigger === "hover" ? handleHide : undefined}
-      onClick={handleClick}
-    >
-      {children}
-      {renderTooltip()}
+    <div className="relative">
+      <div
+        ref={triggerRef}
+        className="relative inline-block"
+        onMouseEnter={trigger === "hover" ? handleShow : undefined}
+        onMouseLeave={trigger === "hover" ? handleHide : undefined}
+        onClick={handleClick}
+      >
+        {children}
+        {renderTooltip()}
+      </div>
     </div>
   );
 };
