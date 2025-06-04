@@ -1,4 +1,10 @@
 
+## [v0.3.0] - 2025-06-04
+- fix: update tooltip positioning
+- fix: update color themes config
+- fix: update keys phoneInput
+
+
 ## [v0.2.1] - 2025-06-03
 - feat: add IntphoneInput
 
