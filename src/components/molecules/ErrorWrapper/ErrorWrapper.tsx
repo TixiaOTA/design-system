@@ -99,7 +99,7 @@ const allErrorConfigs = {
 };
 
 const defaultErrorConfig = {
-  image: '/img/error.svg',
+  image: 'https://design-system-eaip.onrender.com/img/error.svg',
   message: 'An unexpected error occurred. Our team is currently investigating the issue.',
 };
 

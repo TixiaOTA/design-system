@@ -7236,7 +7236,7 @@ const dr = Nt(void 0), ds = {
   ...fs,
   ...at
 }, Ir = {
-  image: "/img/error.svg",
+  image: "https://design-system-eaip.onrender.com/img/error.svg",
   message: "An unexpected error occurred. Our team is currently investigating the issue."
 }, _r = (r) => typeof r == "object" && r !== null && ("code" in r || "message" in r), Ls = ({
   error: r,
