@@ -1,4 +1,8 @@
 
+## [v0.4.1] - 2025-06-09
+- fix: update local img url
+
+
 ## [v0.4.0] - 2025-06-09
 - feat: update errorwrapper
 
