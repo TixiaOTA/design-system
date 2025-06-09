@@ -1,4 +1,8 @@
 
+## [v0.4.0] - 2025-06-09
+- feat: update errorwrapper
+
+
 ## [v0.3.0] - 2025-06-04
 - fix: update tooltip positioning
 - fix: update color themes config
