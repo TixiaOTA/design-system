@@ -7169,60 +7169,60 @@ const dr = Nt(void 0), ds = {
   a && /* @__PURE__ */ e.jsx("div", { className: "flex h-12 w-12 items-center justify-center rounded-lg bg-primary-50", children: /* @__PURE__ */ e.jsx(H, { icon: a, className: "h-6 w-6 text-primary-600" }) })
 ] }), fs = {
   400: {
-    image: "/img/error.svg",
+    image: "https://design-system-eaip.onrender.com/img/error.svg",
     message: "Bad request. Please check your input and try again."
   },
   401: {
-    image: "/img/error.svg",
+    image: "https://design-system-eaip.onrender.com/img/error.svg",
     message: "Please sign in to access this resource."
   },
   403: {
-    image: "/img/error.svg",
+    image: "https://design-system-eaip.onrender.com/img/error.svg",
     message: "You do not have permission to access this resource."
   },
   404: {
-    image: "/img/page-not-found.svg",
+    image: "https://design-system-eaip.onrender.com/img/page-not-found.svg",
     message: "The page you are looking for does not exist."
   },
   500: {
-    image: "/img/error.svg",
+    image: "https://design-system-eaip.onrender.com/img/error.svg",
     message: "Something went wrong on our end. Please try again later."
   },
   502: {
-    image: "/img/error.svg",
+    image: "https://design-system-eaip.onrender.com/img/error.svg",
     message: "Bad gateway. Our servers are having trouble connecting."
   },
   503: {
-    image: "/img/error.svg",
+    image: "https://design-system-eaip.onrender.com/img/error.svg",
     message: "Service unavailable. We are currently performing maintenance."
   },
   504: {
-    image: "/img/error.svg",
+    image: "https://design-system-eaip.onrender.com/img/error.svg",
     message: "Gateway timeout. The server took too long to respond."
   }
 }, at = {
   NO_INTERNET: {
-    image: "/img/no-internet.svg",
+    image: "https://design-system-eaip.onrender.com/img/no-internet.svg",
     message: "Please check your internet connection and try again."
   },
   DATA_NOT_FOUND: {
-    image: "/img/search-not-found.svg",
+    image: "https://design-system-eaip.onrender.com/img/search-not-found.svg",
     message: "No data available for your request."
   },
   UNDER_DEVELOPMENT: {
-    image: "/img/under-development.svg",
+    image: "https://design-system-eaip.onrender.com/img/under-development.svg",
     message: "This feature is currently under development."
   },
   INFORMATION_UNAVAILABLE: {
-    image: "/img/search-not-found.svg",
+    image: "https://design-system-eaip.onrender.com/img/search-not-found.svg",
     message: "The requested information is currently unavailable."
   },
   SUCCESS: {
-    image: "/img/payment-success.svg",
+    image: "https://design-system-eaip.onrender.com/img/payment-success.svg",
     message: "Operation completed successfully."
   },
   CHECKED: {
-    image: "/img/payment-success.svg",
+    image: "https://design-system-eaip.onrender.com/img/payment-success.svg",
     message: "All checks have passed successfully."
   }
 }, ms = {
