@@ -5,6 +5,7 @@ import { cn } from '../../../utils/cn';
 import { Button } from '../Button';
 import { Icon } from '../Icons/Icons';
 import { getWindow, getDocument } from '../../../utils/ssr';
+import { Card } from '../Card';
 
 // Create a custom event for timepicker dropdown management
 const TIMEPICKER_OPEN_EVENT = 'timepicker-dropdown-opened';
@@ -254,7 +255,11 @@ export const PrimitiveTimePicker = forwardRef<HTMLInputElement, PrimitiveTimePic
             {required && <span className="text-red ml-1">*</span>}
           </label>
         )}
-        <div ref={inputRef} className="relative">
+        <div 
+          ref={inputRef} 
+          className="relative"
+          onClick={handleOpen}
+        >
           {leftIcon && (
             <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral flex items-center justify-center">
               <Icon icon={leftIcon} size={20} />
@@ -265,7 +270,6 @@ export const PrimitiveTimePicker = forwardRef<HTMLInputElement, PrimitiveTimePic
             type="text"
             value={displayValue}
             placeholder={placeholder}
-            onClick={handleOpen}
             readOnly
             className={cn(
               timePickerVariants({ variant, size, rounded, fullWidth }),
@@ -286,34 +290,31 @@ export const PrimitiveTimePicker = forwardRef<HTMLInputElement, PrimitiveTimePic
           createPortal(
             <div
               ref={dropdownRef}
-              className="fixed z-[9999] min-w-[320px] rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5"
+              className="fixed z-[9999] w-fit rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="p-4">
-                <div className={cn(
+              <div className="p-0">
+                {/* <div className={cn(
                   "grid gap-4 text-sm font-medium text-gray",
                   use24Hour ? "grid-cols-2" : "grid-cols-3"
                 )}>
                   <span>Hours</span>
                   <span>Minutes</span>
                   {!use24Hour && <span>AM/PM</span>}
-                </div>
-                <div className={cn(
-                  "flex mt-2",
-                  use24Hour ? "justify-center gap-8" : "justify-center gap-4"
+                </div> */}
+                <Card variant="ghost" className={cn(
+                  "flex mx-2 my-1 p-0",
+                  use24Hour ? "justify-start gap-8" : "justify-start gap-4"
                 )}>
-                  <div className="w-24 flex flex-col">
+                  <div className="flex flex-col">
                     <div className="overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] hover:scrollbar-thumb-neutral-200 hover:scrollbar-track-transparent [&::-webkit-scrollbar]:hidden hover:[&::-webkit-scrollbar]:block hover:[&::-webkit-scrollbar]:w-1.5 hover:[&::-webkit-scrollbar-thumb]:rounded-full" style={{ maxHeight: '200px' }}>
-                      <div className="flex flex-col gap-1 py-1">
+                      <div className="flex flex-col gap-2">
                         {generateHours().map((h) => (
                           <Button
                             key={h}
                             variant="ghost"
                             onClick={() => setHours(h)}
-                            className={cn(
-                              'px-3 py-1.5 text-sm rounded hover:bg-gray-100 w-full justify-start',
-                              hours === h && 'bg-primary-100 text-primary-700'
-                            )}
+                            className={cn(hours === h && 'bg-primary text-white')}
                           >
                             {h.toString().padStart(2, '0')}
                           </Button>
@@ -321,18 +322,15 @@ export const PrimitiveTimePicker = forwardRef<HTMLInputElement, PrimitiveTimePic
                       </div>
                     </div>
                   </div>
-                  <div className="w-24 flex flex-col">
+                  <div className="flex flex-col">
                     <div className="overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] hover:scrollbar-thumb-neutral-200 hover:scrollbar-track-transparent [&::-webkit-scrollbar]:hidden hover:[&::-webkit-scrollbar]:block hover:[&::-webkit-scrollbar]:w-1.5 hover:[&::-webkit-scrollbar-thumb]:rounded-full" style={{ maxHeight: '200px' }}>
-                      <div className="flex flex-col gap-1 py-1">
+                      <div className="flex flex-col gap-2">
                         {generateMinutes().map((m) => (
                           <Button
                             key={m}
                             variant="ghost"
                             onClick={() => setMinutes(m)}
-                            className={cn(
-                              'px-3 py-1.5 text-sm rounded hover:bg-gray-100 w-full justify-start',
-                              minutes === m && 'bg-primary-100 text-primary-700'
-                            )}
+                            className={cn(minutes === m && 'bg-primary text-white')}
                           >
                             {m.toString().padStart(2, '0')}
                           </Button>
@@ -341,35 +339,30 @@ export const PrimitiveTimePicker = forwardRef<HTMLInputElement, PrimitiveTimePic
                     </div>
                   </div>
                   {!use24Hour && (
-                    <div className="w-24 flex flex-col gap-2">
+                    <div className="flex flex-col gap-2">
                       <Button
                         variant="ghost"
                         onClick={() => setIsAM(true)}
-                        className={cn(
-                          'px-3 py-1.5 text-sm rounded hover:bg-gray-100 w-full justify-start',
-                          isAM && 'bg-primary-100 text-primary-700'
-                        )}
+                        className={cn(isAM && 'bg-primary text-white')}
                       >
                         AM
                       </Button>
                       <Button
                         variant="ghost"
                         onClick={() => setIsAM(false)}
-                        className={cn(
-                          'px-3 py-1.5 text-sm rounded hover:bg-gray-100 w-full justify-start',
-                          !isAM && 'bg-primary-100 text-primary-700'
-                        )}
+                        className={cn(!isAM && 'bg-primary text-white')}
                       >
                         PM
                       </Button>
                     </div>
                   )}
-                </div>
-                <div className="mt-4 flex justify-end">
+                </Card>
+                <div className="mb-2 mx-2">
                   <Button
                     variant="primary"
                     onClick={handleTimeSelect}
                     size="sm"
+                    fullWidth
                   >
                     Select
                   </Button>
