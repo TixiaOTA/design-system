@@ -4026,7 +4026,7 @@ const Na = ye(
                     children: Z.map((q, se) => {
                       const fe = be(q), Ee = le(q).startOf("month").day();
                       return /* @__PURE__ */ e.jsxs("div", { className: "flex flex-col", children: [
-                        /* @__PURE__ */ e.jsxs("div", { className: "grid grid-cols-7 gap-y-1 mb-1", children: [
+                        /* @__PURE__ */ e.jsxs("div", { className: "grid grid-cols-7 gap-y-1 my-1", children: [
                           ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map(
                             (ne, ze) => {
                               const Pe = ze === 0 || ze === 6;
@@ -4100,6 +4100,7 @@ const Na = ye(
       {
         className: b("relative", !u && "inline-block"),
         ref: L,
+        onClick: () => !i && W(!I),
         children: [
           m && /* @__PURE__ */ e.jsx("div", { className: "absolute left-3 top-1/2 -translate-y-1/2 text-neutral", children: /* @__PURE__ */ e.jsx(U, { icon: m, className: "w-4 h-4" }) }),
           /* @__PURE__ */ e.jsx(
@@ -4109,7 +4110,6 @@ const Na = ye(
               type: "text",
               value: $ ? $() : H(),
               placeholder: h,
-              onClick: () => !i && W(!I),
               readOnly: !0,
               className: b(
                 Na({ variant: o, size: l, rounded: d, fullWidth: u }),
@@ -4845,41 +4845,47 @@ const Aa = ({
           ]
         }
       ),
-      /* @__PURE__ */ e.jsxs("div", { className: b("relative", !j && "inline-block"), children: [
-        /* @__PURE__ */ e.jsxs(
-          "button",
-          {
-            id: M,
-            ref: V,
-            type: "button",
-            className: b(
-              _a({ variant: d ? "error" : t, size: a, rounded: s, fullWidth: j }),
-              "flex items-center justify-between",
-              p && "cursor-not-allowed opacity-50",
-              m && "pl-10",
-              v && "pr-10",
-              r
+      /* @__PURE__ */ e.jsxs(
+        "div",
+        {
+          className: b("relative", !j && "inline-block"),
+          onClick: W,
+          children: [
+            /* @__PURE__ */ e.jsxs(
+              "button",
+              {
+                id: M,
+                ref: V,
+                type: "button",
+                className: b(
+                  _a({ variant: d ? "error" : t, size: a, rounded: s, fullWidth: j }),
+                  "flex items-center justify-between",
+                  p && "cursor-not-allowed opacity-50",
+                  m && "pl-10",
+                  v && "pr-10",
+                  r
+                ),
+                "aria-haspopup": "listbox",
+                "aria-expanded": A,
+                "aria-describedby": d ? `${M}-error` : i ? `${M}-helper` : void 0,
+                disabled: p,
+                children: [
+                  m && /* @__PURE__ */ e.jsx("div", { className: "absolute left-3 top-1/2 -translate-y-1/2 text-neutral", children: /* @__PURE__ */ e.jsx(U, { icon: m, className: "w-4 h-4" }) }),
+                  /* @__PURE__ */ e.jsx("span", { className: "flex items-center text-neutral gap-2 min-w-0 flex-1", children: /* @__PURE__ */ e.jsx("span", { className: "truncate", children: R() || f }) }),
+                  v ? /* @__PURE__ */ e.jsx("div", { className: "absolute right-3 top-1/2 -translate-y-1/2 text-neutral", children: /* @__PURE__ */ e.jsx(U, { icon: v, className: "w-4 h-4" }) }) : /* @__PURE__ */ e.jsx(
+                    U,
+                    {
+                      icon: "mdi:chevron-down",
+                      className: b("transition-transform flex-shrink-0 ml-2", A && "rotate-180")
+                    }
+                  )
+                ]
+              }
             ),
-            onClick: W,
-            "aria-haspopup": "listbox",
-            "aria-expanded": A,
-            "aria-describedby": d ? `${M}-error` : i ? `${M}-helper` : void 0,
-            disabled: p,
-            children: [
-              m && /* @__PURE__ */ e.jsx("div", { className: "absolute left-3 top-1/2 -translate-y-1/2 text-neutral", children: /* @__PURE__ */ e.jsx(U, { icon: m, className: "w-4 h-4" }) }),
-              /* @__PURE__ */ e.jsx("span", { className: "flex items-center text-neutral gap-2 min-w-0 flex-1", children: /* @__PURE__ */ e.jsx("span", { className: "truncate", children: R() || f }) }),
-              v ? /* @__PURE__ */ e.jsx("div", { className: "absolute right-3 top-1/2 -translate-y-1/2 text-neutral", children: /* @__PURE__ */ e.jsx(U, { icon: v, className: "w-4 h-4" }) }) : /* @__PURE__ */ e.jsx(
-                U,
-                {
-                  icon: "mdi:chevron-down",
-                  className: b("transition-transform flex-shrink-0 ml-2", A && "rotate-180")
-                }
-              )
-            ]
-          }
-        ),
-        G()
-      ] }),
+            G()
+          ]
+        }
+      ),
       d && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-danger", id: `${M}-error`, children: d }),
       !d && i && /* @__PURE__ */ e.jsx("p", { className: "mt-1 text-xs text-neutral", id: `${M}-helper`, children: i })
     ] });

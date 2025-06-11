@@ -361,7 +361,10 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
             {required && <span className="text-danger ml-0.5">*</span>}
           </label>
         )}
-        <div className={cn("relative", !fullWidth && "inline-block")}>
+        <div 
+          className={cn("relative", !fullWidth && "inline-block")}
+          onClick={handleOpen}
+        >
           <button
             id={id}
             ref={buttonRef}
@@ -374,7 +377,6 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
               rightIcon && 'pr-10',
               className
             )}
-            onClick={handleOpen}
             aria-haspopup="listbox"
             aria-expanded={isOpen}
             aria-describedby={error ? `${id}-error` : helperText ? `${id}-helper` : undefined}

@@ -370,7 +370,7 @@ export const PrimitiveDatePicker = forwardRef<
                   const firstDayOfMonth = dayjs(month).startOf("month").day();
                   return (
                     <div key={idx} className="flex flex-col">
-                      <div className="grid grid-cols-7 gap-y-1 mb-1">
+                      <div className="grid grid-cols-7 gap-y-1 my-1">
                         {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map(
                           (day, idx) => {
                             const weekend = idx === 0 || idx === 6;
@@ -484,6 +484,7 @@ export const PrimitiveDatePicker = forwardRef<
       <div
         className={cn("relative", !fullWidth && "inline-block")}
         ref={inputRef}
+        onClick={() => !disabled && setIsOpen(!isOpen)}
       >
         {leftIcon && (
           <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral">
@@ -495,7 +496,6 @@ export const PrimitiveDatePicker = forwardRef<
           type="text"
           value={valueFormatter ? valueFormatter() : formatDate()}
           placeholder={placeholder}
-          onClick={() => !disabled && setIsOpen(!isOpen)}
           readOnly
           className={cn(
             primitiveDatePickerVariants({ variant, size, rounded, fullWidth }),
