@@ -7,6 +7,7 @@ import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import { Icon } from "../../atoms/Icons/Icons";
 import { getWindow, getDocument } from "../../../utils/ssr";
+import { Button } from "../Button/Button";
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
@@ -129,6 +130,7 @@ export const PrimitiveDatePicker = forwardRef<
     const [isOpen, setIsOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date | undefined>(value);
     const [currentMonth, setCurrentMonth] = useState<Date>(value || new Date());
+    const [showYearDropdown, setShowYearDropdown] = useState(false);
     const wrapperRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLDivElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -174,35 +176,63 @@ export const PrimitiveDatePicker = forwardRef<
       const handleResize = () => {
         if (isOpen) updateDropdownPosition();
       };
-      const handleClickOutside = (e: Event) => {
-        const target = e.target as HTMLElement;
-        if (
-          wrapperRef.current &&
-          !wrapperRef.current.contains(target) &&
-          dropdownRef.current &&
-          !dropdownRef.current.contains(target)
-        ) {
+      const handleKeyDown = (e: Event) => {
+        if ((e as KeyboardEvent).key === 'Escape' && isOpen) {
           setIsOpen(false);
+          setShowYearDropdown(false);
         }
       };
+
       if (isOpen) {
         updateDropdownPosition();
         win.addEventListener("scroll", handleScroll, true);
         win.addEventListener("resize", handleResize);
+        doc.addEventListener("keydown", handleKeyDown);
       }
-      doc.addEventListener("click", handleClickOutside);
+
       return () => {
         win.removeEventListener("scroll", handleScroll, true);
         win.removeEventListener("resize", handleResize);
-        doc.removeEventListener("click", handleClickOutside);
+        doc.removeEventListener("keydown", handleKeyDown);
       };
     }, [isOpen]);
 
     const handleDateSelect = (date: Date) => {
-      setSelectedDate(date);
-      onChange?.(date);
-      if (closeOnSelect !== false) {
+      const isRangeMode = rangeStart !== undefined && rangeEnd !== undefined;
+
+      if (isRangeMode) {
+        if (rangeStart && rangeEnd) {
+          // If both dates are already selected, reset and start new range
+          setSelectedDate(date);
+          onChange?.(date);
+          // Don't close dropdown to allow selecting end date
+        } else if (rangeStart) {
+          // If start date is selected, set end date
+          const newEndDate = date;
+          if (dayjs(newEndDate).isBefore(rangeStart)) {
+            // If end date is before start date, swap them
+            setSelectedDate(newEndDate);
+            onChange?.(newEndDate);
+          } else {
+            setSelectedDate(newEndDate);
+            onChange?.(newEndDate);
+          }
+          // Always close dropdown after end date is selected
+          setIsOpen(false);
+          setShowYearDropdown(false);
+        } else {
+          // Set start date
+          setSelectedDate(date);
+          onChange?.(date);
+          // Don't close dropdown for start date selection
+        }
+      } else {
+        // Single date mode
+        setSelectedDate(date);
+        onChange?.(date);
+        // Always close dropdown after date selection in single mode
         setIsOpen(false);
+        setShowYearDropdown(false);
       }
     };
 
@@ -239,6 +269,35 @@ export const PrimitiveDatePicker = forwardRef<
       return dayjs(selectedDate).format("DD MMM YYYY");
     };
 
+    const handleYearSelect = (year: number) => {
+      const newDate = dayjs(currentMonth).year(year).toDate();
+      setCurrentMonth(newDate);
+      setShowYearDropdown(false);
+    };
+
+    const renderYearDropdown = () => {
+      if (!showYearDropdown) return null;
+      const currentYear = dayjs(currentMonth).year();
+      const years = Array.from({ length: 50 }, (_, i) => currentYear - 25 + i);
+
+      return (
+        <div className="grid grid-cols-5 gap-2 p-2 overflow-y-auto max-h-[300px]">
+          {years.map((year) => (
+            <div
+              key={year}
+              onClick={() => handleYearSelect(year)}
+              className={cn(
+                year === currentYear && "bg-primary-50 text-primary",
+                "text-sm cursor-pointer p-2"
+              )}
+            >
+              {year}
+            </div>
+          ))}
+        </div>
+      );
+    };
+
     const renderDropdown = () => {
       if (!isOpen) return null;
       const doc = getDocument();
@@ -247,141 +306,176 @@ export const PrimitiveDatePicker = forwardRef<
         dayjs(currentMonth).add(idx, "month").toDate()
       );
       return createPortal(
-        <div
-          ref={dropdownRef}
-          className="fixed z-[9999] bg-white border border-gray-200 rounded-md shadow-lg"
-        >
-          <div className="flex items-center justify-between p-2 border-b border-gray-200">
-            <button
-              onClick={handlePrevMonth}
-              className="p-1 rounded-full hover:bg-primary-50 active:bg-primary-100 transition-colors duration-200"
-            >
-              <Icon icon="mdi:chevron-left" className="w-5 h-5 text-primary" />
-            </button>
-            <span className="font-medium text-gray-900">
-              {monthsToShow === 1
-                ? dayjs(currentMonth).format("MMMM YYYY")
-                : `${dayjs(currentMonth).format("MMMM YYYY")} - ${dayjs(
-                    currentMonth
-                  )
-                    .add(monthsToShow - 1, "month")
-                    .format("MMMM YYYY")}`}
-            </span>
-            <button
-              onClick={handleNextMonth}
-              className="p-1 rounded-full hover:bg-primary-50 active:bg-primary-100 transition-colors duration-200"
-            >
-              <Icon icon="mdi:chevron-right" className="w-5 h-5 text-primary" />
-            </button>
-          </div>
+        <>
+          <div 
+            className="fixed inset-0 z-[9998]"
+            onClick={() => {
+              if (!showYearDropdown) {
+                setIsOpen(false);
+              }
+            }}
+          />
           <div
-            className={cn(
-              monthsToShow === 2 ? "flex gap-5 p-2" : "justify-between p-4"
-            )}
+            ref={dropdownRef}
+            className="fixed z-[9999] bg-white border border-gray-200 rounded-md shadow-lg"
+            onClick={(e) => e.stopPropagation()}
           >
-            {months.map((month, idx) => {
-              const days = getDaysInMonth(month);
-              const firstDayOfMonth = dayjs(month).startOf("month").day();
-              return (
-                <div key={idx} className="flex flex-col">
-                  <div className="grid grid-cols-7 gap-y-1 mb-1">
-                    {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map(
-                      (day, idx) => {
-                        const weekend = idx === 0 || idx === 6;
-                        return (
-                          <div
-                            key={day}
-                            className={cn(
-                              "text-center text-xs font-medium text-neutral",
-                              weekend && "text-danger"
-                            )}
-                          >
-                            {day}
-                          </div>
-                        );
-                      }
-                    )}
-                    {Array.from({ length: firstDayOfMonth }).map((_, index) => (
-                      <div key={`empty-${index}`} />
-                    ))}
-                    {days.map((day) => {
-                      const isSelected =
-                        selectedDate && dayjs(day).isSame(selectedDate, "day");
-                      const isDisabled = isDateDisabled(day);
-                      const isCurrentMonth = dayjs(day).isSame(month, "month");
-                      // Range styling
-                      const inRange =
-                        rangeStart &&
-                        rangeEnd &&
-                        dayjs(day).isSameOrAfter(rangeStart, "day") &&
-                        dayjs(day).isSameOrBefore(rangeEnd, "day");
-                      const isRangeStart =
-                        rangeStart && dayjs(day).isSame(rangeStart, "day");
-                      const isRangeEnd =
-                        rangeEnd && dayjs(day).isSame(rangeEnd, "day");
-                      const isWeekend =
-                        dayjs(day).day() === 0 || dayjs(day).day() === 6;
-                      const isModeRange = rangeStart && rangeEnd;
+            <div className="flex items-center justify-between p-2 border-b border-gray-200">
+              <Button
+                onClick={handlePrevMonth}
+                variant="ghost"
+                size="sm"
+                leftIcon="mdi:chevron-left"
+              />
+              <div className="relative">
+                <span className="font-medium text-gray-900">
+                  {monthsToShow === 1 ? (
+                    <div className="flex items-center gap-2">
+                      <span>{dayjs(currentMonth).format("MMMM")}</span>
+                      <div
+                        className="cursor-pointer flex items-center gap-1"
+                        onClick={() => setShowYearDropdown(!showYearDropdown)}
+                      >
+                        <span>{dayjs(currentMonth).format("YYYY")}</span>
+                        <Button variant="ghost" size="sm" leftIcon={showYearDropdown ? "mdi:chevron-up" : "mdi:chevron-down"} />
+                      </div>
+                    </div>
+                  ) : (
+                    `${dayjs(currentMonth).format("MMMM YYYY")} - ${dayjs(
+                      currentMonth
+                    )
+                      .add(monthsToShow - 1, "month")
+                      .format("MMMM YYYY")}`
+                  )}
+                </span>
+              </div>
+              <Button
+                onClick={handleNextMonth}
+                variant="ghost"
+                size="sm"
+                rightIcon="mdi:chevron-right"
+              />
+            </div>
+            {/* calendar body */}
+            {showYearDropdown ? (
+              renderYearDropdown()
+            ) : (
+              <div
+                className={cn(
+                  monthsToShow === 2 ? "flex gap-5 p-2 mx-auto w-fit" : "justify-between p-2 mx-auto w-fit"
+                )}
+              >
+                {months.map((month, idx) => {
+                  const days = getDaysInMonth(month);
+                  const firstDayOfMonth = dayjs(month).startOf("month").day();
+                  return (
+                    <div key={idx} className="flex flex-col">
+                      <div className="grid grid-cols-7 gap-y-1 mb-1">
+                        {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map(
+                          (day, idx) => {
+                            const weekend = idx === 0 || idx === 6;
+                            return (
+                              <div
+                                key={day}
+                                className={cn(
+                                  "text-center text-xs font-medium text-neutral",
+                                  weekend && "text-danger"
+                                )}
+                              >
+                                {day}
+                              </div>
+                            );
+                          }
+                        )}
+                        {Array.from({ length: firstDayOfMonth }).map(
+                          (_, index) => (
+                            <div key={`empty-${index}`} />
+                          )
+                        )}
+                        {days.map((day) => {
+                          const isSelected =
+                            selectedDate &&
+                            dayjs(day).isSame(selectedDate, "day");
+                          const isDisabled = isDateDisabled(day);
+                          const isCurrentMonth = dayjs(day).isSame(
+                            month,
+                            "month"
+                          );
+                          // Range styling
+                          const inRange =
+                            rangeStart &&
+                            rangeEnd &&
+                            dayjs(day).isSameOrAfter(rangeStart, "day") &&
+                            dayjs(day).isSameOrBefore(rangeEnd, "day");
+                          const isRangeStart =
+                            rangeStart && dayjs(day).isSame(rangeStart, "day");
+                          const isRangeEnd =
+                            rangeEnd && dayjs(day).isSame(rangeEnd, "day");
+                          const isWeekend =
+                            dayjs(day).day() === 0 || dayjs(day).day() === 6;
+                          const isModeRange = rangeStart && rangeEnd;
 
-                      return (
-                        <div className="flex flex-col items-center justify-center">
-                          <div
-                            className={cn(
-                              inRange && "rounded-none bg-primary-50",
-                              isModeRange && isRangeStart && "rounded-l-full",
-                              isModeRange && isRangeEnd && "rounded-r-full"
-                            )}
-                          >
-                            <button
-                              key={day.toString()}
-                              onClick={() =>
-                                !isDisabled && handleDateSelect(day)
-                              }
-                              disabled={isDisabled}
+                          return (
+                            <div className="flex flex-col items-center justify-center">
+                              <div
+                                className={cn(
+                                  inRange && "rounded-none bg-primary-50",
+                                  isModeRange && isRangeStart && "rounded-l-full",
+                                  isModeRange && isRangeEnd && "rounded-r-full"
+                                )}
+                              >
+                                <button
+                                  key={day.toString()}
+                                  onClick={() =>
+                                    !isDisabled && handleDateSelect(day)
+                                  }
+                                  disabled={isDisabled}
+                                  className={cn(
+                                    "p-2 text-sm transition-colors duration-200 w-10 h-10 rounded-full",
+                                    isWeekend && "!text-danger",
+                                    isSelected &&
+                                      "bg-primary !text-white hover:bg-primary-600 active:bg-primary-700",
+                                    isSelected && !isModeRange && "rounded-full",
+                                    !isSelected &&
+                                      !isDisabled &&
+                                      "hover:bg-primary-50 active:bg-primary-100",
+                                    !isCurrentMonth && "text-neutral-400",
+                                    isDisabled && "opacity-50 cursor-not-allowed",
+                                    // inRange && "bg-primary-50 text-primary-900 rounded-none",
+                                    isModeRange &&
+                                      isRangeStart &&
+                                      "!bg-primary !text-white !rounded-full",
+                                    isModeRange &&
+                                      isRangeEnd &&
+                                      "!bg-primary !text-white !rounded-full"
+                                  )}
+                                >
+                                  {dayjs(day).format("D")}
+                                </button>
+                              </div>
+                              {/* show price if exists TO BE DEVELOPED
+                            displayType normal text neutral while HIGHLIGHT_CHEAP === text-success */}
+                              {/* <div
                               className={cn(
-                                "p-2 text-sm transition-colors duration-200 w-10 h-10 rounded-full",
-                                isWeekend && "!text-danger",
-                                isSelected &&
-                                  "bg-primary !text-white hover:bg-primary-600 active:bg-primary-700",
-                                isSelected && !isModeRange && "rounded-full",
-                                !isSelected &&
-                                  !isDisabled &&
-                                  "hover:bg-primary-50 active:bg-primary-100",
-                                !isCurrentMonth && "text-neutral-400",
-                                isDisabled && "opacity-50 cursor-not-allowed",
-                                // inRange && "bg-primary-50 text-primary-900 rounded-none",
-                                isModeRange &&
-                                  isRangeStart &&
-                                  "!bg-primary !text-white !rounded-full",
-                                isModeRange &&
-                                  isRangeEnd &&
-                                  "!bg-primary !text-white !rounded-full"
+                                "text-[10px] text-neutral",
+                                id === 15 && "text-success"
                               )}
                             >
-                              {dayjs(day).format("D")}
-                            </button>
-                          </div>
-                          {/* show price if exists TO BE DEVELOPED
-                          displayType normal text neutral while HIGHLIGHT_CHEAP === text-success */}
-                          {/* <div
-                            className={cn(
-                              "text-[10px] text-neutral",
-                              id === 15 && "text-success"
-                            )}
-                          >
-                            1 BTC
-                          </div> */}
-                        </div>
-                      );
-                    })}
-                  </div>
-                  {/* calendarFooter accepts reactnode */}
-                  {calendarFooter}
-                </div>
-              );
-            })}
+                              1 BTC
+                            </div> */}
+                            </div>
+                          );
+                        })}
+                      </div>
+                      {/* calendarFooter accepts reactnode */}
+                      {calendarFooter}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
-        </div>,
+        </>,
         doc.body
       );
     };
@@ -422,9 +516,7 @@ export const PrimitiveDatePicker = forwardRef<
 
     const helperOrError = (
       <>
-        {errorText && (
-          <p className="mt-1 text-xs text-danger">{errorText}</p>
-        )}
+        {errorText && <p className="mt-1 text-xs text-danger">{errorText}</p>}
         {!errorText && helperText && (
           <p className="mt-1 text-xs text-neutral">{helperText}</p>
         )}
