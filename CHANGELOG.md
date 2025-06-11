@@ -1,4 +1,10 @@
 
+## [v0.4.2] - 2025-06-11
+- fix: handle event timepicker
+- fix: handle event select component
+- fix: handle select year datepicker
+
+
 ## [v0.4.1] - 2025-06-09
 - fix: update local img url
 
