@@ -1,4 +1,8 @@
 
+## [v0.4.4] - 2025-06-12
+- fix: update vite compatibility issue
+
+
 ## [v0.4.3] - 2025-06-12
 - fix: update next compatibility
 - fix: update datepicker story
