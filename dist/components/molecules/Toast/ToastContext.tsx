@@ -1,3 +1,4 @@
+"use client";
 import React, { createContext, useContext, useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Toast, ToastProps } from './Toast';

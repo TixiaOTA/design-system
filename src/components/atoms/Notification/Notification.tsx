@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import { Icon } from '../../atoms/Icons/Icons';
 import { cva } from 'class-variance-authority';

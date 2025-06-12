@@ -1,3 +1,4 @@
+"use client";
 import React, { forwardRef } from 'react';
 import { cn } from '../../../utils/cn';
 import { Icon } from '../../atoms/Icons/Icons';

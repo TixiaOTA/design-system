@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useCallback } from 'react';
 import clsx from 'clsx';
 import { Icon } from '../../atoms/Icons/Icons';

@@ -1,3 +1,4 @@
+"use client";
 import React, { forwardRef, useState, useRef, useEffect, RefCallback } from 'react';
 import { cva } from 'class-variance-authority';
 import { cn } from '../../../utils/cn';

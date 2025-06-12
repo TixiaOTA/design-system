@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useRef, useState } from 'react';
 import { cn } from '../../../utils/cn';
 import { ErrorWrapper } from '../ErrorWrapper/ErrorWrapper';

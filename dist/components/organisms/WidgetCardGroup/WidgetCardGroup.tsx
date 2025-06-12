@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import { WidgetCard } from '../../molecules/WidgetCard/WidgetCard';
 import type { WidgetCardProps } from '../../molecules/WidgetCard/WidgetCard';

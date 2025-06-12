@@ -1,3 +1,4 @@
+"use client";
 import React, { forwardRef, useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { cva } from 'class-variance-authority';
