@@ -30,6 +30,7 @@ export default defineConfig({
           'framer-motion': 'FramerMotion',
           'dayjs': 'dayjs'
         },
+        exports: 'named',
       },
     },
   },
