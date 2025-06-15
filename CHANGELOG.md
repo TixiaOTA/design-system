@@ -1,4 +1,8 @@
 
+## [v0.4.5] - 2025-06-15
+- fix: clean build
+
+
 ## [v0.4.4] - 2025-06-12
 - fix: update vite compatibility issue
 
