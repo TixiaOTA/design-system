@@ -20,11 +20,22 @@ export default defineConfig({
       formats: ['es', 'umd']
     },
     rollupOptions: {
-      external: ['react', 'react-dom', '@tanstack/react-query', '@tanstack/react-table', 'framer-motion', 'dayjs'],
+      external: [
+        'react',
+        'react-dom',
+        'react/jsx-runtime',
+        'react/jsx-dev-runtime',
+        '@tanstack/react-query',
+        '@tanstack/react-table',
+        'framer-motion',
+        'dayjs'
+      ],
       output: {
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
+          'react/jsx-runtime': 'jsxRuntime',
+          'react/jsx-dev-runtime': 'jsxDevRuntime',
           '@tanstack/react-query': 'ReactQuery',
           '@tanstack/react-table': 'ReactTable',
           'framer-motion': 'FramerMotion',
