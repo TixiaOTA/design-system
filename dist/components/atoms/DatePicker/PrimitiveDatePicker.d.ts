@@ -1,0 +1,30 @@
+import React from "react";
+export type PrimitiveDatePickerVariant = "default" | "error" | "success" | "ghost" | "underline";
+export type PrimitiveDatePickerSize = "sm" | "md" | "lg";
+export type PrimitiveDatePickerRounded = "none" | "sm" | "md" | "lg" | "full";
+export type PrimitiveDatePickerLabelPlacement = "top" | "left";
+export interface PrimitiveDatePickerProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size" | "onChange" | "value"> {
+    value?: Date;
+    onChange?: (date: Date) => void;
+    minDate?: Date;
+    maxDate?: Date;
+    variant?: PrimitiveDatePickerVariant;
+    size?: PrimitiveDatePickerSize;
+    rounded?: PrimitiveDatePickerRounded;
+    disabled?: boolean;
+    errorText?: string;
+    helperText?: string;
+    label?: string;
+    required?: boolean;
+    labelPlacement?: PrimitiveDatePickerLabelPlacement;
+    fullWidth?: boolean;
+    leftIcon?: string;
+    rightIcon?: string;
+    monthsToShow?: 1 | 2;
+    valueFormatter?: () => string;
+    rangeStart?: Date;
+    rangeEnd?: Date;
+    closeOnSelect?: boolean;
+    calendarFooter?: React.ReactNode;
+}
+export declare const PrimitiveDatePicker: React.ForwardRefExoticComponent<PrimitiveDatePickerProps & React.RefAttributes<HTMLInputElement>>;
