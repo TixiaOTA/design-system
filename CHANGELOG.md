@@ -1,4 +1,9 @@
 
+## [v0.4.8] - 2025-06-15
+- fix: install tsup
+- fix: use tsup for build
+
+
 ## [v0.4.7] - 2025-06-15
 - fix: update vite
 
