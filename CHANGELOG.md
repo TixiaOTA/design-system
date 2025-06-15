@@ -1,4 +1,8 @@
 
+## [v0.4.6] - 2025-06-15
+- fix: include missing dist
+
+
 ## [v0.4.5] - 2025-06-15
 - fix: clean build
 
