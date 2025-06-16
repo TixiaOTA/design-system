@@ -70,6 +70,8 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
   leftIcon?: string;
   /** Icon to display on the right side of the input */
   rightIcon?: string;
+  /** Callback function when right icon is clicked */
+  onRightIconClick?: () => void;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -86,7 +88,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     labelPlacement = 'top',
     fullWidth = false,
     leftIcon, 
-    rightIcon, 
+    rightIcon,
+    onRightIconClick,
     id: providedId,
     ...props 
   }, ref) => {
@@ -117,7 +120,15 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
         {rightIcon && (
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral">
+          <div 
+            className={cn(
+              "absolute right-3 top-1/2 -translate-y-1/2 text-neutral",
+              onRightIconClick && "cursor-pointer hover:text-primary-600"
+            )}
+            onClick={onRightIconClick}
+            role={onRightIconClick ? "button" : undefined}
+            tabIndex={onRightIconClick ? 0 : undefined}
+          >
             <Icon icon={rightIcon} className="w-4 h-4" />
           </div>
         )}

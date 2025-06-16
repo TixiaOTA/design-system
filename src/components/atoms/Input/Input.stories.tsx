@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Input } from './Input';
+import { useState } from 'react';
 
 const meta: Meta<typeof Input> = {
   title: 'Atoms/Input',
@@ -23,6 +24,12 @@ const meta: Meta<typeof Input> = {
       options: ['top', 'left'],
     },
     fullWidth: {
+      control: 'boolean',
+    },
+    readOnly: {
+      control: 'boolean',
+    },
+    disabled: {
       control: 'boolean',
     },
   },
@@ -70,7 +77,48 @@ export const WithIcons: Story = {
     placeholder: 'Search...',
     leftIcon: 'mdi:magnify',
     rightIcon: 'mdi:close',
+    onRightIconClick: () => alert('Clear search clicked!'),
   },
+};
+
+// Password Visibility Toggle Example
+export const PasswordWithVisibilityToggle: Story = {
+  render: () => {
+    const [showPassword, setShowPassword] = useState(false);
+    
+    return (
+      <Input
+        label="Password"
+        type={showPassword ? "text" : "password"}
+        placeholder="Enter your password..."
+        rightIcon={showPassword ? "mdi:eye-off" : "mdi:eye"}
+        onRightIconClick={() => setShowPassword(!showPassword)}
+        helperText="Click the eye icon to toggle password visibility"
+      />
+    );
+  },
+};
+
+// Interactive Icons Example
+export const InteractiveIcons: Story = {
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <Input
+        label="Search with Clear"
+        placeholder="Type to search..."
+        leftIcon="mdi:magnify"
+        rightIcon="mdi:close"
+        onRightIconClick={() => alert('Clear search clicked!')}
+      />
+      <Input
+        label="Copy to Clipboard"
+        value="https://example.com"
+        rightIcon="mdi:content-copy"
+        onRightIconClick={() => alert('Copied to clipboard!')}
+        readOnly
+      />
+    </div>
+  ),
 };
 
 // Variant Examples
@@ -116,7 +164,50 @@ export const States: Story = {
     <div className="flex flex-col gap-4">
       <Input label="Required Field" placeholder="This field is required..." required />
       <Input label="Disabled Input" placeholder="This input is disabled..." disabled />
-      <Input label="Read Only" placeholder="This input is read only..." readOnly />
+      <Input 
+        label="Read Only Input" 
+        value="This is a read only input" 
+        readOnly 
+        helperText="You can select and copy the text but cannot modify it"
+      />
+    </div>
+  ),
+};
+
+// ReadOnly Examples
+export const ReadOnlyExamples: Story = {
+  render: () => (
+    <div className="flex flex-col gap-4">
+      <Input
+        label="API Key"
+        value="sk_live_51NcX2dKJ8H9mP2qR4tY7wX0vB3nM6kL"
+        readOnly
+        rightIcon="mdi:content-copy"
+        onRightIconClick={() => alert('API Key copied to clipboard!')}
+        helperText="Click the copy icon to copy the API key"
+      />
+      <Input
+        label="Generated URL"
+        value="https://example.com/share/abc123"
+        readOnly
+        rightIcon="mdi:open-in-new"
+        onRightIconClick={() => alert('Opening URL in new tab...')}
+        helperText="Click the icon to open the URL"
+      />
+      <Input
+        label="Reference Number"
+        value="REF-2024-001"
+        readOnly
+        variant="success"
+        helperText="This is your unique reference number"
+      />
+      <Input
+        label="Error Message"
+        value="Invalid credentials"
+        readOnly
+        variant="error"
+        errorText="This is an error message that cannot be modified"
+      />
     </div>
   ),
 };

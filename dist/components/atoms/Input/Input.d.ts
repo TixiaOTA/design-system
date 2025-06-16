@@ -28,6 +28,8 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
     leftIcon?: string;
     /** Icon to display on the right side of the input */
     rightIcon?: string;
+    /** Callback function when right icon is clicked */
+    onRightIconClick?: () => void;
 }
 declare const Input: React.ForwardRefExoticComponent<InputProps & React.RefAttributes<HTMLInputElement>>;
 export { Input };
