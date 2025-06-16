@@ -1,4 +1,11 @@
 
+## [v0.4.4] - 2025-06-16
+- Release v0.4.3
+- feat: enhance select
+- feat: handle input right icon click
+- fix: update datepicker story
+
+
 ## [v0.4.3] - 2025-06-16
 - feat: enhance select
 - feat: handle input right icon click
