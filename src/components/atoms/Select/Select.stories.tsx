@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Select } from './Select';
 import { SelectItem } from '../SelectItem';
 import { Icon } from '../../atoms/Icons/Icons';
+import { useState } from 'react';
 
 const meta = {
   title: 'Atoms/Select',
@@ -45,6 +46,9 @@ const meta = {
     position: {
       control: 'select',
       options: ['bottom', 'top', 'left', 'right'],
+    },
+    fullWidth: {
+      control: 'boolean',
     },
   },
 } satisfies Meta<typeof Select>;
@@ -358,4 +362,89 @@ export const RoundedVariants: Story = {
       <Select rounded="full" options={defaultOptions} placeholder="Full Rounded" />
     </div>
   ),
+};
+
+export const FullWidth: Story = {
+  render: () => (
+    <div className="space-y-4 w-full">
+      <Select
+        label="Full Width Select"
+        options={defaultOptions}
+        placeholder="Select a flavor..."
+        fullWidth
+      />
+      <Select
+        label="Default Width Select"
+        options={defaultOptions}
+        placeholder="Select a flavor..."
+        fullWidth={false}
+      />
+      <div className="flex gap-4">
+        <Select
+          label="Half Width Select"
+          options={defaultOptions}
+          placeholder="Select a flavor..."
+          fullWidth={false}
+        />
+        <Select
+          label="Half Width Select"
+          options={defaultOptions}
+          placeholder="Select a flavor..."
+          fullWidth={false}
+        />
+      </div>
+    </div>
+  ),
+};
+
+export const WithOptionClick: Story = {
+  render: () => {
+    const [selectedValue, setSelectedValue] = useState('');
+    const [lastClickedValue, setLastClickedValue] = useState('');
+
+    const optionsWithClick = [
+      {
+        value: 'option1',
+        label: 'Option 1 (with click)',
+        onClick: (value: string) => {
+          setLastClickedValue(value);
+          console.log('Custom click on Option 1:', value);
+          alert(`Custom click handler on Option 1! Value: ${value}`);
+        }
+      },
+      {
+        value: 'option2',
+        label: 'Option 2 (normal)',
+      },
+      {
+        value: 'option3',
+        label: 'Option 3 (with click)',
+        onClick: (value: string) => {
+          setLastClickedValue(value);
+          console.log('Custom click on Option 3:', value);
+          alert(`Custom click handler on Option 3! Value: ${value}`);
+        }
+      },
+    ];
+
+    return (
+      <div className="space-y-4">
+        <Select
+          label="Select with Custom Click Handlers"
+          options={optionsWithClick}
+          value={selectedValue}
+          onChange={setSelectedValue}
+          placeholder="Select an option..."
+        />
+        <div className="space-y-2">
+          <div className="text-sm text-neutral-600">
+            Selected value: {selectedValue || 'None'}
+          </div>
+          <div className="text-sm text-neutral-600">
+            Last clicked value: {lastClickedValue || 'None'}
+          </div>
+        </div>
+      </div>
+    );
+  },
 };

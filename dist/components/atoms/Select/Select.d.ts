@@ -14,6 +14,7 @@ export interface SelectOption {
     value: string;
     disabled?: boolean;
     icon?: React.ReactNode;
+    onClick?: (value: string) => void;
 }
 export interface SelectProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'size' | 'onChange'>, VariantProps<typeof selectVariants> {
     /** Options for the select */

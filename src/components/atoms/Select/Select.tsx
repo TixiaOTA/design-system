@@ -55,6 +55,7 @@ export interface SelectOption {
   value: string;
   disabled?: boolean;
   icon?: React.ReactNode;
+  onClick?: (value: string) => void;
 }
 
 export interface SelectProps
@@ -293,7 +294,12 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
             value={option.value}
             disabled={option.disabled}
             selected={option.value === value}
-            onClick={() => handleSelect(option.value)}
+            onClick={() => {
+              if (option.onClick) {
+                option.onClick(option.value);
+              }
+              handleSelect(option.value);
+            }}
           >
             <div className="flex items-center gap-2">
               {option.icon}
@@ -325,14 +331,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
         <div
           ref={dropdownRef}
           className={cn(
-            'fixed z-[9999] min-w-[8rem] border border-neutral-200 bg-white py-1 shadow-lg',
-            {
-              'rounded-none': rounded === 'none',
-              'rounded-sm': rounded === 'sm',
-              'rounded-md': rounded === 'md',
-              'rounded-lg': rounded === 'lg',
-              'rounded-xl': rounded === 'full',
-            },
+            'fixed z-[9999] min-w-[8rem] border border-neutral-200 bg-white py-1 shadow-lg rounded-lg',
             position === 'left' || position === 'right' ? 'w-max' : 'w-full'
           )}
           onClick={(e) => e.stopPropagation()}
@@ -383,23 +382,23 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
             disabled={disabled}
           >
             {leftIcon && (
-              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral">
+              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral flex items-center">
                 <Icon icon={leftIcon} className="w-4 h-4" />
               </div>
             )}
-            <span className="flex items-center text-neutral gap-2 min-w-0 flex-1">
+            <span className="flex items-center justify-center text-neutral gap-2 min-w-0 flex-1">
               <span className="truncate">
                 {getSelectedLabel() || placeholder}
               </span>
             </span>
             {rightIcon ? (
-              <div className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral">
+              <div className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral flex items-center">
                 <Icon icon={rightIcon} className="w-4 h-4" />
               </div>
             ) : (
               <Icon
                 icon="mdi:chevron-down"
-                className={cn('transition-transform flex-shrink-0 ml-2', isOpen && 'rotate-180')}
+                className={cn('transition-transform flex-shrink-0 ml-2 w-4 h-4', isOpen && 'rotate-180')}
               />
             )}
           </button>
