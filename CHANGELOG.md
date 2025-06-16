@@ -1,4 +1,10 @@
 
+## [v0.4.3] - 2025-06-16
+- feat: enhance select
+- feat: handle input right icon click
+- fix: update datepicker story
+
+
 ## [v0.4.2] - 2025-06-11
 - fix: handle event timepicker
 - fix: handle event select component
