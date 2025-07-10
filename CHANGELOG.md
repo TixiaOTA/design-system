@@ -1,4 +1,8 @@
 
+## [v0.4.5] - 2025-07-10
+- feat: update error wrapper
+
+
 ## [v0.4.4] - 2025-06-16
 - Release v0.4.3
 - feat: enhance select
