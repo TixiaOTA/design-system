@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ErrorWrapper } from "./ErrorWrapper";
+import { Text } from "../../atoms/Text";
 
 const meta: Meta<typeof ErrorWrapper> = {
   title: "Molecules/ErrorWrapper",
@@ -26,17 +27,17 @@ export const WithChildren: Story = {
   },
 };
 
-// Error-based stories
-export const WithErrorCode: Story = {
+export const NotFound404: Story = {
   args: {
     error: {
       code: "404",
       message: "The page you are looking for does not exist.",
     },
+    reload: () => alert("Reload clicked"),
   },
 };
 
-export const WithErrorAndReload: Story = {
+export const ServerError500: Story = {
   args: {
     error: {
       code: "500",
@@ -46,18 +47,66 @@ export const WithErrorAndReload: Story = {
   },
 };
 
-// Variant-based stories
-export const WithVariant: Story = {
+// Application Error Variant Stories
+export const NoInternet: Story = {
   args: {
     variant: "no-internet",
     reload: () => alert("Reload clicked"),
   },
 };
 
-export const WithVariantAndCustomMessage: Story = {
+export const DataNotFound: Story = {
   args: {
     variant: "data-not-found",
-    customMessage: "We couldn't find what you're looking for. Please try a different search term.",
+    reload: () => alert("Reload clicked"),
+  },
+};
+
+export const UnderDevelopment: Story = {
+  args: {
+    variant: "under-development",
+    reload: () => alert("Reload clicked"),
+  },
+};
+
+export const PaymentSuccess: Story = {
+  args: {
+    variant: "payment-success",
+    reload: () => alert("Reload clicked"),
+  },
+};
+
+export const PaymentFailed: Story = {
+  args: {
+    variant: "payment-failed",
+    reload: () => alert("Reload clicked"),
+  },
+};
+
+export const NoOrder: Story = {
+  args: {
+    variant: "no-order",
+    reload: () => alert("Reload clicked"),
+  },
+};
+
+export const Timeout: Story = {
+  args: {
+    variant: "timeout",
+    reload: () => alert("Reload clicked"),
+  },
+};
+
+export const OnProcess: Story = {
+  args: {
+    variant: "on-process",
+    reload: () => alert("Reload clicked"),
+  },
+};
+
+export const PageNotFound: Story = {
+  args: {
+    variant: "page-not-found",
     reload: () => alert("Reload clicked"),
   },
 };
@@ -87,6 +136,49 @@ export const WithCustomMessageOnly: Story = {
       code: "500",
     },
     customMessage: "This is a custom error message that overrides the default one",
+    reload: () => alert("Reload clicked"),
+  },
+};
+
+// ReactNode custom message examples
+export const WithReactNodeMessage: Story = {
+  args: {
+    variant: "data-not-found",
+    customMessage: (
+      <div className="space-y-2">
+        <Text variant="body1" className="font-semibold">
+          No results found
+        </Text>
+        <Text variant="body2" className="text-gray-600">
+          Try adjusting your search criteria or browse our categories
+        </Text>
+      </div>
+    ),
+    reload: () => alert("Reload clicked"),
+  },
+};
+
+export const WithComplexReactNodeMessage: Story = {
+  args: {
+    variant: "payment-failed",
+    customMessage: (
+      <div className="space-y-3">
+        <Text variant="body1" className="font-semibold text-red-600">
+          Payment Processing Failed
+        </Text>
+        <Text variant="body2" className="text-gray-600">
+          We couldn't process your payment. This might be due to:
+        </Text>
+        <ul className="text-sm text-gray-500 text-left space-y-1">
+          <li>• Insufficient funds</li>
+          <li>• Expired card</li>
+          <li>• Incorrect card details</li>
+        </ul>
+        <Text variant="body2" className="text-blue-600">
+          Please try again or contact support
+        </Text>
+      </div>
+    ),
     reload: () => alert("Reload clicked"),
   },
 };
