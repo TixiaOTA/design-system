@@ -6,13 +6,14 @@ export interface SliderProps {
   min?: number;
   max?: number;
   step?: number;
-  value?: number;
-  defaultValue?: number;
-  onChange?: (value: number) => void;
+  value?: number | [number, number];
+  defaultValue?: number | [number, number];
+  onChange?: (value: number | [number, number]) => void;
   className?: string;
   disabled?: boolean;
   showValue?: boolean;
   marks?: { value: number; label: string }[];
+  range?: boolean;
 }
 
 export const Slider: React.FC<SliderProps> = ({
@@ -26,61 +27,131 @@ export const Slider: React.FC<SliderProps> = ({
   disabled = false,
   showValue = false,
   marks = [],
+  range = false,
 }) => {
-  const [value, setValue] = useState(defaultValue);
-  const [isDragging, setIsDragging] = useState(false);
+  // Internal state for single or range
+  const isRange = range;
+  const [value, setValue] = useState<number | [number, number]>(
+    controlledValue !== undefined
+      ? controlledValue
+      : defaultValue !== undefined
+      ? defaultValue
+      : isRange
+      ? [min, max]
+      : min
+  );
+  const [isDragging, setIsDragging] = useState<null | 0 | 1>(null); // null: not dragging, 0: first thumb, 1: second thumb
   const sliderRef = useRef<HTMLDivElement>(null);
 
+  // Get current value(s)
   const currentValue = controlledValue !== undefined ? controlledValue : value;
+  const [start, end] = isRange
+    ? Array.isArray(currentValue)
+      ? currentValue
+      : [min, max]
+    : [typeof currentValue === 'number' ? currentValue : min, max];
 
-  const handleChange = (newValue: number) => {
+  // Clamp values
+  const clamp = (val: number) => Math.min(Math.max(val, min), max);
+
+  // Handle value change
+  const handleChange = (newValue: number | [number, number]) => {
     if (disabled) return;
-    const clampedValue = Math.min(Math.max(newValue, min), max);
+    let clampedValue: number | [number, number];
+    if (isRange && Array.isArray(newValue)) {
+      clampedValue = [clamp(newValue[0]), clamp(newValue[1])];
+    } else if (!isRange && typeof newValue === 'number') {
+      clampedValue = clamp(newValue);
+    } else {
+      clampedValue = isRange ? [min, max] : min;
+    }
     if (controlledValue === undefined) {
       setValue(clampedValue);
     }
     onChange?.(clampedValue);
   };
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (disabled) return;
-    setIsDragging(true);
-    updateValueFromEvent(e);
-  };
-
-  const handleMouseMove = (e: Event) => {
-    if (!isDragging || disabled) return;
-    updateValueFromEvent(e as MouseEvent);
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const updateValueFromEvent = (e: MouseEvent | React.MouseEvent<HTMLDivElement>) => {
-    if (!sliderRef.current) return;
+  // Mouse/touch event handlers
+  const getValueFromPosition = (clientX: number) => {
+    if (!sliderRef.current) return min;
     const rect = sliderRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
+    const x = clientX - rect.left;
     const percentage = x / rect.width;
-    const newValue = min + (max - min) * percentage;
-    const steppedValue = Math.round(newValue / step) * step;
-    handleChange(steppedValue);
+    const rawValue = min + (max - min) * percentage;
+    const steppedValue = Math.round(rawValue / step) * step;
+    return clamp(steppedValue);
   };
+
+  const handleThumbMouseDown = (thumbIdx: 0 | 1) => (e: React.MouseEvent<HTMLDivElement>) => {
+    if (disabled) return;
+    setIsDragging(thumbIdx);
+    e.stopPropagation();
+  };
+
+  const handleSliderMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (disabled) return;
+    if (!isRange) {
+      setIsDragging(0);
+      updateValueFromEvent(e, 0);
+    } else {
+      // Find closest thumb
+      const mouseValue = getValueFromPosition(e.clientX);
+      const distToStart = Math.abs(mouseValue - start);
+      const distToEnd = Math.abs(mouseValue - end);
+      const thumbIdx = distToStart < distToEnd ? 0 : 1;
+      setIsDragging(thumbIdx as 0 | 1);
+      updateValueFromEvent(e, thumbIdx as 0 | 1);
+    }
+  };
+
+  // Make updateValueFromEvent stable for useCallback
+  const updateValueFromEvent = React.useCallback((e: MouseEvent | React.MouseEvent<HTMLDivElement>, thumbIdx: 0 | 1) => {
+    const newVal = getValueFromPosition((e as MouseEvent).clientX);
+    if (!isRange) {
+      handleChange(newVal);
+    } else {
+      let newRange: [number, number] = [start, end];
+      if (thumbIdx === 0) {
+        newRange = [Math.min(newVal, end - step), end];
+      } else {
+        newRange = [start, Math.max(newVal, start + step)];
+      }
+      // Ensure start <= end
+      if (newRange[0] > newRange[1]) newRange = [newRange[1], newRange[0]];
+      handleChange(newRange);
+    }
+  }, [isRange, start, end, step, handleChange, getValueFromPosition]);
+
+  // --- Fix for dragging bug: use named handlers for add/removeEventListener ---
+  const draggingRef = React.useRef(isDragging);
+  draggingRef.current = isDragging;
+
+  // Named handlers for add/removeEventListener
+  const handleDocumentMouseMove = React.useCallback(function(e: Event) {
+    if (draggingRef.current === null || disabled) return;
+    updateValueFromEvent(e as MouseEvent, draggingRef.current);
+  }, [disabled, updateValueFromEvent]);
+
+  const handleDocumentMouseUp = React.useCallback(function() {
+    setIsDragging(null);
+  }, []);
 
   useEffect(() => {
-    if (isDragging) {
+    if (isDragging !== null) {
       const win = getWindow();
-      win.addEventListener('mousemove', handleMouseMove);
-      win.addEventListener('mouseup', handleMouseUp);
+      win.addEventListener('mousemove', handleDocumentMouseMove as EventListener);
+      win.addEventListener('mouseup', handleDocumentMouseUp as EventListener);
+      return () => {
+        win.removeEventListener('mousemove', handleDocumentMouseMove as EventListener);
+        win.removeEventListener('mouseup', handleDocumentMouseUp as EventListener);
+      };
     }
-    return () => {
-      const win = getWindow();
-      win.removeEventListener('mousemove', handleMouseMove);
-      win.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [isDragging]);
+  }, [isDragging, handleDocumentMouseMove, handleDocumentMouseUp]);
 
-  const percentage = ((currentValue - min) / (max - min)) * 100;
+  // Calculate thumb positions
+  const getPercentage = (val: number) => ((val - min) / (max - min)) * 100;
+  const startPercent = getPercentage(start);
+  const endPercent = getPercentage(end);
 
   return (
     <div className={clsx('relative w-full', className)}>
@@ -90,20 +161,34 @@ export const Slider: React.FC<SliderProps> = ({
           'relative h-2 bg-gray-200 rounded-full cursor-pointer',
           disabled && 'opacity-50 cursor-not-allowed'
         )}
-        onMouseDown={handleMouseDown}
+        onMouseDown={handleSliderMouseDown}
       >
+        {/* Track fill */}
         <div
           className="absolute h-full bg-primary rounded-full"
-          style={{ width: `${percentage}%` }}
+          style={{ left: `${isRange ? startPercent : 0}%`, width: `${isRange ? endPercent - startPercent : startPercent}%` }}
         />
+        {/* Thumbs */}
         <div
           className={clsx(
             'absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full shadow-md',
             'border-2 border-primary',
             disabled && 'cursor-not-allowed'
           )}
-          style={{ left: `${percentage}%`, transform: 'translate(-50%, -50%)' }}
+          style={{ left: `${startPercent}%`, transform: 'translate(-50%, -50%)' }}
+          onMouseDown={handleThumbMouseDown(0)}
         />
+        {isRange && (
+          <div
+            className={clsx(
+              'absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full shadow-md',
+              'border-2 border-primary',
+              disabled && 'cursor-not-allowed'
+            )}
+            style={{ left: `${endPercent}%`, transform: 'translate(-50%, -50%)' }}
+            onMouseDown={handleThumbMouseDown(1)}
+          />
+        )}
       </div>
 
       {marks.length > 0 && (
@@ -122,7 +207,7 @@ export const Slider: React.FC<SliderProps> = ({
 
       {showValue && (
         <div className="mt-2 text-sm text-gray-600">
-          {currentValue}
+          {isRange ? `${start} - ${end}` : start}
         </div>
       )}
     </div>

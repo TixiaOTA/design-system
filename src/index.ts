@@ -31,6 +31,7 @@ export * from './components/atoms/Toogle';
 export * from './components/atoms/Tooltip';
 export * from './components/atoms/Progress/progress';
 export * from './components/atoms/PhoneInput';
+export * from './components/atoms/Popover';
 
 // Molecules
 export * from './components/molecules/Breadcrumbs';
@@ -40,6 +41,9 @@ export * from './components/molecules/WidgetCard';
 export * from './components/molecules/ErrorWrapper';
 export * from './components/molecules/InputOTP';
 export * from './components/molecules/BadgeNotif'
+export * from './components/molecules/Loader';
+export * from './components/molecules/NegativeCase';
+
 // Organisms
 export * from './components/organisms/WidgetCardGroup';
 export * from './components/organisms/OnboardDialog';

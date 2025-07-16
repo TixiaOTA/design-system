@@ -3,9 +3,9 @@ export interface SliderProps {
     min?: number;
     max?: number;
     step?: number;
-    value?: number;
-    defaultValue?: number;
-    onChange?: (value: number) => void;
+    value?: number | [number, number];
+    defaultValue?: number | [number, number];
+    onChange?: (value: number | [number, number]) => void;
     className?: string;
     disabled?: boolean;
     showValue?: boolean;
@@ -13,5 +13,6 @@ export interface SliderProps {
         value: number;
         label: string;
     }[];
+    range?: boolean;
 }
 export declare const Slider: React.FC<SliderProps>;

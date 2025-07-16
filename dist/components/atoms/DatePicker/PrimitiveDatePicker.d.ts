@@ -12,6 +12,7 @@ export interface PrimitiveDatePickerProps extends Omit<React.InputHTMLAttributes
     size?: PrimitiveDatePickerSize;
     rounded?: PrimitiveDatePickerRounded;
     disabled?: boolean;
+    error?: boolean;
     errorText?: string;
     helperText?: string;
     label?: string;

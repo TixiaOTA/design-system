@@ -77,6 +77,7 @@ export interface PrimitiveDatePickerProps
   size?: PrimitiveDatePickerSize;
   rounded?: PrimitiveDatePickerRounded;
   disabled?: boolean;
+  error?: boolean; // <-- add this line
   errorText?: string;
   helperText?: string;
   label?: string;
@@ -107,6 +108,7 @@ export const PrimitiveDatePicker = forwardRef<
       size = "md",
       rounded = "md",
       disabled = false,
+      error = false,
       errorText,
       helperText,
       label,
@@ -498,7 +500,7 @@ export const PrimitiveDatePicker = forwardRef<
           placeholder={placeholder}
           readOnly
           className={cn(
-            primitiveDatePickerVariants({ variant, size, rounded, fullWidth }),
+            primitiveDatePickerVariants({ variant: error ? "error" : variant, size, rounded, fullWidth }),
             leftIcon && "pl-10",
             rightIcon && "pr-10",
             className

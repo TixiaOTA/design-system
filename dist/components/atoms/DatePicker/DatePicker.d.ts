@@ -7,5 +7,9 @@ export interface DatePickerProps extends Omit<PrimitiveDatePickerProps, "onChang
     onChange?: (date: Date | [Date | undefined, Date | undefined]) => void;
     monthsToShow?: 1 | 2;
     calendarFooter?: React.ReactNode;
+    /** Whether the date picker is in an error state */
+    error?: boolean;
+    /** Error message to display below the input */
+    errorText?: string;
 }
 export declare const DatePicker: React.FC<DatePickerProps>;

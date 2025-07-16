@@ -13,6 +13,10 @@ export interface DatePickerProps
   onChange?: (date: Date | [Date | undefined, Date | undefined]) => void;
   monthsToShow?: 1 | 2;
   calendarFooter?: React.ReactNode;
+  /** Whether the date picker is in an error state */
+  error?: boolean;
+  /** Error message to display below the input */
+  errorText?: string;
 }
 
 export const DatePicker: React.FC<DatePickerProps> = ({
@@ -21,6 +25,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   onChange,
   monthsToShow = 1,
   calendarFooter,
+  error = false,
+  errorText,
   ...props
 }) => {
   // State for range selection
@@ -38,6 +44,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         onChange={(date) => onChange?.(date)}
         monthsToShow={monthsToShow}
         calendarFooter={calendarFooter}
+        error={error}
+        errorText={errorText}
         {...props}
       />
     );
@@ -86,6 +94,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         rangeEnd={end}
         closeOnSelect={Boolean(end)}
         calendarFooter={calendarFooter}
+        error={error}
+        errorText={errorText}
         {...props}
       />
     );

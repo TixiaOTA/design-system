@@ -9,11 +9,12 @@ const meta: Meta<typeof Slider> = {
     min: { control: 'number' },
     max: { control: 'number' },
     step: { control: 'number' },
-    value: { control: 'number' },
-    defaultValue: { control: 'number' },
+    value: { control: 'object', description: 'number or [number, number] for range' },
+    defaultValue: { control: 'object', description: 'number or [number, number] for range' },
     onChange: { action: 'valueChanged' },
     disabled: { control: 'boolean' },
     showValue: { control: 'boolean' },
+    range: { control: 'boolean' },
   },
 };
 
@@ -82,5 +83,16 @@ export const SmallSteps: Story = {
     step: 0.1,
     defaultValue: 0.5,
     showValue: true,
+  },
+};
+
+export const RangeSlider: Story = {
+  args: {
+    min: 0,
+    max: 100,
+    step: 1,
+    defaultValue: [20, 80],
+    showValue: true,
+    range: true,
   },
 }; 

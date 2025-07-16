@@ -213,7 +213,7 @@ export const StateExamples: Story = {
       />
       <DatePicker
         label="With Error"
-        variant="error"
+        error
         errorText="Please select a valid date"
         placeholder="Select date"
       />
@@ -270,6 +270,13 @@ export const RangeExamples: Story = {
         mode="range"
         minDate={new Date(2024, 0, 1)}
         maxDate={new Date(2024, 11, 31)}
+        placeholder="Select date range"
+      />
+      <DatePicker
+        label="Range with Error"
+        mode="range"
+        error
+        errorText="Please select a valid date range"
         placeholder="Select date range"
       />
     </div>
