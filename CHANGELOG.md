@@ -1,4 +1,8 @@
 
+## [v0.5.0] - 2025-07-16
+- feat: add negativeCase and Loader
+
+
 ## [v0.4.5] - 2025-07-10
 - feat: update error wrapper
 
