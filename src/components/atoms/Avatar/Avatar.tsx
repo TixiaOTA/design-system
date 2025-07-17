@@ -7,6 +7,7 @@ export interface AvatarProps {
   size?: 'small' | 'medium' | 'large';
   shape?: 'circle' | 'square';
   className?: string;
+  variant?: 'cover' | 'contain';
 }
 
 export const Avatar: React.FC<AvatarProps> = ({
@@ -15,6 +16,7 @@ export const Avatar: React.FC<AvatarProps> = ({
   size = 'medium',
   shape = 'circle',
   className = '',
+  variant = 'cover',
 }) => {
   const sizeClasses = {
     small: 'w-8 h-8',
@@ -37,7 +39,11 @@ export const Avatar: React.FC<AvatarProps> = ({
   return (
     <div className={avatarClasses}>
       {src ? (
-        <img src={src} alt={alt} className="w-full h-full object-cover" />
+        <img
+          src={src}
+          alt={alt}
+          className={twMerge('w-full h-full', variant === 'cover' ? 'object-cover' : 'object-contain')}
+        />
       ) : (
         <svg
           className="w-6 h-6 text-gray"

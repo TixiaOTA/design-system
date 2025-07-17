@@ -85,6 +85,8 @@ export interface PhoneInputProps {
   defaultCountry?: string;
   /** Custom class name */
   className?: string;
+  /** Placeholder for the phone number input */
+  placeholder?: string;
 }
 
 export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
@@ -103,6 +105,7 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
     onChange,
     disabled = false,
     defaultCountry = "id",
+    placeholder = "Enter phone number",
     ...props
   }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -266,7 +269,7 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
                 inputClassName,
                 "rounded-l-none flex-1 min-w-0 w-full"
               )}
-              placeholder="Enter phone number"
+              placeholder={placeholder}
             />
           </div>
 

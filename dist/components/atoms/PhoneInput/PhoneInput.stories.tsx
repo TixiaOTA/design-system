@@ -41,6 +41,7 @@ export const Default: Story = {
   args: {
     label: 'Phone Number',
     onChange: fn(),
+    placeholder: 'e.g. 81234567890',
   },
 };
 
@@ -74,6 +75,14 @@ export const Disabled: Story = {
     label: 'Phone Number',
     disabled: true,
     onChange: fn(),
+  },
+};
+
+export const WithPlaceholder: Story = {
+  args: {
+    label: 'Phone Number',
+    onChange: fn(),
+    placeholder: 'Type your mobile number...',
   },
 };
 

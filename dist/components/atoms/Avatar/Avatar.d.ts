@@ -5,5 +5,6 @@ export interface AvatarProps {
     size?: 'small' | 'medium' | 'large';
     shape?: 'circle' | 'square';
     className?: string;
+    variant?: 'cover' | 'contain';
 }
 export declare const Avatar: React.FC<AvatarProps>;

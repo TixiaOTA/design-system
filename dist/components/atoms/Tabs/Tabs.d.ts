@@ -9,7 +9,7 @@ export interface TabItem {
 export interface TabsProps {
     items: TabItem[];
     defaultActiveId?: string;
-    variant?: 'default' | 'pills' | 'underline';
+    variant?: 'default' | 'pills' | 'underline' | 'active-underline';
     size?: 'sm' | 'md' | 'lg';
     className?: string;
     tabListClassName?: string;

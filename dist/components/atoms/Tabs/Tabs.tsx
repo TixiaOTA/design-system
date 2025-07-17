@@ -13,7 +13,7 @@ export interface TabItem {
 export interface TabsProps {
   items: TabItem[];
   defaultActiveId?: string;
-  variant?: 'default' | 'pills' | 'underline';
+  variant?: 'default' | 'pills' | 'underline' | 'active-underline';
   size?: 'sm' | 'md' | 'lg';
   className?: string;
   tabListClassName?: string;
@@ -34,6 +34,40 @@ export const Tabs: React.FC<TabsProps> = ({
   onChange,
 }) => {
   const [activeId, setActiveId] = useState<string>(defaultActiveId || items[0]?.id || '');
+  const activeTabRef = React.useRef<HTMLButtonElement | null>(null);
+  const [underlineStyle, setUnderlineStyle] = useState<{ left: number; width: number }>({ left: 0, width: 0 });
+
+  React.useEffect(() => {
+    if (variant === 'active-underline' && activeTabRef.current) {
+      const rect = activeTabRef.current.getBoundingClientRect();
+      const parentRect = activeTabRef.current.parentElement?.getBoundingClientRect();
+      if (parentRect) {
+        setUnderlineStyle({
+          left: rect.left - parentRect.left,
+          width: rect.width,
+        });
+      }
+    }
+  }, [variant, items, activeId]);
+
+  React.useEffect(() => {
+    if (variant === 'active-underline') {
+      const handleResize = () => {
+        if (activeTabRef.current) {
+          const rect = activeTabRef.current.getBoundingClientRect();
+          const parentRect = activeTabRef.current.parentElement?.getBoundingClientRect();
+          if (parentRect) {
+            setUnderlineStyle({
+              left: rect.left - parentRect.left,
+              width: rect.width,
+            });
+          }
+        }
+      };
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, [variant, items, activeId]);
 
   const handleTabClick = useCallback((id: string) => {
     setActiveId(id);
@@ -77,6 +111,14 @@ export const Tabs: React.FC<TabsProps> = ({
             ? 'border-primary text-primary'
             : 'border-transparent text-gray-600 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
         );
+      case 'active-underline':
+        return clsx(
+          baseClasses,
+          'border-b-0',
+          isActive
+            ? 'text-primary'
+            : 'text-gray-600 dark:text-gray-300 hover:text-primary'
+        );
       default:
         return clsx(
           baseClasses,
@@ -90,13 +132,13 @@ export const Tabs: React.FC<TabsProps> = ({
 
   return (
     <div className={clsx('w-full', className)}>
-      <div
-        className={clsx(
-          'flex space-x-1 border-b border-gray-200 dark:border-gray-700',
-          variant === 'pills' && 'space-x-2 border-b-0',
-          tabListClassName
-        )}
-      >
+      <div className={clsx(
+        variant === 'active-underline' ? 'relative' : '',
+        'flex space-x-1',
+        variant === 'pills' && 'space-x-2 border-b-0',
+        variant !== 'active-underline' && 'border-b border-gray-200 dark:border-gray-700',
+        tabListClassName
+      )}>
         {items.map((item) => {
           const isActive = item.id === activeId;
           const isDisabled = Boolean(item.disabled);
@@ -104,6 +146,7 @@ export const Tabs: React.FC<TabsProps> = ({
           return (
             <button
               key={item.id}
+              ref={variant === 'active-underline' && isActive ? activeTabRef : undefined}
               onClick={() => !isDisabled && handleTabClick(item.id)}
               disabled={isDisabled}
               className={clsx(
@@ -121,6 +164,12 @@ export const Tabs: React.FC<TabsProps> = ({
             </button>
           );
         })}
+        {variant === 'active-underline' && (
+          <span
+            className="absolute bottom-0 h-0.5 bg-primary transition-all duration-300"
+            style={{ left: underlineStyle.left, width: underlineStyle.width }}
+          />
+        )}
       </div>
       <div className={clsx('mt-4', contentClassName)}>
         {items.find((item) => item.id === activeId)?.content}

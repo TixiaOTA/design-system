@@ -8,7 +8,7 @@ const meta: Meta<typeof Tabs> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['default', 'pills', 'underline'],
+      options: ['default', 'pills', 'underline', 'active-underline'],
     },
     size: {
       control: 'select',
@@ -60,6 +60,33 @@ export const Underline: Story = {
     items: sampleItems,
     variant: 'underline',
   },
+};
+
+export const ActiveUnderline: Story = {
+  args: {
+    items: [
+      {
+        id: 'pesawat',
+        label: 'Pesawat',
+        content: 'Pesawat content goes here',
+        icon: 'mdi:airplane',
+      },
+      {
+        id: 'hotel',
+        label: 'Hotel',
+        content: 'Hotel content goes here',
+        icon: 'mdi:hotel',
+      },
+    ],
+    variant: 'active-underline',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'The underline only appears under the active tab, matching its width and position. No border-bottom spans the full width.'
+      }
+    }
+  }
 };
 
 export const Small: Story = {

@@ -14,16 +14,38 @@ const meta: Meta<typeof Avatar> = {
       control: 'select',
       options: ['circle', 'square'],
     },
+    variant: {
+      control: 'select',
+      options: ['cover', 'contain'],
+    },
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof Avatar>;
 
+const sampleImg = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=facearea&w=256&h=256&facepad=2';
+
 export const Default: Story = {
   args: {
-    size: 'medium',
-    shape: 'circle',
+    src: sampleImg,
+    alt: 'Default Avatar',
+  },
+};
+
+export const Contain: Story = {
+  args: {
+    src: sampleImg,
+    alt: 'Contain Avatar',
+    variant: 'contain',
+  },
+};
+
+export const Cover: Story = {
+  args: {
+    src: sampleImg,
+    alt: 'Cover Avatar',
+    variant: 'cover',
   },
 };
 
