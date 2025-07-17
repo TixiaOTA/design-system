@@ -1,4 +1,8 @@
 
+## [v0.5.1] - 2025-07-17
+- feat: update minor stuffs
+
+
 ## [v0.5.0] - 2025-07-16
 - feat: add negativeCase and Loader
 
