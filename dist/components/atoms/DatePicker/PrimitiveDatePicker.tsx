@@ -63,6 +63,7 @@ export type PrimitiveDatePickerVariant =
 export type PrimitiveDatePickerSize = "sm" | "md" | "lg";
 export type PrimitiveDatePickerRounded = "none" | "sm" | "md" | "lg" | "full";
 export type PrimitiveDatePickerLabelPlacement = "top" | "left";
+export type DateFormat = "DD-MM-YYYY" | "YYYY-MM-DD" | "MM-DD-YYYY";
 
 export interface PrimitiveDatePickerProps
   extends Omit<
@@ -77,7 +78,7 @@ export interface PrimitiveDatePickerProps
   size?: PrimitiveDatePickerSize;
   rounded?: PrimitiveDatePickerRounded;
   disabled?: boolean;
-  error?: boolean; // <-- add this line
+  error?: boolean;
   errorText?: string;
   helperText?: string;
   label?: string;
@@ -92,6 +93,10 @@ export interface PrimitiveDatePickerProps
   rangeEnd?: Date;
   closeOnSelect?: boolean;
   calendarFooter?: React.ReactNode;
+  /** Date format for input display and parsing */
+  format?: DateFormat;
+  /** Whether to allow manual input typing */
+  allowInput?: boolean;
 }
 
 export const PrimitiveDatePicker = forwardRef<
@@ -125,21 +130,112 @@ export const PrimitiveDatePicker = forwardRef<
       rangeEnd,
       closeOnSelect = true,
       calendarFooter,
+      format = "DD-MM-YYYY",
+      allowInput = false,
       ...props
-    },
-    ref
+    }
   ) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date | undefined>(value);
     const [currentMonth, setCurrentMonth] = useState<Date>(value || new Date());
     const [showYearDropdown, setShowYearDropdown] = useState(false);
+    const [inputValue, setInputValue] = useState<string>("");
     const wrapperRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLDivElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const yearDropdownRef = useRef<HTMLDivElement>(null);
+    const inputElementRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
       setSelectedDate(value || undefined);
-    }, [value]);
+      if (value) {
+        setInputValue(formatDateToString(value, format));
+      } else {
+        setInputValue("");
+      }
+    }, [value, format]);
+
+    // Update input value when selectedDate changes internally
+    useEffect(() => {
+      if (selectedDate) {
+        setInputValue(formatDateToString(selectedDate, format));
+      } else {
+        setInputValue("");
+      }
+    }, [selectedDate, format]);
+
+    // Date formatting utilities
+    const formatDateToString = (date: Date, format: DateFormat): string => {
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear().toString();
+      
+      switch (format) {
+        case "DD-MM-YYYY":
+          return `${day}-${month}-${year}`;
+        case "YYYY-MM-DD":
+          return `${year}-${month}-${day}`;
+        case "MM-DD-YYYY":
+          return `${month}-${day}-${year}`;
+        default:
+          return `${day}-${month}-${year}`;
+      }
+    };
+
+    const parseDateFromString = (dateString: string, format: DateFormat): Date | null => {
+      const cleanString = dateString.replace(/[^\d-]/g, '');
+      const parts = cleanString.split('-');
+      
+      if (parts.length !== 3) return null;
+      
+      let day: number, month: number, year: number;
+      
+      switch (format) {
+        case "DD-MM-YYYY":
+          [day, month, year] = parts.map(Number);
+          break;
+        case "YYYY-MM-DD":
+          [year, month, day] = parts.map(Number);
+          break;
+        case "MM-DD-YYYY":
+          [month, day, year] = parts.map(Number);
+          break;
+        default:
+          [day, month, year] = parts.map(Number);
+      }
+      
+      // Validate date
+      if (isNaN(day) || isNaN(month) || isNaN(year)) return null;
+      if (month < 1 || month > 12) return null;
+      if (day < 1 || day > 31) return null;
+      if (year < 1900 || year > 2099) return null;
+      
+      const date = new Date(year, month - 1, day);
+      if (date.getDate() !== day || date.getMonth() !== month - 1 || date.getFullYear() !== year) {
+        return null; // Invalid date (e.g., 31-02-2024)
+      }
+      
+      return date;
+    };
+
+    // Scroll to current year when year dropdown opens
+    useEffect(() => {
+      if (showYearDropdown && yearDropdownRef.current) {
+        const currentYear = dayjs(currentMonth).year();
+        const yearElements = yearDropdownRef.current.querySelectorAll('[data-year]');
+        const currentYearElement = Array.from(yearElements).find(
+          (el) => parseInt(el.getAttribute('data-year') || '0') === currentYear
+        );
+        
+        if (currentYearElement) {
+          currentYearElement.scrollIntoView({
+            behavior: 'auto',
+            block: 'center',
+            inline: 'center'
+          });
+        }
+      }
+    }, [showYearDropdown, currentMonth]);
 
     const updateDropdownPosition = () => {
       if (!isOpen || !inputRef.current || !dropdownRef.current) return;
@@ -206,6 +302,7 @@ export const PrimitiveDatePicker = forwardRef<
         if (rangeStart && rangeEnd) {
           // If both dates are already selected, reset and start new range
           setSelectedDate(date);
+          setInputValue(formatDateToString(date, format));
           onChange?.(date);
           // Don't close dropdown to allow selecting end date
         } else if (rangeStart) {
@@ -214,9 +311,11 @@ export const PrimitiveDatePicker = forwardRef<
           if (dayjs(newEndDate).isBefore(rangeStart)) {
             // If end date is before start date, swap them
             setSelectedDate(newEndDate);
+            setInputValue(formatDateToString(newEndDate, format));
             onChange?.(newEndDate);
           } else {
             setSelectedDate(newEndDate);
+            setInputValue(formatDateToString(newEndDate, format));
             onChange?.(newEndDate);
           }
           // Always close dropdown after end date is selected
@@ -225,12 +324,14 @@ export const PrimitiveDatePicker = forwardRef<
         } else {
           // Set start date
           setSelectedDate(date);
+          setInputValue(formatDateToString(date, format));
           onChange?.(date);
           // Don't close dropdown for start date selection
         }
       } else {
         // Single date mode
         setSelectedDate(date);
+        setInputValue(formatDateToString(date, format));
         onChange?.(date);
         // Always close dropdown after date selection in single mode
         setIsOpen(false);
@@ -266,9 +367,101 @@ export const PrimitiveDatePicker = forwardRef<
       return false;
     };
 
-    const formatDate = () => {
-      if (!selectedDate) return "";
-      return dayjs(selectedDate).format("DD MMM YYYY");
+
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!allowInput) return;
+      
+      const value = e.target.value;
+      
+      // Allow only digits and hyphens
+      const cleanValue = value.replace(/[^\d-]/g, '');
+      
+      // If user is deleting, just update the value without formatting
+      if (cleanValue.length < inputValue.length) {
+        setInputValue(cleanValue);
+        return;
+      }
+      
+      // Limit total input to 8 digits (4 for year, 2 for month, 2 for day)
+      const digitsOnly = cleanValue.replace(/-/g, '');
+      if (digitsOnly.length > 8) {
+        return; // Don't update if more than 8 digits
+      }
+      
+      // Format the value based on the format type
+      let formattedValue = cleanValue;
+      
+      if (format === "DD-MM-YYYY") {
+        if (cleanValue.length === 2 && !cleanValue.includes('-')) {
+          formattedValue = cleanValue + '-';
+        } else if (cleanValue.length === 5 && cleanValue.split('-').length === 2) {
+          formattedValue = cleanValue + '-';
+        }
+      } else if (format === "YYYY-MM-DD") {
+        if (cleanValue.length === 4 && !cleanValue.includes('-')) {
+          formattedValue = cleanValue + '-';
+        } else if (cleanValue.length === 7 && cleanValue.split('-').length === 2) {
+          formattedValue = cleanValue + '-';
+        }
+      } else if (format === "MM-DD-YYYY") {
+        if (cleanValue.length === 2 && !cleanValue.includes('-')) {
+          formattedValue = cleanValue + '-';
+        } else if (cleanValue.length === 5 && cleanValue.split('-').length === 2) {
+          formattedValue = cleanValue + '-';
+        }
+      }
+      
+      setInputValue(formattedValue);
+    };
+
+    const handleInputBlur = () => {
+      if (!allowInput) return;
+      
+      // Parse and validate the input value
+      const parsedDate = parseDateFromString(inputValue, format);
+      
+      if (parsedDate) {
+        // Check min/max date constraints
+        if (minDate && parsedDate < minDate) {
+          setInputValue(formatDateToString(minDate, format));
+          setSelectedDate(minDate);
+          onChange?.(minDate);
+          return;
+        }
+        if (maxDate && parsedDate > maxDate) {
+          setInputValue(formatDateToString(maxDate, format));
+          setSelectedDate(maxDate);
+          onChange?.(maxDate);
+          return;
+        }
+        
+        setSelectedDate(parsedDate);
+        onChange?.(parsedDate);
+        setInputValue(formatDateToString(parsedDate, format));
+      } else {
+        // Invalid date, revert to selected date or clear
+        if (selectedDate) {
+          setInputValue(formatDateToString(selectedDate, format));
+        } else {
+          setInputValue("");
+        }
+      }
+    };
+
+    const handleInputFocus = () => {
+      if (allowInput) {
+        setIsOpen(false);
+      }
+    };
+
+    const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (!allowInput) return;
+      
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleInputBlur();
+      }
     };
 
     const handleYearSelect = (year: number) => {
@@ -280,13 +473,22 @@ export const PrimitiveDatePicker = forwardRef<
     const renderYearDropdown = () => {
       if (!showYearDropdown) return null;
       const currentYear = dayjs(currentMonth).year();
-      const years = Array.from({ length: 50 }, (_, i) => currentYear - 25 + i);
+      const startYear = 1900;
+      const endYear = 2099;
+      const years = Array.from(
+        { length: endYear - startYear + 1 }, 
+        (_, i) => startYear + i
+      );
 
       return (
-        <div className="grid grid-cols-5 gap-2 p-2 overflow-y-auto max-h-[300px]">
+        <div 
+          ref={yearDropdownRef}
+          className="grid grid-cols-5 gap-2 p-2 overflow-y-auto max-h-[300px]"
+        >
           {years.map((year) => (
             <div
               key={year}
+              data-year={year}
               onClick={() => handleYearSelect(year)}
               className={cn(
                 year === currentYear && "bg-primary-50 text-primary",
@@ -486,19 +688,40 @@ export const PrimitiveDatePicker = forwardRef<
       <div
         className={cn("relative", !fullWidth && "inline-block")}
         ref={inputRef}
-        onClick={() => !disabled && setIsOpen(!isOpen)}
+        onClick={() => !disabled && !allowInput && setIsOpen(!isOpen)}
       >
         {leftIcon && (
-          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral">
+          <div 
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral cursor-pointer hover:text-primary transition-colors"
+            onClick={(e) => {
+              e.stopPropagation();
+              if (!disabled) {
+                setIsOpen(!isOpen);
+              }
+            }}
+          >
             <Icon icon={leftIcon} className="w-4 h-4" />
           </div>
         )}
         <input
-          ref={ref}
+          ref={inputElementRef}
           type="text"
-          value={valueFormatter ? valueFormatter() : formatDate()}
-          placeholder={placeholder}
-          readOnly
+          value={
+            allowInput 
+              ? inputValue 
+              : valueFormatter 
+                ? valueFormatter() 
+                : selectedDate 
+                  ? formatDateToString(selectedDate, format)
+                  : ""
+          }
+          placeholder={allowInput ? format : placeholder}
+          readOnly={!allowInput}
+          maxLength={allowInput ? 10 : undefined}
+          onChange={handleInputChange}
+          onBlur={handleInputBlur}
+          onFocus={handleInputFocus}
+          onKeyDown={handleInputKeyDown}
           className={cn(
             primitiveDatePickerVariants({ variant: error ? "error" : variant, size, rounded, fullWidth }),
             leftIcon && "pl-10",
@@ -509,7 +732,15 @@ export const PrimitiveDatePicker = forwardRef<
           {...props}
         />
         {rightIcon && (
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral">
+          <div 
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral cursor-pointer hover:text-primary transition-colors"
+            onClick={(e) => {
+              e.stopPropagation();
+              if (!disabled) {
+                setIsOpen(!isOpen);
+              }
+            }}
+          >
             <Icon icon={rightIcon} className="w-4 h-4" />
           </div>
         )}

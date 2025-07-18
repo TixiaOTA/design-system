@@ -72,6 +72,15 @@ const meta: Meta<typeof DatePicker> = {
       control: "boolean",
       description: "Whether to close the calendar on date selection",
     },
+    format: {
+      control: "select",
+      options: ["DD-MM-YYYY", "YYYY-MM-DD", "MM-DD-YYYY"],
+      description: "Date format for input display and parsing",
+    },
+    allowInput: {
+      control: "boolean",
+      description: "Whether to allow manual input typing",
+    },
   },
 } satisfies Meta<typeof DatePicker>;
 
@@ -283,6 +292,63 @@ export const RangeExamples: Story = {
   ),
 };
 
+// Input Examples
+export const InputExamples: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <DatePicker
+        label="Manual Input - DD-MM-YYYY"
+        allowInput
+        format="DD-MM-YYYY"
+        placeholder="DD-MM-YYYY"
+      />
+      <DatePicker
+        label="Manual Input - YYYY-MM-DD"
+        allowInput
+        format="YYYY-MM-DD"
+        placeholder="YYYY-MM-DD"
+      />
+      <DatePicker
+        label="Manual Input - MM-DD-YYYY"
+        allowInput
+        format="MM-DD-YYYY"
+        placeholder="MM-DD-YYYY"
+      />
+      <DatePicker
+        label="Manual Input with Min/Max"
+        allowInput
+        format="DD-MM-YYYY"
+        minDate={new Date(2024, 0, 1)}
+        maxDate={new Date(2024, 11, 31)}
+        placeholder="DD-MM-YYYY"
+      />
+    </div>
+  ),
+};
+
+// Format Examples
+export const FormatExamples: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <DatePicker
+        label="DD-MM-YYYY Format"
+        format="DD-MM-YYYY"
+        placeholder="DD-MM-YYYY"
+      />
+      <DatePicker
+        label="YYYY-MM-DD Format"
+        format="YYYY-MM-DD"
+        placeholder="YYYY-MM-DD"
+      />
+      <DatePicker
+        label="MM-DD-YYYY Format"
+        format="MM-DD-YYYY"
+        placeholder="MM-DD-YYYY"
+      />
+    </div>
+  ),
+};
+
 // Primitive Examples
 export const PrimitiveExamples: Story = {
   render: () => (
@@ -301,6 +367,12 @@ export const PrimitiveExamples: Story = {
         label="Primitive Two Months"
         monthsToShow={2}
         placeholder="Select date"
+      />
+      <PrimitiveDatePicker
+        label="Primitive with Input"
+        allowInput
+        format="DD-MM-YYYY"
+        placeholder="DD-MM-YYYY"
       />
     </div>
   ),

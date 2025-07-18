@@ -11,5 +11,9 @@ export interface DatePickerProps extends Omit<PrimitiveDatePickerProps, "onChang
     error?: boolean;
     /** Error message to display below the input */
     errorText?: string;
+    /** Date format for input display and parsing */
+    format?: "DD-MM-YYYY" | "YYYY-MM-DD" | "MM-DD-YYYY";
+    /** Whether to allow manual input typing */
+    allowInput?: boolean;
 }
 export declare const DatePicker: React.FC<DatePickerProps>;

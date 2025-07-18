@@ -3,6 +3,7 @@ export type PrimitiveDatePickerVariant = "default" | "error" | "success" | "ghos
 export type PrimitiveDatePickerSize = "sm" | "md" | "lg";
 export type PrimitiveDatePickerRounded = "none" | "sm" | "md" | "lg" | "full";
 export type PrimitiveDatePickerLabelPlacement = "top" | "left";
+export type DateFormat = "DD-MM-YYYY" | "YYYY-MM-DD" | "MM-DD-YYYY";
 export interface PrimitiveDatePickerProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size" | "onChange" | "value"> {
     value?: Date;
     onChange?: (date: Date) => void;
@@ -27,5 +28,9 @@ export interface PrimitiveDatePickerProps extends Omit<React.InputHTMLAttributes
     rangeEnd?: Date;
     closeOnSelect?: boolean;
     calendarFooter?: React.ReactNode;
+    /** Date format for input display and parsing */
+    format?: DateFormat;
+    /** Whether to allow manual input typing */
+    allowInput?: boolean;
 }
 export declare const PrimitiveDatePicker: React.ForwardRefExoticComponent<PrimitiveDatePickerProps & React.RefAttributes<HTMLInputElement>>;

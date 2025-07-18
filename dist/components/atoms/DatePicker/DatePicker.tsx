@@ -17,6 +17,10 @@ export interface DatePickerProps
   error?: boolean;
   /** Error message to display below the input */
   errorText?: string;
+  /** Date format for input display and parsing */
+  format?: "DD-MM-YYYY" | "YYYY-MM-DD" | "MM-DD-YYYY";
+  /** Whether to allow manual input typing */
+  allowInput?: boolean;
 }
 
 export const DatePicker: React.FC<DatePickerProps> = ({
@@ -27,6 +31,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   calendarFooter,
   error = false,
   errorText,
+  format = "DD-MM-YYYY",
+  allowInput = false,
   ...props
 }) => {
   // State for range selection
@@ -46,6 +52,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         calendarFooter={calendarFooter}
         error={error}
         errorText={errorText}
+        format={format}
+        allowInput={allowInput}
         {...props}
       />
     );
@@ -96,6 +104,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         calendarFooter={calendarFooter}
         error={error}
         errorText={errorText}
+        format={format}
+        allowInput={allowInput}
         {...props}
       />
     );
