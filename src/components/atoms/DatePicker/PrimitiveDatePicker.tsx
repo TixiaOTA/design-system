@@ -136,10 +136,30 @@ export const PrimitiveDatePicker = forwardRef<
     const wrapperRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLDivElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const yearDropdownRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
       setSelectedDate(value || undefined);
     }, [value]);
+
+    // Scroll to current year when year dropdown opens
+    useEffect(() => {
+      if (showYearDropdown && yearDropdownRef.current) {
+        const currentYear = dayjs(currentMonth).year();
+        const yearElements = yearDropdownRef.current.querySelectorAll('[data-year]');
+        const currentYearElement = Array.from(yearElements).find(
+          (el) => parseInt(el.getAttribute('data-year') || '0') === currentYear
+        );
+        
+        if (currentYearElement) {
+          currentYearElement.scrollIntoView({
+            behavior: 'auto',
+            block: 'center',
+            inline: 'center'
+          });
+        }
+      }
+    }, [showYearDropdown, currentMonth]);
 
     const updateDropdownPosition = () => {
       if (!isOpen || !inputRef.current || !dropdownRef.current) return;
@@ -280,13 +300,17 @@ export const PrimitiveDatePicker = forwardRef<
     const renderYearDropdown = () => {
       if (!showYearDropdown) return null;
       const currentYear = dayjs(currentMonth).year();
-      const years = Array.from({ length: 50 }, (_, i) => currentYear - 25 + i);
+      const years = Array.from({ length: 200 }, (_, i) => currentYear - 100 + i);
 
       return (
-        <div className="grid grid-cols-5 gap-2 p-2 overflow-y-auto max-h-[300px]">
+        <div 
+          ref={yearDropdownRef}
+          className="grid grid-cols-5 gap-2 p-2 overflow-y-auto max-h-[300px]"
+        >
           {years.map((year) => (
             <div
               key={year}
+              data-year={year}
               onClick={() => handleYearSelect(year)}
               className={cn(
                 year === currentYear && "bg-primary-50 text-primary",
