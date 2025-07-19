@@ -50,6 +50,15 @@ const meta = {
     fullWidth: {
       control: 'boolean',
     },
+    error: {
+      control: 'boolean',
+    },
+    errorText: {
+      control: 'text',
+    },
+    helperText: {
+      control: 'text',
+    },
   },
 } satisfies Meta<typeof Select>;
 
@@ -118,8 +127,37 @@ export const WithError: Story = {
     label: 'Ice Cream Flavor',
     options: defaultOptions,
     placeholder: 'Select a flavor...',
-    error: 'Please select a flavor',
+    error: true,
+    errorText: 'Please select a flavor',
   },
+};
+
+export const ErrorStates: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <Select
+        label="Helper Text Only"
+        options={defaultOptions}
+        placeholder="Select a flavor..."
+        helperText="This is helper text to guide the user"
+      />
+      <Select
+        label="Error State Only"
+        options={defaultOptions}
+        placeholder="Select a flavor..."
+        error={true}
+        errorText="This field is required"
+      />
+      <Select
+        label="Error State with Helper Text (Helper text hidden)"
+        options={defaultOptions}
+        placeholder="Select a flavor..."
+        error={true}
+        errorText="This field is required"
+        helperText="This helper text is hidden when error is true"
+      />
+    </div>
+  ),
 };
 
 export const WithSuccess: Story = {

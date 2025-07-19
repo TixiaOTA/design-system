@@ -21,8 +21,10 @@ export interface SelectProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 
     options?: SelectOption[];
     /** Label for the select */
     label?: string;
-    /** Error message to display */
-    error?: boolean | string;
+    /** Whether the select is in an error state */
+    error?: boolean;
+    /** Error message to display below the select */
+    errorText?: string;
     /** Helper text to display below select */
     helperText?: string;
     /** Whether the select is required */

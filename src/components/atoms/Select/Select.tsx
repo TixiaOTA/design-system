@@ -65,8 +65,10 @@ export interface SelectProps
   options?: SelectOption[];
   /** Label for the select */
   label?: string;
-  /** Error message to display */
-  error?: boolean | string;
+  /** Whether the select is in an error state */
+  error?: boolean;
+  /** Error message to display below the select */
+  errorText?: string;
   /** Helper text to display below select */
   helperText?: string;
   /** Whether the select is required */
@@ -105,6 +107,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
       options,
       label,
       error = false,
+      errorText,
       helperText,
       required = false,
       placeholder,
@@ -386,8 +389,11 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
                 <Icon icon={leftIcon} className="w-4 h-4" />
               </div>
             )}
-            <span className="flex items-center justify-center text-neutral gap-2 min-w-0 flex-1">
-              <span className="truncate">
+            <span className="flex items-center justify-center gap-2 min-w-0 flex-1">
+              <span className={cn(
+                "truncate",
+                getSelectedLabel() ? "text-neutral-900" : "text-neutral"
+              )}>
                 {getSelectedLabel() || placeholder}
               </span>
             </span>
@@ -404,9 +410,9 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
           </button>
           {renderDropdown()}
         </div>
-        {error && (
+        {error && errorText && (
           <p className="mt-1 text-xs text-danger" id={`${id}-error`}>
-            {error}
+            {errorText}
           </p>
         )}
         {!error && helperText && (
