@@ -36,6 +36,9 @@ export const Checkbox: React.FC<CheckboxProps> = ({
     error: 'checked:bg-danger-600 checked:border-danger-600 hover:border-danger-600',
   };
 
+  // Error state styling for unselected checkboxes
+  const errorClasses = error ? 'border-danger-600 hover:border-danger-700' : '';
+
   const variantClasses = {
     square: 'rounded',
     circle: 'rounded-full',
@@ -49,6 +52,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
     variantClasses[variant],
     sizeClasses[variantSize],
     colorClasses[color],
+    errorClasses,
     disabled && 'opacity-50 cursor-not-allowed',
     className
   );
