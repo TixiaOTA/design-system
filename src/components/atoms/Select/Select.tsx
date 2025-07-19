@@ -389,9 +389,9 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
                 <Icon icon={leftIcon} className="w-4 h-4" />
               </div>
             )}
-            <span className="flex items-center justify-center gap-2 min-w-0 flex-1">
+            <span className="flex items-center gap-2 min-w-0 flex-1">
               <span className={cn(
-                "truncate",
+                "truncate text-left",
                 getSelectedLabel() ? "text-neutral-900" : "text-neutral"
               )}>
                 {getSelectedLabel() || placeholder}
