@@ -1,4 +1,9 @@
 
+## [v0.8.0] - 2025-07-19
+- feat: add checkbox and radio group
+- fix: text-left on select
+
+
 ## [v0.7.0] - 2025-07-19
 - fix: add errorText select
 
