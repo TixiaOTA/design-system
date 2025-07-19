@@ -1,4 +1,8 @@
 
+## [v0.7.0] - 2025-07-19
+- fix: add errorText select
+
+
 ## [v0.6.0] - 2025-07-18
 - fix: enhance datepicker allow input
 - fix: enhance datepicker year range
