@@ -37,6 +37,8 @@ export interface AutoCompleteProps extends Omit<React.InputHTMLAttributes<HTMLIn
   loading?: boolean;
   /** Custom render function for options */
   renderOption?: (option: { value: string; label: string }) => React.ReactNode;
+  /** Type of search to perform - 'include' searches anywhere in the string, 'startsWith' searches from the beginning */
+  searchType?: 'include' | 'startsWith';
   /** Input variant that determines the visual style */
   variant?: 'default' | 'error' | 'success' | 'ghost' | 'underline';
   /** Size of the input */
@@ -101,6 +103,7 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       onBlur,
       showClear = false,
       onClear,
+      searchType = 'include',
       ...props
     },
     ref
@@ -250,9 +253,16 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       onBlur?.(e);
     };
 
-    const filteredOptions = options.filter(({ label }) => 
-      label.toLowerCase().includes((inputValue || '').toLowerCase().trim())
-    );
+    const filteredOptions = options.filter(({ label }) => {
+      const searchTerm = inputValue.toLowerCase().trim();
+      const optionLabel = label.toLowerCase();
+
+      if (searchType === 'startsWith') {
+        return optionLabel.startsWith(searchTerm);
+      } else { // include
+        return optionLabel.includes(searchTerm);
+      }
+    });
 
     const showDropdown = isControlled ? controlledIsOpen : isOpen;
 

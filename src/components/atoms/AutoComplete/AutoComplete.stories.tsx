@@ -26,6 +26,10 @@ const meta = {
       control: 'select',
       options: ['top', 'bottom'],
     },
+    searchType: {
+      control: 'select',
+      options: ['include', 'startsWith'],
+    },
   },
 } satisfies Meta<typeof AutoComplete>;
 
@@ -38,6 +42,27 @@ const defaultOptions = [
   { value: 'orange', label: 'Orange' },
   { value: 'mango', label: 'Mango' },
   { value: 'strawberry', label: 'Strawberry' },
+];
+
+const countryOptions = [
+  { value: 'india', label: 'India' },
+  { value: 'indonesia', label: 'Indonesia' },
+  { value: 'iran', label: 'Iran' },
+  { value: 'iraq', label: 'Iraq' },
+  { value: 'ireland', label: 'Ireland' },
+  { value: 'israel', label: 'Israel' },
+  { value: 'italy', label: 'Italy' },
+  { value: 'ivory-coast', label: 'Ivory Coast' },
+  { value: 'china', label: 'China' },
+  { value: 'chile', label: 'Chile' },
+  { value: 'canada', label: 'Canada' },
+  { value: 'cambodia', label: 'Cambodia' },
+  { value: 'brazil', label: 'Brazil' },
+  { value: 'belgium', label: 'Belgium' },
+  { value: 'bangladesh', label: 'Bangladesh' },
+  { value: 'australia', label: 'Australia' },
+  { value: 'austria', label: 'Austria' },
+  { value: 'argentina', label: 'Argentina' },
 ];
 
 // Basic Examples
@@ -262,6 +287,50 @@ export const FormExample: Story = {
         placeholder="Search vegetables..."
         variant="underline"
         showClear
+      />
+    </div>
+  ),
+};
+
+// Search Type Examples
+export const SearchTypeInclude: Story = {
+  args: {
+    label: 'Country Search (Include)',
+    options: countryOptions,
+    placeholder: 'Search countries...',
+    searchType: 'include',
+    helperText: 'Searches for countries that contain the input anywhere in the name',
+  },
+};
+
+export const SearchTypeStartsWith: Story = {
+  args: {
+    label: 'Country Search (Starts With)',
+    options: countryOptions,
+    placeholder: 'Search countries...',
+    searchType: 'startsWith',
+    helperText: 'Searches for countries that start with the input',
+  },
+};
+
+export const SearchTypeComparison: Story = {
+  args: {
+    options: countryOptions,
+    placeholder: 'Search countries...',
+  },
+  render: (args) => (
+    <div className="space-y-4 w-[400px]">
+      <AutoComplete
+        {...args}
+        label="Include Search"
+        searchType="include"
+        helperText="Type 'i' to see all countries containing 'i'"
+      />
+      <AutoComplete
+        {...args}
+        label="Starts With Search"
+        searchType="startsWith"
+        helperText="Type 'i' to see only countries starting with 'i'"
       />
     </div>
   ),
