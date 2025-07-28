@@ -1,4 +1,8 @@
 
+## [v0.10.0] - 2025-07-28
+- fix: add positioning datepicker
+
+
 ## [v0.9.0] - 2025-07-28
 - fix: add scroller autocomplete
 - fix: add variant search type autocomplete
