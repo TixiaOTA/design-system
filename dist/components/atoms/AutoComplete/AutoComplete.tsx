@@ -37,6 +37,20 @@ export interface AutoCompleteProps extends Omit<React.InputHTMLAttributes<HTMLIn
   loading?: boolean;
   /** Custom render function for options */
   renderOption?: (option: { value: string; label: string }) => React.ReactNode;
+  /** Type of search to perform - 'include' searches anywhere in the string, 'startsWith' searches from the beginning */
+  searchType?: 'include' | 'startsWith';
+  /** Number of items to display initially. If 0 or undefined, displays all items */
+  initialItemsToShow?: number;
+  /** Number of additional items to load when scrolling to bottom */
+  itemsToLoad?: number;
+  /** Maximum height of the dropdown in pixels */
+  maxDropdownHeight?: number;
+  /** Custom message to display when no options are found */
+  noOptionsMessage?: React.ReactNode;
+  /** Custom message for scroll indicator. Use {current} and {total} as placeholders */
+  scrollMoreMessage?: string;
+  /** Custom message for when all options are shown. Use {total} as placeholder */
+  allOptionsShownMessage?: string;
   /** Input variant that determines the visual style */
   variant?: 'default' | 'error' | 'success' | 'ghost' | 'underline';
   /** Size of the input */
@@ -101,15 +115,24 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       onBlur,
       showClear = false,
       onClear,
+      searchType = 'include',
+      initialItemsToShow,
+      itemsToLoad = 10,
+      maxDropdownHeight = 300,
+      noOptionsMessage = 'No options found',
+      scrollMoreMessage = '',
+      allOptionsShownMessage = '',
       ...props
     },
     ref
   ) => {
     const [isOpen, setIsOpen] = useState(false);
     const [inputValue, setInputValue] = useState(value as string || '');
+    const [visibleItemsCount, setVisibleItemsCount] = useState(initialItemsToShow || 0);
     const wrapperRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLDivElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const dropdownContentRef = useRef<HTMLDivElement>(null);
     const isControlled = controlledIsOpen !== undefined;
     const reactId = React.useId();
     const id = `autocomplete-${reactId.replace(/:/g, '')}`;
@@ -250,9 +273,47 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       onBlur?.(e);
     };
 
-    const filteredOptions = options.filter(({ label }) => 
-      label.toLowerCase().includes((inputValue || '').toLowerCase().trim())
-    );
+    const handleDropdownScroll = () => {
+      if (!dropdownContentRef.current || initialItemsToShow === undefined || initialItemsToShow <= 0) return;
+      
+      const { scrollTop, scrollHeight, clientHeight } = dropdownContentRef.current;
+      const isNearBottom = scrollTop + clientHeight >= scrollHeight - 10;
+      
+      if (isNearBottom) {
+        setVisibleItemsCount(prev => Math.min(prev + itemsToLoad, filteredOptions.length));
+      }
+    };
+
+    const filteredOptions = options.filter(({ label }) => {
+      const searchTerm = inputValue.toLowerCase().trim();
+      const optionLabel = label.toLowerCase();
+
+      if (searchType === 'startsWith') {
+        return optionLabel.startsWith(searchTerm);
+      } else { // include
+        return optionLabel.includes(searchTerm);
+      }
+    });
+
+    // Reset visible items count when search changes
+    useEffect(() => {
+      if (initialItemsToShow !== undefined && initialItemsToShow > 0) {
+        setVisibleItemsCount(initialItemsToShow);
+      }
+    }, [inputValue, initialItemsToShow]);
+
+    // Determine which options to show
+    const visibleOptions = initialItemsToShow !== undefined && initialItemsToShow > 0 
+      ? filteredOptions.slice(0, visibleItemsCount)
+      : filteredOptions;
+
+    // Helper function to format messages with placeholders
+    const formatMessage = (message: string, placeholders: Record<string, string | number>) => {
+      if (!message) return '';
+      return message.replace(/\{(\w+)\}/g, (match, key) => {
+        return placeholders[key]?.toString() || match;
+      });
+    };
 
     const showDropdown = isControlled ? controlledIsOpen : isOpen;
 
@@ -273,28 +334,59 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
           ref={dropdownRef}
           className={cn(
             dropdownVariants({ position: dropdownPosition }),
-            'overflow-auto'
+            'overflow-hidden'
           )}
+          style={{ maxHeight: `${maxDropdownHeight}px` }}
           onClick={(e) => e.stopPropagation()}
         >
-          {loading ? (
-            <div className="flex items-center justify-center py-2">
-              <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-            </div>
-          ) : filteredOptions.length > 0 ? (
-            filteredOptions.map((option) => (
-              <SelectItem
-                key={option.value}
-                value={option.value}
-                selected={option.label === inputValue}
-                onClick={() => handleSelect(option)}
-              >
-                {renderOption ? renderOption(option) : option.label}
-              </SelectItem>
-            ))
-          ) : (
-            <div className="px-2 py-2 text-sm text-neutral">No options found</div>
-          )}
+          <div
+            ref={dropdownContentRef}
+            className="overflow-auto"
+            style={{ maxHeight: `${maxDropdownHeight}px` }}
+            onScroll={handleDropdownScroll}
+          >
+            {loading ? (
+              <div className="flex items-center justify-center py-2">
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+              </div>
+            ) : visibleOptions.length > 0 ? (
+              <>
+                {visibleOptions.map((option) => (
+                  <SelectItem
+                    key={option.value}
+                    value={option.value}
+                    selected={option.label === inputValue}
+                    onClick={() => handleSelect(option)}
+                  >
+                    {renderOption ? renderOption(option) : option.label}
+                  </SelectItem>
+                ))}
+                {initialItemsToShow !== undefined && initialItemsToShow > 0 && (
+                  <>
+                    {visibleItemsCount < filteredOptions.length && scrollMoreMessage && (
+                      <div className="px-2 py-2 text-sm text-neutral-500 text-center">
+                        {formatMessage(scrollMoreMessage, {
+                          current: visibleItemsCount,
+                          total: filteredOptions.length
+                        })}
+                      </div>
+                    )}
+                    {visibleItemsCount >= filteredOptions.length && filteredOptions.length > 0 && allOptionsShownMessage && (
+                      <div className="px-2 py-2 text-sm text-neutral-500 text-center">
+                        {formatMessage(allOptionsShownMessage, {
+                          total: filteredOptions.length
+                        })}
+                      </div>
+                    )}
+                  </>
+                )}
+              </>
+            ) : (
+              <div className="px-2 py-2 text-sm text-neutral">
+                {noOptionsMessage}
+              </div>
+            )}
+          </div>
         </div>
       );
 

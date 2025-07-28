@@ -18,6 +18,20 @@ export interface AutoCompleteProps extends Omit<React.InputHTMLAttributes<HTMLIn
         value: string;
         label: string;
     }) => React.ReactNode;
+    /** Type of search to perform - 'include' searches anywhere in the string, 'startsWith' searches from the beginning */
+    searchType?: 'include' | 'startsWith';
+    /** Number of items to display initially. If 0 or undefined, displays all items */
+    initialItemsToShow?: number;
+    /** Number of additional items to load when scrolling to bottom */
+    itemsToLoad?: number;
+    /** Maximum height of the dropdown in pixels */
+    maxDropdownHeight?: number;
+    /** Custom message to display when no options are found */
+    noOptionsMessage?: React.ReactNode;
+    /** Custom message for scroll indicator. Use {current} and {total} as placeholders */
+    scrollMoreMessage?: string;
+    /** Custom message for when all options are shown. Use {total} as placeholder */
+    allOptionsShownMessage?: string;
     /** Input variant that determines the visual style */
     variant?: 'default' | 'error' | 'success' | 'ghost' | 'underline';
     /** Size of the input */
