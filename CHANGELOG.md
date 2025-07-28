@@ -1,4 +1,9 @@
 
+## [v0.9.0] - 2025-07-28
+- fix: add scroller autocomplete
+- fix: add variant search type autocomplete
+
+
 ## [v0.8.0] - 2025-07-19
 - feat: add checkbox and radio group
 - fix: text-left on select
