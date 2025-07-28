@@ -1,6 +1,5 @@
 import React, { forwardRef, useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { cva } from 'class-variance-authority';
 import { cn } from '../../../utils/cn';
 import { Input } from '../Input/Input';
 import { SelectItem } from '../SelectItem/SelectItem';
@@ -9,21 +8,6 @@ import { getWindow, getDocument } from '../../../utils/ssr';
 // Create a custom event for autocomplete dropdown management
 const AUTOCOMPLETE_OPEN_EVENT = 'autocomplete-dropdown-opened';
 
-const dropdownVariants = cva(
-  'fixed z-[9999] min-w-[8rem] rounded-md border border-neutral-200 bg-white py-1 shadow-lg',
-  {
-    variants: {
-      position: {
-        bottom: 'top-full',
-        top: 'bottom-full',
-      },
-    },
-    defaultVariants: {
-      position: 'bottom',
-    },
-  }
-);
-
 export interface AutoCompleteProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'onSelect'> {
   /** Options to display in the dropdown */
   options: Array<{ value: string; label: string }>;
@@ -31,8 +15,6 @@ export interface AutoCompleteProps extends Omit<React.InputHTMLAttributes<HTMLIn
   onSelect?: (value: string) => void;
   /** Whether the dropdown is open */
   isOpen?: boolean;
-  /** Position of the dropdown relative to the input */
-  dropdownPosition?: 'top' | 'bottom';
   /** Whether to show loading state */
   loading?: boolean;
   /** Custom render function for options */
@@ -94,7 +76,6 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       options,
       onSelect,
       isOpen: controlledIsOpen,
-      dropdownPosition = 'bottom',
       loading = false,
       renderOption,
       variant = 'default',
@@ -143,25 +124,41 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       const { bottom, top, left, width } = inputRef.current.getBoundingClientRect();
       const dropdown = dropdownRef.current;
       const win = getWindow();
-      const commonStyles = {
+      
+      // Calculate available space
+      const spaceBelow = win.innerHeight - bottom;
+      const spaceAbove = top;
+      
+      // Estimate dropdown height (approximate based on maxDropdownHeight)
+      const estimatedDropdownHeight = Math.min(maxDropdownHeight, 300);
+      
+      // Check if dropdown would be cut off at bottom
+      const wouldBeCutOff = spaceBelow < estimatedDropdownHeight;
+      const hasMoreSpaceAbove = spaceAbove > spaceBelow;
+      const shouldFlip = wouldBeCutOff && hasMoreSpaceAbove;
+
+      // Apply positioning styles
+      Object.assign(dropdown.style, {
         position: 'fixed',
         left: `${left}px`,
         width: `${width}px`,
-      };
+      });
 
-      const styles = dropdownPosition === 'bottom'
-        ? {
-            ...commonStyles,
-            top: `${bottom + 4}px`,
-            maxHeight: `${win.innerHeight - bottom - 8}px`,
-          }
-        : {
-            ...commonStyles,
-            bottom: `${win.innerHeight - top + 4}px`,
-            maxHeight: `${top - 8}px`,
-          };
-
-      Object.assign(dropdown.style, styles);
+      if (shouldFlip) {
+        // Position above the input
+        Object.assign(dropdown.style, {
+          bottom: `${win.innerHeight - top + 4}px`,
+          top: 'auto',
+          maxHeight: `${spaceAbove - 8}px`,
+        });
+      } else {
+        // Position below the input
+        Object.assign(dropdown.style, {
+          top: `${bottom + 4}px`,
+          bottom: 'auto',
+          maxHeight: `${spaceBelow - 8}px`,
+        });
+      }
     };
 
     useEffect(() => {
@@ -332,10 +329,7 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       const dropdown = (
         <div
           ref={dropdownRef}
-          className={cn(
-            dropdownVariants({ position: dropdownPosition }),
-            'overflow-hidden'
-          )}
+          className="fixed z-[9999] min-w-[8rem] rounded-md border border-neutral-200 bg-white py-1 shadow-lg overflow-hidden"
           style={{ maxHeight: `${maxDropdownHeight}px` }}
           onClick={(e) => e.stopPropagation()}
         >

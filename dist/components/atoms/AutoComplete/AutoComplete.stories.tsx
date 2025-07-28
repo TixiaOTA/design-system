@@ -22,10 +22,6 @@ const meta = {
       control: 'select',
       options: ['none', 'sm', 'md', 'lg', 'full'],
     },
-    dropdownPosition: {
-      control: 'select',
-      options: ['top', 'bottom'],
-    },
     searchType: {
       control: 'select',
       options: ['include', 'startsWith'],
@@ -282,8 +278,15 @@ export const WithTopDropdown: Story = {
     label: 'Fruit Search',
     options: defaultOptions,
     placeholder: 'Search fruits...',
-    dropdownPosition: 'top',
   },
+  render: (args) => (
+    <div className="h-96 bg-gray-100 p-4 rounded flex items-end">
+      <AutoComplete
+        {...args}
+        label="AutoComplete at Bottom (Will Flip to Top)"
+      />
+    </div>
+  ),
 };
 
 // Form Example
@@ -463,4 +466,168 @@ export const LocalizedMessages: Story = {
     allOptionsShownMessage: 'Todos los {total} países mostrados',
     helperText: 'Messages in Spanish',
   },
+};
+
+// Positioning Examples
+export const PositioningExamples: Story = {
+  args: {
+    options: countryOptions,
+    placeholder: 'Search countries...',
+  },
+  render: (args) => (
+    <div className="space-y-4">
+      <div className="h-96 bg-gray-100 p-4 rounded">
+        <h3 className="text-sm font-medium mb-2">Top of Page - Dropdown Opens Below</h3>
+        <AutoComplete
+          {...args}
+          label="AutoComplete at Top"
+        />
+      </div>
+      
+      <div className="h-96 bg-gray-100 p-4 rounded flex items-end">
+        <h3 className="text-sm font-medium mb-2">Bottom of Page - Dropdown Opens Above</h3>
+        <AutoComplete
+          {...args}
+          label="AutoComplete at Bottom"
+        />
+      </div>
+      
+      <div className="h-96 bg-gray-100 p-4 rounded flex items-center">
+        <h3 className="text-sm font-medium mb-2">Middle of Page - Dropdown Opens Below</h3>
+        <AutoComplete
+          {...args}
+          label="AutoComplete in Middle"
+        />
+      </div>
+    </div>
+  ),
+};
+
+// Smart Positioning Demo
+export const SmartPositioningDemo: Story = {
+  args: {
+    options: countryOptions,
+    placeholder: 'Search countries...',
+  },
+  render: (args) => (
+    <div className="space-y-8">
+      <div className="bg-blue-50 p-6 rounded-lg">
+        <h2 className="text-lg font-semibold mb-4">Smart Dropdown Positioning Demo</h2>
+        <p className="text-sm text-gray-600 mb-4">
+          This demo shows how the AutoComplete automatically positions its dropdown based on available space.
+          Scroll down to see the dropdown flip from below to above the input when there's not enough space below.
+        </p>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <AutoComplete
+            {...args}
+            label="Country Search"
+            leftIcon="mdi:magnify"
+            showClear
+          />
+          <AutoComplete
+            label="Fruit Search"
+            options={defaultOptions}
+            placeholder="Search fruits..."
+            leftIcon="mdi:fruit-watermelon"
+            showClear
+          />
+        </div>
+      </div>
+      
+      {/* Spacer content to create a long page */}
+      <div className="space-y-4">
+        {Array.from({ length: 10 }).map((_, i) => (
+          <div key={i} className="bg-gray-50 p-4 rounded">
+            <h3 className="font-medium">Content Section {i + 1}</h3>
+            <p className="text-sm text-gray-600">
+              This is placeholder content to create a long page and demonstrate the dropdown positioning behavior.
+            </p>
+          </div>
+        ))}
+      </div>
+      
+      {/* AutoComplete components at the bottom */}
+      <div className="bg-green-50 p-6 rounded-lg">
+        <h3 className="text-lg font-semibold mb-4">AutoComplete at Bottom of Page</h3>
+        <p className="text-sm text-gray-600 mb-4">
+          These AutoComplete components are positioned at the bottom of the page. When opened, their dropdowns will appear above the inputs.
+        </p>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <AutoComplete
+            {...args}
+            label="Country Search"
+            leftIcon="mdi:earth"
+            showClear
+          />
+          <AutoComplete
+            label="Fruit Search"
+            options={defaultOptions}
+            placeholder="Search fruits..."
+            leftIcon="mdi:fruit-watermelon"
+            showClear
+          />
+          <AutoComplete
+            label="Large Dataset"
+            options={largeCountryOptions}
+            placeholder="Search countries..."
+            leftIcon="mdi:database"
+            initialItemsToShow={10}
+            itemsToLoad={10}
+            maxDropdownHeight={200}
+            showClear
+          />
+        </div>
+      </div>
+    </div>
+  ),
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      story: {
+        inline: false,
+        height: '800px',
+        iframeHeight: 800,
+      },
+    },
+  },
+};
+
+// Positioning with Different Heights
+export const PositioningWithDifferentHeights: Story = {
+  args: {
+    options: countryOptions,
+    placeholder: 'Search countries...',
+  },
+  render: (args) => (
+    <div className="space-y-4">
+      <div className="h-96 bg-gray-100 p-4 rounded">
+        <h3 className="text-sm font-medium mb-2">Small Dropdown (150px) at Top</h3>
+        <AutoComplete
+          {...args}
+          label="Small Dropdown"
+          maxDropdownHeight={150}
+        />
+      </div>
+      
+      <div className="h-96 bg-gray-100 p-4 rounded flex items-end">
+        <h3 className="text-sm font-medium mb-2">Large Dropdown (400px) at Bottom</h3>
+        <AutoComplete
+          {...args}
+          label="Large Dropdown"
+          maxDropdownHeight={400}
+        />
+      </div>
+      
+      <div className="h-96 bg-gray-100 p-4 rounded flex items-center">
+        <h3 className="text-sm font-medium mb-2">Medium Dropdown (250px) in Middle</h3>
+        <AutoComplete
+          {...args}
+          label="Medium Dropdown"
+          maxDropdownHeight={250}
+        />
+      </div>
+    </div>
+  ),
 };

@@ -239,29 +239,70 @@ export const PrimitiveDatePicker = forwardRef<
 
     const updateDropdownPosition = () => {
       if (!isOpen || !inputRef.current || !dropdownRef.current) return;
-      const { bottom, left, width } = inputRef.current.getBoundingClientRect();
+      const { bottom, left, width, top } = inputRef.current.getBoundingClientRect();
       const dropdown = dropdownRef.current;
       const win = getWindow();
+      
+      // Calculate available space
+      const spaceBelow = win.innerHeight - bottom;
+      const spaceAbove = top;
+      
+      // Estimate dropdown height (approximate)
+      const estimatedDropdownHeight = monthsToShow === 2 ? 400 : 350;
+      
+      // Check if dropdown would be cut off at bottom
+      const wouldBeCutOff = spaceBelow < estimatedDropdownHeight;
+      const hasMoreSpaceAbove = spaceAbove > spaceBelow;
+      const shouldFlip = wouldBeCutOff && hasMoreSpaceAbove;
+      
       if (monthsToShow === 2) {
         Object.assign(dropdown.style, {
           position: "fixed",
           left: `${left}px`,
-          top: `${bottom + 4}px`,
           minWidth: "500px",
           width: "auto",
-          maxHeight: `${win.innerHeight - bottom - 8}px`,
           transform: "",
         });
+        
+        if (shouldFlip) {
+          // Position above the input
+          Object.assign(dropdown.style, {
+            bottom: `${win.innerHeight - top + 4}px`,
+            top: "auto",
+            maxHeight: `${spaceAbove - 8}px`,
+          });
+        } else {
+          // Position below the input
+          Object.assign(dropdown.style, {
+            top: `${bottom + 4}px`,
+            bottom: "auto",
+            maxHeight: `${spaceBelow - 8}px`,
+          });
+        }
       } else {
         Object.assign(dropdown.style, {
           position: "fixed",
           left: `${left + width / 2}px`,
-          top: `${bottom + 4}px`,
           width: "320px",
           maxWidth: "100vw",
-          maxHeight: `${win.innerHeight - bottom - 8}px`,
           transform: "translateX(-50%)",
         });
+        
+        if (shouldFlip) {
+          // Position above the input
+          Object.assign(dropdown.style, {
+            bottom: `${win.innerHeight - top + 4}px`,
+            top: "auto",
+            maxHeight: `${spaceAbove - 8}px`,
+          });
+        } else {
+          // Position below the input
+          Object.assign(dropdown.style, {
+            top: `${bottom + 4}px`,
+            bottom: "auto",
+            maxHeight: `${spaceBelow - 8}px`,
+          });
+        }
       }
     };
 

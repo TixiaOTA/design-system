@@ -9,8 +9,6 @@ export interface AutoCompleteProps extends Omit<React.InputHTMLAttributes<HTMLIn
     onSelect?: (value: string) => void;
     /** Whether the dropdown is open */
     isOpen?: boolean;
-    /** Position of the dropdown relative to the input */
-    dropdownPosition?: 'top' | 'bottom';
     /** Whether to show loading state */
     loading?: boolean;
     /** Custom render function for options */
