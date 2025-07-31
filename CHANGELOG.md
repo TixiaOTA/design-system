@@ -1,4 +1,8 @@
 
+## [v0.11.0] - 2025-07-31
+- fix: add auto detect country phoneInput
+
+
 ## [v0.10.0] - 2025-07-28
 - fix: add positioning datepicker
 
