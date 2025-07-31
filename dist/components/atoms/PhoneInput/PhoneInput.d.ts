@@ -33,5 +33,7 @@ export interface PhoneInputProps {
     className?: string;
     /** Placeholder for the phone number input */
     placeholder?: string;
+    /** Whether to automatically detect country from phone number input */
+    autoDetect?: boolean;
 }
 export declare const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps & React.RefAttributes<HTMLDivElement>>;

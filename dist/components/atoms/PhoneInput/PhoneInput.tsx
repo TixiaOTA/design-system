@@ -56,6 +56,67 @@ export type PhoneInputVariant =
 export type PhoneInputSize = "sm" | "md" | "lg";
 export type PhoneInputRounded = "none" | "sm" | "md" | "lg" | "full";
 
+// Utility function to detect country from phone number
+const detectCountryFromPhone = (phoneNumber: string) => {
+  if (!phoneNumber || !phoneNumber.startsWith("+")) {
+    return null;
+  }
+
+  // Sort countries by code length (longest first) to avoid partial matches
+  const sortedCountries = [...COUNTRIES].sort(
+    (a, b) => b.code.length - a.code.length
+  );
+
+  for (const country of sortedCountries) {
+    if (phoneNumber.startsWith(country.code)) {
+      return country;
+    }
+  }
+
+  return null;
+};
+
+// Utility function to detect country from clean numeric phone number (without +)
+const detectCountryFromNumeric = (phoneNumber: string) => {
+  if (!phoneNumber || phoneNumber.startsWith("+")) {
+    return null;
+  }
+
+  // Sort countries by code length (longest first) to avoid partial matches
+  const sortedCountries = [...COUNTRIES].sort(
+    (a, b) => b.code.length - a.code.length
+  );
+
+  for (const country of sortedCountries) {
+    const countryCodeNumeric = country.code.replace("+", "");
+    if (phoneNumber.startsWith(countryCodeNumeric)) {
+      return country;
+    }
+  }
+
+  return null;
+};
+
+// Utility function to handle Indonesian number conversion (0 -> +62)
+const handleIndonesianNumber = (inputValue: string) => {
+  // If input starts with 0 and is 9-12 digits long (typical Indonesian mobile number)
+  if (
+    inputValue.startsWith("0") &&
+    inputValue.length >= 9 &&
+    inputValue.length <= 12
+  ) {
+    // Convert 0 to +62
+    return "+62" + inputValue.slice(1);
+  }
+  return inputValue;
+};
+
+// Utility function to check if input should be converted to Indonesian format
+const shouldConvertToIndonesian = (inputValue: string) => {
+  // After 3 digits, if it starts with 0, it's likely Indonesian
+  return inputValue.startsWith("0") && inputValue.length >= 3;
+};
+
 export interface PhoneInputProps {
   /** Visual style variant */
   variant?: PhoneInputVariant;
@@ -87,6 +148,8 @@ export interface PhoneInputProps {
   className?: string;
   /** Placeholder for the phone number input */
   placeholder?: string;
+  /** Whether to automatically detect country from phone number input */
+  autoDetect?: boolean;
 }
 
 export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
@@ -106,6 +169,7 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
     disabled = false,
     defaultCountry = "id",
     placeholder = "Enter phone number",
+    autoDetect = true,
     ...props
   }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -116,8 +180,39 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
     );
     const [searchQuery, setSearchQuery] = useState("");
     const [phoneNumber, setPhoneNumber] = useState(() => {
+      if (autoDetect && value) {
+        // First try to detect from + format
+        const detectedCountry = detectCountryFromPhone(value);
+        if (detectedCountry) {
+          setSelectedCountry(detectedCountry);
+          return value;
+        }
+
+        // Then try to detect from clean numeric format
+        const detectedCountryNumeric = detectCountryFromNumeric(value);
+        if (detectedCountryNumeric) {
+          setSelectedCountry(detectedCountryNumeric);
+          // Convert to + format for display
+          return (
+            detectedCountryNumeric.code +
+            value.slice(detectedCountryNumeric.code.replace("+", "").length)
+          );
+        }
+
+        return value;
+      }
       const dialCode = selectedCountry.code;
       return value.startsWith(dialCode) ? value.slice(dialCode.length) : value;
+    });
+
+    // Track if country has been detected in autoDetect mode
+    const [countryDetected, setCountryDetected] = useState(() => {
+      if (autoDetect && value) {
+        return !!(
+          detectCountryFromPhone(value) || detectCountryFromNumeric(value)
+        );
+      }
+      return false;
     });
 
     const buttonRef = useRef<HTMLButtonElement>(null);
@@ -205,15 +300,101 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
       setSelectedCountry(country);
       setIsOpen(false);
       setSearchQuery("");
-      const newValue = country.code + phoneNumber;
-      onChange?.(newValue);
+
+      if (autoDetect) {
+        // In autoDetect mode, update the phone number to include the new country code
+        const newValue = country.code + phoneNumber.replace(/^\+?\d*/, "");
+        setPhoneNumber(newValue);
+        // Send clean numeric value without + for API compatibility
+        const cleanValue = newValue.replace(/[^\d]/g, "");
+        onChange?.(cleanValue);
+      } else {
+        // In manual mode, keep the existing behavior
+        const newValue = country.code + phoneNumber;
+        // Send clean numeric value without + for API compatibility
+        const cleanValue = newValue.replace(/[^\d]/g, "");
+        onChange?.(cleanValue);
+      }
     };
 
     const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newPhoneNumber = e.target.value.replace(/[^\d]/g, "");
-      setPhoneNumber(newPhoneNumber);
-      const newValue = selectedCountry.code + newPhoneNumber;
-      onChange?.(newValue);
+      const inputValue = e.target.value;
+
+      // Validate input: only allow digits and + symbol
+      const isValidInput = /^[+\d]*$/.test(inputValue);
+      if (!isValidInput) {
+        return; // Ignore invalid input
+      }
+
+      if (autoDetect && inputValue.startsWith("+")) {
+        // Auto-detect mode: user can type full phone number with country code
+        const detectedCountry = detectCountryFromPhone(inputValue);
+        if (detectedCountry) {
+          setSelectedCountry(detectedCountry);
+          setCountryDetected(true);
+          setPhoneNumber(inputValue);
+          // Send clean numeric value without + for API compatibility
+          const cleanValue = inputValue.replace(/[^\d]/g, "");
+          onChange?.(cleanValue);
+        } else {
+          // No country detected, treat as full input
+          setPhoneNumber(inputValue);
+          setCountryDetected(false);
+          // Send clean numeric value without + for API compatibility
+          const cleanValue = inputValue.replace(/[^\d]/g, "");
+          onChange?.(cleanValue);
+        }
+      } else if (
+        autoDetect &&
+        !inputValue.startsWith("+") &&
+        inputValue.length > 0
+      ) {
+        // Check for Indonesian number pattern (0 -> +62) first
+        const indonesianConverted = handleIndonesianNumber(inputValue);
+
+        if (indonesianConverted !== inputValue) {
+          // Indonesian number detected and converted (9-12 digits)
+          setPhoneNumber(indonesianConverted);
+          setSelectedCountry(
+            COUNTRIES.find((country) => country.iso === "id") || COUNTRIES[0]
+          );
+          setCountryDetected(true);
+          // Send clean numeric value without + for API compatibility
+          const cleanValue = indonesianConverted.replace(/[^\d]/g, "");
+          onChange?.(cleanValue);
+        } else if (shouldConvertToIndonesian(inputValue)) {
+          // After 3 digits starting with 0, convert to Indonesian format
+          const convertedValue = "+62" + inputValue.slice(1);
+          setPhoneNumber(convertedValue);
+          setSelectedCountry(
+            COUNTRIES.find((country) => country.iso === "id") || COUNTRIES[0]
+          );
+          setCountryDetected(true);
+          // Send clean numeric value without + for API compatibility
+          const cleanValue = convertedValue.replace(/[^\d]/g, "");
+          onChange?.(cleanValue);
+        } else if (inputValue.startsWith("0")) {
+          // Potential Indonesian number starting with 0, don't add + yet
+          setPhoneNumber(inputValue);
+          setCountryDetected(false);
+          // Don't send onChange yet, wait to see if it becomes a valid Indonesian number
+        } else {
+          // User started typing without +, add it automatically
+          const newValue = "+" + inputValue;
+          setPhoneNumber(newValue);
+          // Send clean numeric value without + for API compatibility
+          const cleanValue = newValue.replace(/[^\d]/g, "");
+          onChange?.(cleanValue);
+        }
+      } else {
+        // Manual mode: only allow digits and update with selected country code
+        const newPhoneNumber = inputValue.replace(/[^\d]/g, "");
+        setPhoneNumber(newPhoneNumber);
+        const newValue = selectedCountry.code + newPhoneNumber;
+        // Send clean numeric value without + for API compatibility
+        const cleanValue = newValue.replace(/[^\d]/g, "");
+        onChange?.(cleanValue);
+      }
     };
 
     const inputClassName = cn(
@@ -225,6 +406,9 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
       }),
       "!w-full"
     );
+
+    // In autoDetect mode, show single input initially, then show country selector after detection
+    const showCountrySelector = !autoDetect || (autoDetect && countryDetected);
 
     return (
       <div
@@ -240,25 +424,30 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
         )}
         <div className={cn("relative", !fullWidth && "inline-block")}>
           <div className="flex">
-            <button
-              type="button"
-              ref={buttonRef}
-              onClick={() => !disabled && setIsOpen(!isOpen)}
-              className={cn(
-                inputClassName,
-                "flex items-center gap-2 rounded-r-none justify-between max-w-[100px]",
-                disabled && "cursor-not-allowed opacity-50"
-              )}
-            >
-              <span className="flex items-center gap-2">
-                <Icon icon={selectedCountry.flag} className="w-5 h-5" />
-                <span className="text-sm">{selectedCountry.code}</span>
-              </span>
-              <Icon
-                icon="mdi:chevron-down"
-                className={cn("transition-transform", isOpen && "rotate-180")}
-              />
-            </button>
+            {showCountrySelector && (
+              <button
+                type="button"
+                ref={buttonRef}
+                onClick={() => !disabled && setIsOpen(!isOpen)}
+                className={cn(
+                  inputClassName,
+                  "flex items-center gap-2 rounded-r-none justify-between",
+                  autoDetect ? "max-w-[60px]" : "max-w-[100px]",
+                  disabled && "cursor-not-allowed opacity-50"
+                )}
+              >
+                <span className="flex items-center gap-2">
+                  <Icon icon={selectedCountry.flag} className="w-5 h-5" />
+                  {!autoDetect && (
+                    <span className="text-sm">{selectedCountry.code}</span>
+                  )}
+                </span>
+                <Icon
+                  icon="mdi:chevron-down"
+                  className={cn("transition-transform", isOpen && "rotate-180")}
+                />
+              </button>
+            )}
             <input
               type="tel"
               id={id}
@@ -267,9 +456,10 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
               disabled={disabled}
               className={cn(
                 inputClassName,
-                "rounded-l-none flex-1 min-w-0 w-full"
+                showCountrySelector ? "rounded-l-none" : "rounded-l-md",
+                "flex-1 min-w-0 w-full"
               )}
-              placeholder={placeholder}
+              placeholder={autoDetect ? "e.g. +6281234567890" : placeholder}
             />
           </div>
 
@@ -292,7 +482,14 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
                   <input
                     type="text"
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onChange={(e) => {
+                      // Allow letters, numbers, and spaces for country search
+                      const value = e.target.value;
+                      const isValidSearch = /^[a-zA-Z0-9\s]*$/.test(value);
+                      if (isValidSearch) {
+                        setSearchQuery(value);
+                      }
+                    }}
                     placeholder="Search countries..."
                     className="w-full px-3 py-2 text-sm border border-neutral-200 rounded-md focus:outline-none focus:border-primary-300"
                   />
