@@ -1,4 +1,8 @@
 
+## [v0.12.0] - 2025-07-31
+- fix: us and canada
+
+
 ## [v0.11.0] - 2025-07-31
 - fix: add auto detect country phoneInput
 
