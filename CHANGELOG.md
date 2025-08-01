@@ -1,4 +1,8 @@
 
+## [v0.13.0] - 2025-08-01
+- fix: add tab/enter on select autocomplete
+
+
 ## [v0.12.0] - 2025-07-31
 - fix: us and canada
 
