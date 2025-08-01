@@ -631,3 +631,87 @@ export const PositioningWithDifferentHeights: Story = {
     </div>
   ),
 };
+
+// Keyboard Navigation Examples
+export const KeyboardNavigation: Story = {
+  args: {
+    label: 'Keyboard Navigation Demo',
+    options: countryOptions,
+    placeholder: 'Type to search, then use Tab/Enter...',
+    helperText: 'Use Tab/Enter to select single option, Escape to close',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+## Keyboard Navigation Features
+
+This AutoComplete component supports simplified keyboard navigation:
+
+- **Enter**: Select the single matching option (if only one option matches)
+- **Tab**: Select the single matching option (if only one option matches)
+- **Escape**: Close dropdown
+
+### Behavior:
+- If only one option matches the search, pressing Tab/Enter will select it automatically
+- If multiple options match, use mouse to click on the desired option
+- Simple and intuitive keyboard interaction
+        `,
+      },
+    },
+  },
+};
+
+export const KeyboardNavigationSingleOption: Story = {
+  args: {
+    label: 'Single Option Auto-Selection',
+    options: [
+      { value: 'apple', label: 'Apple' },
+      { value: 'banana', label: 'Banana' },
+      { value: 'orange', label: 'Orange' },
+    ],
+    placeholder: 'Type "a" to see single option auto-selection...',
+    helperText: 'When only one option matches, Tab/Enter will select it automatically',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+## Single Option Auto-Selection
+
+When the search results in only one matching option, the component will automatically select that option when you press Tab or Enter.
+
+Try typing "a" in this example - you'll see only "Apple" matches, and pressing Tab or Enter will select it immediately.
+        `,
+      },
+    },
+  },
+};
+
+export const KeyboardNavigationLargeDataset: Story = {
+  args: {
+    label: 'Keyboard Navigation with Large Dataset',
+    options: largeCountryOptions,
+    placeholder: 'Search countries and use Tab/Enter...',
+    initialItemsToShow: 10,
+    itemsToLoad: 10,
+    maxDropdownHeight: 200,
+    helperText: 'Use Tab/Enter to select single option with virtual scrolling',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+## Keyboard Navigation with Virtual Scrolling
+
+This example demonstrates simplified keyboard navigation working with virtual scrolling:
+
+- Use Tab/Enter to select the single matching option
+- When multiple options match, use mouse to select
+- Virtual scrolling still works for large datasets
+- Simple and efficient interaction
+        `,
+      },
+    },
+  },
+};

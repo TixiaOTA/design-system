@@ -226,7 +226,16 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
         return;
       }
       
-      setIsOpen(true);
+      // Only open dropdown if there are filtered options
+      const hasFilteredOptions = options.some(({ label }) => {
+        const searchTerm = value.toLowerCase().trim();
+        const optionLabel = label.toLowerCase();
+        return searchType === 'startsWith' 
+          ? optionLabel.startsWith(searchTerm)
+          : optionLabel.includes(searchTerm);
+      });
+      
+      setIsOpen(hasFilteredOptions);
       onChange?.(event);
     };
 
@@ -253,6 +262,21 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       inputRef.current?.dispatchEvent(selectEvent);
     };
 
+    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+      onBlur?.(e);
+    };
+
+    const filteredOptions = options.filter(({ label }) => {
+      const searchTerm = inputValue.toLowerCase().trim();
+      const optionLabel = label.toLowerCase();
+
+      if (searchType === 'startsWith') {
+        return optionLabel.startsWith(searchTerm);
+      } else { // include
+        return optionLabel.includes(searchTerm);
+      }
+    });
+
     const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
       if (!isControlled) {
         const doc = getDocument();
@@ -261,13 +285,12 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
             detail: { id },
           })
         );
-        setIsOpen(true);
+        // Open dropdown on focus if there are filtered options
+        if (filteredOptions.length > 0) {
+          setIsOpen(true);
+        }
       }
       onFocus?.(e);
-    };
-
-    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-      onBlur?.(e);
     };
 
     const handleDropdownScroll = () => {
@@ -281,16 +304,7 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       }
     };
 
-    const filteredOptions = options.filter(({ label }) => {
-      const searchTerm = inputValue.toLowerCase().trim();
-      const optionLabel = label.toLowerCase();
 
-      if (searchType === 'startsWith') {
-        return optionLabel.startsWith(searchTerm);
-      } else { // include
-        return optionLabel.includes(searchTerm);
-      }
-    });
 
     // Reset visible items count when search changes
     useEffect(() => {
@@ -319,6 +333,36 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
 
     // If we have a clear button and a right icon, use the clear button instead
     const effectiveRightIcon = shouldShowClear ? 'mdi:close' : rightIcon;
+
+    // Keyboard navigation handlers - simplified for single option selection only
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (!showDropdown || visibleOptions.length === 0) {
+        return;
+      }
+
+      switch (e.key) {
+        case 'Enter':
+          e.preventDefault();
+          if (visibleOptions.length === 1) {
+            // If only one option, select it
+            handleSelect(visibleOptions[0]);
+          }
+          break;
+
+        case 'Tab':
+          if (visibleOptions.length === 1) {
+            // If only one option, select it
+            e.preventDefault();
+            handleSelect(visibleOptions[0]);
+          }
+          break;
+
+        case 'Escape':
+          e.preventDefault();
+          setIsOpen(false);
+          break;
+      }
+    };
 
     const renderDropdown = () => {
       if (!showDropdown) return null;
@@ -396,6 +440,7 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
             onChange={handleInputChange}
             onFocus={handleFocus}
             onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
             variant={variant}
             size={size}
             rounded={rounded}
