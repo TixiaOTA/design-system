@@ -7,8 +7,8 @@ interface LoaderProps {
   variant: LoaderVariant;
   customImage?: string;
   customMessage?: ReactNode;
-  width?: number | string;
-  height?: number | string;
+  width?: string;
+  height?: string;
   className?: string;
 }
 
@@ -32,20 +32,19 @@ export const Loader = ({
   variant,
   customImage,
   customMessage,
-  width,
-  height,
+  width = 'w-full',
+  height = 'h-full',
   className = '',
 }: LoaderProps) => {
   const loaderCode = variantToLoaderCode[variant];
   const config = loaderConfig[loaderCode];
 
   return (
-    <div className={`flex flex-col items-center justify-center p-8 text-center gap-4 ${className}`}>
+    <div className={`flex flex-col items-center justify-center p-8 text-center gap-4 ${width} ${height} ${className}`}>
       <img
         src={customImage || config.image}
         alt="Loading animation"
         className="max-w-[200px] h-auto"
-        style={{ width, height }}
       />
       {customMessage ? (
         typeof customMessage === 'string' ? (

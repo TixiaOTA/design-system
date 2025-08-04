@@ -4,8 +4,8 @@ interface LoaderProps {
     variant: LoaderVariant;
     customImage?: string;
     customMessage?: ReactNode;
-    width?: number | string;
-    height?: number | string;
+    width?: string;
+    height?: string;
     className?: string;
 }
 export declare const Loader: ({ variant, customImage, customMessage, width, height, className, }: LoaderProps) => import("react/jsx-runtime").JSX.Element;

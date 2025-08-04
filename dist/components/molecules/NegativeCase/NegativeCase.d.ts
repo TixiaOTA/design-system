@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-export type NegativeCaseVariant = 'no-internet' | 'data-not-found' | 'under-development' | 'information-unavailable' | 'payment-success' | 'payment-failed' | 'no-order' | 'timeout' | 'on-process' | 'page-not-found';
+export type NegativeCaseVariant = 'no-internet' | 'data-not-found' | 'under-development' | 'information-unavailable' | 'payment-success' | 'payment-failed' | 'no-order' | 'timeout' | 'on-process' | 'page-not-found' | 'no-seat-available' | 'change-price';
 interface NegativeCaseProps {
     variant: NegativeCaseVariant;
     customMessage?: ReactNode;
