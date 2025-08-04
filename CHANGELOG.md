@@ -1,4 +1,8 @@
 
+## [v0.14.0] - 2025-08-04
+- feat: add negative cases
+
+
 ## [v0.13.0] - 2025-08-01
 - fix: add tab/enter on select autocomplete
 
