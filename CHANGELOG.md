@@ -1,4 +1,8 @@
 
+## [v0.15.0] - 2025-08-05
+- feat: update loader
+
+
 ## [v0.14.0] - 2025-08-04
 - feat: add negative cases
 
