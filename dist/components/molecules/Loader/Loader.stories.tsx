@@ -9,6 +9,37 @@ const meta: Meta<typeof Loader> = {
     layout: "centered",
   },
   tags: ["autodocs"],
+  argTypes: {
+    width: {
+      control: { type: 'text' },
+      description: 'Container width (Tailwind class or number for pixels)',
+    },
+    height: {
+      control: { type: 'text' },
+      description: 'Container height (Tailwind class or number for pixels)',
+    },
+    widthImg: {
+      control: { type: 'text' },
+      description: 'Image width (Tailwind class or number for pixels)',
+    },
+    heightImg: {
+      control: { type: 'text' },
+      description: 'Image height (Tailwind class or number for pixels)',
+    },
+    customImage: {
+      control: { type: 'text' },
+      description: 'Custom image URL',
+    },
+    customMessage: {
+      control: { type: 'text' },
+      description: 'Custom loading message',
+    },
+    variant: {
+      control: { type: 'select' },
+      options: ['flight-light', 'flight-dark'],
+      description: 'Loader variant',
+    },
+  },
 };
 
 export default meta;
@@ -29,6 +60,17 @@ export const AllVariants: Story = {
   ),
 };
 
+export const Interactive: Story = {
+  args: {
+    variant: "flight-light",
+    width: "w-full",
+    height: "h-full",
+    widthImg: "w-auto",
+    heightImg: "h-auto",
+    customMessage: "Loading, please wait...",
+  },
+};
+
 export const WithCustomImage: Story = {
   args: {
     variant: "flight-light",
@@ -40,8 +82,8 @@ export const WithCustomImageAndSize: Story = {
   args: {
     variant: "flight-dark",
     customImage: "https://placehold.co/120x80.gif",
-    width: 120,
-    height: 80,
+    widthImg: "w-32",
+    heightImg: "h-20",
   },
 };
 
@@ -55,8 +97,6 @@ export const WithCustomMessageString: Story = {
 export const WithCustomMessageReactNode: Story = {
   args: {
     variant: "flight-light",
-    // width: "1050px",
-    // height: "1050px",
     customMessage: (
       <div className="space-y-2">
         <Text variant="body1" className="font-semibold text-blue-600">
@@ -75,5 +115,35 @@ export const WithCustomImageAndMessage: Story = {
     variant: "flight-dark",
     customImage: "https://placehold.co/200x100.gif",
     customMessage: "Custom loader with custom image and message",
+  },
+};
+
+export const WithCustomContainerSize: Story = {
+  args: {
+    variant: "flight-light",
+    width: "w-96",
+    height: "h-64",
+    widthImg: "w-32",
+    heightImg: "h-32",
+  },
+};
+
+export const WithNumberValues: Story = {
+  args: {
+    variant: "flight-dark",
+    width: 400,
+    height: 300,
+    widthImg: 128,
+    heightImg: 128,
+  },
+};
+
+export const MixedValues: Story = {
+  args: {
+    variant: "flight-light",
+    width: "w-96",
+    height: 300,
+    widthImg: 100,
+    heightImg: "h-24",
   },
 };

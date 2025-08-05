@@ -7,8 +7,10 @@ interface LoaderProps {
   variant: LoaderVariant;
   customImage?: string;
   customMessage?: ReactNode;
-  width?: string;
-  height?: string;
+  width?: string | number;
+  height?: string | number;
+  widthImg?: string | number;
+  heightImg?: string | number;
   className?: string;
 }
 
@@ -28,23 +30,50 @@ const variantToLoaderCode: Record<LoaderVariant, string> = {
   'flight-dark': 'FLIGHT_DARK',
 };
 
+// Helper function to convert width/height values to CSS classes or inline styles
+const getDimensionStyle = (value: string | number | undefined, defaultClass: string): { className: string; style?: React.CSSProperties } => {
+  if (value === undefined) {
+    return { className: defaultClass };
+  }
+  
+  if (typeof value === 'number') {
+    return { 
+      className: '', 
+      style: { width: `${value}px`, height: `${value}px` } 
+    };
+  }
+  
+  return { className: value };
+};
+
 export const Loader = ({
   variant,
   customImage,
   customMessage,
   width = 'w-full',
   height = 'h-full',
+  widthImg = 'w-auto',
+  heightImg = 'h-auto',
   className = '',
 }: LoaderProps) => {
   const loaderCode = variantToLoaderCode[variant];
   const config = loaderConfig[loaderCode];
 
+  const containerStyle = getDimensionStyle(width, 'w-full');
+  const containerHeightStyle = getDimensionStyle(height, 'h-full');
+  const imageWidthStyle = getDimensionStyle(widthImg, 'w-auto');
+  const imageHeightStyle = getDimensionStyle(heightImg, 'h-auto');
+
   return (
-    <div className={`flex flex-col items-center justify-center p-8 text-center gap-4 ${width} ${height} ${className}`}>
+    <div 
+      className={`flex flex-col items-center justify-center p-8 text-center gap-4 ${containerStyle.className} ${containerHeightStyle.className} ${className}`}
+      style={{ ...containerStyle.style, ...containerHeightStyle.style }}
+    >
       <img
         src={customImage || config.image}
         alt="Loading animation"
-        className="max-w-[200px] h-auto"
+        className={`${imageWidthStyle.className} ${imageHeightStyle.className}`}
+        style={{ ...imageWidthStyle.style, ...imageHeightStyle.style }}
       />
       {customMessage ? (
         typeof customMessage === 'string' ? (
