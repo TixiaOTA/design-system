@@ -1,5 +1,6 @@
 import React from 'react';
 export type DialogSize = 'sm' | 'md' | 'lg' | 'xl' | 'fullscreen';
+export type DialogRounded = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
 interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
     isOpen: boolean;
     onClose: () => void;
@@ -9,6 +10,7 @@ interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
     header?: React.ReactNode;
     closeOnBackdropClick?: boolean;
     size?: DialogSize;
+    rounded?: DialogRounded;
 }
 interface DialogTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
     children: React.ReactNode;

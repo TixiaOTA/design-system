@@ -1,7 +1,7 @@
 import React from "react";
 export type PrimitiveDatePickerVariant = "default" | "error" | "success" | "ghost" | "underline";
 export type PrimitiveDatePickerSize = "sm" | "md" | "lg";
-export type PrimitiveDatePickerRounded = "none" | "sm" | "md" | "lg" | "full";
+export type PrimitiveDatePickerRounded = "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full";
 export type PrimitiveDatePickerLabelPlacement = "top" | "left";
 export type DateFormat = "DD-MM-YYYY" | "YYYY-MM-DD" | "MM-DD-YYYY";
 export interface PrimitiveDatePickerProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size" | "onChange" | "value"> {

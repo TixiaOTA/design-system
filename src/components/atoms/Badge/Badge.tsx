@@ -5,7 +5,7 @@ export interface BadgeProps {
   children: React.ReactNode;
   variant?: 'primary' | 'secondary' | 'success' | 'warning' | 'error';
   size?: 'small' | 'medium' | 'large';
-  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
+  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
   className?: string;
 }
 
@@ -13,7 +13,7 @@ export const Badge: React.FC<BadgeProps> = ({
   children,
   variant = 'primary',
   size = 'medium',
-  rounded = 'md',
+  rounded = 'xl',
   className = '',
 }) => {
   const variantClasses = {
@@ -35,6 +35,9 @@ export const Badge: React.FC<BadgeProps> = ({
     sm: 'rounded-sm',
     md: 'rounded-md',
     lg: 'rounded-lg',
+    xl: 'rounded-xl',
+    '2xl': 'rounded-2xl',
+    '3xl': 'rounded-3xl',
     full: 'rounded-full',
   };
 

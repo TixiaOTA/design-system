@@ -22,12 +22,15 @@ const notificationVariants = cva(
         sm: 'rounded-sm',
         md: 'rounded-md',
         lg: 'rounded-lg',
+        xl: 'rounded-xl',
+        '2xl': 'rounded-2xl',
+        '3xl': 'rounded-3xl',
         full: 'rounded-full',
       },
     },
     defaultVariants: {
       variant: 'default',
-      rounded: 'md',
+      rounded: 'xl',
     },
   }
 );
@@ -42,7 +45,7 @@ export interface NotificationProps {
   /** The visual style variant */
   variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
   /** Border radius of the notification */
-  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
+  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
   /** Whether to show a close button */
   showClose?: boolean;
   /** Callback when the notification is closed */
@@ -56,7 +59,7 @@ export const Notification = ({
   children,
   icon,
   variant = 'default',
-  rounded = 'md',
+  rounded = 'xl',
   showClose = false,
   onClose,
   className,

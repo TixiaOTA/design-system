@@ -179,6 +179,21 @@ export const RoundedVariants: Story = {
       />
       <AutoComplete
         {...args}
+        label="Extra Large Rounded"
+        rounded="xl"
+      />
+      <AutoComplete
+        {...args}
+        label="2xl Rounded"
+        rounded="2xl"
+      />
+      <AutoComplete
+        {...args}
+        label="3xl Rounded"
+        rounded="3xl"
+      />
+      <AutoComplete
+        {...args}
         label="Full Rounded"
         rounded="full"
       />

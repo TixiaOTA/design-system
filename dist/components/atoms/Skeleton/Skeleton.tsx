@@ -18,6 +18,9 @@ const skeletonVariants = cva(
         sm: 'rounded-sm',
         md: 'rounded-md',
         lg: 'rounded-lg',
+        xl: 'rounded-xl',
+        '2xl': 'rounded-2xl',
+        '3xl': 'rounded-3xl',
         full: 'rounded-full',
       },
       fullWidth: {
@@ -41,7 +44,7 @@ export interface SkeletonProps {
   /** The visual style variant */
   variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
   /** Border radius of the skeleton */
-  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
+  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
   /** Whether the skeleton should take full width */
   fullWidth?: boolean;
   /** Additional class name */
@@ -52,7 +55,7 @@ export const Skeleton = ({
   width,
   height,
   variant = 'default',
-  rounded = 'md',
+  rounded = 'xl',
   fullWidth = false,
   className,
 }: SkeletonProps) => {

@@ -31,6 +31,8 @@ const cardVariants = cva(
         md: 'rounded-md',
         lg: 'rounded-lg',
         xl: 'rounded-xl',
+        '2xl': 'rounded-2xl',
+        '3xl': 'rounded-3xl',
         full: 'rounded-full',
       }
     },
@@ -38,7 +40,7 @@ const cardVariants = cva(
       variant: 'default',
       padding: 'md',
       shadow: 'sm',
-      rounded: 'md'
+      rounded: 'xl'
     },
   }
 );
@@ -46,7 +48,7 @@ const cardVariants = cva(
 export type CardVariant = 'default' | 'elevated' | 'outline' | 'ghost';
 export type CardPadding = 'none' | 'sm' | 'md' | 'lg';
 export type CardShadow = 'none' | 'sm' | 'md' | 'lg' | 'xl';
-export type CardRounded = 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
+export type CardRounded = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: CardVariant;
@@ -62,7 +64,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
     variant = 'default', 
     padding = 'md', 
     shadow = 'none', 
-    rounded = 'md', 
+    rounded = '2xl', 
     asChild = false, 
     ...props 
   }, ref) => {

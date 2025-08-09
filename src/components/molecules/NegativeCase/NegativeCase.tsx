@@ -14,7 +14,8 @@ export type NegativeCaseVariant =
   | 'on-process'
   | 'page-not-found'
   | 'no-seat-available'
-  | 'change-price';
+  | 'change-price'
+  | 'help-desk';
 
 interface NegativeCaseProps {
   variant: NegativeCaseVariant;
@@ -76,6 +77,10 @@ const appErrorConfig: Record<string, { image: string; message: string }> = {
     image: 'https://design-system-eaip.onrender.com/img/change-price.svg',
     message: 'The price has been changed. Please try again.',
   },
+  'HELP_DESK': {
+    image: 'https://design-system-eaip.onrender.com/img/help-desk.svg',
+    message: 'Please contact our help desk for assistance.',
+  },
 };
 
 const variantToErrorCode: Record<NegativeCaseVariant, string> = {
@@ -91,6 +96,7 @@ const variantToErrorCode: Record<NegativeCaseVariant, string> = {
   'page-not-found': 'PAGE_NOT_FOUND',
   'no-seat-available': 'NO_SEAT_AVAILABLE',
   'change-price': 'CHANGE_PRICE',
+  'help-desk': 'HELP_DESK',
 };
 
 export const NegativeCase = ({

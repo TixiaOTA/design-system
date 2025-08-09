@@ -41,7 +41,7 @@ const meta = {
     },
     rounded: {
       control: 'select',
-      options: ['none', 'sm', 'md', 'lg', 'full'],
+      options: ['none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full'],
     },
     position: {
       control: 'select',
@@ -397,6 +397,9 @@ export const RoundedVariants: Story = {
       <Select rounded="sm" options={defaultOptions} placeholder="Small Rounded" />
       <Select rounded="md" options={defaultOptions} placeholder="Medium Rounded" />
       <Select rounded="lg" options={defaultOptions} placeholder="Large Rounded" />
+      <Select rounded="xl" options={defaultOptions} placeholder="Extra Large Rounded" />
+      <Select rounded="2xl" options={defaultOptions} placeholder="2xl Rounded" />
+      <Select rounded="3xl" options={defaultOptions} placeholder="3xl Rounded" />
       <Select rounded="full" options={defaultOptions} placeholder="Full Rounded" />
     </div>
   ),

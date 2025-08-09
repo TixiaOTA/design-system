@@ -24,6 +24,14 @@ const meta: Meta<typeof Dialog> = {
       options: ["blur", "dark", "transparent"],
     },
     closeOnBackdropClick: { control: "boolean" },
+    size: {
+      control: "select",
+      options: ["sm", "md", "lg", "xl", "fullscreen"],
+    },
+    rounded: {
+      control: "select",
+      options: ["none", "sm", "md", "lg", "xl", "2xl", "3xl", "full"],
+    },
   },
 };
 

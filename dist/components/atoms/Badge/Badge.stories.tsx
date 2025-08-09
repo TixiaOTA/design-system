@@ -16,7 +16,7 @@ const meta = {
     },
     rounded: {
       control: 'select',
-      options: ['none', 'sm', 'md', 'lg', 'full'],
+      options: ['none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full'],
     },
   },
 } satisfies Meta<typeof Badge>;

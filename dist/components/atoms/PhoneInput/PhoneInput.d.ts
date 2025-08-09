@@ -1,7 +1,7 @@
 import React from "react";
 export type PhoneInputVariant = "default" | "error" | "success" | "ghost" | "underline";
 export type PhoneInputSize = "sm" | "md" | "lg";
-export type PhoneInputRounded = "none" | "sm" | "md" | "lg" | "full";
+export type PhoneInputRounded = "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full";
 export interface PhoneInputProps {
     /** Visual style variant */
     variant?: PhoneInputVariant;

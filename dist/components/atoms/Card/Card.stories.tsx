@@ -25,7 +25,7 @@ const meta = {
     },
     rounded: {
       control: 'select',
-      options: ['none', 'sm', 'md', 'lg', 'xl', 'full'],
+      options: ['none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full'],
     },
   },
 } satisfies Meta<typeof Card>;
@@ -90,6 +90,8 @@ export const Rounded: Story = {
       <Card rounded="md">Medium Rounded</Card>
       <Card rounded="lg">Large Rounded</Card>
       <Card rounded="xl">Extra Large Rounded</Card>
+      <Card rounded="2xl">2xl Rounded</Card>
+      <Card rounded="3xl">3xl Rounded</Card>
       <Card rounded="full">Full Rounded</Card>
     </div>
   ),

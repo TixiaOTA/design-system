@@ -1,7 +1,7 @@
 import React from 'react';
 export type InputVariant = 'default' | 'error' | 'success' | 'ghost' | 'underline';
 export type InputSize = 'sm' | 'md' | 'lg';
-export type InputRounded = 'none' | 'sm' | 'md' | 'lg' | 'full';
+export type InputRounded = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
 export type LabelPlacement = 'top' | 'left';
 export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
     /** Visual style variant */

@@ -1,7 +1,7 @@
 import React from 'react';
 export type AccordionVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'default' | 'light' | 'dark' | 'info';
 export type AccordionShadow = 'none' | 'sm' | 'md' | 'lg' | 'xl';
-export type AccordionRounded = 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
+export type AccordionRounded = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
 export interface AccordionItem {
     id: string;
     title: string | React.ReactNode;

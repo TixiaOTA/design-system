@@ -35,7 +35,7 @@ export interface AutoCompleteProps extends Omit<React.InputHTMLAttributes<HTMLIn
     /** Size of the input */
     size?: 'sm' | 'md' | 'lg';
     /** Border radius of the input */
-    rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
+    rounded?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
     /** Icon to display on the left side of the input */
     leftIcon?: string;
     /** Icon to display on the right side of the input */

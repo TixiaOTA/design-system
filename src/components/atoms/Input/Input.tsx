@@ -24,6 +24,9 @@ const inputVariants = cva(
         sm: 'rounded-sm',
         md: 'rounded-md',
         lg: 'rounded-lg',
+        xl: 'rounded-xl',
+        '2xl': 'rounded-2xl',
+        '3xl': 'rounded-3xl',
         full: 'rounded-full',
       },
       fullWidth: {
@@ -34,7 +37,7 @@ const inputVariants = cva(
     defaultVariants: {
       variant: 'default',
       size: 'md',
-      rounded: 'md',
+      rounded: 'xl',
       fullWidth: true,
     },
   }
@@ -42,7 +45,7 @@ const inputVariants = cva(
 
 export type InputVariant = 'default' | 'error' | 'success' | 'ghost' | 'underline';
 export type InputSize = 'sm' | 'md' | 'lg';
-export type InputRounded = 'none' | 'sm' | 'md' | 'lg' | 'full';
+export type InputRounded = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
 export type LabelPlacement = 'top' | 'left';
 
 export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
@@ -79,7 +82,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     className, 
     variant = 'default', 
     size = 'md', 
-    rounded = 'md', 
+    rounded = 'xl', 
     error = false,
     errorText, 
     helperText, 

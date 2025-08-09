@@ -24,6 +24,9 @@ const popoverVariants = cva(
         sm: "rounded-sm",
         md: "rounded-md",
         lg: "rounded-lg",
+        xl: "rounded-xl",
+        "2xl": "rounded-2xl",
+        "3xl": "rounded-3xl",
         full: "rounded-full",
       },
       shadow: {
@@ -36,7 +39,7 @@ const popoverVariants = cva(
     },
     defaultVariants: {
       color: "neutral",
-      rounded: "md",
+      rounded: "xl",
       shadow: "md",
     },
   }
@@ -57,7 +60,7 @@ export interface PopOverProps {
     | "light"
     | "custom";
   customColor?: string; // for custom color code
-  rounded?: "none" | "sm" | "md" | "lg" | "full";
+  rounded?: "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full";
   shadow?: "none" | "sm" | "md" | "lg" | "xl";
   className?: string;
   trigger?: "hover" | "click";
@@ -73,7 +76,7 @@ export const Popover: React.FC<PopOverProps> = ({
   position = "bottom",
   color = "light",
   customColor,
-  rounded = "md",
+  rounded = "xl",
   shadow = "md",
   className,
   trigger = "click",

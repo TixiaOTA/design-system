@@ -31,6 +31,9 @@ const timePickerVariants = cva(
         sm: 'rounded-sm',
         md: 'rounded-md',
         lg: 'rounded-lg',
+        xl: 'rounded-xl',
+        '2xl': 'rounded-2xl',
+        '3xl': 'rounded-3xl',
         full: 'rounded-full',
       },
       fullWidth: {
@@ -41,7 +44,7 @@ const timePickerVariants = cva(
     defaultVariants: {
       variant: 'default',
       size: 'md',
-      rounded: 'md',
+      rounded: 'xl',
       fullWidth: true,
     },
   }
@@ -59,7 +62,7 @@ export interface PrimitiveTimePickerProps extends Omit<React.InputHTMLAttributes
   /** Size of the input */
   size?: 'sm' | 'md' | 'lg';
   /** Border radius of the input */
-  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
+  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
   /** Whether the input is disabled */
   disabled?: boolean;
   /** Error message to display below the input */
@@ -92,7 +95,7 @@ export const PrimitiveTimePicker = forwardRef<HTMLInputElement, PrimitiveTimePic
       use24Hour = false,
       variant = 'default',
       size = 'md',
-      rounded = 'md',
+      rounded = 'xl',
       disabled = false,
       errorText,
       helperText,

@@ -12,7 +12,7 @@ const meta: Meta<typeof Skeleton> = {
     },
     rounded: {
       control: 'select',
-      options: ['none', 'sm', 'md', 'lg', 'full'],
+      options: ['none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full'],
     },
     fullWidth: {
       control: 'boolean',
@@ -28,7 +28,7 @@ export const Default: Story = {
     width: 200,
     height: 20,
     variant: 'default',
-    rounded: 'md',
+    rounded: 'xl',
   },
 };
 
@@ -52,6 +52,9 @@ export const RoundedVariants: Story = {
       <Skeleton width={200} height={20} rounded="sm" />
       <Skeleton width={200} height={20} rounded="md" />
       <Skeleton width={200} height={20} rounded="lg" />
+      <Skeleton width={200} height={20} rounded="xl" />
+      <Skeleton width={200} height={20} rounded="2xl" />
+      <Skeleton width={200} height={20} rounded="3xl" />
       <Skeleton width={200} height={20} rounded="full" />
     </div>
   ),

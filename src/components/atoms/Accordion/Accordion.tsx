@@ -4,7 +4,7 @@ import { Icon } from '../../atoms/Icons/Icons';
 
 export type AccordionVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'default' | 'light' | 'dark' | 'info';
 export type AccordionShadow = 'none' | 'sm' | 'md' | 'lg' | 'xl';
-export type AccordionRounded = 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
+export type AccordionRounded = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
 
 export interface AccordionItem {
   id: string;
@@ -83,6 +83,8 @@ const roundedStyles: Record<AccordionRounded, string> = {
   md: 'rounded-md',
   lg: 'rounded-lg',
   xl: 'rounded-xl',
+  '2xl': 'rounded-2xl',
+  '3xl': 'rounded-3xl',
   full: 'rounded-full',
 };
 
@@ -96,7 +98,7 @@ export const Accordion: React.FC<AccordionProps> = ({
   contentClassName,
   variant = 'primary',
   shadow = 'none',
-  rounded = 'lg',
+  rounded = 'xl',
 }) => {
   const [openIds, setOpenIds] = useState<string[]>(defaultOpenIds);
 

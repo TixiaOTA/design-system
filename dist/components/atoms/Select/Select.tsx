@@ -32,6 +32,9 @@ const selectVariants = cva(
         sm: 'rounded-sm',
         md: 'rounded-md',
         lg: 'rounded-lg',
+        xl: 'rounded-xl',
+        "2xl": 'rounded-2xl',
+        "3xl": 'rounded-3xl',
         full: 'rounded-full',
       },
       fullWidth: {
@@ -43,12 +46,14 @@ const selectVariants = cva(
       variant: 'default',
       size: 'md',
       fullWidth: true,
+      rounded: 'xl',
     },
   }
 );
 
 export type SelectVariant = 'default' | 'error' | 'success' | 'ghost' | 'underline';
 export type SelectSize = 'sm' | 'md' | 'lg';
+export type SelectRounded = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
 
 export interface SelectOption {
   label: string;
@@ -94,7 +99,7 @@ export interface SelectProps
   /** Icon to display on the right side of the select */
   rightIcon?: string;
   /** Border radius of the select */
-  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
+  rounded?: SelectRounded;
 }
 
 const Select = forwardRef<HTMLDivElement, SelectProps>(
@@ -103,7 +108,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
       className,
       variant = 'default',
       size = 'md',
-      rounded = 'md',
+      rounded = 'xl',
       options,
       label,
       error = false,

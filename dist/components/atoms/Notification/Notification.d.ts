@@ -10,7 +10,7 @@ export interface NotificationProps {
     /** The visual style variant */
     variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
     /** Border radius of the notification */
-    rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
+    rounded?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
     /** Whether to show a close button */
     showClose?: boolean;
     /** Callback when the notification is closed */

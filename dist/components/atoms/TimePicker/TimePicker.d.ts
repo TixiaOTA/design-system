@@ -11,7 +11,7 @@ export interface PrimitiveTimePickerProps extends Omit<React.InputHTMLAttributes
     /** Size of the input */
     size?: 'sm' | 'md' | 'lg';
     /** Border radius of the input */
-    rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
+    rounded?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
     /** Whether the input is disabled */
     disabled?: boolean;
     /** Error message to display below the input */

@@ -38,6 +38,9 @@ const primitiveDatePickerVariants = cva(
         sm: "rounded-sm",
         md: "rounded-md",
         lg: "rounded-lg",
+        xl: "rounded-xl",
+        "2xl": "rounded-2xl",
+        "3xl": "rounded-3xl",
         full: "rounded-full",
       },
       fullWidth: {
@@ -48,7 +51,7 @@ const primitiveDatePickerVariants = cva(
     defaultVariants: {
       variant: "default",
       size: "md",
-      rounded: "md",
+      rounded: "xl",
       fullWidth: true,
     },
   }
@@ -61,7 +64,7 @@ export type PrimitiveDatePickerVariant =
   | "ghost"
   | "underline";
 export type PrimitiveDatePickerSize = "sm" | "md" | "lg";
-export type PrimitiveDatePickerRounded = "none" | "sm" | "md" | "lg" | "full";
+export type PrimitiveDatePickerRounded = "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full";
 export type PrimitiveDatePickerLabelPlacement = "top" | "left";
 export type DateFormat = "DD-MM-YYYY" | "YYYY-MM-DD" | "MM-DD-YYYY";
 
@@ -111,7 +114,7 @@ export const PrimitiveDatePicker = forwardRef<
       maxDate,
       variant = "default",
       size = "md",
-      rounded = "md",
+      rounded = "xl",
       disabled = false,
       error = false,
       errorText,

@@ -31,7 +31,7 @@ const meta: Meta<typeof Button> = {
     },
     rounded: {
       control: "select",
-      options: ["none", "sm", "md", "lg", "full"],
+      options: ["none", "sm", "md", "lg", "xl", "2xl", "3xl", "full"],
     },
     isLoading: {
       control: "boolean",
@@ -167,6 +167,9 @@ export const RoundedVariants: Story = {
       <Button rounded="sm">Small</Button>
       <Button rounded="md">Medium</Button>
       <Button rounded="lg">Large</Button>
+      <Button rounded="xl">Extra Large</Button>
+      <Button rounded="2xl">2xl</Button>
+      <Button rounded="3xl">3xl</Button>
       <Button rounded="full">Full</Button>
     </div>
   ),

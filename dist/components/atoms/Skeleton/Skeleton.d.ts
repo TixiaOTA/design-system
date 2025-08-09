@@ -6,7 +6,7 @@ export interface SkeletonProps {
     /** The visual style variant */
     variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
     /** Border radius of the skeleton */
-    rounded?: 'none' | 'sm' | 'md' | 'lg' | 'full';
+    rounded?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
     /** Whether the skeleton should take full width */
     fullWidth?: boolean;
     /** Additional class name */

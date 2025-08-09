@@ -20,7 +20,7 @@ const meta = {
     },
     rounded: {
       control: 'select',
-      options: ['none', 'sm', 'md', 'lg', 'full'],
+      options: ['none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full'],
     },
   },
 } satisfies Meta<typeof Chip>;
@@ -76,6 +76,9 @@ export const RoundedVariants: Story = {
       <Chip rounded="sm">Small Rounded</Chip>
       <Chip rounded="md">Medium Rounded</Chip>
       <Chip rounded="lg">Large Rounded</Chip>
+      <Chip rounded="xl">Extra Large Rounded</Chip>
+      <Chip rounded="2xl">2xl Rounded</Chip>
+      <Chip rounded="3xl">3xl Rounded</Chip>
       <Chip rounded="full">Full Rounded</Chip>
     </div>
   ),

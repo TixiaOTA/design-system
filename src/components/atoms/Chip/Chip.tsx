@@ -5,7 +5,7 @@ import { Icon } from '../../atoms/Icons/Icons';
 export type ChipVariant = 'solid' | 'outline' | 'subtle' | 'soft';
 export type ChipColor = 'primary' | 'success' | 'warning' | 'error' | 'info' | 'danger' | 'default';
 export type ChipSize = 'sm' | 'md' | 'lg';
-export type ChipRounded = 'none' | 'sm' | 'md' | 'lg' | 'full';
+export type ChipRounded = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
 
 const variantStyles: Record<ChipVariant, Record<ChipColor, string>> = {
   solid: {
@@ -57,6 +57,9 @@ const roundedStyles: Record<ChipRounded, string> = {
   sm: 'rounded-sm',
   md: 'rounded-md',
   lg: 'rounded-lg',
+  xl: 'rounded-xl',
+  '2xl': 'rounded-2xl',
+  '3xl': 'rounded-3xl',
   full: 'rounded-full'
 };
 
@@ -76,7 +79,7 @@ const Chip: React.FC<ChipProps> = ({
   variant = 'solid',
   color = 'primary',
   size = 'md',
-  rounded = 'md',
+  rounded = 'xl',
   onClose,
   className,
   icon

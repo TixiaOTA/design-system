@@ -19,7 +19,7 @@ const meta: Meta<typeof PhoneInput> = {
     },
     rounded: {
       control: 'select',
-      options: ['none', 'sm', 'md', 'lg', 'full'],
+      options: ['none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full'],
     },
     fullWidth: {
       control: 'boolean',
@@ -207,6 +207,9 @@ export const DifferentRounded: Story = {
       <PhoneInput label="Small" rounded="sm" onChange={fn()} />
       <PhoneInput label="Medium" rounded="md" onChange={fn()} />
       <PhoneInput label="Large" rounded="lg" onChange={fn()} />
+      <PhoneInput label="Extra Large" rounded="xl" onChange={fn()} />
+      <PhoneInput label="2xl" rounded="2xl" onChange={fn()} />
+      <PhoneInput label="3xl" rounded="3xl" onChange={fn()} />
       <PhoneInput label="Full" rounded="full" onChange={fn()} />
     </div>
   ),

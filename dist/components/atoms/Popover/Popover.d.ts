@@ -5,7 +5,7 @@ export interface PopOverProps {
     position?: "top" | "bottom" | "left" | "right";
     color?: "primary" | "secondary" | "success" | "warning" | "danger" | "info" | "neutral" | "light" | "custom";
     customColor?: string;
-    rounded?: "none" | "sm" | "md" | "lg" | "full";
+    rounded?: "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full";
     shadow?: "none" | "sm" | "md" | "lg" | "xl";
     className?: string;
     trigger?: "hover" | "click";

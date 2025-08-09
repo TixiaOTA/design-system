@@ -5,6 +5,7 @@ import { Icon } from '../../atoms/Icons/Icons';
 import { getDocument } from '../../../utils/ssr';
 
 export type DialogSize = 'sm' | 'md' | 'lg' | 'xl' | 'fullscreen';
+export type DialogRounded = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
 
 interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;
@@ -15,6 +16,7 @@ interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
   header?: React.ReactNode;
   closeOnBackdropClick?: boolean;
   size?: DialogSize;
+  rounded?: DialogRounded;
 }
 
 interface DialogTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
@@ -77,6 +79,7 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
     header,
     closeOnBackdropClick = true,
     size = 'md',
+    rounded = 'xl',
     ...props 
   }, ref) => {
     const [isVisible, setIsVisible] = useState(false);
@@ -138,6 +141,31 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
     const doc = getDocument();
     if (!('body' in doc)) return null;
 
+    const getRoundedClass = (rounded: DialogRounded): string => {
+      switch (rounded) {
+        case 'none':
+          return 'rounded-none';
+        case 'sm':
+          return 'rounded-sm';
+        case 'md':
+          return 'rounded-md';
+        case 'lg':
+          return 'rounded-lg';
+        case 'xl':
+          return 'rounded-xl';
+        case '2xl':
+          return 'rounded-2xl';
+        case '3xl':
+          return 'rounded-3xl';
+        case 'full':
+          return 'rounded-full';
+        default:
+          return 'rounded-lg';
+      }
+    };
+
+    console.log(getRoundedClass(rounded), rounded);
+
     return createPortal(
       <div
         className={cn(
@@ -151,10 +179,11 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
         <div
           ref={ref}
           className={cn(
-            'relative transform rounded-lg bg-white p-6 shadow-xl transition-all duration-300',
+            'relative transform bg-white p-6 shadow-xl transition-all duration-300',
             sizeClasses[size],
             isAnimating ? 'scale-100 opacity-100' : 'scale-95 opacity-0',
-            className
+            className,
+            size === 'fullscreen' ? 'rounded-none' : getRoundedClass(rounded)
           )}
           onClick={(e) => e.stopPropagation()}
           {...props}

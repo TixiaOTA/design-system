@@ -31,6 +31,9 @@ const phoneInputVariants = cva(
         sm: "rounded-sm",
         md: "rounded-md",
         lg: "rounded-lg",
+        xl: "rounded-xl",
+        "2xl": "rounded-2xl",
+        "3xl": "rounded-3xl",
         full: "rounded-full",
       },
       fullWidth: {
@@ -41,7 +44,7 @@ const phoneInputVariants = cva(
     defaultVariants: {
       variant: "default",
       size: "md",
-      rounded: "md",
+      rounded: "xl",
       fullWidth: true,
     },
   }
@@ -54,7 +57,7 @@ export type PhoneInputVariant =
   | "ghost"
   | "underline";
 export type PhoneInputSize = "sm" | "md" | "lg";
-export type PhoneInputRounded = "none" | "sm" | "md" | "lg" | "full";
+export type PhoneInputRounded = "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full";
 
 // Utility function to detect country from phone number
 const detectCountryFromPhone = (phoneNumber: string) => {
@@ -157,7 +160,7 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
     className,
     variant = "default",
     size = "md",
-    rounded = "md",
+    rounded = "xl",
     error = false,
     errorText,
     helperText,
@@ -456,7 +459,7 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
               disabled={disabled}
               className={cn(
                 inputClassName,
-                showCountrySelector ? "rounded-l-none" : "rounded-l-md",
+                showCountrySelector ? "rounded-l-none" : `rounded-l-${rounded}`,
                 "flex-1 min-w-0 w-full"
               )}
               placeholder={autoDetect ? "e.g. +6281234567890" : placeholder}
@@ -467,16 +470,7 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
             createPortal(
               <div
                 ref={dropdownRef}
-                className={cn(
-                  "border border-neutral-200 bg-white shadow-lg overflow-y-auto",
-                  {
-                    "rounded-none": rounded === "none",
-                    "rounded-sm": rounded === "sm",
-                    "rounded-md": rounded === "md",
-                    "rounded-lg": rounded === "lg",
-                    "rounded-xl": rounded === "full",
-                  }
-                )}
+                className="border border-neutral-200 bg-white shadow-lg overflow-y-auto rounded-md"
               >
                 <div className="p-2 border-b border-neutral-200">
                   <input

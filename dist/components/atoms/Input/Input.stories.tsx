@@ -17,7 +17,7 @@ const meta: Meta<typeof Input> = {
     },
     rounded: {
       control: 'select',
-      options: ['none', 'sm', 'md', 'lg', 'full'],
+      options: ['none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full'],
     },
     labelPlacement: {
       control: 'select',
@@ -153,6 +153,9 @@ export const RoundedVariants: Story = {
       <Input placeholder="Small rounded" rounded="sm" />
       <Input placeholder="Medium rounded" rounded="md" />
       <Input placeholder="Large rounded" rounded="lg" />
+      <Input placeholder="Extra Large rounded" rounded="xl" />
+      <Input placeholder="2xl rounded" rounded="2xl" />
+      <Input placeholder="3xl rounded" rounded="3xl" />
       <Input placeholder="Full rounded" rounded="full" />
     </div>
   ),

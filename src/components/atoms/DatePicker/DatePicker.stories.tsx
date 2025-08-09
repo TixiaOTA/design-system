@@ -22,7 +22,7 @@ const meta: Meta<typeof DatePicker> = {
     },
     rounded: {
       control: "select",
-      options: ["none", "sm", "md", "lg", "full"],
+      options: ["none", "sm", "md", "lg", "xl", "2xl", "3xl", "full"],
       description: "The border radius of the date picker",
     },
     labelPlacement: {
@@ -166,6 +166,9 @@ export const RoundedVariants: Story = {
       <DatePicker label="Small Rounded" rounded="sm" placeholder="Select date" />
       <DatePicker label="Medium Rounded" rounded="md" placeholder="Select date" />
       <DatePicker label="Large Rounded" rounded="lg" placeholder="Select date" />
+      <DatePicker label="Extra Large Rounded" rounded="xl" placeholder="Select date" />
+      <DatePicker label="2xl Rounded" rounded="2xl" placeholder="Select date" />
+      <DatePicker label="3xl Rounded" rounded="3xl" placeholder="Select date" />
       <DatePicker label="Full Rounded" rounded="full" placeholder="Select date" />
     </div>
   ),

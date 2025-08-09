@@ -18,7 +18,7 @@ const meta: Meta<typeof Popover> = {
     },
     rounded: {
       control: "select",
-      options: ["none", "sm", "md", "lg", "full"],
+      options: ["none", "sm", "md", "lg", "xl", "2xl", "3xl", "full"],
     },
     shadow: {
       control: "select",
@@ -43,7 +43,7 @@ export const Default: Story = {
     children: <Button>Click me</Button>,
     position: "bottom",
     color: "primary",
-    rounded: "md",
+    rounded: "xl",
     shadow: "md",
     trigger: "click",
   },
@@ -103,6 +103,9 @@ export const RoundedAndShadow: Story = {
       <Popover content="Small" rounded="sm" shadow="sm"><Button>Small</Button></Popover>
       <Popover content="Medium" rounded="md" shadow="md"><Button>Medium</Button></Popover>
       <Popover content="Large" rounded="lg" shadow="lg"><Button>Large</Button></Popover>
+      <Popover content="Extra Large" rounded="xl" shadow="xl"><Button>Extra Large</Button></Popover>
+      <Popover content="2xl" rounded="2xl" shadow="xl"><Button>2xl</Button></Popover>
+      <Popover content="3xl" rounded="3xl" shadow="xl"><Button>3xl</Button></Popover>
       <Popover content="Full" rounded="full" shadow="xl"><Button>Full</Button></Popover>
     </div>
   ),
