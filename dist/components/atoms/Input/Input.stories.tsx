@@ -177,36 +177,6 @@ export const States: Story = {
   ),
 };
 
-// ReadOnly Examples
-export const ReadOnlyExamples: Story = {
-  render: () => (
-    <div className="flex flex-col gap-4">
-      <Input
-        label="Generated URL"
-        value="https://example.com/share/abc123"
-        readOnly
-        rightIcon="mdi:open-in-new"
-        onRightIconClick={() => alert('Opening URL in new tab...')}
-        helperText="Click the icon to open the URL"
-      />
-      <Input
-        label="Reference Number"
-        value="REF-2024-001"
-        readOnly
-        variant="success"
-        helperText="This is your unique reference number"
-      />
-      <Input
-        label="Error Message"
-        value="Invalid credentials"
-        readOnly
-        variant="error"
-        errorText="This is an error message that cannot be modified"
-      />
-    </div>
-  ),
-};
-
 // Layout Examples
 export const LayoutExamples: Story = {
   render: () => (
