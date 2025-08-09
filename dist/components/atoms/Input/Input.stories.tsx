@@ -183,7 +183,7 @@ export const ReadOnlyExamples: Story = {
     <div className="flex flex-col gap-4">
       <Input
         label="API Key"
-        value="sk_live_51NcX2dKJ8H9mP2qR4tY7wX0vB3nM6kL"
+        value="sample key to be pasted"
         readOnly
         rightIcon="mdi:content-copy"
         onRightIconClick={() => alert('API Key copied to clipboard!')}
