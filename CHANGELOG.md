@@ -1,4 +1,8 @@
 
+## [v0.17.0] - 2025-08-11
+- fix: rm console
+
+
 ## [v0.16.0] - 2025-08-09
 - fix: fix annoying error
 - fix: error github
