@@ -164,8 +164,6 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
       }
     };
 
-    console.log(getRoundedClass(rounded), rounded);
-
     return createPortal(
       <div
         className={cn(
