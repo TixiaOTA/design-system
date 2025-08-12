@@ -1,4 +1,8 @@
 
+## [v0.20.0] - 2025-08-12
+- fix: add scroll behavior dialog
+
+
 ## [v0.19.0] - 2025-08-12
 - fix: add more size dialog
 
