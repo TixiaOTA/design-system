@@ -1,6 +1,7 @@
 import React from 'react';
 export type DialogSize = 'sm' | 'md' | 'lg' | 'xl' | 'fullscreen';
 export type DialogRounded = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
+export type DialogPosition = 'center' | 'top' | 'bottom' | 'left' | 'right';
 interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
     isOpen: boolean;
     onClose: () => void;
@@ -11,6 +12,7 @@ interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
     closeOnBackdropClick?: boolean;
     size?: DialogSize;
     rounded?: DialogRounded;
+    position?: DialogPosition;
 }
 interface DialogTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
     children: React.ReactNode;

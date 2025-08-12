@@ -32,6 +32,10 @@ const meta: Meta<typeof Dialog> = {
       control: "select",
       options: ["none", "sm", "md", "lg", "xl", "2xl", "3xl", "full"],
     },
+    position: {
+      control: "select",
+      options: ["center", "top", "bottom", "left", "right"],
+    },
   },
 };
 
@@ -39,7 +43,7 @@ export default meta;
 type Story = StoryObj<typeof Dialog>;
 
 // Interactive Example with Header
-const InteractiveDialogWithHeader = () => {
+const InteractiveDialogWithHeader = (args: any) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => {
@@ -50,11 +54,12 @@ const InteractiveDialogWithHeader = () => {
     <>
       <Button onClick={() => setIsOpen(true)}>Open Dialog with Header</Button>
       <Dialog
+        {...args}
         isOpen={isOpen}
         onClose={handleClose}
-        backdrop="blur"
-        header={<DialogTitle>Custom Header</DialogTitle>}
-        closeOnBackdropClick={true}
+        backdrop={args.backdrop ?? "blur"}
+        header={args.header ?? <DialogTitle>Custom Header</DialogTitle>}
+        closeOnBackdropClick={args.closeOnBackdropClick ?? true}
       >
         <DialogBody>
           This dialog has a custom header with a close icon. The backdrop is
@@ -72,7 +77,7 @@ const InteractiveDialogWithHeader = () => {
 };
 
 // Example with Custom Header
-const DialogWithCustomHeader = () => {
+const DialogWithCustomHeader = (args: any) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => {
@@ -85,16 +90,19 @@ const DialogWithCustomHeader = () => {
         Open Dialog with Custom Header
       </Button>
       <Dialog
+        {...args}
         isOpen={isOpen}
         onClose={handleClose}
-        backdrop="dark"
+        backdrop={args.backdrop ?? "dark"}
         header={
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">🎉</span>
-            Custom Header with Icon
-          </div>
+          args.header ?? (
+            <div className="flex items-center gap-2">
+              <span className="text-2xl">🎉</span>
+              Custom Header with Icon
+            </div>
+          )
         }
-        closeOnBackdropClick={false}
+        closeOnBackdropClick={args.closeOnBackdropClick ?? false}
       >
         <DialogBody>
           This dialog has a custom header with an emoji and close button.
@@ -111,7 +119,7 @@ const DialogWithCustomHeader = () => {
 };
 
 // Example without Header
-const DialogWithoutHeader = () => {
+const DialogWithoutHeader = (args: any) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => {
@@ -123,7 +131,7 @@ const DialogWithoutHeader = () => {
       <Button onClick={() => setIsOpen(true)}>
         Open Dialog without Header
       </Button>
-      <Dialog isOpen={isOpen} onClose={handleClose} backdrop="dark">
+      <Dialog {...args} isOpen={isOpen} onClose={handleClose} backdrop={args.backdrop ?? "dark"}>
         <DialogBody>
           This dialog has no header and no close icon. It can only be closed by
           clicking outside or using the action buttons.
@@ -140,11 +148,11 @@ const DialogWithoutHeader = () => {
 };
 
 export const WithHeader: Story = {
-  render: () => <InteractiveDialogWithHeader />,
+  render: (args) => <InteractiveDialogWithHeader {...args} />,
 };
 
 export const WithCustomHeader: Story = {
-  render: () => <DialogWithCustomHeader />,
+  render: (args) => <DialogWithCustomHeader {...args} />,
   parameters: {
     docs: {
       description: {
@@ -156,7 +164,7 @@ export const WithCustomHeader: Story = {
 };
 
 export const WithoutHeader: Story = {
-  render: () => <DialogWithoutHeader />,
+  render: (args) => <DialogWithoutHeader {...args} />,
   parameters: {
     docs: {
       description: {
@@ -217,4 +225,38 @@ export const WithBlurBackdrop: Story = {
 
 export const WithTransparentBackdrop: Story = {
   render: (args) => <DialogTemplate {...args} backdrop="transparent" />,
+};
+
+export const PositionCenter: Story = {
+  render: (args) => <DialogTemplate {...args} position="center" />,
+};
+
+export const PositionTop: Story = {
+  render: (args) => <DialogTemplate {...args} position="top" />,
+};
+
+export const PositionBottom: Story = {
+  render: (args) => <DialogTemplate {...args} position="bottom" />,
+};
+
+export const PositionLeft: Story = {
+  render: (args) => <DialogTemplate {...args} position="left" size="md" />,
+  parameters: {
+    docs: {
+      description: {
+        story: "Left drawer with slide-in animation and full-height panel.",
+      },
+    },
+  },
+};
+
+export const PositionRight: Story = {
+  render: (args) => <DialogTemplate {...args} position="right" size="md" />,
+  parameters: {
+    docs: {
+      description: {
+        story: "Right drawer with slide-in animation and full-height panel.",
+      },
+    },
+  },
 };

@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useLayoutEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { cn } from '../../../utils/cn';
 import { Icon } from '../../atoms/Icons/Icons';
@@ -6,6 +6,7 @@ import { getDocument } from '../../../utils/ssr';
 
 export type DialogSize = 'sm' | 'md' | 'lg' | 'xl' | 'fullscreen';
 export type DialogRounded = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
+export type DialogPosition = 'center' | 'top' | 'bottom' | 'left' | 'right';
 
 interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;
@@ -17,6 +18,7 @@ interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
   closeOnBackdropClick?: boolean;
   size?: DialogSize;
   rounded?: DialogRounded;
+  position?: DialogPosition;
 }
 
 interface DialogTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
@@ -69,6 +71,15 @@ const sizeClasses: Record<DialogSize, string> = {
   fullscreen: 'w-full h-full max-w-none max-h-none rounded-none'
 };
 
+// Width presets when used as side drawers (left/right)
+const sideWidthClasses: Record<DialogSize, string> = {
+  sm: 'w-64',
+  md: 'w-80',
+  lg: 'w-96',
+  xl: 'w-[32rem]',
+  fullscreen: 'w-full'
+};
+
 const Dialog = forwardRef<HTMLDivElement, DialogProps>(
   ({ 
     isOpen, 
@@ -80,30 +91,34 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
     closeOnBackdropClick = true,
     size = 'md',
     rounded = 'xl',
+    position = 'center',
     ...props 
   }, ref) => {
-    const [isVisible, setIsVisible] = useState(false);
+    const [isVisible, setIsVisible] = useState(isOpen);
     const [isAnimating, setIsAnimating] = useState(false);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
       if (isOpen) {
         setIsVisible(true);
-        setIsAnimating(true);
+        setIsAnimating(false);
         const doc = getDocument();
         if ('body' in doc) {
           doc.body.style.overflow = 'hidden';
         }
-      } else {
-        setIsAnimating(false);
-        const timer = setTimeout(() => {
-          setIsVisible(false);
-          const doc = getDocument();
-          if ('body' in doc) {
-            doc.body.style.overflow = '';
-          }
-        }, 300); // Match animation duration
-        return () => clearTimeout(timer);
+        // Trigger enter animation on next frame
+        const id = requestAnimationFrame(() => setIsAnimating(true));
+        return () => cancelAnimationFrame(id);
       }
+
+      setIsAnimating(false);
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+        const doc = getDocument();
+        if ('body' in doc) {
+          doc.body.style.overflow = '';
+        }
+      }, 300); // Match animation duration
+      return () => clearTimeout(timer);
     }, [isOpen]);
 
     useEffect(() => {
@@ -167,10 +182,14 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
     return createPortal(
       <div
         className={cn(
-          'fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-300',
+          'fixed inset-0 z-50 flex transition-opacity duration-300',
           backdropClasses[backdrop],
           isAnimating ? 'opacity-100' : 'opacity-0',
-          size === 'fullscreen' && 'items-start'
+          position === 'center' && 'items-center justify-center',
+          position === 'top' && 'items-start justify-center',
+          position === 'bottom' && 'items-end justify-center',
+          position === 'left' && 'items-stretch justify-start',
+          position === 'right' && 'items-stretch justify-end'
         )}
         onClick={handleBackdropClick}
       >
@@ -178,10 +197,21 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
           ref={ref}
           className={cn(
             'relative transform bg-white p-6 shadow-xl transition-all duration-300',
-            sizeClasses[size],
-            isAnimating ? 'scale-100 opacity-100' : 'scale-95 opacity-0',
+            // Size behavior depends on position
+            position === 'left' || position === 'right' ? sideWidthClasses[size] : sizeClasses[size],
+            // Position-based animations
+            position === 'center' && (isAnimating ? 'scale-100 opacity-100' : 'scale-95 opacity-0'),
+            position === 'left' && (isAnimating ? 'translate-x-0 opacity-100 h-full' : '-translate-x-full opacity-0 h-full'),
+            position === 'right' && (isAnimating ? 'translate-x-0 opacity-100 h-full' : 'translate-x-full opacity-0 h-full'),
+            position === 'top' && (isAnimating ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'),
+            position === 'bottom' && (isAnimating ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'),
             className,
-            size === 'fullscreen' ? 'rounded-none' : getRoundedClass(rounded)
+            size === 'fullscreen' ? 'rounded-none' : getRoundedClass(rounded),
+            // Corner overrides so the edge touching the viewport is not rounded
+            position === 'left' && 'rounded-l-none',
+            position === 'right' && 'rounded-r-none',
+            position === 'top' && 'rounded-t-none',
+            position === 'bottom' && 'rounded-b-none'
           )}
           onClick={(e) => e.stopPropagation()}
           {...props}
