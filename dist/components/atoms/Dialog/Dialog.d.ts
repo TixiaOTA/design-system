@@ -1,5 +1,5 @@
 import React from 'react';
-export type DialogSize = 'sm' | 'md' | 'lg' | 'xl' | 'fullscreen';
+export type DialogSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | 'fullscreen';
 export type DialogRounded = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
 export type DialogPosition = 'center' | 'top' | 'bottom' | 'left' | 'right';
 interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -11,6 +11,12 @@ interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
     header?: React.ReactNode;
     closeOnBackdropClick?: boolean;
     size?: DialogSize;
+    /**
+     * Optional Tailwind classes to control width or max-width.
+     * Examples: `w-full`, `w-[10em]`, `max-w-7xl`.
+     * Takes precedence over preset sizes except when `size` is `fullscreen`.
+     */
+    sizeClassName?: string;
     rounded?: DialogRounded;
     position?: DialogPosition;
 }

@@ -4,7 +4,16 @@ import { cn } from '../../../utils/cn';
 import { Icon } from '../../atoms/Icons/Icons';
 import { getDocument } from '../../../utils/ssr';
 
-export type DialogSize = 'sm' | 'md' | 'lg' | 'xl' | 'fullscreen';
+export type DialogSize =
+  | 'sm'
+  | 'md'
+  | 'lg'
+  | 'xl'
+  | '2xl'
+  | '3xl'
+  | '4xl'
+  | '5xl'
+  | 'fullscreen';
 export type DialogRounded = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
 export type DialogPosition = 'center' | 'top' | 'bottom' | 'left' | 'right';
 
@@ -17,6 +26,12 @@ interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
   header?: React.ReactNode;
   closeOnBackdropClick?: boolean;
   size?: DialogSize;
+  /**
+   * Optional Tailwind classes to control width or max-width.
+   * Examples: `w-full`, `w-[10em]`, `max-w-7xl`.
+   * Takes precedence over preset sizes except when `size` is `fullscreen`.
+   */
+  sizeClassName?: string;
   rounded?: DialogRounded;
   position?: DialogPosition;
 }
@@ -67,17 +82,27 @@ const sizeClasses: Record<DialogSize, string> = {
   sm: 'max-w-sm',
   md: 'max-w-md',
   lg: 'max-w-lg',
+  // Historically `xl` used a larger cap; keep behavior for backward compatibility
   xl: 'max-w-4xl',
-  fullscreen: 'w-full h-full max-w-none max-h-none rounded-none'
+  '2xl': 'max-w-5xl',
+  '3xl': 'max-w-6xl',
+  '4xl': 'max-w-7xl',
+  // Tailwind default stops at 7xl; for 5xl we use an explicit size
+  '5xl': 'max-w-[96rem]',
+  fullscreen: 'w-full h-full max-w-none max-h-none rounded-none',
 };
 
 // Width presets when used as side drawers (left/right)
 const sideWidthClasses: Record<DialogSize, string> = {
-  sm: 'w-64',
-  md: 'w-80',
-  lg: 'w-96',
+  sm: 'w-64', // 16rem
+  md: 'w-80', // 20rem
+  lg: 'w-96', // 24rem
   xl: 'w-[32rem]',
-  fullscreen: 'w-full'
+  '2xl': 'w-[36rem]',
+  '3xl': 'w-[42rem]',
+  '4xl': 'w-[48rem]',
+  '5xl': 'w-[56rem]',
+  fullscreen: 'w-full',
 };
 
 const Dialog = forwardRef<HTMLDivElement, DialogProps>(
@@ -90,6 +115,7 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
     header,
     closeOnBackdropClick = true,
     size = 'md',
+    sizeClassName,
     rounded = 'xl',
     position = 'center',
     ...props 
@@ -197,8 +223,17 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
           ref={ref}
           className={cn(
             'relative transform bg-white p-6 shadow-xl transition-all duration-300',
-            // Size behavior depends on position
-            position === 'left' || position === 'right' ? sideWidthClasses[size] : sizeClasses[size],
+            // Width/Max-width behavior depends on position.
+            // If `sizeClassName` is provided, it takes precedence except in fullscreen mode.
+            size === 'fullscreen'
+              ? sizeClasses.fullscreen
+              : (
+                sizeClassName ?? (
+                  position === 'left' || position === 'right'
+                    ? sideWidthClasses[size]
+                    : sizeClasses[size]
+                )
+              ),
             // Position-based animations
             position === 'center' && (isAnimating ? 'scale-100 opacity-100' : 'scale-95 opacity-0'),
             position === 'left' && (isAnimating ? 'translate-x-0 opacity-100 h-full' : '-translate-x-full opacity-0 h-full'),
