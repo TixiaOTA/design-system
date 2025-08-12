@@ -23,10 +23,24 @@ const meta: Meta<typeof Dialog> = {
       control: "select",
       options: ["blur", "dark", "transparent"],
     },
+    scrollBehavior: {
+      control: "select",
+      options: ["normal", "inside", "outside"],
+    },
     closeOnBackdropClick: { control: "boolean" },
     size: {
       control: "select",
-      options: ["sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "fullscreen"],
+      options: [
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "2xl",
+        "3xl",
+        "4xl",
+        "5xl",
+        "fullscreen",
+      ],
     },
     rounded: {
       control: "select",
@@ -131,7 +145,12 @@ const DialogWithoutHeader = (args: any) => {
       <Button onClick={() => setIsOpen(true)}>
         Open Dialog without Header
       </Button>
-      <Dialog {...args} isOpen={isOpen} onClose={handleClose} backdrop={args.backdrop ?? "dark"}>
+      <Dialog
+        {...args}
+        isOpen={isOpen}
+        onClose={handleClose}
+        backdrop={args.backdrop ?? "dark"}
+      >
         <DialogBody>
           This dialog has no header and no close icon. It can only be closed by
           clicking outside or using the action buttons.
@@ -294,6 +313,82 @@ export const CustomWidth: Story = {
       description: {
         story:
           "Demonstrates using `sizeClassName` to fully control width (e.g., `w-[28rem]`, `w-full`, `max-w-7xl`).",
+      },
+    },
+  },
+};
+
+// Utilities to generate long content for scroll demos
+const LongContent = () => (
+  <div className="space-y-4">
+    {Array.from({ length: 40 }).map((_, i) => (
+      <p key={i}>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus varius,
+        nunc ac cursus aliquet, metus orci posuere libero, vel lobortis urna
+        sapien eget purus.
+      </p>
+    ))}
+  </div>
+);
+
+const ScrollTemplate = (args: any) => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <>
+      <div className="space-y-3">
+        <p>Use the control knob to switch scroll behavior.</p>
+      </div>
+      <Button onClick={() => setIsOpen(true)}>Open Long Content Dialog</Button>
+      <Dialog
+        {...args}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        size={args.size ?? "xl"}
+        header={<DialogTitle>Long Content</DialogTitle>}
+      >
+        <DialogBody>
+          <LongContent />
+        </DialogBody>
+        <DialogActions>
+          <Button variant="outline" onClick={() => setIsOpen(false)}>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};
+
+export const ScrollNormal: Story = {
+  render: (args) => <ScrollTemplate {...args} scrollBehavior="normal" />,
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Body scroll is locked while dialog is open (default). Panel may clip if content exceeds viewport height.",
+      },
+    },
+  },
+};
+
+export const ScrollInside: Story = {
+  render: (args) => <ScrollTemplate {...args} scrollBehavior="inside" />,
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Content scrolls inside the dialog panel; body scroll is locked.",
+      },
+    },
+  },
+};
+
+export const ScrollOutside: Story = {
+  render: (args) => <ScrollTemplate {...args} scrollBehavior="outside" />,
+  parameters: {
+    docs: {
+      description: {
+        story: "Body (page) can scroll behind the dialog.",
       },
     },
   },

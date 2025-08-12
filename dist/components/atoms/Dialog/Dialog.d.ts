@@ -1,13 +1,14 @@
-import React from 'react';
-export type DialogSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | 'fullscreen';
-export type DialogRounded = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
-export type DialogPosition = 'center' | 'top' | 'bottom' | 'left' | 'right';
+import React from "react";
+export type DialogSize = "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "fullscreen";
+export type DialogRounded = "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full";
+export type DialogPosition = "center" | "top" | "bottom" | "left" | "right";
+export type DialogScrollBehavior = "inside" | "outside" | "normal";
 interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
     isOpen: boolean;
     onClose: () => void;
     children: React.ReactNode;
     className?: string;
-    backdrop?: 'blur' | 'dark' | 'transparent';
+    backdrop?: "blur" | "dark" | "transparent";
     header?: React.ReactNode;
     closeOnBackdropClick?: boolean;
     size?: DialogSize;
@@ -19,6 +20,13 @@ interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
     sizeClassName?: string;
     rounded?: DialogRounded;
     position?: DialogPosition;
+    /**
+     * Controls how scrolling behaves while the dialog is open.
+     * - `normal` (default): lock body scroll, panel scroll not forced
+     * - `inside`: lock body scroll, enable overflow on the panel
+     * - `outside`: allow body scroll behind the dialog
+     */
+    scrollBehavior?: DialogScrollBehavior;
 }
 interface DialogTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
     children: React.ReactNode;
