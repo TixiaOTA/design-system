@@ -50,6 +50,18 @@ const meta: Meta<typeof Dialog> = {
       control: "select",
       options: ["center", "top", "bottom", "left", "right"],
     },
+    animationDuration: {
+      control: { type: "number", min: 0, step: 50 },
+      description: "Animation duration in ms (backdrop and panel)",
+    },
+    animationDelay: {
+      control: { type: "number", min: 0, step: 50 },
+      description: "Animation delay in ms",
+    },
+  },
+  args: {
+    animationDuration: 300,
+    animationDelay: 0,
   },
 };
 

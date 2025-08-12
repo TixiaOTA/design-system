@@ -56,6 +56,16 @@ interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
    * - `outside`: allow body scroll behind the dialog
    */
   scrollBehavior?: DialogScrollBehavior;
+  /**
+   * Total animation duration in milliseconds for both backdrop and panel.
+   * Default is 300ms.
+   */
+  animationDuration?: number;
+  /**
+   * Transition delay in milliseconds before the animation starts.
+   * Applied to both backdrop and panel. Default is 0ms.
+   */
+  animationDelay?: number;
 }
 
 interface DialogTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
@@ -142,6 +152,8 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
       rounded = "xl",
       position = "center",
       scrollBehavior = "normal",
+      animationDuration = 300,
+      animationDelay = 0,
       ...props
     },
     ref
@@ -176,9 +188,9 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
           doc.body.style.overflow = "";
           didLockBodyRef.current = false;
         }
-      }, 300); // Match animation duration
+      }, animationDuration + animationDelay);
       return () => clearTimeout(timer);
-    }, [isOpen, scrollBehavior]);
+    }, [isOpen, scrollBehavior, animationDuration, animationDelay]);
 
     useEffect(() => {
       const handleEscape = (event: Event) => {
@@ -252,10 +264,15 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
       return undefined;
     })();
 
+    const transitionStyle = {
+      transitionDuration: `${animationDuration}ms`,
+      transitionDelay: `${animationDelay}ms`,
+    } as React.CSSProperties;
+
     return createPortal(
       <div
         className={cn(
-          "fixed inset-0 z-50 flex transition-opacity duration-300",
+          "fixed inset-0 z-50 flex transition-opacity",
           backdropClasses[backdrop],
           isAnimating ? "opacity-100" : "opacity-0",
           position === "center" && "items-center justify-center",
@@ -264,12 +281,13 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
           position === "left" && "items-stretch justify-start",
           position === "right" && "items-stretch justify-end"
         )}
+        style={transitionStyle}
         onClick={handleBackdropClick}
       >
         <div
           ref={ref}
           className={cn(
-            "relative transform bg-white p-6 shadow-xl transition-all duration-300",
+            "relative transform bg-white p-6 shadow-xl transition-all",
             // Width/Max-width behavior depends on position.
             // If `sizeClassName` is provided, it takes precedence except in fullscreen mode.
             size === "fullscreen"
@@ -283,12 +301,12 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
               (isAnimating ? "scale-100 opacity-100" : "scale-95 opacity-0"),
             position === "left" &&
               (isAnimating
-                ? "translate-x-0 opacity-100 h-full"
-                : "-translate-x-full opacity-0 h-full"),
+                ? "translate-x-0 h-full"
+                : "-translate-x-full h-full"),
             position === "right" &&
               (isAnimating
-                ? "translate-x-0 opacity-100 h-full"
-                : "translate-x-full opacity-0 h-full"),
+                ? "translate-x-0 h-full"
+                : "translate-x-full h-full"),
             position === "top" &&
               (isAnimating
                 ? "translate-y-0 opacity-100"
@@ -306,6 +324,7 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
             position === "bottom" && "rounded-b-none",
             panelOverflowClasses
           )}
+          style={transitionStyle}
           onClick={(e) => e.stopPropagation()}
           {...props}
         >

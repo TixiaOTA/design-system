@@ -27,6 +27,16 @@ interface DialogProps extends React.HTMLAttributes<HTMLDivElement> {
      * - `outside`: allow body scroll behind the dialog
      */
     scrollBehavior?: DialogScrollBehavior;
+    /**
+     * Total animation duration in milliseconds for both backdrop and panel.
+     * Default is 300ms.
+     */
+    animationDuration?: number;
+    /**
+     * Transition delay in milliseconds before the animation starts.
+     * Applied to both backdrop and panel. Default is 0ms.
+     */
+    animationDelay?: number;
 }
 interface DialogTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
     children: React.ReactNode;
