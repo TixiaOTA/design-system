@@ -1,4 +1,8 @@
 
+## [v0.18.0] - 2025-08-12
+- fix: add dialog position
+
+
 ## [v0.17.0] - 2025-08-11
 - fix: rm console
 
