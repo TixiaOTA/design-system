@@ -1,4 +1,8 @@
 
+## [v0.21.0] - 2025-08-12
+- fix: add animation duration to dialog
+
+
 ## [v0.20.0] - 2025-08-12
 - fix: add scroll behavior dialog
 
