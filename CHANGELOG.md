@@ -1,4 +1,9 @@
 
+## [v0.22.0] - 2025-08-14
+- fix: update table and popover
+- fix: add more loader variations
+
+
 ## [v0.21.0] - 2025-08-12
 - fix: add animation duration to dialog
 
