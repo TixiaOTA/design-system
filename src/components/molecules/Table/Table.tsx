@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { cn } from '../../../utils/cn';
-import { Icon } from '../../atoms/Icons';
-import { Pagination } from '../../atoms/Pagination';
-import { Skeleton } from '../../atoms/Skeleton';
+import React, { useState } from "react";
+import { cn } from "../../../utils/cn";
+import { Icon } from "../../atoms/Icons";
+import { Pagination } from "../../atoms/Pagination";
+import { Skeleton } from "../../atoms/Skeleton";
 import {
   useReactTable,
   getCoreRowModel,
@@ -14,20 +14,27 @@ import {
   Row,
   Header,
   HeaderGroup,
-} from '@tanstack/react-table';
+} from "@tanstack/react-table";
 
-export type TableVariant = 'primary' | 'secondary' | 'warning' | 'danger' | 'ghost' | 'success';
+export type TableVariant =
+  | "primary"
+  | "secondary"
+  | "warning"
+  | "danger"
+  | "ghost"
+  | "success";
 
-type ColumnAlignment = 'left' | 'center' | 'right';
+type ColumnAlignment = "left" | "center" | "right";
 
 export interface TableColumn<T> {
   name: string;
   label: string;
   accessorKey: keyof T;
-  type: 'string' | 'number' | 'date' | 'other';
+  type: "string" | "number" | "date" | "other";
   sortable?: boolean;
-  sort?: 'asc' | 'desc';
+  sort?: "asc" | "desc";
   align?: ColumnAlignment;
+  width?: number | string;
   render?: (value: any, row: T, index?: number) => React.ReactNode;
 }
 
@@ -59,36 +66,36 @@ export interface TableProps<T extends Record<string, any>> {
 const getVariantStyles = (variant: TableVariant) => {
   const styles = {
     header: {
-      primary: 'bg-primary text-white',
-      secondary: 'bg-secondary text-white',
-      warning: 'bg-warning text-white',
-      danger: 'bg-danger text-white',
-      ghost: 'bg-gray-100 text-gray-700',
-      success: 'bg-success text-white',
+      primary: "bg-primary text-white",
+      secondary: "bg-secondary text-white",
+      warning: "bg-warning text-white",
+      danger: "bg-danger text-white",
+      ghost: "bg-gray-100 text-gray-700",
+      success: "bg-success text-white",
     },
     row: {
-      primary: 'hover:bg-primary/5',
-      secondary: 'hover:bg-secondary/5',
-      warning: 'hover:bg-warning/5',
-      danger: 'hover:bg-danger/5',
-      ghost: 'hover:bg-gray-50',
-      success: 'hover:bg-success/5',
+      primary: "hover:bg-primary/5",
+      secondary: "hover:bg-secondary/5",
+      warning: "hover:bg-warning/5",
+      danger: "hover:bg-danger/5",
+      ghost: "hover:bg-gray-50",
+      success: "hover:bg-success/5",
     },
     border: {
-      primary: 'border-primary',
-      secondary: 'border-secondary',
-      warning: 'border-warning',
-      danger: 'border-danger',
-      ghost: 'border-gray-200',
-      success: 'border-success',
+      primary: "border-primary",
+      secondary: "border-secondary",
+      warning: "border-warning",
+      danger: "border-danger",
+      ghost: "border-gray-200",
+      success: "border-success",
     },
     stripe: {
-      primary: 'bg-primary/5',
-      secondary: 'bg-secondary/5',
-      warning: 'bg-warning/5',
-      danger: 'bg-danger/5',
-      ghost: 'bg-gray-50',
-      success: 'bg-success/5',
+      primary: "bg-primary/5",
+      secondary: "bg-secondary/5",
+      warning: "bg-warning/5",
+      danger: "bg-danger/5",
+      ghost: "bg-gray-50",
+      success: "bg-success/5",
     },
   };
 
@@ -100,46 +107,86 @@ const getVariantStyles = (variant: TableVariant) => {
   };
 };
 
-const TableLoading = <T,>({ schema, variant = 'primary' }: { schema: TableColumn<T>[]; variant?: TableVariant }) => {
-  const displayColumns = [{ name: 'no', label: 'No.', accessorKey: 'no' as keyof T, type: 'number' }, ...schema];
+const TableLoading = <T,>({
+  schema,
+  variant = "primary",
+}: {
+  schema: TableColumn<T>[];
+  variant?: TableVariant;
+}) => {
+  const displayColumns = [
+    {
+      name: "no",
+      label: "No.",
+      accessorKey: "no" as keyof T,
+      type: "number",
+      width: 80,
+    },
+    ...schema,
+  ];
   const variantStyles = getVariantStyles(variant);
-  
+
   return (
     <div className="bg-white rounded-md">
-      <div className="p-0 w-full max-h-[50vh] overflow-auto rounded-t-md [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-        <table className="w-full border-spacing-0 border-separate">
-          <thead className={cn("border-2 sticky top-0 z-10 rounded-t-md", variantStyles.border)}>
+      <div className="p-0 w-full overflow-auto rounded-t-md [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full">
+        <table className="w-full border-spacing-0 border-separate min-w-full">
+          <thead
+            className={cn(
+              "border-2 sticky top-0 z-10 rounded-t-md",
+              variantStyles.border
+            )}
+          >
             <tr>
               {displayColumns.map((column, index) => (
                 <th
                   key={index}
                   className={cn(
-                    'text-sm text-wrap border-y p-4 text-left',
+                    "text-sm text-wrap border-y p-4 text-left",
                     variantStyles.header,
                     {
-                      'rounded-tl-md': index === 0,
-                      'rounded-tr-md': index === displayColumns.length - 1,
+                      "rounded-tl-md": index === 0,
+                      "rounded-tr-md": index === displayColumns.length - 1,
                     }
                   )}
+                  style={{
+                    width:
+                      typeof column.width === "number"
+                        ? `${column.width}px`
+                        : column.width,
+                    minWidth:
+                      typeof column.width === "number"
+                        ? `${column.width}px`
+                        : column.width,
+                  }}
                 >
                   {column.label}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="max-h-[50vh]">
+          <tbody>
             {[...Array(5)].map((_, rowIndex) => (
               <tr
                 key={rowIndex}
-                className={cn('p-3', {
+                className={cn("p-3", {
                   [variantStyles.stripe]: rowIndex % 2 !== 0,
-                  'bg-white': rowIndex % 2 === 0,
+                  "bg-white": rowIndex % 2 === 0,
                 })}
               >
-                {displayColumns.map((_, colIndex) => (
+                {displayColumns.map((column, colIndex) => (
                   <td
                     key={`${rowIndex}-${colIndex}`}
                     className="text-left text-nowrap text-sm p-4"
+                    style={{
+                      width:
+                        typeof column.width === "number"
+                          ? `${column.width}px`
+                          : column.width,
+                      minWidth:
+                        typeof column.width === "number"
+                          ? `${column.width}px`
+                          : column.width,
+                    }}
                   >
                     <Skeleton className="h-10 w-full rounded-md" />
                   </td>
@@ -169,7 +216,7 @@ export const Table = <T extends Record<string, any>>({
   onSortChange,
   onRowClick,
   showPagination = false,
-  variant = 'primary',
+  variant = "primary",
   meta = {
     current_page: 1,
     total_page: 1,
@@ -177,41 +224,49 @@ export const Table = <T extends Record<string, any>>({
     limit_number: 10,
   },
 }: TableProps<T>) => {
-
   const [sorting, setSorting] = useState<SortingState>(() => {
-    const sortedColumn = schema.find(col => col.sortable && col.sort);
+    const sortedColumn = schema.find((col) => col.sortable && col.sort);
     if (sortedColumn) {
-      return [{
-        id: sortedColumn.accessorKey.toString(),
-        desc: sortedColumn.sort === 'desc'
-      }];
+      return [
+        {
+          id: sortedColumn.accessorKey.toString(),
+          desc: sortedColumn.sort === "desc",
+        },
+      ];
     }
     return [];
   });
 
   const columns = React.useMemo<ColumnDef<T, any>[]>(() => {
-    const baseColumns = schema.map(col => ({
+    const baseColumns = schema.map((col) => ({
       accessorKey: col.accessorKey,
       header: col.label,
       enableSorting: !!col.sortable,
-      cell: col.render ? 
-        ({ row }: { row: Row<T> }) => col.render?.(row.original[col.accessorKey], row.original, row.index) :
-        ({ row }: { row: Row<T> }) => row.original[col.accessorKey] || '-',
+      cell: col.render
+        ? ({ row }: { row: Row<T> }) =>
+            col.render?.(row.original[col.accessorKey], row.original, row.index)
+        : ({ row }: { row: Row<T> }) => row.original[col.accessorKey] || "-",
       meta: {
-        align: col.align || 'left'
-      }
+        align: col.align || "left",
+        width: col.width,
+      },
     }));
 
     if (showIndex) {
-      return [{
-        accessorKey: 'no',
-        header: 'No.',
-        enableSorting: false,
-        cell: ({ row }: { row: Row<T> }) => (meta.current_page - 1) * meta.limit_number + row.index + 1,
-        meta: {
-          align: 'left'
-        }
-      }, ...baseColumns];
+      return [
+        {
+          accessorKey: "no",
+          header: "No.",
+          enableSorting: false,
+          cell: ({ row }: { row: Row<T> }) =>
+            (meta.current_page - 1) * meta.limit_number + row.index + 1,
+          meta: {
+            align: "left",
+            width: 80,
+          },
+        },
+        ...baseColumns,
+      ];
     }
 
     return baseColumns;
@@ -223,14 +278,17 @@ export const Table = <T extends Record<string, any>>({
     state: {
       sorting,
     },
-    onSortingChange: (updater: SortingState | ((old: SortingState) => SortingState)) => {
-      const newSorting = typeof updater === 'function' ? updater(sorting) : updater;
+    onSortingChange: (
+      updater: SortingState | ((old: SortingState) => SortingState)
+    ) => {
+      const newSorting =
+        typeof updater === "function" ? updater(sorting) : updater;
       setSorting(newSorting);
-      
+
       if (newSorting.length > 0) {
-        onSortChange?.(newSorting[0].desc ? 'desc' : 'asc', newSorting[0].id);
+        onSortChange?.(newSorting[0].desc ? "desc" : "asc", newSorting[0].id);
       } else {
-        onSortChange?.('', '');
+        onSortChange?.("", "");
       }
     },
     getCoreRowModel: getCoreRowModel(),
@@ -246,17 +304,21 @@ export const Table = <T extends Record<string, any>>({
     return loadingState || <TableLoading schema={schema} variant={variant} />;
   }
 
-  const handleRowClick = (event: React.MouseEvent<HTMLTableRowElement>, row: T, index: number) => {
+  const handleRowClick = (
+    event: React.MouseEvent<HTMLTableRowElement>,
+    row: T,
+    index: number
+  ) => {
     const target = event.target as HTMLElement;
-    const isInteractiveElement = 
-      target.tagName === 'BUTTON' ||
-      target.tagName === 'A' ||
-      target.tagName === 'INPUT' ||
-      target.tagName === 'SELECT' ||
-      target.closest('button') !== null ||
-      target.closest('a') !== null ||
-      target.closest('input') !== null ||
-      target.closest('select') !== null;
+    const isInteractiveElement =
+      target.tagName === "BUTTON" ||
+      target.tagName === "A" ||
+      target.tagName === "INPUT" ||
+      target.tagName === "SELECT" ||
+      target.closest("button") !== null ||
+      target.closest("a") !== null ||
+      target.closest("input") !== null ||
+      target.closest("select") !== null;
 
     if (!isInteractiveElement) {
       onRowClick?.(row, index);
@@ -265,63 +327,101 @@ export const Table = <T extends Record<string, any>>({
 
   return (
     <div className="bg-white rounded-md">
-      <div className="p-0 w-full max-h-[50vh] overflow-auto rounded-t-md [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-        <table className={cn('w-full border-spacing-0 border-separate', className)}>
-          <thead className={cn("border-2 sticky top-0 z-10 rounded-t-md", variantStyles.border)}>
+      <div className="p-0 w-full overflow-auto rounded-t-md [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full">
+        <table
+          className={cn(
+            "w-full border-spacing-0 border-separate min-w-full",
+            className
+          )}
+        >
+          <thead
+            className={cn(
+              "border-2 sticky top-0 z-10 rounded-t-md",
+              variantStyles.border
+            )}
+          >
             {table.getHeaderGroups().map((headerGroup: HeaderGroup<T>) => (
               <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header: Header<T, unknown>, index: number) => (
-                  <th
-                    key={header.id}
-                    className={cn(
-                      'text-sm text-wrap border-y p-4',
-                      variantStyles.header,
-                      {
-                        'cursor-pointer': header.column.getCanSort(),
-                        'rounded-tl-md': index === 0,
-                        'rounded-tr-md': index === headerGroup.headers.length - 1,
-                        'text-left': (header.column.columnDef.meta as { align?: ColumnAlignment })?.align === 'left',
-                        'text-center': (header.column.columnDef.meta as { align?: ColumnAlignment })?.align === 'center',
-                        'text-right': (header.column.columnDef.meta as { align?: ColumnAlignment })?.align === 'right',
-                      },
-                      headerClassName
-                    )}
-                    onClick={header.column.getCanSort() ? header.column.getToggleSortingHandler() : undefined}
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className={cn({
-                        'font-semibold': index === 0
-                      })}>
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                      </span>
-                      {header.column.getCanSort() && (
-                        <Icon
-                          icon={
-                            header.column.getIsSorted()
-                              ? header.column.getIsSorted() === 'desc'
-                                ? 'mdi:keyboard-arrow-up'
-                                : 'mdi:keyboard-arrow-down'
-                              : 'mdi:unfold-more-horizontal'
-                          }
-                          className={cn('h-4 w-4', {
-                            'text-white': variant !== 'ghost',
-                            'text-gray-700': variant === 'ghost',
-                          })}
-                        />
-                      )}
-                    </div>
-                  </th>
-                ))}
+                {headerGroup.headers.map(
+                  (header: Header<T, unknown>, index: number) => {
+                    const columnMeta = header.column.columnDef.meta as {
+                      align?: ColumnAlignment;
+                      width?: number | string;
+                    };
+                    return (
+                      <th
+                        key={header.id}
+                        className={cn(
+                          "text-sm text-wrap border-y p-4",
+                          variantStyles.header,
+                          {
+                            "cursor-pointer": header.column.getCanSort(),
+                            "rounded-tl-md": index === 0,
+                            "rounded-tr-md":
+                              index === headerGroup.headers.length - 1,
+                            "text-left": columnMeta?.align === "left",
+                            "text-center": columnMeta?.align === "center",
+                            "text-right": columnMeta?.align === "right",
+                          },
+                          headerClassName
+                        )}
+                        style={{
+                          width:
+                            typeof columnMeta?.width === "number"
+                              ? `${columnMeta.width}px`
+                              : columnMeta?.width,
+                          minWidth:
+                            typeof columnMeta?.width === "number"
+                              ? `${columnMeta.width}px`
+                              : columnMeta?.width,
+                        }}
+                        onClick={
+                          header.column.getCanSort()
+                            ? header.column.getToggleSortingHandler()
+                            : undefined
+                        }
+                      >
+                        <div className="flex items-center gap-2">
+                          <span
+                            className={cn({
+                              "font-semibold": index === 0,
+                            })}
+                          >
+                            {flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                          </span>
+                          {header.column.getCanSort() && (
+                            <Icon
+                              icon={
+                                header.column.getIsSorted()
+                                  ? header.column.getIsSorted() === "desc"
+                                    ? "mdi:keyboard-arrow-up"
+                                    : "mdi:keyboard-arrow-down"
+                                  : "mdi:unfold-more-horizontal"
+                              }
+                              className={cn("h-4 w-4", {
+                                "text-white": variant !== "ghost",
+                                "text-gray-700": variant === "ghost",
+                              })}
+                            />
+                          )}
+                        </div>
+                      </th>
+                    );
+                  }
+                )}
               </tr>
             ))}
           </thead>
-          <tbody className="max-h-[50vh]">
+          <tbody>
             {table.getRowModel().rows.length === 0 ? (
               <tr>
                 <td
                   colSpan={table.getAllColumns().length}
                   className={cn(
-                    "text-center border h-full w-full rounded-b-md",
+                    "text-center border h-full w-full rounded-b-md"
                   )}
                 >
                   {emptyState || (
@@ -337,33 +437,54 @@ export const Table = <T extends Record<string, any>>({
                 <tr
                   key={row.id}
                   className={cn(
-                    'p-3',
+                    "p-3",
                     variantStyles.row,
                     {
                       [variantStyles.stripe]: rowIndex % 2 !== 0,
-                      'bg-white': rowIndex % 2 === 0,
-                      'cursor-pointer': onRowClick,
+                      "bg-white": rowIndex % 2 === 0,
+                      "cursor-pointer": onRowClick,
                     },
                     rowClassName
                   )}
-                  onClick={(event) => handleRowClick(event, row.original, rowIndex)}
+                  onClick={(event) =>
+                    handleRowClick(event, row.original, rowIndex)
+                  }
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <td
-                      key={cell.id}
-                      className={cn(
-                        "px-4 py-3 text-sm text-gray-900",
-                        {
-                          'text-left': (cell.column.columnDef.meta as { align?: ColumnAlignment })?.align === 'left',
-                          'text-center': (cell.column.columnDef.meta as { align?: ColumnAlignment })?.align === 'center',
-                          'text-right': (cell.column.columnDef.meta as { align?: ColumnAlignment })?.align === 'right',
-                        },
-                        cellClassName
-                      )}
-                    >
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                  ))}
+                  {row.getVisibleCells().map((cell) => {
+                    const columnMeta = cell.column.columnDef.meta as {
+                      align?: ColumnAlignment;
+                      width?: number | string;
+                    };
+                    return (
+                      <td
+                        key={cell.id}
+                        className={cn(
+                          "px-4 py-3 text-sm text-gray-900",
+                          {
+                            "text-left": columnMeta?.align === "left",
+                            "text-center": columnMeta?.align === "center",
+                            "text-right": columnMeta?.align === "right",
+                          },
+                          cellClassName
+                        )}
+                        style={{
+                          width:
+                            typeof columnMeta?.width === "number"
+                              ? `${columnMeta.width}px`
+                              : columnMeta?.width,
+                          minWidth:
+                            typeof columnMeta?.width === "number"
+                              ? `${columnMeta.width}px`
+                              : columnMeta?.width,
+                        }}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </td>
+                    );
+                  })}
                 </tr>
               ))
             )}

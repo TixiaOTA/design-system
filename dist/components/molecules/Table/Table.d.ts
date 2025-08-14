@@ -1,14 +1,15 @@
-import React from 'react';
-export type TableVariant = 'primary' | 'secondary' | 'warning' | 'danger' | 'ghost' | 'success';
-type ColumnAlignment = 'left' | 'center' | 'right';
+import React from "react";
+export type TableVariant = "primary" | "secondary" | "warning" | "danger" | "ghost" | "success";
+type ColumnAlignment = "left" | "center" | "right";
 export interface TableColumn<T> {
     name: string;
     label: string;
     accessorKey: keyof T;
-    type: 'string' | 'number' | 'date' | 'other';
+    type: "string" | "number" | "date" | "other";
     sortable?: boolean;
-    sort?: 'asc' | 'desc';
+    sort?: "asc" | "desc";
     align?: ColumnAlignment;
+    width?: number | string;
     render?: (value: any, row: T, index?: number) => React.ReactNode;
 }
 export interface TableProps<T extends Record<string, any>> {

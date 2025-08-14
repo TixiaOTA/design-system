@@ -1,14 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Table } from './Table';
-import type { TableVariant, TableColumn } from './Table';
-import { Button } from '../../atoms/Button';
-import { Icon } from '../../atoms/Icons';
-import { ErrorWrapper } from '../ErrorWrapper/ErrorWrapper';
+import type { Meta, StoryObj } from "@storybook/react";
+import { Table } from "./Table";
+import type { TableVariant, TableColumn } from "./Table";
+import { Button } from "../../atoms/Button";
+import { Icon } from "../../atoms/Icons";
+import { ErrorWrapper } from "../ErrorWrapper/ErrorWrapper";
 
 const meta: Meta<typeof Table<User>> = {
-  title: 'Molecules/Table',
+  title: "Molecules/Table",
   component: Table,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 };
 
 export default meta;
@@ -28,101 +28,97 @@ interface User {
 const sampleData: User[] = [
   {
     no: 1,
-    nama: 'Steve Jobs',
-    email: 'stevejobs@gmail.com',
-    nomorTelepon: '081234567890',
-    jenisKelamin: 'Laki-laki',
-    kewarganegaraan: 'Indonesia',
-    status: 'Suspend',
+    nama: "Steve Jobs",
+    email: "stevejobs@gmail.com",
+    nomorTelepon: "081234567890",
+    jenisKelamin: "Laki-laki",
+    kewarganegaraan: "Indonesia",
+    status: "Suspend",
     saldo: 1500000,
   },
   {
     no: 2,
-    nama: 'Bill Gates',
-    email: 'billgates@gmail.com',
-    nomorTelepon: '081234567890',
-    jenisKelamin: 'Laki-laki',
-    kewarganegaraan: 'Indonesia',
-    status: 'Aktif',
+    nama: "Bill Gates",
+    email: "billgates@gmail.com",
+    nomorTelepon: "081234567890",
+    jenisKelamin: "Laki-laki",
+    kewarganegaraan: "Indonesia",
+    status: "Aktif",
     saldo: 2500000,
   },
   {
     no: 3,
-    nama: 'Kucing Persia',
-    email: 'kucingpersia@gmail.com',
-    nomorTelepon: '081234567890',
-    jenisKelamin: 'Perempuan',
-    kewarganegaraan: 'Indonesia',
-    status: 'Aktif',
+    nama: "Kucing Persia",
+    email: "kucingpersia@gmail.com",
+    nomorTelepon: "081234567890",
+    jenisKelamin: "Perempuan",
+    kewarganegaraan: "Indonesia",
+    status: "Aktif",
     saldo: 3500000,
   },
 ];
 
 const schema: TableColumn<User>[] = [
-  { 
-    name: 'nama',
-    label: 'Nama', 
-    accessorKey: 'nama',
-    type: 'string',
+  {
+    name: "nama",
+    label: "Nama",
+    accessorKey: "nama",
+    type: "string",
     sortable: true,
-    align: 'left'
-  },
-  { 
-    name: 'email',
-    label: 'Email', 
-    accessorKey: 'email',
-    type: 'string',
-    sortable: true,
-    align: 'left'
-  },
-  { 
-    name: 'nomorTelepon',
-    label: 'Nomor Telepon', 
-    accessorKey: 'nomorTelepon',
-    type: 'string',
-    align: 'left'
-  },
-  { 
-    name: 'jenisKelamin',
-    label: 'Jenis Kelamin', 
-    accessorKey: 'jenisKelamin',
-    type: 'string',
-    align: 'center'
-  },
-  { 
-    name: 'kewarganegaraan',
-    label: 'Kewarganegaraan', 
-    accessorKey: 'kewarganegaraan',
-    type: 'string',
-    align: 'center'
+    align: "left",
+    width: 200,
   },
   {
-    name: 'status',
-    label: 'Status',
-    accessorKey: 'status',
-    type: 'string',
+    name: "email",
+    label: "Email",
+    accessorKey: "email",
+    type: "string",
     sortable: true,
-    align: 'center',
-    render: (value: string) => (
-      <span
-        className={value === 'Suspend' ? 'text-red' : 'text-blue'}
-      >
-        {value}
-      </span>
-    ),
+    align: "left",
+    width: 250,
   },
   {
-    name: 'saldo',
-    label: 'Saldo',
-    accessorKey: 'saldo',
-    type: 'number',
+    name: "nomorTelepon",
+    label: "Nomor Telepon",
+    accessorKey: "nomorTelepon",
+    type: "string",
+    align: "left",
+    width: 150,
+  },
+  {
+    name: "jenisKelamin",
+    label: "Jenis Kelamin",
+    accessorKey: "jenisKelamin",
+    type: "string",
+    align: "center",
+    width: 120,
+  },
+  {
+    name: "kewarganegaraan",
+    label: "Kewarganegaraan",
+    accessorKey: "kewarganegaraan",
+    type: "string",
+    align: "center",
+    width: 140,
+  },
+  {
+    name: "status",
+    label: "Status",
+    accessorKey: "status",
+    type: "string",
+    sortable: false,
+    align: "center",
+    width: 120,
+  },
+  {
+    name: "saldo",
+    label: "Saldo",
+    accessorKey: "saldo",
+    type: "number",
     sortable: true,
-    align: 'right',
-    render: (value: number) => (
-      <span>
-        Rp {value.toLocaleString('id-ID')}
-      </span>
-    ),
+    align: "right",
+    width: 150,
+    render: (value: number) => <span>Rp {value.toLocaleString("id-ID")}</span>,
   },
 ];
 
@@ -144,10 +140,10 @@ export const WithPagination: Story = {
       current_page: 1,
       total_page: 5,
       total_data: 50,
-      limit_number: 10
+      limit_number: 10,
     },
-    onPageChange: (page) => console.log('Page changed:', page),
-    onPageSizeChange: (size) => console.log('Page size changed:', size),
+    onPageChange: (page) => console.log("Page changed:", page),
+    onPageSizeChange: (size) => console.log("Page size changed:", size),
   },
 };
 
@@ -156,7 +152,7 @@ export const WithSorting: Story = {
     schema,
     data: sampleData,
     showIndex: true,
-    onSortChange: (sort, sortBy) => console.log('Sort changed:', sort, sortBy),
+    onSortChange: (sort, sortBy) => console.log("Sort changed:", sort, sortBy),
   },
 };
 
@@ -174,9 +170,107 @@ export const Empty: Story = {
     schema,
     data: [],
     showIndex: true,
-    emptyState: (
-      <ErrorWrapper variant="data-not-found" />
-    ),
+    emptyState: <ErrorWrapper variant="data-not-found" />,
+  },
+};
+
+export const WideTableWithHorizontalScroll: Story = {
+  args: {
+    schema: [
+      {
+        name: "nama",
+        label: "Nama Lengkap",
+        accessorKey: "nama",
+        type: "string",
+        sortable: true,
+        align: "left",
+        width: 200,
+      },
+      {
+        name: "email",
+        label: "Email Address",
+        accessorKey: "email",
+        type: "string",
+        sortable: true,
+        align: "left",
+        width: 300,
+      },
+      {
+        name: "nomorTelepon",
+        label: "Phone Number",
+        accessorKey: "nomorTelepon",
+        type: "string",
+        align: "left",
+        width: 150,
+      },
+      {
+        name: "jenisKelamin",
+        label: "Gender",
+        accessorKey: "jenisKelamin",
+        type: "string",
+        align: "center",
+        width: 120,
+      },
+      {
+        name: "kewarganegaraan",
+        label: "Nationality",
+        accessorKey: "kewarganegaraan",
+        type: "string",
+        align: "center",
+        width: 140,
+      },
+      {
+        name: "status",
+        label: "Account Status",
+        accessorKey: "status",
+        type: "string",
+        align: "center",
+        width: 120,
+      },
+      {
+        name: "saldo",
+        label: "Account Balance",
+        accessorKey: "saldo",
+        type: "number",
+        sortable: true,
+        align: "right",
+        width: 150,
+      },
+    ],
+    data: [
+      {
+        no: 1,
+        nama: "John Doe",
+        email: "john.doe@example.com",
+        nomorTelepon: "+1234567890",
+        jenisKelamin: "Laki-laki",
+        kewarganegaraan: "USA",
+        status: "Aktif",
+        saldo: 5000.0,
+      },
+      {
+        no: 2,
+        nama: "Jane Smith",
+        email: "jane.smith@example.com",
+        nomorTelepon: "+1987654321",
+        jenisKelamin: "Perempuan",
+        kewarganegaraan: "USA",
+        status: "Aktif",
+        saldo: 7500.0,
+      },
+      {
+        no: 3,
+        nama: "Bob Johnson",
+        email: "bob.johnson@example.com",
+        nomorTelepon: "+1122334455",
+        jenisKelamin: "Laki-laki",
+        kewarganegaraan: "USA",
+        status: "Suspend",
+        saldo: 0.0,
+      },
+    ],
+    showIndex: true,
+    showPagination: false,
   },
 };
 
@@ -185,11 +279,11 @@ export const WithRowClick: Story = {
     schema: [
       ...schema,
       {
-        name: 'actions',
-        label: 'Aksi',
-        accessorKey: 'no',
-        type: 'other',
-        align: 'center',
+        name: "actions",
+        label: "Aksi",
+        accessorKey: "no",
+        type: "other",
+        align: "center",
         render: (_, row: User) => (
           <div className="flex gap-2 justify-center">
             <Button
@@ -197,7 +291,7 @@ export const WithRowClick: Story = {
               size="sm"
               onClick={(e) => {
                 e.stopPropagation();
-                alert('Edit clicked for: ' + row.nama);
+                alert("Edit clicked for: " + row.nama);
               }}
             >
               <Icon icon="mdi:pencil" />
@@ -207,7 +301,7 @@ export const WithRowClick: Story = {
               size="sm"
               onClick={(e) => {
                 e.stopPropagation();
-                alert('Delete clicked for: ' + row.nama);
+                alert("Delete clicked for: " + row.nama);
               }}
             >
               <Icon icon="mdi:delete" />
@@ -219,20 +313,29 @@ export const WithRowClick: Story = {
     data: sampleData,
     showIndex: true,
     onRowClick: (row: User, index: number) => {
-      alert('Row clicked: ' + row.nama + ' at index: ' + index);
+      alert("Row clicked: " + row.nama + " at index: " + index);
     },
   },
 };
 
 export const WithVariants: Story = {
   render: () => {
-    const variants: TableVariant[] = ['primary', 'secondary', 'warning', 'danger', 'ghost', 'success'];
-    
+    const variants: TableVariant[] = [
+      "primary",
+      "secondary",
+      "warning",
+      "danger",
+      "ghost",
+      "success",
+    ];
+
     return (
       <div className="space-y-8">
         {variants.map((variant) => (
           <div key={variant} className="space-y-2">
-            <h3 className="text-lg font-semibold capitalize">{variant} Variant</h3>
+            <h3 className="text-lg font-semibold capitalize">
+              {variant} Variant
+            </h3>
             <Table<User>
               schema={schema}
               data={sampleData}
@@ -243,12 +346,18 @@ export const WithVariants: Story = {
                 current_page: 1,
                 total_page: 2,
                 total_data: 10,
-                limit_number: 5
+                limit_number: 5,
               }}
-              onPageChange={(page) => console.log('Page changed:', page)}
-              onPageSizeChange={(size) => console.log('Page size changed:', size)}
-              onSortChange={(sort, sortBy) => console.log('Sort changed:', sort, sortBy)}
-              onRowClick={(row, index) => console.log('Row clicked:', row.nama, 'at index:', index)}
+              onPageChange={(page) => console.log("Page changed:", page)}
+              onPageSizeChange={(size) =>
+                console.log("Page size changed:", size)
+              }
+              onSortChange={(sort, sortBy) =>
+                console.log("Sort changed:", sort, sortBy)
+              }
+              onRowClick={(row, index) =>
+                console.log("Row clicked:", row.nama, "at index:", index)
+              }
             />
           </div>
         ))}
