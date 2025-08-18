@@ -25,64 +25,70 @@ export const Radio: React.FC<RadioProps> = ({
   variantSize = 'sm',
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (onChange) {
-      onChange(e.target.checked);
-    }
+    onChange?.(e.target.checked);
   };
 
-  const sizeClasses = {
-    sm: 'w-4 h-4',
-    md: 'w-5 h-5',
-    lg: 'w-6 h-6',
+  // Outer control size + inner dot size (pixel-perfect, no aliasing)
+  const sizeClasses: Record<NonNullable<RadioProps['variantSize']>, string> = {
+    sm: 'h-4 w-4 before:h-2 before:w-2',
+    md: 'h-5 w-5 before:h-2.5 before:w-2.5',
+    lg: 'h-6 w-6 before:h-3 before:w-3',
   };
 
-  const colorClasses = {
-    primary: 'checked:bg-primary-600 checked:border-primary-600 hover:border-primary-600',
-    secondary: 'checked:bg-secondary-600 checked:border-secondary-600 hover:border-secondary-600',
-    success: 'checked:bg-success-600 checked:border-success-600 hover:border-success-600',
-    warning: 'checked:bg-warning-600 checked:border-warning-600 hover:border-warning-600',
-    error: 'checked:bg-danger-600 checked:border-danger-600 hover:border-danger-600',
+  // Use text-* to set currentColor for the dot + border when checked
+  const colorClasses: Record<NonNullable<RadioProps['color']>, string> = {
+    primary: 'text-primary-600 checked:border-primary-600 hover:border-primary-600',
+    secondary: 'text-secondary-600 checked:border-secondary-600 hover:border-secondary-600',
+    success: 'text-success-600 checked:border-success-600 hover:border-success-600',
+    warning: 'text-warning-600 checked:border-warning-600 hover:border-warning-600',
+    error: 'text-danger-600 checked:border-danger-600 hover:border-danger-600',
   };
-
-
 
   return (
     <label
       className={twMerge(
-        'inline-flex items-center cursor-pointer',
+        'inline-flex items-center gap-2 cursor-pointer select-none',
         disabled && 'opacity-60 cursor-not-allowed'
       )}
     >
       <input
         type="radio"
-        className={twMerge(
-          'border-2 rounded-full appearance-none',
-          'focus:outline-none focus:ring-2 focus:ring-primary/25',
-          'transition-colors duration-200',
-          'checked:bg-no-repeat checked:bg-center',
-          'checked:bg-[url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSI2IiBjeT0iNiIgcj0iNCIgZmlsbD0id2hpdGUiLz48L3N2Zz4=")]',
-          sizeClasses[variantSize],
-          checked
-            ? colorClasses[color]
-            : error ? 'border-danger-600' : 'border-gray-300',
-          error && !checked && 'hover:border-danger-700',
-          disabled && 'cursor-not-allowed'
-        )}
+        name={name}
+        value={value}
         checked={checked}
         disabled={disabled}
         onChange={handleChange}
-        name={name}
-        value={value}
+        className={twMerge(
+          // Base control
+          'appearance-none rounded-full border-2 bg-white shrink-0',
+          // Center a pseudo-element dot
+          'grid place-items-center',
+          // Inner dot (smooth, perfectly centered)
+          "before:content-[''] before:rounded-full before:bg-current before:scale-0",
+          'before:transition-transform before:duration-150 before:ease-out',
+          'checked:before:scale-100',
+          // Sizes
+          sizeClasses[variantSize],
+          // Colors (currentColor + checked border color)
+          colorClasses[color],
+          checked ? '' : (error ? 'border-danger-600' : 'border-gray-300'),
+          !checked && error && 'hover:border-danger-700',
+          // Focus only when keyboard navigating (prevents extra “ring” on click)
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-current'
+        )}
+        // currentColor is set via text-* classes above
       />
+
       {label && (
-        <label className={twMerge(
-          'ml-2 text-sm font-medium',
-          disabled && 'opacity-50 cursor-not-allowed',
-          error && 'text-danger-600'
-        )}>
+        <span
+          className={twMerge(
+            'text-sm font-medium leading-none',
+            error && 'text-danger-600'
+          )}
+        >
           {label}
-        </label>
+        </span>
       )}
     </label>
   );
-}; 
+};

@@ -51,7 +51,7 @@ interface DialogActionsProps extends React.HTMLAttributes<HTMLDivElement> {
     className?: string;
 }
 interface DialogHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     onClose?: () => void;
     className?: string;
 }

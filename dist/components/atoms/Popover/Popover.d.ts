@@ -1,17 +1,39 @@
+/**
+ * HeroUI Popover Variant
+ *
+ * This component wraps HeroUI's Popover components to provide a consistent API
+ * with the main Popover component. It supports all HeroUI-specific features:
+ *
+ * - Advanced placement options (top-start, bottom-end, etc.)
+ * - Backdrop options (transparent, blur, dark)
+ * - Animation control
+ * - Arrow control
+ * - Offset customization
+ * - HeroUI's built-in positioning and styling system
+ *
+ * This variant is automatically used when variant="hero" is set on the main Popover component.
+ */
 import React from "react";
-export interface PopOverProps {
+export type PopoverVariant = "default" | "elevated" | "outline" | "ghost";
+export type PopoverColor = "primary" | "secondary" | "success" | "warning" | "danger" | "info" | "neutral" | "light" | "custom";
+export type PopoverShadow = "none" | "sm" | "md" | "lg" | "xl";
+export type PopoverRounded = "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full";
+export interface PopoverHerouiProps {
     content: React.ReactNode;
     children: React.ReactNode;
-    position?: "top" | "bottom" | "left" | "right";
-    color?: "primary" | "secondary" | "success" | "warning" | "danger" | "info" | "neutral" | "light" | "custom";
+    placement?: "top" | "bottom" | "left" | "right" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end" | "right-start" | "right-end";
+    showArrow?: boolean;
+    variant?: PopoverVariant;
+    color?: PopoverColor;
     customColor?: string;
-    rounded?: "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full";
-    shadow?: "none" | "sm" | "md" | "lg" | "xl";
+    rounded?: PopoverRounded;
+    shadow?: PopoverShadow;
     className?: string;
-    trigger?: "hover" | "click";
-    autoFocus?: boolean;
     isOpen?: boolean;
     onOpenChange?: (open: boolean) => void;
-    closeOnClickOutside?: boolean;
+    backdrop?: "transparent" | "blur" | "dark";
+    disableAnimation?: boolean;
+    offset?: number;
+    isDismissable?: boolean;
 }
-export declare const Popover: React.FC<PopOverProps>;
+export declare const Popover: React.FC<PopoverHerouiProps>;

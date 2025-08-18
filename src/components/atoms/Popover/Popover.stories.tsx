@@ -1,16 +1,35 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Popover } from "./Popover";
 import { Button } from "../Button/Button";
-import React from "react";
 
 const meta: Meta<typeof Popover> = {
   title: "Atoms/Popover",
   component: Popover,
+  parameters: {
+    layout: "centered",
+  },
   tags: ["autodocs"],
   argTypes: {
-    position: {
+    placement: {
       control: "select",
-      options: ["top", "bottom", "left", "right"],
+      options: [
+        "top",
+        "bottom",
+        "left",
+        "right",
+        "top-start",
+        "top-end",
+        "bottom-start",
+        "bottom-end",
+        "left-start",
+        "left-end",
+        "right-start",
+        "right-end",
+      ],
+    },
+    variant: {
+      control: "select",
+      options: ["default", "elevated", "outline", "ghost"],
     },
     color: {
       control: "select",
@@ -26,573 +45,455 @@ const meta: Meta<typeof Popover> = {
         "custom",
       ],
     },
-    rounded: {
-      control: "select",
-      options: ["none", "sm", "md", "lg", "xl", "2xl", "3xl", "full"],
-    },
     shadow: {
       control: "select",
       options: ["none", "sm", "md", "lg", "xl"],
     },
-    trigger: {
+    rounded: {
       control: "select",
-      options: ["hover", "click"],
+      options: ["none", "sm", "md", "lg", "xl", "2xl", "3xl", "full"],
     },
-    autoFocus: { control: "boolean" },
-    customColor: { control: "color" },
-    closeOnClickOutside: { control: "boolean" },
+    showArrow: {
+      control: "boolean",
+    },
+    isDismissable: {
+      control: "boolean",
+    },
+    disableAnimation: {
+      control: "boolean",
+    },
+    backdrop: {
+      control: "select",
+      options: ["transparent", "blur", "dark"],
+    },
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof Popover>;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    content: <div>This is a popover</div>,
+    content: (
+      <div className="p-4">
+        <h4 className="font-semibold mb-2">Default Popover</h4>
+        <p className="text-sm text-gray-600">
+          This is a default popover with standard styling.
+        </p>
+      </div>
+    ),
     children: <Button>Click me</Button>,
-    position: "bottom",
-    color: "primary",
-    rounded: "xl",
+    placement: "bottom",
+    variant: "default",
+    color: "light",
     shadow: "md",
-    trigger: "click",
+    rounded: "lg",
+    showArrow: true,
   },
 };
 
-export const WithFormAutoFocus: Story = {
+export const Elevated: Story = {
   args: {
     content: (
-      <form className="flex flex-col gap-2">
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          placeholder="Enter email"
-          className="border p-2 rounded"
-        />
-        <Button type="submit">Submit</Button>
-      </form>
+      <div className="p-4">
+        <h4 className="font-semibold mb-2">Elevated Popover</h4>
+        <p className="text-sm text-gray-600">
+          This popover has an elevated appearance with stronger shadows.
+        </p>
+      </div>
     ),
-    children: <Button>Open Form</Button>,
-    position: "bottom",
+    children: <Button>Elevated</Button>,
+    variant: "elevated",
     color: "light",
-    rounded: "lg",
     shadow: "lg",
-    trigger: "click",
-    autoFocus: true,
+    rounded: "xl",
+    showArrow: true,
   },
+};
+
+export const ColoredVariants: Story = {
+  render: () => (
+    <div className="flex gap-4 flex-wrap">
+      <Popover
+        content={
+          <div className="p-4">
+            <h4 className="font-semibold mb-2">Primary</h4>
+            <p className="text-sm">Primary colored popover</p>
+          </div>
+        }
+        color="primary"
+        variant="default"
+        shadow="md"
+        rounded="lg"
+      >
+        <Button>Primary</Button>
+      </Popover>
+
+      <Popover
+        content={
+          <div className="p-4">
+            <h4 className="font-semibold mb-2">Success</h4>
+            <p className="text-sm">Success colored popover</p>
+          </div>
+        }
+        color="success"
+        variant="default"
+        shadow="md"
+        rounded="lg"
+      >
+        <Button>Success</Button>
+      </Popover>
+
+      <Popover
+        content={
+          <div className="p-4">
+            <h4 className="font-semibold mb-2">Warning</h4>
+            <p className="text-sm">Warning colored popover</p>
+          </div>
+        }
+        color="warning"
+        variant="default"
+        shadow="md"
+        rounded="lg"
+      >
+        <Button>Warning</Button>
+      </Popover>
+
+      <Popover
+        content={
+          <div className="p-4">
+            <h4 className="font-semibold mb-2">Danger</h4>
+            <p className="text-sm">Danger colored popover</p>
+          </div>
+        }
+        color="danger"
+        variant="default"
+        shadow="md"
+        rounded="lg"
+      >
+        <Button>Danger</Button>
+      </Popover>
+    </div>
+  ),
+};
+
+export const ShadowVariants: Story = {
+  render: () => (
+    <div className="flex gap-4 flex-wrap">
+      <Popover
+        content={
+          <div className="p-4">
+            <h4 className="font-semibold mb-2">No Shadow</h4>
+            <p className="text-sm">Popover without shadow</p>
+          </div>
+        }
+        shadow="none"
+        rounded="lg"
+      >
+        <Button>No Shadow</Button>
+      </Popover>
+
+      <Popover
+        content={
+          <div className="p-4">
+            <h4 className="font-semibold mb-2">Small Shadow</h4>
+            <p className="text-sm">Popover with small shadow</p>
+          </div>
+        }
+        shadow="sm"
+        rounded="lg"
+      >
+        <Button>Small Shadow</Button>
+      </Popover>
+
+      <Popover
+        content={
+          <div className="p-4">
+            <h4 className="font-semibold mb-2">Large Shadow</h4>
+            <p className="text-sm">Popover with large shadow</p>
+          </div>
+        }
+        shadow="lg"
+        rounded="lg"
+      >
+        <Button>Large Shadow</Button>
+      </Popover>
+
+      <Popover
+        content={
+          <div className="p-4">
+            <h4 className="font-semibold mb-2">Extra Large Shadow</h4>
+            <p className="text-sm">Popover with extra large shadow</p>
+          </div>
+        }
+        shadow="xl"
+        rounded="lg"
+      >
+        <Button>XL Shadow</Button>
+      </Popover>
+    </div>
+  ),
+};
+
+export const RoundedVariants: Story = {
+  render: () => (
+    <div className="flex gap-4 flex-wrap">
+      <Popover
+        content={
+          <div className="p-4">
+            <h4 className="font-semibold mb-2">No Rounded</h4>
+            <p className="text-sm">Sharp corners</p>
+          </div>
+        }
+        rounded="none"
+        shadow="md"
+      >
+        <Button>No Rounded</Button>
+      </Popover>
+
+      <Popover
+        content={
+          <div className="p-4">
+            <h4 className="font-semibold mb-2">Small Rounded</h4>
+            <p className="text-sm">Small rounded corners</p>
+          </div>
+        }
+        rounded="sm"
+        shadow="md"
+      >
+        <Button>Small Rounded</Button>
+      </Popover>
+
+      <Popover
+        content={
+          <div className="p-4">
+            <h4 className="font-semibold mb-2">Large Rounded</h4>
+            <p className="text-sm">Large rounded corners</p>
+          </div>
+        }
+        rounded="xl"
+        shadow="md"
+      >
+        <Button>Large Rounded</Button>
+      </Popover>
+
+      <Popover
+        content={
+          <div className="p-4">
+            <h4 className="font-semibold mb-2">Full Rounded</h4>
+            <p className="text-sm">Fully rounded corners</p>
+          </div>
+        }
+        rounded="full"
+        shadow="md"
+      >
+        <Button>Full Rounded</Button>
+      </Popover>
+    </div>
+  ),
+};
+
+export const PlacementVariants: Story = {
+  render: () => (
+    <div className="grid grid-cols-3 gap-8 items-center justify-items-center">
+      <Popover
+        content={
+          <div className="p-4">
+            <h4 className="font-semibold mb-2">Top</h4>
+            <p className="text-sm">Appears above the trigger</p>
+          </div>
+        }
+        placement="top"
+        shadow="md"
+        rounded="lg"
+      >
+        <Button>Top</Button>
+      </Popover>
+
+      <Popover
+        content={
+          <div className="p-4">
+            <h4 className="font-semibold mb-2">Bottom</h4>
+            <p className="text-sm">Appears below the trigger</p>
+          </div>
+        }
+        placement="bottom"
+        shadow="md"
+        rounded="lg"
+      >
+        <Button>Bottom</Button>
+      </Popover>
+
+      <Popover
+        content={
+          <div className="p-4">
+            <h4 className="font-semibold mb-2">Left</h4>
+            <p className="text-sm">Appears to the left</p>
+          </div>
+        }
+        placement="left"
+        shadow="md"
+        rounded="lg"
+      >
+        <Button>Left</Button>
+      </Popover>
+
+      <Popover
+        content={
+          <div className="p-4">
+            <h4 className="font-semibold mb-2">Right</h4>
+            <p className="text-sm">Appears to the right</p>
+          </div>
+        }
+        placement="right"
+        shadow="md"
+        rounded="lg"
+      >
+        <Button>Right</Button>
+      </Popover>
+
+      <Popover
+        content={
+          <div className="p-4">
+            <h4 className="font-semibold mb-2">Top Start</h4>
+            <p className="text-sm">Top with start alignment</p>
+          </div>
+        }
+        placement="top-start"
+        shadow="md"
+        rounded="lg"
+      >
+        <Button>Top Start</Button>
+      </Popover>
+
+      <Popover
+        content={
+          <div className="p-4">
+            <h4 className="font-semibold mb-2">Bottom End</h4>
+            <p className="text-sm">Bottom with end alignment</p>
+          </div>
+        }
+        placement="bottom-end"
+        shadow="md"
+        rounded="lg"
+      >
+        <Button>Bottom End</Button>
+      </Popover>
+    </div>
+  ),
 };
 
 export const CustomColor: Story = {
   args: {
-    content: <div>Custom color popover</div>,
+    content: (
+      <div className="p-4">
+        <h4 className="font-semibold mb-2">Custom Color</h4>
+        <p className="text-sm">This popover uses a custom color</p>
+      </div>
+    ),
     children: <Button>Custom Color</Button>,
     color: "custom",
-    customColor: "#ff69b4",
-    position: "top",
-    rounded: "full",
-    shadow: "xl",
-    trigger: "click",
-  },
-};
-
-export const AllPositions: Story = {
-  render: () => (
-    <div className="flex flex-col items-center gap-8 p-8">
-      <div className="flex items-center gap-4">
-        <Popover content="Top popover" position="top">
-          <Button>Top</Button>
-        </Popover>
-        <Popover content="Bottom popover" position="bottom">
-          <Button>Bottom</Button>
-        </Popover>
-      </div>
-      <div className="flex items-center gap-4">
-        <Popover content="Left popover" position="left">
-          <Button>Left</Button>
-        </Popover>
-        <Popover content="Right popover" position="right">
-          <Button>Right</Button>
-        </Popover>
-      </div>
-    </div>
-  ),
-};
-
-export const RoundedAndShadow: Story = {
-  render: () => (
-    <div className="flex items-center gap-4">
-      <Popover content="None" rounded="none" shadow="none">
-        <Button>None</Button>
-      </Popover>
-      <Popover content="Small" rounded="sm" shadow="sm">
-        <Button>Small</Button>
-      </Popover>
-      <Popover content="Medium" rounded="md" shadow="md">
-        <Button>Medium</Button>
-      </Popover>
-      <Popover content="Large" rounded="lg" shadow="lg">
-        <Button>Large</Button>
-      </Popover>
-      <Popover content="Extra Large" rounded="xl" shadow="xl">
-        <Button>Extra Large</Button>
-      </Popover>
-      <Popover content="2xl" rounded="2xl" shadow="xl">
-        <Button>2xl</Button>
-      </Popover>
-      <Popover content="3xl" rounded="3xl" shadow="xl">
-        <Button>3xl</Button>
-      </Popover>
-      <Popover content="Full" rounded="full" shadow="xl">
-        <Button>Full</Button>
-      </Popover>
-    </div>
-  ),
-};
-
-export const HoverTrigger: Story = {
-  args: {
-    content: <div>Popover on hover</div>,
-    children: <Button>Hover me</Button>,
-    trigger: "hover",
-    color: "info",
-    position: "right",
-  },
-};
-
-// --- Showcase: Popover with a menu/list ---
-export const WithMenu: Story = {
-  args: {
-    content: (
-      <ul className="min-w-[160px]">
-        <li className="p-2 hover:bg-neutral-100 cursor-pointer">Profile</li>
-        <li className="p-2 hover:bg-neutral-100 cursor-pointer">Settings</li>
-        <li className="p-2 hover:bg-neutral-100 cursor-pointer">Logout</li>
-      </ul>
-    ),
-    children: <Button>Menu</Button>,
-    position: "bottom",
-    color: "light",
-    rounded: "md",
-    shadow: "md",
-    trigger: "click",
-  },
-};
-
-// --- Showcase: Popover with a complex form ---
-export const WithComplexForm: Story = {
-  args: {
-    content: (
-      <form className="flex flex-col gap-3 w-64">
-        <label htmlFor="name">Name</label>
-        <input
-          id="name"
-          type="text"
-          placeholder="Enter name"
-          className="border p-2 rounded"
-        />
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          type="email"
-          placeholder="Enter email"
-          className="border p-2 rounded"
-        />
-        <div className="flex gap-2 justify-end">
-          <Button type="button">Cancel</Button>
-          <Button type="submit">Save</Button>
-        </div>
-      </form>
-    ),
-    children: <Button>Open Complex Form</Button>,
-    position: "right",
-    color: "light",
-    rounded: "lg",
+    customColor: "#8B5CF6",
+    variant: "default",
     shadow: "lg",
-    trigger: "click",
-    autoFocus: true,
+    rounded: "xl",
+    showArrow: true,
   },
 };
 
-// --- Showcase: Popover with custom width/content ---
-export const CustomWidthContent: Story = {
+export const NoArrow: Story = {
   args: {
     content: (
-      <div className="w-80 p-2">
-        <h4 className="font-bold mb-2">Popover Title</h4>
-        <p>
-          This popover has a custom width and more content. You can use it for
-          tooltips, cards, or anything else.
-        </p>
+      <div className="p-4">
+        <h4 className="font-semibold mb-2">No Arrow</h4>
+        <p className="text-sm">This popover doesn't show an arrow</p>
       </div>
     ),
-    children: <Button>Wide Popover</Button>,
-    position: "top",
-    color: "info",
-    rounded: "md",
-    shadow: "xl",
-    trigger: "click",
+    children: <Button>No Arrow</Button>,
+    showArrow: false,
+    shadow: "md",
+    rounded: "lg",
   },
 };
 
-// --- Showcase: Controlled Popover (external state) ---
-export const Controlled: Story = {
-  render: () => {
-    const [open, setOpen] = React.useState(false);
-    return (
-      <div className="flex flex-col items-center gap-4">
-        <Button onClick={() => setOpen((v) => !v)}>
-          {open ? "Close" : "Open"} Popover
-        </Button>
-        <Popover
-          content={<div>Controlled popover. Click the button to toggle.</div>}
-          isOpen={open}
-          onOpenChange={setOpen}
-          children={<span></span>}
-        />
-      </div>
-    );
-  },
-};
-
-// --- Showcase: Popover with interactive content (close button inside) ---
-export const WithCloseButton: Story = {
-  render: () => {
-    const [open, setOpen] = React.useState(false);
-    return (
-      <Popover
-        content={
-          <div className="flex flex-col gap-2">
-            <span>This popover can be closed from inside.</span>
-            <Button size="sm" onClick={() => setOpen(false)}>
-              Close
-            </Button>
-          </div>
-        }
-        isOpen={open}
-        onOpenChange={setOpen}
-        children={<Button onClick={() => setOpen(true)}>Open Popover</Button>}
-      />
-    );
-  },
-};
-
-// --- Showcase: Popover with long content and scrolling ---
-export const WithLongContent: Story = {
+export const OutlineVariant: Story = {
   args: {
     content: (
-      <div className="max-h-60 overflow-y-auto w-64">
-        <h4 className="font-bold mb-2">Long Content</h4>
-        <ul>
-          {Array.from({ length: 20 }).map((_, i) => (
-            <li key={i} className="p-1 border-b last:border-b-0">
-              Item {i + 1}
-            </li>
-          ))}
-        </ul>
+      <div className="p-4">
+        <h4 className="font-semibold mb-2">Outline Variant</h4>
+        <p className="text-sm">This popover has an outline style</p>
       </div>
     ),
-    children: <Button>Show Long Content</Button>,
-    position: "left",
+    children: <Button>Outline</Button>,
+    variant: "outline",
+    color: "primary",
+    shadow: "sm",
+    rounded: "lg",
+    showArrow: true,
+  },
+};
+
+export const GhostVariant: Story = {
+  args: {
+    content: (
+      <div className="p-4">
+        <h4 className="font-semibold mb-2">Ghost Variant</h4>
+        <p className="text-sm">This popover has a ghost style</p>
+      </div>
+    ),
+    children: <Button>Ghost</Button>,
+    variant: "ghost",
     color: "neutral",
-    rounded: "md",
-    shadow: "md",
-    trigger: "click",
+    shadow: "none",
+    rounded: "lg",
+    showArrow: true,
   },
 };
 
-// --- Showcase: Manual close only (closeOnClickOutside = false) ---
-export const ManualCloseOnly: Story = {
-  render: () => {
-    const [open, setOpen] = React.useState(false);
-    return (
+export const BackdropVariants: Story = {
+  render: () => (
+    <div className="flex gap-4 flex-wrap">
       <Popover
         content={
-          <div className="flex flex-col gap-2">
-            <span>This popover will NOT close on outside click.</span>
-            <span className="text-xs text-neutral-500">
-              It only closes when you click the button below.
-            </span>
-            <Button size="sm" onClick={() => setOpen(false)}>
-              Close Popover
-            </Button>
+          <div className="p-4">
+            <h4 className="font-semibold mb-2">Transparent Backdrop</h4>
+            <p className="text-sm">No backdrop overlay</p>
           </div>
         }
-        isOpen={open}
-        onOpenChange={setOpen}
-        closeOnClickOutside={false}
-        children={
-          <Button onClick={() => setOpen(true)}>Open Manual Popover</Button>
+        backdrop="transparent"
+        shadow="md"
+        rounded="lg"
+      >
+        <Button>Transparent</Button>
+      </Popover>
+
+      <Popover
+        content={
+          <div className="p-4">
+            <h4 className="font-semibold mb-2">Blur Backdrop</h4>
+            <p className="text-sm">Backdrop with blur effect</p>
+          </div>
         }
-      />
-    );
-  },
-};
+        backdrop="blur"
+        shadow="md"
+        rounded="lg"
+      >
+        <Button>Blur</Button>
+      </Popover>
 
-// --- Showcase: Mobile-optimized popover ---
-export const MobileOptimized: Story = {
-  args: {
-    content: (
-      <div className="w-72 p-4">
-        <h4 className="font-bold mb-3 text-lg">Mobile-Friendly Popover</h4>
-        <p className="text-sm mb-3">
-          This popover is optimized for mobile devices with:
-        </p>
-        <ul className="text-sm space-y-1 mb-3">
-          <li>• Better touch handling</li>
-          <li>• Virtual keyboard awareness</li>
-          <li>• Responsive positioning</li>
-          <li>• Mobile-optimized spacing</li>
-        </ul>
-        <div className="flex gap-2">
-          <Button size="sm">Action 1</Button>
-          <Button size="sm" variant="outline">
-            Action 2
-          </Button>
-        </div>
-      </div>
-    ),
-    children: <Button>Mobile Popover</Button>,
-    position: "bottom",
-    color: "light",
-    rounded: "lg",
-    shadow: "lg",
-    trigger: "click",
-    className: "max-w-[90vw]",
-  },
-  parameters: {
-    viewport: {
-      defaultViewport: "mobile1",
-    },
-  },
-};
-
-// --- Showcase: Smooth animations and scroll positioning ---
-export const SmoothAnimations: Story = {
-  render: () => {
-    const [open, setOpen] = React.useState(false);
-    return (
-      <div className="space-y-8 p-8">
-        <div className="text-center">
-          <h3 className="text-lg font-semibold mb-4">Smooth Animations Demo</h3>
-          <p className="text-sm text-neutral-600 mb-4">
-            This popover features smooth open/close animations and accurate
-            scroll positioning
-          </p>
-          <Button onClick={() => setOpen(!open)}>
-            {open ? "Close" : "Open"} Animated Popover
-          </Button>
-        </div>
-
-        <Popover
-          content={
-            <div className="w-64 p-4">
-              <h4 className="font-bold mb-2">Smooth Animations</h4>
-              <p className="text-sm mb-3">
-                Notice the smooth scale and opacity transitions when opening and
-                closing. The popover also maintains accurate positioning during
-                scroll.
-              </p>
-              <div className="flex gap-2">
-                <Button size="sm" onClick={() => setOpen(false)}>
-                  Close
-                </Button>
-                <Button size="sm" variant="outline">
-                  Action
-                </Button>
-              </div>
-            </div>
-          }
-          isOpen={open}
-          onOpenChange={setOpen}
-          position="bottom"
-          color="light"
-          rounded="lg"
-          shadow="lg"
-          children={<span></span>}
-        />
-
-        {/* Add some scrollable content to test positioning */}
-        <div className="h-96 overflow-y-auto border rounded-lg p-4 bg-neutral-50">
-          <h4 className="font-semibold mb-4">Scrollable Content for Testing</h4>
-          {Array.from({ length: 20 }).map((_, i) => (
-            <div key={i} className="mb-4 p-3 bg-white rounded border">
-              <h5 className="font-medium">Section {i + 1}</h5>
-              <p className="text-sm text-neutral-600">
-                This is scrollable content to test the popover positioning
-                during scroll. The popover should maintain its relative position
-                to the trigger element.
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  },
-};
-
-// --- Showcase: Accurate positioning test ---
-export const AccuratePositioning: Story = {
-  render: () => {
-    const [open, setOpen] = React.useState(false);
-    return (
-      <div className="space-y-8 p-8">
-        <div className="text-center">
-          <h3 className="text-lg font-semibold mb-4">
-            Accurate Positioning Test
-          </h3>
-          <p className="text-sm text-neutral-600 mb-4">
-            This popover should always stick close to its parent button, even
-            during scroll
-          </p>
-        </div>
-
-        {/* Test popover in different positions */}
-        <div className="flex flex-wrap gap-4 justify-center">
-          <Popover
-            content={<div className="p-3 bg-blue-100 rounded">Top Popover</div>}
-            position="top"
-            children={<Button>Top Position</Button>}
-          />
-
-          <Popover
-            content={
-              <div className="p-3 bg-green-100 rounded">Bottom Popover</div>
-            }
-            position="bottom"
-            children={<Button>Bottom Position</Button>}
-          />
-
-          <Popover
-            content={
-              <div className="p-3 bg-yellow-100 rounded">Left Popover</div>
-            }
-            position="left"
-            children={<Button>Left Position</Button>}
-          />
-
-          <Popover
-            content={
-              <div className="p-3 bg-purple-100 rounded">Right Popover</div>
-            }
-            position="right"
-            children={<Button>Right Position</Button>}
-          />
-        </div>
-
-        {/* Scrollable container with positioned popover */}
-        <div className="border rounded-lg p-4">
-          <h4 className="font-semibold mb-4">Scroll Test Container</h4>
-          <div className="h-64 overflow-y-auto border rounded p-4 bg-neutral-50">
-            <div className="space-y-4">
-              {Array.from({ length: 10 }).map((_, i) => (
-                <div key={i} className="p-3 bg-white rounded border">
-                  <div className="flex items-center justify-between">
-                    <span>Scroll Item {i + 1}</span>
-                    <Popover
-                      content={
-                        <div className="p-2 bg-white border rounded shadow">
-                          <p className="text-sm">Popover {i + 1}</p>
-                          <p className="text-xs text-neutral-500">
-                            Should stay with button
-                          </p>
-                        </div>
-                      }
-                      position="right"
-                      children={<Button size="sm">Info {i + 1}</Button>}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
+      <Popover
+        content={
+          <div className="p-4">
+            <h4 className="font-semibold mb-2">Dark Backdrop</h4>
+            <p className="text-sm">Dark backdrop overlay</p>
           </div>
-        </div>
-      </div>
-    );
-  },
-};
-
-// --- Showcase: Clean animations and scroll positioning ---
-export const CleanAnimations: Story = {
-  render: () => {
-    const [open, setOpen] = React.useState(false);
-    const [currentPosition, setCurrentPosition] = React.useState<
-      "top" | "bottom" | "left" | "right"
-    >("bottom");
-
-    const positions: Array<"top" | "bottom" | "left" | "right"> = [
-      "top",
-      "bottom",
-      "left",
-      "right",
-    ];
-
-    return (
-      <div className="space-y-8 p-8">
-        <div className="text-center">
-          <h3 className="text-lg font-semibold mb-4">
-            Clean, Professional Animations
-          </h3>
-          <p className="text-sm text-neutral-600 mb-4">
-            Notice the smooth open/close animations without any sliding effects
-            when position changes
-          </p>
-          <div className="flex gap-2 justify-center mb-4">
-            <Button onClick={() => setOpen(!open)}>
-              {open ? "Close" : "Open"} Popover
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => {
-                const nextIndex =
-                  (positions.indexOf(currentPosition) + 1) % positions.length;
-                setCurrentPosition(positions[nextIndex]);
-              }}
-            >
-              Change Position: {currentPosition}
-            </Button>
-          </div>
-        </div>
-
-        <div className="flex justify-center">
-          <Popover
-            content={
-              <div className="w-64 p-4">
-                <h4 className="font-bold mb-2">Smooth Animations</h4>
-                <p className="text-sm mb-3">
-                  This popover demonstrates clean, professional animations. Try
-                  changing the position while it's open - no sliding effects!
-                </p>
-                <div className="flex gap-2">
-                  <Button size="sm" onClick={() => setOpen(false)}>
-                    Close
-                  </Button>
-                  <Button size="sm" variant="outline">
-                    Action
-                  </Button>
-                </div>
-              </div>
-            }
-            isOpen={open}
-            onOpenChange={setOpen}
-            position={currentPosition}
-            color="light"
-            rounded="lg"
-            shadow="lg"
-            children={<Button>Hover/Click Me</Button>}
-          />
-        </div>
-
-        <div className="text-center text-sm text-neutral-500">
-          <p>
-            Current position: <strong>{currentPosition}</strong>
-          </p>
-          <p>
-            Try changing the position while the popover is open to see the clean
-            transition
-          </p>
-        </div>
-      </div>
-    );
-  },
+        }
+        backdrop="dark"
+        shadow="md"
+        rounded="lg"
+      >
+        <Button>Dark</Button>
+      </Popover>
+    </div>
+  ),
 };

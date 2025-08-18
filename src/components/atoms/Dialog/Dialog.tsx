@@ -84,7 +84,7 @@ interface DialogActionsProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 interface DialogHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   onClose?: () => void;
   className?: string;
 }
@@ -100,7 +100,10 @@ const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
       {onClose && (
         <button
           onClick={onClose}
-          className="ml-4 rounded-full p-1 text-gray hover:bg-gray-100 hover:text-gray-700"
+          className={cn(
+            "rounded-full p-1 text-gray hover:bg-gray-100 hover:text-gray-700",
+            children ? "ml-4" : "ml-0"
+          )}
           aria-label="Close dialog"
         >
           <Icon icon="mdi:close" className="h-5 w-5" />
