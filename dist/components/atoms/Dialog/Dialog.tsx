@@ -96,14 +96,11 @@ const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
       className={cn("mb-4 flex items-center justify-between", className)}
       {...props}
     >
-      {children}
+      <div className="flex-1">{children}</div>
       {onClose && (
         <button
           onClick={onClose}
-          className={cn(
-            "rounded-full p-1 text-gray hover:bg-gray-100 hover:text-gray-700",
-            children ? "ml-4" : "ml-0"
-          )}
+          className="rounded-full p-1 text-gray hover:bg-gray-100 hover:text-gray-700"
           aria-label="Close dialog"
         >
           <Icon icon="mdi:close" className="h-5 w-5" />

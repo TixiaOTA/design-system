@@ -4617,15 +4617,12 @@ const Fa = Ie(
       className: _("mb-4 flex items-center justify-between", r),
       ...n,
       children: [
-        e,
+        /* @__PURE__ */ i.jsx("div", { className: "flex-1", children: e }),
         t && /* @__PURE__ */ i.jsx(
           "button",
           {
             onClick: t,
-            className: _(
-              "rounded-full p-1 text-gray hover:bg-gray-100 hover:text-gray-700",
-              e ? "ml-4" : "ml-0"
-            ),
+            className: "rounded-full p-1 text-gray hover:bg-gray-100 hover:text-gray-700",
             "aria-label": "Close dialog",
             children: /* @__PURE__ */ i.jsx(ue, { icon: "mdi:close", className: "h-5 w-5" })
           }

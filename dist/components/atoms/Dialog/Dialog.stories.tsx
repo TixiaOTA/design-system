@@ -205,6 +205,53 @@ export const WithoutHeader: Story = {
   },
 };
 
+// Example with Header but no content (only close button)
+const DialogWithEmptyHeader = (args: any) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)}>
+        Open Dialog with Empty Header
+      </Button>
+      <Dialog
+        {...args}
+        isOpen={isOpen}
+        onClose={handleClose}
+        backdrop={args.backdrop ?? "dark"}
+        header={<div></div>} // Empty header content
+        closeOnBackdropClick={args.closeOnBackdropClick ?? true}
+      >
+        <DialogBody>
+          This dialog has a header with no visible content, but the close button is still positioned on the right.
+          The close icon maintains its position regardless of header content.
+        </DialogBody>
+        <DialogActions>
+          <Button variant="outline" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button onClick={handleClose}>Confirm</Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};
+
+export const WithEmptyHeader: Story = {
+  render: (args) => <DialogWithEmptyHeader {...args} />,
+  parameters: {
+    docs: {
+      description: {
+        story: "Dialog with an empty header that still shows the close button positioned on the right.",
+      },
+    },
+  },
+};
+
 const DialogTemplate = (args: any) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
