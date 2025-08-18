@@ -1,4 +1,8 @@
 
+## [v0.23.0] - 2025-08-18
+- fix: update dialog, popover, and radio
+
+
 ## [v0.22.0] - 2025-08-14
 - fix: update table and popover
 - fix: add more loader variations
