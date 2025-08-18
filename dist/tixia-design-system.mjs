@@ -15449,7 +15449,7 @@ const gp = De("border bg-popover text-popover-foreground", {
   content: e,
   children: t,
   placement: r = "bottom",
-  showArrow: n = !0,
+  showArrow: n = !1,
   variant: o = "default",
   color: a = "light",
   customColor: s,

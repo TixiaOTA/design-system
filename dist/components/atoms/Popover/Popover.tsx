@@ -125,7 +125,7 @@ export const Popover: React.FC<PopoverHerouiProps> = ({
   content,
   children,
   placement = "bottom",
-  showArrow = true,
+  showArrow = false,
   variant = "default",
   color = "light",
   customColor,
