@@ -1,4 +1,4 @@
-import React, { forwardRef, useState, useRef, useEffect } from "react";
+import React, { forwardRef, useState, useRef, useEffect, useImperativeHandle } from "react";
 import { cva } from "class-variance-authority";
 import { cn } from "../../../utils/cn";
 import { Icon } from "../../atoms/Icons/Icons";
@@ -174,7 +174,7 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
     placeholder = "Enter phone number",
     autoDetect = true,
     ...props
-  }) => {
+  }, ref) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedCountry, setSelectedCountry] = useState(
       () =>
@@ -412,6 +412,9 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
 
     // In autoDetect mode, show single input initially, then show country selector after detection
     const showCountrySelector = !autoDetect || (autoDetect && countryDetected);
+
+    // Expose the wrapper div via the forwarded ref
+    useImperativeHandle(ref, () => wrapperRef.current!, []);
 
     return (
       <div

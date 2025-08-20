@@ -1,4 +1,4 @@
-import React, { forwardRef, useState, useRef, useEffect } from "react";
+import React, { forwardRef, useState, useRef, useEffect, useImperativeHandle } from "react";
 import { createPortal } from "react-dom";
 import { cva } from "class-variance-authority";
 import { cn } from "../../../utils/cn";
@@ -136,7 +136,8 @@ export const PrimitiveDatePicker = forwardRef<
       format = "DD-MM-YYYY",
       allowInput = false,
       ...props
-    }
+    },
+    ref
   ) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date | undefined>(value);
@@ -148,6 +149,8 @@ export const PrimitiveDatePicker = forwardRef<
     const dropdownRef = useRef<HTMLDivElement>(null);
     const yearDropdownRef = useRef<HTMLDivElement>(null);
     const inputElementRef = useRef<HTMLInputElement>(null);
+    // Expose the input element via the forwarded ref
+    useImperativeHandle(ref, () => inputElementRef.current!, []);
 
     useEffect(() => {
       setSelectedDate(value || undefined);
