@@ -1,4 +1,8 @@
 
+## [v0.26.0] - 2025-08-20
+- fix: warning forwardref
+
+
 ## [v0.25.0] - 2025-08-18
 - fix: update arror popover on default
 
