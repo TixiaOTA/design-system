@@ -1,6 +1,6 @@
 import React from 'react';
 export interface RadioProps {
-    label?: string;
+    label?: string | React.ReactNode;
     checked?: boolean;
     disabled?: boolean;
     onChange?: (checked: boolean) => void;

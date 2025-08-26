@@ -4,7 +4,7 @@ export type RadioGroupSize = 'sm' | 'md' | 'lg';
 export type RadioGroupLabelPlacement = 'top' | 'left';
 export interface RadioOption {
     value: string;
-    label: string;
+    label: string | React.ReactNode;
     disabled?: boolean;
 }
 export interface RadioGroupProps extends Omit<React.FieldsetHTMLAttributes<HTMLFieldSetElement>, 'onChange'> {

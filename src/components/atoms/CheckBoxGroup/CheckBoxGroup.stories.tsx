@@ -624,3 +624,315 @@ export const GridLayoutWithGaps: Story = {
     </div>
   ),
 };
+
+// ReactNode Label Examples
+export const WithReactNodeLabels: Story = {
+  render: () => {
+    const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+
+    const reactNodeOptions = [
+      {
+        value: 'feature1',
+        label: (
+          <div className="flex items-center gap-2">
+            <span className="w-3 h-3 bg-blue-500 rounded-full"></span>
+            <span>Feature with Icon</span>
+          </div>
+        )
+      },
+      {
+        value: 'feature2',
+        label: (
+          <div className="flex items-center gap-2">
+            <span className="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">New</span>
+            <span>Feature with Badge</span>
+          </div>
+        )
+      },
+      {
+        value: 'feature3',
+        label: (
+          <div className="flex items-center gap-2">
+            <span className="text-yellow-500">⭐</span>
+            <span>Premium Feature</span>
+          </div>
+        )
+      },
+      {
+        value: 'feature4',
+        label: (
+          <div className="flex flex-col gap-1">
+            <span className="font-medium">Advanced Feature</span>
+            <span className="text-xs text-gray-500">With detailed description</span>
+          </div>
+        )
+      }
+    ];
+
+    return (
+      <div className="flex flex-col gap-4">
+        <CheckBoxGroup
+          options={reactNodeOptions}
+          label="Features with ReactNode Labels"
+          value={selectedOptions}
+          onChange={setSelectedOptions}
+          showSelectAll={true}
+          helperText="These options demonstrate complex label content"
+        />
+        
+        {selectedOptions.length > 0 && (
+          <div className="mt-4 p-3 bg-blue-50 rounded border border-blue-200">
+            <p className="text-sm text-blue-800">
+              Selected: <strong>{selectedOptions.join(', ')}</strong>
+            </p>
+          </div>
+        )}
+      </div>
+    );
+  },
+};
+
+export const WithIconsAndBadges: Story = {
+  render: () => {
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+    const categoryOptions = [
+      {
+        value: 'design',
+        label: (
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+              <span className="text-purple-600 text-sm">🎨</span>
+            </div>
+            <div>
+              <div className="font-medium">Design</div>
+              <div className="text-sm text-gray-500">UI/UX, Graphics</div>
+            </div>
+          </div>
+        )
+      },
+      {
+        value: 'development',
+        label: (
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+              <span className="text-blue-600 text-sm">💻</span>
+            </div>
+            <div>
+              <div className="font-medium">Development</div>
+              <div className="text-sm text-gray-500">Frontend, Backend</div>
+            </div>
+            <span className="ml-auto px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">Hot</span>
+          </div>
+        )
+      },
+      {
+        value: 'marketing',
+        label: (
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+              <span className="text-green-600 text-sm">📈</span>
+            </div>
+            <div>
+              <div className="font-medium">Marketing</div>
+              <div className="text-sm text-gray-500">SEO, Social Media</div>
+            </div>
+          </div>
+        )
+      }
+    ];
+
+    return (
+      <div className="flex flex-col gap-4">
+        <CheckBoxGroup
+          options={categoryOptions}
+          label="Select Categories"
+          value={selectedCategories}
+          onChange={setSelectedCategories}
+          showSelectAll={true}
+          helperText="Choose the categories you're interested in"
+        />
+        
+        {selectedCategories.length > 0 && (
+          <div className="mt-4 p-4 bg-green-50 rounded-lg border border-green-200">
+            <h3 className="font-medium text-green-900 mb-2">Selected Categories:</h3>
+            <p className="text-sm text-green-800">
+              {selectedCategories.join(', ')}
+            </p>
+          </div>
+        )}
+      </div>
+    );
+  },
+};
+
+export const WithStatusIndicators: Story = {
+  render: () => {
+    const [selectedServices, setSelectedServices] = useState<string[]>([]);
+
+    const serviceOptions = [
+      {
+        value: 'web-hosting',
+        label: (
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+            <span>Web Hosting</span>
+            <span className="text-xs text-gray-500">(99.9% uptime)</span>
+          </div>
+        )
+      },
+      {
+        value: 'ssl-certificate',
+        label: (
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+            <span>SSL Certificate</span>
+            <span className="text-xs text-gray-500">(Free with hosting)</span>
+          </div>
+        )
+      },
+      {
+        value: 'backup-service',
+        label: (
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+            <span>Backup Service</span>
+            <span className="text-xs text-gray-500">(Daily backups)</span>
+          </div>
+        )
+      },
+      {
+        value: 'cdn',
+        label: (
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+            <span>CDN</span>
+            <span className="text-xs text-gray-500">(Global distribution)</span>
+          </div>
+        )
+      }
+    ];
+
+    return (
+      <div className="flex flex-col gap-4">
+        <CheckBoxGroup
+          options={serviceOptions}
+          label="Additional Services"
+          value={selectedServices}
+          onChange={setSelectedServices}
+          showSelectAll={true}
+          helperText="Select additional services for your hosting package"
+        />
+        
+        {selectedServices.length > 0 && (
+          <div className="mt-4 p-3 bg-gray-50 rounded border border-gray-200">
+            <p className="text-sm text-gray-700">
+              Selected Services: <strong>{selectedServices.join(', ')}</strong>
+            </p>
+          </div>
+        )}
+      </div>
+    );
+  },
+};
+
+export const WithComplexContent: Story = {
+  render: () => {
+    const [selectedPackages, setSelectedPackages] = useState<string[]>([]);
+
+    const packageOptions = [
+      {
+        value: 'starter',
+        label: (
+          <div className="flex items-start gap-3 p-2 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors">
+            <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+              <span className="text-gray-600 text-lg font-bold">S</span>
+            </div>
+            <div className="flex-1">
+              <div className="font-medium text-gray-900">Starter Package</div>
+              <div className="text-sm text-gray-600 mb-1">Perfect for small projects</div>
+              <div className="flex items-center gap-4 text-xs text-gray-500">
+                <span>• 5GB Storage</span>
+                <span>• 1 Domain</span>
+                <span>• Basic Support</span>
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-lg font-bold text-gray-900">$9</div>
+              <div className="text-xs text-gray-500">/month</div>
+            </div>
+          </div>
+        )
+      },
+      {
+        value: 'professional',
+        label: (
+          <div className="flex items-start gap-3 p-2 rounded-lg border border-blue-200 hover:border-blue-300 transition-colors bg-blue-50">
+            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+              <span className="text-blue-600 text-lg font-bold">P</span>
+            </div>
+            <div className="flex-1">
+              <div className="font-medium text-gray-900">Professional Package</div>
+              <div className="text-sm text-gray-600 mb-1">Ideal for growing businesses</div>
+              <div className="flex items-center gap-4 text-xs text-gray-500">
+                <span>• 25GB Storage</span>
+                <span>• 5 Domains</span>
+                <span>• Priority Support</span>
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-lg font-bold text-gray-900">$29</div>
+              <div className="text-xs text-gray-500">/month</div>
+            </div>
+            <span className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">Popular</span>
+          </div>
+        )
+      },
+      {
+        value: 'enterprise',
+        label: (
+          <div className="flex items-start gap-3 p-2 rounded-lg border border-purple-200 hover:border-purple-300 transition-colors">
+            <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+              <span className="text-purple-600 text-lg font-bold">E</span>
+            </div>
+            <div className="flex-1">
+              <div className="font-medium text-gray-900">Enterprise Package</div>
+              <div className="text-sm text-gray-600 mb-1">For large-scale applications</div>
+              <div className="flex items-center gap-4 text-xs text-gray-500">
+                <span>• Unlimited Storage</span>
+                <span>• Unlimited Domains</span>
+                <span>• 24/7 Support</span>
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-lg font-bold text-gray-900">$99</div>
+              <div className="text-xs text-gray-500">/month</div>
+            </div>
+          </div>
+        )
+      }
+    ];
+
+    return (
+      <div className="flex flex-col gap-4">
+        <CheckBoxGroup
+          options={packageOptions}
+          label="Hosting Packages"
+          value={selectedPackages}
+          onChange={setSelectedPackages}
+          showSelectAll={true}
+          helperText="Select the hosting packages that meet your requirements"
+        />
+        
+        {selectedPackages.length > 0 && (
+          <div className="mt-4 p-4 bg-green-50 rounded-lg border border-green-200">
+            <h3 className="font-medium text-green-900 mb-2">Selected Packages:</h3>
+            <p className="text-sm text-green-800">
+              {selectedPackages.join(', ')}
+            </p>
+          </div>
+        )}
+      </div>
+    );
+  },
+};

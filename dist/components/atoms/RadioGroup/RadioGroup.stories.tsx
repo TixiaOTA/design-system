@@ -703,3 +703,204 @@ export const MultipleGroups: Story = {
     );
   },
 };
+
+// ReactNode Label Examples
+export const WithReactNodeLabels: Story = {
+  render: () => {
+    const [selectedOption, setSelectedOption] = useState<string>('');
+
+    const reactNodeOptions = [
+      {
+        value: 'option1',
+        label: (
+          <div className="flex items-center gap-2">
+            <span className="w-3 h-3 bg-blue-500 rounded-full"></span>
+            <span>Option with Icon</span>
+          </div>
+        )
+      },
+      {
+        value: 'option2',
+        label: (
+          <div className="flex items-center gap-2">
+            <span className="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">New</span>
+            <span>Option with Badge</span>
+          </div>
+        )
+      },
+      {
+        value: 'option3',
+        label: (
+          <div className="flex items-center gap-2">
+            <span className="text-yellow-500">⭐</span>
+            <span>Option with Emoji</span>
+          </div>
+        )
+      },
+      {
+        value: 'option4',
+        label: (
+          <div className="flex flex-col gap-1">
+            <span className="font-medium">Complex Option</span>
+            <span className="text-xs text-gray-500">With description text</span>
+          </div>
+        )
+      }
+    ];
+
+    return (
+      <div className="flex flex-col gap-4">
+        <RadioGroup
+          options={reactNodeOptions}
+          label="Options with ReactNode Labels"
+          value={selectedOption}
+          onChange={setSelectedOption}
+          helperText="These options demonstrate complex label content"
+        />
+        
+        {selectedOption && (
+          <div className="mt-4 p-3 bg-blue-50 rounded border border-blue-200">
+            <p className="text-sm text-blue-800">
+              Selected: <strong>{selectedOption}</strong>
+            </p>
+          </div>
+        )}
+      </div>
+    );
+  },
+};
+
+export const WithIconsAndBadges: Story = {
+  render: () => {
+    const [selectedPlan, setSelectedPlan] = useState<string>('');
+
+    const planOptions = [
+      {
+        value: 'basic',
+        label: (
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+              <span className="text-gray-600 text-sm">B</span>
+            </div>
+            <div>
+              <div className="font-medium">Basic Plan</div>
+              <div className="text-sm text-gray-500">$9/month</div>
+            </div>
+          </div>
+        )
+      },
+      {
+        value: 'pro',
+        label: (
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+              <span className="text-blue-600 text-sm font-bold">P</span>
+            </div>
+            <div>
+              <div className="font-medium">Pro Plan</div>
+              <div className="text-sm text-gray-500">$19/month</div>
+            </div>
+            <span className="ml-auto px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">Popular</span>
+          </div>
+        )
+      },
+      {
+        value: 'enterprise',
+        label: (
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+              <span className="text-purple-600 text-sm font-bold">E</span>
+            </div>
+            <div>
+              <div className="font-medium">Enterprise</div>
+              <div className="text-sm text-gray-500">Custom pricing</div>
+            </div>
+            <span className="ml-auto px-2 py-1 text-xs bg-purple-100 text-purple-800 rounded-full">Enterprise</span>
+          </div>
+        )
+      }
+    ];
+
+    return (
+      <div className="flex flex-col gap-4">
+        <RadioGroup
+          options={planOptions}
+          label="Select Your Plan"
+          value={selectedPlan}
+          onChange={setSelectedPlan}
+          helperText="Choose the plan that best fits your needs"
+        />
+        
+        {selectedPlan && (
+          <div className="mt-4 p-4 bg-green-50 rounded-lg border border-green-200">
+            <h3 className="font-medium text-green-900 mb-2">Selected Plan:</h3>
+            <p className="text-sm text-green-800">
+              {planOptions.find(opt => opt.value === selectedPlan)?.value === 'basic' && 'Basic Plan - $9/month'}
+              {planOptions.find(opt => opt.value === selectedPlan)?.value === 'pro' && 'Pro Plan - $19/month'}
+              {planOptions.find(opt => opt.value === selectedPlan)?.value === 'enterprise' && 'Enterprise - Custom pricing'}
+            </p>
+          </div>
+        )}
+      </div>
+    );
+  },
+};
+
+export const WithStatusIndicators: Story = {
+  render: () => {
+    const [selectedStatus, setSelectedStatus] = useState<string>('');
+
+    const statusOptions = [
+      {
+        value: 'active',
+        label: (
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+            <span>Active</span>
+            <span className="text-xs text-gray-500">(Currently running)</span>
+          </div>
+        )
+      },
+      {
+        value: 'paused',
+        label: (
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+            <span>Paused</span>
+            <span className="text-xs text-gray-500">(Temporarily stopped)</span>
+          </div>
+        )
+      },
+      {
+        value: 'stopped',
+        label: (
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+            <span>Stopped</span>
+            <span className="text-xs text-gray-500">(Not running)</span>
+          </div>
+        )
+      }
+    ];
+
+    return (
+      <div className="flex flex-col gap-4">
+        <RadioGroup
+          options={statusOptions}
+          label="Service Status"
+          value={selectedStatus}
+          onChange={setSelectedStatus}
+          helperText="Select the current status of your service"
+        />
+        
+        {selectedStatus && (
+          <div className="mt-4 p-3 bg-gray-50 rounded border border-gray-200">
+            <p className="text-sm text-gray-700">
+              Status: <strong>{selectedStatus}</strong>
+            </p>
+          </div>
+        )}
+      </div>
+    );
+  },
+};

@@ -31,7 +31,7 @@ export type RadioGroupLabelPlacement = 'top' | 'left';
 
 export interface RadioOption {
   value: string;
-  label: string;
+  label: string | React.ReactNode;
   disabled?: boolean;
 }
 

@@ -4,7 +4,7 @@ export type CheckBoxGroupSize = 'sm' | 'md' | 'lg';
 export type CheckBoxGroupLabelPlacement = 'top' | 'left';
 export interface CheckBoxOption {
     value: string;
-    label: string;
+    label: string | React.ReactNode;
     disabled?: boolean;
     indeterminate?: boolean;
 }

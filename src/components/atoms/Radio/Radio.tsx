@@ -2,7 +2,7 @@ import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
 export interface RadioProps {
-  label?: string;
+  label?: string | React.ReactNode;
   checked?: boolean;
   disabled?: boolean;
   onChange?: (checked: boolean) => void;
