@@ -1,4 +1,8 @@
 
+## [v0.27.0] - 2025-08-26
+- fix: update radio and checkbox to accept reactnode
+
+
 ## [v0.26.0] - 2025-08-20
 - fix: warning forwardref
 
