@@ -1,4 +1,8 @@
 
+## [v0.28.0] - 2025-08-27
+- fix: add negative case
+
+
 ## [v0.27.0] - 2025-08-26
 - fix: update radio and checkbox to accept reactnode
 
