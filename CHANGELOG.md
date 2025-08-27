@@ -1,4 +1,8 @@
 
+## [v0.29.0] - 2025-08-27
+- fix: add skeleton pulse
+
+
 ## [v0.28.0] - 2025-08-27
 - fix: add negative case
 
