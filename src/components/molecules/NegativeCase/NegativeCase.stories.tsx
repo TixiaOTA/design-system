@@ -25,6 +25,7 @@ const variants: NegativeCaseVariant[] = [
   "timeout",
   "on-process",
   "page-not-found",
+  "page-not-found-v2",
   "no-seat-available",
   "change-price",
   "help-desk",

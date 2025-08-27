@@ -13,6 +13,7 @@ export type NegativeCaseVariant =
   | 'timeout'
   | 'on-process'
   | 'page-not-found'
+  | 'page-not-found-v2'
   | 'no-seat-available'
   | 'change-price'
   | 'help-desk';
@@ -31,6 +32,10 @@ interface NegativeCaseProps {
 const appErrorConfig: Record<string, { image: string; message: string }> = {
   'PAGE_NOT_FOUND': {
     image: 'https://design-system-eaip.onrender.com/img/page-not-found.svg',
+    message: 'The page you are looking for does not exist.',
+  },
+  'PAGE_NOT_FOUND_V2': {
+    image: 'https://design-system-eaip.onrender.com/img/page-not-found-v2.svg',
     message: 'The page you are looking for does not exist.',
   },
   'NO_INTERNET': {
@@ -94,6 +99,7 @@ const variantToErrorCode: Record<NegativeCaseVariant, string> = {
   'timeout': 'TIMEOUT',
   'on-process': 'ON_PROCESS',
   'page-not-found': 'PAGE_NOT_FOUND',
+  'page-not-found-v2': 'PAGE_NOT_FOUND_V2',
   'no-seat-available': 'NO_SEAT_AVAILABLE',
   'change-price': 'CHANGE_PRICE',
   'help-desk': 'HELP_DESK',
