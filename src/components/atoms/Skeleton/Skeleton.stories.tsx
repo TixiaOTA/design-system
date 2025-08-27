@@ -17,6 +17,10 @@ const meta: Meta<typeof Skeleton> = {
     fullWidth: {
       control: 'boolean',
     },
+    pulseVariant: {
+      control: 'select',
+      options: ['default', 'left-to-right'],
+    },
   },
 };
 
@@ -29,6 +33,7 @@ export const Default: Story = {
     height: 20,
     variant: 'default',
     rounded: 'xl',
+    pulseVariant: 'default',
   },
 };
 
@@ -41,6 +46,21 @@ export const VariantExamples: Story = {
       <Skeleton width={200} height={20} variant="warning" />
       <Skeleton width={200} height={20} variant="danger" />
       <Skeleton width={200} height={20} variant="info" />
+    </div>
+  ),
+};
+
+export const PulsingVariants: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <div>
+        <h3 className="text-sm font-medium mb-2">Default Pulsing</h3>
+        <Skeleton width={200} height={20} pulseVariant="default" />
+      </div>
+      <div>
+        <h3 className="text-sm font-medium mb-2">Left-to-Right Pulsing</h3>
+        <Skeleton width={200} height={20} pulseVariant="left-to-right" />
+      </div>
     </div>
   ),
 };

@@ -36,6 +36,15 @@
   }
 }
 
+@keyframes pulse-left-to-right {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 .animate-progress-indeterminate {
   position: relative;
   animation: progress-indeterminate 1.5s infinite linear;
@@ -47,6 +56,10 @@
 
 .animate-spin {
   animation: spin 1s linear infinite;
+}
+
+.animate-pulse-left-to-right {
+  animation: pulse-left-to-right 1.5s ease-in-out infinite;
 }
 
 @keyframes spin {
