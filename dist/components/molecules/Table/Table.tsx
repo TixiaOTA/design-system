@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { cn } from "../../../utils/cn";
 import { Icon } from "../../atoms/Icons";
 import { Pagination } from "../../atoms/Pagination";
@@ -123,10 +123,12 @@ const TableLoading = <T,>({
   schema,
   variant = "primary",
   showIndexSticky = false,
+  isMobile = false,
 }: {
   schema: TableColumn<T>[];
   variant?: TableVariant;
   showIndexSticky?: boolean;
+  isMobile?: boolean;
 }) => {
   const displayColumns = [
     {
@@ -156,7 +158,7 @@ const TableLoading = <T,>({
               {displayColumns.map((column, index) => {
                 // Calculate left position for sticky columns
                 const calculateStickyLeft = () => {
-                  if (!column.sticky || column.stickyPosition !== "left") return 0;
+                  if (isMobile || !column.sticky || column.stickyPosition !== "left") return 0;
                   
                   let leftPosition = 0;
                   for (let i = 0; i < index; i++) {
@@ -180,9 +182,9 @@ const TableLoading = <T,>({
                       {
                         "rounded-tl-md": index === 0,
                         "rounded-tr-md": index === displayColumns.length - 1,
-                        "sticky z-20": column.sticky,
-                        "left-0": column.sticky && column.stickyPosition === "left",
-                        "right-0": column.sticky && column.stickyPosition === "right",
+                        "sticky z-20": !isMobile && column.sticky,
+                        "left-0": !isMobile && column.sticky && column.stickyPosition === "left",
+                        "right-0": !isMobile && column.sticky && column.stickyPosition === "right",
                       }
                     )}
                     style={{
@@ -194,7 +196,7 @@ const TableLoading = <T,>({
                         typeof column.width === "number"
                           ? `${column.width}px`
                           : column.width,
-                      left: column.sticky && column.stickyPosition === "left" 
+                      left: !isMobile && column.sticky && column.stickyPosition === "left" 
                         ? `${calculateStickyLeft()}px` 
                         : undefined,
                     }}
@@ -312,6 +314,14 @@ export const Table = <T extends Record<string, any>>({
     return [];
   });
 
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const columns = React.useMemo<ColumnDef<T, any>[]>(() => {
     const baseColumns = schema.map((col) => ({
       accessorKey: col.accessorKey,
@@ -386,6 +396,7 @@ export const Table = <T extends Record<string, any>>({
           schema={schema}
           variant={variant}
           showIndexSticky={showIndexSticky}
+          isMobile={isMobile}
         />
       )
     );
@@ -440,7 +451,7 @@ export const Table = <T extends Record<string, any>>({
                     
                     // Calculate left position for sticky columns
                     const calculateStickyLeft = () => {
-                      if (!columnMeta?.sticky || columnMeta.stickyPosition !== "left") return 0;
+                      if (isMobile || !columnMeta?.sticky || columnMeta.stickyPosition !== "left") return 0;
                       
                       let leftPosition = 0;
                       for (let i = 0; i < index; i++) {
@@ -474,9 +485,9 @@ export const Table = <T extends Record<string, any>>({
                             "text-left": columnMeta?.align === "left",
                             "text-center": columnMeta?.align === "center",
                             "text-right": columnMeta?.align === "right",
-                            "sticky z-20": columnMeta?.sticky,
-                            "left-0": columnMeta?.sticky && columnMeta.stickyPosition === "left",
-                            "right-0": columnMeta?.sticky && columnMeta.stickyPosition === "right",
+                            "sticky z-20": !isMobile && columnMeta?.sticky,
+                            "left-0": !isMobile && columnMeta?.sticky && columnMeta.stickyPosition === "left",
+                            "right-0": !isMobile && columnMeta?.sticky && columnMeta.stickyPosition === "right",
                           },
                           headerClassName
                         )}
@@ -489,7 +500,7 @@ export const Table = <T extends Record<string, any>>({
                             typeof columnMeta?.width === "number"
                               ? `${columnMeta.width}px`
                               : columnMeta?.width,
-                          left: columnMeta?.sticky && columnMeta.stickyPosition === "left" 
+                          left: !isMobile && columnMeta?.sticky && columnMeta.stickyPosition === "left" 
                             ? `${calculateStickyLeft()}px` 
                             : undefined,
                         }}
@@ -578,7 +589,7 @@ export const Table = <T extends Record<string, any>>({
                     
                     // Calculate left position for sticky columns
                     const calculateStickyLeft = () => {
-                      if (!columnMeta?.sticky || columnMeta.stickyPosition !== "left") return 0;
+                      if (isMobile || !columnMeta?.sticky || columnMeta.stickyPosition !== "left") return 0;
                       
                       let leftPosition = 0;
                       const allColumns = table.getAllColumns();
@@ -610,13 +621,13 @@ export const Table = <T extends Record<string, any>>({
                             "text-left": columnMeta?.align === "left",
                             "text-center": columnMeta?.align === "center",
                             "text-right": columnMeta?.align === "right",
-                            "sticky z-10": columnMeta?.sticky,
-                            "left-0": columnMeta?.sticky && columnMeta.stickyPosition === "left",
-                            "right-0": columnMeta?.sticky && columnMeta.stickyPosition === "right",
+                            "sticky z-10": !isMobile && columnMeta?.sticky,
+                            "left-0": !isMobile && columnMeta?.sticky && columnMeta.stickyPosition === "left",
+                            "right-0": !isMobile && columnMeta?.sticky && columnMeta.stickyPosition === "right",
                             // Ensure sticky columns have solid background that matches row
-                            "bg-white": columnMeta?.sticky && rowIndex % 2 === 0,
-                            [variantStyles.stripe]: columnMeta?.sticky && rowIndex % 2 !== 0,
-                            [variantStyles.hoverStripe]: columnMeta?.sticky,
+                            "bg-white": !isMobile && columnMeta?.sticky && rowIndex % 2 === 0,
+                            [variantStyles.stripe]: !isMobile && columnMeta?.sticky && rowIndex % 2 !== 0,
+                            [variantStyles.hoverStripe]: !isMobile && columnMeta?.sticky,
                           },
                           cellClassName
                         )}
@@ -629,7 +640,7 @@ export const Table = <T extends Record<string, any>>({
                             typeof columnMeta?.width === "number"
                               ? `${columnMeta.width}px`
                               : columnMeta?.width,
-                          left: columnMeta?.sticky && columnMeta.stickyPosition === "left" 
+                          left: !isMobile && columnMeta?.sticky && columnMeta.stickyPosition === "left" 
                             ? `${calculateStickyLeft()}px` 
                             : undefined,
                         }}
