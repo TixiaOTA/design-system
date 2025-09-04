@@ -1,4 +1,8 @@
 
+## [v0.31.0] - 2025-09-04
+- fix: table sticky on mobile
+
+
 ## [v0.30.0] - 2025-09-04
 - fix: update table sticky
 
