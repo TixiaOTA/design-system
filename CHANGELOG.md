@@ -1,4 +1,8 @@
 
+## [v0.30.0] - 2025-09-04
+- fix: update table sticky
+
+
 ## [v0.29.0] - 2025-08-27
 - fix: add skeleton pulse
 
