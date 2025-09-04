@@ -10,6 +10,8 @@ export interface TableColumn<T> {
     sort?: "asc" | "desc";
     align?: ColumnAlignment;
     width?: number | string;
+    sticky?: boolean;
+    stickyPosition?: "left" | "right";
     render?: (value: any, row: T, index?: number) => React.ReactNode;
 }
 export interface TableProps<T extends Record<string, any>> {
@@ -23,6 +25,7 @@ export interface TableProps<T extends Record<string, any>> {
     isLoading?: boolean;
     loadingState?: React.ReactNode;
     showIndex?: boolean;
+    showIndexSticky?: boolean;
     onPageChange?: (page: number) => void;
     onPageSizeChange?: (size: number) => void;
     onSortChange?: (sort: string, sortBy: string) => void;
@@ -36,5 +39,5 @@ export interface TableProps<T extends Record<string, any>> {
         limit_number: number;
     };
 }
-export declare const Table: <T extends Record<string, any>>({ schema, data, className, headerClassName, rowClassName, cellClassName, emptyState, isLoading, loadingState, showIndex, onPageChange, onPageSizeChange, onSortChange, onRowClick, showPagination, variant, meta, }: TableProps<T>) => string | number | true | import("react/jsx-runtime").JSX.Element | Iterable<React.ReactNode>;
+export declare const Table: <T extends Record<string, any>>({ schema, data, className, headerClassName, rowClassName, cellClassName, emptyState, isLoading, loadingState, showIndex, showIndexSticky, onPageChange, onPageSizeChange, onSortChange, onRowClick, showPagination, variant, meta, }: TableProps<T>) => string | number | true | import("react/jsx-runtime").JSX.Element | Iterable<React.ReactNode>;
 export {};
