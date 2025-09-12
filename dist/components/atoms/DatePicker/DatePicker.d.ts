@@ -16,4 +16,4 @@ export interface DatePickerProps extends Omit<PrimitiveDatePickerProps, "onChang
     /** Whether to allow manual input typing */
     allowInput?: boolean;
 }
-export declare const DatePicker: React.FC<DatePickerProps>;
+export declare const DatePicker: React.ForwardRefExoticComponent<DatePickerProps & React.RefAttributes<HTMLInputElement>>;
