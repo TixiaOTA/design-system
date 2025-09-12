@@ -1,4 +1,8 @@
 
+## [v0.32.0] - 2025-09-12
+- fix: update accordion
+
+
 ## [v0.31.0] - 2025-09-04
 - fix: table sticky on mobile
 

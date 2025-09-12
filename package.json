@@ -1,6 +1,6 @@
 {
   "name": "@tixia/design-system",
-  "version": "0.31.0",
+  "version": "0.32.0",
   "private": false,
   "main": "./dist/tixia-design-system.umd.js",
   "module": "./dist/tixia-design-system.mjs",
