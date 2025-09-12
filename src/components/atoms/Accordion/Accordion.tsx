@@ -17,6 +17,8 @@ export interface AccordionProps {
   items: AccordionItem[];
   multiple?: boolean;
   defaultOpenIds?: string[];
+  openIds?: string[];
+  onOpenChange?: (openIds: string[]) => void;
   icon?: string;
   iconPosition?: 'left' | 'right';
   className?: string;
@@ -92,6 +94,8 @@ export const Accordion: React.FC<AccordionProps> = ({
   items,
   multiple = false,
   defaultOpenIds = [],
+  openIds: controlledOpenIds,
+  onOpenChange,
   icon = 'mdi:chevron-down',
   iconPosition = 'right',
   className,
@@ -100,17 +104,29 @@ export const Accordion: React.FC<AccordionProps> = ({
   shadow = 'none',
   rounded = 'xl',
 }) => {
-  const [openIds, setOpenIds] = useState<string[]>(defaultOpenIds);
+  const [internalOpenIds, setInternalOpenIds] = useState<string[]>(defaultOpenIds);
+  
+  // Use controlled openIds if provided, otherwise use internal state
+  const openIds = controlledOpenIds !== undefined ? controlledOpenIds : internalOpenIds;
+  const isControlled = controlledOpenIds !== undefined;
 
   const toggleItem = (id: string) => {
+    let newOpenIds: string[];
+    
     if (multiple) {
-      setOpenIds((prev) =>
-        prev.includes(id)
-          ? prev.filter((itemId) => itemId !== id)
-          : [...prev, id]
-      );
+      newOpenIds = openIds.includes(id)
+        ? openIds.filter((itemId) => itemId !== id)
+        : [...openIds, id];
     } else {
-      setOpenIds((prev) => (prev.includes(id) ? [] : [id]));
+      newOpenIds = openIds.includes(id) ? [] : [id];
+    }
+
+    if (isControlled) {
+      // In controlled mode, call the onOpenChange callback
+      onOpenChange?.(newOpenIds);
+    } else {
+      // In uncontrolled mode, update internal state
+      setInternalOpenIds(newOpenIds);
     }
   };
 

@@ -12,6 +12,8 @@ export interface AccordionProps {
     items: AccordionItem[];
     multiple?: boolean;
     defaultOpenIds?: string[];
+    openIds?: string[];
+    onOpenChange?: (openIds: string[]) => void;
     icon?: string;
     iconPosition?: 'left' | 'right';
     className?: string;
