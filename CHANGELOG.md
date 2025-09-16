@@ -1,4 +1,8 @@
 
+## [v0.34.0] - 2025-09-16
+- feat: add textarea
+
+
 ## [v0.33.0] - 2025-09-12
 - fix: add ref to datepicker
 
