@@ -27,6 +27,7 @@ export * from './components/atoms/Stepper';
 export * from './components/atoms/Switch';
 export * from './components/atoms/Tabs';
 export * from './components/atoms/Text';
+export * from './components/atoms/Textarea';
 export * from './components/atoms/TimePicker';
 export * from './components/atoms/Toogle';
 export * from './components/atoms/Tooltip';
