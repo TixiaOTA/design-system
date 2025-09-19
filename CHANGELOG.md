@@ -1,4 +1,8 @@
 
+## [v0.35.0] - 2025-09-19
+- fix: update table sticky
+
+
 ## [v0.34.0] - 2025-09-16
 - feat: add textarea
 
