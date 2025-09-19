@@ -150,7 +150,7 @@ const TableLoading = <T,>({
         <table className="w-full border-spacing-0 border-separate min-w-full">
           <thead
             className={cn(
-              "border-2 sticky top-0 z-10 rounded-t-md",
+              "border-2 sticky top-0 z-20 rounded-t-md",
               variantStyles.border
             )}
           >
@@ -182,7 +182,7 @@ const TableLoading = <T,>({
                       {
                         "rounded-tl-md": index === 0,
                         "rounded-tr-md": index === displayColumns.length - 1,
-                        "sticky z-20": !isMobile && column.sticky,
+                        "sticky z-10": !isMobile && column.sticky,
                         "left-0": !isMobile && column.sticky && column.stickyPosition === "left",
                         "right-0": !isMobile && column.sticky && column.stickyPosition === "right",
                       }
@@ -240,7 +240,7 @@ const TableLoading = <T,>({
                       className={cn(
                         "text-left text-nowrap text-sm p-4",
                         {
-                          "sticky z-10": column.sticky,
+                          "sticky z-5": column.sticky,
                           "left-0": column.sticky && column.stickyPosition === "left",
                           "right-0": column.sticky && column.stickyPosition === "right",
                           // Ensure sticky columns have solid background that matches row
@@ -434,7 +434,7 @@ export const Table = <T extends Record<string, any>>({
         >
           <thead
             className={cn(
-              "border-2 sticky top-0 z-10 rounded-t-md",
+              "border-2 sticky top-0 z-20 rounded-t-md",
               variantStyles.border
             )}
           >
@@ -485,7 +485,7 @@ export const Table = <T extends Record<string, any>>({
                             "text-left": columnMeta?.align === "left",
                             "text-center": columnMeta?.align === "center",
                             "text-right": columnMeta?.align === "right",
-                            "sticky z-20": !isMobile && columnMeta?.sticky,
+                            "sticky z-5": !isMobile && columnMeta?.sticky,
                             "left-0": !isMobile && columnMeta?.sticky && columnMeta.stickyPosition === "left",
                             "right-0": !isMobile && columnMeta?.sticky && columnMeta.stickyPosition === "right",
                           },
@@ -621,7 +621,7 @@ export const Table = <T extends Record<string, any>>({
                             "text-left": columnMeta?.align === "left",
                             "text-center": columnMeta?.align === "center",
                             "text-right": columnMeta?.align === "right",
-                            "sticky z-10": !isMobile && columnMeta?.sticky,
+                            "sticky z-5": !isMobile && columnMeta?.sticky,
                             "left-0": !isMobile && columnMeta?.sticky && columnMeta.stickyPosition === "left",
                             "right-0": !isMobile && columnMeta?.sticky && columnMeta.stickyPosition === "right",
                             // Ensure sticky columns have solid background that matches row

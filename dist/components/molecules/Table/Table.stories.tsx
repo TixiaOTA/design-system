@@ -23,6 +23,10 @@ interface User {
   kewarganegaraan: string;
   status: string;
   saldo: number;
+  department?: string;
+  position?: string;
+  joinDate?: string;
+  lastLogin?: string;
 }
 
 const sampleData: User[] = [
@@ -850,6 +854,151 @@ export const WithStickyPagination: Story = {
     docs: {
       description: {
         story: "This story demonstrates the sticky pagination behavior. When the table has 10+ rows, the header stays at the top and pagination stays at the bottom while the content scrolls. Notice how the table has a maximum height and the content area scrolls independently.",
+      },
+    },
+  },
+};
+
+export const LargeDatasetWithStickyColumns: Story = {
+  args: {
+    schema: [
+      {
+        name: "no",
+        label: "No.",
+        accessorKey: "no",
+        type: "number",
+        sortable: false,
+        align: "center",
+        width: 80,
+        sticky: true,
+        stickyPosition: "left",
+      },
+      {
+        name: "nama",
+        label: "Nama Lengkap",
+        accessorKey: "nama",
+        type: "string",
+        sortable: true,
+        align: "left",
+        width: 200,
+        sticky: true,
+        stickyPosition: "left",
+      },
+      {
+        name: "email",
+        label: "Email Address",
+        accessorKey: "email",
+        type: "string",
+        sortable: true,
+        align: "left",
+        width: 300,
+      },
+      {
+        name: "nomorTelepon",
+        label: "Phone Number",
+        accessorKey: "nomorTelepon",
+        type: "string",
+        align: "left",
+        width: 150,
+      },
+      {
+        name: "jenisKelamin",
+        label: "Gender",
+        accessorKey: "jenisKelamin",
+        type: "string",
+        align: "center",
+        width: 120,
+      },
+      {
+        name: "kewarganegaraan",
+        label: "Nationality",
+        accessorKey: "kewarganegaraan",
+        type: "string",
+        align: "center",
+        width: 140,
+      },
+      {
+        name: "status",
+        label: "Account Status",
+        accessorKey: "status",
+        type: "string",
+        align: "center",
+        width: 120,
+      },
+      {
+        name: "department",
+        label: "Department",
+        accessorKey: "department",
+        type: "string",
+        align: "left",
+        width: 150,
+      },
+      {
+        name: "position",
+        label: "Position",
+        accessorKey: "position",
+        type: "string",
+        align: "left",
+        width: 180,
+      },
+      {
+        name: "joinDate",
+        label: "Join Date",
+        accessorKey: "joinDate",
+        type: "date",
+        align: "center",
+        width: 120,
+      },
+      {
+        name: "lastLogin",
+        label: "Last Login",
+        accessorKey: "lastLogin",
+        type: "date",
+        align: "center",
+        width: 120,
+      },
+      {
+        name: "saldo",
+        label: "Account Balance",
+        accessorKey: "saldo",
+        type: "number",
+        sortable: true,
+        align: "right",
+        width: 150,
+        sticky: true,
+        stickyPosition: "right",
+        render: (value: number) => <span>Rp {value.toLocaleString("id-ID")}</span>,
+      },
+    ],
+    data: Array.from({ length: 50 }, (_, index) => ({
+      no: index + 1,
+      nama: `User ${String(index + 1).padStart(2, '0')}`,
+      email: `user${String(index + 1).padStart(2, '0')}@example.com`,
+      nomorTelepon: `+628${String(Math.floor(Math.random() * 1000000000)).padStart(10, '0')}`,
+      jenisKelamin: Math.random() > 0.5 ? "Laki-laki" : "Perempuan",
+      kewarganegaraan: ["Indonesia", "USA", "Singapore", "Malaysia", "Japan", "Korea", "Australia"][Math.floor(Math.random() * 7)],
+      status: Math.random() > 0.1 ? "Aktif" : "Suspend",
+      department: ["Engineering", "Marketing", "Sales", "HR", "Finance", "Operations", "Support"][Math.floor(Math.random() * 7)],
+      position: ["Manager", "Senior", "Junior", "Lead", "Director", "Analyst", "Specialist"][Math.floor(Math.random() * 7)],
+      joinDate: new Date(2020 + Math.floor(Math.random() * 4), Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toLocaleDateString('id-ID'),
+      lastLogin: new Date(2024, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toLocaleDateString('id-ID'),
+      saldo: Math.floor(Math.random() * 10000000) + 1000000,
+    })),
+    showPagination: true,
+    meta: {
+      current_page: 1,
+      total_page: 5,
+      total_data: 50,
+      limit_number: 10,
+    },
+    onPageChange: (page) => console.log("Page changed:", page),
+    onPageSizeChange: (size) => console.log("Page size changed:", size),
+    onSortChange: (sort, sortBy) => console.log("Sort changed:", sort, sortBy),
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "This story showcases a large dataset with 50 rows and sticky columns. The first two columns (No. and Nama) are sticky on the left, and the last column (Account Balance) is sticky on the right. This allows users to always see the row identifier, name, and balance while scrolling horizontally through other columns. The table also has sticky pagination at the bottom for vertical scrolling.",
       },
     },
   },

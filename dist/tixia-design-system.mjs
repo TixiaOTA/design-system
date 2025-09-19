@@ -15863,7 +15863,7 @@ const Ri = (e) => {
       "thead",
       {
         className: O(
-          "border-2 sticky top-0 z-10 rounded-t-md",
+          "border-2 sticky top-0 z-20 rounded-t-md",
           s.border
         ),
         children: /* @__PURE__ */ i.jsx("tr", { children: o.map((a, l) => {
@@ -15889,7 +15889,7 @@ const Ri = (e) => {
                 {
                   "rounded-tl-md": l === 0,
                   "rounded-tr-md": l === o.length - 1,
-                  "sticky z-20": !n && a.sticky,
+                  "sticky z-10": !n && a.sticky,
                   "left-0": !n && a.sticky && a.stickyPosition === "left",
                   "right-0": !n && a.sticky && a.stickyPosition === "right"
                 }
@@ -15933,7 +15933,7 @@ const Ri = (e) => {
               className: O(
                 "text-left text-nowrap text-sm p-4",
                 {
-                  "sticky z-10": c.sticky,
+                  "sticky z-5": c.sticky,
                   "left-0": c.sticky && c.stickyPosition === "left",
                   "right-0": c.sticky && c.stickyPosition === "right",
                   // Ensure sticky columns have solid background that matches row
@@ -16068,7 +16068,7 @@ const Ri = (e) => {
             "thead",
             {
               className: O(
-                "border-2 sticky top-0 z-10 rounded-t-md",
+                "border-2 sticky top-0 z-20 rounded-t-md",
                 _.border
               ),
               children: H.getHeaderGroups().map((A) => /* @__PURE__ */ i.jsx("tr", { children: A.headers.map(
@@ -16099,7 +16099,7 @@ const Ri = (e) => {
                           "text-left": (b == null ? void 0 : b.align) === "left",
                           "text-center": (b == null ? void 0 : b.align) === "center",
                           "text-right": (b == null ? void 0 : b.align) === "right",
-                          "sticky z-20": !R && (b == null ? void 0 : b.sticky),
+                          "sticky z-5": !R && (b == null ? void 0 : b.sticky),
                           "left-0": !R && (b == null ? void 0 : b.sticky) && b.stickyPosition === "left",
                           "right-0": !R && (b == null ? void 0 : b.sticky) && b.stickyPosition === "right"
                         },
@@ -16192,7 +16192,7 @@ const Ri = (e) => {
                         "text-left": (b == null ? void 0 : b.align) === "left",
                         "text-center": (b == null ? void 0 : b.align) === "center",
                         "text-right": (b == null ? void 0 : b.align) === "right",
-                        "sticky z-10": !R && (b == null ? void 0 : b.sticky),
+                        "sticky z-5": !R && (b == null ? void 0 : b.sticky),
                         "left-0": !R && (b == null ? void 0 : b.sticky) && b.stickyPosition === "left",
                         "right-0": !R && (b == null ? void 0 : b.sticky) && b.stickyPosition === "right",
                         // Ensure sticky columns have solid background that matches row
