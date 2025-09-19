@@ -15858,7 +15858,7 @@ const Ri = (e) => {
     },
     ...e
   ], s = Ri(t);
-  return /* @__PURE__ */ i.jsx("div", { className: "bg-white rounded-md", children: /* @__PURE__ */ i.jsx("div", { className: "p-0 w-full overflow-auto rounded-t-md [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full", children: /* @__PURE__ */ i.jsxs("table", { className: "w-full border-spacing-0 border-separate min-w-full", children: [
+  return /* @__PURE__ */ i.jsx("div", { className: "bg-white rounded-md flex flex-col h-full max-h-[600px]", children: /* @__PURE__ */ i.jsx("div", { className: "p-0 w-full overflow-auto rounded-t-md [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full flex-1", children: /* @__PURE__ */ i.jsxs("table", { className: "w-full border-spacing-0 border-separate min-w-full", children: [
     /* @__PURE__ */ i.jsx(
       "thead",
       {
@@ -16055,8 +16055,8 @@ const Ri = (e) => {
     const b = A.target;
     b.tagName === "BUTTON" || b.tagName === "A" || b.tagName === "INPUT" || b.tagName === "SELECT" || b.closest("button") !== null || b.closest("a") !== null || b.closest("input") !== null || b.closest("select") !== null || x == null || x(p, y);
   };
-  return /* @__PURE__ */ i.jsxs("div", { className: "bg-white rounded-md", children: [
-    /* @__PURE__ */ i.jsx("div", { className: "p-0 w-full overflow-auto rounded-t-md [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full", children: /* @__PURE__ */ i.jsxs(
+  return /* @__PURE__ */ i.jsxs("div", { className: "bg-white rounded-md flex flex-col h-full max-h-[600px]", children: [
+    /* @__PURE__ */ i.jsx("div", { className: "p-0 w-full overflow-auto rounded-t-md [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full flex-1", children: /* @__PURE__ */ i.jsxs(
       "table",
       {
         className: O(
@@ -16221,7 +16221,7 @@ const Ri = (e) => {
         ]
       }
     ) }),
-    !!t.length && v && /* @__PURE__ */ i.jsx("div", { className: "p-4 bg-white rounded-b-md", children: /* @__PURE__ */ i.jsx(
+    !!t.length && v && /* @__PURE__ */ i.jsx("div", { className: "p-4 bg-white rounded-b-md border-t border-gray-200 sticky bottom-0 z-10 flex-shrink-0", children: /* @__PURE__ */ i.jsx(
       rc,
       {
         currentPage: E.current_page,

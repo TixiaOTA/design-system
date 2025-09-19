@@ -145,8 +145,8 @@ const TableLoading = <T,>({
   const variantStyles = getVariantStyles(variant);
 
   return (
-    <div className="bg-white rounded-md">
-      <div className="p-0 w-full overflow-auto rounded-t-md [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full">
+    <div className="bg-white rounded-md flex flex-col h-full max-h-[600px]">
+      <div className="p-0 w-full overflow-auto rounded-t-md [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full flex-1">
         <table className="w-full border-spacing-0 border-separate min-w-full">
           <thead
             className={cn(
@@ -424,8 +424,8 @@ export const Table = <T extends Record<string, any>>({
   };
 
   return (
-    <div className="bg-white rounded-md">
-      <div className="p-0 w-full overflow-auto rounded-t-md [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full">
+    <div className="bg-white rounded-md flex flex-col h-full max-h-[600px]">
+      <div className="p-0 w-full overflow-auto rounded-t-md [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full flex-1">
         <table
           className={cn(
             "w-full border-spacing-0 border-separate min-w-full",
@@ -660,7 +660,7 @@ export const Table = <T extends Record<string, any>>({
       </div>
 
       {!!data.length && showPagination && (
-        <div className="p-4 bg-white rounded-b-md">
+        <div className="p-4 bg-white rounded-b-md border-t border-gray-200 sticky bottom-0 z-10 flex-shrink-0">
           <Pagination
             currentPage={meta.current_page}
             totalPages={meta.total_page}
