@@ -1,4 +1,8 @@
 
+## [v0.36.0] - 2025-09-19
+- fix: table scroll
+
+
 ## [v0.35.0] - 2025-09-19
 - fix: update table sticky
 
