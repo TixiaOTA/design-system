@@ -1,4 +1,8 @@
 
+## [v0.37.0] - 2025-09-21
+- fix: update phoneinput iso and code
+
+
 ## [v0.36.0] - 2025-09-19
 - fix: table scroll
 
