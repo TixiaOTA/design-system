@@ -1,4 +1,10 @@
-import React, { forwardRef, useState, useRef, useEffect, useImperativeHandle } from "react";
+import React, {
+  forwardRef,
+  useState,
+  useRef,
+  useEffect,
+  useImperativeHandle,
+} from "react";
 import { cva } from "class-variance-authority";
 import { cn } from "../../../utils/cn";
 import { Icon } from "../../atoms/Icons/Icons";
@@ -57,7 +63,15 @@ export type PhoneInputVariant =
   | "ghost"
   | "underline";
 export type PhoneInputSize = "sm" | "md" | "lg";
-export type PhoneInputRounded = "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full";
+export type PhoneInputRounded =
+  | "none"
+  | "sm"
+  | "md"
+  | "lg"
+  | "xl"
+  | "2xl"
+  | "3xl"
+  | "full";
 
 // Utility function to detect country from phone number
 const detectCountryFromPhone = (phoneNumber: string) => {
@@ -120,6 +134,11 @@ const shouldConvertToIndonesian = (inputValue: string) => {
   return inputValue.startsWith("0") && inputValue.length >= 3;
 };
 
+export interface CountryValue {
+  iso: string;
+  code: string;
+}
+
 export interface PhoneInputProps {
   /** Visual style variant */
   variant?: PhoneInputVariant;
@@ -142,7 +161,7 @@ export interface PhoneInputProps {
   /** Current phone number value */
   value?: string;
   /** Callback when phone number changes */
-  onChange?: (phone: string) => void;
+  onChange?: (phone: string, countryValue?: CountryValue) => void;
   /** Whether the input is disabled */
   disabled?: boolean;
   /** Default country code */
@@ -156,25 +175,28 @@ export interface PhoneInputProps {
 }
 
 export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
-  ({
-    className,
-    variant = "default",
-    size = "md",
-    rounded = "xl",
-    error = false,
-    errorText,
-    helperText,
-    label,
-    required = false,
-    fullWidth = false,
-    value = "",
-    onChange,
-    disabled = false,
-    defaultCountry = "id",
-    placeholder = "Enter phone number",
-    autoDetect = true,
-    ...props
-  }, ref) => {
+  (
+    {
+      className,
+      variant = "default",
+      size = "md",
+      rounded = "xl",
+      error = false,
+      errorText,
+      helperText,
+      label,
+      required = false,
+      fullWidth = false,
+      value = "",
+      onChange,
+      disabled = false,
+      defaultCountry = "id",
+      placeholder = "Enter phone number",
+      autoDetect = true,
+      ...props
+    },
+    ref
+  ) => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedCountry, setSelectedCountry] = useState(
       () =>
@@ -207,6 +229,31 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
       const dialCode = selectedCountry.code;
       return value.startsWith(dialCode) ? value.slice(dialCode.length) : value;
     });
+
+    // Call onChange with country code on initial load if value is provided
+    useEffect(() => {
+      if (value && onChange) {
+        if (autoDetect) {
+          const detectedCountry =
+            detectCountryFromPhone(value) || detectCountryFromNumeric(value);
+          if (detectedCountry) {
+            const countryValue: CountryValue = {
+              iso: detectedCountry.iso,
+              code: detectedCountry.code.replace("+", ""),
+            };
+            onChange(value, countryValue);
+          } else {
+            onChange(value);
+          }
+        } else {
+          const countryValue: CountryValue = {
+            iso: selectedCountry.iso,
+            code: selectedCountry.code.replace("+", ""),
+          };
+          onChange(value, countryValue);
+        }
+      }
+    }, []); // Only run on mount
 
     // Track if country has been detected in autoDetect mode
     const [countryDetected, setCountryDetected] = useState(() => {
@@ -310,13 +357,21 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
         setPhoneNumber(newValue);
         // Send clean numeric value without + for API compatibility
         const cleanValue = newValue.replace(/[^\d]/g, "");
-        onChange?.(cleanValue);
+        const countryValue: CountryValue = {
+          iso: country.iso,
+          code: country.code.replace("+", ""),
+        };
+        onChange?.(cleanValue, countryValue);
       } else {
         // In manual mode, keep the existing behavior
         const newValue = country.code + phoneNumber;
         // Send clean numeric value without + for API compatibility
         const cleanValue = newValue.replace(/[^\d]/g, "");
-        onChange?.(cleanValue);
+        const countryValue: CountryValue = {
+          iso: country.iso,
+          code: country.code.replace("+", ""),
+        };
+        onChange?.(cleanValue, countryValue);
       }
     };
 
@@ -338,7 +393,11 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
           setPhoneNumber(inputValue);
           // Send clean numeric value without + for API compatibility
           const cleanValue = inputValue.replace(/[^\d]/g, "");
-          onChange?.(cleanValue);
+          const countryValue: CountryValue = {
+            iso: detectedCountry.iso,
+            code: detectedCountry.code.replace("+", ""),
+          };
+          onChange?.(cleanValue, countryValue);
         } else {
           // No country detected, treat as full input
           setPhoneNumber(inputValue);
@@ -364,7 +423,11 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
           setCountryDetected(true);
           // Send clean numeric value without + for API compatibility
           const cleanValue = indonesianConverted.replace(/[^\d]/g, "");
-          onChange?.(cleanValue);
+          const countryValue: CountryValue = {
+            iso: "id",
+            code: "62",
+          };
+          onChange?.(cleanValue, countryValue);
         } else if (shouldConvertToIndonesian(inputValue)) {
           // After 3 digits starting with 0, convert to Indonesian format
           const convertedValue = "+62" + inputValue.slice(1);
@@ -375,7 +438,11 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
           setCountryDetected(true);
           // Send clean numeric value without + for API compatibility
           const cleanValue = convertedValue.replace(/[^\d]/g, "");
-          onChange?.(cleanValue);
+          const countryValue: CountryValue = {
+            iso: "id",
+            code: "62",
+          };
+          onChange?.(cleanValue, countryValue);
         } else if (inputValue.startsWith("0")) {
           // Potential Indonesian number starting with 0, don't add + yet
           setPhoneNumber(inputValue);
@@ -396,7 +463,11 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
         const newValue = selectedCountry.code + newPhoneNumber;
         // Send clean numeric value without + for API compatibility
         const cleanValue = newValue.replace(/[^\d]/g, "");
-        onChange?.(cleanValue);
+        const countryValue: CountryValue = {
+          iso: selectedCountry.iso,
+          code: selectedCountry.code.replace("+", ""),
+        };
+        onChange?.(cleanValue, countryValue);
       }
     };
 

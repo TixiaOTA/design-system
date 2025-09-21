@@ -2,6 +2,10 @@ import React from "react";
 export type PhoneInputVariant = "default" | "error" | "success" | "ghost" | "underline";
 export type PhoneInputSize = "sm" | "md" | "lg";
 export type PhoneInputRounded = "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full";
+export interface CountryValue {
+    iso: string;
+    code: string;
+}
 export interface PhoneInputProps {
     /** Visual style variant */
     variant?: PhoneInputVariant;
@@ -24,7 +28,7 @@ export interface PhoneInputProps {
     /** Current phone number value */
     value?: string;
     /** Callback when phone number changes */
-    onChange?: (phone: string) => void;
+    onChange?: (phone: string, countryValue?: CountryValue) => void;
     /** Whether the input is disabled */
     disabled?: boolean;
     /** Default country code */
