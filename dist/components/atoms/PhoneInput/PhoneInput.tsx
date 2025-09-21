@@ -10,6 +10,7 @@ import { cn } from "../../../utils/cn";
 import { Icon } from "../../atoms/Icons/Icons";
 import { createPortal } from "react-dom";
 import { COUNTRIES } from "./constant";
+import { getCountryFromPhone } from "../../../utils/phoneMeta";
 
 const phoneInputVariants = cva(
   "border bg-white px-3 py-2 ring-0 transition-colors placeholder:text-neutral placeholder:text-sm focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
@@ -73,45 +74,15 @@ export type PhoneInputRounded =
   | "3xl"
   | "full";
 
-// Utility function to detect country from phone number
+// Utility function to detect country from phone number using libphonenumber-js
 const detectCountryFromPhone = (phoneNumber: string) => {
-  if (!phoneNumber || !phoneNumber.startsWith("+")) {
-    return null;
-  }
+  if (!phoneNumber) return null;
 
-  // Sort countries by code length (longest first) to avoid partial matches
-  const sortedCountries = [...COUNTRIES].sort(
-    (a, b) => b.code.length - a.code.length
-  );
-
-  for (const country of sortedCountries) {
-    if (phoneNumber.startsWith(country.code)) {
-      return country;
-    }
-  }
-
-  return null;
-};
-
-// Utility function to detect country from clean numeric phone number (without +)
-const detectCountryFromNumeric = (phoneNumber: string) => {
-  if (!phoneNumber || phoneNumber.startsWith("+")) {
-    return null;
-  }
-
-  // Sort countries by code length (longest first) to avoid partial matches
-  const sortedCountries = [...COUNTRIES].sort(
-    (a, b) => b.code.length - a.code.length
-  );
-
-  for (const country of sortedCountries) {
-    const countryCodeNumeric = country.code.replace("+", "");
-    if (phoneNumber.startsWith(countryCodeNumeric)) {
-      return country;
-    }
-  }
-
-  return null;
+  // Ensure phone number starts with + for libphonenumber-js
+  const normalizedPhone = phoneNumber.startsWith("+")
+    ? phoneNumber
+    : `+${phoneNumber}`;
+  return getCountryFromPhone(normalizedPhone);
 };
 
 // Utility function to handle Indonesian number conversion (0 -> +62)
@@ -206,24 +177,14 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
     const [searchQuery, setSearchQuery] = useState("");
     const [phoneNumber, setPhoneNumber] = useState(() => {
       if (autoDetect && value) {
-        // First try to detect from + format
+        // Use libphonenumber-js to detect country from phone number
         const detectedCountry = detectCountryFromPhone(value);
         if (detectedCountry) {
           setSelectedCountry(detectedCountry);
           return value;
         }
 
-        // Then try to detect from clean numeric format
-        const detectedCountryNumeric = detectCountryFromNumeric(value);
-        if (detectedCountryNumeric) {
-          setSelectedCountry(detectedCountryNumeric);
-          // Convert to + format for display
-          return (
-            detectedCountryNumeric.code +
-            value.slice(detectedCountryNumeric.code.replace("+", "").length)
-          );
-        }
-
+        // If no country detected but value exists, return as is
         return value;
       }
       const dialCode = selectedCountry.code;
@@ -234,8 +195,7 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
     useEffect(() => {
       if (value && onChange) {
         if (autoDetect) {
-          const detectedCountry =
-            detectCountryFromPhone(value) || detectCountryFromNumeric(value);
+          const detectedCountry = detectCountryFromPhone(value);
           if (detectedCountry) {
             const countryValue: CountryValue = {
               iso: detectedCountry.iso,
@@ -258,9 +218,7 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
     // Track if country has been detected in autoDetect mode
     const [countryDetected, setCountryDetected] = useState(() => {
       if (autoDetect && value) {
-        return !!(
-          detectCountryFromPhone(value) || detectCountryFromNumeric(value)
-        );
+        return !!detectCountryFromPhone(value);
       }
       return false;
     });

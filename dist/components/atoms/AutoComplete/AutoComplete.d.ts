@@ -1,5 +1,5 @@
-import React from 'react';
-export interface AutoCompleteProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'onSelect'> {
+import React from "react";
+export interface AutoCompleteProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size" | "onSelect"> {
     /** Options to display in the dropdown */
     options: Array<{
         value: string;
@@ -17,7 +17,7 @@ export interface AutoCompleteProps extends Omit<React.InputHTMLAttributes<HTMLIn
         label: string;
     }) => React.ReactNode;
     /** Type of search to perform - 'include' searches anywhere in the string, 'startsWith' searches from the beginning */
-    searchType?: 'include' | 'startsWith';
+    searchType?: "include" | "startsWith";
     /** Number of items to display initially. If 0 or undefined, displays all items */
     initialItemsToShow?: number;
     /** Number of additional items to load when scrolling to bottom */
@@ -31,11 +31,11 @@ export interface AutoCompleteProps extends Omit<React.InputHTMLAttributes<HTMLIn
     /** Custom message for when all options are shown. Use {total} as placeholder */
     allOptionsShownMessage?: string;
     /** Input variant that determines the visual style */
-    variant?: 'default' | 'error' | 'success' | 'ghost' | 'underline';
+    variant?: "default" | "error" | "success" | "ghost" | "underline";
     /** Size of the input */
-    size?: 'sm' | 'md' | 'lg';
+    size?: "sm" | "md" | "lg";
     /** Border radius of the input */
-    rounded?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
+    rounded?: "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full";
     /** Icon to display on the left side of the input */
     leftIcon?: string;
     /** Icon to display on the right side of the input */
@@ -51,13 +51,17 @@ export interface AutoCompleteProps extends Omit<React.InputHTMLAttributes<HTMLIn
     /** Whether the input is required */
     required?: boolean;
     /** Position of the label relative to the input */
-    labelPlacement?: 'top' | 'left';
+    labelPlacement?: "top" | "left";
     /** Whether the input should take full width */
     fullWidth?: boolean;
     /** Whether to show clear icon when there's input */
     showClear?: boolean;
     /** Callback when clear button is clicked */
     onClear?: () => void;
+    /** Whether to reset invalid input to null on blur. When true, if user types a value that doesn't match any option and then blurs, the input will be reset to null */
+    resetInvalidOnBlur?: boolean;
+    /** Callback when invalid input is reset to null */
+    onInvalidReset?: () => void;
 }
 declare const AutoComplete: React.ForwardRefExoticComponent<AutoCompleteProps & React.RefAttributes<HTMLInputElement>>;
 export { AutoComplete };

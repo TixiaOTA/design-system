@@ -44,6 +44,9 @@ const meta = {
     allOptionsShownMessage: {
       control: 'text',
     },
+    resetInvalidOnBlur: {
+      control: 'boolean',
+    },
   },
 } satisfies Meta<typeof AutoComplete>;
 
@@ -725,6 +728,41 @@ This example demonstrates simplified keyboard navigation working with virtual sc
 - When multiple options match, use mouse to select
 - Virtual scrolling still works for large datasets
 - Simple and efficient interaction
+        `,
+      },
+    },
+  },
+};
+
+export const InvalidInputReset: Story = {
+  args: {
+    label: 'Invalid Input Reset on Blur',
+    options: [
+      { value: 'apple', label: 'Apple' },
+      { value: 'banana', label: 'Banana' },
+      { value: 'cherry', label: 'Cherry' },
+      { value: 'date', label: 'Date' },
+      { value: 'elderberry', label: 'Elderberry' },
+    ],
+    placeholder: 'Type a fruit name...',
+    resetInvalidOnBlur: true,
+    helperText: 'Try typing something not in the list, then click outside - it will reset to empty',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+## Invalid Input Reset on Blur
+
+This example demonstrates the \`resetInvalidOnBlur\` feature:
+
+- Type a value that doesn't match any option (e.g., "grape")
+- Click outside the input or press Tab to blur
+- The input will automatically reset to empty
+- This prevents users from submitting invalid values
+- Useful for edit forms where you want to ensure only valid options are selected
+
+**Use case**: When editing existing data, users might type invalid values thinking they've changed the selection, but the form would still submit the old value. This feature prevents that confusion.
         `,
       },
     },

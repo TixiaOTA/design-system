@@ -1,14 +1,18 @@
-import React, { forwardRef, useState, useRef, useEffect } from 'react';
-import { createPortal } from 'react-dom';
-import { cn } from '../../../utils/cn';
-import { Input } from '../Input/Input';
-import { SelectItem } from '../SelectItem/SelectItem';
-import { getWindow, getDocument } from '../../../utils/ssr';
+import React, { forwardRef, useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
+import { cn } from "../../../utils/cn";
+import { Input } from "../Input/Input";
+import { SelectItem } from "../SelectItem/SelectItem";
+import { getWindow, getDocument } from "../../../utils/ssr";
 
 // Create a custom event for autocomplete dropdown management
-const AUTOCOMPLETE_OPEN_EVENT = 'autocomplete-dropdown-opened';
+const AUTOCOMPLETE_OPEN_EVENT = "autocomplete-dropdown-opened";
 
-export interface AutoCompleteProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'onSelect'> {
+export interface AutoCompleteProps
+  extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    "size" | "onSelect"
+  > {
   /** Options to display in the dropdown */
   options: Array<{ value: string; label: string }>;
   /** Callback when an option is selected */
@@ -20,7 +24,7 @@ export interface AutoCompleteProps extends Omit<React.InputHTMLAttributes<HTMLIn
   /** Custom render function for options */
   renderOption?: (option: { value: string; label: string }) => React.ReactNode;
   /** Type of search to perform - 'include' searches anywhere in the string, 'startsWith' searches from the beginning */
-  searchType?: 'include' | 'startsWith';
+  searchType?: "include" | "startsWith";
   /** Number of items to display initially. If 0 or undefined, displays all items */
   initialItemsToShow?: number;
   /** Number of additional items to load when scrolling to bottom */
@@ -34,11 +38,11 @@ export interface AutoCompleteProps extends Omit<React.InputHTMLAttributes<HTMLIn
   /** Custom message for when all options are shown. Use {total} as placeholder */
   allOptionsShownMessage?: string;
   /** Input variant that determines the visual style */
-  variant?: 'default' | 'error' | 'success' | 'ghost' | 'underline';
+  variant?: "default" | "error" | "success" | "ghost" | "underline";
   /** Size of the input */
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
   /** Border radius of the input */
-  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full';
+  rounded?: "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full";
   /** Icon to display on the left side of the input */
   leftIcon?: string;
   /** Icon to display on the right side of the input */
@@ -54,13 +58,17 @@ export interface AutoCompleteProps extends Omit<React.InputHTMLAttributes<HTMLIn
   /** Whether the input is required */
   required?: boolean;
   /** Position of the label relative to the input */
-  labelPlacement?: 'top' | 'left';
+  labelPlacement?: "top" | "left";
   /** Whether the input should take full width */
   fullWidth?: boolean;
   /** Whether to show clear icon when there's input */
   showClear?: boolean;
   /** Callback when clear button is clicked */
   onClear?: () => void;
+  /** Whether to reset invalid input to null on blur. When true, if user types a value that doesn't match any option and then blurs, the input will be reset to null */
+  resetInvalidOnBlur?: boolean;
+  /** Callback when invalid input is reset to null */
+  onInvalidReset?: () => void;
 }
 
 interface AutoCompleteOpenEvent extends CustomEvent {
@@ -78,9 +86,9 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       isOpen: controlledIsOpen,
       loading = false,
       renderOption,
-      variant = 'default',
-      size = 'md',
-      rounded = 'xl',
+      variant = "default",
+      size = "md",
+      rounded = "xl",
       leftIcon,
       rightIcon,
       error = false,
@@ -88,7 +96,7 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       helperText,
       label,
       required = false,
-      labelPlacement = 'top',
+      labelPlacement = "top",
       fullWidth = false,
       value,
       onChange,
@@ -96,42 +104,47 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       onBlur,
       showClear = false,
       onClear,
-      searchType = 'include',
+      searchType = "include",
       initialItemsToShow,
       itemsToLoad = 10,
       maxDropdownHeight = 300,
-      noOptionsMessage = 'No options found',
-      scrollMoreMessage = '',
-      allOptionsShownMessage = '',
+      noOptionsMessage = "No options found",
+      scrollMoreMessage = "",
+      allOptionsShownMessage = "",
+      resetInvalidOnBlur = false,
+      onInvalidReset,
       ...props
     },
     ref
   ) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [inputValue, setInputValue] = useState(value as string || '');
-    const [visibleItemsCount, setVisibleItemsCount] = useState(initialItemsToShow || 0);
+    const [inputValue, setInputValue] = useState((value as string) || "");
+    const [visibleItemsCount, setVisibleItemsCount] = useState(
+      initialItemsToShow || 0
+    );
     const wrapperRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLDivElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const dropdownContentRef = useRef<HTMLDivElement>(null);
     const isControlled = controlledIsOpen !== undefined;
     const reactId = React.useId();
-    const id = `autocomplete-${reactId.replace(/:/g, '')}`;
+    const id = `autocomplete-${reactId.replace(/:/g, "")}`;
 
     const updateDropdownPosition = () => {
       if (!isOpen || !inputRef.current || !dropdownRef.current) return;
 
-      const { bottom, top, left, width } = inputRef.current.getBoundingClientRect();
+      const { bottom, top, left, width } =
+        inputRef.current.getBoundingClientRect();
       const dropdown = dropdownRef.current;
       const win = getWindow();
-      
+
       // Calculate available space
       const spaceBelow = win.innerHeight - bottom;
       const spaceAbove = top;
-      
+
       // Estimate dropdown height (approximate based on maxDropdownHeight)
       const estimatedDropdownHeight = Math.min(maxDropdownHeight, 300);
-      
+
       // Check if dropdown would be cut off at bottom
       const wouldBeCutOff = spaceBelow < estimatedDropdownHeight;
       const hasMoreSpaceAbove = spaceAbove > spaceBelow;
@@ -139,7 +152,7 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
 
       // Apply positioning styles
       Object.assign(dropdown.style, {
-        position: 'fixed',
+        position: "fixed",
         left: `${left}px`,
         width: `${width}px`,
       });
@@ -148,14 +161,14 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
         // Position above the input
         Object.assign(dropdown.style, {
           bottom: `${win.innerHeight - top + 4}px`,
-          top: 'auto',
+          top: "auto",
           maxHeight: `${spaceAbove - 8}px`,
         });
       } else {
         // Position below the input
         Object.assign(dropdown.style, {
           top: `${bottom + 4}px`,
-          bottom: 'auto',
+          bottom: "auto",
           maxHeight: `${spaceBelow - 8}px`,
         });
       }
@@ -198,71 +211,109 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
 
       if (isOpen) {
         updateDropdownPosition();
-        win.addEventListener('scroll', handleScroll, true);
-        win.addEventListener('resize', handleResize);
+        win.addEventListener("scroll", handleScroll, true);
+        win.addEventListener("resize", handleResize);
       }
 
-      doc.addEventListener(AUTOCOMPLETE_OPEN_EVENT, handleOtherAutocompleteOpen);
-      doc.addEventListener('click', handleClickOutside);
+      doc.addEventListener(
+        AUTOCOMPLETE_OPEN_EVENT,
+        handleOtherAutocompleteOpen
+      );
+      doc.addEventListener("click", handleClickOutside);
 
       return () => {
-        win.removeEventListener('scroll', handleScroll, true);
-        win.removeEventListener('resize', handleResize);
-        doc.removeEventListener(AUTOCOMPLETE_OPEN_EVENT, handleOtherAutocompleteOpen);
-        doc.removeEventListener('click', handleClickOutside);
+        win.removeEventListener("scroll", handleScroll, true);
+        win.removeEventListener("resize", handleResize);
+        doc.removeEventListener(
+          AUTOCOMPLETE_OPEN_EVENT,
+          handleOtherAutocompleteOpen
+        );
+        doc.removeEventListener("click", handleClickOutside);
       };
     }, [isOpen, id]);
 
     useEffect(() => {
-      setInputValue(value as string || '');
+      setInputValue((value as string) || "");
     }, [value]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = event.target;
       setInputValue(value);
-      
+
       if (!value.trim()) {
         setIsOpen(false);
         return;
       }
-      
+
       // Only open dropdown if there are filtered options
       const hasFilteredOptions = options.some(({ label }) => {
         const searchTerm = value.toLowerCase().trim();
         const optionLabel = label.toLowerCase();
-        return searchType === 'startsWith' 
+        return searchType === "startsWith"
           ? optionLabel.startsWith(searchTerm)
           : optionLabel.includes(searchTerm);
       });
-      
+
       setIsOpen(hasFilteredOptions);
       onChange?.(event);
     };
 
     const handleClear = (e: React.MouseEvent<HTMLInputElement>) => {
       e.stopPropagation();
-      setInputValue('');
+      setInputValue("");
       onClear?.();
-      const syntheticEvent = new Event('change') as unknown as React.ChangeEvent<HTMLInputElement>;
-      syntheticEvent.target = { value: '' } as HTMLInputElement;
+      const syntheticEvent = new Event(
+        "change"
+      ) as unknown as React.ChangeEvent<HTMLInputElement>;
+      syntheticEvent.target = { value: "" } as HTMLInputElement;
       onChange?.(syntheticEvent);
     };
 
     const handleSelect = (option: { value: string; label: string }) => {
       if (!option) return;
-      
+
       const { value, label } = option;
       setInputValue(label);
       setIsOpen(false);
       onSelect?.(value);
 
-      const selectEvent = new CustomEvent('autocomplete-select', {
-        detail: { selectedOption: option }
+      const selectEvent = new CustomEvent("autocomplete-select", {
+        detail: { selectedOption: option },
       });
       inputRef.current?.dispatchEvent(selectEvent);
     };
 
+    // Helper function to check if current input value matches any option
+    const isInputValueValid = (inputVal: string) => {
+      if (!inputVal.trim()) return true; // Empty values are considered valid
+
+      return options.some(({ label }) => {
+        const searchTerm = inputVal.toLowerCase().trim();
+        const optionLabel = label.toLowerCase();
+        return searchType === "startsWith"
+          ? optionLabel.startsWith(searchTerm)
+          : optionLabel.includes(searchTerm);
+      });
+    };
+
     const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+      // Check if we should reset invalid input on blur
+      if (
+        resetInvalidOnBlur &&
+        inputValue.trim() &&
+        !isInputValueValid(inputValue)
+      ) {
+        setInputValue("");
+        onInvalidReset?.();
+
+        // Create a synthetic change event to notify parent component
+        const syntheticEvent = new Event(
+          "change"
+        ) as unknown as React.ChangeEvent<HTMLInputElement>;
+        syntheticEvent.target = { value: "" } as HTMLInputElement;
+        onChange?.(syntheticEvent);
+      }
+
       onBlur?.(e);
     };
 
@@ -270,9 +321,10 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       const searchTerm = inputValue.toLowerCase().trim();
       const optionLabel = label.toLowerCase();
 
-      if (searchType === 'startsWith') {
+      if (searchType === "startsWith") {
         return optionLabel.startsWith(searchTerm);
-      } else { // include
+      } else {
+        // include
         return optionLabel.includes(searchTerm);
       }
     });
@@ -294,17 +346,23 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
     };
 
     const handleDropdownScroll = () => {
-      if (!dropdownContentRef.current || initialItemsToShow === undefined || initialItemsToShow <= 0) return;
-      
-      const { scrollTop, scrollHeight, clientHeight } = dropdownContentRef.current;
+      if (
+        !dropdownContentRef.current ||
+        initialItemsToShow === undefined ||
+        initialItemsToShow <= 0
+      )
+        return;
+
+      const { scrollTop, scrollHeight, clientHeight } =
+        dropdownContentRef.current;
       const isNearBottom = scrollTop + clientHeight >= scrollHeight - 10;
-      
+
       if (isNearBottom) {
-        setVisibleItemsCount(prev => Math.min(prev + itemsToLoad, filteredOptions.length));
+        setVisibleItemsCount((prev) =>
+          Math.min(prev + itemsToLoad, filteredOptions.length)
+        );
       }
     };
-
-
 
     // Reset visible items count when search changes
     useEffect(() => {
@@ -314,13 +372,17 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
     }, [inputValue, initialItemsToShow]);
 
     // Determine which options to show
-    const visibleOptions = initialItemsToShow !== undefined && initialItemsToShow > 0 
-      ? filteredOptions.slice(0, visibleItemsCount)
-      : filteredOptions;
+    const visibleOptions =
+      initialItemsToShow !== undefined && initialItemsToShow > 0
+        ? filteredOptions.slice(0, visibleItemsCount)
+        : filteredOptions;
 
     // Helper function to format messages with placeholders
-    const formatMessage = (message: string, placeholders: Record<string, string | number>) => {
-      if (!message) return '';
+    const formatMessage = (
+      message: string,
+      placeholders: Record<string, string | number>
+    ) => {
+      if (!message) return "";
       return message.replace(/\{(\w+)\}/g, (match, key) => {
         return placeholders[key]?.toString() || match;
       });
@@ -329,10 +391,11 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
     const showDropdown = isControlled ? controlledIsOpen : isOpen;
 
     // Determine if we should show the clear button
-    const shouldShowClear = showClear && inputValue && !props.disabled && !props.readOnly;
+    const shouldShowClear =
+      showClear && inputValue && !props.disabled && !props.readOnly;
 
     // If we have a clear button and a right icon, use the clear button instead
-    const effectiveRightIcon = shouldShowClear ? 'mdi:close' : rightIcon;
+    const effectiveRightIcon = shouldShowClear ? "mdi:close" : rightIcon;
 
     // Keyboard navigation handlers - simplified for single option selection only
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -341,7 +404,7 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       }
 
       switch (e.key) {
-        case 'Enter':
+        case "Enter":
           e.preventDefault();
           if (visibleOptions.length === 1) {
             // If only one option, select it
@@ -349,7 +412,7 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
           }
           break;
 
-        case 'Tab':
+        case "Tab":
           if (visibleOptions.length === 1) {
             // If only one option, select it
             e.preventDefault();
@@ -357,7 +420,7 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
           }
           break;
 
-        case 'Escape':
+        case "Escape":
           e.preventDefault();
           setIsOpen(false);
           break;
@@ -368,7 +431,7 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       if (!showDropdown) return null;
 
       const doc = getDocument();
-      if (!('body' in doc)) return null;
+      if (!("body" in doc)) return null;
 
       const dropdown = (
         <div
@@ -401,21 +464,24 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
                 ))}
                 {initialItemsToShow !== undefined && initialItemsToShow > 0 && (
                   <>
-                    {visibleItemsCount < filteredOptions.length && scrollMoreMessage && (
-                      <div className="px-2 py-2 text-sm text-neutral-500 text-center">
-                        {formatMessage(scrollMoreMessage, {
-                          current: visibleItemsCount,
-                          total: filteredOptions.length
-                        })}
-                      </div>
-                    )}
-                    {visibleItemsCount >= filteredOptions.length && filteredOptions.length > 0 && allOptionsShownMessage && (
-                      <div className="px-2 py-2 text-sm text-neutral-500 text-center">
-                        {formatMessage(allOptionsShownMessage, {
-                          total: filteredOptions.length
-                        })}
-                      </div>
-                    )}
+                    {visibleItemsCount < filteredOptions.length &&
+                      scrollMoreMessage && (
+                        <div className="px-2 py-2 text-sm text-neutral-500 text-center">
+                          {formatMessage(scrollMoreMessage, {
+                            current: visibleItemsCount,
+                            total: filteredOptions.length,
+                          })}
+                        </div>
+                      )}
+                    {visibleItemsCount >= filteredOptions.length &&
+                      filteredOptions.length > 0 &&
+                      allOptionsShownMessage && (
+                        <div className="px-2 py-2 text-sm text-neutral-500 text-center">
+                          {formatMessage(allOptionsShownMessage, {
+                            total: filteredOptions.length,
+                          })}
+                        </div>
+                      )}
                   </>
                 )}
               </>
@@ -432,7 +498,10 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
     };
 
     return (
-      <div ref={wrapperRef} className={cn("relative", fullWidth ? "w-full" : "inline-block")}>
+      <div
+        ref={wrapperRef}
+        className={cn("relative", fullWidth ? "w-full" : "inline-block")}
+      >
         <div ref={inputRef} className={cn(!fullWidth && "inline-block")}>
           <Input
             ref={ref}
@@ -464,6 +533,6 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
   }
 );
 
-AutoComplete.displayName = 'AutoComplete';
+AutoComplete.displayName = "AutoComplete";
 
 export { AutoComplete };
