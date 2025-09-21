@@ -1,4 +1,8 @@
 
+## [v1.0.0] - 2025-09-21
+- fix: update phoneinput and autocomplete
+
+
 ## [v0.37.0] - 2025-09-21
 - fix: update phoneinput iso and code
 
