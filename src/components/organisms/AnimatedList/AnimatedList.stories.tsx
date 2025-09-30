@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import AnimatedList from "./AnimatedList";
+import { AnimatedList } from "./AnimatedList";
 import { Notification } from "../../atoms/Notification/Notification";
 
 const meta: Meta<typeof AnimatedList> = {

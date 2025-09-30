@@ -186,4 +186,4 @@ const AnimatedList = ({
   );
 };
 
-export default AnimatedList;
+export { AnimatedList };

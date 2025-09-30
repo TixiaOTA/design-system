@@ -11,4 +11,4 @@ interface AnimatedListProps {
     initialSelectedIndex?: number;
 }
 declare const AnimatedList: ({ items, children, onItemSelect, showGradients, enableArrowNavigation, className, itemClassName, displayScrollbar, initialSelectedIndex, }: AnimatedListProps) => import("react/jsx-runtime").JSX.Element;
-export default AnimatedList;
+export { AnimatedList };
