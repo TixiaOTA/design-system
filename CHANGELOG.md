@@ -1,4 +1,8 @@
 
+## [v1.2.1] - 2025-09-30
+- fix: named export
+
+
 ## [v1.2.0] - 2025-09-30
 - fix: reset node and config
 
