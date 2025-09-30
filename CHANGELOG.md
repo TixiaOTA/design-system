@@ -1,4 +1,8 @@
 
+## [v1.2.0] - 2025-09-30
+- fix: reset node and config
+
+
 ## [v1.1.0] - 2025-09-30
 - fix: add animation list design system
 
