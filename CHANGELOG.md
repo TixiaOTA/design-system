@@ -1,4 +1,8 @@
 
+## [v1.1.0] - 2025-09-30
+- fix: add animation list design system
+
+
 ## [v1.0.0] - 2025-09-21
 - fix: update phoneinput and autocomplete
 
