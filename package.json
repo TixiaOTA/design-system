@@ -32,14 +32,17 @@
     "@heroui/react": "^2.7.6",
     "@iconify/react": "^4.1.1",
     "@tanstack/react-table": "^8.21.3",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
     "framer-motion": "^12.11.3",
     "libphonenumber-js": "^1.12.17",
+    "lucide-react": "^0.544.0",
+    "motion": "^12.23.22",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tailwind-merge": "^2.2.1"
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss-animate": "^1.0.7"
   },
   "bundledDependencies": [
     "class-variance-authority",
