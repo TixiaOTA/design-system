@@ -1,4 +1,8 @@
 
+## [v1.2.2] - 2025-10-08
+- fix: update popover onscroll
+
+
 ## [v1.2.1] - 2025-09-30
 - fix: named export
 
