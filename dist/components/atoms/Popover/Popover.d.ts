@@ -9,6 +9,7 @@
  * - Animation control
  * - Arrow control
  * - Offset customization
+ * - Scroll behavior control (shouldCloseOnScroll)
  * - HeroUI's built-in positioning and styling system
  *
  * This variant is automatically used when variant="hero" is set on the main Popover component.
@@ -35,5 +36,14 @@ export interface PopoverHerouiProps {
     disableAnimation?: boolean;
     offset?: number;
     isDismissable?: boolean;
+    shouldCloseOnScroll?: boolean;
+    shouldCloseOnBlur?: boolean;
+    shouldBlockScroll?: boolean;
+    containerPadding?: number;
+    crossOffset?: number;
+    portalContainer?: HTMLElement;
+    triggerType?: "dialog" | "menu" | "listbox" | "tree" | "grid";
+    shouldFlip?: boolean;
+    triggerScaleOnOpen?: boolean;
 }
 export declare const Popover: React.FC<PopoverHerouiProps>;
