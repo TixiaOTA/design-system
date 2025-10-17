@@ -1,4 +1,8 @@
 
+## [v1.2.3] - 2025-10-17
+- fix: update z-index popover
+
+
 ## [v1.2.2] - 2025-10-08
 - fix: update popover onscroll
 
