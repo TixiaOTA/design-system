@@ -129,6 +129,8 @@ export interface PopoverHerouiProps {
   triggerType?: "dialog" | "menu" | "listbox" | "tree" | "grid";
   shouldFlip?: boolean;
   triggerScaleOnOpen?: boolean;
+  zIndex?: number | string; // Allow custom z-index control
+  contentZIndex?: number | string; // Specific z-index for content container
 }
 
 export const Popover: React.FC<PopoverHerouiProps> = ({
@@ -153,10 +155,12 @@ export const Popover: React.FC<PopoverHerouiProps> = ({
   shouldBlockScroll = false,
   containerPadding = 12,
   crossOffset = 0,
-  portalContainer = typeof document !== 'undefined' ? document.body : undefined,
+  portalContainer = typeof document !== "undefined" ? document.body : undefined,
   triggerType = "dialog",
   shouldFlip = true,
   triggerScaleOnOpen = true,
+  zIndex = 50, // Default z-index for popover
+  contentZIndex, // Specific z-index for content, falls back to zIndex
 }) => {
   // Map our color system to HeroUI colors
   const getHeroUIColor = () => {
@@ -216,6 +220,9 @@ export const Popover: React.FC<PopoverHerouiProps> = ({
   const heroUIColor = getHeroUIColor();
   const heroUIBackdrop = getHeroUIBackdrop();
 
+  // Determine the effective z-index for content
+  const effectiveZIndex = contentZIndex !== undefined ? contentZIndex : zIndex;
+
   // Map our props to HeroUI props
   const heroUIProps: any = {
     placement,
@@ -240,6 +247,10 @@ export const Popover: React.FC<PopoverHerouiProps> = ({
     triggerScaleOnOpen,
     // Ensure proper positioning
     isKeyboardDismissDisabled: false,
+    // Apply z-index to the popover container
+    style: {
+      zIndex: typeof zIndex === "number" ? zIndex : zIndex,
+    },
   };
 
   // Remove undefined props to avoid HeroUI warnings
@@ -260,11 +271,16 @@ export const Popover: React.FC<PopoverHerouiProps> = ({
           // Apply custom color styles when needed
           color === "custom" && customColor ? "border-0" : ""
         )}
-        style={
-          color === "custom" && customColor
+        style={{
+          ...(color === "custom" && customColor
             ? { backgroundColor: customColor, color: "#ffffff" }
-            : undefined
-        }
+            : {}),
+          // Apply z-index to content container
+          zIndex:
+            typeof effectiveZIndex === "number"
+              ? effectiveZIndex
+              : effectiveZIndex,
+        }}
       >
         {content}
       </PopoverContent>

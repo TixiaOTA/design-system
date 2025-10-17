@@ -95,6 +95,15 @@ const meta: Meta<typeof Popover> = {
     triggerScaleOnOpen: {
       control: "boolean",
     },
+    zIndex: {
+      control: "number",
+      description: "Z-index for the popover container",
+    },
+    contentZIndex: {
+      control: "number",
+      description:
+        "Z-index for the popover content (falls back to zIndex if not provided)",
+    },
   },
 };
 
@@ -533,14 +542,15 @@ export const ScrollBehavior: Story = {
       <div className="text-center">
         <h3 className="text-lg font-semibold mb-4">Scroll Behavior Demo</h3>
         <p className="text-sm text-gray-600 mb-6">
-          Try scrolling the page with these popovers open to see the difference in behavior.
+          Try scrolling the page with these popovers open to see the difference
+          in behavior.
           <br />
           <span className="text-xs text-gray-500">
             Uses HeroUI's native <code>shouldCloseOnScroll</code> prop
           </span>
         </p>
       </div>
-      
+
       <div className="flex gap-8 justify-center flex-wrap">
         <div className="text-center">
           <h4 className="font-medium mb-2">Closes on Scroll (Default)</h4>
@@ -548,7 +558,9 @@ export const ScrollBehavior: Story = {
             content={
               <div className="p-4">
                 <h4 className="font-semibold mb-2">Closes on Scroll</h4>
-                <p className="text-sm">This popover will close when you scroll the page</p>
+                <p className="text-sm">
+                  This popover will close when you scroll the page
+                </p>
               </div>
             }
             shouldCloseOnScroll={true}
@@ -560,7 +572,9 @@ export const ScrollBehavior: Story = {
             triggerType="dialog"
             shouldFlip={true}
             containerPadding={12}
-            portalContainer={typeof document !== 'undefined' ? document.body : undefined}
+            portalContainer={
+              typeof document !== "undefined" ? document.body : undefined
+            }
           >
             <Button>Closes on Scroll</Button>
           </Popover>
@@ -572,7 +586,9 @@ export const ScrollBehavior: Story = {
             content={
               <div className="p-4">
                 <h4 className="font-semibold mb-2">Stays Open</h4>
-                <p className="text-sm">This popover will stay open when you scroll the page</p>
+                <p className="text-sm">
+                  This popover will stay open when you scroll the page
+                </p>
               </div>
             }
             shouldCloseOnScroll={false}
@@ -584,7 +600,9 @@ export const ScrollBehavior: Story = {
             triggerType="dialog"
             shouldFlip={true}
             containerPadding={12}
-            portalContainer={typeof document !== 'undefined' ? document.body : undefined}
+            portalContainer={
+              typeof document !== "undefined" ? document.body : undefined
+            }
           >
             <Button>Stays Open</Button>
           </Popover>
@@ -595,7 +613,8 @@ export const ScrollBehavior: Story = {
       <div className="h-96 bg-gray-100 rounded-lg p-4 mt-8">
         <h4 className="font-semibold mb-2">Scrollable Content</h4>
         <p className="text-sm text-gray-600 mb-4">
-          This content is here to make the page scrollable. Try opening the popovers above and then scrolling to see the difference in behavior.
+          This content is here to make the page scrollable. Try opening the
+          popovers above and then scrolling to see the difference in behavior.
         </p>
         <div className="space-y-2">
           {Array.from({ length: 20 }, (_, i) => (
@@ -615,10 +634,11 @@ export const PositioningDemo: Story = {
       <div className="text-center">
         <h3 className="text-lg font-semibold mb-4">Positioning Demo</h3>
         <p className="text-sm text-gray-600 mb-6">
-          These popovers should stay positioned relative to their trigger elements, not scroll with the page content.
+          These popovers should stay positioned relative to their trigger
+          elements, not scroll with the page content.
         </p>
       </div>
-      
+
       <div className="flex gap-8 justify-center flex-wrap">
         <div className="text-center">
           <h4 className="font-medium mb-2">Fixed Position</h4>
@@ -626,7 +646,9 @@ export const PositioningDemo: Story = {
             content={
               <div className="p-4">
                 <h4 className="font-semibold mb-2">Fixed Position</h4>
-                <p className="text-sm">This popover should stay fixed relative to the button</p>
+                <p className="text-sm">
+                  This popover should stay fixed relative to the button
+                </p>
               </div>
             }
             shouldCloseOnScroll={false}
@@ -649,7 +671,9 @@ export const PositioningDemo: Story = {
             content={
               <div className="p-4">
                 <h4 className="font-semibold mb-2">Menu Type</h4>
-                <p className="text-sm">Using menu trigger type for better positioning</p>
+                <p className="text-sm">
+                  Using menu trigger type for better positioning
+                </p>
               </div>
             }
             shouldCloseOnScroll={false}
@@ -671,7 +695,8 @@ export const PositioningDemo: Story = {
       <div className="h-96 bg-gray-100 rounded-lg p-4 mt-8">
         <h4 className="font-semibold mb-2">Scrollable Content</h4>
         <p className="text-sm text-gray-600 mb-4">
-          Scroll this content to test if the popovers above maintain their position relative to their buttons.
+          Scroll this content to test if the popovers above maintain their
+          position relative to their buttons.
         </p>
         <div className="space-y-2">
           {Array.from({ length: 20 }, (_, i) => (
@@ -679,6 +704,354 @@ export const PositioningDemo: Story = {
               Scrollable item {i + 1}
             </div>
           ))}
+        </div>
+      </div>
+    </div>
+  ),
+};
+
+export const ZIndexDemo: Story = {
+  render: () => (
+    <div className="space-y-8">
+      <div className="text-center">
+        <h3 className="text-lg font-semibold mb-4">Z-Index Control Demo</h3>
+        <p className="text-sm text-gray-600 mb-6">
+          Control the layering of popovers using z-index props. This is useful
+          for ensuring popovers appear above or below other UI elements like
+          navigation bars.
+        </p>
+      </div>
+
+      <div className="flex gap-8 justify-center flex-wrap">
+        <div className="text-center">
+          <h4 className="font-medium mb-2">Default Z-Index (50)</h4>
+          <Popover
+            content={
+              <div className="p-4">
+                <h4 className="font-semibold mb-2">Default Z-Index</h4>
+                <p className="text-sm">Uses default z-index of 50</p>
+                <p className="text-xs text-gray-500 mt-1">zIndex: 50</p>
+              </div>
+            }
+            zIndex={50}
+            shadow="lg"
+            rounded="lg"
+            showArrow={true}
+            placement="bottom"
+          >
+            <Button>Default (50)</Button>
+          </Popover>
+        </div>
+
+        <div className="text-center">
+          <h4 className="font-medium mb-2">High Z-Index (100)</h4>
+          <Popover
+            content={
+              <div className="p-4">
+                <h4 className="font-semibold mb-2">High Z-Index</h4>
+                <p className="text-sm">Appears above most elements</p>
+                <p className="text-xs text-gray-500 mt-1">zIndex: 100</p>
+              </div>
+            }
+            zIndex={100}
+            shadow="lg"
+            rounded="lg"
+            showArrow={true}
+            placement="bottom"
+          >
+            <Button>High (100)</Button>
+          </Popover>
+        </div>
+
+        <div className="text-center">
+          <h4 className="font-medium mb-2">Low Z-Index (10)</h4>
+          <Popover
+            content={
+              <div className="p-4">
+                <h4 className="font-semibold mb-2">Low Z-Index</h4>
+                <p className="text-sm">Appears below most elements</p>
+                <p className="text-xs text-gray-500 mt-1">zIndex: 10</p>
+              </div>
+            }
+            zIndex={10}
+            shadow="lg"
+            rounded="lg"
+            showArrow={true}
+            placement="bottom"
+          >
+            <Button>Low (10)</Button>
+          </Popover>
+        </div>
+      </div>
+    </div>
+  ),
+};
+
+export const NavbarOverlapFix: Story = {
+  render: () => (
+    <div className="space-y-8">
+      <div className="text-center">
+        <h3 className="text-lg font-semibold mb-4">Navbar Overlap Fix Demo</h3>
+        <p className="text-sm text-gray-600 mb-6">
+          This demonstrates how to fix the popover appearing in front of navbar
+          components by controlling z-index values.
+        </p>
+      </div>
+
+      {/* Simulate a navbar with high z-index */}
+      <div className="relative">
+        <div
+          className="bg-gray-900 text-white p-4 rounded-lg mb-4 flex items-center justify-between"
+          style={{ zIndex: 1000 }}
+        >
+          <div className="flex items-center space-x-4">
+            <h2 className="text-lg font-semibold">Tixia Travel Solutions</h2>
+            <nav className="flex space-x-4">
+              <span className="text-sm">Pesawat</span>
+              <span className="text-sm">Hotel</span>
+              <span className="text-sm">Kereta</span>
+            </nav>
+          </div>
+          <div className="flex items-center space-x-2">
+            <span className="text-sm">Blink182</span>
+            <div className="w-8 h-8 bg-gray-600 rounded-full"></div>
+          </div>
+        </div>
+
+        <div className="flex gap-4 justify-center flex-wrap">
+          <div className="text-center">
+            <h4 className="font-medium mb-2">❌ Problem: High Z-Index</h4>
+            <p className="text-xs text-red-600 mb-2">
+              Popover appears above navbar
+            </p>
+            <Popover
+              content={
+                <div className="p-4 w-64">
+                  <h4 className="font-semibold mb-2">Kamar 1</h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm">Dewasa</span>
+                      <div className="flex items-center space-x-2">
+                        <button className="w-6 h-6 rounded-full border flex items-center justify-center">
+                          -
+                        </button>
+                        <span className="w-8 text-center">2</span>
+                        <button className="w-6 h-6 rounded-full border flex items-center justify-center">
+                          +
+                        </button>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm">Anak-anak</span>
+                      <div className="flex items-center space-x-2">
+                        <button className="w-6 h-6 rounded-full border flex items-center justify-center">
+                          -
+                        </button>
+                        <span className="w-8 text-center">1</span>
+                        <button className="w-6 h-6 rounded-full border flex items-center justify-center">
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+              zIndex={1100} // Higher than navbar
+              shadow="lg"
+              rounded="lg"
+              showArrow={true}
+              placement="bottom"
+            >
+              <Button>Room Selector (High Z)</Button>
+            </Popover>
+          </div>
+
+          <div className="text-center">
+            <h4 className="font-medium mb-2">✅ Solution: Low Z-Index</h4>
+            <p className="text-xs text-green-600 mb-2">
+              Popover appears below navbar
+            </p>
+            <Popover
+              content={
+                <div className="p-4 w-64">
+                  <h4 className="font-semibold mb-2">Kamar 1</h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm">Dewasa</span>
+                      <div className="flex items-center space-x-2">
+                        <button className="w-6 h-6 rounded-full border flex items-center justify-center">
+                          -
+                        </button>
+                        <span className="w-8 text-center">2</span>
+                        <button className="w-6 h-6 rounded-full border flex items-center justify-center">
+                          +
+                        </button>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm">Anak-anak</span>
+                      <div className="flex items-center space-x-2">
+                        <button className="w-6 h-6 rounded-full border flex items-center justify-center">
+                          -
+                        </button>
+                        <span className="w-8 text-center">1</span>
+                        <button className="w-6 h-6 rounded-full border flex items-center justify-center">
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+              zIndex={500} // Lower than navbar
+              shadow="lg"
+              rounded="lg"
+              showArrow={true}
+              placement="bottom"
+            >
+              <Button>Room Selector (Low Z)</Button>
+            </Popover>
+          </div>
+        </div>
+      </div>
+    </div>
+  ),
+};
+
+export const ZIndexVariants: Story = {
+  render: () => (
+    <div className="space-y-8">
+      <div className="text-center">
+        <h3 className="text-lg font-semibold mb-4">Z-Index Variants</h3>
+        <p className="text-sm text-gray-600 mb-6">
+          Different z-index values for various use cases and layering scenarios.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="text-center">
+          <h4 className="font-medium mb-2">Modal Level (1000)</h4>
+          <Popover
+            content={
+              <div className="p-4">
+                <h4 className="font-semibold mb-2">Modal Level</h4>
+                <p className="text-sm">For modals and overlays</p>
+                <p className="text-xs text-gray-500 mt-1">zIndex: 1000</p>
+              </div>
+            }
+            zIndex={1000}
+            shadow="xl"
+            rounded="lg"
+            showArrow={true}
+            placement="bottom"
+          >
+            <Button>Modal (1000)</Button>
+          </Popover>
+        </div>
+
+        <div className="text-center">
+          <h4 className="font-medium mb-2">Dropdown Level (100)</h4>
+          <Popover
+            content={
+              <div className="p-4">
+                <h4 className="font-semibold mb-2">Dropdown Level</h4>
+                <p className="text-sm">For dropdowns and menus</p>
+                <p className="text-xs text-gray-500 mt-1">zIndex: 100</p>
+              </div>
+            }
+            zIndex={100}
+            shadow="lg"
+            rounded="lg"
+            showArrow={true}
+            placement="bottom"
+          >
+            <Button>Dropdown (100)</Button>
+          </Popover>
+        </div>
+
+        <div className="text-center">
+          <h4 className="font-medium mb-2">Tooltip Level (50)</h4>
+          <Popover
+            content={
+              <div className="p-4">
+                <h4 className="font-semibold mb-2">Tooltip Level</h4>
+                <p className="text-sm">For tooltips and hints</p>
+                <p className="text-xs text-gray-500 mt-1">zIndex: 50</p>
+              </div>
+            }
+            zIndex={50}
+            shadow="md"
+            rounded="lg"
+            showArrow={true}
+            placement="bottom"
+          >
+            <Button>Tooltip (50)</Button>
+          </Popover>
+        </div>
+
+        <div className="text-center">
+          <h4 className="font-medium mb-2">Background Level (10)</h4>
+          <Popover
+            content={
+              <div className="p-4">
+                <h4 className="font-semibold mb-2">Background Level</h4>
+                <p className="text-sm">Behind other elements</p>
+                <p className="text-xs text-gray-500 mt-1">zIndex: 10</p>
+              </div>
+            }
+            zIndex={10}
+            shadow="sm"
+            rounded="lg"
+            showArrow={true}
+            placement="bottom"
+          >
+            <Button>Background (10)</Button>
+          </Popover>
+        </div>
+
+        <div className="text-center">
+          <h4 className="font-medium mb-2">Custom Content Z-Index</h4>
+          <Popover
+            content={
+              <div className="p-4">
+                <h4 className="font-semibold mb-2">Custom Content</h4>
+                <p className="text-sm">Different z-index for content</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  zIndex: 200, contentZIndex: 300
+                </p>
+              </div>
+            }
+            zIndex={200}
+            contentZIndex={300}
+            shadow="lg"
+            rounded="lg"
+            showArrow={true}
+            placement="bottom"
+          >
+            <Button>Custom Content</Button>
+          </Popover>
+        </div>
+
+        <div className="text-center">
+          <h4 className="font-medium mb-2">String Z-Index</h4>
+          <Popover
+            content={
+              <div className="p-4">
+                <h4 className="font-semibold mb-2">String Z-Index</h4>
+                <p className="text-sm">Using CSS custom properties</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  zIndex: "var(--popover-z)"
+                </p>
+              </div>
+            }
+            zIndex="var(--popover-z, 75)"
+            shadow="lg"
+            rounded="lg"
+            showArrow={true}
+            placement="bottom"
+          >
+            <Button>String Z-Index</Button>
+          </Popover>
         </div>
       </div>
     </div>

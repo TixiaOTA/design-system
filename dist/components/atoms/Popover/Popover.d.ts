@@ -45,5 +45,7 @@ export interface PopoverHerouiProps {
     triggerType?: "dialog" | "menu" | "listbox" | "tree" | "grid";
     shouldFlip?: boolean;
     triggerScaleOnOpen?: boolean;
+    zIndex?: number | string;
+    contentZIndex?: number | string;
 }
 export declare const Popover: React.FC<PopoverHerouiProps>;
