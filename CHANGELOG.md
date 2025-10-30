@@ -1,4 +1,8 @@
 
+## [v1.2.4] - 2025-10-30
+- fix: update tooltip based on hero
+
+
 ## [v1.2.3] - 2025-10-17
 - fix: update z-index popover
 
