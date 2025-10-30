@@ -1,144 +1,323 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Tooltip } from './Tooltip';
-import { Button } from '../Button/Button';
+import type { Meta, StoryObj } from "@storybook/react";
+import { Tooltip } from "./Tooltip";
+import { Button } from "../Button/Button";
 
 const meta: Meta<typeof Tooltip> = {
-  title: 'Atoms/Tooltip',
+  title: "Atoms/Tooltip",
   component: Tooltip,
-  tags: ['autodocs'],
+  parameters: {
+    layout: "centered",
+  },
+  tags: ["autodocs"],
   argTypes: {
-    position: {
-      control: 'select',
-      options: ['top', 'bottom', 'left', 'right'],
+    placement: {
+      control: "select",
+      options: [
+        "top",
+        "bottom",
+        "left",
+        "right",
+        "top-start",
+        "top-end",
+        "bottom-start",
+        "bottom-end",
+        "left-start",
+        "left-end",
+        "right-start",
+        "right-end",
+      ],
+    },
+    variant: {
+      control: "select",
+      options: ["default", "elevated", "outline", "ghost"],
     },
     color: {
-      control: 'select',
-      options: ['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'neutral', 'light'],
+      control: "select",
+      options: [
+        "primary",
+        "secondary",
+        "success",
+        "warning",
+        "danger",
+        "info",
+        "neutral",
+        "light",
+        "custom",
+      ],
     },
-    size: {
-      control: 'select',
-      options: ['sm', 'md', 'lg'],
+    shadow: {
+      control: "select",
+      options: ["none", "sm", "md", "lg", "xl"],
+    },
+    rounded: {
+      control: "select",
+      options: ["none", "sm", "md", "lg", "xl", "2xl", "3xl", "full"],
+    },
+    showArrow: {
+      control: "boolean",
+    },
+    isDisabled: {
+      control: "boolean",
+    },
+    delay: {
+      control: "number",
+    },
+    closeDelay: {
+      control: "number",
     },
     trigger: {
-      control: 'select',
-      options: ['hover', 'click'],
+      control: "select",
+      options: ["hover", "press", "focus", "manual"],
+    },
+    offset: {
+      control: "number",
+    },
+    shouldCloseOnScroll: {
+      control: "boolean",
+    },
+    zIndex: {
+      control: "number",
+      description: "Z-index for the tooltip container",
+    },
+    contentZIndex: {
+      control: "number",
+      description: "Z-index for the tooltip content (fallbacks to zIndex)",
     },
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof Tooltip>;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    content: 'This is a tooltip',
-    children: <Button rightIcon="mdi:information">hover me</Button>,
-    position: 'top',
-    color: 'primary',
-    size: 'md',
-    delay: 0,
-  },
-};
-
-export const WithCustomContent: Story = {
-  args: {
     content: (
-      <div className="flex items-center gap-2">
-        <span className="text-lg">ℹ️</span>
-        <span>Custom content with icon</span>
+      <div className="p-2">
+        <div className="text-sm">This is a tooltip</div>
       </div>
     ),
-    children: <Button>Custom Content</Button>,
-    position: 'top',
-    color: 'info',
+    children: <Button>Hover me</Button>,
+    placement: "top",
+    variant: "default",
+    color: "light",
+    shadow: "md",
+    rounded: "lg",
+    showArrow: true,
   },
 };
 
-export const ClickTrigger: Story = {
-  args: {
-    content: 'Click to show/hide tooltip',
-    children: <Button>Click me</Button>,
-    trigger: 'click',
-    position: 'bottom',
-    color: 'success',
-  },
-};
-
-export const AllPositions: Story = {
+export const Colored: Story = {
   render: () => (
-    <div className="flex flex-col items-center gap-8 p-8">
-      <div className="flex items-center gap-4">
-        <Tooltip content="Top tooltip" position="top">
-          <Button>Top</Button>
-        </Tooltip>
-        <Tooltip content="Bottom tooltip" position="bottom">
-          <Button>Bottom</Button>
-        </Tooltip>
-      </div>
-      <div className="flex items-center gap-4">
-        <Tooltip content="Left tooltip" position="left">
-          <Button>Left</Button>
-        </Tooltip>
-        <Tooltip content="Right tooltip" position="right">
-          <Button>Right</Button>
-        </Tooltip>
-      </div>
-    </div>
-  ),
-};
-
-export const AllColors: Story = {
-  render: () => (
-    <div className="flex items-center gap-4">
-      <Tooltip content="Primary tooltip" color="primary">
+    <div className="flex gap-4 flex-wrap">
+      <Tooltip
+        content={<div className="p-2 text-sm">Primary tooltip</div>}
+        color="primary"
+      >
         <Button>Primary</Button>
       </Tooltip>
-      <Tooltip content="Secondary tooltip" color="secondary">
-        <Button>Secondary</Button>
-      </Tooltip>
-      <Tooltip content="Success tooltip" color="success">
+
+      <Tooltip
+        content={<div className="p-2 text-sm">Success tooltip</div>}
+        color="success"
+      >
         <Button>Success</Button>
       </Tooltip>
-      <Tooltip content="Warning tooltip" color="warning">
+
+      <Tooltip
+        content={<div className="p-2 text-sm">Warning tooltip</div>}
+        color="warning"
+      >
         <Button>Warning</Button>
       </Tooltip>
-      <Tooltip content="Danger tooltip" color="danger">
+
+      <Tooltip
+        content={<div className="p-2 text-sm">Danger tooltip</div>}
+        color="danger"
+      >
         <Button>Danger</Button>
       </Tooltip>
-      <Tooltip content="Info tooltip" color="info">
-        <Button>Info</Button>
-      </Tooltip>
-      <Tooltip content="Neutral tooltip" color="neutral">
-        <Button>Neutral</Button>
-      </Tooltip>
-      <Tooltip content="Light tooltip" color="light">
-        <Button>Light</Button>
-      </Tooltip>
     </div>
   ),
 };
 
-export const AllSizes: Story = {
+export const Variants: Story = {
   render: () => (
-    <div className="flex items-center gap-4">
-      <Tooltip content="Small tooltip" size="sm">
-        <Button>Small</Button>
+    <div className="flex gap-4 flex-wrap">
+      <Tooltip
+        content={<div className="p-2 text-sm">Default</div>}
+        variant="default"
+        showArrow
+      >
+        <Button>Default</Button>
       </Tooltip>
-      <Tooltip content="Medium tooltip" size="md">
-        <Button>Medium</Button>
+
+      <Tooltip
+        content={<div className="p-2 text-sm">Elevated</div>}
+        variant="elevated"
+        showArrow
+      >
+        <Button>Elevated</Button>
       </Tooltip>
-      <Tooltip content="Large tooltip" size="lg">
-        <Button>Large</Button>
+
+      <Tooltip
+        content={<div className="p-2 text-sm">Outline</div>}
+        variant="outline"
+        showArrow
+      >
+        <Button>Outline</Button>
+      </Tooltip>
+
+      <Tooltip
+        content={<div className="p-2 text-sm">Ghost</div>}
+        variant="ghost"
+        showArrow
+      >
+        <Button>Ghost</Button>
       </Tooltip>
     </div>
   ),
 };
 
-export const WithDelay: Story = {
+export const ShadowRounded: Story = {
+  render: () => (
+    <div className="flex gap-4 flex-wrap">
+      <Tooltip
+        content={<div className="p-2 text-sm">No shadow</div>}
+        shadow="none"
+      >
+        <Button>No Shadow</Button>
+      </Tooltip>
+
+      <Tooltip
+        content={<div className="p-2 text-sm">Small shadow</div>}
+        shadow="sm"
+      >
+        <Button>Shadow sm</Button>
+      </Tooltip>
+
+      <Tooltip
+        content={<div className="p-2 text-sm">Large rounded</div>}
+        rounded="xl"
+      >
+        <Button>Rounded xl</Button>
+      </Tooltip>
+
+      <Tooltip
+        content={<div className="p-2 text-sm">Full rounded</div>}
+        rounded="full"
+      >
+        <Button>Rounded full</Button>
+      </Tooltip>
+    </div>
+  ),
+};
+
+export const Placement: Story = {
+  render: () => (
+    <div className="grid grid-cols-3 gap-6 items-center justify-items-center">
+      <Tooltip content={<div className="p-2 text-sm">Top</div>} placement="top">
+        <Button>Top</Button>
+      </Tooltip>
+      <Tooltip
+        content={<div className="p-2 text-sm">Bottom</div>}
+        placement="bottom"
+      >
+        <Button>Bottom</Button>
+      </Tooltip>
+      <Tooltip
+        content={<div className="p-2 text-sm">Left</div>}
+        placement="left"
+      >
+        <Button>Left</Button>
+      </Tooltip>
+      <Tooltip
+        content={<div className="p-2 text-sm">Right</div>}
+        placement="right"
+      >
+        <Button>Right</Button>
+      </Tooltip>
+      <Tooltip
+        content={<div className="p-2 text-sm">Top Start</div>}
+        placement="top-start"
+      >
+        <Button>Top Start</Button>
+      </Tooltip>
+      <Tooltip
+        content={<div className="p-2 text-sm">Bottom End</div>}
+        placement="bottom-end"
+      >
+        <Button>Bottom End</Button>
+      </Tooltip>
+    </div>
+  ),
+};
+
+export const CustomColor: Story = {
   args: {
-    content: 'This tooltip appears after 500ms',
-    children: <Button>Delayed Tooltip</Button>,
-    delay: 500,
-    color: 'warning',
+    content: <div className="p-2 text-sm">Custom color tooltip</div>,
+    children: <Button>Custom Color</Button>,
+    color: "custom",
+    customColor: "#8B5CF6",
+    variant: "default",
+    shadow: "lg",
+    rounded: "lg",
+    showArrow: true,
   },
-}; 
+};
+
+export const TriggersAndDelay: Story = {
+  render: () => (
+    <div className="flex gap-6 flex-wrap">
+      <Tooltip
+        content={<div className="p-2 text-sm">Hover trigger</div>}
+        trigger="hover"
+        delay={200}
+      >
+        <Button>Hover (delay 200ms)</Button>
+      </Tooltip>
+
+      <Tooltip
+        content={<div className="p-2 text-sm">Focus trigger</div>}
+        trigger="focus"
+        closeDelay={150}
+      >
+        <Button>Focus (close delay 150ms)</Button>
+      </Tooltip>
+
+      <Tooltip
+        content={<div className="p-2 text-sm">Press trigger</div>}
+        trigger="press"
+      >
+        <Button>Press</Button>
+      </Tooltip>
+    </div>
+  ),
+};
+
+export const ZIndexDemo: Story = {
+  render: () => (
+    <div className="flex gap-6 flex-wrap">
+      <Tooltip
+        content={<div className="p-2 text-sm">Above most</div>}
+        zIndex={100}
+      >
+        <Button>zIndex 100</Button>
+      </Tooltip>
+
+      <Tooltip
+        content={<div className="p-2 text-sm">Content higher</div>}
+        zIndex={100}
+        contentZIndex={200}
+      >
+        <Button>contentZIndex 200</Button>
+      </Tooltip>
+
+      <Tooltip
+        content={<div className="p-2 text-sm">String z-index</div>}
+        zIndex="var(--tooltip-z, 75)"
+      >
+        <Button>zIndex var()</Button>
+      </Tooltip>
+    </div>
+  ),
+};

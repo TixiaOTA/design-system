@@ -1,24 +1,29 @@
 import React from "react";
+export type TooltipVariant = "default" | "elevated" | "outline" | "ghost";
+export type TooltipColor = "primary" | "secondary" | "success" | "warning" | "danger" | "info" | "neutral" | "light" | "custom";
+export type TooltipShadow = "none" | "sm" | "md" | "lg" | "xl";
+export type TooltipRounded = "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full";
 export interface TooltipProps {
-    /** Content to display in the tooltip */
     content: React.ReactNode;
-    /** Element that triggers the tooltip */
     children: React.ReactNode;
-    /** Position of the tooltip relative to the trigger */
-    position?: "top" | "bottom" | "left" | "right";
-    /** Delay before showing the tooltip (in milliseconds) */
-    delay?: number;
-    /** Additional class name for the tooltip */
+    placement?: "top" | "bottom" | "left" | "right" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end" | "right-start" | "right-end";
+    showArrow?: boolean;
+    variant?: TooltipVariant;
+    color?: TooltipColor;
+    customColor?: string;
+    rounded?: TooltipRounded;
+    shadow?: TooltipShadow;
     className?: string;
-    /** Color variant of the tooltip */
-    color?: "primary" | "secondary" | "success" | "warning" | "danger" | "info" | "neutral" | "light";
-    /** Size of the tooltip text */
-    size?: "sm" | "md" | "lg";
-    /** Whether the tooltip is controlled externally */
     isOpen?: boolean;
-    /** Callback when tooltip visibility changes */
-    onOpenChange?: (isOpen: boolean) => void;
-    /** How the tooltip should be triggered */
-    trigger?: "hover" | "click";
+    onOpenChange?: (open: boolean) => void;
+    isDisabled?: boolean;
+    delay?: number;
+    closeDelay?: number;
+    offset?: number;
+    trigger?: "hover" | "press" | "focus" | "manual";
+    shouldCloseOnScroll?: boolean;
+    portalContainer?: HTMLElement;
+    zIndex?: number | string;
+    contentZIndex?: number | string;
 }
 export declare const Tooltip: React.FC<TooltipProps>;

@@ -1,287 +1,229 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
+import { Tooltip as HeroUITooltip } from "@heroui/react";
 import { cva } from "class-variance-authority";
 import { cn } from "../../../utils/cn";
-import { getWindow, getDocument } from "../../../utils/ssr";
-import { createPortal } from "react-dom";
 
-const tooltipVariants = cva(
-  "absolute z-50 px-3 py-2 text-sm rounded-md shadow-lg transition-opacity duration-200",
-  {
-    variants: {
-      color: {
-        primary: "bg-primary text-white",
-        secondary: "bg-secondary text-white",
-        success: "bg-success text-white",
-        warning: "bg-warning text-white",
-        danger: "bg-danger text-white",
-        info: "bg-info text-white",
-        neutral: "bg-neutral text-white",
-        light: "bg-white text-neutral-900 border border-neutral-200",
-      },
-      size: {
-        sm: "text-xs",
-        md: "text-sm",
-        lg: "text-base",
-      },
-    },
-    defaultVariants: {
-      color: "primary",
-      size: "md",
-    },
-  }
-);
-
-const arrowVariants = cva("absolute w-2 h-2 transform rotate-45", {
+const tooltipVariants = cva("border bg-popover text-popover-foreground", {
   variants: {
+    variant: {
+      default: "border-border shadow-sm",
+      elevated: "border-border shadow-lg",
+      outline: "border-border bg-transparent",
+      ghost: "border-transparent bg-transparent",
+    },
     color: {
-      primary: "bg-primary",
-      secondary: "bg-secondary",
-      success: "bg-success",
-      warning: "bg-warning",
-      danger: "bg-danger",
-      info: "bg-info",
-      neutral: "bg-neutral",
-      light: "bg-white",
+      primary: "border-primary bg-primary text-primary-foreground",
+      secondary: "border-secondary bg-secondary text-secondary-foreground",
+      success: "border-success bg-success text-success-foreground",
+      warning: "border-warning bg-warning text-warning-foreground",
+      danger: "border-danger bg-danger text-danger-foreground",
+      info: "border-blue-500 bg-blue-500 text-white",
+      neutral: "border-gray-500 bg-gray-500 text-white",
+      light: "border-gray-200 bg-white text-gray-900",
+      custom: "",
+    },
+    shadow: {
+      none: "",
+      sm: "shadow-sm",
+      md: "shadow-md",
+      lg: "shadow-lg",
+      xl: "shadow-xl",
+    },
+    rounded: {
+      none: "rounded-none",
+      sm: "rounded-sm",
+      md: "rounded-md",
+      lg: "rounded-lg",
+      xl: "rounded-xl",
+      "2xl": "rounded-2xl",
+      "3xl": "rounded-3xl",
+      full: "rounded-full",
     },
   },
   defaultVariants: {
-    color: "primary",
+    variant: "default",
+    color: "light",
+    shadow: "md",
+    rounded: "lg",
   },
 });
 
+export type TooltipVariant = "default" | "elevated" | "outline" | "ghost";
+export type TooltipColor =
+  | "primary"
+  | "secondary"
+  | "success"
+  | "warning"
+  | "danger"
+  | "info"
+  | "neutral"
+  | "light"
+  | "custom";
+export type TooltipShadow = "none" | "sm" | "md" | "lg" | "xl";
+export type TooltipRounded =
+  | "none"
+  | "sm"
+  | "md"
+  | "lg"
+  | "xl"
+  | "2xl"
+  | "3xl"
+  | "full";
+
 export interface TooltipProps {
-  /** Content to display in the tooltip */
   content: React.ReactNode;
-  /** Element that triggers the tooltip */
   children: React.ReactNode;
-  /** Position of the tooltip relative to the trigger */
-  position?: "top" | "bottom" | "left" | "right";
-  /** Delay before showing the tooltip (in milliseconds) */
-  delay?: number;
-  /** Additional class name for the tooltip */
+  placement?:
+    | "top"
+    | "bottom"
+    | "left"
+    | "right"
+    | "top-start"
+    | "top-end"
+    | "bottom-start"
+    | "bottom-end"
+    | "left-start"
+    | "left-end"
+    | "right-start"
+    | "right-end";
+  showArrow?: boolean;
+  variant?: TooltipVariant;
+  color?: TooltipColor;
+  customColor?: string;
+  rounded?: TooltipRounded;
+  shadow?: TooltipShadow;
   className?: string;
-  /** Color variant of the tooltip */
-  color?:
-    | "primary"
-    | "secondary"
-    | "success"
-    | "warning"
-    | "danger"
-    | "info"
-    | "neutral"
-    | "light";
-  /** Size of the tooltip text */
-  size?: "sm" | "md" | "lg";
-  /** Whether the tooltip is controlled externally */
   isOpen?: boolean;
-  /** Callback when tooltip visibility changes */
-  onOpenChange?: (isOpen: boolean) => void;
-  /** How the tooltip should be triggered */
-  trigger?: "hover" | "click";
+  onOpenChange?: (open: boolean) => void;
+  isDisabled?: boolean;
+  delay?: number; // open delay (ms)
+  closeDelay?: number; // close delay (ms)
+  offset?: number;
+  trigger?: "hover" | "press" | "focus" | "manual";
+  shouldCloseOnScroll?: boolean;
+  portalContainer?: HTMLElement;
+  zIndex?: number | string;
+  contentZIndex?: number | string;
 }
 
 export const Tooltip: React.FC<TooltipProps> = ({
   content,
   children,
-  position = "top",
-  delay = 0,
-  className,
+  placement = "top",
+  showArrow = true,
+  variant = "default",
   color = "light",
-  size = "md",
-  isOpen: controlledIsOpen,
+  customColor,
+  rounded = "lg",
+  shadow = "md",
+  className,
+  isOpen,
   onOpenChange,
+  isDisabled = false,
+  delay,
+  closeDelay = 0,
+  offset = 6,
   trigger = "hover",
+  shouldCloseOnScroll = true,
+  portalContainer = typeof document !== "undefined" ? document.body : undefined,
+  zIndex = 50,
+  contentZIndex,
 }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
-  const tooltipRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLDivElement>(null);
-  const timeoutRef = useRef<NodeJS.Timeout>();
-  const isControlled = controlledIsOpen !== undefined;
-  const showTooltip = isControlled ? controlledIsOpen : isVisible;
-
-  const updatePosition = () => {
-    if (!tooltipRef.current || !triggerRef.current) return;
-
-    const triggerRect = triggerRef.current.getBoundingClientRect();
-    const tooltipRect = tooltipRef.current.getBoundingClientRect();
-    const win = getWindow() as Window;
-    const scrollX = win.scrollX || win.pageXOffset;
-    const scrollY = win.scrollY || win.pageYOffset;
-
-    let top = 0;
-    let left = 0;
-    const spacing = 8;
-
-    switch (position) {
-      case "top":
-        top = triggerRect.top + scrollY - tooltipRect.height - spacing;
-        left =
-          triggerRect.left +
-          scrollX +
-          (triggerRect.width - tooltipRect.width) / 2;
-        break;
-      case "bottom":
-        top = triggerRect.bottom + scrollY + spacing;
-        left =
-          triggerRect.left +
-          scrollX +
-          (triggerRect.width - tooltipRect.width) / 2;
-        break;
-      case "left":
-        top =
-          triggerRect.top +
-          scrollY +
-          (triggerRect.height - tooltipRect.height) / 2;
-        left = triggerRect.left + scrollX - tooltipRect.width - spacing;
-        break;
-      case "right":
-        top =
-          triggerRect.top +
-          scrollY +
-          (triggerRect.height - tooltipRect.height) / 2;
-        left = triggerRect.right + scrollX + spacing;
-        break;
-    }
-
-    // Ensure tooltip stays within viewport
-    const viewportWidth = win.innerWidth;
-    const viewportHeight = win.innerHeight;
-
-    if (left < 0) left = 0;
-    if (left + tooltipRect.width > viewportWidth) {
-      left = viewportWidth - tooltipRect.width;
-    }
-    if (top < 0) top = 0;
-    if (top + tooltipRect.height > viewportHeight) {
-      top = viewportHeight - tooltipRect.height;
-    }
-
-    setTooltipPosition({ top, left });
-  };
-
-  useEffect(() => {
-    if (showTooltip) {
-      updatePosition();
-      const win = getWindow();
-      win.addEventListener("scroll", updatePosition, true);
-      win.addEventListener("resize", updatePosition);
-    }
-    return () => {
-      const win = getWindow();
-      win.removeEventListener("scroll", updatePosition, true);
-      win.removeEventListener("resize", updatePosition);
-    };
-  }, [showTooltip, position]);
-
-  const handleShow = () => {
-    if (isControlled) {
-      onOpenChange?.(true);
-    } else {
-      timeoutRef.current = setTimeout(() => {
-        setIsVisible(true);
-      }, delay);
+  const getHeroUIColor = () => {
+    switch (color) {
+      case "primary":
+        return "primary";
+      case "secondary":
+        return "secondary";
+      case "success":
+        return "success";
+      case "warning":
+        return "warning";
+      case "danger":
+        return "danger";
+      case "info":
+      case "neutral":
+      case "light":
+      case "custom":
+      default:
+        return "default";
     }
   };
 
-  const handleHide = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
+  const getCustomStyles = () => {
+    if (color === "custom" && customColor) {
+      return { backgroundColor: customColor, color: "#ffffff" };
     }
-    if (isControlled) {
-      onOpenChange?.(false);
-    } else {
-      setIsVisible(false);
-    }
+
+    const colorClasses = {
+      info: "bg-blue-500 text-white border-blue-500",
+      neutral: "bg-gray-500 text-white border-gray-500",
+      light: "bg-white text-gray-900 border-gray-200",
+    } as const;
+
+    return colorClasses[color as keyof typeof colorClasses] || "";
   };
 
-  const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (trigger === "click") {
-      if (isControlled) {
-        onOpenChange?.(!controlledIsOpen);
-      } else {
-        setIsVisible(!isVisible);
-      }
-    }
+  const customStyles = getCustomStyles();
+  const heroUIColor = getHeroUIColor();
+  const effectiveZIndex = contentZIndex !== undefined ? contentZIndex : zIndex;
+
+  const heroUIProps: any = {
+    content,
+    placement,
+    showArrow,
+    color: heroUIColor,
+    radius: rounded,
+    shadow,
+    isOpen,
+    onOpenChange,
+    isDisabled,
+    delay,
+    closeDelay,
+    offset,
+    trigger,
+    shouldCloseOnScroll,
+    portalContainer,
+    // container z-index to manage layering
+    style: {
+      zIndex: typeof zIndex === "number" ? zIndex : zIndex,
+    },
   };
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        trigger === "click" &&
-        tooltipRef.current &&
-        !tooltipRef.current.contains(e.target as Node) &&
-        triggerRef.current &&
-        !triggerRef.current.contains(e.target as Node)
-      ) {
-        handleHide();
-      }
-    };
-
-    if (showTooltip) {
-      document.addEventListener("click", handleClickOutside);
+  Object.keys(heroUIProps).forEach((key) => {
+    if (heroUIProps[key] === undefined) {
+      delete heroUIProps[key];
     }
-
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, [showTooltip, trigger]);
-
-  const renderTooltip = () => {
-    if (!showTooltip) return null;
-
-    const doc = getDocument();
-    if (!("body" in doc)) return null;
-
-    return createPortal(
-      <div
-        ref={tooltipRef}
-        className={cn(tooltipVariants({ color, size }), className)}
-        style={{
-          top: `${tooltipPosition.top}px`,
-          left: `${tooltipPosition.left}px`,
-        }}
-      >
-        {content}
-        <div
-          className={cn(
-            arrowVariants({ color }),
-            position === "top" && "bottom-[-4px] left-1/2 -translate-x-1/2",
-            position === "bottom" && "top-[-4px] left-1/2 -translate-x-1/2",
-            position === "left" && "right-[-4px] top-1/2 -translate-y-1/2",
-            position === "right" && "left-[-4px] top-1/2 -translate-y-1/2",
-            color === "light" &&
-              position === "top" &&
-              "border-r border-b border-neutral-200",
-            color === "light" &&
-              position === "bottom" &&
-              "border-l border-t border-neutral-200",
-            color === "light" &&
-              position === "left" &&
-              "border-t border-r border-neutral-200",
-            color === "light" &&
-              position === "right" &&
-              "border-l border-b border-neutral-200"
-          )}
-        />
-      </div>,
-      doc.body
-    );
-  };
+  });
 
   return (
-    <div className="relative">
-      <div
-        ref={triggerRef}
-        className="relative inline-block"
-        onMouseEnter={trigger === "hover" ? handleShow : undefined}
-        onMouseLeave={trigger === "hover" ? handleHide : undefined}
-        onClick={handleClick}
-      >
-        {children}
-        {renderTooltip()}
-      </div>
-    </div>
+    <HeroUITooltip
+      {...heroUIProps}
+      classNames={{
+        content: cn(
+          tooltipVariants({ variant, color, shadow, rounded }),
+          className,
+          customStyles,
+          color === "custom" && customColor ? "border-0" : ""
+        ),
+      }}
+      content={
+        <div
+          style={{
+            zIndex:
+              typeof effectiveZIndex === "number"
+                ? effectiveZIndex
+                : effectiveZIndex,
+            ...(color === "custom" && customColor
+              ? { backgroundColor: customColor, color: "#ffffff" }
+              : {}),
+          }}
+        >
+          {content}
+        </div>
+      }
+    >
+      {children}
+    </HeroUITooltip>
   );
 };
