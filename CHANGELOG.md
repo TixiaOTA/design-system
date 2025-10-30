@@ -1,4 +1,8 @@
 
+## [v1.2.5] - 2025-10-30
+- fix: add loader hotel
+
+
 ## [v1.2.4] - 2025-10-30
 - fix: update tooltip based on hero
 
