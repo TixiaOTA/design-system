@@ -45,7 +45,7 @@ const meta: Meta<typeof Loader> = {
 export default meta;
 type Story = StoryObj<typeof Loader>;
 
-const variants: LoaderVariant[] = ["flight-light", "flight-dark", "tixia-circular", "tixia-linear"];
+const variants: LoaderVariant[] = ["flight-light", "flight-dark", "tixia-circular", "tixia-linear", "hotel-loader"];
 
 export const AllVariants: Story = {
   render: () => (

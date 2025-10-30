@@ -19333,12 +19333,17 @@ const Fs = {
   "TIXIA-LINEAR": {
     image: "https://design-system-eaip.onrender.com/img/tixia-linear.gif",
     message: "Loading, please wait..."
+  },
+  "HOTEL-LOADER": {
+    image: "https://design-system-eaip.onrender.com/img/hotel-loader.gif",
+    message: "Loading, please wait..."
   }
 }, Em = {
   "flight-light": "FLIGHT_LIGHT",
   "flight-dark": "FLIGHT_DARK",
   "tixia-circular": "TIXIA-CIRCULAR",
-  "tixia-linear": "TIXIA-LINEAR"
+  "tixia-linear": "TIXIA-LINEAR",
+  "hotel-loader": "HOTEL-LOADER"
 }, nn = (e, t) => e === void 0 ? { className: t } : typeof e == "number" ? {
   className: "",
   style: { width: `${e}px`, height: `${e}px` }

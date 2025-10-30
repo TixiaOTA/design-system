@@ -5,7 +5,8 @@ export type LoaderVariant =
   | "flight-light"
   | "flight-dark"
   | "tixia-circular"
-  | "tixia-linear";
+  | "tixia-linear"
+  | "hotel-loader";
 
 interface LoaderProps {
   variant: LoaderVariant;
@@ -36,6 +37,10 @@ const loaderConfig: Record<string, { image: string; message: string }> = {
     image: "https://design-system-eaip.onrender.com/img/tixia-linear.gif",
     message: "Loading, please wait...",
   },
+  "HOTEL-LOADER": {
+    image: "https://design-system-eaip.onrender.com/img/hotel-loader.gif",
+    message: "Loading, please wait...",
+  },
 };
 
 const variantToLoaderCode: Record<LoaderVariant, string> = {
@@ -43,6 +48,7 @@ const variantToLoaderCode: Record<LoaderVariant, string> = {
   "flight-dark": "FLIGHT_DARK",
   "tixia-circular": "TIXIA-CIRCULAR",
   "tixia-linear": "TIXIA-LINEAR",
+  "hotel-loader": "HOTEL-LOADER",
 };
 
 // Helper function to convert width/height values to CSS classes or inline styles
