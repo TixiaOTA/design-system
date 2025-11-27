@@ -1,4 +1,8 @@
 
+## [v1.3.0] - 2025-11-27
+- fix: html input and div compatibility
+
+
 ## [v1.2.6] - 2025-11-27
 - fix: update react hook form compatibility
 
