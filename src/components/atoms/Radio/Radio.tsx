@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-export interface RadioProps {
+export interface RadioProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'size'> {
   label?: string | React.ReactNode;
   checked?: boolean;
   disabled?: boolean;
@@ -13,7 +13,7 @@ export interface RadioProps {
   variantSize?: 'sm' | 'md' | 'lg';
 }
 
-export const Radio: React.FC<RadioProps> = ({
+export const Radio = forwardRef<HTMLInputElement, RadioProps>(({
   label,
   checked = false,
   disabled = false,
@@ -23,7 +23,8 @@ export const Radio: React.FC<RadioProps> = ({
   error,
   color = 'primary',
   variantSize = 'sm',
-}) => {
+  ...props
+}, ref) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange?.(e.target.checked);
   };
@@ -58,6 +59,8 @@ export const Radio: React.FC<RadioProps> = ({
         checked={checked}
         disabled={disabled}
         onChange={handleChange}
+        ref={ref}
+        {...props}
         className={twMerge(
           // Base control
           'appearance-none rounded-full border-2 bg-white shrink-0',
@@ -91,4 +94,6 @@ export const Radio: React.FC<RadioProps> = ({
       )}
     </label>
   );
-};
+});
+
+Radio.displayName = 'Radio';

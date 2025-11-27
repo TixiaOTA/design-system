@@ -19,5 +19,6 @@ export interface FileUploadProps {
     showPlaceholder?: boolean;
     showMaxSize?: boolean;
     icon?: string;
+    name?: string;
 }
-export declare const FileUpload: React.FC<FileUploadProps>;
+export declare const FileUpload: React.ForwardRefExoticComponent<FileUploadProps & React.RefAttributes<HTMLInputElement>>;

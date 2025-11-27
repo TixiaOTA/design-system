@@ -1,5 +1,5 @@
 import React from 'react';
-export interface SliderProps {
+export interface SliderProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
     min?: number;
     max?: number;
     step?: number;
@@ -14,5 +14,6 @@ export interface SliderProps {
         label: string;
     }[];
     range?: boolean;
+    name?: string;
 }
-export declare const Slider: React.FC<SliderProps>;
+export declare const Slider: React.ForwardRefExoticComponent<SliderProps & React.RefAttributes<HTMLInputElement>>;

@@ -143,9 +143,11 @@ export interface PhoneInputProps {
   placeholder?: string;
   /** Whether to automatically detect country from phone number input */
   autoDetect?: boolean;
+  /** Name attribute for form submission and React Hook Form */
+  name?: string;
 }
 
-export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
+export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
   (
     {
       className,
@@ -164,6 +166,7 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
       defaultCountry = "id",
       placeholder = "Enter phone number",
       autoDetect = true,
+      name,
       ...props
     },
     ref
@@ -225,9 +228,13 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
 
     const buttonRef = useRef<HTMLButtonElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const hiddenInputRef = useRef<HTMLInputElement>(null);
     const id = React.useId();
     const helperId = `${id}-helper`;
     const errorId = `${id}-error`;
+
+    // Expose the hidden input ref for React Hook Form
+    useImperativeHandle(ref, () => hiddenInputRef.current as HTMLInputElement);
 
     const filteredCountries = COUNTRIES.filter(
       (country) =>
@@ -442,8 +449,16 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
     // In autoDetect mode, show single input initially, then show country selector after detection
     const showCountrySelector = !autoDetect || (autoDetect && countryDetected);
 
-    // Expose the wrapper div via the forwarded ref
-    useImperativeHandle(ref, () => wrapperRef.current!, []);
+    // Sync hidden input value when phone number changes
+    useEffect(() => {
+      if (hiddenInputRef.current) {
+        const phoneValue = phoneNumber || '';
+        hiddenInputRef.current.value = phoneValue;
+        // Trigger input event for React Hook Form
+        const event = new Event('input', { bubbles: true });
+        hiddenInputRef.current.dispatchEvent(event);
+      }
+    }, [phoneNumber]);
 
     return (
       <div
@@ -451,6 +466,14 @@ export const PhoneInput = forwardRef<HTMLDivElement, PhoneInputProps>(
         className={cn(fullWidth ? "w-full" : "inline-block", className)}
         {...props}
       >
+        {/* Hidden input for React Hook Form */}
+        <input
+          type="hidden"
+          ref={hiddenInputRef}
+          name={name}
+          value={phoneNumber || ''}
+          onChange={() => {}} // Controlled by handlePhoneChange
+        />
         {label && (
           <label htmlFor={id} className="mb-1.5 block text-sm text-neutral-900">
             {label}

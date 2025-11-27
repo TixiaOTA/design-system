@@ -81,6 +81,8 @@ export interface CheckBoxGroupProps extends Omit<React.FieldsetHTMLAttributes<HT
   gap?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   /** Custom gap between select all and options (overrides gap) */
   selectAllGap?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  /** Name attribute for form submission and React Hook Form */
+  name?: string;
 }
 
 const CheckBoxGroup = forwardRef<HTMLFieldSetElement, CheckBoxGroupProps>(
@@ -108,6 +110,7 @@ const CheckBoxGroup = forwardRef<HTMLFieldSetElement, CheckBoxGroupProps>(
     indeterminateSelectAll = true,
     gap,
     selectAllGap,
+    name,
     id: providedId,
     ...props 
   }, ref) => {
@@ -163,6 +166,7 @@ const CheckBoxGroup = forwardRef<HTMLFieldSetElement, CheckBoxGroupProps>(
         <fieldset
           ref={ref}
           id={groupId}
+          name={name}
           className={cn(
             checkboxGroupVariants({ layout, size }),
             optionsGapClass,

@@ -53,6 +53,8 @@ export interface CheckBoxGroupProps extends Omit<React.FieldsetHTMLAttributes<HT
     gap?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
     /** Custom gap between select all and options (overrides gap) */
     selectAllGap?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+    /** Name attribute for form submission and React Hook Form */
+    name?: string;
 }
 declare const CheckBoxGroup: React.ForwardRefExoticComponent<CheckBoxGroupProps & React.RefAttributes<HTMLFieldSetElement>>;
 export { CheckBoxGroup };

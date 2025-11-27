@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 export interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -11,7 +11,7 @@ export interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElemen
   color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error';
 }
 
-export const Checkbox: React.FC<CheckboxProps> = ({
+export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(({
   label,
   error,
   disabled = false,
@@ -21,7 +21,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   color = 'primary',
   className = '',
   ...props
-}) => {
+}, ref) => {
   const sizeClasses = {
     sm: 'w-4 h-4',
     md: 'w-5 h-5',
@@ -71,6 +71,11 @@ export const Checkbox: React.FC<CheckboxProps> = ({
           className={checkboxClasses}
           disabled={disabled}
           ref={(input) => {
+            if (typeof ref === 'function') {
+              ref(input);
+            } else if (ref) {
+              ref.current = input;
+            }
             if (input) {
               input.indeterminate = indeterminate;
             }
@@ -88,4 +93,6 @@ export const Checkbox: React.FC<CheckboxProps> = ({
       )}
     </div>
   );
-};
+});
+
+Checkbox.displayName = 'Checkbox';

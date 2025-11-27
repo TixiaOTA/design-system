@@ -8,4 +8,4 @@ export interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElemen
     variant?: 'square' | 'circle';
     color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error';
 }
-export declare const Checkbox: React.FC<CheckboxProps>;
+export declare const Checkbox: React.ForwardRefExoticComponent<CheckboxProps & React.RefAttributes<HTMLInputElement>>;

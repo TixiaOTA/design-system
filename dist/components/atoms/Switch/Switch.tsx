@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 
-export interface SwitchProps {
+export interface SwitchProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'size'> {
   label?: string;
   checked?: boolean;
   disabled?: boolean;
@@ -9,13 +9,14 @@ export interface SwitchProps {
   size?: 'sm' | 'md' | 'lg';
 }
 
-export const Switch: React.FC<SwitchProps> = ({
+export const Switch = forwardRef<HTMLInputElement, SwitchProps>(({
   label,
   checked = false,
   disabled = false,
   onChange,
   size = 'md',
-}) => {
+  ...props
+}, ref) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
       onChange(e.target.checked);
@@ -48,6 +49,8 @@ export const Switch: React.FC<SwitchProps> = ({
           checked={checked}
           disabled={disabled}
           onChange={handleChange}
+          ref={ref}
+          {...props}
         />
         <div
           className={clsx(
@@ -81,4 +84,6 @@ export const Switch: React.FC<SwitchProps> = ({
       )}
     </label>
   );
-}; 
+});
+
+Switch.displayName = 'Switch'; 

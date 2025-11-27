@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, forwardRef } from 'react';
 import clsx from 'clsx';
 import { getWindow } from '../../../utils/ssr';
 
-export interface SliderProps {
+export interface SliderProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
   min?: number;
   max?: number;
   step?: number;
@@ -14,9 +14,10 @@ export interface SliderProps {
   showValue?: boolean;
   marks?: { value: number; label: string }[];
   range?: boolean;
+  name?: string;
 }
 
-export const Slider: React.FC<SliderProps> = ({
+export const Slider = forwardRef<HTMLInputElement, SliderProps>(({
   min = 0,
   max = 100,
   step = 1,
@@ -28,7 +29,9 @@ export const Slider: React.FC<SliderProps> = ({
   showValue = false,
   marks = [],
   range = false,
-}) => {
+  name,
+  ...props
+}, ref) => {
   // Internal state for single or range
   const isRange = range;
   const [value, setValue] = useState<number | [number, number]>(
@@ -42,6 +45,10 @@ export const Slider: React.FC<SliderProps> = ({
   );
   const [isDragging, setIsDragging] = useState<null | 0 | 1>(null); // null: not dragging, 0: first thumb, 1: second thumb
   const sliderRef = useRef<HTMLDivElement>(null);
+  const hiddenInputRef = useRef<HTMLInputElement>(null);
+
+  // Expose the hidden input ref for React Hook Form
+  React.useImperativeHandle(ref, () => hiddenInputRef.current as HTMLInputElement);
 
   // Get current value(s)
   const currentValue = controlledValue !== undefined ? controlledValue : value;
@@ -69,6 +76,13 @@ export const Slider: React.FC<SliderProps> = ({
       setValue(clampedValue);
     }
     onChange?.(clampedValue);
+    
+    // Update hidden input for React Hook Form
+    if (hiddenInputRef.current) {
+      hiddenInputRef.current.value = JSON.stringify(clampedValue);
+      const event = new Event('input', { bubbles: true });
+      hiddenInputRef.current.dispatchEvent(event);
+    }
   };
 
   // Mouse/touch event handlers
@@ -154,7 +168,15 @@ export const Slider: React.FC<SliderProps> = ({
   const endPercent = getPercentage(end);
 
   return (
-    <div className={clsx('relative w-full', className)}>
+    <div className={clsx('relative w-full', className)} {...props}>
+      {/* Hidden input for React Hook Form */}
+      <input
+        type="hidden"
+        ref={hiddenInputRef}
+        name={name}
+        value={JSON.stringify(currentValue)}
+        onChange={() => {}} // Controlled by handleChange
+      />
       <div
         ref={sliderRef}
         className={clsx(
@@ -212,4 +234,6 @@ export const Slider: React.FC<SliderProps> = ({
       )}
     </div>
   );
-}; 
+});
+
+Slider.displayName = 'Slider'; 

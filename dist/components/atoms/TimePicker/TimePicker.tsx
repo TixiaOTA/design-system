@@ -394,15 +394,16 @@ export interface TimePickerProps extends Omit<PrimitiveTimePickerProps, 'onChang
   closeOnSelect?: boolean;
 }
 
-export const TimePicker: React.FC<TimePickerProps> = ({
+export const TimePicker = forwardRef<HTMLInputElement, TimePickerProps>(({
   value,
   onChange,
   valueFormatter,
   closeOnSelect,
   ...props
-}) => {
+}, ref) => {
   return (
     <PrimitiveTimePicker
+      ref={ref}
       value={value}
       onChange={onChange}
       valueFormatter={valueFormatter}
@@ -410,6 +411,6 @@ export const TimePicker: React.FC<TimePickerProps> = ({
       {...props}
     />
   );
-};
+});
 
 TimePicker.displayName = 'TimePicker';

@@ -1,4 +1,4 @@
-import React, { forwardRef, useState, Children, isValidElement, cloneElement, useEffect, useRef } from 'react';
+import React, { forwardRef, useState, Children, isValidElement, cloneElement, useEffect, useRef, useImperativeHandle } from 'react';
 import { createPortal } from 'react-dom';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../../../utils/cn';
@@ -100,9 +100,11 @@ export interface SelectProps
   rightIcon?: string;
   /** Border radius of the select */
   rounded?: SelectRounded;
+  /** Name attribute for form submission and React Hook Form */
+  name?: string;
 }
 
-const Select = forwardRef<HTMLDivElement, SelectProps>(
+const Select = forwardRef<HTMLInputElement, SelectProps>(
   (
     {
       className,
@@ -124,6 +126,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
       children,
       leftIcon,
       rightIcon,
+      name,
       ...props
     },
     ref
@@ -131,8 +134,12 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
     const [isOpen, setIsOpen] = useState(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const hiddenInputRef = useRef<HTMLInputElement>(null);
     const reactId = React.useId();
     const id = `select-${reactId.replace(/:/g, '')}`;
+
+    // Expose the hidden input ref for React Hook Form
+    useImperativeHandle(ref, () => hiddenInputRef.current as HTMLInputElement);
 
     const updateDropdownPosition = () => {
       if (isOpen && buttonRef.current && dropdownRef.current) {
@@ -217,6 +224,13 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
       };
     }, [isOpen, position]);
 
+    // Sync hidden input when value changes externally
+    useEffect(() => {
+      if (hiddenInputRef.current && value !== undefined) {
+        hiddenInputRef.current.value = value;
+      }
+    }, [value]);
+
     useEffect(() => {
       const doc = getDocument();
 
@@ -288,10 +302,18 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
       return null;
     };
 
-    const handleSelect = (value: string) => {
+    const handleSelect = (selectedValue: string) => {
       if (disabled) return;
-      onChange?.(value);
+      onChange?.(selectedValue);
       setIsOpen(false);
+      
+      // Update hidden input for React Hook Form
+      if (hiddenInputRef.current) {
+        hiddenInputRef.current.value = selectedValue;
+        // Trigger input event for React Hook Form
+        const event = new Event('input', { bubbles: true });
+        hiddenInputRef.current.dispatchEvent(event);
+      }
     };
 
     const renderOptions = () => {
@@ -358,7 +380,15 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
     };
 
     return (
-      <div className={cn(fullWidth ? "w-full" : "inline-block")} ref={ref} {...props}>
+      <div className={cn(fullWidth ? "w-full" : "inline-block")} {...props}>
+        {/* Hidden input for React Hook Form */}
+        <input
+          type="hidden"
+          ref={hiddenInputRef}
+          name={name}
+          value={value || ''}
+          onChange={() => {}} // Controlled by handleSelect
+        />
         {label && (
           <label
             htmlFor={id}

@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useCallback, useState, useRef, forwardRef, useImperativeHandle } from 'react';
 import clsx from 'clsx';
 import { Icon } from '../../atoms/Icons/Icons';
 
@@ -23,6 +23,7 @@ export interface FileUploadProps {
   showPlaceholder?: boolean;
   showMaxSize?: boolean;
   icon?: string;
+  name?: string;
 }
 
 const variantStyles: Record<FileUploadVariant, { 
@@ -107,7 +108,7 @@ const roundedStyles: Record<FileUploadRounded, string> = {
   full: 'rounded-full',
 };
 
-export const FileUpload: React.FC<FileUploadProps> = ({
+export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(({
   accept = ['*'],
   maxSize = 5 * 1024 * 1024, // 5MB default
   multiple = false,
@@ -124,10 +125,14 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   showPlaceholder = true,
   showMaxSize = true,
   icon = 'mdi:upload',
-}) => {
+  name,
+}, ref) => {
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Expose the file input ref for React Hook Form
+  useImperativeHandle(ref, () => fileInputRef.current as HTMLInputElement);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -269,6 +274,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
           onChange={handleFileInput}
           className="hidden"
           disabled={disabled}
+          name={name}
         />
         
         {children ? (
@@ -328,4 +334,6 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       )}
     </div>
   );
-}; 
+});
+
+FileUpload.displayName = 'FileUpload'; 

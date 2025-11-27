@@ -39,5 +39,7 @@ export interface PhoneInputProps {
     placeholder?: string;
     /** Whether to automatically detect country from phone number input */
     autoDetect?: boolean;
+    /** Name attribute for form submission and React Hook Form */
+    name?: string;
 }
-export declare const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps & React.RefAttributes<HTMLDivElement>>;
+export declare const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps & React.RefAttributes<HTMLInputElement>>;

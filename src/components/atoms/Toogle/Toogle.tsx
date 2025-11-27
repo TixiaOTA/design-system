@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useRef, useImperativeHandle, useEffect } from 'react';
 import { cva } from 'class-variance-authority';
 import { cn } from '../../../utils/cn';
 
@@ -63,9 +63,11 @@ export interface ToggleProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonE
   errorText?: string;
   /** Whether the toggle is in an error state */
   error?: boolean;
+  /** Name attribute for form submission and React Hook Form */
+  name?: string;
 }
 
-const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(
+const Toggle = forwardRef<HTMLInputElement, ToggleProps>(
   ({
     checked = false,
     onCheckedChange,
@@ -77,22 +79,60 @@ const Toggle = forwardRef<HTMLButtonElement, ToggleProps>(
     errorText,
     error = false,
     className,
+    name,
     ...props
   }, ref) => {
     const id = React.useId();
     const helperId = `${id}-helper`;
     const errorId = `${id}-error`;
+    const hiddenInputRef = useRef<HTMLInputElement>(null);
+    const buttonRef = useRef<HTMLButtonElement>(null);
+
+    // Expose the hidden input ref for React Hook Form
+    useImperativeHandle(ref, () => hiddenInputRef.current as HTMLInputElement);
+
+    // Sync hidden input when checked changes
+    useEffect(() => {
+      if (hiddenInputRef.current) {
+        hiddenInputRef.current.checked = checked;
+        // Trigger change event for React Hook Form
+        const event = new Event('change', { bubbles: true });
+        hiddenInputRef.current.dispatchEvent(event);
+      }
+    }, [checked]);
+
+    const handleToggle = () => {
+      const newChecked = !checked;
+      onCheckedChange?.(newChecked);
+      
+      // Update hidden input for React Hook Form
+      if (hiddenInputRef.current) {
+        hiddenInputRef.current.checked = newChecked;
+        const event = new Event('change', { bubbles: true });
+        hiddenInputRef.current.dispatchEvent(event);
+      }
+    };
 
     return (
       <div className="inline-flex flex-col gap-1.5">
+        {/* Hidden input for React Hook Form */}
+        <input
+          type="checkbox"
+          ref={hiddenInputRef}
+          name={name}
+          checked={checked}
+          onChange={() => {}} // Controlled by handleToggle
+          className="sr-only"
+          aria-hidden="true"
+        />
         <div className="flex items-center gap-2">
           <button
             type="button"
             role="switch"
             aria-checked={checked}
             data-state={checked ? 'checked' : 'unchecked'}
-            onClick={() => onCheckedChange?.(!checked)}
-            ref={ref}
+            onClick={handleToggle}
+            ref={buttonRef}
             className={cn(toggleVariants({ variant: error ? 'danger' : variant, size }), className)}
             aria-describedby={error ? errorId : helperText ? helperId : undefined}
             aria-invalid={error}

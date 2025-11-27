@@ -52,6 +52,8 @@ export interface SelectProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 
     rightIcon?: string;
     /** Border radius of the select */
     rounded?: SelectRounded;
+    /** Name attribute for form submission and React Hook Form */
+    name?: string;
 }
-declare const Select: React.ForwardRefExoticComponent<SelectProps & React.RefAttributes<HTMLDivElement>>;
+declare const Select: React.ForwardRefExoticComponent<SelectProps & React.RefAttributes<HTMLInputElement>>;
 export { Select };

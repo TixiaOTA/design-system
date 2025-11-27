@@ -1,5 +1,5 @@
 import React from 'react';
-export interface RadioProps {
+export interface RadioProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'size'> {
     label?: string | React.ReactNode;
     checked?: boolean;
     disabled?: boolean;
@@ -10,4 +10,4 @@ export interface RadioProps {
     color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error';
     variantSize?: 'sm' | 'md' | 'lg';
 }
-export declare const Radio: React.FC<RadioProps>;
+export declare const Radio: React.ForwardRefExoticComponent<RadioProps & React.RefAttributes<HTMLInputElement>>;

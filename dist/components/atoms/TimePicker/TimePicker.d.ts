@@ -46,4 +46,4 @@ export interface TimePickerProps extends Omit<PrimitiveTimePickerProps, 'onChang
     /** Whether to close the dropdown after selection */
     closeOnSelect?: boolean;
 }
-export declare const TimePicker: React.FC<TimePickerProps>;
+export declare const TimePicker: React.ForwardRefExoticComponent<TimePickerProps & React.RefAttributes<HTMLInputElement>>;
