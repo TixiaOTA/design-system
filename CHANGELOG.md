@@ -1,4 +1,8 @@
 
+## [v1.2.6] - 2025-11-27
+- fix: update react hook form compatibility
+
+
 ## [v1.2.5] - 2025-10-30
 - fix: add loader hotel
 
