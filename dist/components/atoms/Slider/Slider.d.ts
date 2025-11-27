@@ -16,4 +16,4 @@ export interface SliderProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 
     range?: boolean;
     name?: string;
 }
-export declare const Slider: React.ForwardRefExoticComponent<SliderProps & React.RefAttributes<HTMLInputElement>>;
+export declare const Slider: React.ForwardRefExoticComponent<SliderProps & React.RefAttributes<HTMLInputElement | HTMLDivElement>>;

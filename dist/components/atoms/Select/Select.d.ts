@@ -55,5 +55,5 @@ export interface SelectProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 
     /** Name attribute for form submission and React Hook Form */
     name?: string;
 }
-declare const Select: React.ForwardRefExoticComponent<SelectProps & React.RefAttributes<HTMLInputElement>>;
+declare const Select: React.ForwardRefExoticComponent<SelectProps & React.RefAttributes<HTMLInputElement | HTMLDivElement>>;
 export { Select };

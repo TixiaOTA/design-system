@@ -108,7 +108,7 @@ const roundedStyles: Record<FileUploadRounded, string> = {
   full: 'rounded-full',
 };
 
-export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(({
+export const FileUpload = forwardRef<HTMLDivElement | HTMLInputElement, FileUploadProps>(({
   accept = ['*'],
   maxSize = 5 * 1024 * 1024, // 5MB default
   multiple = false,
@@ -130,9 +130,13 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(({
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
-  // Expose the file input ref for React Hook Form
-  useImperativeHandle(ref, () => fileInputRef.current as HTMLInputElement);
+  // Expose both wrapper div (for backward compatibility) and file input (for React Hook Form)
+  useImperativeHandle(ref, () => {
+    // Prefer file input element for React Hook Form compatibility
+    return (fileInputRef.current || wrapperRef.current) as HTMLDivElement | HTMLInputElement;
+  }, []);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -245,7 +249,7 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(({
   const styles = variantStyles[variant];
 
   return (
-    <div className={clsx('w-full', className)}>
+    <div ref={wrapperRef} className={clsx('w-full', className)}>
       <div
         className={clsx(
           'p-6 text-center transition-colors',

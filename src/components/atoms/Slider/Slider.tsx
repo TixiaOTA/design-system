@@ -17,7 +17,7 @@ export interface SliderProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 
   name?: string;
 }
 
-export const Slider = forwardRef<HTMLInputElement, SliderProps>(({
+export const Slider = forwardRef<HTMLDivElement | HTMLInputElement, SliderProps>(({
   min = 0,
   max = 100,
   step = 1,
@@ -46,9 +46,13 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(({
   const [isDragging, setIsDragging] = useState<null | 0 | 1>(null); // null: not dragging, 0: first thumb, 1: second thumb
   const sliderRef = useRef<HTMLDivElement>(null);
   const hiddenInputRef = useRef<HTMLInputElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
-  // Expose the hidden input ref for React Hook Form
-  React.useImperativeHandle(ref, () => hiddenInputRef.current as HTMLInputElement);
+  // Expose both wrapper div (for backward compatibility) and hidden input (for React Hook Form)
+  React.useImperativeHandle(ref, () => {
+    // Prefer input element for React Hook Form compatibility
+    return (hiddenInputRef.current || wrapperRef.current) as HTMLDivElement | HTMLInputElement;
+  }, []);
 
   // Get current value(s)
   const currentValue = controlledValue !== undefined ? controlledValue : value;
@@ -168,7 +172,7 @@ export const Slider = forwardRef<HTMLInputElement, SliderProps>(({
   const endPercent = getPercentage(end);
 
   return (
-    <div className={clsx('relative w-full', className)} {...props}>
+    <div ref={wrapperRef} className={clsx('relative w-full', className)} {...props}>
       {/* Hidden input for React Hook Form */}
       <input
         type="hidden"

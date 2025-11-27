@@ -104,7 +104,7 @@ export interface SelectProps
   name?: string;
 }
 
-const Select = forwardRef<HTMLInputElement, SelectProps>(
+const Select = forwardRef<HTMLDivElement | HTMLInputElement, SelectProps>(
   (
     {
       className,
@@ -135,11 +135,18 @@ const Select = forwardRef<HTMLInputElement, SelectProps>(
     const buttonRef = useRef<HTMLButtonElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const hiddenInputRef = useRef<HTMLInputElement>(null);
+    const wrapperRef = useRef<HTMLDivElement>(null);
     const reactId = React.useId();
     const id = `select-${reactId.replace(/:/g, '')}`;
 
-    // Expose the hidden input ref for React Hook Form
-    useImperativeHandle(ref, () => hiddenInputRef.current as HTMLInputElement);
+    // Expose both wrapper div (for backward compatibility) and hidden input (for React Hook Form)
+    useImperativeHandle(ref, () => {
+      // If ref is a function, we need to handle it differently
+      // For React Hook Form, prefer the input element
+      // For backward compatibility, prefer the wrapper div
+      // We'll default to input element for form compatibility
+      return (hiddenInputRef.current || wrapperRef.current) as HTMLDivElement | HTMLInputElement;
+    }, []);
 
     const updateDropdownPosition = () => {
       if (isOpen && buttonRef.current && dropdownRef.current) {
@@ -380,7 +387,11 @@ const Select = forwardRef<HTMLInputElement, SelectProps>(
     };
 
     return (
-      <div className={cn(fullWidth ? "w-full" : "inline-block")} {...props}>
+      <div 
+        ref={wrapperRef}
+        className={cn(fullWidth ? "w-full" : "inline-block")} 
+        {...props}
+      >
         {/* Hidden input for React Hook Form */}
         <input
           type="hidden"

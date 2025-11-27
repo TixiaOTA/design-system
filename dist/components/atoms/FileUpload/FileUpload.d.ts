@@ -21,4 +21,4 @@ export interface FileUploadProps {
     icon?: string;
     name?: string;
 }
-export declare const FileUpload: React.ForwardRefExoticComponent<FileUploadProps & React.RefAttributes<HTMLInputElement>>;
+export declare const FileUpload: React.ForwardRefExoticComponent<FileUploadProps & React.RefAttributes<HTMLInputElement | HTMLDivElement>>;

@@ -67,7 +67,7 @@ export interface ToggleProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonE
   name?: string;
 }
 
-const Toggle = forwardRef<HTMLInputElement, ToggleProps>(
+const Toggle = forwardRef<HTMLDivElement | HTMLInputElement, ToggleProps>(
   ({
     checked = false,
     onCheckedChange,
@@ -87,9 +87,13 @@ const Toggle = forwardRef<HTMLInputElement, ToggleProps>(
     const errorId = `${id}-error`;
     const hiddenInputRef = useRef<HTMLInputElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
+    const wrapperRef = useRef<HTMLDivElement>(null);
 
-    // Expose the hidden input ref for React Hook Form
-    useImperativeHandle(ref, () => hiddenInputRef.current as HTMLInputElement);
+    // Expose both wrapper div (for backward compatibility) and hidden input (for React Hook Form)
+    useImperativeHandle(ref, () => {
+      // Prefer input element for React Hook Form compatibility
+      return (hiddenInputRef.current || wrapperRef.current) as HTMLDivElement | HTMLInputElement;
+    }, []);
 
     // Sync hidden input when checked changes
     useEffect(() => {
@@ -114,7 +118,7 @@ const Toggle = forwardRef<HTMLInputElement, ToggleProps>(
     };
 
     return (
-      <div className="inline-flex flex-col gap-1.5">
+      <div ref={wrapperRef} className="inline-flex flex-col gap-1.5">
         {/* Hidden input for React Hook Form */}
         <input
           type="checkbox"

@@ -27,5 +27,5 @@ export interface ToggleProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonE
     /** Name attribute for form submission and React Hook Form */
     name?: string;
 }
-declare const Toggle: React.ForwardRefExoticComponent<ToggleProps & React.RefAttributes<HTMLInputElement>>;
+declare const Toggle: React.ForwardRefExoticComponent<ToggleProps & React.RefAttributes<HTMLInputElement | HTMLDivElement>>;
 export { Toggle, toggleVariants };

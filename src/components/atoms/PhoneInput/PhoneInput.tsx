@@ -147,7 +147,7 @@ export interface PhoneInputProps {
   name?: string;
 }
 
-export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
+export const PhoneInput = forwardRef<HTMLDivElement | HTMLInputElement, PhoneInputProps>(
   (
     {
       className,
@@ -233,8 +233,11 @@ export const PhoneInput = forwardRef<HTMLInputElement, PhoneInputProps>(
     const helperId = `${id}-helper`;
     const errorId = `${id}-error`;
 
-    // Expose the hidden input ref for React Hook Form
-    useImperativeHandle(ref, () => hiddenInputRef.current as HTMLInputElement);
+    // Expose both wrapper div (for backward compatibility) and hidden input (for React Hook Form)
+    useImperativeHandle(ref, () => {
+      // Prefer input element for React Hook Form compatibility
+      return (hiddenInputRef.current || wrapperRef.current) as HTMLDivElement | HTMLInputElement;
+    }, []);
 
     const filteredCountries = COUNTRIES.filter(
       (country) =>

@@ -42,4 +42,4 @@ export interface PhoneInputProps {
     /** Name attribute for form submission and React Hook Form */
     name?: string;
 }
-export declare const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps & React.RefAttributes<HTMLInputElement>>;
+export declare const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps & React.RefAttributes<HTMLInputElement | HTMLDivElement>>;
