@@ -1,4 +1,4 @@
-import type { Preview } from '@storybook/react'
+import type { Preview } from '@storybook/react-vite'
 
 // error if used, storybook works if this is commented but tailwind styling is not applied
 import '../src/styles/globals.css' 

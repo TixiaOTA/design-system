@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { AutoComplete } from './AutoComplete';
 import { Icon } from '../../atoms/Icons/Icons';
 

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { NegativeCase, NegativeCaseVariant } from "./NegativeCase";
 import { Text } from "../../atoms/Text";
 

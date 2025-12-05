@@ -1,6 +1,6 @@
 import { BadgeNotif } from "./BadgeNotif";
 import { Card } from '../../atoms/Card/Card';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Button } from "../../../components/atoms/Button/Button";
 
 const meta: Meta<typeof BadgeNotif> = {

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Loader, LoaderVariant } from "./Loader";
 import { Text } from "../../atoms/Text";
 

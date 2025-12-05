@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { HorizontalCarousel } from './HorizontalCarousel';
 import { Card } from '../../atoms/Card/Card';
 import { Icon } from '../../atoms/Icons/Icons';

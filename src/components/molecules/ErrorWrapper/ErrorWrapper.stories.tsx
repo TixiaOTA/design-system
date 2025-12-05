@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ErrorWrapper } from "./ErrorWrapper";
 import { Text } from "../../atoms/Text";
 

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Table } from "./Table";
 import type { TableVariant, TableColumn } from "./Table";
 import { Button } from "../../atoms/Button";
