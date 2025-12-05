@@ -1,4 +1,8 @@
 
+## [v2.0.0] - 2025-12-05
+- feat: update storybook to v10
+
+
 ## [v1.3.0] - 2025-11-27
 - fix: html input and div compatibility
 
