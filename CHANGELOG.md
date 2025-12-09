@@ -1,4 +1,8 @@
 
+## [v2.0.2] - 2025-12-09
+- feat: add img approve and rejected
+
+
 ## [v2.0.1] - 2025-12-09
 - fix: stepper and add value input phone input
 
