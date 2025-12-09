@@ -29,6 +29,8 @@ const variants: NegativeCaseVariant[] = [
   "no-seat-available",
   "change-price",
   "help-desk",
+  "approved",
+  "rejected",
 ];
 
 export const AllVariants: Story = {

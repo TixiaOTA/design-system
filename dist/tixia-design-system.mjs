@@ -19589,6 +19589,14 @@ const Gs = {
   HELP_DESK: {
     image: "https://design-system-eaip.onrender.com/img/help-desk.svg",
     message: "Please contact our help desk for assistance."
+  },
+  APPROVED: {
+    image: "https://design-system-eaip.onrender.com/img/approved.svg",
+    message: "Your request has been approved."
+  },
+  REJECTED: {
+    image: "https://design-system-eaip.onrender.com/img/rejected.svg",
+    message: "Your request has been rejected."
   }
 }, Om = {
   "no-internet": "NO_INTERNET",
@@ -19604,7 +19612,9 @@ const Gs = {
   "page-not-found-v2": "PAGE_NOT_FOUND_V2",
   "no-seat-available": "NO_SEAT_AVAILABLE",
   "change-price": "CHANGE_PRICE",
-  "help-desk": "HELP_DESK"
+  "help-desk": "HELP_DESK",
+  approved: "APPROVED",
+  rejected: "REJECTED"
 }, o2 = ({
   variant: e,
   customMessage: t,

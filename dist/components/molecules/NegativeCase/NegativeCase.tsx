@@ -16,7 +16,9 @@ export type NegativeCaseVariant =
   | 'page-not-found-v2'
   | 'no-seat-available'
   | 'change-price'
-  | 'help-desk';
+  | 'help-desk'
+  | 'approved'
+  | 'rejected';
 
 interface NegativeCaseProps {
   variant: NegativeCaseVariant;
@@ -86,6 +88,14 @@ const appErrorConfig: Record<string, { image: string; message: string }> = {
     image: 'https://design-system-eaip.onrender.com/img/help-desk.svg',
     message: 'Please contact our help desk for assistance.',
   },
+  'APPROVED': {
+    image: 'https://design-system-eaip.onrender.com/img/approved.svg',
+    message: 'Your request has been approved.',
+  },
+  'REJECTED': {
+    image: 'https://design-system-eaip.onrender.com/img/rejected.svg',
+    message: 'Your request has been rejected.',
+  },
 };
 
 const variantToErrorCode: Record<NegativeCaseVariant, string> = {
@@ -103,6 +113,8 @@ const variantToErrorCode: Record<NegativeCaseVariant, string> = {
   'no-seat-available': 'NO_SEAT_AVAILABLE',
   'change-price': 'CHANGE_PRICE',
   'help-desk': 'HELP_DESK',
+  'approved': 'APPROVED',
+  'rejected': 'REJECTED',
 };
 
 export const NegativeCase = ({
