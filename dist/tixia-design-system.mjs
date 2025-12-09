@@ -19626,28 +19626,25 @@ const Gs = {
   className: i = ""
 }) => {
   const d = Om[e], u = jm[d];
-  return /* @__PURE__ */ l.jsxs("div", { className: `flex flex-col items-center justify-center p-8 text-center gap-4 ${i}`, children: [
-    /* @__PURE__ */ l.jsx(
-      "img",
-      {
-        src: o || u.image,
-        alt: "Negative case illustration",
-        className: "max-w-[300px] h-auto",
-        style: { width: a, height: s }
-      }
-    ),
-    t ? typeof t == "string" ? /* @__PURE__ */ l.jsx(Rr, { variant: "body1", className: "m-0", children: t }) : /* @__PURE__ */ l.jsx("div", { className: "m-0", children: t }) : /* @__PURE__ */ l.jsx(Rr, { variant: "body1", className: "m-0", children: u.message }),
-    r && /* @__PURE__ */ l.jsx(
-      qe,
-      {
-        onClick: r,
-        rounded: "full",
-        variant: "primary",
-        size: "md",
-        children: n
-      }
-    )
-  ] });
+  return /* @__PURE__ */ l.jsxs(
+    "div",
+    {
+      className: `flex flex-col items-center justify-center p-8 text-center gap-4 ${i}`,
+      children: [
+        /* @__PURE__ */ l.jsx(
+          "img",
+          {
+            src: o || u.image,
+            alt: "Negative case illustration",
+            className: "max-w-[300px] h-auto",
+            style: { width: a, height: s }
+          }
+        ),
+        t ? typeof t == "string" ? /* @__PURE__ */ l.jsx(Rr, { variant: "body1", className: "m-0", children: t }) : /* @__PURE__ */ l.jsx("div", { className: "m-0", children: t }) : /* @__PURE__ */ l.jsx(Rr, { variant: "body1", className: "m-0", children: u.message }),
+        r && /* @__PURE__ */ l.jsx(qe, { onClick: r, rounded: "full", variant: "primary", size: "md", children: n })
+      ]
+    }
+  );
 }, Im = ({
   children: e,
   delay: t = 0,
