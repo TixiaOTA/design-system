@@ -1,4 +1,8 @@
 
+## [v2.0.1] - 2025-12-09
+- fix: stepper and add value input phone input
+
+
 ## [v2.0.0] - 2025-12-05
 - feat: update storybook to v10
 
