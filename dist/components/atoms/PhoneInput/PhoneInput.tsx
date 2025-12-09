@@ -108,6 +108,7 @@ const shouldConvertToIndonesian = (inputValue: string) => {
 export interface CountryValue {
   iso: string;
   code: string;
+  value?: string;
 }
 
 export interface PhoneInputProps {
@@ -200,18 +201,28 @@ export const PhoneInput = forwardRef<HTMLDivElement | HTMLInputElement, PhoneInp
         if (autoDetect) {
           const detectedCountry = detectCountryFromPhone(value);
           if (detectedCountry) {
+            const dialCode = detectedCountry.code;
+            const inputValue = value.startsWith(dialCode) 
+              ? value.slice(dialCode.length) 
+              : value;
             const countryValue: CountryValue = {
               iso: detectedCountry.iso,
               code: detectedCountry.code.replace("+", ""),
+              value: inputValue,
             };
             onChange(value, countryValue);
           } else {
             onChange(value);
           }
         } else {
+          const dialCode = selectedCountry.code;
+          const inputValue = value.startsWith(dialCode) 
+            ? value.slice(dialCode.length) 
+            : value;
           const countryValue: CountryValue = {
             iso: selectedCountry.iso,
             code: selectedCountry.code.replace("+", ""),
+            value: inputValue,
           };
           onChange(value, countryValue);
         }
@@ -325,9 +336,11 @@ export const PhoneInput = forwardRef<HTMLDivElement | HTMLInputElement, PhoneInp
         setPhoneNumber(newValue);
         // Send clean numeric value without + for API compatibility
         const cleanValue = newValue.replace(/[^\d]/g, "");
+        const inputValue = phoneNumber.replace(/^\+?\d*/, "");
         const countryValue: CountryValue = {
           iso: country.iso,
           code: country.code.replace("+", ""),
+          value: inputValue,
         };
         onChange?.(cleanValue, countryValue);
       } else {
@@ -338,6 +351,7 @@ export const PhoneInput = forwardRef<HTMLDivElement | HTMLInputElement, PhoneInp
         const countryValue: CountryValue = {
           iso: country.iso,
           code: country.code.replace("+", ""),
+          value: phoneNumber,
         };
         onChange?.(cleanValue, countryValue);
       }
@@ -361,9 +375,14 @@ export const PhoneInput = forwardRef<HTMLDivElement | HTMLInputElement, PhoneInp
           setPhoneNumber(inputValue);
           // Send clean numeric value without + for API compatibility
           const cleanValue = inputValue.replace(/[^\d]/g, "");
+          const dialCode = detectedCountry.code;
+          const inputWithoutCode = inputValue.startsWith(dialCode) 
+            ? inputValue.slice(dialCode.length) 
+            : inputValue;
           const countryValue: CountryValue = {
             iso: detectedCountry.iso,
             code: detectedCountry.code.replace("+", ""),
+            value: inputWithoutCode,
           };
           onChange?.(cleanValue, countryValue);
         } else {
@@ -391,9 +410,11 @@ export const PhoneInput = forwardRef<HTMLDivElement | HTMLInputElement, PhoneInp
           setCountryDetected(true);
           // Send clean numeric value without + for API compatibility
           const cleanValue = indonesianConverted.replace(/[^\d]/g, "");
+          const inputWithoutCode = inputValue.slice(1); // Remove leading 0
           const countryValue: CountryValue = {
             iso: "id",
             code: "62",
+            value: inputWithoutCode,
           };
           onChange?.(cleanValue, countryValue);
         } else if (shouldConvertToIndonesian(inputValue)) {
@@ -406,9 +427,11 @@ export const PhoneInput = forwardRef<HTMLDivElement | HTMLInputElement, PhoneInp
           setCountryDetected(true);
           // Send clean numeric value without + for API compatibility
           const cleanValue = convertedValue.replace(/[^\d]/g, "");
+          const inputWithoutCode = inputValue.slice(1); // Remove leading 0
           const countryValue: CountryValue = {
             iso: "id",
             code: "62",
+            value: inputWithoutCode,
           };
           onChange?.(cleanValue, countryValue);
         } else if (inputValue.startsWith("0")) {
@@ -434,6 +457,7 @@ export const PhoneInput = forwardRef<HTMLDivElement | HTMLInputElement, PhoneInp
         const countryValue: CountryValue = {
           iso: selectedCountry.iso,
           code: selectedCountry.code.replace("+", ""),
+          value: newPhoneNumber,
         };
         onChange?.(cleanValue, countryValue);
       }

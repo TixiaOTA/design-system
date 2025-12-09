@@ -8,7 +8,7 @@ export type StepperVariant = 'default' | 'simple';
 
 export interface StepProps {
   label: string;
-  description?: string;
+  description?: React.ReactNode | string;
   icon?: string;
   status?: StepStatus;
 }

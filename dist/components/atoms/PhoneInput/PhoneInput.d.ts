@@ -5,6 +5,7 @@ export type PhoneInputRounded = "none" | "sm" | "md" | "lg" | "xl" | "2xl" | "3x
 export interface CountryValue {
     iso: string;
     code: string;
+    value?: string;
 }
 export interface PhoneInputProps {
     /** Visual style variant */

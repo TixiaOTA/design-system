@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "storybook/test";
 import { useState } from "react";
-import { PhoneInput } from "./PhoneInput";
+import { PhoneInput, type CountryValue } from "./PhoneInput";
 import { PhoneInputDemo } from "./PhoneInputDemo";
 
 const meta: Meta<typeof PhoneInput> = {
@@ -643,10 +643,9 @@ export const FetchedDataHandling: Story = {
 export const CountryValueDemo: Story = {
   render: () => {
     const [phoneValue, setPhoneValue] = useState("");
-    const [countryValue, setCountryValue] = useState<{
-      iso: string;
-      code: string;
-    } | null>(null);
+    const [countryValue, setCountryValue] = useState<CountryValue | null>(null);
+
+    console.log(countryValue);
 
     return (
       <div className="space-y-6">
@@ -654,8 +653,9 @@ export const CountryValueDemo: Story = {
           <h3 className="text-lg font-semibold mb-2">Country Value Demo</h3>
           <p className="text-sm text-gray-700 mb-2">
             This demonstrates the new countryValue parameter in the onChange
-            callback. You can now retrieve both the full phone number and
-            comprehensive country information.
+            callback. You can now retrieve the full phone number, country
+            information (ISO and code), and the input value without the country
+            code.
           </p>
         </div>
 
@@ -707,12 +707,14 @@ const handlePhoneChange = (phone, countryInfo) => {
   console.log('Full phone:', phone);           // "6281234567890"
   console.log('Country ISO:', countryInfo?.iso); // "id"
   console.log('Country code:', countryInfo?.code); // "62"
+  console.log('Input value (without country code):', countryInfo?.value); // "81234567890"
   
   // Send to API
   api.updateUser({
     phoneNumber: phone,
     countryIso: countryInfo?.iso,
-    countryCode: countryInfo?.code
+    countryCode: countryInfo?.code,
+    localNumber: countryInfo?.value // Input without country code
   });
 };`}
               </pre>
@@ -725,11 +727,13 @@ const handlePhoneChange = (phone, countryInfo) => {
           <ul className="text-sm text-gray-700 space-y-1">
             <li>
               • <strong>API Integration:</strong> Send phone number, country
-              ISO, and country code as separate fields
+              ISO, country code, and local number (without country code) as
+              separate fields
             </li>
             <li>
               • <strong>Validation:</strong> Validate country ISO and code
-              separately from phone number
+              separately from phone number, and validate local number format
+              using the value property
             </li>
             <li>
               • <strong>Display:</strong> Show country flag/name based on ISO
