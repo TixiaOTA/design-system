@@ -1,4 +1,8 @@
 
+## [v2.0.4] - 2025-12-12
+- feat: enhance progress bar with icons
+
+
 ## [v2.0.3] - 2025-12-09
 - feat: add img approve and rejected again
 
