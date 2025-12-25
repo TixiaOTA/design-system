@@ -343,7 +343,7 @@ export const PrimitiveDatePicker = forwardRef<
     }, [isOpen]);
 
     const handleDateSelect = (date: Date) => {
-      const isRangeMode = rangeStart !== undefined && rangeEnd !== undefined;
+      const isRangeMode = rangeStart !== undefined || rangeEnd !== undefined;
 
       if (isRangeMode) {
         if (rangeStart && rangeEnd) {
@@ -351,7 +351,7 @@ export const PrimitiveDatePicker = forwardRef<
           setSelectedDate(date);
           setInputValue(formatDateToString(date, format));
           onChange?.(date);
-          // Don't close dropdown to allow selecting end date
+          // Don't close dropdown to allow selecting end date for new range
         } else if (rangeStart) {
           // If start date is selected, set end date
           const newEndDate = date;
@@ -365,7 +365,8 @@ export const PrimitiveDatePicker = forwardRef<
             setInputValue(formatDateToString(newEndDate, format));
             onChange?.(newEndDate);
           }
-          // Always close dropdown after end date is selected
+          // Close dropdown after end date is selected (when rangeStart is set but rangeEnd is not, we're selecting the end date)
+          // We close here because we know the end date is being set, even though closeOnSelect might not be updated yet
           setIsOpen(false);
           setShowYearDropdown(false);
         } else {
@@ -373,16 +374,18 @@ export const PrimitiveDatePicker = forwardRef<
           setSelectedDate(date);
           setInputValue(formatDateToString(date, format));
           onChange?.(date);
-          // Don't close dropdown for start date selection
+          // Don't close dropdown for start date selection in range mode
         }
       } else {
         // Single date mode
         setSelectedDate(date);
         setInputValue(formatDateToString(date, format));
         onChange?.(date);
-        // Always close dropdown after date selection in single mode
-        setIsOpen(false);
-        setShowYearDropdown(false);
+        // Close dropdown after date selection in single mode if closeOnSelect is true
+        if (closeOnSelect) {
+          setIsOpen(false);
+          setShowYearDropdown(false);
+        }
       }
     };
 

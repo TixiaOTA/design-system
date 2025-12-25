@@ -4265,7 +4265,7 @@ const Ec = He(
       };
     }, [v]);
     const fe = (te) => {
-      if (O !== void 0 && I !== void 0)
+      if (O !== void 0 || I !== void 0)
         if (O && I)
           b(te), F(B(te, L)), t == null || t(te);
         else if (O) {
@@ -4274,7 +4274,7 @@ const Ec = He(
         } else
           b(te), F(B(te, L)), t == null || t(te);
       else
-        b(te), F(B(te, L)), t == null || t(te), T(!1), A(!1);
+        b(te), F(B(te, L)), t == null || t(te), H && (T(!1), A(!1));
     }, $e = () => {
       j(Se(S).subtract(1, "month").toDate());
     }, Ie = () => {
