@@ -1,4 +1,9 @@
 
+## [v2.0.5] - 2025-12-25
+- fix: update package lock
+- fix: datepicker mode range auto closing
+
+
 ## [v2.0.4] - 2025-12-12
 - feat: enhance progress bar with icons
 
