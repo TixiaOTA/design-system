@@ -1,4 +1,8 @@
 
+## [v2.0.6] - 2025-12-26
+- feat: add variant table default
+
+
 ## [v2.0.5] - 2025-12-25
 - fix: update package lock
 - fix: datepicker mode range auto closing
