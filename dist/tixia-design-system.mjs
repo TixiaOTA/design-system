@@ -18746,7 +18746,7 @@ const ld = (e) => {
   onSortChange: p,
   onRowClick: h,
   showPagination: E = !1,
-  variant: $ = "primary",
+  variant: $ = "default",
   meta: x = {
     current_page: 1,
     total_page: 1,

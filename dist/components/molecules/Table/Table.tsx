@@ -325,7 +325,7 @@ export const Table = <T extends Record<string, any>>({
   onSortChange,
   onRowClick,
   showPagination = false,
-  variant = "primary",
+  variant = "default",
   meta = {
     current_page: 1,
     total_page: 1,
