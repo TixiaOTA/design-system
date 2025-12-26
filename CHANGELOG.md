@@ -1,4 +1,8 @@
 
+## [v2.0.8] - 2025-12-26
+- fix: revert variant default to primary
+
+
 ## [v2.0.7] - 2025-12-26
 - fix: make default as default variant table
 
