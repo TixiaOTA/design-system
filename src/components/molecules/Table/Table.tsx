@@ -22,7 +22,8 @@ export type TableVariant =
   | "warning"
   | "danger"
   | "ghost"
-  | "success";
+  | "success"
+  | "default";
 
 type ColumnAlignment = "left" | "center" | "right";
 
@@ -70,6 +71,7 @@ const getVariantStyles = (variant: TableVariant) => {
   const styles = {
     header: {
       primary: "bg-primary text-white",
+      default: "bg-primary text-white",
       secondary: "bg-secondary text-white",
       warning: "bg-warning text-white",
       danger: "bg-danger text-white",
@@ -78,6 +80,7 @@ const getVariantStyles = (variant: TableVariant) => {
     },
     row: {
       primary: "hover:bg-primary-50",
+      default: "hover:bg-primary-50",
       secondary: "hover:bg-secondary-50",
       warning: "hover:bg-warning-50",
       danger: "hover:bg-danger-50",
@@ -86,6 +89,7 @@ const getVariantStyles = (variant: TableVariant) => {
     },
     border: {
       primary: "border-primary",
+      default: "border-primary",
       secondary: "border-secondary",
       warning: "border-warning",
       danger: "border-danger",
@@ -94,6 +98,7 @@ const getVariantStyles = (variant: TableVariant) => {
     },
     stripe: {
       primary: "bg-primary-50",
+      default: "bg-none",
       secondary: "bg-secondary-50",
       warning: "bg-warning-50",
       danger: "bg-danger-50",
@@ -102,6 +107,7 @@ const getVariantStyles = (variant: TableVariant) => {
     },
     hoverStripe: {
       primary: "group-hover:bg-primary-50",
+      default: "group-hover:bg-primary-50",
       secondary: "group-hover:bg-secondary-50",
       warning: "group-hover:bg-warning-50",
       danger: "group-hover:bg-danger-50",
@@ -121,7 +127,7 @@ const getVariantStyles = (variant: TableVariant) => {
 
 const TableLoading = <T,>({
   schema,
-  variant = "primary",
+  variant = "default",
   showIndexSticky = false,
   isMobile = false,
 }: {
@@ -158,15 +164,24 @@ const TableLoading = <T,>({
               {displayColumns.map((column, index) => {
                 // Calculate left position for sticky columns
                 const calculateStickyLeft = () => {
-                  if (isMobile || !column.sticky || column.stickyPosition !== "left") return 0;
-                  
+                  if (
+                    isMobile ||
+                    !column.sticky ||
+                    column.stickyPosition !== "left"
+                  )
+                    return 0;
+
                   let leftPosition = 0;
                   for (let i = 0; i < index; i++) {
                     const prevColumn = displayColumns[i];
-                    if (prevColumn.sticky && prevColumn.stickyPosition === "left") {
-                      const width = typeof prevColumn.width === "number" 
-                        ? prevColumn.width 
-                        : parseInt(prevColumn.width?.toString() || "0") || 0;
+                    if (
+                      prevColumn.sticky &&
+                      prevColumn.stickyPosition === "left"
+                    ) {
+                      const width =
+                        typeof prevColumn.width === "number"
+                          ? prevColumn.width
+                          : parseInt(prevColumn.width?.toString() || "0") || 0;
                       leftPosition += width;
                     }
                   }
@@ -183,8 +198,14 @@ const TableLoading = <T,>({
                         "rounded-tl-md": index === 0,
                         "rounded-tr-md": index === displayColumns.length - 1,
                         "sticky z-10": !isMobile && column.sticky,
-                        "left-0": !isMobile && column.sticky && column.stickyPosition === "left",
-                        "right-0": !isMobile && column.sticky && column.stickyPosition === "right",
+                        "left-0":
+                          !isMobile &&
+                          column.sticky &&
+                          column.stickyPosition === "left",
+                        "right-0":
+                          !isMobile &&
+                          column.sticky &&
+                          column.stickyPosition === "right",
                       }
                     )}
                     style={{
@@ -196,9 +217,12 @@ const TableLoading = <T,>({
                         typeof column.width === "number"
                           ? `${column.width}px`
                           : column.width,
-                      left: !isMobile && column.sticky && column.stickyPosition === "left" 
-                        ? `${calculateStickyLeft()}px` 
-                        : undefined,
+                      left:
+                        !isMobile &&
+                        column.sticky &&
+                        column.stickyPosition === "left"
+                          ? `${calculateStickyLeft()}px`
+                          : undefined,
                     }}
                   >
                     {column.label}
@@ -219,15 +243,21 @@ const TableLoading = <T,>({
                 {displayColumns.map((column, colIndex) => {
                   // Calculate left position for sticky columns
                   const calculateStickyLeft = () => {
-                    if (!column.sticky || column.stickyPosition !== "left") return 0;
-                    
+                    if (!column.sticky || column.stickyPosition !== "left")
+                      return 0;
+
                     let leftPosition = 0;
                     for (let i = 0; i < colIndex; i++) {
                       const prevColumn = displayColumns[i];
-                      if (prevColumn.sticky && prevColumn.stickyPosition === "left") {
-                        const width = typeof prevColumn.width === "number" 
-                          ? prevColumn.width 
-                          : parseInt(prevColumn.width?.toString() || "0") || 0;
+                      if (
+                        prevColumn.sticky &&
+                        prevColumn.stickyPosition === "left"
+                      ) {
+                        const width =
+                          typeof prevColumn.width === "number"
+                            ? prevColumn.width
+                            : parseInt(prevColumn.width?.toString() || "0") ||
+                              0;
                         leftPosition += width;
                       }
                     }
@@ -237,18 +267,19 @@ const TableLoading = <T,>({
                   return (
                     <td
                       key={`${rowIndex}-${colIndex}`}
-                      className={cn(
-                        "text-left text-nowrap text-sm p-4",
-                        {
-                          "sticky z-5": column.sticky,
-                          "left-0": column.sticky && column.stickyPosition === "left",
-                          "right-0": column.sticky && column.stickyPosition === "right",
-                          // Ensure sticky columns have solid background that matches row
-                          "bg-white": column.sticky && rowIndex % 2 === 0,
-                          [variantStyles.stripe]: column.sticky && rowIndex % 2 !== 0,
-                          [variantStyles.hoverStripe]: column.sticky,
-                        }
-                      )}
+                      className={cn("text-left text-nowrap text-sm p-4", {
+                        "sticky z-5": column.sticky,
+                        "left-0":
+                          column.sticky && column.stickyPosition === "left",
+                        "right-0":
+                          column.sticky && column.stickyPosition === "right",
+                        // Ensure sticky columns have solid background that matches row
+                        "bg-white": column.sticky && rowIndex % 2 === 0,
+                        [variantStyles.stripe]:
+                          column.sticky && rowIndex % 2 !== 0,
+                        [variantStyles.hoverStripe]: column.sticky,
+                        "border-b border-gray-200": variant === "default",
+                      })}
                       style={{
                         width:
                           typeof column.width === "number"
@@ -258,9 +289,10 @@ const TableLoading = <T,>({
                           typeof column.width === "number"
                             ? `${column.width}px`
                             : column.width,
-                        left: column.sticky && column.stickyPosition === "left" 
-                          ? `${calculateStickyLeft()}px` 
-                          : undefined,
+                        left:
+                          column.sticky && column.stickyPosition === "left"
+                            ? `${calculateStickyLeft()}px`
+                            : undefined,
                       }}
                     >
                       <Skeleton className="h-10 w-full rounded-md" />
@@ -448,11 +480,16 @@ export const Table = <T extends Record<string, any>>({
                       sticky?: boolean;
                       stickyPosition?: "left" | "right";
                     };
-                    
+
                     // Calculate left position for sticky columns
                     const calculateStickyLeft = () => {
-                      if (isMobile || !columnMeta?.sticky || columnMeta.stickyPosition !== "left") return 0;
-                      
+                      if (
+                        isMobile ||
+                        !columnMeta?.sticky ||
+                        columnMeta.stickyPosition !== "left"
+                      )
+                        return 0;
+
                       let leftPosition = 0;
                       for (let i = 0; i < index; i++) {
                         const prevColumn = headerGroup.headers[i];
@@ -461,10 +498,15 @@ export const Table = <T extends Record<string, any>>({
                           stickyPosition?: "left" | "right";
                           width?: number | string;
                         };
-                        if (prevMeta?.sticky && prevMeta.stickyPosition === "left") {
-                          const width = typeof prevMeta.width === "number" 
-                            ? prevMeta.width 
-                            : parseInt(prevMeta.width?.toString() || "0") || 0;
+                        if (
+                          prevMeta?.sticky &&
+                          prevMeta.stickyPosition === "left"
+                        ) {
+                          const width =
+                            typeof prevMeta.width === "number"
+                              ? prevMeta.width
+                              : parseInt(prevMeta.width?.toString() || "0") ||
+                                0;
                           leftPosition += width;
                         }
                       }
@@ -486,8 +528,14 @@ export const Table = <T extends Record<string, any>>({
                             "text-center": columnMeta?.align === "center",
                             "text-right": columnMeta?.align === "right",
                             "sticky z-5": !isMobile && columnMeta?.sticky,
-                            "left-0": !isMobile && columnMeta?.sticky && columnMeta.stickyPosition === "left",
-                            "right-0": !isMobile && columnMeta?.sticky && columnMeta.stickyPosition === "right",
+                            "left-0":
+                              !isMobile &&
+                              columnMeta?.sticky &&
+                              columnMeta.stickyPosition === "left",
+                            "right-0":
+                              !isMobile &&
+                              columnMeta?.sticky &&
+                              columnMeta.stickyPosition === "right",
                           },
                           headerClassName
                         )}
@@ -500,9 +548,12 @@ export const Table = <T extends Record<string, any>>({
                             typeof columnMeta?.width === "number"
                               ? `${columnMeta.width}px`
                               : columnMeta?.width,
-                          left: !isMobile && columnMeta?.sticky && columnMeta.stickyPosition === "left" 
-                            ? `${calculateStickyLeft()}px` 
-                            : undefined,
+                          left:
+                            !isMobile &&
+                            columnMeta?.sticky &&
+                            columnMeta.stickyPosition === "left"
+                              ? `${calculateStickyLeft()}px`
+                              : undefined,
                         }}
                         onClick={
                           header.column.getCanSort()
@@ -586,15 +637,22 @@ export const Table = <T extends Record<string, any>>({
                       sticky?: boolean;
                       stickyPosition?: "left" | "right";
                     };
-                    
+
                     // Calculate left position for sticky columns
                     const calculateStickyLeft = () => {
-                      if (isMobile || !columnMeta?.sticky || columnMeta.stickyPosition !== "left") return 0;
-                      
+                      if (
+                        isMobile ||
+                        !columnMeta?.sticky ||
+                        columnMeta.stickyPosition !== "left"
+                      )
+                        return 0;
+
                       let leftPosition = 0;
                       const allColumns = table.getAllColumns();
-                      const currentColumnIndex = allColumns.findIndex(col => col.id === cell.column.id);
-                      
+                      const currentColumnIndex = allColumns.findIndex(
+                        (col) => col.id === cell.column.id
+                      );
+
                       for (let i = 0; i < currentColumnIndex; i++) {
                         const prevColumn = allColumns[i];
                         const prevMeta = prevColumn.columnDef.meta as {
@@ -602,10 +660,15 @@ export const Table = <T extends Record<string, any>>({
                           stickyPosition?: "left" | "right";
                           width?: number | string;
                         };
-                        if (prevMeta?.sticky && prevMeta.stickyPosition === "left") {
-                          const width = typeof prevMeta.width === "number" 
-                            ? prevMeta.width 
-                            : parseInt(prevMeta.width?.toString() || "0") || 0;
+                        if (
+                          prevMeta?.sticky &&
+                          prevMeta.stickyPosition === "left"
+                        ) {
+                          const width =
+                            typeof prevMeta.width === "number"
+                              ? prevMeta.width
+                              : parseInt(prevMeta.width?.toString() || "0") ||
+                                0;
                           leftPosition += width;
                         }
                       }
@@ -622,12 +685,26 @@ export const Table = <T extends Record<string, any>>({
                             "text-center": columnMeta?.align === "center",
                             "text-right": columnMeta?.align === "right",
                             "sticky z-5": !isMobile && columnMeta?.sticky,
-                            "left-0": !isMobile && columnMeta?.sticky && columnMeta.stickyPosition === "left",
-                            "right-0": !isMobile && columnMeta?.sticky && columnMeta.stickyPosition === "right",
+                            "left-0":
+                              !isMobile &&
+                              columnMeta?.sticky &&
+                              columnMeta.stickyPosition === "left",
+                            "right-0":
+                              !isMobile &&
+                              columnMeta?.sticky &&
+                              columnMeta.stickyPosition === "right",
                             // Ensure sticky columns have solid background that matches row
-                            "bg-white": !isMobile && columnMeta?.sticky && rowIndex % 2 === 0,
-                            [variantStyles.stripe]: !isMobile && columnMeta?.sticky && rowIndex % 2 !== 0,
-                            [variantStyles.hoverStripe]: !isMobile && columnMeta?.sticky,
+                            "bg-white":
+                              !isMobile &&
+                              columnMeta?.sticky &&
+                              rowIndex % 2 === 0,
+                            [variantStyles.stripe]:
+                              !isMobile &&
+                              columnMeta?.sticky &&
+                              rowIndex % 2 !== 0,
+                            [variantStyles.hoverStripe]:
+                              !isMobile && columnMeta?.sticky,
+                            "border-b border-gray-200": variant === "default",
                           },
                           cellClassName
                         )}
@@ -640,9 +717,12 @@ export const Table = <T extends Record<string, any>>({
                             typeof columnMeta?.width === "number"
                               ? `${columnMeta.width}px`
                               : columnMeta?.width,
-                          left: !isMobile && columnMeta?.sticky && columnMeta.stickyPosition === "left" 
-                            ? `${calculateStickyLeft()}px` 
-                            : undefined,
+                          left:
+                            !isMobile &&
+                            columnMeta?.sticky &&
+                            columnMeta.stickyPosition === "left"
+                              ? `${calculateStickyLeft()}px`
+                              : undefined,
                         }}
                       >
                         {flexRender(

@@ -18562,6 +18562,7 @@ const ld = (e) => {
   const t = {
     header: {
       primary: "bg-primary text-white",
+      default: "bg-primary text-white",
       secondary: "bg-secondary text-white",
       warning: "bg-warning text-white",
       danger: "bg-danger text-white",
@@ -18570,6 +18571,7 @@ const ld = (e) => {
     },
     row: {
       primary: "hover:bg-primary-50",
+      default: "hover:bg-primary-50",
       secondary: "hover:bg-secondary-50",
       warning: "hover:bg-warning-50",
       danger: "hover:bg-danger-50",
@@ -18578,6 +18580,7 @@ const ld = (e) => {
     },
     border: {
       primary: "border-primary",
+      default: "border-primary",
       secondary: "border-secondary",
       warning: "border-warning",
       danger: "border-danger",
@@ -18586,6 +18589,7 @@ const ld = (e) => {
     },
     stripe: {
       primary: "bg-primary-50",
+      default: "bg-none",
       secondary: "bg-secondary-50",
       warning: "bg-warning-50",
       danger: "bg-danger-50",
@@ -18594,6 +18598,7 @@ const ld = (e) => {
     },
     hoverStripe: {
       primary: "group-hover:bg-primary-50",
+      default: "group-hover:bg-primary-50",
       secondary: "group-hover:bg-secondary-50",
       warning: "group-hover:bg-warning-50",
       danger: "group-hover:bg-danger-50",
@@ -18610,7 +18615,7 @@ const ld = (e) => {
   };
 }, xm = ({
   schema: e,
-  variant: t = "primary",
+  variant: t = "default",
   showIndexSticky: r = !1,
   isMobile: n = !1
 }) => {
@@ -18637,7 +18642,8 @@ const ld = (e) => {
         children: /* @__PURE__ */ l.jsx("tr", { children: o.map((s, i) => {
           const d = () => {
             var c;
-            if (n || !s.sticky || s.stickyPosition !== "left") return 0;
+            if (n || !s.sticky || s.stickyPosition !== "left")
+              return 0;
             let u = 0;
             for (let f = 0; f < i; f++) {
               const m = o[f];
@@ -18684,7 +18690,8 @@ const ld = (e) => {
         children: o.map((d, u) => {
           const c = () => {
             var m;
-            if (!d.sticky || d.stickyPosition !== "left") return 0;
+            if (!d.sticky || d.stickyPosition !== "left")
+              return 0;
             let f = 0;
             for (let p = 0; p < u; p++) {
               const h = o[p];
@@ -18698,18 +18705,16 @@ const ld = (e) => {
           return /* @__PURE__ */ l.jsx(
             "td",
             {
-              className: V(
-                "text-left text-nowrap text-sm p-4",
-                {
-                  "sticky z-5": d.sticky,
-                  "left-0": d.sticky && d.stickyPosition === "left",
-                  "right-0": d.sticky && d.stickyPosition === "right",
-                  // Ensure sticky columns have solid background that matches row
-                  "bg-white": d.sticky && i % 2 === 0,
-                  [a.stripe]: d.sticky && i % 2 !== 0,
-                  [a.hoverStripe]: d.sticky
-                }
-              ),
+              className: V("text-left text-nowrap text-sm p-4", {
+                "sticky z-5": d.sticky,
+                "left-0": d.sticky && d.stickyPosition === "left",
+                "right-0": d.sticky && d.stickyPosition === "right",
+                // Ensure sticky columns have solid background that matches row
+                "bg-white": d.sticky && i % 2 === 0,
+                [a.stripe]: d.sticky && i % 2 !== 0,
+                [a.hoverStripe]: d.sticky,
+                "border-b border-gray-200": t === "default"
+              }),
               style: {
                 width: typeof d.width == "number" ? `${d.width}px` : d.width,
                 minWidth: typeof d.width == "number" ? `${d.width}px` : d.width,
@@ -18843,7 +18848,8 @@ const ld = (e) => {
                 (g, N) => {
                   const v = g.column.columnDef.meta, T = () => {
                     var b;
-                    if (P || !(v != null && v.sticky) || v.stickyPosition !== "left") return 0;
+                    if (P || !(v != null && v.sticky) || v.stickyPosition !== "left")
+                      return 0;
                     let M = 0;
                     for (let S = 0; S < N; S++) {
                       const R = z.headers[S].column.columnDef.meta;
@@ -18939,9 +18945,12 @@ const ld = (e) => {
               children: z.getVisibleCells().map((N) => {
                 const v = N.column.columnDef.meta, T = () => {
                   var j;
-                  if (P || !(v != null && v.sticky) || v.stickyPosition !== "left") return 0;
+                  if (P || !(v != null && v.sticky) || v.stickyPosition !== "left")
+                    return 0;
                   let M = 0;
-                  const b = H.getAllColumns(), S = b.findIndex((R) => R.id === N.column.id);
+                  const b = H.getAllColumns(), S = b.findIndex(
+                    (R) => R.id === N.column.id
+                  );
                   for (let R = 0; R < S; R++) {
                     const k = b[R].columnDef.meta;
                     if (k != null && k.sticky && k.stickyPosition === "left") {
@@ -18966,7 +18975,8 @@ const ld = (e) => {
                         // Ensure sticky columns have solid background that matches row
                         "bg-white": !P && (v == null ? void 0 : v.sticky) && g % 2 === 0,
                         [D.stripe]: !P && (v == null ? void 0 : v.sticky) && g % 2 !== 0,
-                        [D.hoverStripe]: !P && (v == null ? void 0 : v.sticky)
+                        [D.hoverStripe]: !P && (v == null ? void 0 : v.sticky),
+                        "border-b border-gray-200": $ === "default"
                       },
                       a
                     ),
