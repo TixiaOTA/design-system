@@ -127,7 +127,7 @@ const getVariantStyles = (variant: TableVariant) => {
 
 const TableLoading = <T,>({
   schema,
-  variant = "default",
+  variant = "primary",
   showIndexSticky = false,
   isMobile = false,
 }: {
@@ -325,7 +325,7 @@ export const Table = <T extends Record<string, any>>({
   onSortChange,
   onRowClick,
   showPagination = false,
-  variant = "default",
+  variant = "primary",
   meta = {
     current_page: 1,
     total_page: 1,

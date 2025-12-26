@@ -18615,7 +18615,7 @@ const ld = (e) => {
   };
 }, xm = ({
   schema: e,
-  variant: t = "default",
+  variant: t = "primary",
   showIndexSticky: r = !1,
   isMobile: n = !1
 }) => {
@@ -18746,7 +18746,7 @@ const ld = (e) => {
   onSortChange: p,
   onRowClick: h,
   showPagination: E = !1,
-  variant: $ = "default",
+  variant: $ = "primary",
   meta: x = {
     current_page: 1,
     total_page: 1,
