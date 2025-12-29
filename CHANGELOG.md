@@ -1,4 +1,8 @@
 
+## [v2.0.9] - 2025-12-29
+- update: checkbox label to allow reactnode
+
+
 ## [v2.0.8] - 2025-12-26
 - fix: revert variant default to primary
 
