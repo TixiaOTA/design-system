@@ -56,7 +56,7 @@ export interface CheckBoxGroupProps extends Omit<React.FieldsetHTMLAttributes<HT
   /** Helper text to display below the group */
   helperText?: string;
   /** Label for the checkbox group */
-  label?: string;
+  label?: string | React.ReactNode;
   /** Whether the group is required */
   required?: boolean;
   /** Position of the label relative to the group */
@@ -74,7 +74,7 @@ export interface CheckBoxGroupProps extends Omit<React.FieldsetHTMLAttributes<HT
   /** Whether to show "Select All" option */
   showSelectAll?: boolean;
   /** Custom text for "Select All" option */
-  selectAllText?: string;
+  selectAllText?: string | React.ReactNode;
   /** Whether to show "Select All" as indeterminate when some items are selected */
   indeterminateSelectAll?: boolean;
   /** Custom gap between options (overrides size-based gap) */
