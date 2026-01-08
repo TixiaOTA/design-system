@@ -18615,7 +18615,7 @@ const ld = (e) => {
   };
 }, xm = ({
   schema: e,
-  variant: t = "primary",
+  variant: t = "default",
   showIndexSticky: r = !1,
   isMobile: n = !1
 }) => {
@@ -18663,7 +18663,7 @@ const ld = (e) => {
                 {
                   "rounded-tl-md": i === 0,
                   "rounded-tr-md": i === o.length - 1,
-                  "sticky z-10": !n && s.sticky,
+                  "sticky z-30": !n && s.sticky,
                   "left-0": !n && s.sticky && s.stickyPosition === "left",
                   "right-0": !n && s.sticky && s.stickyPosition === "right"
                 }
@@ -18706,12 +18706,12 @@ const ld = (e) => {
             "td",
             {
               className: V("text-left text-nowrap text-sm p-4", {
-                "sticky z-5": d.sticky,
+                "sticky z-10": d.sticky,
                 "left-0": d.sticky && d.stickyPosition === "left",
                 "right-0": d.sticky && d.stickyPosition === "right",
                 // Ensure sticky columns have solid background that matches row
-                "bg-white": d.sticky && i % 2 === 0,
-                [a.stripe]: d.sticky && i % 2 !== 0,
+                "bg-white": d.sticky && (i % 2 === 0 || t === "default"),
+                [a.stripe]: d.sticky && i % 2 !== 0 && t !== "default",
                 [a.hoverStripe]: d.sticky,
                 "border-b border-gray-200": t === "default"
               }),
@@ -18746,7 +18746,7 @@ const ld = (e) => {
   onSortChange: p,
   onRowClick: h,
   showPagination: E = !1,
-  variant: $ = "primary",
+  variant: $ = "default",
   meta: x = {
     current_page: 1,
     total_page: 1,
@@ -18873,7 +18873,7 @@ const ld = (e) => {
                           "text-left": (v == null ? void 0 : v.align) === "left",
                           "text-center": (v == null ? void 0 : v.align) === "center",
                           "text-right": (v == null ? void 0 : v.align) === "right",
-                          "sticky z-5": !P && (v == null ? void 0 : v.sticky),
+                          "sticky z-30": !P && (v == null ? void 0 : v.sticky),
                           "left-0": !P && (v == null ? void 0 : v.sticky) && v.stickyPosition === "left",
                           "right-0": !P && (v == null ? void 0 : v.sticky) && v.stickyPosition === "right"
                         },
@@ -18885,7 +18885,7 @@ const ld = (e) => {
                         left: !P && (v != null && v.sticky) && v.stickyPosition === "left" ? `${T()}px` : void 0
                       },
                       onClick: g.column.getCanSort() ? g.column.getToggleSortingHandler() : void 0,
-                      children: /* @__PURE__ */ l.jsxs("div", { className: "flex items-center gap-2", children: [
+                      children: /* @__PURE__ */ l.jsxs("div", { className: "flex items-center gap-2 relative z-10", children: [
                         /* @__PURE__ */ l.jsx(
                           "span",
                           {
@@ -18902,7 +18902,7 @@ const ld = (e) => {
                           ge,
                           {
                             icon: g.column.getIsSorted() ? g.column.getIsSorted() === "desc" ? "mdi:keyboard-arrow-up" : "mdi:keyboard-arrow-down" : "mdi:unfold-more-horizontal",
-                            className: V("h-4 w-4", {
+                            className: V("h-4 w-4 flex-shrink-0", {
                               "text-white": $ !== "ghost",
                               "text-gray-700": $ === "ghost"
                             })
@@ -18969,12 +18969,12 @@ const ld = (e) => {
                         "text-left": (v == null ? void 0 : v.align) === "left",
                         "text-center": (v == null ? void 0 : v.align) === "center",
                         "text-right": (v == null ? void 0 : v.align) === "right",
-                        "sticky z-5": !P && (v == null ? void 0 : v.sticky),
+                        "sticky z-10": !P && (v == null ? void 0 : v.sticky),
                         "left-0": !P && (v == null ? void 0 : v.sticky) && v.stickyPosition === "left",
                         "right-0": !P && (v == null ? void 0 : v.sticky) && v.stickyPosition === "right",
                         // Ensure sticky columns have solid background that matches row
-                        "bg-white": !P && (v == null ? void 0 : v.sticky) && g % 2 === 0,
-                        [D.stripe]: !P && (v == null ? void 0 : v.sticky) && g % 2 !== 0,
+                        "bg-white": !P && (v == null ? void 0 : v.sticky) && (g % 2 === 0 || $ === "default"),
+                        [D.stripe]: !P && (v == null ? void 0 : v.sticky) && g % 2 !== 0 && $ !== "default",
                         [D.hoverStripe]: !P && (v == null ? void 0 : v.sticky),
                         "border-b border-gray-200": $ === "default"
                       },

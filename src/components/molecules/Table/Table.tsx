@@ -127,7 +127,7 @@ const getVariantStyles = (variant: TableVariant) => {
 
 const TableLoading = <T,>({
   schema,
-  variant = "primary",
+  variant = "default",
   showIndexSticky = false,
   isMobile = false,
 }: {
@@ -197,7 +197,7 @@ const TableLoading = <T,>({
                       {
                         "rounded-tl-md": index === 0,
                         "rounded-tr-md": index === displayColumns.length - 1,
-                        "sticky z-10": !isMobile && column.sticky,
+                        "sticky z-30": !isMobile && column.sticky,
                         "left-0":
                           !isMobile &&
                           column.sticky &&
@@ -268,15 +268,15 @@ const TableLoading = <T,>({
                     <td
                       key={`${rowIndex}-${colIndex}`}
                       className={cn("text-left text-nowrap text-sm p-4", {
-                        "sticky z-5": column.sticky,
+                        "sticky z-10": column.sticky,
                         "left-0":
                           column.sticky && column.stickyPosition === "left",
                         "right-0":
                           column.sticky && column.stickyPosition === "right",
                         // Ensure sticky columns have solid background that matches row
-                        "bg-white": column.sticky && rowIndex % 2 === 0,
+                        "bg-white": column.sticky && (rowIndex % 2 === 0 || variant === "default"),
                         [variantStyles.stripe]:
-                          column.sticky && rowIndex % 2 !== 0,
+                          column.sticky && rowIndex % 2 !== 0 && variant !== "default",
                         [variantStyles.hoverStripe]: column.sticky,
                         "border-b border-gray-200": variant === "default",
                       })}
@@ -325,7 +325,7 @@ export const Table = <T extends Record<string, any>>({
   onSortChange,
   onRowClick,
   showPagination = false,
-  variant = "primary",
+  variant = "default",
   meta = {
     current_page: 1,
     total_page: 1,
@@ -527,7 +527,7 @@ export const Table = <T extends Record<string, any>>({
                             "text-left": columnMeta?.align === "left",
                             "text-center": columnMeta?.align === "center",
                             "text-right": columnMeta?.align === "right",
-                            "sticky z-5": !isMobile && columnMeta?.sticky,
+                            "sticky z-30": !isMobile && columnMeta?.sticky,
                             "left-0":
                               !isMobile &&
                               columnMeta?.sticky &&
@@ -561,7 +561,7 @@ export const Table = <T extends Record<string, any>>({
                             : undefined
                         }
                       >
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 relative z-10">
                           <span
                             className={cn({
                               "font-semibold": index === 0,
@@ -581,7 +581,7 @@ export const Table = <T extends Record<string, any>>({
                                     : "mdi:keyboard-arrow-down"
                                   : "mdi:unfold-more-horizontal"
                               }
-                              className={cn("h-4 w-4", {
+                              className={cn("h-4 w-4 flex-shrink-0", {
                                 "text-white": variant !== "ghost",
                                 "text-gray-700": variant === "ghost",
                               })}
@@ -684,7 +684,7 @@ export const Table = <T extends Record<string, any>>({
                             "text-left": columnMeta?.align === "left",
                             "text-center": columnMeta?.align === "center",
                             "text-right": columnMeta?.align === "right",
-                            "sticky z-5": !isMobile && columnMeta?.sticky,
+                            "sticky z-10": !isMobile && columnMeta?.sticky,
                             "left-0":
                               !isMobile &&
                               columnMeta?.sticky &&
@@ -697,11 +697,12 @@ export const Table = <T extends Record<string, any>>({
                             "bg-white":
                               !isMobile &&
                               columnMeta?.sticky &&
-                              rowIndex % 2 === 0,
+                              (rowIndex % 2 === 0 || variant === "default"),
                             [variantStyles.stripe]:
                               !isMobile &&
                               columnMeta?.sticky &&
-                              rowIndex % 2 !== 0,
+                              rowIndex % 2 !== 0 &&
+                              variant !== "default",
                             [variantStyles.hoverStripe]:
                               !isMobile && columnMeta?.sticky,
                             "border-b border-gray-200": variant === "default",
