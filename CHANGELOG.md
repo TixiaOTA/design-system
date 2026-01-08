@@ -1,4 +1,8 @@
 
+## [v2.0.10] - 2026-01-08
+- fix: table z-index bug
+
+
 ## [v2.0.9] - 2025-12-29
 - update: checkbox label to allow reactnode
 
