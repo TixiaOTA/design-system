@@ -49,6 +49,7 @@ export * from './components/molecules/NegativeCase';
 // Organisms
 export * from './components/organisms/OnboardDialog';
 export * from './components/organisms/AnimatedList';
+export * from './components/organisms/WysiwygEditor';
 
 // Utils
 export * from './utils/cn'; 

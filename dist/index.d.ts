@@ -44,4 +44,5 @@ export * from './components/molecules/Loader';
 export * from './components/molecules/NegativeCase';
 export * from './components/organisms/OnboardDialog';
 export * from './components/organisms/AnimatedList';
+export * from './components/organisms/WysiwygEditor';
 export * from './utils/cn';
