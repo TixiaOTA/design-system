@@ -11,6 +11,10 @@ const meta: Meta<typeof WysiwygEditor> = {
   parameters: {
     layout: 'padded',
   },
+  args: {
+    // Explicit no-op for onChange to avoid implicit Storybook actions warning
+    onChange: () => {},
+  },
   argTypes: {
     outputFormat: {
       control: 'select',
