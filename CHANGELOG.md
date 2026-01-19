@@ -1,4 +1,8 @@
 
+## [v2.2.2] - 2026-01-19
+- fix: import text editor
+
+
 ## [v2.2.1] - 2026-01-19
 - fix: error storybook
 
