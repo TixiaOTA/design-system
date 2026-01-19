@@ -46,10 +46,14 @@ export interface WysiwygEditorProps {
   handleUploadImage?: (file: File) => Promise<string>;
   /** Whether the editor is editable */
   editable?: boolean;
+  /** View-only mode: hides toolbar and shows content as preview */
+  viewOnly?: boolean;
   /** Custom CSS classes */
   className?: string;
   /** Minimum height of the editor */
   minHeight?: string;
+  /** Maximum height of the editor; content will scroll inside when exceeded */
+  maxHeight?: string;
 }
 
 const COMMON_IMAGE_SIZES: ImageSize[] = [
@@ -68,8 +72,10 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   placeholder = 'Start typing...',
   handleUploadImage,
   editable = true,
+  viewOnly = false,
   className,
   minHeight = '400px',
+  maxHeight,
 }) => {
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [imageDialogOpen, setImageDialogOpen] = useState(false);
@@ -134,7 +140,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
       }),
     ],
     content: initialContent,
-    editable,
+    editable: viewOnly ? false : editable,
     onUpdate: ({ editor }) => {
       if (onChange) {
         let content = '';
@@ -156,6 +162,12 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
       }
     },
   });
+
+  // Keep editor's editable state in sync with props (editable, viewOnly)
+  React.useEffect(() => {
+    if (!editor) return;
+    editor.setEditable(!viewOnly && editable);
+  }, [editor, editable, viewOnly]);
 
   const handleImageUpload = useCallback(async () => {
     if (!editor || !handleUploadImage) return;
@@ -189,7 +201,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
     const imageAttrs: { src: string; width?: number; height?: number } = {
       src: imageUrl,
     };
-    
+
     if (widthNum) {
       imageAttrs.width = widthNum;
     }
@@ -285,21 +297,21 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
     icon: string;
     tooltip: string;
   }> = ({ onClick, isActive = false, disabled = false, icon, tooltip }) => (
-      <button
-        type="button"
-        title={tooltip}
-        onClick={onClick}
-        disabled={disabled || !editor}
-        className={cn(
-          'p-2 rounded-md transition-colors',
-          isActive
-            ? 'bg-primary text-white p-2 rounded-full'
-            : 'text-gray-700 hover:bg-gray-100',
-          disabled && 'opacity-50 cursor-not-allowed'
-        )}
-      >
-        <Icon icon={icon} className="w-5 h-5" />
-      </button>
+    <button
+      type="button"
+      title={tooltip}
+      onClick={onClick}
+      disabled={disabled || !editor}
+      className={cn(
+        'p-2 rounded-md transition-colors',
+        isActive
+          ? 'bg-primary text-white p-2 rounded-full'
+          : 'text-gray-700 hover:bg-gray-100',
+        disabled && 'opacity-50 cursor-not-allowed'
+      )}
+    >
+      <Icon icon={icon} className="w-5 h-5" />
+    </button>
   );
 
   if (!editor) {
@@ -309,252 +321,272 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   const previewContent = editor.getHTML();
 
   return (
-    <div className={cn('border border-gray-200 rounded-lg overflow-hidden', className)}>
+    <div
+      className={cn(
+        'rounded-lg overflow-hidden',
+        !viewOnly && 'border border-gray-200',
+        className,
+      )}
+    >
       {/* Toolbar */}
-      <div className="border-b border-gray-200 bg-gray-50 p-2 flex flex-wrap gap-1">
-        {/* Text Formatting */}
-        <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
-          <ToolbarButton
-            onClick={() => editor.chain().focus().toggleBold().run()}
-            icon="mdi:format-bold"
-            tooltip="Bold"
-          />
-          <ToolbarButton
-            onClick={() => editor.chain().focus().toggleItalic().run()}
-            icon="mdi:format-italic"
-            tooltip="Italic"
-          />
-          <ToolbarButton
-            onClick={() => editor.chain().focus().toggleUnderline().run()}
-            icon="mdi:format-underline"
-            tooltip="Underline"
-          />
-          <ToolbarButton
-            onClick={() => editor.chain().focus().toggleStrike().run()}
-            icon="mdi:format-strikethrough"
-            tooltip="Strikethrough"
-          />
-          <ToolbarButton
-            onClick={() => editor.chain().focus().toggleCode().run()}
-            icon="mdi:code-tags"
-            tooltip="Inline Code"
-          />
-          <ToolbarButton
-            onClick={() => editor.chain().focus().toggleHighlight().run()}
-            icon="mdi:format-color-highlight"
-            tooltip="Highlight"
-          />
-          <ToolbarButton
-            onClick={() => editor.chain().focus().toggleSubscript().run()}
-            icon="mdi:format-subscript"
-            tooltip="Subscript"
-          />
-          <ToolbarButton
-            onClick={() => editor.chain().focus().toggleSuperscript().run()}
-            icon="mdi:format-superscript"
-            tooltip="Superscript"
-          />
-        </div>
-
-        {/* Headings */}
-        <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
-          <ToolbarButton
-            onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-            icon="mdi:format-header-1"
-            tooltip="Heading 1"
-          />
-          <ToolbarButton
-            onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-            icon="mdi:format-header-2"
-            tooltip="Heading 2"
-          />
-          <ToolbarButton
-            onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-            icon="mdi:format-header-3"
-            tooltip="Heading 3"
-          />
-        </div>
-
-        {/* Lists */}
-        <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
-          <ToolbarButton
-            onClick={() => editor.chain().focus().toggleBulletList().run()}
-            icon="mdi:format-list-bulleted"
-            tooltip="Bullet List"
-          />
-          <ToolbarButton
-            onClick={() => editor.chain().focus().toggleOrderedList().run()}
-            icon="mdi:format-list-numbered"
-            tooltip="Numbered List"
-          />
-          <ToolbarButton
-            onClick={() => editor.chain().focus().toggleTaskList().run()}
-            icon="mdi:format-list-checks"
-            tooltip="Task List"
-          />
-          <ToolbarButton
-            onClick={() => editor.chain().focus().toggleBlockquote().run()}
-            icon="mdi:format-quote-close"
-            tooltip="Blockquote"
-          />
-        </div>
-
-        {/* Alignment */}
-        <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
-          <ToolbarButton
-            onClick={() => editor.chain().focus().setTextAlign('left').run()}
-            icon="mdi:format-align-left"
-            tooltip="Align Left"
-          />
-          <ToolbarButton
-            onClick={() => editor.chain().focus().setTextAlign('center').run()}
-            icon="mdi:format-align-center"
-            tooltip="Align Center"
-          />
-          <ToolbarButton
-            onClick={() => editor.chain().focus().setTextAlign('right').run()}
-            icon="mdi:format-align-right"
-            tooltip="Align Right"
-          />
-          <ToolbarButton
-            onClick={() => editor.chain().focus().setTextAlign('justify').run()}
-            icon="mdi:format-align-justify"
-            tooltip="Justify"
-          />
-        </div>
-
-        {/* Text Color */}
-        <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
-          <Tooltip content="Text Color" placement="top">
-            <input
-              type="color"
-              onInput={(e) =>
-                editor.chain().focus().setColor((e.target as HTMLInputElement).value).run()
-              }
-              value={editor.getAttributes('textStyle').color || '#000000'}
-              className="w-8 h-8 cursor-pointer rounded border border-gray-300"
-            />
-          </Tooltip>
-        </div>
-
-        {/* Insert Elements */}
-        <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
-          <ToolbarButton
-            onClick={() => {
-              const { from, to } = editor.state.selection;
-              const selectedText = editor.state.doc.textBetween(from, to);
-              
-              // Check if we're in a link
-              const linkAttributes = editor.getAttributes('link');
-              const existingUrl = linkAttributes.href || '';
-              const isLink = editor.isActive('link');
-              
-              setLinkText(selectedText || '');
-              setLinkUrl(existingUrl);
-              setIsEditingLink(isLink);
-              setLinkDialogOpen(true);
-            }}
-            icon="mdi:link"
-            tooltip={editor.isActive('link') ? 'Edit Link' : 'Insert Link'}
-          />
-          <ToolbarButton
-            onClick={() => setImageDialogOpen(true)}
-            icon="mdi:image"
-            tooltip="Insert Image"
-          />
-          <ToolbarButton
-            onClick={() => {
-              setTableRows(3);
-              setTableCols(3);
-              setTableWithHeader(true);
-              setTableDialogOpen(true);
-            }}
-            icon="mdi:table"
-            tooltip="Insert Table"
-          />
-          <ToolbarButton
-            onClick={() => editor.chain().focus().setHorizontalRule().run()}
-            icon="mdi:minus"
-            tooltip="Horizontal Rule"
-          />
-          <ToolbarButton
-            onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-            icon="mdi:code-braces"
-            tooltip="Code Block"
-          />
-        </div>
-
-        {/* Table Controls */}
-        {editor.isActive('table') && (
+      {!viewOnly && (
+        <div className="border-b border-gray-200 bg-gray-50 p-2 flex flex-wrap gap-2">
+          {/* Text Formatting */}
           <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
             <ToolbarButton
-              onClick={() => editor.chain().focus().addColumnBefore().run()}
-              icon="mdi:table-column-plus-before"
-              tooltip="Add Column Before"
+              onClick={() => editor.chain().focus().toggleBold().run()}
+              icon="mdi:format-bold"
+              tooltip="Bold"
             />
             <ToolbarButton
-              onClick={() => editor.chain().focus().addColumnAfter().run()}
-              icon="mdi:table-column-plus-after"
-              tooltip="Add Column After"
+              onClick={() => editor.chain().focus().toggleItalic().run()}
+              icon="mdi:format-italic"
+              tooltip="Italic"
             />
             <ToolbarButton
-              onClick={() => editor.chain().focus().deleteColumn().run()}
-              icon="mdi:table-column-remove"
-              tooltip="Delete Column"
+              onClick={() => editor.chain().focus().toggleUnderline().run()}
+              icon="mdi:format-underline"
+              tooltip="Underline"
             />
             <ToolbarButton
-              onClick={() => editor.chain().focus().addRowBefore().run()}
-              icon="mdi:table-row-plus-before"
-              tooltip="Add Row Before"
+              onClick={() => editor.chain().focus().toggleStrike().run()}
+              icon="mdi:format-strikethrough"
+              tooltip="Strikethrough"
             />
             <ToolbarButton
-              onClick={() => editor.chain().focus().addRowAfter().run()}
-              icon="mdi:table-row-plus-after"
-              tooltip="Add Row After"
+              onClick={() => editor.chain().focus().toggleCode().run()}
+              icon="mdi:code-tags"
+              tooltip="Inline Code"
             />
             <ToolbarButton
-              onClick={() => editor.chain().focus().deleteRow().run()}
-              icon="mdi:table-row-remove"
-              tooltip="Delete Row"
+              onClick={() => editor.chain().focus().toggleHighlight().run()}
+              icon="mdi:format-color-highlight"
+              tooltip="Highlight"
             />
             <ToolbarButton
-              onClick={() => editor.chain().focus().deleteTable().run()}
-              icon="mdi:table-remove"
-              tooltip="Delete Table"
+              onClick={() => editor.chain().focus().toggleSubscript().run()}
+              icon="mdi:format-subscript"
+              tooltip="Subscript"
+            />
+            <ToolbarButton
+              onClick={() => editor.chain().focus().toggleSuperscript().run()}
+              icon="mdi:format-superscript"
+              tooltip="Superscript"
             />
           </div>
-        )}
 
-        {/* Undo/Redo */}
-        <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
-          <ToolbarButton
-            onClick={() => editor.chain().focus().undo().run()}
-            disabled={!editor.can().undo()}
-            icon="mdi:undo"
-            tooltip="Undo"
-          />
-          <ToolbarButton
-            onClick={() => editor.chain().focus().redo().run()}
-            disabled={!editor.can().redo()}
-            icon="mdi:redo"
-            tooltip="Redo"
-          />
-        </div>
+          {/* Headings */}
+          <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
+            <ToolbarButton
+              onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+              icon="mdi:format-header-1"
+              tooltip="Heading 1"
+            />
+            <ToolbarButton
+              onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+              icon="mdi:format-header-2"
+              tooltip="Heading 2"
+            />
+            <ToolbarButton
+              onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+              icon="mdi:format-header-3"
+              tooltip="Heading 3"
+            />
+          </div>
 
-        {/* Preview/Edit Toggle */}
-        <div className="flex gap-1 ml-auto">
-          <ToolbarButton
-            onClick={() => setIsPreviewMode(!isPreviewMode)}
-            isActive={false}
-            icon={isPreviewMode ? 'mdi:pencil' : 'mdi:eye'}
-            tooltip={isPreviewMode ? 'Edit Mode' : 'Preview Mode'}
-          />
+          {/* Lists */}
+          <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
+            <ToolbarButton
+              onClick={() => editor.chain().focus().toggleBulletList().run()}
+              icon="mdi:format-list-bulleted"
+              tooltip="Bullet List"
+            />
+            <ToolbarButton
+              onClick={() => editor.chain().focus().toggleOrderedList().run()}
+              icon="mdi:format-list-numbered"
+              tooltip="Numbered List"
+            />
+            <ToolbarButton
+              onClick={() => editor.chain().focus().toggleTaskList().run()}
+              icon="mdi:format-list-checks"
+              tooltip="Task List"
+            />
+            <ToolbarButton
+              onClick={() => editor.chain().focus().toggleBlockquote().run()}
+              icon="mdi:format-quote-close"
+              tooltip="Blockquote"
+            />
+          </div>
+
+          {/* Alignment */}
+          <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
+            <ToolbarButton
+              onClick={() => editor.chain().focus().setTextAlign('left').run()}
+              icon="mdi:format-align-left"
+              tooltip="Align Left"
+            />
+            <ToolbarButton
+              onClick={() => editor.chain().focus().setTextAlign('center').run()}
+              icon="mdi:format-align-center"
+              tooltip="Align Center"
+            />
+            <ToolbarButton
+              onClick={() => editor.chain().focus().setTextAlign('right').run()}
+              icon="mdi:format-align-right"
+              tooltip="Align Right"
+            />
+            <ToolbarButton
+              onClick={() => editor.chain().focus().setTextAlign('justify').run()}
+              icon="mdi:format-align-justify"
+              tooltip="Justify"
+            />
+          </div>
+
+          {/* Text Color */}
+          <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
+            <Tooltip content="Text Color" placement="top">
+              <input
+                type="color"
+                onInput={(e) =>
+                  editor.chain().focus().setColor((e.target as HTMLInputElement).value).run()
+                }
+                value={editor.getAttributes('textStyle').color || '#000000'}
+                className="w-8 h-8 cursor-pointer rounded border border-gray-300"
+              />
+            </Tooltip>
+          </div>
+
+          {/* Insert Elements */}
+          <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
+            <ToolbarButton
+              onClick={() => {
+                const { from, to } = editor.state.selection;
+                const selectedText = editor.state.doc.textBetween(from, to);
+
+                // Check if we're in a link
+                const linkAttributes = editor.getAttributes('link');
+                const existingUrl = linkAttributes.href || '';
+                const isLink = editor.isActive('link');
+
+                setLinkText(selectedText || '');
+                setLinkUrl(existingUrl);
+                setIsEditingLink(isLink);
+                setLinkDialogOpen(true);
+              }}
+              icon="mdi:link"
+              tooltip={editor.isActive('link') ? 'Edit Link' : 'Insert Link'}
+            />
+            <ToolbarButton
+              onClick={() => setImageDialogOpen(true)}
+              icon="mdi:image"
+              tooltip="Insert Image"
+            />
+            <ToolbarButton
+              onClick={() => {
+                setTableRows(3);
+                setTableCols(3);
+                setTableWithHeader(true);
+                setTableDialogOpen(true);
+              }}
+              icon="mdi:table"
+              tooltip="Insert Table"
+            />
+            <ToolbarButton
+              onClick={() => editor.chain().focus().setHorizontalRule().run()}
+              icon="mdi:minus"
+              tooltip="Horizontal Rule"
+            />
+            <ToolbarButton
+              onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+              icon="mdi:code-braces"
+              tooltip="Code Block"
+            />
+          </div>
+
+          {/* Table Controls */}
+          {editor.isActive('table') && (
+            <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
+              <ToolbarButton
+                onClick={() => editor.chain().focus().addColumnBefore().run()}
+                icon="mdi:table-column-plus-before"
+                tooltip="Add Column Before"
+              />
+              <ToolbarButton
+                onClick={() => editor.chain().focus().addColumnAfter().run()}
+                icon="mdi:table-column-plus-after"
+                tooltip="Add Column After"
+              />
+              <ToolbarButton
+                onClick={() => editor.chain().focus().deleteColumn().run()}
+                icon="mdi:table-column-remove"
+                tooltip="Delete Column"
+              />
+              <ToolbarButton
+                onClick={() => editor.chain().focus().addRowBefore().run()}
+                icon="mdi:table-row-plus-before"
+                tooltip="Add Row Before"
+              />
+              <ToolbarButton
+                onClick={() => editor.chain().focus().addRowAfter().run()}
+                icon="mdi:table-row-plus-after"
+                tooltip="Add Row After"
+              />
+              <ToolbarButton
+                onClick={() => editor.chain().focus().deleteRow().run()}
+                icon="mdi:table-row-remove"
+                tooltip="Delete Row"
+              />
+              <ToolbarButton
+                onClick={() => editor.chain().focus().deleteTable().run()}
+                icon="mdi:table-remove"
+                tooltip="Delete Table"
+              />
+            </div>
+          )}
+
+          {/* Undo/Redo */}
+          <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
+            <ToolbarButton
+              onClick={() => editor.chain().focus().undo().run()}
+              disabled={!editor.can().undo()}
+              icon="mdi:undo"
+              tooltip="Undo"
+            />
+            <ToolbarButton
+              onClick={() => editor.chain().focus().redo().run()}
+              disabled={!editor.can().redo()}
+              icon="mdi:redo"
+              tooltip="Redo"
+            />
+          </div>
+
+          {/* Preview/Edit Toggle */}
+          <div className="flex gap-1 ml-auto">
+            <Button
+              leftIcon={isPreviewMode ? 'mdi:pencil' : 'mdi:eye'}
+              variant="ghost"
+              onClick={() => setIsPreviewMode(!isPreviewMode)}
+            >
+              {/* {isPreviewMode ? 'Edit' : 'Preview'} */}
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Editor Content */}
-      <div className="bg-white" style={{ minHeight }}>
-        {isPreviewMode ? (
+      <div
+        className="bg-white"
+        style={{
+          minHeight,
+          ...(maxHeight
+            ? {
+              maxHeight,
+              overflowY: 'auto',
+            }
+            : {}),
+        }}
+      >
+        {viewOnly || isPreviewMode ? (
           <div
             className="p-4 ProseMirror max-w-none"
             dangerouslySetInnerHTML={{ __html: previewContent }}

@@ -25,9 +25,17 @@ const meta: Meta<typeof WysiwygEditor> = {
       control: 'boolean',
       description: 'Whether the editor is editable',
     },
+    viewOnly: {
+      control: 'boolean',
+      description: 'View-only mode: hides toolbar and shows content as preview',
+    },
     minHeight: {
       control: 'text',
       description: 'Minimum height of the editor',
+    },
+    maxHeight: {
+      control: 'text',
+      description: 'Maximum height of the editor; content scrolls inside when exceeded',
     },
   },
 };
@@ -90,6 +98,7 @@ export const Default: Story = {
     placeholder: 'Start typing...',
     editable: true,
     minHeight: '400px',
+    maxHeight: '600px',
   },
 };
 
@@ -113,6 +122,7 @@ export const WithInitialContent: Story = {
     placeholder: 'Start typing...',
     editable: true,
     minHeight: '400px',
+    maxHeight: '600px',
   },
 };
 
@@ -142,11 +152,24 @@ export const ReadOnly: Story = {
   args: {
     initialContent: `
       <h1>Read-Only Mode</h1>
-      <p>This editor is in <strong>read-only</strong> mode. You cannot edit the content.</p>
+      <p>This editor is in <strong>view-only</strong> mode. You cannot edit the content.</p>
       <p>This is useful for displaying formatted content without allowing edits.</p>
     `,
-    editable: false,
+    viewOnly: true,
     minHeight: '200px',
+    maxHeight: '400px',
+  },
+};
+
+export const ViewOnlyLongContent: Story = {
+  args: {
+    initialContent: `
+      <h1>Long Content in View-Only Mode</h1>
+      ${'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>'.repeat(20)}
+    `,
+    viewOnly: true,
+    minHeight: '200px',
+    maxHeight: '300px',
   },
 };
 

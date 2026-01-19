@@ -18,10 +18,14 @@ export interface WysiwygEditorProps {
     handleUploadImage?: (file: File) => Promise<string>;
     /** Whether the editor is editable */
     editable?: boolean;
+    /** View-only mode: hides toolbar and shows content as preview */
+    viewOnly?: boolean;
     /** Custom CSS classes */
     className?: string;
     /** Minimum height of the editor */
     minHeight?: string;
+    /** Maximum height of the editor; content will scroll inside when exceeded */
+    maxHeight?: string;
 }
 declare const WysiwygEditor: React.FC<WysiwygEditorProps>;
 export default WysiwygEditor;
