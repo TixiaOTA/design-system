@@ -1,4 +1,8 @@
 
+## [v2.2.0] - 2026-01-19
+- update: maxheight, viewonly
+
+
 ## [v2.1.0] - 2026-01-19
 - feat: add wysiwyg editor
 
