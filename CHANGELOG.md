@@ -1,4 +1,8 @@
 
+## [v2.2.1] - 2026-01-19
+- fix: error storybook
+
+
 ## [v2.2.0] - 2026-01-19
 - update: maxheight, viewonly
 
