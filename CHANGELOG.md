@@ -1,4 +1,8 @@
 
+## [v2.1.0] - 2026-01-19
+- feat: add wysiwyg editor
+
+
 ## [v2.0.10] - 2026-01-08
 - fix: table z-index bug
 
