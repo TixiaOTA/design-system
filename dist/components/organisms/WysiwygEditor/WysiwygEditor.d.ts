@@ -26,6 +26,8 @@ export interface WysiwygEditorProps {
     minHeight?: string;
     /** Maximum height of the editor; content will scroll inside when exceeded */
     maxHeight?: string;
+    /** Whether to show the preview/edit toggle button */
+    showPreviewToggle?: boolean;
 }
-declare const WysiwygEditor: React.FC<WysiwygEditorProps>;
-export default WysiwygEditor;
+declare const _default: React.NamedExoticComponent<WysiwygEditorProps>;
+export default _default;

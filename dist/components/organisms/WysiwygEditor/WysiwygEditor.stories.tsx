@@ -13,7 +13,7 @@ const meta: Meta<typeof WysiwygEditor> = {
   },
   args: {
     // Explicit no-op for onChange to avoid implicit Storybook actions warning
-    onChange: () => {},
+    onChange: () => { },
   },
   argTypes: {
     outputFormat: {

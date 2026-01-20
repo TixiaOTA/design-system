@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
@@ -54,6 +54,8 @@ export interface WysiwygEditorProps {
   minHeight?: string;
   /** Maximum height of the editor; content will scroll inside when exceeded */
   maxHeight?: string;
+  /** Whether to show the preview/edit toggle button */
+  showPreviewToggle?: boolean;
 }
 
 const COMMON_IMAGE_SIZES: ImageSize[] = [
@@ -64,6 +66,12 @@ const COMMON_IMAGE_SIZES: ImageSize[] = [
   { width: 640, height: 480, label: 'Small (640x480)' },
   { width: 400, height: 300, label: 'Thumbnail (400x300)' },
 ];
+
+const normalizeEmptyParagraphs = (html: string): string =>
+  html.replace(
+    /<p(?:\s+[^>]*)?>\s*(?:<br\s*\/?>)?\s*<\/p>/gi,
+    '<br />',
+  );
 
 const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   initialContent = '',
@@ -76,6 +84,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   className,
   minHeight = '400px',
   maxHeight,
+  showPreviewToggle = true,
 }) => {
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [imageDialogOpen, setImageDialogOpen] = useState(false);
@@ -92,9 +101,21 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   const [linkUrl, setLinkUrl] = useState('');
   const [linkText, setLinkText] = useState('');
   const [isEditingLink, setIsEditingLink] = useState(false);
+  const hasAppliedInitialContentRef = useRef(false);
+  const onChangeRef = useRef<WysiwygEditorProps['onChange']>();
+  const outputFormatRef = useRef<OutputFormat>(outputFormat);
+  const frameIdRef = useRef<number | null>(null);
 
-  const editor = useEditor({
-    extensions: [
+  useEffect(() => {
+    onChangeRef.current = onChange;
+  }, [onChange]);
+
+  useEffect(() => {
+    outputFormatRef.current = outputFormat || 'html';
+  }, [outputFormat]);
+
+  const extensions = useMemo(
+    () => [
       StarterKit.configure({
         heading: {
           levels: [1, 2, 3, 4, 5, 6],
@@ -139,29 +160,71 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
         nested: true,
       }),
     ],
-    content: initialContent,
+    [placeholder],
+  );
+
+  const editor = useEditor({
+    extensions,
     editable: viewOnly ? false : editable,
-    onUpdate: ({ editor }) => {
-      if (onChange) {
+    onUpdate: ({ editor: editorInstance }) => {
+      const handler = onChangeRef.current;
+      if (!handler) return;
+
+      if (frameIdRef.current !== null) {
+        cancelAnimationFrame(frameIdRef.current);
+      }
+
+      frameIdRef.current = window.requestAnimationFrame(() => {
+        const format = outputFormatRef.current || 'html';
         let content = '';
-        switch (outputFormat) {
+
+        switch (format) {
           case 'json':
-            content = JSON.stringify(editor.getJSON());
+            content = JSON.stringify(editorInstance.getJSON());
             break;
           case 'markdown':
             // Tiptap doesn't have built-in markdown export, using HTML as fallback
             // For markdown support, you would need to install @tiptap/extension-markdown
-            content = editor.getHTML();
+            content = editorInstance.getHTML();
             break;
           case 'html':
           default:
-            content = editor.getHTML();
+            content = editorInstance.getHTML();
             break;
         }
-        onChange(content, outputFormat);
-      }
+
+        if (format !== 'json') {
+          content = normalizeEmptyParagraphs(content);
+        }
+
+        handler(content, format);
+      });
     },
   });
+
+  // Apply initialContent once when the editor is ready.
+  // This avoids resetting the editor content on every parent re-render,
+  // which can cause flickering and cursor jumps.
+  React.useEffect(() => {
+    if (!editor) return;
+    if (hasAppliedInitialContentRef.current) return;
+    if (!initialContent) {
+      hasAppliedInitialContentRef.current = true;
+      return;
+    }
+
+    editor.commands.setContent(initialContent);
+    hasAppliedInitialContentRef.current = true;
+  }, [editor, initialContent]);
+
+  // Cleanup any pending animation frame when component unmounts
+  React.useEffect(() => {
+    return () => {
+      if (frameIdRef.current !== null) {
+        cancelAnimationFrame(frameIdRef.current);
+      }
+    };
+  }, []);
 
   // Keep editor's editable state in sync with props (editable, viewOnly)
   React.useEffect(() => {
@@ -318,7 +381,13 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
     return null;
   }
 
-  const previewContent = editor.getHTML();
+  // Only compute HTML when actually rendering preview / view-only content.
+  // Avoids expensive serialization work on every keystroke while editing,
+  // which can cause occasional flicker/layout jank.
+  const previewContent =
+    viewOnly || isPreviewMode
+      ? normalizeEmptyParagraphs(editor.getHTML())
+      : '';
 
   return (
     <div
@@ -561,21 +630,23 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
           </div>
 
           {/* Preview/Edit Toggle */}
-          <div className="flex gap-1 ml-auto">
-            <Button
-              leftIcon={isPreviewMode ? 'mdi:pencil' : 'mdi:eye'}
-              variant="ghost"
-              onClick={() => setIsPreviewMode(!isPreviewMode)}
-            >
-              {/* {isPreviewMode ? 'Edit' : 'Preview'} */}
-            </Button>
-          </div>
+          {showPreviewToggle && (
+            <div className="flex gap-1 ml-auto">
+              <Button
+                leftIcon={isPreviewMode ? 'mdi:pencil' : 'mdi:eye'}
+                variant="ghost"
+                onClick={() => setIsPreviewMode(!isPreviewMode)}
+              >
+                {/* {isPreviewMode ? 'Edit' : 'Preview'} */}
+              </Button>
+            </div>
+          )}
         </div>
       )}
 
       {/* Editor Content */}
       <div
-        className="bg-white"
+        className="bg-white flex flex-col"
         style={{
           minHeight,
           ...(maxHeight
@@ -588,13 +659,26 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
       >
         {viewOnly || isPreviewMode ? (
           <div
-            className="p-4 ProseMirror max-w-none"
+            className="p-4 ProseMirror max-w-none flex-1"
             dangerouslySetInnerHTML={{ __html: previewContent }}
           />
         ) : (
-          <EditorContent editor={editor} className="p-4" />
+          <EditorContent
+            editor={editor}
+            className="p-4 h-full flex-1 [&_.ProseMirror]:h-full [&_.ProseMirror]:outline-none [&_.ProseMirror]:min-h-full"
+            onClick={() => editor?.commands.focus()}
+          />
         )}
       </div>
+
+      {/* Footer */}
+      {!viewOnly && (
+        <div className="border-t border-gray-200 bg-gray-50 px-4 py-2">
+          <p className="text-xs text-gray-500 text-center">
+            Powered by <span className="font-semibold">Tixia Design System</span>
+          </p>
+        </div>
+      )}
 
       {/* Image Dialog */}
       <Dialog isOpen={imageDialogOpen} onClose={() => setImageDialogOpen(false)} size="md">
@@ -788,4 +872,28 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   );
 };
 
-export default WysiwygEditor;
+// Custom comparison function for React.memo that ignores function props.
+// Since we use refs for onChange and handleUploadImage internally,
+// we don't need to re-render when these function references change.
+// This prevents flicker when parent components re-render and create new function references.
+const arePropsEqual = (
+  prevProps: WysiwygEditorProps,
+  nextProps: WysiwygEditorProps,
+): boolean => {
+  // Compare all props except function props (which we handle via refs)
+  return (
+    prevProps.initialContent === nextProps.initialContent &&
+    prevProps.outputFormat === nextProps.outputFormat &&
+    prevProps.placeholder === nextProps.placeholder &&
+    prevProps.editable === nextProps.editable &&
+    prevProps.viewOnly === nextProps.viewOnly &&
+    prevProps.className === nextProps.className &&
+    prevProps.minHeight === nextProps.minHeight &&
+    prevProps.maxHeight === nextProps.maxHeight &&
+    prevProps.showPreviewToggle === nextProps.showPreviewToggle
+    // Intentionally ignoring onChange and handleUploadImage
+    // since we use refs for these internally
+  );
+};
+
+export default React.memo(WysiwygEditor, arePropsEqual);
