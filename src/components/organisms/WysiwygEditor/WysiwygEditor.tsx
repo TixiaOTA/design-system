@@ -120,6 +120,10 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
         heading: {
           levels: [1, 2, 3, 4, 5, 6],
         },
+        // Explicitly exclude Link and Underline to avoid duplicate extension warnings
+        // since we're adding them separately with custom configuration
+        link: false,
+        underline: false,
       }),
       Image.configure({
         inline: true,

@@ -39759,7 +39759,11 @@ const AT = [
       XC.configure({
         heading: {
           levels: [1, 2, 3, 4, 5, 6]
-        }
+        },
+        // Explicitly exclude Link and Underline to avoid duplicate extension warnings
+        // since we're adding them separately with custom configuration
+        link: !1,
+        underline: !1
       }),
       eN.configure({
         inline: !0,
