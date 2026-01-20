@@ -1,4 +1,8 @@
 
+## [v2.2.3] - 2026-01-20
+- fix: state preview/edit
+
+
 ## [v2.2.2] - 2026-01-19
 - fix: import text editor
 
