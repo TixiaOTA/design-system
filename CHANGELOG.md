@@ -1,4 +1,8 @@
 
+## [v2.2.4] - 2026-01-20
+- fix: duplicate extension link underline
+
+
 ## [v2.2.3] - 2026-01-20
 - fix: state preview/edit
 
