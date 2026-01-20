@@ -102,6 +102,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   const [linkText, setLinkText] = useState('');
   const [isEditingLink, setIsEditingLink] = useState(false);
   const hasAppliedInitialContentRef = useRef(false);
+  const previousInitialContentRef = useRef<string>(initialContent);
   const onChangeRef = useRef<WysiwygEditorProps['onChange']>();
   const outputFormatRef = useRef<OutputFormat>(outputFormat);
   const frameIdRef = useRef<number | null>(null);
@@ -170,6 +171,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   const editor = useEditor({
     extensions,
     editable: viewOnly ? false : editable,
+    content: viewOnly ? initialContent : undefined,
     onUpdate: ({ editor: editorInstance }) => {
       const handler = onChangeRef.current;
       if (!handler) return;
@@ -206,20 +208,38 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
     },
   });
 
-  // Apply initialContent once when the editor is ready.
-  // This avoids resetting the editor content on every parent re-render,
-  // which can cause flickering and cursor jumps.
+  // Apply initialContent when the editor is ready.
+  // In viewOnly mode, always sync with initialContent prop changes.
+  // In editable mode, only apply once to avoid cursor jumps.
   React.useEffect(() => {
     if (!editor) return;
+    
+    // In viewOnly mode, always sync content when initialContent changes
+    if (viewOnly) {
+      const currentContent = editor.getHTML();
+      const normalizedCurrent = normalizeEmptyParagraphs(currentContent);
+      const normalizedInitial = initialContent ? normalizeEmptyParagraphs(initialContent) : '';
+      
+      // Only update if content actually changed
+      if (normalizedCurrent !== normalizedInitial) {
+        editor.commands.setContent(initialContent || '');
+      }
+      previousInitialContentRef.current = initialContent;
+      return;
+    }
+    
+    // In editable mode, only apply once to avoid cursor jumps
     if (hasAppliedInitialContentRef.current) return;
     if (!initialContent) {
       hasAppliedInitialContentRef.current = true;
+      previousInitialContentRef.current = initialContent;
       return;
     }
 
     editor.commands.setContent(initialContent);
     hasAppliedInitialContentRef.current = true;
-  }, [editor, initialContent]);
+    previousInitialContentRef.current = initialContent;
+  }, [editor, initialContent, viewOnly]);
 
   // Cleanup any pending animation frame when component unmounts
   React.useEffect(() => {
@@ -388,10 +408,24 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   // Only compute HTML when actually rendering preview / view-only content.
   // Avoids expensive serialization work on every keystroke while editing,
   // which can cause occasional flicker/layout jank.
-  const previewContent =
-    viewOnly || isPreviewMode
-      ? normalizeEmptyParagraphs(editor.getHTML())
-      : '';
+  // In viewOnly mode, use initialContent directly if editor hasn't loaded yet or content is empty.
+  const previewContent = React.useMemo(() => {
+    if (!(viewOnly || isPreviewMode)) return '';
+    
+    if (!editor) {
+      // If editor isn't ready yet, use initialContent directly
+      return initialContent ? normalizeEmptyParagraphs(initialContent) : '';
+    }
+    
+    const editorHtml = editor.getHTML();
+    // If editor HTML is empty but we have initialContent, use initialContent
+    // This handles the case where editor hasn't loaded the content yet
+    if (!editorHtml.trim() && initialContent) {
+      return normalizeEmptyParagraphs(initialContent);
+    }
+    
+    return normalizeEmptyParagraphs(editorHtml);
+  }, [viewOnly, isPreviewMode, editor, initialContent]);
 
   return (
     <div
