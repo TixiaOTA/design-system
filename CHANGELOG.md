@@ -1,4 +1,8 @@
 
+## [v2.2.5] - 2026-01-20
+- fix: viewonly texteditor
+
+
 ## [v2.2.4] - 2026-01-20
 - fix: duplicate extension link underline
 
