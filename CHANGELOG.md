@@ -1,4 +1,9 @@
 
+## [v2.2.6] - 2026-01-30
+- fix: add link
+- fix: style in handleupload wysiwyg
+
+
 ## [v2.2.5] - 2026-01-20
 - fix: viewonly texteditor
 
