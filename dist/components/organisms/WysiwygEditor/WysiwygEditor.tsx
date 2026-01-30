@@ -81,6 +81,10 @@ const COMMON_IMAGE_SIZES: ImageSize[] = [
 const normalizeEmptyParagraphs = (html: string): string =>
   html.replace(/<p(?:\s+[^>]*)?>\s*(?:<br\s*\/?>)?\s*<\/p>/gi, "<br />");
 
+/** CSS class for link rendered as primary full-rounded button */
+const LINK_BUTTON_CLASS =
+  "inline-flex items-center justify-center gap-2 font-medium transition-all duration-200 ease-in-out bg-primary !text-white hover:bg-primary-600 active:bg-primary-700 shadow-sm hover:shadow-md active:shadow-none rounded-full text-base px-4 py-2 !no-underline hover:!no-underline";
+
 const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   initialContent = "",
   onChange,
@@ -109,6 +113,9 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   const [linkUrl, setLinkUrl] = useState("");
   const [linkText, setLinkText] = useState("");
   const [isEditingLink, setIsEditingLink] = useState(false);
+  const [linkDisplayType, setLinkDisplayType] = useState<"text" | "button">(
+    "text",
+  );
   const hasAppliedInitialContentRef = useRef(false);
   const previousInitialContentRef = useRef<string>(initialContent);
   const onChangeRef = useRef<WysiwygEditorProps["onChange"]>();
@@ -324,45 +331,49 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
 
     const { from, to } = editor.state.selection;
     const hasSelection = from !== to;
+    const isButtonStyle = linkDisplayType === "button";
+    const linkAnchorClass = isButtonStyle
+      ? ` class="${LINK_BUTTON_CLASS}"`
+      : "";
+    const wrapAnchor = (text: string) =>
+      `<a href="${linkUrl}"${linkAnchorClass}>${text}</a>`;
 
     if (linkText) {
       // Insert link with custom text
       if (hasSelection) {
-        // Replace selected text with link
         editor
           .chain()
           .focus()
           .deleteSelection()
-          .insertContent(`<a href="${linkUrl}">${linkText}</a>`)
+          .insertContent(wrapAnchor(linkText))
           .run();
       } else {
-        // Insert link at cursor position
-        editor
-          .chain()
-          .focus()
-          .insertContent(`<a href="${linkUrl}">${linkText}</a>`)
-          .run();
+        editor.chain().focus().insertContent(wrapAnchor(linkText)).run();
       }
     } else {
-      // Use selected text or URL as link text
       if (hasSelection) {
-        // Apply link to selected text
-        editor.chain().focus().setLink({ href: linkUrl }).run();
+        if (isButtonStyle) {
+          const selectedText = editor.state.doc.textBetween(from, to);
+          editor
+            .chain()
+            .focus()
+            .deleteSelection()
+            .insertContent(wrapAnchor(selectedText))
+            .run();
+        } else {
+          editor.chain().focus().setLink({ href: linkUrl }).run();
+        }
       } else {
-        // Insert URL as link text
-        editor
-          .chain()
-          .focus()
-          .insertContent(`<a href="${linkUrl}">${linkUrl}</a>`)
-          .run();
+        editor.chain().focus().insertContent(wrapAnchor(linkUrl)).run();
       }
     }
 
     setLinkDialogOpen(false);
     setLinkUrl("");
     setLinkText("");
+    setLinkDisplayType("text");
     setIsEditingLink(false);
-  }, [editor, linkUrl, linkText]);
+  }, [editor, linkUrl, linkText, linkDisplayType]);
 
   const handleRemoveLink = useCallback(() => {
     if (!editor) return;
@@ -370,6 +381,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
     setLinkDialogOpen(false);
     setLinkUrl("");
     setLinkText("");
+    setLinkDisplayType("text");
     setIsEditingLink(false);
   }, [editor]);
 
@@ -845,12 +857,15 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
       {/* Link Dialog */}
       <Dialog
         isOpen={linkDialogOpen}
-        onClose={() => setLinkDialogOpen(false)}
+        onClose={() => {
+          setLinkDialogOpen(false);
+          setLinkDisplayType("text");
+        }}
         size="md"
       >
         <DialogTitle>{isEditingLink ? "Edit Link" : "Insert Link"}</DialogTitle>
         <DialogBody>
-          <div className="space-y-4">
+          <div className="space-y-4 mt-4">
             <Input
               label="URL"
               value={linkUrl}
@@ -867,17 +882,51 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
               fullWidth
               helperText="If empty, will use selected text or the URL itself"
             />
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Display as
+              </label>
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  onClick={() => setLinkDisplayType("text")}
+                  fullWidth
+                  rounded="full"
+                  variant={linkDisplayType === "text" ? "primary" : "outline"}
+                >
+                  Text link
+                </Button>
+                <Button
+                  type="button"
+                  fullWidth
+                  rounded="full"
+                  variant={linkDisplayType === "button" ? "primary" : "outline"}
+                  onClick={() => setLinkDisplayType("button")}
+                >
+                  Button link
+                </Button>
+              </div>
+              <p className="text-xs text-gray-500 mt-1.5">
+                Button link uses primary style with full rounded corners.
+              </p>
+            </div>
           </div>
         </DialogBody>
         <DialogActions>
-          <div className="flex justify-between w-full">
+          <div className="flex justify-between w-full gap-2">
             {isEditingLink && (
               <Button variant="danger" onClick={handleRemoveLink}>
                 Remove Link
               </Button>
             )}
             <div className="flex gap-2 ml-auto">
-              <Button variant="ghost" onClick={() => setLinkDialogOpen(false)}>
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setLinkDialogOpen(false);
+                  setLinkDisplayType("text");
+                }}
+              >
                 Cancel
               </Button>
               <Button onClick={handleInsertLink} disabled={!linkUrl}>
