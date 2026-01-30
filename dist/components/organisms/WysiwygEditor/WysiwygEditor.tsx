@@ -1,31 +1,42 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useEditor, EditorContent } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import Image from '@tiptap/extension-image';
-import Link from '@tiptap/extension-link';
-import TextAlign from '@tiptap/extension-text-align';
-import Color from '@tiptap/extension-color';
-import { TextStyle } from '@tiptap/extension-text-style';
-import Underline from '@tiptap/extension-underline';
-import { Table } from '@tiptap/extension-table';
-import TableRow from '@tiptap/extension-table-row';
-import TableCell from '@tiptap/extension-table-cell';
-import TableHeader from '@tiptap/extension-table-header';
-import Placeholder from '@tiptap/extension-placeholder';
-import Highlight from '@tiptap/extension-highlight';
-import Subscript from '@tiptap/extension-subscript';
-import Superscript from '@tiptap/extension-superscript';
-import TaskList from '@tiptap/extension-task-list';
-import TaskItem from '@tiptap/extension-task-item';
-import { Button } from '../../atoms/Button';
-import { Tooltip } from '../../atoms/Tooltip';
-import { Icon } from '../../atoms/Icons/Icons';
-import { Dialog, DialogTitle, DialogBody, DialogActions } from '../../atoms/Dialog';
-import { Input } from '../../atoms/Input';
-import { Checkbox } from '../../atoms/CheckBox';
-import { cn } from '../../../utils/cn';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Image from "@tiptap/extension-image";
+import Link from "@tiptap/extension-link";
+import TextAlign from "@tiptap/extension-text-align";
+import Color from "@tiptap/extension-color";
+import { TextStyle } from "@tiptap/extension-text-style";
+import Underline from "@tiptap/extension-underline";
+import { Table } from "@tiptap/extension-table";
+import TableRow from "@tiptap/extension-table-row";
+import TableCell from "@tiptap/extension-table-cell";
+import TableHeader from "@tiptap/extension-table-header";
+import Placeholder from "@tiptap/extension-placeholder";
+import Highlight from "@tiptap/extension-highlight";
+import Subscript from "@tiptap/extension-subscript";
+import Superscript from "@tiptap/extension-superscript";
+import TaskList from "@tiptap/extension-task-list";
+import TaskItem from "@tiptap/extension-task-item";
+import { Button } from "../../atoms/Button";
+import { Tooltip } from "../../atoms/Tooltip";
+import { Icon } from "../../atoms/Icons/Icons";
+import {
+  Dialog,
+  DialogTitle,
+  DialogBody,
+  DialogActions,
+} from "../../atoms/Dialog";
+import { Input } from "../../atoms/Input";
+import { Checkbox } from "../../atoms/CheckBox";
+import { cn } from "../../../utils/cn";
 
-export type OutputFormat = 'json' | 'markdown' | 'html';
+export type OutputFormat = "json" | "markdown" | "html";
 
 export interface ImageSize {
   width: number;
@@ -59,51 +70,48 @@ export interface WysiwygEditorProps {
 }
 
 const COMMON_IMAGE_SIZES: ImageSize[] = [
-  { width: 1920, height: 1080, label: 'Full HD (1920x1080)' },
-  { width: 1280, height: 720, label: 'HD (1280x720)' },
-  { width: 1024, height: 768, label: 'Standard (1024x768)' },
-  { width: 800, height: 600, label: 'Medium (800x600)' },
-  { width: 640, height: 480, label: 'Small (640x480)' },
-  { width: 400, height: 300, label: 'Thumbnail (400x300)' },
+  { width: 1920, height: 1080, label: "Full HD (1920x1080)" },
+  { width: 1280, height: 720, label: "HD (1280x720)" },
+  { width: 1024, height: 768, label: "Standard (1024x768)" },
+  { width: 800, height: 600, label: "Medium (800x600)" },
+  { width: 640, height: 480, label: "Small (640x480)" },
+  { width: 400, height: 300, label: "Thumbnail (400x300)" },
 ];
 
 const normalizeEmptyParagraphs = (html: string): string =>
-  html.replace(
-    /<p(?:\s+[^>]*)?>\s*(?:<br\s*\/?>)?\s*<\/p>/gi,
-    '<br />',
-  );
+  html.replace(/<p(?:\s+[^>]*)?>\s*(?:<br\s*\/?>)?\s*<\/p>/gi, "<br />");
 
 const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
-  initialContent = '',
+  initialContent = "",
   onChange,
-  outputFormat = 'html',
-  placeholder = 'Start typing...',
+  outputFormat = "html",
+  placeholder = "Start typing...",
   handleUploadImage,
   editable = true,
   viewOnly = false,
   className,
-  minHeight = '400px',
+  minHeight = "400px",
   maxHeight,
   showPreviewToggle = true,
 }) => {
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [imageDialogOpen, setImageDialogOpen] = useState(false);
-  const [imageUrl, setImageUrl] = useState('');
-  const [imageWidth, setImageWidth] = useState<number | ''>('');
-  const [imageHeight, setImageHeight] = useState<number | ''>('');
+  const [imageUrl, setImageUrl] = useState("");
+  const [imageWidth, setImageWidth] = useState<number | "">("");
+  const [imageHeight, setImageHeight] = useState<number | "">("");
   const [selectedSize, setSelectedSize] = useState<ImageSize | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [tableDialogOpen, setTableDialogOpen] = useState(false);
-  const [tableRows, setTableRows] = useState<number | ''>(3);
-  const [tableCols, setTableCols] = useState<number | ''>(3);
+  const [tableRows, setTableRows] = useState<number | "">(3);
+  const [tableCols, setTableCols] = useState<number | "">(3);
   const [tableWithHeader, setTableWithHeader] = useState(true);
   const [linkDialogOpen, setLinkDialogOpen] = useState(false);
-  const [linkUrl, setLinkUrl] = useState('');
-  const [linkText, setLinkText] = useState('');
+  const [linkUrl, setLinkUrl] = useState("");
+  const [linkText, setLinkText] = useState("");
   const [isEditingLink, setIsEditingLink] = useState(false);
   const hasAppliedInitialContentRef = useRef(false);
   const previousInitialContentRef = useRef<string>(initialContent);
-  const onChangeRef = useRef<WysiwygEditorProps['onChange']>();
+  const onChangeRef = useRef<WysiwygEditorProps["onChange"]>();
   const outputFormatRef = useRef<OutputFormat>(outputFormat);
   const frameIdRef = useRef<number | null>(null);
 
@@ -112,7 +120,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   }, [onChange]);
 
   useEffect(() => {
-    outputFormatRef.current = outputFormat || 'html';
+    outputFormatRef.current = outputFormat || "html";
   }, [outputFormat]);
 
   const extensions = useMemo(
@@ -133,11 +141,11 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
       Link.configure({
         openOnClick: false,
         HTMLAttributes: {
-          class: 'text-primary underline',
+          class: "text-primary underline",
         },
       }),
       TextAlign.configure({
-        types: ['heading', 'paragraph'],
+        types: ["heading", "paragraph"],
       }),
       Color,
       TextStyle,
@@ -148,7 +156,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
       TableRow,
       TableHeader.configure({
         HTMLAttributes: {
-          style: 'font-weight: normal;',
+          style: "font-weight: normal;",
         },
       }),
       TableCell,
@@ -181,25 +189,25 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
       }
 
       frameIdRef.current = window.requestAnimationFrame(() => {
-        const format = outputFormatRef.current || 'html';
-        let content = '';
+        const format = outputFormatRef.current || "html";
+        let content = "";
 
         switch (format) {
-          case 'json':
+          case "json":
             content = JSON.stringify(editorInstance.getJSON());
             break;
-          case 'markdown':
+          case "markdown":
             // Tiptap doesn't have built-in markdown export, using HTML as fallback
             // For markdown support, you would need to install @tiptap/extension-markdown
             content = editorInstance.getHTML();
             break;
-          case 'html':
+          case "html":
           default:
             content = editorInstance.getHTML();
             break;
         }
 
-        if (format !== 'json') {
+        if (format !== "json") {
           content = normalizeEmptyParagraphs(content);
         }
 
@@ -213,21 +221,23 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   // In editable mode, only apply once to avoid cursor jumps.
   React.useEffect(() => {
     if (!editor) return;
-    
+
     // In viewOnly mode, always sync content when initialContent changes
     if (viewOnly) {
       const currentContent = editor.getHTML();
       const normalizedCurrent = normalizeEmptyParagraphs(currentContent);
-      const normalizedInitial = initialContent ? normalizeEmptyParagraphs(initialContent) : '';
-      
+      const normalizedInitial = initialContent
+        ? normalizeEmptyParagraphs(initialContent)
+        : "";
+
       // Only update if content actually changed
       if (normalizedCurrent !== normalizedInitial) {
-        editor.commands.setContent(initialContent || '');
+        editor.commands.setContent(initialContent || "");
       }
       previousInitialContentRef.current = initialContent;
       return;
     }
-    
+
     // In editable mode, only apply once to avoid cursor jumps
     if (hasAppliedInitialContentRef.current) return;
     if (!initialContent) {
@@ -259,9 +269,9 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   const handleImageUpload = useCallback(async () => {
     if (!editor || !handleUploadImage) return;
 
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
     input.onchange = async (e) => {
       const file = (e.target as HTMLInputElement).files?.[0];
       if (!file) return;
@@ -271,7 +281,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
         const url = await handleUploadImage(file);
         editor.chain().focus().setImage({ src: url }).run();
       } catch (error) {
-        console.error('Failed to upload image:', error);
+        console.error("Failed to upload image:", error);
       } finally {
         setIsUploading(false);
       }
@@ -282,8 +292,12 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   const handleImageUrl = useCallback(() => {
     if (!editor) return;
 
-    const widthNum = selectedSize?.width || (typeof imageWidth === 'number' ? imageWidth : undefined);
-    const heightNum = selectedSize?.height || (typeof imageHeight === 'number' ? imageHeight : undefined);
+    const widthNum =
+      selectedSize?.width ||
+      (typeof imageWidth === "number" ? imageWidth : undefined);
+    const heightNum =
+      selectedSize?.height ||
+      (typeof imageHeight === "number" ? imageHeight : undefined);
 
     const imageAttrs: { src: string; width?: number; height?: number } = {
       src: imageUrl,
@@ -299,9 +313,9 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
     editor.chain().focus().setImage(imageAttrs).run();
 
     setImageDialogOpen(false);
-    setImageUrl('');
-    setImageWidth('');
-    setImageHeight('');
+    setImageUrl("");
+    setImageWidth("");
+    setImageHeight("");
     setSelectedSize(null);
   }, [editor, imageUrl, imageWidth, imageHeight, selectedSize]);
 
@@ -345,8 +359,8 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
     }
 
     setLinkDialogOpen(false);
-    setLinkUrl('');
-    setLinkText('');
+    setLinkUrl("");
+    setLinkText("");
     setIsEditingLink(false);
   }, [editor, linkUrl, linkText]);
 
@@ -354,16 +368,16 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
     if (!editor) return;
     editor.chain().focus().unsetLink().run();
     setLinkDialogOpen(false);
-    setLinkUrl('');
-    setLinkText('');
+    setLinkUrl("");
+    setLinkText("");
     setIsEditingLink(false);
   }, [editor]);
 
   const handleInsertTable = useCallback(() => {
     if (!editor) return;
 
-    const rows = typeof tableRows === 'number' ? tableRows : 3;
-    const cols = typeof tableCols === 'number' ? tableCols : 3;
+    const rows = typeof tableRows === "number" ? tableRows : 3;
+    const cols = typeof tableCols === "number" ? tableCols : 3;
 
     editor
       .chain()
@@ -390,11 +404,11 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
       onClick={onClick}
       disabled={disabled || !editor}
       className={cn(
-        'p-2 rounded-md transition-colors',
+        "p-2 rounded-md transition-colors",
         isActive
-          ? 'bg-primary text-white p-2 rounded-full'
-          : 'text-gray-700 hover:bg-gray-100',
-        disabled && 'opacity-50 cursor-not-allowed'
+          ? "bg-primary text-white p-2 rounded-full"
+          : "text-gray-700 hover:bg-gray-100",
+        disabled && "opacity-50 cursor-not-allowed",
       )}
     >
       <Icon icon={icon} className="w-5 h-5" />
@@ -410,28 +424,28 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   // which can cause occasional flicker/layout jank.
   // In viewOnly mode, use initialContent directly if editor hasn't loaded yet or content is empty.
   const previewContent = React.useMemo(() => {
-    if (!(viewOnly || isPreviewMode)) return '';
-    
+    if (!(viewOnly || isPreviewMode)) return "";
+
     if (!editor) {
       // If editor isn't ready yet, use initialContent directly
-      return initialContent ? normalizeEmptyParagraphs(initialContent) : '';
+      return initialContent ? normalizeEmptyParagraphs(initialContent) : "";
     }
-    
+
     const editorHtml = editor.getHTML();
     // If editor HTML is empty but we have initialContent, use initialContent
     // This handles the case where editor hasn't loaded the content yet
     if (!editorHtml.trim() && initialContent) {
       return normalizeEmptyParagraphs(initialContent);
     }
-    
+
     return normalizeEmptyParagraphs(editorHtml);
   }, [viewOnly, isPreviewMode, editor, initialContent]);
 
   return (
     <div
       className={cn(
-        'rounded-lg overflow-hidden',
-        !viewOnly && 'border border-gray-200',
+        "rounded-lg overflow-hidden",
+        !viewOnly && "border border-gray-200",
         className,
       )}
     >
@@ -485,17 +499,23 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
           {/* Headings */}
           <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
             <ToolbarButton
-              onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+              onClick={() =>
+                editor.chain().focus().toggleHeading({ level: 1 }).run()
+              }
               icon="mdi:format-header-1"
               tooltip="Heading 1"
             />
             <ToolbarButton
-              onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+              onClick={() =>
+                editor.chain().focus().toggleHeading({ level: 2 }).run()
+              }
               icon="mdi:format-header-2"
               tooltip="Heading 2"
             />
             <ToolbarButton
-              onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+              onClick={() =>
+                editor.chain().focus().toggleHeading({ level: 3 }).run()
+              }
               icon="mdi:format-header-3"
               tooltip="Heading 3"
             />
@@ -528,22 +548,26 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
           {/* Alignment */}
           <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
             <ToolbarButton
-              onClick={() => editor.chain().focus().setTextAlign('left').run()}
+              onClick={() => editor.chain().focus().setTextAlign("left").run()}
               icon="mdi:format-align-left"
               tooltip="Align Left"
             />
             <ToolbarButton
-              onClick={() => editor.chain().focus().setTextAlign('center').run()}
+              onClick={() =>
+                editor.chain().focus().setTextAlign("center").run()
+              }
               icon="mdi:format-align-center"
               tooltip="Align Center"
             />
             <ToolbarButton
-              onClick={() => editor.chain().focus().setTextAlign('right').run()}
+              onClick={() => editor.chain().focus().setTextAlign("right").run()}
               icon="mdi:format-align-right"
               tooltip="Align Right"
             />
             <ToolbarButton
-              onClick={() => editor.chain().focus().setTextAlign('justify').run()}
+              onClick={() =>
+                editor.chain().focus().setTextAlign("justify").run()
+              }
               icon="mdi:format-align-justify"
               tooltip="Justify"
             />
@@ -555,9 +579,13 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
               <input
                 type="color"
                 onInput={(e) =>
-                  editor.chain().focus().setColor((e.target as HTMLInputElement).value).run()
+                  editor
+                    .chain()
+                    .focus()
+                    .setColor((e.target as HTMLInputElement).value)
+                    .run()
                 }
-                value={editor.getAttributes('textStyle').color || '#000000'}
+                value={editor.getAttributes("textStyle").color || "#000000"}
                 className="w-8 h-8 cursor-pointer rounded border border-gray-300"
               />
             </Tooltip>
@@ -571,17 +599,17 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
                 const selectedText = editor.state.doc.textBetween(from, to);
 
                 // Check if we're in a link
-                const linkAttributes = editor.getAttributes('link');
-                const existingUrl = linkAttributes.href || '';
-                const isLink = editor.isActive('link');
+                const linkAttributes = editor.getAttributes("link");
+                const existingUrl = linkAttributes.href || "";
+                const isLink = editor.isActive("link");
 
-                setLinkText(selectedText || '');
+                setLinkText(selectedText || "");
                 setLinkUrl(existingUrl);
                 setIsEditingLink(isLink);
                 setLinkDialogOpen(true);
               }}
               icon="mdi:link"
-              tooltip={editor.isActive('link') ? 'Edit Link' : 'Insert Link'}
+              tooltip={editor.isActive("link") ? "Edit Link" : "Insert Link"}
             />
             <ToolbarButton
               onClick={() => setImageDialogOpen(true)}
@@ -611,7 +639,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
           </div>
 
           {/* Table Controls */}
-          {editor.isActive('table') && (
+          {editor.isActive("table") && (
             <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
               <ToolbarButton
                 onClick={() => editor.chain().focus().addColumnBefore().run()}
@@ -671,7 +699,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
           {showPreviewToggle && (
             <div className="flex gap-1 ml-auto">
               <Button
-                leftIcon={isPreviewMode ? 'mdi:pencil' : 'mdi:eye'}
+                leftIcon={isPreviewMode ? "mdi:pencil" : "mdi:eye"}
                 variant="ghost"
                 onClick={() => setIsPreviewMode(!isPreviewMode)}
               >
@@ -689,9 +717,9 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
           minHeight,
           ...(maxHeight
             ? {
-              maxHeight,
-              overflowY: 'auto',
-            }
+                maxHeight,
+                overflowY: "auto",
+              }
             : {}),
         }}
       >
@@ -713,25 +741,30 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
       {!viewOnly && (
         <div className="border-t border-gray-200 bg-gray-50 px-4 py-2">
           <p className="text-xs text-gray-500 text-center">
-            Powered by <span className="font-semibold">Tixia Design System</span>
+            Powered by{" "}
+            <span className="font-semibold">Tixia Design System</span>
           </p>
         </div>
       )}
 
       {/* Image Dialog */}
-      <Dialog isOpen={imageDialogOpen} onClose={() => setImageDialogOpen(false)} size="md">
+      <Dialog
+        isOpen={imageDialogOpen}
+        onClose={() => setImageDialogOpen(false)}
+        size="md"
+      >
         <DialogTitle>Insert Image</DialogTitle>
         <DialogBody>
           <div className="space-y-4">
             {handleUploadImage && (
-              <div>
+              <div className="mt-4">
                 <Button
                   onClick={handleImageUpload}
                   disabled={isUploading}
                   variant="outline"
                   fullWidth
                 >
-                  {isUploading ? 'Uploading...' : 'Upload Image'}
+                  {isUploading ? "Uploading..." : "Upload Image"}
                 </Button>
                 <p className="text-sm text-gray-500 mt-2 text-center">or</p>
               </div>
@@ -749,8 +782,10 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
               </label>
               <div className="grid grid-cols-2 gap-2">
                 {COMMON_IMAGE_SIZES.map((size) => (
-                  <button
+                  <Button
                     key={size.label}
+                    fullWidth
+                    variant="outline"
                     type="button"
                     onClick={() => {
                       setSelectedSize(size);
@@ -758,14 +793,14 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
                       setImageHeight(size.height);
                     }}
                     className={cn(
-                      'p-2 text-sm border rounded-md text-left transition-colors',
+                      "p-2 text-sm border text-left transition-colors",
                       selectedSize?.label === size.label
-                        ? 'border-primary bg-primary-50'
-                        : 'border-gray-200 hover:border-gray-300'
+                        ? "border-primary bg-primary-50"
+                        : "border-gray-200 hover:border-gray-300",
                     )}
                   >
                     {size.label}
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>
@@ -774,8 +809,9 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
                 label="Width (px)"
                 type="number"
                 value={imageWidth}
+                fullWidth
                 onChange={(e) => {
-                  setImageWidth(e.target.value ? parseInt(e.target.value) : '');
+                  setImageWidth(e.target.value ? parseInt(e.target.value) : "");
                   setSelectedSize(null);
                 }}
                 placeholder="Auto"
@@ -783,9 +819,12 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
               <Input
                 label="Height (px)"
                 type="number"
+                fullWidth
                 value={imageHeight}
                 onChange={(e) => {
-                  setImageHeight(e.target.value ? parseInt(e.target.value) : '');
+                  setImageHeight(
+                    e.target.value ? parseInt(e.target.value) : "",
+                  );
                   setSelectedSize(null);
                 }}
                 placeholder="Auto"
@@ -797,18 +836,19 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
           <Button variant="ghost" onClick={() => setImageDialogOpen(false)}>
             Cancel
           </Button>
-          <Button
-            onClick={handleImageUrl}
-            disabled={!imageUrl || isUploading}
-          >
+          <Button onClick={handleImageUrl} disabled={!imageUrl || isUploading}>
             Insert Image
           </Button>
         </DialogActions>
       </Dialog>
 
       {/* Link Dialog */}
-      <Dialog isOpen={linkDialogOpen} onClose={() => setLinkDialogOpen(false)} size="md">
-        <DialogTitle>{isEditingLink ? 'Edit Link' : 'Insert Link'}</DialogTitle>
+      <Dialog
+        isOpen={linkDialogOpen}
+        onClose={() => setLinkDialogOpen(false)}
+        size="md"
+      >
+        <DialogTitle>{isEditingLink ? "Edit Link" : "Insert Link"}</DialogTitle>
         <DialogBody>
           <div className="space-y-4">
             <Input
@@ -840,11 +880,8 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
               <Button variant="ghost" onClick={() => setLinkDialogOpen(false)}>
                 Cancel
               </Button>
-              <Button
-                onClick={handleInsertLink}
-                disabled={!linkUrl}
-              >
-                {isEditingLink ? 'Update Link' : 'Insert Link'}
+              <Button onClick={handleInsertLink} disabled={!linkUrl}>
+                {isEditingLink ? "Update Link" : "Insert Link"}
               </Button>
             </div>
           </div>
@@ -852,7 +889,11 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
       </Dialog>
 
       {/* Table Dialog */}
-      <Dialog isOpen={tableDialogOpen} onClose={() => setTableDialogOpen(false)} size="sm">
+      <Dialog
+        isOpen={tableDialogOpen}
+        onClose={() => setTableDialogOpen(false)}
+        size="sm"
+      >
         <DialogTitle>Insert Table</DialogTitle>
         <DialogBody>
           <div className="space-y-4">
@@ -862,7 +903,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
                 type="number"
                 value={tableRows}
                 onChange={(e) => {
-                  const value = e.target.value ? parseInt(e.target.value) : '';
+                  const value = e.target.value ? parseInt(e.target.value) : "";
                   setTableRows(value);
                 }}
                 min={1}
@@ -874,7 +915,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
                 type="number"
                 value={tableCols}
                 onChange={(e) => {
-                  const value = e.target.value ? parseInt(e.target.value) : '';
+                  const value = e.target.value ? parseInt(e.target.value) : "";
                   setTableCols(value);
                 }}
                 min={1}
@@ -898,8 +939,10 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
             disabled={
               !tableRows ||
               !tableCols ||
-              (typeof tableRows === 'number' && (tableRows < 1 || tableRows > 20)) ||
-              (typeof tableCols === 'number' && (tableCols < 1 || tableCols > 20))
+              (typeof tableRows === "number" &&
+                (tableRows < 1 || tableRows > 20)) ||
+              (typeof tableCols === "number" &&
+                (tableCols < 1 || tableCols > 20))
             }
           >
             Insert Table

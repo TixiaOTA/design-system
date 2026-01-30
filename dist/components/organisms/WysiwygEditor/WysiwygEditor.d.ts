@@ -1,5 +1,5 @@
-import React from 'react';
-export type OutputFormat = 'json' | 'markdown' | 'html';
+import React from "react";
+export type OutputFormat = "json" | "markdown" | "html";
 export interface ImageSize {
     width: number;
     height: number;
