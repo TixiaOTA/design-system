@@ -1,4 +1,8 @@
 
+## [v2.2.7] - 2026-02-03
+- fix: add toolbar html editor
+
+
 ## [v2.2.6] - 2026-01-30
 - fix: add link
 - fix: style in handleupload wysiwyg
