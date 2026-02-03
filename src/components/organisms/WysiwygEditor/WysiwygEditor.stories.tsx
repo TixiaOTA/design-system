@@ -1,45 +1,46 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
-import WysiwygEditor from './WysiwygEditor';
-import { Button } from '../../atoms/Button';
-import type { OutputFormat } from './WysiwygEditor';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
+import WysiwygEditor, { sanitizeHtml } from "./WysiwygEditor";
+import { Button } from "../../atoms/Button";
+import type { OutputFormat } from "./WysiwygEditor";
 
 const meta: Meta<typeof WysiwygEditor> = {
-  title: 'Organisms/WysiwygEditor',
+  title: "Organisms/WysiwygEditor",
   component: WysiwygEditor,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
-    layout: 'padded',
+    layout: "padded",
   },
   args: {
     // Explicit no-op for onChange to avoid implicit Storybook actions warning
-    onChange: () => { },
+    onChange: () => {},
   },
   argTypes: {
     outputFormat: {
-      control: 'select',
-      options: ['html', 'json', 'markdown'],
-      description: 'Output format for the onChange callback',
+      control: "select",
+      options: ["html", "json", "markdown"],
+      description: "Output format for the onChange callback",
     },
     placeholder: {
-      control: 'text',
-      description: 'Placeholder text for the editor',
+      control: "text",
+      description: "Placeholder text for the editor",
     },
     editable: {
-      control: 'boolean',
-      description: 'Whether the editor is editable',
+      control: "boolean",
+      description: "Whether the editor is editable",
     },
     viewOnly: {
-      control: 'boolean',
-      description: 'View-only mode: hides toolbar and shows content as preview',
+      control: "boolean",
+      description: "View-only mode: hides toolbar and shows content as preview",
     },
     minHeight: {
-      control: 'text',
-      description: 'Minimum height of the editor',
+      control: "text",
+      description: "Minimum height of the editor",
     },
     maxHeight: {
-      control: 'text',
-      description: 'Maximum height of the editor; content scrolls inside when exceeded',
+      control: "text",
+      description:
+        "Maximum height of the editor; content scrolls inside when exceeded",
     },
   },
 };
@@ -48,8 +49,12 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // Example component that demonstrates onChange functionality
-const EditorWithOutput = ({ outputFormat = 'html' }: { outputFormat?: OutputFormat }) => {
-  const [content, setContent] = useState('');
+const EditorWithOutput = ({
+  outputFormat = "html",
+}: {
+  outputFormat?: OutputFormat;
+}) => {
+  const [content, setContent] = useState("");
   const [format, setFormat] = useState<OutputFormat>(outputFormat);
 
   return (
@@ -57,23 +62,23 @@ const EditorWithOutput = ({ outputFormat = 'html' }: { outputFormat?: OutputForm
       <div className="flex gap-2 items-center">
         <span className="text-sm font-medium">Output Format:</span>
         <Button
-          variant={format === 'html' ? 'primary' : 'outline'}
+          variant={format === "html" ? "primary" : "outline"}
           size="sm"
-          onClick={() => setFormat('html')}
+          onClick={() => setFormat("html")}
         >
           HTML
         </Button>
         <Button
-          variant={format === 'json' ? 'primary' : 'outline'}
+          variant={format === "json" ? "primary" : "outline"}
           size="sm"
-          onClick={() => setFormat('json')}
+          onClick={() => setFormat("json")}
         >
           JSON
         </Button>
         <Button
-          variant={format === 'markdown' ? 'primary' : 'outline'}
+          variant={format === "markdown" ? "primary" : "outline"}
           size="sm"
-          onClick={() => setFormat('markdown')}
+          onClick={() => setFormat("markdown")}
         >
           Markdown
         </Button>
@@ -82,12 +87,14 @@ const EditorWithOutput = ({ outputFormat = 'html' }: { outputFormat?: OutputForm
         outputFormat={format}
         onChange={(newContent, fmt) => {
           setContent(newContent);
-          console.log('Content changed:', { content: newContent, format: fmt });
+          console.log("Content changed:", { content: newContent, format: fmt });
         }}
       />
       {content && (
         <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-          <h3 className="text-sm font-semibold mb-2">Output ({format.toUpperCase()}):</h3>
+          <h3 className="text-sm font-semibold mb-2">
+            Output ({format.toUpperCase()}):
+          </h3>
           <pre className="text-xs overflow-auto max-h-64 whitespace-pre-wrap break-words">
             {content}
           </pre>
@@ -99,10 +106,10 @@ const EditorWithOutput = ({ outputFormat = 'html' }: { outputFormat?: OutputForm
 
 export const Default: Story = {
   args: {
-    placeholder: 'Start typing...',
+    placeholder: "Start typing...",
     editable: true,
-    minHeight: '400px',
-    maxHeight: '600px',
+    minHeight: "400px",
+    maxHeight: "600px",
   },
 };
 
@@ -123,18 +130,18 @@ export const WithInitialContent: Story = {
       </blockquote>
       <p>Try editing this content!</p>
     `,
-    placeholder: 'Start typing...',
+    placeholder: "Start typing...",
     editable: true,
-    minHeight: '400px',
-    maxHeight: '600px',
+    minHeight: "400px",
+    maxHeight: "600px",
   },
 };
 
 export const WithImageUpload: Story = {
   args: {
-    placeholder: 'Start typing...',
+    placeholder: "Start typing...",
     editable: true,
-    minHeight: '400px',
+    minHeight: "400px",
     handleUploadImage: async (file: File) => {
       // Simulate image upload
       return new Promise((resolve) => {
@@ -160,8 +167,8 @@ export const ReadOnly: Story = {
       <p>This is useful for displaying formatted content without allowing edits.</p>
     `,
     viewOnly: true,
-    minHeight: '200px',
-    maxHeight: '400px',
+    minHeight: "200px",
+    maxHeight: "400px",
   },
 };
 
@@ -169,11 +176,13 @@ export const ViewOnlyLongContent: Story = {
   args: {
     initialContent: `
       <h1>Long Content in View-Only Mode</h1>
-      ${'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>'.repeat(20)}
+      ${"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>".repeat(
+        20
+      )}
     `,
     viewOnly: true,
-    minHeight: '200px',
-    maxHeight: '300px',
+    minHeight: "200px",
+    maxHeight: "300px",
   },
 };
 
@@ -183,6 +192,77 @@ export const WithOutputDisplay: Story = {
 
 export const WithHTMLOutput: Story = {
   render: () => <EditorWithOutput outputFormat="html" />,
+};
+
+/** When outputFormat is "html", a Text/HTML mode toggle appears. In HTML mode the toolbar is hidden and you edit raw HTML; scripts, iframes, and event handlers are sanitized on the frontend. */
+export const HTMLMode: Story = {
+  args: {
+    outputFormat: "html",
+    initialContent: `
+      <h1>HTML mode</h1>
+      <p>Switch to <strong>HTML</strong> in the toolbar to edit raw HTML. Switch back to <strong>Text</strong> to return to the visual editor. In HTML mode, dangerous content (script, iframe, object, embed, javascript: URLs, and event handlers) is stripped when saving.</p>
+    `,
+    placeholder: "Start typing...",
+    editable: true,
+    minHeight: "400px",
+    maxHeight: "600px",
+  },
+};
+
+/** Demonstrates frontend sanitization: dangerous patterns are stripped before content is passed to onChange. Backend should also sanitize. */
+const DANGEROUS_SAMPLE = `<p>Safe</p><script>alert(1)</script><iframe src="evil"></iframe><a href="javascript:alert(1)">click</a><img onerror="alert(1)" src="x">`;
+
+export const SanitizationDemo: Story = {
+  render: () => {
+    const [raw, setRaw] = useState(DANGEROUS_SAMPLE);
+    const sanitized = sanitizeHtml(raw);
+
+    return (
+      <div className="space-y-6">
+        <div>
+          <h3 className="text-sm font-semibold mb-2">
+            sanitizeHtml() (exported)
+          </h3>
+          <p className="text-xs text-gray-600 mb-2">
+            Strips: script, iframe, object, embed, javascript: URLs, and on*
+            event handlers.
+          </p>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-medium text-gray-700 mb-1">
+                Raw HTML
+              </label>
+              <textarea
+                className="w-full p-2 border rounded text-xs font-mono h-24"
+                value={raw}
+                onChange={(e) => setRaw(e.target.value)}
+                placeholder="Paste or type HTML"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-gray-700 mb-1">
+                After sanitizeHtml()
+              </label>
+              <pre className="w-full p-2 border rounded text-xs font-mono h-24 overflow-auto whitespace-pre-wrap break-words bg-gray-50">
+                {sanitized}
+              </pre>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 className="text-sm font-semibold mb-2">Editor with HTML mode</h3>
+          <WysiwygEditor
+            outputFormat="html"
+            initialContent={DANGEROUS_SAMPLE}
+            onChange={(content) =>
+              console.log("Editor onChange (sanitized):", content)
+            }
+            minHeight="200px"
+          />
+        </div>
+      </div>
+    );
+  },
 };
 
 export const WithJSONOutput: Story = {
@@ -245,9 +325,9 @@ export const FullFeatured: Story = {
       <hr>
       <p>Try using the preview mode to see how your content will look!</p>
     `,
-    placeholder: 'Start typing...',
+    placeholder: "Start typing...",
     editable: true,
-    minHeight: '500px',
+    minHeight: "500px",
     handleUploadImage: async (file: File) => {
       return new Promise((resolve) => {
         const reader = new FileReader();

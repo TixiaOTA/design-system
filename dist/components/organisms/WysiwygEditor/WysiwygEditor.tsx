@@ -23,6 +23,7 @@ import Subscript from "@tiptap/extension-subscript";
 import Superscript from "@tiptap/extension-superscript";
 import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
+import { HtmlBlock } from "./htmlBlockExtension";
 import { Button } from "../../atoms/Button";
 import { Tooltip } from "../../atoms/Tooltip";
 import { Icon } from "../../atoms/Icons/Icons";
@@ -81,6 +82,41 @@ const COMMON_IMAGE_SIZES: ImageSize[] = [
 const normalizeEmptyParagraphs = (html: string): string =>
   html.replace(/<p(?:\s+[^>]*)?>\s*(?:<br\s*\/?>)?\s*<\/p>/gi, "<br />");
 
+/**
+ * Sanitizes HTML to prevent script injection and unsafe content.
+ * Mirrors backend rules: strips script/iframe/object/embed, javascript: URLs, and event handlers.
+ */
+export const sanitizeHtml = (html: string): string => {
+  if (!html || typeof html !== "string") return "";
+
+  let out = html;
+
+  // Remove <script>...</script> (case insensitive)
+  out = out.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "");
+
+  // Remove <iframe>...</iframe> (case insensitive)
+  out = out.replace(/<iframe[^>]*>[\s\S]*?<\/iframe>/gi, "");
+
+  // Remove <object>...</object> (case insensitive)
+  out = out.replace(/<object[^>]*>[\s\S]*?<\/object>/gi, "");
+
+  // Remove <embed> (self-closing or with content)
+  out = out.replace(/<embed[^>]*\s*\/?>/gi, "");
+  out = out.replace(/<embed[^>]*>[\s\S]*?<\/embed>/gi, "");
+
+  // Strip javascript: URLs in attributes (href, src, action, etc.)
+  out = out.replace(
+    /(\s)(href|src|action|formaction)\s*=\s*["']?\s*javascript:[^"'\s>]*/gi,
+    '$1$2="#"'
+  );
+
+  // Remove event handler attributes (onclick=, onerror=, onload=, etc.)
+  out = out.replace(/\s+on\w+\s*=\s*["'][^"']*["']/gi, "");
+  out = out.replace(/\s+on\w+\s*=\s*[^\s>]+/gi, "");
+
+  return out.trim();
+};
+
 /** CSS class for link rendered as primary full-rounded button */
 const LINK_BUTTON_CLASS =
   "inline-flex items-center justify-center gap-2 font-medium transition-all duration-200 ease-in-out bg-primary !text-white hover:bg-primary-600 active:bg-primary-700 shadow-sm hover:shadow-md active:shadow-none rounded-full text-base px-4 py-2 !no-underline hover:!no-underline";
@@ -114,8 +150,11 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   const [linkText, setLinkText] = useState("");
   const [isEditingLink, setIsEditingLink] = useState(false);
   const [linkDisplayType, setLinkDisplayType] = useState<"text" | "button">(
-    "text",
+    "text"
   );
+  const [htmlBlockDialogOpen, setHtmlBlockDialogOpen] = useState(false);
+  const [htmlBlockContent, setHtmlBlockContent] = useState("");
+  const [isEditingHtmlBlock, setIsEditingHtmlBlock] = useState(false);
   const hasAppliedInitialContentRef = useRef(false);
   const previousInitialContentRef = useRef<string>(initialContent);
   const onChangeRef = useRef<WysiwygEditorProps["onChange"]>();
@@ -179,14 +218,17 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
       TaskItem.configure({
         nested: true,
       }),
+      HtmlBlock,
     ],
-    [placeholder],
+    [placeholder]
   );
 
   const editor = useEditor({
     extensions,
     editable: viewOnly ? false : editable,
-    content: viewOnly ? initialContent : undefined,
+    content: viewOnly
+      ? sanitizeHtml(initialContent || "") || undefined
+      : undefined,
     onUpdate: ({ editor: editorInstance }) => {
       const handler = onChangeRef.current;
       if (!handler) return;
@@ -237,9 +279,9 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
         ? normalizeEmptyParagraphs(initialContent)
         : "";
 
-      // Only update if content actually changed
+      // Only update if content actually changed (sanitize to block script injection)
       if (normalizedCurrent !== normalizedInitial) {
-        editor.commands.setContent(initialContent || "");
+        editor.commands.setContent(sanitizeHtml(initialContent || "") || "");
       }
       previousInitialContentRef.current = initialContent;
       return;
@@ -253,7 +295,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
       return;
     }
 
-    editor.commands.setContent(initialContent);
+    editor.commands.setContent(sanitizeHtml(initialContent) || "");
     hasAppliedInitialContentRef.current = true;
     previousInitialContentRef.current = initialContent;
   }, [editor, initialContent, viewOnly]);
@@ -403,6 +445,43 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
     setTableWithHeader(true);
   }, [editor, tableRows, tableCols, tableWithHeader]);
 
+  const openHtmlBlockDialog = useCallback(
+    (edit: boolean) => {
+      if (!editor) return;
+      if (edit && editor.isActive("htmlBlock")) {
+        const html = editor.getAttributes("htmlBlock").html ?? "";
+        setHtmlBlockContent(html);
+        setIsEditingHtmlBlock(true);
+      } else {
+        setHtmlBlockContent("");
+        setIsEditingHtmlBlock(false);
+      }
+      setHtmlBlockDialogOpen(true);
+    },
+    [editor]
+  );
+
+  const handleSaveHtmlBlock = useCallback(() => {
+    if (!editor) return;
+    const sanitized = sanitizeHtml(htmlBlockContent);
+    if (isEditingHtmlBlock) {
+      editor
+        .chain()
+        .focus()
+        .updateAttributes("htmlBlock", { html: sanitized })
+        .run();
+    } else {
+      editor
+        .chain()
+        .focus()
+        .insertContent({ type: "htmlBlock", attrs: { html: sanitized } })
+        .run();
+    }
+    setHtmlBlockDialogOpen(false);
+    setHtmlBlockContent("");
+    setIsEditingHtmlBlock(false);
+  }, [editor, htmlBlockContent, isEditingHtmlBlock]);
+
   const ToolbarButton: React.FC<{
     onClick: () => void;
     isActive?: boolean;
@@ -420,7 +499,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
         isActive
           ? "bg-primary text-white p-2 rounded-full"
           : "text-gray-700 hover:bg-gray-100",
-        disabled && "opacity-50 cursor-not-allowed",
+        disabled && "opacity-50 cursor-not-allowed"
       )}
     >
       <Icon icon={icon} className="w-5 h-5" />
@@ -458,267 +537,284 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
       className={cn(
         "rounded-lg overflow-hidden",
         !viewOnly && "border border-gray-200",
-        className,
+        className
       )}
     >
-      {/* Toolbar */}
+      {/* Toolbar: hidden in viewOnly */}
       {!viewOnly && (
         <div className="border-b border-gray-200 bg-gray-50 p-2 flex flex-wrap gap-2">
-          {/* Text Formatting */}
-          <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
-            <ToolbarButton
-              onClick={() => editor.chain().focus().toggleBold().run()}
-              icon="mdi:format-bold"
-              tooltip="Bold"
-            />
-            <ToolbarButton
-              onClick={() => editor.chain().focus().toggleItalic().run()}
-              icon="mdi:format-italic"
-              tooltip="Italic"
-            />
-            <ToolbarButton
-              onClick={() => editor.chain().focus().toggleUnderline().run()}
-              icon="mdi:format-underline"
-              tooltip="Underline"
-            />
-            <ToolbarButton
-              onClick={() => editor.chain().focus().toggleStrike().run()}
-              icon="mdi:format-strikethrough"
-              tooltip="Strikethrough"
-            />
-            <ToolbarButton
-              onClick={() => editor.chain().focus().toggleCode().run()}
-              icon="mdi:code-tags"
-              tooltip="Inline Code"
-            />
-            <ToolbarButton
-              onClick={() => editor.chain().focus().toggleHighlight().run()}
-              icon="mdi:format-color-highlight"
-              tooltip="Highlight"
-            />
-            <ToolbarButton
-              onClick={() => editor.chain().focus().toggleSubscript().run()}
-              icon="mdi:format-subscript"
-              tooltip="Subscript"
-            />
-            <ToolbarButton
-              onClick={() => editor.chain().focus().toggleSuperscript().run()}
-              icon="mdi:format-superscript"
-              tooltip="Superscript"
-            />
-          </div>
-
-          {/* Headings */}
-          <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
-            <ToolbarButton
-              onClick={() =>
-                editor.chain().focus().toggleHeading({ level: 1 }).run()
-              }
-              icon="mdi:format-header-1"
-              tooltip="Heading 1"
-            />
-            <ToolbarButton
-              onClick={() =>
-                editor.chain().focus().toggleHeading({ level: 2 }).run()
-              }
-              icon="mdi:format-header-2"
-              tooltip="Heading 2"
-            />
-            <ToolbarButton
-              onClick={() =>
-                editor.chain().focus().toggleHeading({ level: 3 }).run()
-              }
-              icon="mdi:format-header-3"
-              tooltip="Heading 3"
-            />
-          </div>
-
-          {/* Lists */}
-          <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
-            <ToolbarButton
-              onClick={() => editor.chain().focus().toggleBulletList().run()}
-              icon="mdi:format-list-bulleted"
-              tooltip="Bullet List"
-            />
-            <ToolbarButton
-              onClick={() => editor.chain().focus().toggleOrderedList().run()}
-              icon="mdi:format-list-numbered"
-              tooltip="Numbered List"
-            />
-            <ToolbarButton
-              onClick={() => editor.chain().focus().toggleTaskList().run()}
-              icon="mdi:format-list-checks"
-              tooltip="Task List"
-            />
-            <ToolbarButton
-              onClick={() => editor.chain().focus().toggleBlockquote().run()}
-              icon="mdi:format-quote-close"
-              tooltip="Blockquote"
-            />
-          </div>
-
-          {/* Alignment */}
-          <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
-            <ToolbarButton
-              onClick={() => editor.chain().focus().setTextAlign("left").run()}
-              icon="mdi:format-align-left"
-              tooltip="Align Left"
-            />
-            <ToolbarButton
-              onClick={() =>
-                editor.chain().focus().setTextAlign("center").run()
-              }
-              icon="mdi:format-align-center"
-              tooltip="Align Center"
-            />
-            <ToolbarButton
-              onClick={() => editor.chain().focus().setTextAlign("right").run()}
-              icon="mdi:format-align-right"
-              tooltip="Align Right"
-            />
-            <ToolbarButton
-              onClick={() =>
-                editor.chain().focus().setTextAlign("justify").run()
-              }
-              icon="mdi:format-align-justify"
-              tooltip="Justify"
-            />
-          </div>
-
-          {/* Text Color */}
-          <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
-            <Tooltip content="Text Color" placement="top">
-              <input
-                type="color"
-                onInput={(e) =>
-                  editor
-                    .chain()
-                    .focus()
-                    .setColor((e.target as HTMLInputElement).value)
-                    .run()
-                }
-                value={editor.getAttributes("textStyle").color || "#000000"}
-                className="w-8 h-8 cursor-pointer rounded border border-gray-300"
-              />
-            </Tooltip>
-          </div>
-
-          {/* Insert Elements */}
-          <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
-            <ToolbarButton
-              onClick={() => {
-                const { from, to } = editor.state.selection;
-                const selectedText = editor.state.doc.textBetween(from, to);
-
-                // Check if we're in a link
-                const linkAttributes = editor.getAttributes("link");
-                const existingUrl = linkAttributes.href || "";
-                const isLink = editor.isActive("link");
-
-                setLinkText(selectedText || "");
-                setLinkUrl(existingUrl);
-                setIsEditingLink(isLink);
-                setLinkDialogOpen(true);
-              }}
-              icon="mdi:link"
-              tooltip={editor.isActive("link") ? "Edit Link" : "Insert Link"}
-            />
-            <ToolbarButton
-              onClick={() => setImageDialogOpen(true)}
-              icon="mdi:image"
-              tooltip="Insert Image"
-            />
-            <ToolbarButton
-              onClick={() => {
-                setTableRows(3);
-                setTableCols(3);
-                setTableWithHeader(true);
-                setTableDialogOpen(true);
-              }}
-              icon="mdi:table"
-              tooltip="Insert Table"
-            />
-            <ToolbarButton
-              onClick={() => editor.chain().focus().setHorizontalRule().run()}
-              icon="mdi:minus"
-              tooltip="Horizontal Rule"
-            />
-            <ToolbarButton
-              onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-              icon="mdi:code-braces"
-              tooltip="Code Block"
-            />
-          </div>
-
-          {/* Table Controls */}
-          {editor.isActive("table") && (
+          <>
+            {/* Text Formatting */}
             <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
               <ToolbarButton
-                onClick={() => editor.chain().focus().addColumnBefore().run()}
-                icon="mdi:table-column-plus-before"
-                tooltip="Add Column Before"
+                onClick={() => editor.chain().focus().toggleBold().run()}
+                icon="mdi:format-bold"
+                tooltip="Bold"
               />
               <ToolbarButton
-                onClick={() => editor.chain().focus().addColumnAfter().run()}
-                icon="mdi:table-column-plus-after"
-                tooltip="Add Column After"
+                onClick={() => editor.chain().focus().toggleItalic().run()}
+                icon="mdi:format-italic"
+                tooltip="Italic"
               />
               <ToolbarButton
-                onClick={() => editor.chain().focus().deleteColumn().run()}
-                icon="mdi:table-column-remove"
-                tooltip="Delete Column"
+                onClick={() => editor.chain().focus().toggleUnderline().run()}
+                icon="mdi:format-underline"
+                tooltip="Underline"
               />
               <ToolbarButton
-                onClick={() => editor.chain().focus().addRowBefore().run()}
-                icon="mdi:table-row-plus-before"
-                tooltip="Add Row Before"
+                onClick={() => editor.chain().focus().toggleStrike().run()}
+                icon="mdi:format-strikethrough"
+                tooltip="Strikethrough"
               />
               <ToolbarButton
-                onClick={() => editor.chain().focus().addRowAfter().run()}
-                icon="mdi:table-row-plus-after"
-                tooltip="Add Row After"
+                onClick={() => editor.chain().focus().toggleCode().run()}
+                icon="mdi:code-tags"
+                tooltip="Inline Code"
               />
               <ToolbarButton
-                onClick={() => editor.chain().focus().deleteRow().run()}
-                icon="mdi:table-row-remove"
-                tooltip="Delete Row"
+                onClick={() => editor.chain().focus().toggleHighlight().run()}
+                icon="mdi:format-color-highlight"
+                tooltip="Highlight"
               />
               <ToolbarButton
-                onClick={() => editor.chain().focus().deleteTable().run()}
-                icon="mdi:table-remove"
-                tooltip="Delete Table"
+                onClick={() => editor.chain().focus().toggleSubscript().run()}
+                icon="mdi:format-subscript"
+                tooltip="Subscript"
+              />
+              <ToolbarButton
+                onClick={() => editor.chain().focus().toggleSuperscript().run()}
+                icon="mdi:format-superscript"
+                tooltip="Superscript"
               />
             </div>
-          )}
 
-          {/* Undo/Redo */}
-          <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
-            <ToolbarButton
-              onClick={() => editor.chain().focus().undo().run()}
-              disabled={!editor.can().undo()}
-              icon="mdi:undo"
-              tooltip="Undo"
-            />
-            <ToolbarButton
-              onClick={() => editor.chain().focus().redo().run()}
-              disabled={!editor.can().redo()}
-              icon="mdi:redo"
-              tooltip="Redo"
-            />
-          </div>
-
-          {/* Preview/Edit Toggle */}
-          {showPreviewToggle && (
-            <div className="flex gap-1 ml-auto">
-              <Button
-                leftIcon={isPreviewMode ? "mdi:pencil" : "mdi:eye"}
-                variant="ghost"
-                onClick={() => setIsPreviewMode(!isPreviewMode)}
-              >
-                {/* {isPreviewMode ? 'Edit' : 'Preview'} */}
-              </Button>
+            {/* Headings */}
+            <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
+              <ToolbarButton
+                onClick={() =>
+                  editor.chain().focus().toggleHeading({ level: 1 }).run()
+                }
+                icon="mdi:format-header-1"
+                tooltip="Heading 1"
+              />
+              <ToolbarButton
+                onClick={() =>
+                  editor.chain().focus().toggleHeading({ level: 2 }).run()
+                }
+                icon="mdi:format-header-2"
+                tooltip="Heading 2"
+              />
+              <ToolbarButton
+                onClick={() =>
+                  editor.chain().focus().toggleHeading({ level: 3 }).run()
+                }
+                icon="mdi:format-header-3"
+                tooltip="Heading 3"
+              />
             </div>
-          )}
+
+            {/* Lists */}
+            <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
+              <ToolbarButton
+                onClick={() => editor.chain().focus().toggleBulletList().run()}
+                icon="mdi:format-list-bulleted"
+                tooltip="Bullet List"
+              />
+              <ToolbarButton
+                onClick={() => editor.chain().focus().toggleOrderedList().run()}
+                icon="mdi:format-list-numbered"
+                tooltip="Numbered List"
+              />
+              <ToolbarButton
+                onClick={() => editor.chain().focus().toggleTaskList().run()}
+                icon="mdi:format-list-checks"
+                tooltip="Task List"
+              />
+              <ToolbarButton
+                onClick={() => editor.chain().focus().toggleBlockquote().run()}
+                icon="mdi:format-quote-close"
+                tooltip="Blockquote"
+              />
+            </div>
+
+            {/* Alignment */}
+            <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
+              <ToolbarButton
+                onClick={() =>
+                  editor.chain().focus().setTextAlign("left").run()
+                }
+                icon="mdi:format-align-left"
+                tooltip="Align Left"
+              />
+              <ToolbarButton
+                onClick={() =>
+                  editor.chain().focus().setTextAlign("center").run()
+                }
+                icon="mdi:format-align-center"
+                tooltip="Align Center"
+              />
+              <ToolbarButton
+                onClick={() =>
+                  editor.chain().focus().setTextAlign("right").run()
+                }
+                icon="mdi:format-align-right"
+                tooltip="Align Right"
+              />
+              <ToolbarButton
+                onClick={() =>
+                  editor.chain().focus().setTextAlign("justify").run()
+                }
+                icon="mdi:format-align-justify"
+                tooltip="Justify"
+              />
+            </div>
+
+            {/* Text Color */}
+            <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
+              <Tooltip content="Text Color" placement="top">
+                <input
+                  type="color"
+                  onInput={(e) =>
+                    editor
+                      .chain()
+                      .focus()
+                      .setColor((e.target as HTMLInputElement).value)
+                      .run()
+                  }
+                  value={editor.getAttributes("textStyle").color || "#000000"}
+                  className="w-8 h-8 cursor-pointer rounded border border-gray-300"
+                />
+              </Tooltip>
+            </div>
+
+            {/* Insert Elements */}
+            <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
+              <ToolbarButton
+                onClick={() => {
+                  const { from, to } = editor.state.selection;
+                  const selectedText = editor.state.doc.textBetween(from, to);
+
+                  // Check if we're in a link
+                  const linkAttributes = editor.getAttributes("link");
+                  const existingUrl = linkAttributes.href || "";
+                  const isLink = editor.isActive("link");
+
+                  setLinkText(selectedText || "");
+                  setLinkUrl(existingUrl);
+                  setIsEditingLink(isLink);
+                  setLinkDialogOpen(true);
+                }}
+                icon="mdi:link"
+                tooltip={editor.isActive("link") ? "Edit Link" : "Insert Link"}
+              />
+              <ToolbarButton
+                onClick={() => setImageDialogOpen(true)}
+                icon="mdi:image"
+                tooltip="Insert Image"
+              />
+              <ToolbarButton
+                onClick={() => {
+                  setTableRows(3);
+                  setTableCols(3);
+                  setTableWithHeader(true);
+                  setTableDialogOpen(true);
+                }}
+                icon="mdi:table"
+                tooltip="Insert Table"
+              />
+              <ToolbarButton
+                onClick={() => editor.chain().focus().setHorizontalRule().run()}
+                icon="mdi:minus"
+                tooltip="Horizontal Rule"
+              />
+              <ToolbarButton
+                onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+                icon="mdi:code-braces"
+                tooltip="Code Block"
+              />
+              <ToolbarButton
+                onClick={() =>
+                  openHtmlBlockDialog(editor.isActive("htmlBlock"))
+                }
+                icon="mdi:language-html5"
+                tooltip={
+                  editor.isActive("htmlBlock")
+                    ? "Edit HTML Block"
+                    : "Insert HTML Block"
+                }
+              />
+            </div>
+
+            {/* Table Controls */}
+            {editor.isActive("table") && (
+              <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
+                <ToolbarButton
+                  onClick={() => editor.chain().focus().addColumnBefore().run()}
+                  icon="mdi:table-column-plus-before"
+                  tooltip="Add Column Before"
+                />
+                <ToolbarButton
+                  onClick={() => editor.chain().focus().addColumnAfter().run()}
+                  icon="mdi:table-column-plus-after"
+                  tooltip="Add Column After"
+                />
+                <ToolbarButton
+                  onClick={() => editor.chain().focus().deleteColumn().run()}
+                  icon="mdi:table-column-remove"
+                  tooltip="Delete Column"
+                />
+                <ToolbarButton
+                  onClick={() => editor.chain().focus().addRowBefore().run()}
+                  icon="mdi:table-row-plus-before"
+                  tooltip="Add Row Before"
+                />
+                <ToolbarButton
+                  onClick={() => editor.chain().focus().addRowAfter().run()}
+                  icon="mdi:table-row-plus-after"
+                  tooltip="Add Row After"
+                />
+                <ToolbarButton
+                  onClick={() => editor.chain().focus().deleteRow().run()}
+                  icon="mdi:table-row-remove"
+                  tooltip="Delete Row"
+                />
+                <ToolbarButton
+                  onClick={() => editor.chain().focus().deleteTable().run()}
+                  icon="mdi:table-remove"
+                  tooltip="Delete Table"
+                />
+              </div>
+            )}
+
+            {/* Undo/Redo */}
+            <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
+              <ToolbarButton
+                onClick={() => editor.chain().focus().undo().run()}
+                disabled={!editor.can().undo()}
+                icon="mdi:undo"
+                tooltip="Undo"
+              />
+              <ToolbarButton
+                onClick={() => editor.chain().focus().redo().run()}
+                disabled={!editor.can().redo()}
+                icon="mdi:redo"
+                tooltip="Redo"
+              />
+            </div>
+
+            {/* Preview/Edit Toggle */}
+            {showPreviewToggle && (
+              <div className="flex gap-1 ml-auto">
+                <Button
+                  leftIcon={isPreviewMode ? "mdi:pencil" : "mdi:eye"}
+                  variant="ghost"
+                  onClick={() => setIsPreviewMode(!isPreviewMode)}
+                >
+                  {/* {isPreviewMode ? 'Edit' : 'Preview'} */}
+                </Button>
+              </div>
+            )}
+          </>
         </div>
       )}
 
@@ -808,7 +904,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
                       "p-2 text-sm border text-left transition-colors",
                       selectedSize?.label === size.label
                         ? "border-primary bg-primary-50"
-                        : "border-gray-200 hover:border-gray-300",
+                        : "border-gray-200 hover:border-gray-300"
                     )}
                   >
                     {size.label}
@@ -835,7 +931,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
                 value={imageHeight}
                 onChange={(e) => {
                   setImageHeight(
-                    e.target.value ? parseInt(e.target.value) : "",
+                    e.target.value ? parseInt(e.target.value) : ""
                   );
                   setSelectedSize(null);
                 }}
@@ -998,6 +1094,51 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* HTML Block Dialog */}
+      <Dialog
+        isOpen={htmlBlockDialogOpen}
+        onClose={() => {
+          setHtmlBlockDialogOpen(false);
+          setHtmlBlockContent("");
+          setIsEditingHtmlBlock(false);
+        }}
+        size="lg"
+      >
+        <DialogTitle>
+          {isEditingHtmlBlock ? "Edit HTML Block" : "Insert HTML Block"}
+        </DialogTitle>
+        <DialogBody>
+          <p className="text-sm text-gray-600 mb-2">
+            Paste or edit raw HTML. It will be stored as a protected block and
+            not reinterpreted by the editor. Scripts, iframes, and event
+            handlers are stripped on save.
+          </p>
+          <textarea
+            value={htmlBlockContent}
+            onChange={(e) => setHtmlBlockContent(e.target.value)}
+            placeholder='<div style="display:flex; gap:16px">...</div>'
+            className="w-full min-h-[200px] p-3 font-mono text-sm border border-gray-200 rounded-md outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-y"
+            spellCheck={false}
+            data-testid="wysiwyg-html-block-source"
+          />
+        </DialogBody>
+        <DialogActions>
+          <Button
+            variant="ghost"
+            onClick={() => {
+              setHtmlBlockDialogOpen(false);
+              setHtmlBlockContent("");
+              setIsEditingHtmlBlock(false);
+            }}
+          >
+            Cancel
+          </Button>
+          <Button onClick={handleSaveHtmlBlock}>
+            {isEditingHtmlBlock ? "Update Block" : "Insert Block"}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
@@ -1008,7 +1149,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
 // This prevents flicker when parent components re-render and create new function references.
 const arePropsEqual = (
   prevProps: WysiwygEditorProps,
-  nextProps: WysiwygEditorProps,
+  nextProps: WysiwygEditorProps
 ): boolean => {
   // Compare all props except function props (which we handle via refs)
   return (

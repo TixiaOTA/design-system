@@ -29,5 +29,10 @@ export interface WysiwygEditorProps {
     /** Whether to show the preview/edit toggle button */
     showPreviewToggle?: boolean;
 }
+/**
+ * Sanitizes HTML to prevent script injection and unsafe content.
+ * Mirrors backend rules: strips script/iframe/object/embed, javascript: URLs, and event handlers.
+ */
+export declare const sanitizeHtml: (html: string) => string;
 declare const _default: React.NamedExoticComponent<WysiwygEditorProps>;
 export default _default;
