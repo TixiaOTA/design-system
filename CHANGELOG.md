@@ -1,4 +1,8 @@
 
+## [v2.2.8] - 2026-03-10
+- fix: add support ssr
+
+
 ## [v2.2.7] - 2026-02-03
 - fix: add toolbar html editor
 
