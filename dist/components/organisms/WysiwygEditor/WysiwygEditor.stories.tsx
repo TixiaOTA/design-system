@@ -14,6 +14,8 @@ const meta: Meta<typeof WysiwygEditor> = {
   args: {
     // Explicit no-op for onChange to avoid implicit Storybook actions warning
     onChange: () => {},
+    // Default to client-friendly behavior in Storybook
+    immediatelyRender: true,
   },
   argTypes: {
     outputFormat: {
@@ -41,6 +43,11 @@ const meta: Meta<typeof WysiwygEditor> = {
       control: "text",
       description:
         "Maximum height of the editor; content scrolls inside when exceeded",
+    },
+    immediatelyRender: {
+      control: "boolean",
+      description:
+        "Passes through to Tiptap's `immediatelyRender`. For SSR set to false to avoid hydration mismatches.",
     },
   },
 };

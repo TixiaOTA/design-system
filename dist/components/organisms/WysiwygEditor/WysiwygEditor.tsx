@@ -52,6 +52,11 @@ export interface WysiwygEditorProps {
   onChange?: (content: string, format: OutputFormat) => void;
   /** Output format for onChange callback */
   outputFormat?: OutputFormat;
+  /** Whether to render immediately on the server (Tiptap `immediatelyRender`).
+   * For SSR setups, set this explicitly to avoid hydration mismatches.
+   * Defaults to false for safer SSR usage.
+   */
+  immediatelyRender?: boolean;
   /** Placeholder text */
   placeholder?: string;
   /** Custom image upload handler */
@@ -125,6 +130,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   initialContent = "",
   onChange,
   outputFormat = "html",
+  immediatelyRender = true,
   placeholder = "Start typing...",
   handleUploadImage,
   editable = true,
@@ -226,6 +232,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   const editor = useEditor({
     extensions,
     editable: viewOnly ? false : editable,
+    immediatelyRender,
     content: viewOnly
       ? sanitizeHtml(initialContent || "") || undefined
       : undefined,
@@ -1155,6 +1162,7 @@ const arePropsEqual = (
   return (
     prevProps.initialContent === nextProps.initialContent &&
     prevProps.outputFormat === nextProps.outputFormat &&
+    prevProps.immediatelyRender === nextProps.immediatelyRender &&
     prevProps.placeholder === nextProps.placeholder &&
     prevProps.editable === nextProps.editable &&
     prevProps.viewOnly === nextProps.viewOnly &&

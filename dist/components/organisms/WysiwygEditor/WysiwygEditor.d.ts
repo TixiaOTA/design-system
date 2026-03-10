@@ -12,6 +12,11 @@ export interface WysiwygEditorProps {
     onChange?: (content: string, format: OutputFormat) => void;
     /** Output format for onChange callback */
     outputFormat?: OutputFormat;
+    /** Whether to render immediately on the server (Tiptap `immediatelyRender`).
+     * For SSR setups, set this explicitly to avoid hydration mismatches.
+     * Defaults to false for safer SSR usage.
+     */
+    immediatelyRender?: boolean;
     /** Placeholder text */
     placeholder?: string;
     /** Custom image upload handler */
