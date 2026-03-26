@@ -1,10 +1,11 @@
-import React from 'react';
+import React from "react";
 export interface AvatarProps {
     src?: string;
     alt?: string;
-    size?: 'small' | 'medium' | 'large';
-    shape?: 'circle' | 'square';
+    size?: "small" | "medium" | "large";
+    shape?: "circle" | "square";
+    color?: "ghost" | "primary" | "secondary" | "danger" | "warning" | "success" | "default";
     className?: string;
-    variant?: 'cover' | 'contain';
+    variant?: "cover" | "contain";
 }
 export declare const Avatar: React.FC<AvatarProps>;
