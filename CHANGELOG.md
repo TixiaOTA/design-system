@@ -1,4 +1,8 @@
 
+## [v2.2.9] - 2026-03-26
+- fix: enhance avatar
+
+
 ## [v2.2.8] - 2026-03-10
 - fix: add support ssr
 
