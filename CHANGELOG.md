@@ -1,4 +1,8 @@
 
+## [v2.2.10] - 2026-04-01
+- fix: handle table responsiveness
+
+
 ## [v2.2.9] - 2026-03-26
 - fix: enhance avatar
 
