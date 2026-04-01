@@ -1,4 +1,8 @@
 
+## [v2.2.11] - 2026-04-01
+- fix: add responsive pagination
+
+
 ## [v2.2.10] - 2026-04-01
 - fix: handle table responsiveness
 
