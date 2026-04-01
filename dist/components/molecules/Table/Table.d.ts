@@ -38,6 +38,11 @@ export interface TableProps<T extends Record<string, any>> {
         total_data: number;
         limit_number: number;
     };
+    /**
+     * When true (default), below `sm` each row is shown as a stacked card with labels for readability.
+     * When false, the table always scrolls horizontally on narrow viewports (legacy behavior).
+     */
+    isResponsive?: boolean;
 }
-export declare const Table: <T extends Record<string, any>>({ schema, data, className, headerClassName, rowClassName, cellClassName, emptyState, isLoading, loadingState, showIndex, showIndexSticky, onPageChange, onPageSizeChange, onSortChange, onRowClick, showPagination, variant, meta, }: TableProps<T>) => string | number | true | import("react/jsx-runtime").JSX.Element | Iterable<React.ReactNode>;
+export declare const Table: <T extends Record<string, any>>({ schema, data, className, headerClassName, rowClassName, cellClassName, emptyState, isLoading, loadingState, showIndex, showIndexSticky, onPageChange, onPageSizeChange, onSortChange, onRowClick, showPagination, variant, isResponsive, meta, }: TableProps<T>) => string | number | true | import("react/jsx-runtime").JSX.Element | Iterable<React.ReactNode>;
 export {};

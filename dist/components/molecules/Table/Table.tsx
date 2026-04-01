@@ -14,6 +14,7 @@ import {
   Row,
   Header,
   HeaderGroup,
+  Cell,
 } from "@tanstack/react-table";
 
 export type TableVariant =
@@ -65,6 +66,11 @@ export interface TableProps<T extends Record<string, any>> {
     total_data: number;
     limit_number: number;
   };
+  /**
+   * When true (default), below `sm` each row is shown as a stacked card with labels for readability.
+   * When false, the table always scrolls horizontally on narrow viewports (legacy behavior).
+   */
+  isResponsive?: boolean;
 }
 
 const getVariantStyles = (variant: TableVariant) => {
@@ -125,54 +131,154 @@ const getVariantStyles = (variant: TableVariant) => {
   };
 };
 
+/** Left accent on mobile row cards (Tailwind border color utilities). */
+const getMobileCardAccent = (variant: TableVariant) => {
+  const map: Record<TableVariant, string> = {
+    primary: "border-l-primary",
+    default: "border-l-primary",
+    secondary: "border-l-secondary",
+    warning: "border-l-warning",
+    danger: "border-l-danger",
+    ghost: "border-l-gray-300",
+    success: "border-l-success",
+  };
+  return map[variant];
+};
+
 const TableLoading = <T,>({
   schema,
   variant = "default",
   showIndexSticky = false,
   isMobile = false,
+  isResponsive = true,
+  showIndex = false,
 }: {
   schema: TableColumn<T>[];
   variant?: TableVariant;
   showIndexSticky?: boolean;
   isMobile?: boolean;
+  isResponsive?: boolean;
+  showIndex?: boolean;
 }) => {
   const displayColumns = [
-    {
-      name: "no",
-      label: "No.",
-      accessorKey: "no" as keyof T,
-      type: "number",
-      width: 80,
-      sticky: showIndexSticky,
-      stickyPosition: "left" as const,
-    },
+    ...(showIndex
+      ? [
+          {
+            name: "no",
+            label: "No.",
+            accessorKey: "no" as keyof T,
+            type: "number" as const,
+            width: 80,
+            sticky: showIndexSticky,
+            stickyPosition: "left" as const,
+          },
+        ]
+      : []),
     ...schema,
   ];
   const variantStyles = getVariantStyles(variant);
+  const cardAccent = getMobileCardAccent(variant);
 
-  return (
-    <div className="bg-white rounded-md flex flex-col h-full max-h-[600px]">
-      <div className="p-0 w-full overflow-auto rounded-t-md [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full flex-1">
-        <table className="w-full border-spacing-0 border-separate min-w-full">
-          <thead
-            className={cn(
-              "border-2 sticky top-0 z-20 rounded-t-md",
-              variantStyles.border
-            )}
-          >
-            <tr>
-              {displayColumns.map((column, index) => {
+  const scrollShellClass =
+    "p-0 w-full overflow-auto rounded-t-md [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full flex-1";
+
+  const tableMarkup = (
+    <div className={cn(scrollShellClass, isResponsive && "hidden sm:block")}>
+      <table className="w-full border-spacing-0 border-separate min-w-full">
+        <thead
+          className={cn(
+            "border-2 sticky top-0 z-20 rounded-t-md",
+            variantStyles.border,
+          )}
+        >
+          <tr>
+            {displayColumns.map((column, index) => {
+              // Calculate left position for sticky columns
+              const calculateStickyLeft = () => {
+                if (
+                  isMobile ||
+                  !column.sticky ||
+                  column.stickyPosition !== "left"
+                )
+                  return 0;
+
+                let leftPosition = 0;
+                for (let i = 0; i < index; i++) {
+                  const prevColumn = displayColumns[i];
+                  if (
+                    prevColumn.sticky &&
+                    prevColumn.stickyPosition === "left"
+                  ) {
+                    const width =
+                      typeof prevColumn.width === "number"
+                        ? prevColumn.width
+                        : parseInt(prevColumn.width?.toString() || "0") || 0;
+                    leftPosition += width;
+                  }
+                }
+                return leftPosition;
+              };
+
+              return (
+                <th
+                  key={index}
+                  className={cn(
+                    "text-sm text-wrap border-y p-4 text-left",
+                    variantStyles.header,
+                    {
+                      "rounded-tl-md": index === 0,
+                      "rounded-tr-md": index === displayColumns.length - 1,
+                      "sticky z-30": !isMobile && column.sticky,
+                      "left-0":
+                        !isMobile &&
+                        column.sticky &&
+                        column.stickyPosition === "left",
+                      "right-0":
+                        !isMobile &&
+                        column.sticky &&
+                        column.stickyPosition === "right",
+                    },
+                  )}
+                  style={{
+                    width:
+                      typeof column.width === "number"
+                        ? `${column.width}px`
+                        : column.width,
+                    minWidth:
+                      typeof column.width === "number"
+                        ? `${column.width}px`
+                        : column.width,
+                    left:
+                      !isMobile &&
+                      column.sticky &&
+                      column.stickyPosition === "left"
+                        ? `${calculateStickyLeft()}px`
+                        : undefined,
+                  }}
+                >
+                  {column.label}
+                </th>
+              );
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {[...Array(5)].map((_, rowIndex) => (
+            <tr
+              key={rowIndex}
+              className={cn("p-3", {
+                [variantStyles.stripe]: rowIndex % 2 !== 0,
+                "bg-white": rowIndex % 2 === 0,
+              })}
+            >
+              {displayColumns.map((column, colIndex) => {
                 // Calculate left position for sticky columns
                 const calculateStickyLeft = () => {
-                  if (
-                    isMobile ||
-                    !column.sticky ||
-                    column.stickyPosition !== "left"
-                  )
+                  if (!column.sticky || column.stickyPosition !== "left")
                     return 0;
 
                   let leftPosition = 0;
-                  for (let i = 0; i < index; i++) {
+                  for (let i = 0; i < colIndex; i++) {
                     const prevColumn = displayColumns[i];
                     if (
                       prevColumn.sticky &&
@@ -189,25 +295,25 @@ const TableLoading = <T,>({
                 };
 
                 return (
-                  <th
-                    key={index}
-                    className={cn(
-                      "text-sm text-wrap border-y p-4 text-left",
-                      variantStyles.header,
-                      {
-                        "rounded-tl-md": index === 0,
-                        "rounded-tr-md": index === displayColumns.length - 1,
-                        "sticky z-30": !isMobile && column.sticky,
-                        "left-0":
-                          !isMobile &&
-                          column.sticky &&
-                          column.stickyPosition === "left",
-                        "right-0":
-                          !isMobile &&
-                          column.sticky &&
-                          column.stickyPosition === "right",
-                      }
-                    )}
+                  <td
+                    key={`${rowIndex}-${colIndex}`}
+                    className={cn("text-left text-nowrap text-sm p-4", {
+                      "sticky z-10": column.sticky,
+                      "left-0":
+                        column.sticky && column.stickyPosition === "left",
+                      "right-0":
+                        column.sticky && column.stickyPosition === "right",
+                      // Ensure sticky columns have solid background that matches row
+                      "bg-white":
+                        column.sticky &&
+                        (rowIndex % 2 === 0 || variant === "default"),
+                      [variantStyles.stripe]:
+                        column.sticky &&
+                        rowIndex % 2 !== 0 &&
+                        variant !== "default",
+                      [variantStyles.hoverStripe]: column.sticky,
+                      "border-b border-gray-200": variant === "default",
+                    })}
                     style={{
                       width:
                         typeof column.width === "number"
@@ -218,92 +324,50 @@ const TableLoading = <T,>({
                           ? `${column.width}px`
                           : column.width,
                       left:
-                        !isMobile &&
-                        column.sticky &&
-                        column.stickyPosition === "left"
+                        column.sticky && column.stickyPosition === "left"
                           ? `${calculateStickyLeft()}px`
                           : undefined,
                     }}
                   >
-                    {column.label}
-                  </th>
+                    <Skeleton className="h-10 w-full rounded-md" />
+                  </td>
                 );
               })}
             </tr>
-          </thead>
-          <tbody>
-            {[...Array(5)].map((_, rowIndex) => (
-              <tr
-                key={rowIndex}
-                className={cn("p-3", {
-                  [variantStyles.stripe]: rowIndex % 2 !== 0,
-                  "bg-white": rowIndex % 2 === 0,
-                })}
-              >
-                {displayColumns.map((column, colIndex) => {
-                  // Calculate left position for sticky columns
-                  const calculateStickyLeft = () => {
-                    if (!column.sticky || column.stickyPosition !== "left")
-                      return 0;
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 
-                    let leftPosition = 0;
-                    for (let i = 0; i < colIndex; i++) {
-                      const prevColumn = displayColumns[i];
-                      if (
-                        prevColumn.sticky &&
-                        prevColumn.stickyPosition === "left"
-                      ) {
-                        const width =
-                          typeof prevColumn.width === "number"
-                            ? prevColumn.width
-                            : parseInt(prevColumn.width?.toString() || "0") ||
-                              0;
-                        leftPosition += width;
-                      }
-                    }
-                    return leftPosition;
-                  };
-
-                  return (
-                    <td
-                      key={`${rowIndex}-${colIndex}`}
-                      className={cn("text-left text-nowrap text-sm p-4", {
-                        "sticky z-10": column.sticky,
-                        "left-0":
-                          column.sticky && column.stickyPosition === "left",
-                        "right-0":
-                          column.sticky && column.stickyPosition === "right",
-                        // Ensure sticky columns have solid background that matches row
-                        "bg-white": column.sticky && (rowIndex % 2 === 0 || variant === "default"),
-                        [variantStyles.stripe]:
-                          column.sticky && rowIndex % 2 !== 0 && variant !== "default",
-                        [variantStyles.hoverStripe]: column.sticky,
-                        "border-b border-gray-200": variant === "default",
-                      })}
-                      style={{
-                        width:
-                          typeof column.width === "number"
-                            ? `${column.width}px`
-                            : column.width,
-                        minWidth:
-                          typeof column.width === "number"
-                            ? `${column.width}px`
-                            : column.width,
-                        left:
-                          column.sticky && column.stickyPosition === "left"
-                            ? `${calculateStickyLeft()}px`
-                            : undefined,
-                      }}
-                    >
-                      <Skeleton className="h-10 w-full rounded-md" />
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+  return (
+    <div className="bg-white rounded-md flex flex-col h-full max-h-[600px]">
+      {tableMarkup}
+      {isResponsive && (
+        <div className="sm:hidden flex-1 space-y-3 p-3 overflow-auto min-h-0">
+          {[...Array(5)].map((_, cardIndex) => (
+            <div
+              key={cardIndex}
+              className={cn(
+                "rounded-xl border border-gray-200 bg-white p-4 shadow-sm border-l-4",
+                cardAccent,
+              )}
+            >
+              <div className="space-y-3">
+                {displayColumns.map((_, i) => (
+                  <div
+                    key={`${cardIndex}-${i}`}
+                    className="grid grid-cols-[minmax(0,40%)_minmax(0,1fr)] items-center gap-x-3 gap-y-0"
+                  >
+                    <Skeleton className="h-3 w-20 max-w-full rounded" />
+                    <Skeleton className="h-4 w-full rounded-md" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
@@ -326,6 +390,7 @@ export const Table = <T extends Record<string, any>>({
   onRowClick,
   showPagination = false,
   variant = "default",
+  isResponsive = true,
   meta = {
     current_page: 1,
     total_page: 1,
@@ -400,7 +465,7 @@ export const Table = <T extends Record<string, any>>({
       sorting,
     },
     onSortingChange: (
-      updater: SortingState | ((old: SortingState) => SortingState)
+      updater: SortingState | ((old: SortingState) => SortingState),
     ) => {
       const newSorting =
         typeof updater === "function" ? updater(sorting) : updater;
@@ -420,6 +485,10 @@ export const Table = <T extends Record<string, any>>({
   });
 
   const variantStyles = getVariantStyles(variant);
+  const mobileCardAccent = getMobileCardAccent(variant);
+
+  const tableScrollClass =
+    "p-0 w-full overflow-auto rounded-t-md [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full flex-1";
 
   if (isLoading) {
     return (
@@ -429,15 +498,17 @@ export const Table = <T extends Record<string, any>>({
           variant={variant}
           showIndexSticky={showIndexSticky}
           isMobile={isMobile}
+          isResponsive={isResponsive}
+          showIndex={showIndex}
         />
       )
     );
   }
 
   const handleRowClick = (
-    event: React.MouseEvent<HTMLTableRowElement>,
+    event: React.MouseEvent<HTMLElement>,
     row: T,
-    index: number
+    index: number,
   ) => {
     const target = event.target as HTMLElement;
     const isInteractiveElement =
@@ -455,290 +526,352 @@ export const Table = <T extends Record<string, any>>({
     }
   };
 
+  const renderHeaderCell = (
+    headerGroup: HeaderGroup<T>,
+    header: Header<T, unknown>,
+    index: number,
+  ) => {
+    const columnMeta = header.column.columnDef.meta as {
+      align?: ColumnAlignment;
+      width?: number | string;
+      sticky?: boolean;
+      stickyPosition?: "left" | "right";
+    };
+
+    const calculateStickyLeft = () => {
+      if (
+        isMobile ||
+        !columnMeta?.sticky ||
+        columnMeta.stickyPosition !== "left"
+      )
+        return 0;
+
+      let leftPosition = 0;
+      for (let i = 0; i < index; i++) {
+        const prevColumn = headerGroup.headers[i];
+        const prevMeta = prevColumn.column.columnDef.meta as {
+          sticky?: boolean;
+          stickyPosition?: "left" | "right";
+          width?: number | string;
+        };
+        if (prevMeta?.sticky && prevMeta.stickyPosition === "left") {
+          const width =
+            typeof prevMeta.width === "number"
+              ? prevMeta.width
+              : parseInt(prevMeta.width?.toString() || "0") || 0;
+          leftPosition += width;
+        }
+      }
+      return leftPosition;
+    };
+
+    return (
+      <th
+        key={header.id}
+        className={cn(
+          "text-sm text-wrap border-y p-4",
+          variantStyles.header,
+          {
+            "cursor-pointer": header.column.getCanSort(),
+            "rounded-tl-md": index === 0,
+            "rounded-tr-md": index === headerGroup.headers.length - 1,
+            "text-left": columnMeta?.align === "left",
+            "text-center": columnMeta?.align === "center",
+            "text-right": columnMeta?.align === "right",
+            "sticky z-30": !isMobile && columnMeta?.sticky,
+            "left-0":
+              !isMobile &&
+              columnMeta?.sticky &&
+              columnMeta.stickyPosition === "left",
+            "right-0":
+              !isMobile &&
+              columnMeta?.sticky &&
+              columnMeta.stickyPosition === "right",
+          },
+          headerClassName,
+        )}
+        style={{
+          width:
+            typeof columnMeta?.width === "number"
+              ? `${columnMeta.width}px`
+              : columnMeta?.width,
+          minWidth:
+            typeof columnMeta?.width === "number"
+              ? `${columnMeta.width}px`
+              : columnMeta?.width,
+          left:
+            !isMobile &&
+            columnMeta?.sticky &&
+            columnMeta.stickyPosition === "left"
+              ? `${calculateStickyLeft()}px`
+              : undefined,
+        }}
+        onClick={
+          header.column.getCanSort()
+            ? header.column.getToggleSortingHandler()
+            : undefined
+        }
+      >
+        <div className="flex items-center gap-2 relative z-10">
+          <span
+            className={cn({
+              "font-semibold": index === 0,
+            })}
+          >
+            {flexRender(header.column.columnDef.header, header.getContext())}
+          </span>
+          {header.column.getCanSort() && (
+            <Icon
+              icon={
+                header.column.getIsSorted()
+                  ? header.column.getIsSorted() === "desc"
+                    ? "mdi:keyboard-arrow-up"
+                    : "mdi:keyboard-arrow-down"
+                  : "mdi:unfold-more-horizontal"
+              }
+              className={cn("h-4 w-4 flex-shrink-0", {
+                "text-white": variant !== "ghost",
+                "text-gray-700": variant === "ghost",
+              })}
+            />
+          )}
+        </div>
+      </th>
+    );
+  };
+
+  const renderBodyCell = (rowIndex: number, cell: Cell<T, unknown>) => {
+    const columnMeta = cell.column.columnDef.meta as {
+      align?: ColumnAlignment;
+      width?: number | string;
+      sticky?: boolean;
+      stickyPosition?: "left" | "right";
+    };
+
+    const calculateStickyLeft = () => {
+      if (
+        isMobile ||
+        !columnMeta?.sticky ||
+        columnMeta.stickyPosition !== "left"
+      )
+        return 0;
+
+      let leftPosition = 0;
+      const allColumns = table.getAllColumns();
+      const currentColumnIndex = allColumns.findIndex(
+        (col) => col.id === cell.column.id,
+      );
+
+      for (let i = 0; i < currentColumnIndex; i++) {
+        const prevColumn = allColumns[i];
+        const prevMeta = prevColumn.columnDef.meta as {
+          sticky?: boolean;
+          stickyPosition?: "left" | "right";
+          width?: number | string;
+        };
+        if (prevMeta?.sticky && prevMeta.stickyPosition === "left") {
+          const width =
+            typeof prevMeta.width === "number"
+              ? prevMeta.width
+              : parseInt(prevMeta.width?.toString() || "0") || 0;
+          leftPosition += width;
+        }
+      }
+      return leftPosition;
+    };
+
+    return (
+      <td
+        key={cell.id}
+        className={cn(
+          "px-4 py-3 text-sm text-gray-900",
+          {
+            "text-left": columnMeta?.align === "left",
+            "text-center": columnMeta?.align === "center",
+            "text-right": columnMeta?.align === "right",
+            "sticky z-10": !isMobile && columnMeta?.sticky,
+            "left-0":
+              !isMobile &&
+              columnMeta?.sticky &&
+              columnMeta.stickyPosition === "left",
+            "right-0":
+              !isMobile &&
+              columnMeta?.sticky &&
+              columnMeta.stickyPosition === "right",
+            "bg-white":
+              !isMobile &&
+              columnMeta?.sticky &&
+              (rowIndex % 2 === 0 || variant === "default"),
+            [variantStyles.stripe]:
+              !isMobile &&
+              columnMeta?.sticky &&
+              rowIndex % 2 !== 0 &&
+              variant !== "default",
+            [variantStyles.hoverStripe]: !isMobile && columnMeta?.sticky,
+            "border-b border-gray-200": variant === "default",
+          },
+          cellClassName,
+        )}
+        style={{
+          width:
+            typeof columnMeta?.width === "number"
+              ? `${columnMeta.width}px`
+              : columnMeta?.width,
+          minWidth:
+            typeof columnMeta?.width === "number"
+              ? `${columnMeta.width}px`
+              : columnMeta?.width,
+          left:
+            !isMobile &&
+            columnMeta?.sticky &&
+            columnMeta.stickyPosition === "left"
+              ? `${calculateStickyLeft()}px`
+              : undefined,
+        }}
+      >
+        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+      </td>
+    );
+  };
+
   return (
     <div className="bg-white rounded-md flex flex-col h-full max-h-[600px]">
-      <div className="p-0 w-full overflow-auto rounded-t-md [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full flex-1">
-        <table
+      {data.length === 0 ? (
+        <div
           className={cn(
-            "w-full border-spacing-0 border-separate min-w-full",
-            className
+            "flex flex-1 flex-col items-center justify-center gap-3 p-8 text-center text-gray-600 min-h-[200px]",
+            isResponsive &&
+              "mx-3 my-3 rounded-xl border border-dashed border-gray-200 sm:mx-0 sm:my-0 sm:rounded-none sm:border-0",
           )}
         >
-          <thead
-            className={cn(
-              "border-2 sticky top-0 z-20 rounded-t-md",
-              variantStyles.border
-            )}
+          {emptyState || (
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <p>Data Not Found</p>
+              <Icon icon="mdi:face-frown-open" size={34} />
+            </div>
+          )}
+        </div>
+      ) : (
+        <>
+          <div
+            className={cn(tableScrollClass, isResponsive && "hidden sm:block")}
           >
-            {table.getHeaderGroups().map((headerGroup: HeaderGroup<T>) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map(
-                  (header: Header<T, unknown>, index: number) => {
-                    const columnMeta = header.column.columnDef.meta as {
-                      align?: ColumnAlignment;
-                      width?: number | string;
-                      sticky?: boolean;
-                      stickyPosition?: "left" | "right";
-                    };
-
-                    // Calculate left position for sticky columns
-                    const calculateStickyLeft = () => {
-                      if (
-                        isMobile ||
-                        !columnMeta?.sticky ||
-                        columnMeta.stickyPosition !== "left"
-                      )
-                        return 0;
-
-                      let leftPosition = 0;
-                      for (let i = 0; i < index; i++) {
-                        const prevColumn = headerGroup.headers[i];
-                        const prevMeta = prevColumn.column.columnDef.meta as {
-                          sticky?: boolean;
-                          stickyPosition?: "left" | "right";
-                          width?: number | string;
-                        };
-                        if (
-                          prevMeta?.sticky &&
-                          prevMeta.stickyPosition === "left"
-                        ) {
-                          const width =
-                            typeof prevMeta.width === "number"
-                              ? prevMeta.width
-                              : parseInt(prevMeta.width?.toString() || "0") ||
-                                0;
-                          leftPosition += width;
-                        }
-                      }
-                      return leftPosition;
-                    };
-
-                    return (
-                      <th
-                        key={header.id}
-                        className={cn(
-                          "text-sm text-wrap border-y p-4",
-                          variantStyles.header,
-                          {
-                            "cursor-pointer": header.column.getCanSort(),
-                            "rounded-tl-md": index === 0,
-                            "rounded-tr-md":
-                              index === headerGroup.headers.length - 1,
-                            "text-left": columnMeta?.align === "left",
-                            "text-center": columnMeta?.align === "center",
-                            "text-right": columnMeta?.align === "right",
-                            "sticky z-30": !isMobile && columnMeta?.sticky,
-                            "left-0":
-                              !isMobile &&
-                              columnMeta?.sticky &&
-                              columnMeta.stickyPosition === "left",
-                            "right-0":
-                              !isMobile &&
-                              columnMeta?.sticky &&
-                              columnMeta.stickyPosition === "right",
-                          },
-                          headerClassName
-                        )}
-                        style={{
-                          width:
-                            typeof columnMeta?.width === "number"
-                              ? `${columnMeta.width}px`
-                              : columnMeta?.width,
-                          minWidth:
-                            typeof columnMeta?.width === "number"
-                              ? `${columnMeta.width}px`
-                              : columnMeta?.width,
-                          left:
-                            !isMobile &&
-                            columnMeta?.sticky &&
-                            columnMeta.stickyPosition === "left"
-                              ? `${calculateStickyLeft()}px`
-                              : undefined,
-                        }}
-                        onClick={
-                          header.column.getCanSort()
-                            ? header.column.getToggleSortingHandler()
-                            : undefined
-                        }
-                      >
-                        <div className="flex items-center gap-2 relative z-10">
-                          <span
-                            className={cn({
-                              "font-semibold": index === 0,
-                            })}
-                          >
-                            {flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                          </span>
-                          {header.column.getCanSort() && (
-                            <Icon
-                              icon={
-                                header.column.getIsSorted()
-                                  ? header.column.getIsSorted() === "desc"
-                                    ? "mdi:keyboard-arrow-up"
-                                    : "mdi:keyboard-arrow-down"
-                                  : "mdi:unfold-more-horizontal"
-                              }
-                              className={cn("h-4 w-4 flex-shrink-0", {
-                                "text-white": variant !== "ghost",
-                                "text-gray-700": variant === "ghost",
-                              })}
-                            />
-                          )}
-                        </div>
-                      </th>
-                    );
-                  }
+            <table
+              className={cn(
+                "w-full border-spacing-0 border-separate min-w-full",
+                className,
+              )}
+            >
+              <thead
+                className={cn(
+                  "border-2 sticky top-0 z-20 rounded-t-md",
+                  variantStyles.border,
                 )}
-              </tr>
-            ))}
-          </thead>
-          <tbody>
-            {table.getRowModel().rows.length === 0 ? (
-              <tr>
-                <td
-                  colSpan={table.getAllColumns().length}
-                  className={cn(
-                    "text-center border h-full w-full rounded-b-md"
-                  )}
-                >
-                  {emptyState || (
-                    <div className="flex mx-auto w-full text-center justify-center gap-3 items-center">
-                      <p>Data Not Found</p>
-                      <Icon icon="mdi:face-frown-open" size={34} />
-                    </div>
-                  )}
-                </td>
-              </tr>
-            ) : (
-              table.getRowModel().rows.map((row: Row<T>, rowIndex: number) => (
-                <tr
+              >
+                {table.getHeaderGroups().map((headerGroup: HeaderGroup<T>) => (
+                  <tr key={headerGroup.id}>
+                    {headerGroup.headers.map(
+                      (header: Header<T, unknown>, index: number) =>
+                        renderHeaderCell(headerGroup, header, index),
+                    )}
+                  </tr>
+                ))}
+              </thead>
+              <tbody>
+                {table
+                  .getRowModel()
+                  .rows.map((row: Row<T>, rowIndex: number) => (
+                    <tr
+                      key={row.id}
+                      className={cn(
+                        "p-3 group",
+                        variantStyles.row,
+                        {
+                          [variantStyles.stripe]: rowIndex % 2 !== 0,
+                          "bg-white": rowIndex % 2 === 0,
+                          "cursor-pointer": onRowClick,
+                        },
+                        rowClassName,
+                      )}
+                      onClick={(event) =>
+                        handleRowClick(event, row.original, rowIndex)
+                      }
+                    >
+                      {row
+                        .getVisibleCells()
+                        .map((cell) => renderBodyCell(rowIndex, cell))}
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+
+          {isResponsive && (
+            <div className="sm:hidden flex-1 space-y-3 p-3 overflow-auto min-h-0 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full">
+              {table.getRowModel().rows.map((row: Row<T>, rowIndex: number) => (
+                <article
                   key={row.id}
                   className={cn(
-                    "p-3 group",
+                    "rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden border-l-4 transition-colors",
+                    mobileCardAccent,
                     variantStyles.row,
                     {
                       [variantStyles.stripe]: rowIndex % 2 !== 0,
                       "bg-white": rowIndex % 2 === 0,
-                      "cursor-pointer": onRowClick,
+                      "cursor-pointer active:scale-[0.99]": onRowClick,
                     },
-                    rowClassName
+                    rowClassName,
                   )}
                   onClick={(event) =>
                     handleRowClick(event, row.original, rowIndex)
                   }
                 >
-                  {row.getVisibleCells().map((cell) => {
-                    const columnMeta = cell.column.columnDef.meta as {
-                      align?: ColumnAlignment;
-                      width?: number | string;
-                      sticky?: boolean;
-                      stickyPosition?: "left" | "right";
-                    };
-
-                    // Calculate left position for sticky columns
-                    const calculateStickyLeft = () => {
-                      if (
-                        isMobile ||
-                        !columnMeta?.sticky ||
-                        columnMeta.stickyPosition !== "left"
-                      )
-                        return 0;
-
-                      let leftPosition = 0;
-                      const allColumns = table.getAllColumns();
-                      const currentColumnIndex = allColumns.findIndex(
-                        (col) => col.id === cell.column.id
+                  <dl className="divide-y divide-gray-100 text-left">
+                    {row.getVisibleCells().map((cell) => {
+                      const headerGroup = table.getHeaderGroups()[0];
+                      const columnHeader = headerGroup?.headers.find(
+                        (h) => h.column.id === cell.column.id,
                       );
+                      const hdrDef = cell.column.columnDef.header;
+                      const label = columnHeader
+                        ? flexRender(
+                            columnHeader.column.columnDef.header,
+                            columnHeader.getContext(),
+                          )
+                        : typeof hdrDef === "string" ||
+                            typeof hdrDef === "number"
+                          ? hdrDef
+                          : cell.column.id;
 
-                      for (let i = 0; i < currentColumnIndex; i++) {
-                        const prevColumn = allColumns[i];
-                        const prevMeta = prevColumn.columnDef.meta as {
-                          sticky?: boolean;
-                          stickyPosition?: "left" | "right";
-                          width?: number | string;
-                        };
-                        if (
-                          prevMeta?.sticky &&
-                          prevMeta.stickyPosition === "left"
-                        ) {
-                          const width =
-                            typeof prevMeta.width === "number"
-                              ? prevMeta.width
-                              : parseInt(prevMeta.width?.toString() || "0") ||
-                                0;
-                          leftPosition += width;
-                        }
-                      }
-                      return leftPosition;
-                    };
-
-                    return (
-                      <td
-                        key={cell.id}
-                        className={cn(
-                          "px-4 py-3 text-sm text-gray-900",
-                          {
-                            "text-left": columnMeta?.align === "left",
-                            "text-center": columnMeta?.align === "center",
-                            "text-right": columnMeta?.align === "right",
-                            "sticky z-10": !isMobile && columnMeta?.sticky,
-                            "left-0":
-                              !isMobile &&
-                              columnMeta?.sticky &&
-                              columnMeta.stickyPosition === "left",
-                            "right-0":
-                              !isMobile &&
-                              columnMeta?.sticky &&
-                              columnMeta.stickyPosition === "right",
-                            // Ensure sticky columns have solid background that matches row
-                            "bg-white":
-                              !isMobile &&
-                              columnMeta?.sticky &&
-                              (rowIndex % 2 === 0 || variant === "default"),
-                            [variantStyles.stripe]:
-                              !isMobile &&
-                              columnMeta?.sticky &&
-                              rowIndex % 2 !== 0 &&
-                              variant !== "default",
-                            [variantStyles.hoverStripe]:
-                              !isMobile && columnMeta?.sticky,
-                            "border-b border-gray-200": variant === "default",
-                          },
-                          cellClassName
-                        )}
-                        style={{
-                          width:
-                            typeof columnMeta?.width === "number"
-                              ? `${columnMeta.width}px`
-                              : columnMeta?.width,
-                          minWidth:
-                            typeof columnMeta?.width === "number"
-                              ? `${columnMeta.width}px`
-                              : columnMeta?.width,
-                          left:
-                            !isMobile &&
-                            columnMeta?.sticky &&
-                            columnMeta.stickyPosition === "left"
-                              ? `${calculateStickyLeft()}px`
-                              : undefined,
-                        }}
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </td>
-                    );
-                  })}
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+                      return (
+                        <div
+                          key={cell.id}
+                          className="grid grid-cols-[minmax(0,40%)_minmax(0,1fr)] items-start gap-x-3 gap-y-0 px-4 py-3"
+                        >
+                          <dt className="text-[11px] font-semibold uppercase tracking-wide text-gray-500 break-words text-left pr-1 pt-0.5">
+                            {label}
+                          </dt>
+                          <dd
+                            className={cn(
+                              cellClassName,
+                              "text-left text-sm text-gray-900 min-w-0 break-words [&>*]:max-w-full [&>*]:text-left",
+                            )}
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )}
+                          </dd>
+                        </div>
+                      );
+                    })}
+                  </dl>
+                </article>
+              ))}
+            </div>
+          )}
+        </>
+      )}
 
       {!!data.length && showPagination && (
         <div className="p-4 bg-white rounded-b-md border-t border-gray-200 sticky bottom-0 z-10 flex-shrink-0">

@@ -70,14 +70,16 @@ export const Pagination: React.FC<PaginationProps> = ({
     <nav
       className={clsx("flex items-center justify-between space-x-1", className)}
     >
-      <div className="hidden sm:block text-sm text-neutral-700">
+      <div className="text-sm text-neutral-700">
         <b>{`${currentPage} - ${totalPages}`}</b> dari {totalData} {label}
       </div>
 
       <div className="flex items-center gap-2">
         {perPageOptions && perPageOptions.length > 0 && (
           <div className="flex items-center gap-2 mr-4">
-            <span className="text-neutral-700 text-sm">Menampilkan</span>
+            <span className="sm:block hidden text-neutral-700 text-sm">
+              Menampilkan
+            </span>
             <Select
               value={perPage?.toString()}
               onChange={(val) =>
@@ -94,7 +96,9 @@ export const Pagination: React.FC<PaginationProps> = ({
                 </SelectItem>
               ))}
             </Select>
-            <span className="text-neutral-700 text-sm">data per halaman</span>
+            <span className="sm:block hidden text-neutral-700 text-sm">
+              data per halaman
+            </span>
           </div>
         )}
         <Button
@@ -105,33 +109,35 @@ export const Pagination: React.FC<PaginationProps> = ({
             "px-3 py-1 rounded-md text-sm",
             currentPage === 1
               ? "text-gray-400 cursor-not-allowed"
-              : "text-gray-700 hover:bg-gray-100"
+              : "text-gray-700 hover:bg-gray-100",
           )}
         >
           <Icon size="18" icon="mdi:chevron-left" />
         </Button>
 
-        {pages.map((page, index) => {
-          const isCurrentPage = page === currentPage;
-          const isEllipsis = typeof page === "string" && page === "...";
+        <div className="flex items-center gap-2 overflow-x-auto max-w-[8em]">
+          {pages.map((page, index) => {
+            const isCurrentPage = page === currentPage;
+            const isEllipsis = typeof page === "string" && page === "...";
 
-          return (
-            <Button
-              variant="ghost"
-              key={index}
-              onClick={() => !isEllipsis && onPageChange(page)}
-              className={clsx(
-                "px-3 py-1 rounded-md text-sm",
-                isCurrentPage
-                  ? "bg-primary text-white hover:bg-primary"
-                  : "text-gray-700",
-                isEllipsis && "cursor-default"
-              )}
-            >
-              {page}
-            </Button>
-          );
-        })}
+            return (
+              <Button
+                variant="ghost"
+                key={index}
+                onClick={() => !isEllipsis && onPageChange(page)}
+                className={clsx(
+                  "px-3 py-1 rounded-md text-sm",
+                  isCurrentPage
+                    ? "bg-primary text-white hover:bg-primary"
+                    : "text-gray-700",
+                  isEllipsis && "cursor-default",
+                )}
+              >
+                {page}
+              </Button>
+            );
+          })}
+        </div>
 
         <Button
           variant="ghost"
@@ -141,7 +147,7 @@ export const Pagination: React.FC<PaginationProps> = ({
             "px-3 py-1 rounded-md text-sm",
             currentPage === totalPages
               ? "text-gray-400 cursor-not-allowed"
-              : "text-gray-700"
+              : "text-gray-700",
           )}
         >
           <Icon size="18" icon="mdi:chevron-right" />
