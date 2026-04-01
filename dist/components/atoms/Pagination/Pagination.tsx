@@ -68,39 +68,41 @@ export const Pagination: React.FC<PaginationProps> = ({
 
   return (
     <nav
-      className={clsx("flex items-center justify-between space-x-1", className)}
+      className={clsx(
+        "flex items-center justify-between space-x-1 flex-col gap-2 sm:flex-row",
+        className,
+      )}
     >
       <div className="text-sm text-neutral-700">
         <b>{`${currentPage} - ${totalPages}`}</b> dari {totalData} {label}
       </div>
 
+      {perPageOptions && perPageOptions.length > 0 && (
+        <div className="flex items-center gap-2 mr-4">
+          <span className="sm:block hidden text-neutral-700 text-sm">
+            Menampilkan
+          </span>
+          <Select
+            value={perPage?.toString()}
+            onChange={(val) => onPerPageChange && onPerPageChange(Number(val))}
+            size="sm"
+            className="w-16"
+            fullWidth={false}
+            aria-label="Items per page"
+          >
+            {perPageOptions.map((option) => (
+              <SelectItem key={option} value={option.toString()}>
+                {option}
+              </SelectItem>
+            ))}
+          </Select>
+          <span className="sm:block hidden text-neutral-700 text-sm">
+            data per halaman
+          </span>
+        </div>
+      )}
+
       <div className="flex items-center gap-2">
-        {perPageOptions && perPageOptions.length > 0 && (
-          <div className="flex items-center gap-2 mr-4">
-            <span className="sm:block hidden text-neutral-700 text-sm">
-              Menampilkan
-            </span>
-            <Select
-              value={perPage?.toString()}
-              onChange={(val) =>
-                onPerPageChange && onPerPageChange(Number(val))
-              }
-              size="sm"
-              className="w-16"
-              fullWidth={false}
-              aria-label="Items per page"
-            >
-              {perPageOptions.map((option) => (
-                <SelectItem key={option} value={option.toString()}>
-                  {option}
-                </SelectItem>
-              ))}
-            </Select>
-            <span className="sm:block hidden text-neutral-700 text-sm">
-              data per halaman
-            </span>
-          </div>
-        )}
         <Button
           variant="ghost"
           onClick={() => onPageChange(currentPage - 1)}
@@ -115,29 +117,27 @@ export const Pagination: React.FC<PaginationProps> = ({
           <Icon size="18" icon="mdi:chevron-left" />
         </Button>
 
-        <div className="flex items-center gap-2 overflow-x-auto max-w-[8em]">
-          {pages.map((page, index) => {
-            const isCurrentPage = page === currentPage;
-            const isEllipsis = typeof page === "string" && page === "...";
+        {pages.map((page, index) => {
+          const isCurrentPage = page === currentPage;
+          const isEllipsis = typeof page === "string" && page === "...";
 
-            return (
-              <Button
-                variant="ghost"
-                key={index}
-                onClick={() => !isEllipsis && onPageChange(page)}
-                className={clsx(
-                  "px-3 py-1 rounded-md text-sm",
-                  isCurrentPage
-                    ? "bg-primary text-white hover:bg-primary"
-                    : "text-gray-700",
-                  isEllipsis && "cursor-default",
-                )}
-              >
-                {page}
-              </Button>
-            );
-          })}
-        </div>
+          return (
+            <Button
+              variant="ghost"
+              key={index}
+              onClick={() => !isEllipsis && onPageChange(page)}
+              className={clsx(
+                "px-3 py-1 rounded-md text-sm",
+                isCurrentPage
+                  ? "bg-primary text-white hover:bg-primary"
+                  : "text-gray-700",
+                isEllipsis && "cursor-default",
+              )}
+            >
+              {page}
+            </Button>
+          );
+        })}
 
         <Button
           variant="ghost"

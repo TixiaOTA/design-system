@@ -5500,7 +5500,10 @@ const gv = ({
   return /* @__PURE__ */ m.jsxs(
     "nav",
     {
-      className: Me("flex items-center justify-between space-x-1", s),
+      className: Me(
+        "flex items-center justify-between space-x-1 flex-col gap-2 sm:flex-row",
+        s
+      ),
       children: [
         /* @__PURE__ */ m.jsxs("div", { className: "text-sm text-neutral-700", children: [
           /* @__PURE__ */ m.jsx("b", { children: `${t} - ${e}` }),
@@ -5509,23 +5512,23 @@ const gv = ({
           " ",
           l
         ] }),
+        i && i.length > 0 && /* @__PURE__ */ m.jsxs("div", { className: "flex items-center gap-2 mr-4", children: [
+          /* @__PURE__ */ m.jsx("span", { className: "sm:block hidden text-neutral-700 text-sm", children: "Menampilkan" }),
+          /* @__PURE__ */ m.jsx(
+            Hm,
+            {
+              value: a == null ? void 0 : a.toString(),
+              onChange: (p) => d && d(Number(p)),
+              size: "sm",
+              className: "w-16",
+              fullWidth: !1,
+              "aria-label": "Items per page",
+              children: i.map((p) => /* @__PURE__ */ m.jsx(Va, { value: p.toString(), children: p }, p))
+            }
+          ),
+          /* @__PURE__ */ m.jsx("span", { className: "sm:block hidden text-neutral-700 text-sm", children: "data per halaman" })
+        ] }),
         /* @__PURE__ */ m.jsxs("div", { className: "flex items-center gap-2", children: [
-          i && i.length > 0 && /* @__PURE__ */ m.jsxs("div", { className: "flex items-center gap-2 mr-4", children: [
-            /* @__PURE__ */ m.jsx("span", { className: "sm:block hidden text-neutral-700 text-sm", children: "Menampilkan" }),
-            /* @__PURE__ */ m.jsx(
-              Hm,
-              {
-                value: a == null ? void 0 : a.toString(),
-                onChange: (p) => d && d(Number(p)),
-                size: "sm",
-                className: "w-16",
-                fullWidth: !1,
-                "aria-label": "Items per page",
-                children: i.map((p) => /* @__PURE__ */ m.jsx(Va, { value: p.toString(), children: p }, p))
-              }
-            ),
-            /* @__PURE__ */ m.jsx("span", { className: "sm:block hidden text-neutral-700 text-sm", children: "data per halaman" })
-          ] }),
           /* @__PURE__ */ m.jsx(
             _e,
             {
@@ -5539,7 +5542,7 @@ const gv = ({
               children: /* @__PURE__ */ m.jsx(ke, { size: "18", icon: "mdi:chevron-left" })
             }
           ),
-          /* @__PURE__ */ m.jsx("div", { className: "flex items-center gap-2 overflow-x-auto max-w-[8em]", children: f.map((p, h) => {
+          f.map((p, h) => {
             const b = p === t, g = typeof p == "string" && p === "...";
             return /* @__PURE__ */ m.jsx(
               _e,
@@ -5555,7 +5558,7 @@ const gv = ({
               },
               h
             );
-          }) }),
+          }),
           /* @__PURE__ */ m.jsx(
             _e,
             {
