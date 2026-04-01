@@ -1,4 +1,8 @@
 
+## [v2.2.12] - 2026-04-01
+- fix: pagination spacing
+
+
 ## [v2.2.11] - 2026-04-01
 - fix: add responsive pagination
 
