@@ -5512,66 +5512,68 @@ const gv = ({
           " ",
           l
         ] }),
-        i && i.length > 0 && /* @__PURE__ */ m.jsxs("div", { className: "flex items-center gap-2 mr-4", children: [
-          /* @__PURE__ */ m.jsx("span", { className: "sm:block hidden text-neutral-700 text-sm", children: "Menampilkan" }),
-          /* @__PURE__ */ m.jsx(
-            Hm,
-            {
-              value: a == null ? void 0 : a.toString(),
-              onChange: (p) => d && d(Number(p)),
-              size: "sm",
-              className: "w-16",
-              fullWidth: !1,
-              "aria-label": "Items per page",
-              children: i.map((p) => /* @__PURE__ */ m.jsx(Va, { value: p.toString(), children: p }, p))
-            }
-          ),
-          /* @__PURE__ */ m.jsx("span", { className: "sm:block hidden text-neutral-700 text-sm", children: "data per halaman" })
-        ] }),
-        /* @__PURE__ */ m.jsxs("div", { className: "flex items-center gap-2", children: [
-          /* @__PURE__ */ m.jsx(
-            _e,
-            {
-              variant: "ghost",
-              onClick: () => n(t - 1),
-              disabled: t === 1,
-              className: Me(
-                "px-3 py-1 rounded-md text-sm",
-                t === 1 ? "text-gray-400 cursor-not-allowed" : "text-gray-700 hover:bg-gray-100"
-              ),
-              children: /* @__PURE__ */ m.jsx(ke, { size: "18", icon: "mdi:chevron-left" })
-            }
-          ),
-          f.map((p, h) => {
-            const b = p === t, g = typeof p == "string" && p === "...";
-            return /* @__PURE__ */ m.jsx(
+        /* @__PURE__ */ m.jsxs("div", { className: "flex flex-col sm:flex-row items-center gap-2", children: [
+          i && i.length > 0 && /* @__PURE__ */ m.jsxs("div", { className: "flex flex-wrap items-center gap-2", children: [
+            /* @__PURE__ */ m.jsx("span", { className: "hidden sm:block text-neutral-700 text-sm", children: "Showing" }),
+            /* @__PURE__ */ m.jsx(
+              Hm,
+              {
+                value: a == null ? void 0 : a.toString(),
+                onChange: (p) => d && d(Number(p)),
+                size: "sm",
+                className: "w-16",
+                fullWidth: !1,
+                "aria-label": "Items per page",
+                children: i.map((p) => /* @__PURE__ */ m.jsx(Va, { value: p.toString(), children: p }, p))
+              }
+            ),
+            /* @__PURE__ */ m.jsx("span", { className: "text-neutral-700 text-sm", children: "data per page" })
+          ] }),
+          /* @__PURE__ */ m.jsxs("div", { className: "flex items-center gap-2", children: [
+            /* @__PURE__ */ m.jsx(
               _e,
               {
                 variant: "ghost",
-                onClick: () => !g && n(p),
+                onClick: () => n(t - 1),
+                disabled: t === 1,
                 className: Me(
                   "px-3 py-1 rounded-md text-sm",
-                  b ? "bg-primary text-white hover:bg-primary" : "text-gray-700",
-                  g && "cursor-default"
+                  t === 1 ? "text-gray-400 cursor-not-allowed" : "text-gray-700 hover:bg-gray-100"
                 ),
-                children: p
-              },
-              h
-            );
-          }),
-          /* @__PURE__ */ m.jsx(
-            _e,
-            {
-              variant: "ghost",
-              onClick: () => n(t + 1),
-              disabled: t === e,
-              className: Me(
-                "px-3 py-1 rounded-md text-sm",
-                t === e ? "text-gray-400 cursor-not-allowed" : "text-gray-700"
-              ),
-              children: /* @__PURE__ */ m.jsx(ke, { size: "18", icon: "mdi:chevron-right" })
-            }
-          )
+                children: /* @__PURE__ */ m.jsx(ke, { size: "18", icon: "mdi:chevron-left" })
+              }
+            ),
+            f.map((p, h) => {
+              const b = p === t, g = typeof p == "string" && p === "...";
+              return /* @__PURE__ */ m.jsx(
+                _e,
+                {
+                  variant: "ghost",
+                  onClick: () => !g && n(p),
+                  className: Me(
+                    "px-3 py-1 rounded-md text-sm",
+                    b ? "bg-primary text-white hover:bg-primary" : "text-gray-700",
+                    g && "cursor-default"
+                  ),
+                  children: p
+                },
+                h
+              );
+            }),
+            /* @__PURE__ */ m.jsx(
+              _e,
+              {
+                variant: "ghost",
+                onClick: () => n(t + 1),
+                disabled: t === e,
+                className: Me(
+                  "px-3 py-1 rounded-md text-sm",
+                  t === e ? "text-gray-400 cursor-not-allowed" : "text-gray-700"
+                ),
+                children: /* @__PURE__ */ m.jsx(ke, { size: "18", icon: "mdi:chevron-right" })
+              }
+            )
+          ] })
         ] })
       ]
     }
