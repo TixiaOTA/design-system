@@ -1051,7 +1051,7 @@ export const LargeDatasetWithStickyColumns: Story = {
 export const Dark: Story = {
   decorators: [
     (Story) => (
-      <div className="min-h-[360px] bg-gray-950 p-6">
+      <div className="min-h-[360px] bg-[#44444E] p-6">
         <Story />
       </div>
     ),

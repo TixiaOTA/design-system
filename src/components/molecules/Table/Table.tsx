@@ -156,6 +156,7 @@ type TableChrome = {
   shell: string;
   rowEven: string;
   cellText: string;
+  headerCellBorder: string;
   cellRowBorder: string;
   emptyWrapper: string;
   emptyResponsive: string;
@@ -171,9 +172,10 @@ type TableChrome = {
 const getTableChrome = (variant: TableVariant): TableChrome => {
   if (variant === "dark") {
     return {
-      shell: "bg-[#44444E]",
-      rowEven: "bg-[#44444E]",
+      shell: "bg-[#3A3A44]",
+      rowEven: "bg-[#3A3A44]",
       cellText: "text-gray-100",
+      headerCellBorder: "border-gray-700",
       cellRowBorder: "border-b border-gray-700",
       emptyWrapper: "text-gray-400",
       emptyResponsive:
@@ -182,7 +184,7 @@ const getTableChrome = (variant: TableVariant): TableChrome => {
       mobileDivider: "divide-gray-800",
       mobileDt: "text-gray-400",
       mobileDd: "text-gray-100",
-      paginationShell: "bg-gray-900 border-t border-gray-700",
+      paginationShell: "bg-[#37353E] border-t border-gray-700",
       paginationNavClass:
         "[&_.text-neutral-700]:text-gray-400 [&_span.text-neutral-700]:text-gray-400 [&_button]:text-gray-200 [&_button:hover]:bg-gray-800 [&_button.text-gray-700]:text-gray-200 [&_button.text-gray-400]:text-gray-600",
       scrollbar:
@@ -193,6 +195,7 @@ const getTableChrome = (variant: TableVariant): TableChrome => {
     shell: "bg-white",
     rowEven: "bg-white",
     cellText: "text-gray-900",
+    headerCellBorder: variant === "default" ? "border-gray-200" : "",
     cellRowBorder: variant === "default" ? "border-b border-gray-200" : "",
     emptyWrapper: "text-gray-600",
     emptyResponsive:
@@ -291,6 +294,7 @@ const TableLoading = <T,>({
                   className={cn(
                     "text-sm text-wrap border-y p-4 text-left",
                     variantStyles.header,
+                    chrome.headerCellBorder,
                     {
                       "rounded-tl-md": index === 0,
                       "rounded-tr-md": index === displayColumns.length - 1,
@@ -654,6 +658,7 @@ export const Table = <T extends Record<string, any>>({
         className={cn(
           "text-sm text-wrap border-y p-4",
           variantStyles.header,
+          chrome.headerCellBorder,
           {
             "cursor-pointer": header.column.getCanSort(),
             "rounded-tl-md": index === 0,
