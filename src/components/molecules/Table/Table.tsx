@@ -24,7 +24,8 @@ export type TableVariant =
   | "danger"
   | "ghost"
   | "success"
-  | "default";
+  | "default"
+  | "dark";
 
 type ColumnAlignment = "left" | "center" | "right";
 
@@ -83,6 +84,7 @@ const getVariantStyles = (variant: TableVariant) => {
       danger: "bg-danger text-white",
       ghost: "bg-gray-100 text-gray-700",
       success: "bg-success text-white",
+      dark: "bg-[#37353E] text-gray-100",
     },
     row: {
       primary: "hover:bg-primary-50",
@@ -92,6 +94,7 @@ const getVariantStyles = (variant: TableVariant) => {
       danger: "hover:bg-danger-50",
       ghost: "hover:bg-gray-50",
       success: "hover:bg-success-50",
+      dark: "hover:bg-white/5",
     },
     border: {
       primary: "border-primary",
@@ -101,6 +104,7 @@ const getVariantStyles = (variant: TableVariant) => {
       danger: "border-danger",
       ghost: "border-gray-200",
       success: "border-success",
+      dark: "border-gray-600",
     },
     stripe: {
       primary: "bg-primary-50",
@@ -110,6 +114,7 @@ const getVariantStyles = (variant: TableVariant) => {
       danger: "bg-danger-50",
       ghost: "bg-gray-50",
       success: "bg-success-50",
+      dark: "bg-none",
     },
     hoverStripe: {
       primary: "group-hover:bg-primary-50",
@@ -119,6 +124,7 @@ const getVariantStyles = (variant: TableVariant) => {
       danger: "group-hover:bg-danger-50",
       ghost: "group-hover:bg-gray-50",
       success: "group-hover:bg-success-50",
+      dark: "group-hover:bg-gray-800",
     },
   };
 
@@ -141,8 +147,65 @@ const getMobileCardAccent = (variant: TableVariant) => {
     danger: "border-l-danger",
     ghost: "border-l-gray-300",
     success: "border-l-success",
+    dark: "border-l-gray-500",
   };
   return map[variant];
+};
+
+type TableChrome = {
+  shell: string;
+  rowEven: string;
+  cellText: string;
+  cellRowBorder: string;
+  emptyWrapper: string;
+  emptyResponsive: string;
+  mobileCard: string;
+  mobileDivider: string;
+  mobileDt: string;
+  mobileDd: string;
+  paginationShell: string;
+  paginationNavClass: string;
+  scrollbar: string;
+};
+
+const getTableChrome = (variant: TableVariant): TableChrome => {
+  if (variant === "dark") {
+    return {
+      shell: "bg-[#44444E]",
+      rowEven: "bg-[#44444E]",
+      cellText: "text-gray-100",
+      cellRowBorder: "border-b border-gray-700",
+      emptyWrapper: "text-gray-400",
+      emptyResponsive:
+        "mx-3 my-3 rounded-xl border border-dashed border-gray-700 sm:mx-0 sm:my-0 sm:rounded-none sm:border-0",
+      mobileCard: "rounded-xl border border-gray-700 bg-gray-900 shadow-sm",
+      mobileDivider: "divide-gray-800",
+      mobileDt: "text-gray-400",
+      mobileDd: "text-gray-100",
+      paginationShell: "bg-gray-900 border-t border-gray-700",
+      paginationNavClass:
+        "[&_.text-neutral-700]:text-gray-400 [&_span.text-neutral-700]:text-gray-400 [&_button]:text-gray-200 [&_button:hover]:bg-gray-800 [&_button.text-gray-700]:text-gray-200 [&_button.text-gray-400]:text-gray-600",
+      scrollbar:
+        "[&::-webkit-scrollbar-track]:bg-gray-800 [&::-webkit-scrollbar-thumb]:bg-gray-600",
+    };
+  }
+  return {
+    shell: "bg-white",
+    rowEven: "bg-white",
+    cellText: "text-gray-900",
+    cellRowBorder: variant === "default" ? "border-b border-gray-200" : "",
+    emptyWrapper: "text-gray-600",
+    emptyResponsive:
+      "mx-3 my-3 rounded-xl border border-dashed border-gray-200 sm:mx-0 sm:my-0 sm:rounded-none sm:border-0",
+    mobileCard: "rounded-xl border border-gray-200 bg-white shadow-sm",
+    mobileDivider: "divide-gray-100",
+    mobileDt: "text-gray-500",
+    mobileDd: "text-gray-900",
+    paginationShell: "bg-white border-t border-gray-200",
+    paginationNavClass: "",
+    scrollbar:
+      "[&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300",
+  };
 };
 
 const TableLoading = <T,>({
@@ -178,9 +241,12 @@ const TableLoading = <T,>({
   ];
   const variantStyles = getVariantStyles(variant);
   const cardAccent = getMobileCardAccent(variant);
+  const chrome = getTableChrome(variant);
 
-  const scrollShellClass =
-    "p-0 w-full overflow-auto rounded-t-md [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full flex-1";
+  const scrollShellClass = cn(
+    "p-0 w-full overflow-auto rounded-t-md [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full flex-1",
+    chrome.scrollbar,
+  );
 
   const tableMarkup = (
     <div className={cn(scrollShellClass, isResponsive && "hidden sm:block")}>
@@ -268,7 +334,7 @@ const TableLoading = <T,>({
               key={rowIndex}
               className={cn("p-3", {
                 [variantStyles.stripe]: rowIndex % 2 !== 0,
-                "bg-white": rowIndex % 2 === 0,
+                [chrome.rowEven]: rowIndex % 2 === 0,
               })}
             >
               {displayColumns.map((column, colIndex) => {
@@ -304,7 +370,7 @@ const TableLoading = <T,>({
                       "right-0":
                         column.sticky && column.stickyPosition === "right",
                       // Ensure sticky columns have solid background that matches row
-                      "bg-white":
+                      [chrome.rowEven]:
                         column.sticky &&
                         (rowIndex % 2 === 0 || variant === "default"),
                       [variantStyles.stripe]:
@@ -312,7 +378,10 @@ const TableLoading = <T,>({
                         rowIndex % 2 !== 0 &&
                         variant !== "default",
                       [variantStyles.hoverStripe]: column.sticky,
-                      "border-b border-gray-200": variant === "default",
+                      ...(chrome.cellRowBorder &&
+                      (variant === "default" || variant === "dark")
+                        ? { [chrome.cellRowBorder]: true }
+                        : {}),
                     })}
                     style={{
                       width:
@@ -341,15 +410,26 @@ const TableLoading = <T,>({
   );
 
   return (
-    <div className="bg-white rounded-md flex flex-col h-full max-h-[600px]">
+    <div
+      className={cn(
+        "rounded-md flex flex-col h-full max-h-[600px]",
+        chrome.shell,
+      )}
+    >
       {tableMarkup}
       {isResponsive && (
-        <div className="sm:hidden flex-1 space-y-3 p-3 overflow-auto min-h-0">
+        <div
+          className={cn(
+            "sm:hidden flex-1 space-y-3 p-3 overflow-auto min-h-0 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full",
+            chrome.scrollbar,
+          )}
+        >
           {[...Array(5)].map((_, cardIndex) => (
             <div
               key={cardIndex}
               className={cn(
-                "rounded-xl border border-gray-200 bg-white p-4 shadow-sm border-l-4",
+                "overflow-hidden border-l-4 p-4 transition-colors",
+                chrome.mobileCard,
                 cardAccent,
               )}
             >
@@ -486,9 +566,12 @@ export const Table = <T extends Record<string, any>>({
 
   const variantStyles = getVariantStyles(variant);
   const mobileCardAccent = getMobileCardAccent(variant);
+  const chrome = getTableChrome(variant);
 
-  const tableScrollClass =
-    "p-0 w-full overflow-auto rounded-t-md [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full flex-1";
+  const tableScrollClass = cn(
+    "p-0 w-full overflow-auto rounded-t-md [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full flex-1",
+    chrome.scrollbar,
+  );
 
   if (isLoading) {
     return (
@@ -684,7 +767,8 @@ export const Table = <T extends Record<string, any>>({
       <td
         key={cell.id}
         className={cn(
-          "px-4 py-3 text-sm text-gray-900",
+          "px-4 py-3 text-sm",
+          chrome.cellText,
           {
             "text-left": columnMeta?.align === "left",
             "text-center": columnMeta?.align === "center",
@@ -698,7 +782,7 @@ export const Table = <T extends Record<string, any>>({
               !isMobile &&
               columnMeta?.sticky &&
               columnMeta.stickyPosition === "right",
-            "bg-white":
+            [chrome.rowEven]:
               !isMobile &&
               columnMeta?.sticky &&
               (rowIndex % 2 === 0 || variant === "default"),
@@ -708,7 +792,10 @@ export const Table = <T extends Record<string, any>>({
               rowIndex % 2 !== 0 &&
               variant !== "default",
             [variantStyles.hoverStripe]: !isMobile && columnMeta?.sticky,
-            "border-b border-gray-200": variant === "default",
+            ...(chrome.cellRowBorder &&
+            (variant === "default" || variant === "dark")
+              ? { [chrome.cellRowBorder]: true }
+              : {}),
           },
           cellClassName,
         )}
@@ -735,13 +822,18 @@ export const Table = <T extends Record<string, any>>({
   };
 
   return (
-    <div className="bg-white rounded-md flex flex-col h-full max-h-[600px]">
+    <div
+      className={cn(
+        "rounded-md flex flex-col h-full max-h-[600px]",
+        chrome.shell,
+      )}
+    >
       {data.length === 0 ? (
         <div
           className={cn(
-            "flex flex-1 flex-col items-center justify-center gap-3 p-8 text-center text-gray-600 min-h-[200px]",
-            isResponsive &&
-              "mx-3 my-3 rounded-xl border border-dashed border-gray-200 sm:mx-0 sm:my-0 sm:rounded-none sm:border-0",
+            "flex flex-1 flex-col items-center justify-center gap-3 p-8 text-center min-h-[200px]",
+            chrome.emptyWrapper,
+            isResponsive && chrome.emptyResponsive,
           )}
         >
           {emptyState || (
@@ -788,7 +880,7 @@ export const Table = <T extends Record<string, any>>({
                         variantStyles.row,
                         {
                           [variantStyles.stripe]: rowIndex % 2 !== 0,
-                          "bg-white": rowIndex % 2 === 0,
+                          [chrome.rowEven]: rowIndex % 2 === 0,
                           "cursor-pointer": onRowClick,
                         },
                         rowClassName,
@@ -807,17 +899,23 @@ export const Table = <T extends Record<string, any>>({
           </div>
 
           {isResponsive && (
-            <div className="sm:hidden flex-1 space-y-3 p-3 overflow-auto min-h-0 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-thumb]:rounded-full">
+            <div
+              className={cn(
+                "sm:hidden flex-1 space-y-3 p-3 overflow-auto min-h-0 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full",
+                chrome.scrollbar,
+              )}
+            >
               {table.getRowModel().rows.map((row: Row<T>, rowIndex: number) => (
                 <article
                   key={row.id}
                   className={cn(
-                    "rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden border-l-4 transition-colors",
+                    "overflow-hidden border-l-4 transition-colors",
+                    chrome.mobileCard,
                     mobileCardAccent,
                     variantStyles.row,
                     {
                       [variantStyles.stripe]: rowIndex % 2 !== 0,
-                      "bg-white": rowIndex % 2 === 0,
+                      [chrome.rowEven]: rowIndex % 2 === 0,
                       "cursor-pointer active:scale-[0.99]": onRowClick,
                     },
                     rowClassName,
@@ -826,7 +924,9 @@ export const Table = <T extends Record<string, any>>({
                     handleRowClick(event, row.original, rowIndex)
                   }
                 >
-                  <dl className="divide-y divide-gray-100 text-left">
+                  <dl
+                    className={cn("divide-y text-left", chrome.mobileDivider)}
+                  >
                     {row.getVisibleCells().map((cell) => {
                       const headerGroup = table.getHeaderGroups()[0];
                       const columnHeader = headerGroup?.headers.find(
@@ -848,13 +948,19 @@ export const Table = <T extends Record<string, any>>({
                           key={cell.id}
                           className="grid grid-cols-[minmax(0,40%)_minmax(0,1fr)] items-start gap-x-3 gap-y-0 px-4 py-3"
                         >
-                          <dt className="text-[11px] font-semibold uppercase tracking-wide text-gray-500 break-words text-left pr-1 pt-0.5">
+                          <dt
+                            className={cn(
+                              "text-[11px] font-semibold uppercase tracking-wide break-words text-left pr-1 pt-0.5",
+                              chrome.mobileDt,
+                            )}
+                          >
                             {label}
                           </dt>
                           <dd
                             className={cn(
                               cellClassName,
-                              "text-left text-sm text-gray-900 min-w-0 break-words [&>*]:max-w-full [&>*]:text-left",
+                              "text-left text-sm min-w-0 break-words [&>*]:max-w-full [&>*]:text-left",
+                              chrome.mobileDd,
                             )}
                           >
                             {flexRender(
@@ -874,8 +980,14 @@ export const Table = <T extends Record<string, any>>({
       )}
 
       {!!data.length && showPagination && (
-        <div className="p-4 bg-white rounded-b-md border-t border-gray-200 sticky bottom-0 z-10 flex-shrink-0">
+        <div
+          className={cn(
+            "p-4 rounded-b-md border-t sticky bottom-0 z-10 flex-shrink-0",
+            chrome.paginationShell,
+          )}
+        >
           <Pagination
+            className={chrome.paginationNavClass || undefined}
             currentPage={meta.current_page}
             totalPages={meta.total_page}
             totalData={meta.total_data}

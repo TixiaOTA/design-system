@@ -1,5 +1,5 @@
 import React from "react";
-export type TableVariant = "primary" | "secondary" | "warning" | "danger" | "ghost" | "success" | "default";
+export type TableVariant = "primary" | "secondary" | "warning" | "danger" | "ghost" | "success" | "default" | "dark";
 type ColumnAlignment = "left" | "center" | "right";
 export interface TableColumn<T> {
     name: string;

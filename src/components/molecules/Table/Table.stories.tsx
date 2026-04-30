@@ -1048,6 +1048,40 @@ export const LargeDatasetWithStickyColumns: Story = {
   },
 };
 
+export const Dark: Story = {
+  decorators: [
+    (Story) => (
+      <div className="min-h-[360px] bg-gray-950 p-6">
+        <Story />
+      </div>
+    ),
+  ],
+  args: {
+    schema,
+    data: sampleData,
+    variant: "dark",
+    showIndex: true,
+    showPagination: true,
+    meta: {
+      current_page: 1,
+      total_page: 2,
+      total_data: 10,
+      limit_number: 5,
+    },
+    onPageChange: (page) => console.log("Page changed:", page),
+    onPageSizeChange: (size) => console.log("Page size changed:", size),
+    onSortChange: (sort, sortBy) => console.log("Sort changed:", sort, sortBy),
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Dark variant for dark-mode surfaces: gray header, striped body, and chrome matched to `bg-gray-900`. Shown on a dark canvas so contrast matches real usage.",
+      },
+    },
+  },
+};
+
 export const WithVariants: Story = {
   render: () => {
     const variants: TableVariant[] = [
@@ -1058,6 +1092,7 @@ export const WithVariants: Story = {
       "ghost",
       "success",
       "default",
+      "dark",
     ];
 
     return (
