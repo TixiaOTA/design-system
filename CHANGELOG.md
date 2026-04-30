@@ -1,4 +1,8 @@
 
+## [v2.2.14] - 2026-04-30
+- fix: border dark mode
+
+
 ## [v2.2.13] - 2026-04-30
 - feat: add dark mode table
 
