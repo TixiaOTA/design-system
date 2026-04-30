@@ -1,4 +1,8 @@
 
+## [v2.2.13] - 2026-04-30
+- feat: add dark mode table
+
+
 ## [v2.2.12] - 2026-04-01
 - fix: pagination spacing
 
