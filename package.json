@@ -1,6 +1,6 @@
 {
   "name": "@tixia/design-system",
-  "version": "2.2.16",
+  "version": "2.3.0",
   "private": false,
   "main": "./dist/tixia-design-system.umd.js",
   "module": "./dist/tixia-design-system.mjs",
@@ -24,6 +24,8 @@
     "storybook": "storybook dev",
     "build-storybook": "storybook build",
     "preview": "vite preview",
+    "verify:react19": "pnpm build && pnpm build-storybook",
+    "verify:react18": "pnpm --config.overrides.react=18.3.1 --config.overrides.react-dom=18.3.1 install && pnpm --config.overrides.react=18.3.1 --config.overrides.react-dom=18.3.1 build && pnpm --config.overrides.react=18.3.1 --config.overrides.react-dom=18.3.1 build-storybook",
     "release:patch": "ts-node --project tsconfig.release.json scripts/release.ts patch",
     "release:minor": "ts-node --project tsconfig.release.json scripts/release.ts minor",
     "release:major": "ts-node --project tsconfig.release.json scripts/release.ts major"
@@ -61,8 +63,6 @@
     "lowlight": "^3.3.0",
     "lucide-react": "^0.544.0",
     "motion": "^12.23.22",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7"
   },
@@ -82,9 +82,9 @@
     "@storybook/testing-library": "^0.2.2",
     "@tanstack/react-query": "^5.75.6",
     "@types/node": "^20.11.0",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
-    "@vitejs/plugin-react": "^4.2.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.7.0",
     "@vitest/browser": "3.2.4",
     "autoprefixer": "^10.4.17",
     "baseline-browser-mapping": "^2.9.0",
@@ -97,6 +97,8 @@
     "tailwindcss": "^3.4.1",
     "ts-node": "^10.9.2",
     "tsup": "^8.4.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "typescript": "^5.3.0",
     "vite": "^5.0.0",
     "vite-tsconfig-paths": "^5.1.4",
@@ -104,8 +106,8 @@
   },
   "peerDependencies": {
     "@tanstack/react-query": "^5.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^18.2.0 || ^19.0.0",
+    "react-dom": "^18.2.0 || ^19.0.0"
   },
   "bundleDependencies": [
     "class-variance-authority",

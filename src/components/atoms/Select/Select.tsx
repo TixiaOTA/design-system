@@ -303,7 +303,9 @@ const Select = forwardRef<HTMLDivElement | HTMLInputElement, SelectProps>(
             'value' in child.props && 
             child.props.value === value
         );
-        return isValidElement(selectedChild) ? selectedChild.props.children : null;
+        return isValidElement<SelectItemProps>(selectedChild)
+          ? selectedChild.props.children
+          : null;
       }
       
       return null;

@@ -1,4 +1,11 @@
 
+## [v2.3.0] - 2026-05-20
+- feat: add official React 19 support while keeping React 18 backward compatibility
+- fix: move `react` and `react-dom` from dependencies to peer dependencies for singleton React usage
+- chore: run development and type toolchain on React 19 and widen peer range to `^18.2.0 || ^19.0.0`
+- docs: add React migration policy and verification commands (`verify:react18` and `verify:react19`)
+- notice: React 18 remains supported in `v2.x` and is planned for removal in `v3.0.0`
+
 ## [v2.2.16] - 2026-05-20
 - update: readme
 

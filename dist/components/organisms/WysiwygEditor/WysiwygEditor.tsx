@@ -163,7 +163,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   const [isEditingHtmlBlock, setIsEditingHtmlBlock] = useState(false);
   const hasAppliedInitialContentRef = useRef(false);
   const previousInitialContentRef = useRef<string>(initialContent);
-  const onChangeRef = useRef<WysiwygEditorProps["onChange"]>();
+  const onChangeRef = useRef<WysiwygEditorProps["onChange"]>(undefined);
   const outputFormatRef = useRef<OutputFormat>(outputFormat);
   const frameIdRef = useRef<number | null>(null);
 

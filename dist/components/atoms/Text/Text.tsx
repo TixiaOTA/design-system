@@ -7,7 +7,7 @@ export interface TextProps {
   variant?: TextVariant;
   children: React.ReactNode;
   className?: string;
-  as?: keyof JSX.IntrinsicElements;
+  as?: React.ElementType;
 }
 
 const Text: React.FC<TextProps> = ({
@@ -48,17 +48,17 @@ const Text: React.FC<TextProps> = ({
       case 'heading2':
       case 'heading3':
       case 'heading4':
-        return 'h' + variant.slice(-1) as keyof JSX.IntrinsicElements;
+        return `h${variant.slice(-1)}` as React.ElementType;
       case 'body1':
       case 'body2':
       case 'subtitle1':
       case 'subtitle2':
-        return 'p' as keyof JSX.IntrinsicElements;
+        return 'p' as React.ElementType;
       case 'caption':
       case 'value':
-        return 'span' as keyof JSX.IntrinsicElements;
+        return 'span' as React.ElementType;
       default:
-        return variant as keyof JSX.IntrinsicElements;
+        return variant as React.ElementType;
     }
   };
 

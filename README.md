@@ -17,10 +17,19 @@ A modern, accessible, and customizable design system built with React, TypeScrip
 
 ```bash
 # Install the design system via Git tag
-pnpm add git@github.com:TixiaOTA/design-system.git#v0.2.0
+pnpm add git@github.com:TixiaOTA/design-system.git#v2.3.0
 ```
 
-> 🔁 Replace `v0.2.0` with the latest version listed in the design system release notes.
+> Replace `v2.3.0` with the latest version listed in the design system release notes.
+
+### Peer dependencies
+
+This design system supports both React 18 and React 19 in consuming projects:
+
+- `react`: `^18.2.0 || ^19.0.0`
+- `react-dom`: `^18.2.0 || ^19.0.0`
+
+React and ReactDOM are peer dependencies and are not bundled in `dist`. The consuming app must provide a single deduped React instance.
 
 ---
 
@@ -56,6 +65,11 @@ This repository uses [pnpm](https://pnpm.io/) for dependency management.
 4. Start Storybook:
    ```bash
    pnpm storybook
+   ```
+5. Verify compatibility:
+   ```bash
+   pnpm verify:react19
+   pnpm verify:react18
    ```
 
 ---
@@ -128,10 +142,16 @@ This will:
 To upgrade a project using this design system:
 
 ```bash
-pnpm add git@github.com:TixiaOTA/design-system.git#v0.2.0
+pnpm add git@github.com:TixiaOTA/design-system.git#v2.3.0
 ```
 
 > Check `CHANGELOG.md` to review changes before upgrading.
+
+### React migration policy
+
+- React 19 is the recommended target for consuming projects.
+- React 18 remains supported in `v2.x` for backward compatibility.
+- React 18 support is planned to be removed in `v3.0.0` after all consuming projects complete migration.
 
 ---
 

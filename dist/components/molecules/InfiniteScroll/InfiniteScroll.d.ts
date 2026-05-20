@@ -13,4 +13,4 @@ export interface InfiniteScrollProps<T> {
     rootMargin?: string;
     root?: Element | null;
 }
-export declare const InfiniteScroll: <T>({ data, hasNextPage, isFetchingNextPage, fetchNextPage, renderItem, className, loadingComponent, emptyComponent, endComponent, threshold, rootMargin, root, }: InfiniteScrollProps<T>) => string | number | true | import("react/jsx-runtime").JSX.Element | Iterable<React.ReactNode>;
+export declare const InfiniteScroll: <T>({ data, hasNextPage, isFetchingNextPage, fetchNextPage, renderItem, className, loadingComponent, emptyComponent, endComponent, threshold, rootMargin, root, }: InfiniteScrollProps<T>) => string | number | bigint | true | import("react/jsx-runtime").JSX.Element | Iterable<React.ReactNode> | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined>;

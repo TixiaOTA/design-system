@@ -44,5 +44,5 @@ export interface TableProps<T extends Record<string, any>> {
      */
     isResponsive?: boolean;
 }
-export declare const Table: <T extends Record<string, any>>({ schema, data, className, headerClassName, rowClassName, cellClassName, emptyState, isLoading, loadingState, showIndex, showIndexSticky, onPageChange, onPageSizeChange, onSortChange, onRowClick, showPagination, variant, isResponsive, meta, }: TableProps<T>) => string | number | true | import("react/jsx-runtime").JSX.Element | Iterable<React.ReactNode>;
+export declare const Table: <T extends Record<string, any>>({ schema, data, className, headerClassName, rowClassName, cellClassName, emptyState, isLoading, loadingState, showIndex, showIndexSticky, onPageChange, onPageSizeChange, onSortChange, onRowClick, showPagination, variant, isResponsive, meta, }: TableProps<T>) => string | number | bigint | true | import("react/jsx-runtime").JSX.Element | Iterable<React.ReactNode> | Promise<string | number | bigint | boolean | React.ReactPortal | React.ReactElement<unknown, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined>;
 export {};

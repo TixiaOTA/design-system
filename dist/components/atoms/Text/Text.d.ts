@@ -4,7 +4,7 @@ export interface TextProps {
     variant?: TextVariant;
     children: React.ReactNode;
     className?: string;
-    as?: keyof JSX.IntrinsicElements;
+    as?: React.ElementType;
 }
 declare const Text: React.FC<TextProps>;
 export { Text };
