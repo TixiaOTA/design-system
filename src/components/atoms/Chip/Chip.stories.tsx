@@ -90,7 +90,6 @@ export const WithIcon: Story = {
     icon: 'mdi:star',
   },
 };
-
 export const WithClose: Story = {
   args: {
     children: 'Closeable Chip',

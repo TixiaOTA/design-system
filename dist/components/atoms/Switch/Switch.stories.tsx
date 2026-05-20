@@ -65,7 +65,6 @@ export const Large: Story = {
     size: 'lg',
   },
 };
-
 export const SwitchGroup: Story = {
   render: () => (
     <div className="space-y-4">

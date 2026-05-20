@@ -47,7 +47,6 @@ export const DisabledChecked: Story = {
 export const WithoutLabel: Story = {
   args: {},
 };
-
 export const RadioGroup: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>

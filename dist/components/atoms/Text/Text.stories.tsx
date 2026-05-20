@@ -115,7 +115,6 @@ export const Value: Story = {
     children: '11',
   },
 };
-
 // Example with custom className
 export const CustomStyle: Story = {
   args: {
