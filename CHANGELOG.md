@@ -1,4 +1,8 @@
 
+## [v2.2.16] - 2026-05-20
+- update: readme
+
+
 ## [v2.2.15] - 2026-05-20
 - feat: migrate to pnpm
 
