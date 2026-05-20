@@ -1,4 +1,8 @@
 
+## [v2.4.0] - 2026-05-20
+- update: react to v19
+
+
 ## [v2.3.0] - 2026-05-20
 - feat: add official React 19 support while keeping React 18 backward compatibility
 - fix: move `react` and `react-dom` from dependencies to peer dependencies for singleton React usage
