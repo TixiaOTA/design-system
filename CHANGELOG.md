@@ -1,4 +1,8 @@
 
+## [v2.2.15] - 2026-05-20
+- feat: migrate to pnpm
+
+
 ## [v2.2.14] - 2026-04-30
 - fix: border dark mode
 
