@@ -17,7 +17,7 @@ A modern, accessible, and customizable design system built with React, TypeScrip
 
 ```bash
 # Install the design system via Git tag
-npm install git@github.com:TixiaOTA/design-system.git#v0.2.0
+pnpm add git@github.com:TixiaOTA/design-system.git#v0.2.0
 ```
 
 > 🔁 Replace `v0.2.0` with the latest version listed in the design system release notes.
@@ -42,18 +42,20 @@ function App() {
 
 ## Development
 
+This repository uses [pnpm](https://pnpm.io/) for dependency management.
+
 1. Clone the repository
 2. Install dependencies:
    ```bash
-   npm install
+   pnpm install
    ```
 3. Start the development server:
    ```bash
-   npm run dev
+   pnpm dev
    ```
 4. Start Storybook:
    ```bash
-   npm run storybook
+   pnpm storybook
    ```
 
 ---
@@ -76,12 +78,12 @@ src/
 ## Building for Production
 
 ```bash
-npm run build
+pnpm build
 ```
 
 This will generate the following files in the `dist` directory:
 - `tixia-design-system.umd.js` - UMD bundle
-- `tixia-design-system.es.js` - ES module bundle
+- `tixia-design-system.mjs` - ES module bundle
 - `index.d.ts` - TypeScript type definitions
 
 ---
@@ -95,9 +97,9 @@ We use Semantic Versioning and an automated script (`release.ts`) to manage rele
 To release a new version, run one of the following:
 
 ```bash
-npm run release:patch   # Bugfixes, internal updates
-npm run release:minor   # New components, features (non-breaking)
-npm run release:major   # Breaking changes, large refactors
+pnpm release:patch   # Bugfixes, internal updates
+pnpm release:minor   # New components, features (non-breaking)
+pnpm release:major   # Breaking changes, large refactors
 ```
 
 This will:
@@ -126,7 +128,7 @@ This will:
 To upgrade a project using this design system:
 
 ```bash
-npm install git@github.com:TixiaOTA/design-system.git#v0.2.0
+pnpm add git@github.com:TixiaOTA/design-system.git#v0.2.0
 ```
 
 > Check `CHANGELOG.md` to review changes before upgrading.
