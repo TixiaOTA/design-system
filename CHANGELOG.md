@@ -1,4 +1,8 @@
 
+## [v2.4.2] - 2026-05-22
+- fix: conflict wysiwyg
+
+
 ## [v2.4.1] - 2026-05-22
 ### Fixed
 - WysiwygEditor: guard TipTap commands after destroy (React 19 / Strict Mode).
