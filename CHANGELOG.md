@@ -1,4 +1,13 @@
 
+## [v2.4.1] - 2026-05-22
+### Fixed
+- WysiwygEditor: guard TipTap commands after destroy (React 19 / Strict Mode).
+- WysiwygEditor: default `immediatelyRender` to `false` (matches docs; fixes remount races).
+
+### Added
+- WysiwygEditor: optional `editorKey` prop for stable remount identity.
+
+
 ## [v2.4.0] - 2026-05-20
 - update: react to v19
 

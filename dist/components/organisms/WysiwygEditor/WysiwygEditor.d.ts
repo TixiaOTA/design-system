@@ -33,6 +33,8 @@ export interface WysiwygEditorProps {
     maxHeight?: string;
     /** Whether to show the preview/edit toggle button */
     showPreviewToggle?: boolean;
+    /** Stable id for this editor instance (record id, locale). Changes remount the editor cleanly. */
+    editorKey?: string | number;
 }
 /**
  * Sanitizes HTML to prevent script injection and unsafe content.

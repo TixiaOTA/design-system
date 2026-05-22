@@ -24,6 +24,11 @@ import Superscript from "@tiptap/extension-superscript";
 import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
 import { HtmlBlock } from "./htmlBlockExtension";
+import {
+  isEditorActive,
+  runEditorCommand,
+  safeSetContent,
+} from "./editorUtils";
 import { Button } from "../../atoms/Button";
 import { Tooltip } from "../../atoms/Tooltip";
 import { Icon } from "../../atoms/Icons/Icons";
@@ -73,6 +78,8 @@ export interface WysiwygEditorProps {
   maxHeight?: string;
   /** Whether to show the preview/edit toggle button */
   showPreviewToggle?: boolean;
+  /** Stable id for this editor instance (record id, locale). Changes remount the editor cleanly. */
+  editorKey?: string | number;
 }
 
 const COMMON_IMAGE_SIZES: ImageSize[] = [
@@ -130,7 +137,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   initialContent = "",
   onChange,
   outputFormat = "html",
-  immediatelyRender = true,
+  immediatelyRender = false,
   placeholder = "Start typing...",
   handleUploadImage,
   editable = true,
@@ -139,6 +146,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   minHeight = "400px",
   maxHeight,
   showPreviewToggle = true,
+  editorKey,
 }) => {
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [imageDialogOpen, setImageDialogOpen] = useState(false);
@@ -229,54 +237,73 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
     [placeholder]
   );
 
-  const editor = useEditor({
-    extensions,
-    editable: viewOnly ? false : editable,
-    immediatelyRender,
-    content: viewOnly
-      ? sanitizeHtml(initialContent || "") || undefined
-      : undefined,
-    onUpdate: ({ editor: editorInstance }) => {
-      const handler = onChangeRef.current;
-      if (!handler) return;
+  const editor = useEditor(
+    {
+      extensions,
+      editable: viewOnly ? false : editable,
+      immediatelyRender,
+      content: viewOnly
+        ? sanitizeHtml(initialContent || "") || undefined
+        : undefined,
+      onDestroy: () => {
+        hasAppliedInitialContentRef.current = false;
+        if (frameIdRef.current !== null) {
+          cancelAnimationFrame(frameIdRef.current);
+          frameIdRef.current = null;
+        }
+      },
+      onUpdate: ({ editor: editorInstance }) => {
+        const handler = onChangeRef.current;
+        if (!handler) return;
 
-      if (frameIdRef.current !== null) {
-        cancelAnimationFrame(frameIdRef.current);
-      }
-
-      frameIdRef.current = window.requestAnimationFrame(() => {
-        const format = outputFormatRef.current || "html";
-        let content = "";
-
-        switch (format) {
-          case "json":
-            content = JSON.stringify(editorInstance.getJSON());
-            break;
-          case "markdown":
-            // Tiptap doesn't have built-in markdown export, using HTML as fallback
-            // For markdown support, you would need to install @tiptap/extension-markdown
-            content = editorInstance.getHTML();
-            break;
-          case "html":
-          default:
-            content = editorInstance.getHTML();
-            break;
+        if (frameIdRef.current !== null) {
+          cancelAnimationFrame(frameIdRef.current);
         }
 
-        if (format !== "json") {
-          content = normalizeEmptyParagraphs(content);
-        }
+        frameIdRef.current = window.requestAnimationFrame(() => {
+          if (!isEditorActive(editorInstance)) return;
 
-        handler(content, format);
-      });
+          const format = outputFormatRef.current || "html";
+          let content = "";
+
+          switch (format) {
+            case "json":
+              content = JSON.stringify(editorInstance.getJSON());
+              break;
+            case "markdown":
+              // Tiptap doesn't have built-in markdown export, using HTML as fallback
+              // For markdown support, you would need to install @tiptap/extension-markdown
+              content = editorInstance.getHTML();
+              break;
+            case "html":
+            default:
+              content = editorInstance.getHTML();
+              break;
+          }
+
+          if (format !== "json") {
+            content = normalizeEmptyParagraphs(content);
+          }
+
+          handler(content, format);
+        });
+      },
     },
-  });
+    editorKey !== undefined ? [editorKey] : []
+  );
+
+  const runCommand = useCallback(
+    (fn: (activeEditor: NonNullable<typeof editor>) => void) => {
+      runEditorCommand(editor, fn);
+    },
+    [editor]
+  );
 
   // Apply initialContent when the editor is ready.
   // In viewOnly mode, always sync with initialContent prop changes.
   // In editable mode, only apply once to avoid cursor jumps.
   React.useEffect(() => {
-    if (!editor) return;
+    if (!isEditorActive(editor)) return;
 
     // In viewOnly mode, always sync content when initialContent changes
     if (viewOnly) {
@@ -288,7 +315,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
 
       // Only update if content actually changed (sanitize to block script injection)
       if (normalizedCurrent !== normalizedInitial) {
-        editor.commands.setContent(sanitizeHtml(initialContent || "") || "");
+        safeSetContent(editor, sanitizeHtml(initialContent || "") || "");
       }
       previousInitialContentRef.current = initialContent;
       return;
@@ -302,9 +329,10 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
       return;
     }
 
-    editor.commands.setContent(sanitizeHtml(initialContent) || "");
-    hasAppliedInitialContentRef.current = true;
-    previousInitialContentRef.current = initialContent;
+    if (safeSetContent(editor, sanitizeHtml(initialContent) || "")) {
+      hasAppliedInitialContentRef.current = true;
+      previousInitialContentRef.current = initialContent;
+    }
   }, [editor, initialContent, viewOnly]);
 
   // Cleanup any pending animation frame when component unmounts
@@ -318,12 +346,16 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
 
   // Keep editor's editable state in sync with props (editable, viewOnly)
   React.useEffect(() => {
-    if (!editor) return;
-    editor.setEditable(!viewOnly && editable);
+    if (!isEditorActive(editor)) return;
+    try {
+      editor.setEditable(!viewOnly && editable);
+    } catch {
+      // Editor torn down during Strict Mode remount
+    }
   }, [editor, editable, viewOnly]);
 
   const handleImageUpload = useCallback(async () => {
-    if (!editor || !handleUploadImage) return;
+    if (!isEditorActive(editor) || !handleUploadImage) return;
 
     const input = document.createElement("input");
     input.type = "file";
@@ -335,7 +367,9 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
       setIsUploading(true);
       try {
         const url = await handleUploadImage(file);
-        editor.chain().focus().setImage({ src: url }).run();
+        runEditorCommand(editor, (ed) =>
+          ed.chain().focus().setImage({ src: url }).run()
+        );
       } catch (error) {
         console.error("Failed to upload image:", error);
       } finally {
@@ -346,7 +380,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   }, [editor, handleUploadImage]);
 
   const handleImageUrl = useCallback(() => {
-    if (!editor) return;
+    if (!isEditorActive(editor)) return;
 
     const widthNum =
       selectedSize?.width ||
@@ -366,7 +400,9 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
       imageAttrs.height = heightNum;
     }
 
-    editor.chain().focus().setImage(imageAttrs).run();
+    runEditorCommand(editor, (ed) =>
+      ed.chain().focus().setImage(imageAttrs).run()
+    );
 
     setImageDialogOpen(false);
     setImageUrl("");
@@ -376,7 +412,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   }, [editor, imageUrl, imageWidth, imageHeight, selectedSize]);
 
   const handleInsertLink = useCallback(() => {
-    if (!editor || !linkUrl) return;
+    if (!isEditorActive(editor) || !linkUrl) return;
 
     const { from, to } = editor.state.selection;
     const hasSelection = from !== to;
@@ -390,30 +426,40 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
     if (linkText) {
       // Insert link with custom text
       if (hasSelection) {
-        editor
-          .chain()
-          .focus()
-          .deleteSelection()
-          .insertContent(wrapAnchor(linkText))
-          .run();
+        runEditorCommand(editor, (ed) =>
+          ed
+            .chain()
+            .focus()
+            .deleteSelection()
+            .insertContent(wrapAnchor(linkText))
+            .run()
+        );
       } else {
-        editor.chain().focus().insertContent(wrapAnchor(linkText)).run();
+        runEditorCommand(editor, (ed) =>
+          ed.chain().focus().insertContent(wrapAnchor(linkText)).run()
+        );
       }
     } else {
       if (hasSelection) {
         if (isButtonStyle) {
           const selectedText = editor.state.doc.textBetween(from, to);
-          editor
-            .chain()
-            .focus()
-            .deleteSelection()
-            .insertContent(wrapAnchor(selectedText))
-            .run();
+          runEditorCommand(editor, (ed) =>
+            ed
+              .chain()
+              .focus()
+              .deleteSelection()
+              .insertContent(wrapAnchor(selectedText))
+              .run()
+          );
         } else {
-          editor.chain().focus().setLink({ href: linkUrl }).run();
+          runEditorCommand(editor, (ed) =>
+            ed.chain().focus().setLink({ href: linkUrl }).run()
+          );
         }
       } else {
-        editor.chain().focus().insertContent(wrapAnchor(linkUrl)).run();
+        runEditorCommand(editor, (ed) =>
+          ed.chain().focus().insertContent(wrapAnchor(linkUrl)).run()
+        );
       }
     }
 
@@ -425,8 +471,8 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   }, [editor, linkUrl, linkText, linkDisplayType]);
 
   const handleRemoveLink = useCallback(() => {
-    if (!editor) return;
-    editor.chain().focus().unsetLink().run();
+    if (!isEditorActive(editor)) return;
+    runEditorCommand(editor, (ed) => ed.chain().focus().unsetLink().run());
     setLinkDialogOpen(false);
     setLinkUrl("");
     setLinkText("");
@@ -435,16 +481,18 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   }, [editor]);
 
   const handleInsertTable = useCallback(() => {
-    if (!editor) return;
+    if (!isEditorActive(editor)) return;
 
     const rows = typeof tableRows === "number" ? tableRows : 3;
     const cols = typeof tableCols === "number" ? tableCols : 3;
 
-    editor
-      .chain()
-      .focus()
-      .insertTable({ rows, cols, withHeaderRow: tableWithHeader })
-      .run();
+    runEditorCommand(editor, (ed) =>
+      ed
+        .chain()
+        .focus()
+        .insertTable({ rows, cols, withHeaderRow: tableWithHeader })
+        .run()
+    );
 
     setTableDialogOpen(false);
     setTableRows(3);
@@ -454,7 +502,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
 
   const openHtmlBlockDialog = useCallback(
     (edit: boolean) => {
-      if (!editor) return;
+      if (!isEditorActive(editor)) return;
       if (edit && editor.isActive("htmlBlock")) {
         const html = editor.getAttributes("htmlBlock").html ?? "";
         setHtmlBlockContent(html);
@@ -469,20 +517,24 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   );
 
   const handleSaveHtmlBlock = useCallback(() => {
-    if (!editor) return;
+    if (!isEditorActive(editor)) return;
     const sanitized = sanitizeHtml(htmlBlockContent);
     if (isEditingHtmlBlock) {
-      editor
-        .chain()
-        .focus()
-        .updateAttributes("htmlBlock", { html: sanitized })
-        .run();
+      runEditorCommand(editor, (ed) =>
+        ed
+          .chain()
+          .focus()
+          .updateAttributes("htmlBlock", { html: sanitized })
+          .run()
+      );
     } else {
-      editor
-        .chain()
-        .focus()
-        .insertContent({ type: "htmlBlock", attrs: { html: sanitized } })
-        .run();
+      runEditorCommand(editor, (ed) =>
+        ed
+          .chain()
+          .focus()
+          .insertContent({ type: "htmlBlock", attrs: { html: sanitized } })
+          .run()
+      );
     }
     setHtmlBlockDialogOpen(false);
     setHtmlBlockContent("");
@@ -500,7 +552,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
       type="button"
       title={tooltip}
       onClick={onClick}
-      disabled={disabled || !editor}
+      disabled={disabled || !isEditorActive(editor)}
       className={cn(
         "p-2 rounded-md transition-colors",
         isActive
@@ -514,7 +566,17 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   );
 
   if (!editor) {
-    return null;
+    return (
+      <div
+        className={cn(
+          "rounded-lg bg-gray-50 animate-pulse",
+          !viewOnly && "border border-gray-200",
+          className
+        )}
+        style={{ minHeight }}
+        aria-hidden
+      />
+    );
   }
 
   // Only compute HTML when actually rendering preview / view-only content.
@@ -524,7 +586,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
   const previewContent = React.useMemo(() => {
     if (!(viewOnly || isPreviewMode)) return "";
 
-    if (!editor) {
+    if (!isEditorActive(editor)) {
       // If editor isn't ready yet, use initialContent directly
       return initialContent ? normalizeEmptyParagraphs(initialContent) : "";
     }
@@ -554,42 +616,42 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
             {/* Text Formatting */}
             <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
               <ToolbarButton
-                onClick={() => editor.chain().focus().toggleBold().run()}
+                onClick={() => runCommand((ed) => ed.chain().focus().toggleBold().run())}
                 icon="mdi:format-bold"
                 tooltip="Bold"
               />
               <ToolbarButton
-                onClick={() => editor.chain().focus().toggleItalic().run()}
+                onClick={() => runCommand((ed) => ed.chain().focus().toggleItalic().run())}
                 icon="mdi:format-italic"
                 tooltip="Italic"
               />
               <ToolbarButton
-                onClick={() => editor.chain().focus().toggleUnderline().run()}
+                onClick={() => runCommand((ed) => ed.chain().focus().toggleUnderline().run())}
                 icon="mdi:format-underline"
                 tooltip="Underline"
               />
               <ToolbarButton
-                onClick={() => editor.chain().focus().toggleStrike().run()}
+                onClick={() => runCommand((ed) => ed.chain().focus().toggleStrike().run())}
                 icon="mdi:format-strikethrough"
                 tooltip="Strikethrough"
               />
               <ToolbarButton
-                onClick={() => editor.chain().focus().toggleCode().run()}
+                onClick={() => runCommand((ed) => ed.chain().focus().toggleCode().run())}
                 icon="mdi:code-tags"
                 tooltip="Inline Code"
               />
               <ToolbarButton
-                onClick={() => editor.chain().focus().toggleHighlight().run()}
+                onClick={() => runCommand((ed) => ed.chain().focus().toggleHighlight().run())}
                 icon="mdi:format-color-highlight"
                 tooltip="Highlight"
               />
               <ToolbarButton
-                onClick={() => editor.chain().focus().toggleSubscript().run()}
+                onClick={() => runCommand((ed) => ed.chain().focus().toggleSubscript().run())}
                 icon="mdi:format-subscript"
                 tooltip="Subscript"
               />
               <ToolbarButton
-                onClick={() => editor.chain().focus().toggleSuperscript().run()}
+                onClick={() => runCommand((ed) => ed.chain().focus().toggleSuperscript().run())}
                 icon="mdi:format-superscript"
                 tooltip="Superscript"
               />
@@ -599,21 +661,27 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
             <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
               <ToolbarButton
                 onClick={() =>
-                  editor.chain().focus().toggleHeading({ level: 1 }).run()
+                  runCommand((ed) =>
+                    ed.chain().focus().toggleHeading({ level: 1 }).run()
+                  )
                 }
                 icon="mdi:format-header-1"
                 tooltip="Heading 1"
               />
               <ToolbarButton
                 onClick={() =>
-                  editor.chain().focus().toggleHeading({ level: 2 }).run()
+                  runCommand((ed) =>
+                    ed.chain().focus().toggleHeading({ level: 2 }).run()
+                  )
                 }
                 icon="mdi:format-header-2"
                 tooltip="Heading 2"
               />
               <ToolbarButton
                 onClick={() =>
-                  editor.chain().focus().toggleHeading({ level: 3 }).run()
+                  runCommand((ed) =>
+                    ed.chain().focus().toggleHeading({ level: 3 }).run()
+                  )
                 }
                 icon="mdi:format-header-3"
                 tooltip="Heading 3"
@@ -623,22 +691,22 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
             {/* Lists */}
             <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
               <ToolbarButton
-                onClick={() => editor.chain().focus().toggleBulletList().run()}
+                onClick={() => runCommand((ed) => ed.chain().focus().toggleBulletList().run())}
                 icon="mdi:format-list-bulleted"
                 tooltip="Bullet List"
               />
               <ToolbarButton
-                onClick={() => editor.chain().focus().toggleOrderedList().run()}
+                onClick={() => runCommand((ed) => ed.chain().focus().toggleOrderedList().run())}
                 icon="mdi:format-list-numbered"
                 tooltip="Numbered List"
               />
               <ToolbarButton
-                onClick={() => editor.chain().focus().toggleTaskList().run()}
+                onClick={() => runCommand((ed) => ed.chain().focus().toggleTaskList().run())}
                 icon="mdi:format-list-checks"
                 tooltip="Task List"
               />
               <ToolbarButton
-                onClick={() => editor.chain().focus().toggleBlockquote().run()}
+                onClick={() => runCommand((ed) => ed.chain().focus().toggleBlockquote().run())}
                 icon="mdi:format-quote-close"
                 tooltip="Blockquote"
               />
@@ -648,28 +716,36 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
             <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
               <ToolbarButton
                 onClick={() =>
-                  editor.chain().focus().setTextAlign("left").run()
+                  runCommand((ed) =>
+                    ed.chain().focus().setTextAlign("left").run()
+                  )
                 }
                 icon="mdi:format-align-left"
                 tooltip="Align Left"
               />
               <ToolbarButton
                 onClick={() =>
-                  editor.chain().focus().setTextAlign("center").run()
+                  runCommand((ed) =>
+                    ed.chain().focus().setTextAlign("center").run()
+                  )
                 }
                 icon="mdi:format-align-center"
                 tooltip="Align Center"
               />
               <ToolbarButton
                 onClick={() =>
-                  editor.chain().focus().setTextAlign("right").run()
+                  runCommand((ed) =>
+                    ed.chain().focus().setTextAlign("right").run()
+                  )
                 }
                 icon="mdi:format-align-right"
                 tooltip="Align Right"
               />
               <ToolbarButton
                 onClick={() =>
-                  editor.chain().focus().setTextAlign("justify").run()
+                  runCommand((ed) =>
+                    ed.chain().focus().setTextAlign("justify").run()
+                  )
                 }
                 icon="mdi:format-align-justify"
                 tooltip="Justify"
@@ -682,13 +758,19 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
                 <input
                   type="color"
                   onInput={(e) =>
-                    editor
-                      .chain()
-                      .focus()
-                      .setColor((e.target as HTMLInputElement).value)
-                      .run()
+                    runCommand((ed) =>
+                      ed
+                        .chain()
+                        .focus()
+                        .setColor((e.target as HTMLInputElement).value)
+                        .run()
+                    )
                   }
-                  value={editor.getAttributes("textStyle").color || "#000000"}
+                  value={
+                    isEditorActive(editor)
+                      ? editor.getAttributes("textStyle").color || "#000000"
+                      : "#000000"
+                  }
                   className="w-8 h-8 cursor-pointer rounded border border-gray-300"
                 />
               </Tooltip>
@@ -698,6 +780,7 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
             <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
               <ToolbarButton
                 onClick={() => {
+                  if (!isEditorActive(editor)) return;
                   const { from, to } = editor.state.selection;
                   const selectedText = editor.state.doc.textBetween(from, to);
 
@@ -712,7 +795,11 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
                   setLinkDialogOpen(true);
                 }}
                 icon="mdi:link"
-                tooltip={editor.isActive("link") ? "Edit Link" : "Insert Link"}
+                tooltip={
+                  isEditorActive(editor) && editor.isActive("link")
+                    ? "Edit Link"
+                    : "Insert Link"
+                }
               />
               <ToolbarButton
                 onClick={() => setImageDialogOpen(true)}
@@ -730,12 +817,12 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
                 tooltip="Insert Table"
               />
               <ToolbarButton
-                onClick={() => editor.chain().focus().setHorizontalRule().run()}
+                onClick={() => runCommand((ed) => ed.chain().focus().setHorizontalRule().run())}
                 icon="mdi:minus"
                 tooltip="Horizontal Rule"
               />
               <ToolbarButton
-                onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+                onClick={() => runCommand((ed) => ed.chain().focus().toggleCodeBlock().run())}
                 icon="mdi:code-braces"
                 tooltip="Code Block"
               />
@@ -756,37 +843,37 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
             {editor.isActive("table") && (
               <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
                 <ToolbarButton
-                  onClick={() => editor.chain().focus().addColumnBefore().run()}
+                  onClick={() => runCommand((ed) => ed.chain().focus().addColumnBefore().run())}
                   icon="mdi:table-column-plus-before"
                   tooltip="Add Column Before"
                 />
                 <ToolbarButton
-                  onClick={() => editor.chain().focus().addColumnAfter().run()}
+                  onClick={() => runCommand((ed) => ed.chain().focus().addColumnAfter().run())}
                   icon="mdi:table-column-plus-after"
                   tooltip="Add Column After"
                 />
                 <ToolbarButton
-                  onClick={() => editor.chain().focus().deleteColumn().run()}
+                  onClick={() => runCommand((ed) => ed.chain().focus().deleteColumn().run())}
                   icon="mdi:table-column-remove"
                   tooltip="Delete Column"
                 />
                 <ToolbarButton
-                  onClick={() => editor.chain().focus().addRowBefore().run()}
+                  onClick={() => runCommand((ed) => ed.chain().focus().addRowBefore().run())}
                   icon="mdi:table-row-plus-before"
                   tooltip="Add Row Before"
                 />
                 <ToolbarButton
-                  onClick={() => editor.chain().focus().addRowAfter().run()}
+                  onClick={() => runCommand((ed) => ed.chain().focus().addRowAfter().run())}
                   icon="mdi:table-row-plus-after"
                   tooltip="Add Row After"
                 />
                 <ToolbarButton
-                  onClick={() => editor.chain().focus().deleteRow().run()}
+                  onClick={() => runCommand((ed) => ed.chain().focus().deleteRow().run())}
                   icon="mdi:table-row-remove"
                   tooltip="Delete Row"
                 />
                 <ToolbarButton
-                  onClick={() => editor.chain().focus().deleteTable().run()}
+                  onClick={() => runCommand((ed) => ed.chain().focus().deleteTable().run())}
                   icon="mdi:table-remove"
                   tooltip="Delete Table"
                 />
@@ -796,14 +883,14 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
             {/* Undo/Redo */}
             <div className="flex gap-1 border-r border-gray-300 pr-1 mr-1">
               <ToolbarButton
-                onClick={() => editor.chain().focus().undo().run()}
-                disabled={!editor.can().undo()}
+                onClick={() => runCommand((ed) => ed.chain().focus().undo().run())}
+                disabled={!isEditorActive(editor) || !editor.can().undo()}
                 icon="mdi:undo"
                 tooltip="Undo"
               />
               <ToolbarButton
-                onClick={() => editor.chain().focus().redo().run()}
-                disabled={!editor.can().redo()}
+                onClick={() => runCommand((ed) => ed.chain().focus().redo().run())}
+                disabled={!isEditorActive(editor) || !editor.can().redo()}
                 icon="mdi:redo"
                 tooltip="Redo"
               />
@@ -845,9 +932,12 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
           />
         ) : (
           <EditorContent
+            {...(editorKey !== undefined ? { key: editorKey } : {})}
             editor={editor}
             className="p-4 h-full flex-1 [&_.ProseMirror]:h-full [&_.ProseMirror]:outline-none [&_.ProseMirror]:min-h-full"
-            onClick={() => editor?.commands.focus()}
+            onClick={() => {
+              runEditorCommand(editor, (ed) => ed.commands.focus());
+            }}
           />
         )}
       </div>
@@ -1169,7 +1259,8 @@ const arePropsEqual = (
     prevProps.className === nextProps.className &&
     prevProps.minHeight === nextProps.minHeight &&
     prevProps.maxHeight === nextProps.maxHeight &&
-    prevProps.showPreviewToggle === nextProps.showPreviewToggle
+    prevProps.showPreviewToggle === nextProps.showPreviewToggle &&
+    prevProps.editorKey === nextProps.editorKey
     // Intentionally ignoring onChange and handleUploadImage
     // since we use refs for these internally
   );

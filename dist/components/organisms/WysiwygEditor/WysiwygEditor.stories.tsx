@@ -14,10 +14,13 @@ const meta: Meta<typeof WysiwygEditor> = {
   args: {
     // Explicit no-op for onChange to avoid implicit Storybook actions warning
     onChange: () => {},
-    // Default to client-friendly behavior in Storybook
-    immediatelyRender: true,
   },
   argTypes: {
+    editorKey: {
+      control: "text",
+      description:
+        "Stable id for remount identity (record id, locale). Prefer over bumping React key after load.",
+    },
     outputFormat: {
       control: "select",
       options: ["html", "json", "markdown"],
@@ -278,6 +281,77 @@ export const WithJSONOutput: Story = {
 
 export const WithMarkdownOutput: Story = {
   render: () => <EditorWithOutput outputFormat="markdown" />,
+};
+
+/** Simulates edit form with preloaded HTML (backoffice edit dialog). */
+export const WithInitialHtml: Story = {
+  args: {
+    initialContent:
+      "<h2>Edit record</h2><p>Loaded from API — editor applies content once when ready.</p>",
+    editable: true,
+    minHeight: "300px",
+  },
+};
+
+/** Toggle remount identity; must not throw in React 19 Strict Mode. */
+export const RemountWithKey: Story = {
+  render: () => {
+    const [key, setKey] = useState<string | number>("a");
+    return (
+      <div className="space-y-4">
+        <Button onClick={() => setKey((k) => (k === "a" ? "b" : "a"))}>
+          Toggle editorKey (remount)
+        </Button>
+        <WysiwygEditor
+          key={key}
+          editorKey={key}
+          initialContent={`<p>Instance <strong>${key}</strong></p>`}
+          onChange={() => {}}
+          minHeight="200px"
+        />
+      </div>
+    );
+  },
+};
+
+/** Mimics dialog open/close: mount only while enabled. */
+export const DialogSimulation: Story = {
+  render: () => {
+    const [enabled, setEnabled] = useState(false);
+    return (
+      <div className="space-y-4">
+        <Button onClick={() => setEnabled((v) => !v)}>
+          {enabled ? "Close dialog (unmount)" : "Open dialog (mount)"}
+        </Button>
+        {enabled && (
+          <WysiwygEditor
+            editorKey="dialog"
+            initialContent="<p>Editor inside modal</p>"
+            onChange={() => {}}
+            minHeight="200px"
+          />
+        )}
+      </div>
+    );
+  },
+};
+
+export const StrictModeNote: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Storybook dev preview runs React Strict Mode. Toggle RemountWithKey or DialogSimulation repeatedly; the console must stay free of `Cannot read properties of null (reading 'commands')`.",
+      },
+    },
+  },
+  render: () => (
+    <p className="text-sm text-gray-600">
+      Use <strong>RemountWithKey</strong> and <strong>DialogSimulation</strong>{" "}
+      for React 19 regression checks. Pass <code>editorKey</code> when switching
+      records or locales instead of bumping <code>key</code> after async load.
+    </p>
+  ),
 };
 
 export const FullFeatured: Story = {
