@@ -565,24 +565,11 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
     </button>
   );
 
-  if (!editor) {
-    return (
-      <div
-        className={cn(
-          "rounded-lg bg-gray-50 animate-pulse",
-          !viewOnly && "border border-gray-200",
-          className
-        )}
-        style={{ minHeight }}
-        aria-hidden
-      />
-    );
-  }
-
   // Only compute HTML when actually rendering preview / view-only content.
   // Avoids expensive serialization work on every keystroke while editing,
   // which can cause occasional flicker/layout jank.
   // In viewOnly mode, use initialContent directly if editor hasn't loaded yet or content is empty.
+  // Must run before the !editor early return (Rules of Hooks).
   const previewContent = React.useMemo(() => {
     if (!(viewOnly || isPreviewMode)) return "";
 
@@ -600,6 +587,20 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
 
     return normalizeEmptyParagraphs(editorHtml);
   }, [viewOnly, isPreviewMode, editor, initialContent]);
+
+  if (!editor) {
+    return (
+      <div
+        className={cn(
+          "rounded-lg bg-gray-50 animate-pulse",
+          !viewOnly && "border border-gray-200",
+          className
+        )}
+        style={{ minHeight }}
+        aria-hidden
+      />
+    );
+  }
 
   return (
     <div
@@ -932,7 +933,6 @@ const WysiwygEditor: React.FC<WysiwygEditorProps> = ({
           />
         ) : (
           <EditorContent
-            {...(editorKey !== undefined ? { key: editorKey } : {})}
             editor={editor}
             className="p-4 h-full flex-1 [&_.ProseMirror]:h-full [&_.ProseMirror]:outline-none [&_.ProseMirror]:min-h-full"
             onClick={() => {

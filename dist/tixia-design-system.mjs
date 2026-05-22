@@ -50347,28 +50347,14 @@ const zM = [
       ),
       children: /* @__PURE__ */ m.jsx(Ce, { icon: Fe, className: "w-5 h-5" })
     }
-  );
-  if (!re)
-    return /* @__PURE__ */ m.jsx(
-      "div",
-      {
-        className: H(
-          "rounded-lg bg-gray-50 animate-pulse",
-          !i && "border border-gray-200",
-          l
-        ),
-        style: { minHeight: d },
-        "aria-hidden": !0
-      }
-    );
-  const be = ne.useMemo(() => {
+  ), be = ne.useMemo(() => {
     if (!(i || f)) return "";
     if (!ut(re))
       return t ? oo(t) : "";
     const _ = re.getHTML();
     return !_.trim() && t ? oo(t) : oo(_);
   }, [i, f, re, t]);
-  return /* @__PURE__ */ m.jsxs(
+  return re ? /* @__PURE__ */ m.jsxs(
     "div",
     {
       className: H(
@@ -50726,7 +50712,6 @@ const zM = [
             ) : /* @__PURE__ */ m.jsx(
               yy,
               {
-                ...p !== void 0 ? { key: p } : {},
                 editor: re,
                 className: "p-4 h-full flex-1 [&_.ProseMirror]:h-full [&_.ProseMirror]:outline-none [&_.ProseMirror]:min-h-full",
                 onClick: () => {
@@ -51017,6 +51002,17 @@ const zM = [
           }
         )
       ]
+    }
+  ) : /* @__PURE__ */ m.jsx(
+    "div",
+    {
+      className: H(
+        "rounded-lg bg-gray-50 animate-pulse",
+        !i && "border border-gray-200",
+        l
+      ),
+      style: { minHeight: d },
+      "aria-hidden": !0
     }
   );
 }, HM = (t, e) => t.initialContent === e.initialContent && t.outputFormat === e.outputFormat && t.immediatelyRender === e.immediatelyRender && t.placeholder === e.placeholder && t.editable === e.editable && t.viewOnly === e.viewOnly && t.className === e.className && t.minHeight === e.minHeight && t.maxHeight === e.maxHeight && t.showPreviewToggle === e.showPreviewToggle && t.editorKey === e.editorKey, gA = ne.memo(FM, HM);

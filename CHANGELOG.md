@@ -1,4 +1,10 @@
 
+## [v2.4.3] - 2026-05-22
+### Fixed
+- WysiwygEditor: Rules of Hooks violation when editor initializes (`previewContent` useMemo ran after `!editor` early return).
+- WysiwygEditor: remove spread `key` on `EditorContent` (React 19); `editorKey` still recreates editor via `useEditor` deps.
+
+
 ## [v2.4.2] - 2026-05-22
 - fix: conflict wysiwyg
 
