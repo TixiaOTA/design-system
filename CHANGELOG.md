@@ -1,4 +1,8 @@
 
+## [v2.4.4] - 2026-05-22
+- fix: wysiwyg error
+
+
 ## [v2.4.3] - 2026-05-22
 ### Fixed
 - WysiwygEditor: Rules of Hooks violation when editor initializes (`previewContent` useMemo ran after `!editor` early return).
