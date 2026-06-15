@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import type { StorybookConfig } from '@storybook/react-vite';
 import { resolve, dirname } from 'path';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import { esbuildDestructuringWorkaround } from '../vite.esbuild.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -18,6 +19,17 @@ const config: StorybookConfig = {
     "options": {}
   },
   viteFinal: async (config) => {
+    config.esbuild = {
+      ...config.esbuild,
+      ...esbuildDestructuringWorkaround,
+    };
+    config.optimizeDeps = {
+      ...config.optimizeDeps,
+      esbuildOptions: {
+        ...config.optimizeDeps?.esbuildOptions,
+        ...esbuildDestructuringWorkaround,
+      },
+    };
     if (config.resolve) {
       config.resolve.alias = {
         ...config.resolve.alias,

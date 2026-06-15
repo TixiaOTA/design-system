@@ -22,7 +22,7 @@ var Qu;
 function Ev() {
   if (Qu) return Io;
   Qu = 1;
-  var t = Symbol.for("react.transitional.element"), e = Symbol.for("react.fragment");
+  var t = /* @__PURE__ */ Symbol.for("react.transitional.element"), e = /* @__PURE__ */ Symbol.for("react.fragment");
   function r(n, o, s) {
     var a = null;
     if (s !== void 0 && (a = "" + s), o.key !== void 0 && (a = "" + o.key), "key" in o) {
@@ -52,7 +52,7 @@ var Ro = {};
  */
 var ef;
 function Cv() {
-  return ef || (ef = 1, process.env.NODE_ENV !== "production" && function() {
+  return ef || (ef = 1, process.env.NODE_ENV !== "production" && (function() {
     function t(v) {
       if (v == null) return null;
       if (typeof v == "function")
@@ -246,7 +246,7 @@ React keys must be passed directly to JSX without using spread:
     function p(v) {
       return typeof v == "object" && v !== null && v.$$typeof === h;
     }
-    var f = ne, h = Symbol.for("react.transitional.element"), g = Symbol.for("react.portal"), b = Symbol.for("react.fragment"), y = Symbol.for("react.strict_mode"), x = Symbol.for("react.profiler"), E = Symbol.for("react.consumer"), C = Symbol.for("react.context"), k = Symbol.for("react.forward_ref"), S = Symbol.for("react.suspense"), N = Symbol.for("react.suspense_list"), M = Symbol.for("react.memo"), A = Symbol.for("react.lazy"), W = Symbol.for("react.activity"), G = Symbol.for("react.client.reference"), z = f.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, K = Object.prototype.hasOwnProperty, V = Array.isArray, F = console.createTask ? console.createTask : function() {
+    var f = ne, h = /* @__PURE__ */ Symbol.for("react.transitional.element"), g = /* @__PURE__ */ Symbol.for("react.portal"), b = /* @__PURE__ */ Symbol.for("react.fragment"), y = /* @__PURE__ */ Symbol.for("react.strict_mode"), x = /* @__PURE__ */ Symbol.for("react.profiler"), E = /* @__PURE__ */ Symbol.for("react.consumer"), C = /* @__PURE__ */ Symbol.for("react.context"), k = /* @__PURE__ */ Symbol.for("react.forward_ref"), S = /* @__PURE__ */ Symbol.for("react.suspense"), N = /* @__PURE__ */ Symbol.for("react.suspense_list"), M = /* @__PURE__ */ Symbol.for("react.memo"), A = /* @__PURE__ */ Symbol.for("react.lazy"), W = /* @__PURE__ */ Symbol.for("react.activity"), G = /* @__PURE__ */ Symbol.for("react.client.reference"), z = f.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, K = Object.prototype.hasOwnProperty, V = Array.isArray, F = console.createTask ? console.createTask : function() {
       return null;
     };
     f = {
@@ -279,7 +279,7 @@ React keys must be passed directly to JSX without using spread:
         j ? F(n(v)) : R
       );
     };
-  }()), Ro;
+  })()), Ro;
 }
 process.env.NODE_ENV === "production" ? vd.exports = Ev() : vd.exports = Cv();
 var m = vd.exports;
@@ -2603,7 +2603,7 @@ const nf = (t) => typeof t == "boolean" ? `${t}` : t === 0 ? "0" : t, of = Ae, f
     let b = !0;
     return (async () => {
       try {
-        const { Icon: x } = await import("./iconify-CtDxgBXd.mjs");
+        const { Icon: x } = await import("./iconify-BTEzywX2.mjs");
         b && (u(() => x), f(!1));
       } catch (x) {
         console.error("Failed to load icon:", x), b && (g(x), f(!1));
@@ -3762,13 +3762,13 @@ var jm = { exports: {} };
 (function(t, e) {
   (function(r, n) {
     t.exports = n();
-  })(Nm, function() {
+  })(Nm, (function() {
     return function(r, n) {
       n.prototype.isSameOrAfter = function(o, s) {
         return this.isSame(o, s) || this.isAfter(o, s);
       };
     };
-  });
+  }));
 })(jm);
 var hx = jm.exports;
 const mx = /* @__PURE__ */ Mm(hx);
@@ -3776,13 +3776,13 @@ var zm = { exports: {} };
 (function(t, e) {
   (function(r, n) {
     t.exports = n();
-  })(Nm, function() {
+  })(Nm, (function() {
     return function(r, n) {
       n.prototype.isSameOrBefore = function(o, s) {
         return this.isSame(o, s) || this.isBefore(o, s);
       };
     };
-  });
+  }));
 })(zm);
 var gx = zm.exports;
 const bx = /* @__PURE__ */ Mm(gx);
@@ -6999,7 +6999,7 @@ function p2(t) {
 function Ki() {
   return typeof ne.useSyncExternalStore == "function" ? ne.useSyncExternalStore(p2, u2, f2) : Dt(s2);
 }
-const h2 = Symbol.for("react-aria.i18n.locale"), m2 = Symbol.for("react-aria.i18n.strings");
+const h2 = /* @__PURE__ */ Symbol.for("react-aria.i18n.locale"), m2 = /* @__PURE__ */ Symbol.for("react-aria.i18n.strings");
 let Zn;
 class qi {
   constructor(e, r = "en-US") {
@@ -8147,7 +8147,7 @@ function yw(t) {
   let e = t.split("-")[0];
   return bw.has(e);
 }
-const ig = Symbol.for("react-aria.i18n.locale");
+const ig = /* @__PURE__ */ Symbol.for("react-aria.i18n.locale");
 function lg() {
   let t = typeof window < "u" && window[ig] || typeof navigator < "u" && (navigator.language || navigator.userLanguage) || "en-US";
   try {
@@ -8506,7 +8506,7 @@ class Xs {
     n.clientX != null && n.clientY != null && (c = n.clientX, u = n.clientY), i && (c != null && u != null ? (l = c - i.left, d = u - i.top) : (l = i.width / 2, d = i.height / 2)), this.type = e, this.pointerType = r, this.target = n.currentTarget, this.shiftKey = n.shiftKey, this.metaKey = n.metaKey, this.ctrlKey = n.ctrlKey, this.altKey = n.altKey, this.x = l, this.y = d, this.key = n.key;
   }
 }
-const Rf = Symbol("linkClicked"), Lf = "react-aria-pressable-style", Df = "data-react-aria-pressable";
+const Rf = /* @__PURE__ */ Symbol("linkClicked"), Lf = "react-aria-pressable-style", Df = "data-react-aria-pressable";
 function Ow(t) {
   let { onPress: e, onPressChange: r, onPressStart: n, onPressEnd: o, onPressUp: s, onClick: a, isDisabled: i, isPressed: l, preventFocusOnPress: d, shouldCancelOnPointerExit: c, allowTextSelectionOnPress: u, ref: p, ...f } = Pw(t), [h, g] = Q(!1), b = te({
     isPressed: !1,
@@ -25515,7 +25515,7 @@ var jl = {};
  */
 var cp;
 function kk() {
-  return cp || (cp = 1, process.env.NODE_ENV !== "production" && function() {
+  return cp || (cp = 1, process.env.NODE_ENV !== "production" && (function() {
     function t(f, h) {
       return f === h && (f !== 0 || 1 / f === 1 / h) || f !== f && h !== h;
     }
@@ -25564,7 +25564,7 @@ function kk() {
     typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ < "u" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart == "function" && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
     var o = ne, s = typeof Object.is == "function" ? Object.is : t, a = o.useState, i = o.useEffect, l = o.useLayoutEffect, d = o.useDebugValue, c = !1, u = !1, p = typeof window > "u" || typeof window.document > "u" || typeof window.document.createElement > "u" ? n : e;
     jl.useSyncExternalStore = o.useSyncExternalStore !== void 0 ? o.useSyncExternalStore : p, typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ < "u" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop == "function" && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
-  }()), jl;
+  })()), jl;
 }
 process.env.NODE_ENV === "production" ? Kd.exports = $k() : Kd.exports = kk();
 var rl = Kd.exports;
@@ -25646,10 +25646,6 @@ const Ek = ft("border bg-popover text-popover-foreground", {
         return "warning";
       case "danger":
         return "danger";
-      case "info":
-      case "neutral":
-      case "light":
-      case "custom":
       default:
         return "default";
     }
@@ -26205,7 +26201,7 @@ function Dk(t, e) {
   }
   return String(t);
 }
-var _k = "1.2.0", jk = "1.7.35", fp = " ext. ", zk = /^\d+$/, Pt = /* @__PURE__ */ function() {
+var _k = "1.2.0", jk = "1.7.35", fp = " ext. ", zk = /^\d+$/, Pt = /* @__PURE__ */ (function() {
   function t(e) {
     nl(this, t), q0(e), this.metadata = e, Y0.call(this, e);
   }
@@ -26391,7 +26387,7 @@ var _k = "1.2.0", jk = "1.7.35", fp = " ext. ", zk = /^\d+$/, Pt = /* @__PURE__ 
       return this.numberingPlan !== void 0;
     }
   }]);
-}(), pp = /* @__PURE__ */ function() {
+})(), pp = /* @__PURE__ */ (function() {
   function t(e, r) {
     nl(this, t), this.globalMetadataObject = r, this.metadata = e, Y0.call(this, r.metadata);
   }
@@ -26527,7 +26523,7 @@ var _k = "1.2.0", jk = "1.7.35", fp = " ext. ", zk = /^\d+$/, Pt = /* @__PURE__ 
       return this.v1 || this.v2 ? fp : this.metadata[13] || fp;
     }
   }]);
-}(), Bk = /* @__PURE__ */ function() {
+})(), Bk = /* @__PURE__ */ (function() {
   function t(e, r) {
     nl(this, t), this._format = e, this.metadata = r;
   }
@@ -26574,7 +26570,7 @@ var _k = "1.2.0", jk = "1.7.35", fp = " ext. ", zk = /^\d+$/, Pt = /* @__PURE__ 
       return this._format[5] || this.format();
     }
   }]);
-}(), Fk = /^\(?\$1\)?$/, Hk = /* @__PURE__ */ function() {
+})(), Fk = /^\(?\$1\)?$/, Hk = /* @__PURE__ */ (function() {
   function t(e, r) {
     nl(this, t), this.type = e, this.metadata = r;
   }
@@ -26590,7 +26586,7 @@ var _k = "1.2.0", jk = "1.7.35", fp = " ext. ", zk = /^\d+$/, Pt = /* @__PURE__ 
         return this.type[1] || this.metadata.possibleLengths();
     }
   }]);
-}();
+})();
 function hp(t, e) {
   switch (e) {
     case "FIXED_LINE":
@@ -26672,12 +26668,7 @@ function Gk(t, e, r) {
   throw new Error('Missing "possibleLengths" in metadata. Perhaps the metadata has been generated before v1.0.18.');
 }
 function J0(t, e, r) {
-  switch (ou(t, e, r)) {
-    case "IS_POSSIBLE":
-      return !0;
-    default:
-      return !1;
-  }
+  return ou(t, e, r) === "IS_POSSIBLE";
 }
 function Fr(t, e) {
   return t = t || "", new RegExp("^(?:" + e + ")$").test(t);
@@ -27004,6 +26995,10 @@ function A4(t, e, r, n) {
         number: "+".concat(o).concat(s),
         ext: t.ext
       });
+    // For reference, here's Google's IDD formatter:
+    // https://github.com/google/libphonenumber/blob/32719cf74e68796788d1ca45abc85dcdc63ba5b9/java/libphonenumber/src/com/google/i18n/phonenumbers/PhoneNumberUtil.java#L1546
+    // Not saying that this IDD formatter replicates it 1:1, but it seems to work.
+    // Who would even need to format phone numbers in IDD format anyway?
     case "IDD":
       if (!r.fromCountry)
         return;
@@ -27119,7 +27114,7 @@ function z4(t, e) {
   }
   return String(t);
 }
-var B4 = /* @__PURE__ */ function() {
+var B4 = /* @__PURE__ */ (function() {
   function t(e, r, n) {
     if (D4(this, t), !e)
       throw new TypeError("First argument is required");
@@ -27227,7 +27222,7 @@ var B4 = /* @__PURE__ */ function() {
       return this.format("RFC3966", r);
     }
   }]);
-}(), F4 = function(e) {
+})(), F4 = function(e) {
   return /^[A-Z]{2}$/.test(e);
 };
 function H4(t, e) {
@@ -27317,13 +27312,13 @@ function ks(t) {
     return e.__proto__ || Object.getPrototypeOf(e);
   }, ks(t);
 }
-var Ir = /* @__PURE__ */ function(t) {
+var Ir = /* @__PURE__ */ (function(t) {
   function e(r) {
     var n;
     return U4(this, e), n = G4(this, e, [r]), Object.setPrototypeOf(n, e.prototype), n.name = n.constructor.name, n;
   }
   return Y4(e, t), W4(e);
-}(/* @__PURE__ */ Jd(Error)), xp = new RegExp("(?:" + Q0() + ")$", "i");
+})(/* @__PURE__ */ Jd(Error)), xp = new RegExp("(?:" + Q0() + ")$", "i");
 function Z4(t) {
   var e = t.search(xp);
   if (e < 0)
@@ -28308,7 +28303,6 @@ const sA = () => {
         return "blur";
       case "dark":
         return "opaque";
-      case "transparent":
       default:
         return "transparent";
     }
@@ -41073,7 +41067,7 @@ function GC(t) {
         if (i)
           return i;
         const l = o.getMeta("applyInputRules");
-        return !!l && setTimeout(() => {
+        return l && setTimeout(() => {
           let { text: c } = l;
           typeof c == "string" ? c = c : c = Iu(q.from(c), a.schema);
           const { from: u } = l, p = u + c.length;
@@ -43773,7 +43767,7 @@ var ad = {};
  */
 var Yh;
 function t7() {
-  return Yh || (Yh = 1, process.env.NODE_ENV !== "production" && function() {
+  return Yh || (Yh = 1, process.env.NODE_ENV !== "production" && (function() {
     function t(d, c) {
       return d === c && (d !== 0 || 1 / d === 1 / c) || d !== d && c !== c;
     }
@@ -43821,7 +43815,7 @@ function t7() {
         [b]
       ), l(b), b;
     }, typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ < "u" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop == "function" && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
-  }()), ad;
+  })()), ad;
 }
 process.env.NODE_ENV === "production" ? xc.exports = e7() : xc.exports = t7();
 var r7 = xc.exports, n7 = (...t) => (e) => {
@@ -47093,7 +47087,7 @@ vt.prototype.map = function(e, r, n) {
 vt.from = function(e) {
   return e instanceof vt ? e : e && e.length ? new qy(e) : vt.empty;
 };
-var qy = /* @__PURE__ */ function(t) {
+var qy = /* @__PURE__ */ (function(t) {
   function e(n) {
     t.call(this), this.values = n;
   }
@@ -47124,9 +47118,9 @@ var qy = /* @__PURE__ */ function(t) {
   }, r.depth.get = function() {
     return 0;
   }, Object.defineProperties(e.prototype, r), e;
-}(vt);
+})(vt);
 vt.empty = new qy([]);
-var BT = /* @__PURE__ */ function(t) {
+var BT = /* @__PURE__ */ (function(t) {
   function e(r, n) {
     t.call(this), this.left = r, this.right = n, this.length = r.length + n.length, this.depth = Math.max(r.depth, n.depth) + 1;
   }
@@ -47158,7 +47152,7 @@ var BT = /* @__PURE__ */ function(t) {
   }, e.prototype.appendInner = function(n) {
     return this.left.depth >= Math.max(this.right.depth, n.depth) + 1 ? new e(this.left, new e(this.right, n)) : new e(this, n);
   }, e;
-}(vt);
+})(vt);
 const FT = 500;
 class or {
   constructor(e, r) {
@@ -50203,7 +50197,6 @@ const zM = [
             case "markdown":
               Fe = _.getHTML();
               break;
-            case "html":
             default:
               Fe = _.getHTML();
               break;

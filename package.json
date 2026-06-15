@@ -119,5 +119,10 @@
     "workerDirectory": [
       "public"
     ]
+  },
+  "pnpm": {
+    "overrides": {
+      "esbuild": "0.28.1"
+    }
   }
 }
