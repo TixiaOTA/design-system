@@ -1,4 +1,8 @@
 
+## [v2.4.5] - 2026-06-15
+- fix: github error
+
+
 ## [v2.4.4] - 2026-05-22
 - fix: wysiwyg error
 
