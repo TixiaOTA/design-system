@@ -1,4 +1,8 @@
 
+## [v2.4.6] - 2026-07-23
+- feat: add borderless accordion
+
+
 ## [v2.4.5] - 2026-06-15
 - fix: github error
 
