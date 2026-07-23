@@ -3096,21 +3096,22 @@ const sx = {
   contentClassName: l,
   variant: d = "primary",
   shadow: c = "none",
-  rounded: u = "xl"
+  rounded: u = "xl",
+  borderless: p = !1
 }) => {
-  const [p, f] = Q(r), h = n !== void 0 ? n : p, g = n !== void 0, b = (x) => {
-    let E;
-    e ? E = h.includes(x) ? h.filter((C) => C !== x) : [...h, x] : E = h.includes(x) ? [] : [x], g ? o == null || o(E) : f(E);
-  }, y = sx[d];
-  return /* @__PURE__ */ m.jsx("div", { className: Ae("w-full space-y-2", i), children: t.map((x) => {
-    const E = h.includes(x.id), C = !!x.disabled;
+  const [f, h] = Q(r), g = n !== void 0 ? n : f, b = n !== void 0, y = (E) => {
+    let C;
+    e ? C = g.includes(E) ? g.filter((k) => k !== E) : [...g, E] : C = g.includes(E) ? [] : [E], b ? o == null || o(C) : h(C);
+  }, x = sx[d];
+  return /* @__PURE__ */ m.jsx("div", { className: Ae("w-full space-y-2", i), children: t.map((E) => {
+    const C = g.includes(E.id), k = !!E.disabled;
     return /* @__PURE__ */ m.jsxs(
       "div",
       {
         className: Ae(
-          "border overflow-hidden",
+          "overflow-hidden",
           "bg-white",
-          "border-gray-200",
+          !p && "border border-gray-200",
           ax[c],
           ix[u],
           "transition-shadow duration-200"
@@ -3119,15 +3120,15 @@ const sx = {
           /* @__PURE__ */ m.jsxs(
             "button",
             {
-              onClick: () => !C && b(x.id),
-              disabled: C,
+              onClick: () => !k && y(E.id),
+              disabled: k,
               className: Ae(
                 "w-full flex items-center justify-between p-4",
                 "text-left transition-colors",
-                y.hover,
-                E && y.active,
-                y.text,
-                C && "opacity-50 cursor-not-allowed"
+                x.hover,
+                C && x.active,
+                x.text,
+                k && "opacity-50 cursor-not-allowed"
               ),
               children: [
                 a === "left" && /* @__PURE__ */ m.jsx(
@@ -3135,18 +3136,18 @@ const sx = {
                   {
                     className: Ae(
                       "mr-3 transition-transform duration-200",
-                      E && "rotate-180"
+                      C && "rotate-180"
                     ),
                     children: /* @__PURE__ */ m.jsx(Ce, { icon: s, className: "w-5 h-5" })
                   }
                 ),
-                /* @__PURE__ */ m.jsx("div", { className: "flex-1", children: x.title }),
+                /* @__PURE__ */ m.jsx("div", { className: "flex-1", children: E.title }),
                 a === "right" && /* @__PURE__ */ m.jsx(
                   "div",
                   {
                     className: Ae(
                       "ml-3 transition-transform duration-200",
-                      E && "rotate-180"
+                      C && "rotate-180"
                     ),
                     children: /* @__PURE__ */ m.jsx(Ce, { icon: s, className: "w-5 h-5" })
                   }
@@ -3159,23 +3160,24 @@ const sx = {
             {
               className: Ae(
                 "grid transition-all duration-200 ease-in-out",
-                E ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                C ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
               ),
               children: /* @__PURE__ */ m.jsx("div", { className: "overflow-hidden", children: /* @__PURE__ */ m.jsx(
                 "div",
                 {
                   className: Ae(
-                    "p-4 border-t border-gray-200",
+                    "p-4",
+                    !p && "border-t border-gray-200",
                     l
                   ),
-                  children: x.content
+                  children: E.content
                 }
               ) })
             }
           )
         ]
       },
-      x.id
+      E.id
     );
   }) });
 }, YM = ({

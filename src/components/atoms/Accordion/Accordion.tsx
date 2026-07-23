@@ -26,6 +26,7 @@ export interface AccordionProps {
   variant?: AccordionVariant;
   shadow?: AccordionShadow;
   rounded?: AccordionRounded;
+  borderless?: boolean;
 }
 
 const variantStyles: Record<AccordionVariant, { hover: string; active: string; text: string }> = {
@@ -103,6 +104,7 @@ export const Accordion: React.FC<AccordionProps> = ({
   variant = 'primary',
   shadow = 'none',
   rounded = 'xl',
+  borderless = false,
 }) => {
   const [internalOpenIds, setInternalOpenIds] = useState<string[]>(defaultOpenIds);
   
@@ -142,9 +144,9 @@ export const Accordion: React.FC<AccordionProps> = ({
           <div
             key={item.id}
             className={clsx(
-              'border overflow-hidden',
+              'overflow-hidden',
               'bg-white',
-              'border-gray-200',
+              !borderless && 'border border-gray-200',
               shadowStyles[shadow],
               roundedStyles[rounded],
               'transition-shadow duration-200',
@@ -193,7 +195,8 @@ export const Accordion: React.FC<AccordionProps> = ({
               <div className="overflow-hidden">
                 <div
                   className={clsx(
-                    'p-4 border-t border-gray-200',
+                    'p-4',
+                    !borderless && 'border-t border-gray-200',
                     contentClassName
                   )}
                 >

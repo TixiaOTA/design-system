@@ -156,6 +156,14 @@ export const Light: Story = {
   },
 };
 
+export const Borderless: Story = {
+  args: {
+    items: sampleItems,
+    variant: 'light',
+    borderless: true,
+  },
+};
+
 export const Dark: Story = {
   args: {
     items: sampleItems,

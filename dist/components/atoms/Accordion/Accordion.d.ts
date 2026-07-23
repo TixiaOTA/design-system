@@ -21,5 +21,6 @@ export interface AccordionProps {
     variant?: AccordionVariant;
     shadow?: AccordionShadow;
     rounded?: AccordionRounded;
+    borderless?: boolean;
 }
 export declare const Accordion: React.FC<AccordionProps>;
