@@ -18,7 +18,8 @@ export type NegativeCaseVariant =
   | "change-price"
   | "help-desk"
   | "approved"
-  | "rejected";
+  | "rejected"
+  | "check-order";
 
 interface NegativeCaseProps {
   variant: NegativeCaseVariant;
@@ -96,6 +97,10 @@ const appErrorConfig: Record<string, { image: string; message: string }> = {
     image: "https://design-system-eaip.onrender.com/img/rejected.svg",
     message: "Your request has been rejected.",
   },
+  CHECK_ORDER: {
+    image: "https://design-system-eaip.onrender.com/img/check-order.svg",
+    message: "Please check your order.",
+  },
 };
 
 const variantToErrorCode: Record<NegativeCaseVariant, string> = {
@@ -115,6 +120,7 @@ const variantToErrorCode: Record<NegativeCaseVariant, string> = {
   "help-desk": "HELP_DESK",
   approved: "APPROVED",
   rejected: "REJECTED",
+  "check-order": "CHECK_ORDER",
 };
 
 export const NegativeCase = ({
