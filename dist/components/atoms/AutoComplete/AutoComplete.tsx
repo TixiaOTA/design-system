@@ -258,15 +258,14 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
       onChange?.(event);
     };
 
-    const handleClear = (e: React.MouseEvent<HTMLInputElement>) => {
-      e.stopPropagation();
+    const handleClear = () => {
       setInputValue("");
+      setIsOpen(false);
       onClear?.();
-      const syntheticEvent = new Event(
-        "change"
-      ) as unknown as React.ChangeEvent<HTMLInputElement>;
-      syntheticEvent.target = { value: "" } as HTMLInputElement;
-      onChange?.(syntheticEvent);
+      onChange?.({
+        target: { value: "" },
+        currentTarget: { value: "" },
+      } as React.ChangeEvent<HTMLInputElement>);
     };
 
     const handleSelect = (option: { value: string; label: string }) => {
@@ -524,7 +523,7 @@ const AutoComplete = forwardRef<HTMLInputElement, AutoCompleteProps>(
             fullWidth={fullWidth}
             className={className}
             {...props}
-            onClick={shouldShowClear ? handleClear : props.onClick}
+            onRightIconClick={shouldShowClear ? handleClear : undefined}
           />
         </div>
         {renderDropdown()}

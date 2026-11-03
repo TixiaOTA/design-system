@@ -125,12 +125,28 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {rightIcon && (
           <div 
             className={cn(
-              "absolute right-3 top-1/2 -translate-y-1/2 text-neutral",
+              "absolute right-3 top-1/2 z-10 -translate-y-1/2 text-neutral",
               onRightIconClick && "cursor-pointer hover:text-primary-600"
             )}
-            onClick={onRightIconClick}
+            onMouseDown={(event) => {
+              if (!onRightIconClick) return;
+              // Keep focus on the input so blur cannot unmount the icon before click.
+              event.preventDefault();
+            }}
+            onClick={(event) => {
+              if (!onRightIconClick) return;
+              event.preventDefault();
+              event.stopPropagation();
+              onRightIconClick();
+            }}
             role={onRightIconClick ? "button" : undefined}
             tabIndex={onRightIconClick ? 0 : undefined}
+            onKeyDown={(event) => {
+              if (!onRightIconClick) return;
+              if (event.key !== "Enter" && event.key !== " ") return;
+              event.preventDefault();
+              onRightIconClick();
+            }}
           >
             <Icon icon={rightIcon} className="w-4 h-4" />
           </div>
