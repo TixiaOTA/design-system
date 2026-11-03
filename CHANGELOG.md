@@ -1,4 +1,8 @@
 
+## [v2.4.8] - 2026-11-03
+- chore: redeploy
+
+
 ## [v2.4.7] - 2026-11-03
 - chore: fix autocomplete
 - chore: fix build and add check-order
