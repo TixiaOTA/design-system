@@ -1,4 +1,10 @@
 
+## [v2.4.7] - 2026-11-03
+- chore: fix autocomplete
+- chore: fix build and add check-order
+- chore: fix github vul alert
+
+
 ## [v2.4.6] - 2026-07-23
 - feat: add borderless accordion
 
