@@ -1,4 +1,8 @@
 
+## [v2.4.9] - 2026-11-03
+- chore: fix pnpm
+
+
 ## [v2.4.8] - 2026-11-03
 - chore: redeploy
 
