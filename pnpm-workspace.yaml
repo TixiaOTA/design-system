@@ -1,4 +1,7 @@
+overrides:
+  esbuild: 0.28.1
+
 allowBuilds:
-  '@heroui/shared-utils': set this to true or false
-  esbuild: set this to true or false
-  msw: set this to true or false
+  '@heroui/shared-utils': true
+  esbuild: true
+  msw: true

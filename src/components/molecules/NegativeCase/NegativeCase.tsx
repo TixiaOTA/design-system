@@ -34,71 +34,71 @@ interface NegativeCaseProps {
 
 const appErrorConfig: Record<string, { image: string; message: string }> = {
   PAGE_NOT_FOUND: {
-    image: "https://design-system-eaip.onrender.com/img/page-not-found.svg",
+    image: "https://tixia-bucket.s3.ap-southeast-3.amazonaws.com/seo/facebook_image/page-not-found_20261103043319.svg",
     message: "The page you are looking for does not exist.",
   },
   PAGE_NOT_FOUND_V2: {
-    image: "https://design-system-eaip.onrender.com/img/page-not-found-v2.svg",
+    image: "https://tixia-bucket.s3.ap-southeast-3.amazonaws.com/seo/facebook_image/page-not-found-v2_20261103043349.svg",
     message: "The page you are looking for does not exist.",
   },
   NO_INTERNET: {
-    image: "https://design-system-eaip.onrender.com/img/no-internet.svg",
+    image: "https://tixia-bucket.s3.ap-southeast-3.amazonaws.com/seo/facebook_image/no-internet_20261103043423.svg",
     message: "Please check your internet connection and try again.",
   },
   DATA_NOT_FOUND: {
-    image: "https://design-system-eaip.onrender.com/img/search-not-found.svg",
+    image: "https://tixia-bucket.s3.ap-southeast-3.amazonaws.com/seo/facebook_image/search-not-found_20261103043503.svg",
     message: "No data available for your request.",
   },
   UNDER_DEVELOPMENT: {
-    image: "https://design-system-eaip.onrender.com/img/under-development.svg",
+    image: "https://tixia-bucket.s3.ap-southeast-3.amazonaws.com/seo/facebook_image/under-development_20261103043531.svg",
     message: "This feature is currently under development.",
   },
   INFORMATION_UNAVAILABLE: {
-    image: "https://design-system-eaip.onrender.com/img/search-not-found.svg",
+    image: "https://tixia-bucket.s3.ap-southeast-3.amazonaws.com/seo/facebook_image/search-not-found_20261103043503.svg",
     message: "The requested information is currently unavailable.",
   },
   PAYMENT_SUCCESS: {
-    image: "https://design-system-eaip.onrender.com/img/payment-success.svg",
+    image: "https://tixia-bucket.s3.ap-southeast-3.amazonaws.com/seo/facebook_image/payment-success_20261103043614.svg",
     message: "Operation completed successfully.",
   },
   PAYMENT_FAILED: {
-    image: "https://design-system-eaip.onrender.com/img/payment-failed.svg",
+    image: "https://tixia-bucket.s3.ap-southeast-3.amazonaws.com/seo/facebook_image/payment-failed_20261103043650.svg",
     message: "Payment failed. Please try again.",
   },
   NO_ORDER: {
-    image: "https://design-system-eaip.onrender.com/img/no-order.svg",
+    image: "https://tixia-bucket.s3.ap-southeast-3.amazonaws.com/seo/facebook_image/no-order_20261103043718.svg",
     message: "No order found.",
   },
   TIMEOUT: {
-    image: "https://design-system-eaip.onrender.com/img/timeout.svg",
+    image: "https://tixia-bucket.s3.ap-southeast-3.amazonaws.com/seo/facebook_image/timeout_20261103043739.svg",
     message: "Request timed out. Please try again.",
   },
   ON_PROCESS: {
-    image: "https://design-system-eaip.onrender.com/img/on-process.svg",
+    image: "https://tixia-bucket.s3.ap-southeast-3.amazonaws.com/seo/facebook_image/on-process_20261103043758.svg",
     message: "Your request is being processed. Please wait for a moment.",
   },
   NO_SEAT_AVAILABLE: {
-    image: "https://design-system-eaip.onrender.com/img/seat-not-available.svg",
+    image: "https://tixia-bucket.s3.ap-southeast-3.amazonaws.com/seo/facebook_image/seat-not-available_20261103043824.svg",
     message: "No seat available. Please try again later.",
   },
   CHANGE_PRICE: {
-    image: "https://design-system-eaip.onrender.com/img/change-price.svg",
+    image: "https://tixia-bucket.s3.ap-southeast-3.amazonaws.com/seo/facebook_image/change-price_20261103043852.svg",
     message: "The price has been changed. Please try again.",
   },
   HELP_DESK: {
-    image: "https://design-system-eaip.onrender.com/img/help-desk.svg",
+    image: "https://tixia-bucket.s3.ap-southeast-3.amazonaws.com/seo/facebook_image/help-desk_20261103043911.svg",
     message: "Please contact our help desk for assistance.",
   },
   APPROVED: {
-    image: "https://design-system-eaip.onrender.com/img/approved.svg",
+    image: "https://tixia-bucket.s3.ap-southeast-3.amazonaws.com/seo/facebook_image/approved_20261103043930.svg",
     message: "Your request has been approved.",
   },
   REJECTED: {
-    image: "https://design-system-eaip.onrender.com/img/rejected.svg",
+    image: "https://tixia-bucket.s3.ap-southeast-3.amazonaws.com/seo/facebook_image/rejected_20261103043947.svg",
     message: "Your request has been rejected.",
   },
   CHECK_ORDER: {
-    image: "https://design-system-eaip.onrender.com/img/check-order.svg",
+    image: "https://tixia-bucket.s3.ap-southeast-3.amazonaws.com/seo/facebook_image/check-order_20261103044009.svg",
     message: "Please check your order.",
   },
 };

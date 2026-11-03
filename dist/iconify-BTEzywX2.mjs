@@ -1125,6 +1125,7 @@ const De = (t, e, n, r) => {
     const u = e[m];
     if (u !== void 0)
       switch (m) {
+        // Properties to ignore
         case "icon":
         case "style":
         case "children":
@@ -1133,24 +1134,30 @@ const De = (t, e, n, r) => {
         case "_ref":
         case "_inline":
           break;
+        // Boolean attributes
         case "inline":
         case "hFlip":
         case "vFlip":
           i[m] = u === !0 || u === "true" || u === 1;
           break;
+        // Flip as string: 'horizontal,vertical'
         case "flip":
           typeof u == "string" && Ce(i, u);
           break;
+        // Color: copy to style
         case "color":
           c.color = u;
           break;
+        // Rotation as string
         case "rotate":
           typeof u == "string" ? i[m] = Te(u) : typeof u == "number" && (i[m] = u);
           break;
+        // Remove aria-hidden
         case "ariaHidden":
         case "aria-hidden":
           u !== !0 && u !== "true" && delete f["aria-hidden"];
           break;
+        // Copy missing property if it does not exist in customisations
         default:
           o[m] === void 0 && (f[m] = u);
       }
