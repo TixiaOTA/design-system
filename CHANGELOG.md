@@ -1,4 +1,8 @@
 
+## [v2.4.10] - 2026-11-10
+- chore: fix input OTP
+
+
 ## [v2.4.9] - 2026-11-03
 - chore: fix pnpm
 
