@@ -147,105 +147,105 @@ const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(
       // No need to add/remove listeners manually - React will handle this
     };
 
-    // Add a handler for the onFocus event that we'll pass to each input
     const handleInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-      // Select the content when the input is focused
       e.target.select();
     };
 
-    // Modify handleChange to better handle character replacement
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-      const inputValue = e.target.value;
-      let newChar = '';
-      
-      // Handle different input scenarios
-      if (inputValue.length >= 1) {
-        // Get the last character if multiple were somehow entered
-        newChar = inputValue.slice(-1);
-      } else if (inputValue.length === 0) {
-        // Handle deletion
-        const newValue = currentValue.split('');
-        newValue[index] = '';
-        updateValue(newValue.join(''));
-        return;
+    /** Top-row digits via e.key; numpad via e.code so NumLock-off still types digits. */
+    const resolveDigitKey = (e: React.KeyboardEvent<HTMLInputElement>): string | null => {
+      if (/^\d$/.test(e.key)) return e.key;
+      const numpadMatch = /^Numpad([0-9])$/.exec(e.code);
+      return numpadMatch ? numpadMatch[1] : null;
+    };
+
+    const commitCharAt = (index: number, char: string) => {
+      const next = currentValue.split('');
+      while (next.length <= index) {
+        next.push('');
       }
-      
-      // Validate for numeric only if needed
-      if (numericOnly && !/^\d$/.test(newChar)) {
-        return;
-      }
-      
-      // Update the value
-      const newValue = currentValue.split('');
-      
-      // Ensure we have enough slots in the array
-      while (newValue.length <= index) {
-        newValue.push('');
-      }
-      
-      // Update the specific position
-      newValue[index] = newChar;
-      const updatedValue = newValue.join('');
-      updateValue(updatedValue);
-      
-      // Move focus to next input if appropriate
-      if (index < length - 1 && newChar) {
-        // Always move to next input if a valid character was entered
+      next[index] = char;
+      updateValue(next.join(''));
+
+      if (char && index < length - 1) {
         inputRefs.current[index + 1]?.focus();
       }
     };
 
-    // Enhance keyDown handler to improve overall input experience
+    // Mobile / autofill / IME path — desktop digits are handled in keyDown
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+      const inputValue = e.target.value;
+
+      if (inputValue.length === 0) {
+        const next = currentValue.split('');
+        next[index] = '';
+        updateValue(next.join(''));
+        return;
+      }
+
+      const newChar = inputValue.slice(-1);
+      if (numericOnly && !/^\d$/.test(newChar)) {
+        return;
+      }
+
+      commitCharAt(index, newChar);
+    };
+
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-      // Handle delete/backspace operations
+      const digit = resolveDigitKey(e);
+
+      // Prefer digits over arrow remaps from numpad when NumLock is off
+      if (digit && !e.ctrlKey && !e.altKey && !e.metaKey) {
+        e.preventDefault();
+        commitCharAt(index, digit);
+        return;
+      }
+
+      if (
+        numericOnly &&
+        !e.ctrlKey && !e.altKey && !e.metaKey &&
+        e.key.length === 1 &&
+        !/^\d$/.test(e.key)
+      ) {
+        e.preventDefault();
+        return;
+      }
+
       if (e.key === 'Backspace') {
-        const newValue = currentValue.split('');
-        
-        // If current field has a value, clear it but stay on current field
+        const next = currentValue.split('');
+
         if (currentValue[index]) {
-          e.preventDefault(); // Prevent default only if we're clearing a value
-          newValue[index] = '';
-          updateValue(newValue.join(''));
-        } 
-        // If current field is empty and not the first field, move to previous field and clear it
-        else if (index > 0) {
           e.preventDefault();
-          newValue[index - 1] = '';
-          updateValue(newValue.join(''));
+          next[index] = '';
+          updateValue(next.join(''));
+        } else if (index > 0) {
+          e.preventDefault();
+          next[index - 1] = '';
+          updateValue(next.join(''));
           inputRefs.current[index - 1]?.focus();
         }
-      } 
-      // Handle Delete key to clear current position
-      else if (e.key === 'Delete') {
+        return;
+      }
+
+      if (e.key === 'Delete') {
         if (currentValue[index]) {
           e.preventDefault();
-          const newValue = currentValue.split('');
-          newValue[index] = '';
-          updateValue(newValue.join(''));
+          const next = currentValue.split('');
+          next[index] = '';
+          updateValue(next.join(''));
         }
+        return;
       }
-      // Handle arrow keys for navigation
-      else if (e.key === 'ArrowLeft' && index > 0) {
+
+      // Real arrow keys only — numpad arrows already handled as digits above
+      if (e.code === 'ArrowLeft' && index > 0) {
         e.preventDefault();
         inputRefs.current[index - 1]?.focus();
-      } 
-      else if (e.key === 'ArrowRight' && index < length - 1) {
+        return;
+      }
+
+      if (e.code === 'ArrowRight' && index < length - 1) {
         e.preventDefault();
         inputRefs.current[index + 1]?.focus();
-      }
-      // If user is typing a valid character, handle it specially
-      else if (
-        !e.ctrlKey && !e.altKey && !e.metaKey && 
-        e.key.length === 1
-      ) {
-        // For numeric only mode, validate first
-        if (numericOnly && !/^\d$/.test(e.key)) {
-          e.preventDefault();
-          return;
-        }
-        
-        // No need to prevent default here as we want the input to be updated
-        // The onChange handler will catch this input and process it
       }
     };
 
@@ -296,7 +296,7 @@ const InputOTP = forwardRef<HTMLDivElement, InputOTPProps>(
                 type={numericOnly ? 'tel' : 'text'}
                 inputMode={numericOnly ? 'numeric' : 'text'}
                 maxLength={1}
-                value={digits[index] || ''}
+                value={digits[index] ?? ''}
                 onChange={(e) => handleChange(e, index)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
                 onPaste={index === 0 ? handlePaste : undefined}
